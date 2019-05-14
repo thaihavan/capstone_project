@@ -1,0 +1,34 @@
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\NUnit3.TestAdapter.dll
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\NUnit3.TestAdapter.pdb
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\nunit.engine.netstandard.dll
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.deps.json
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.runtimeconfig.json
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.runtimeconfig.dev.json
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.dll
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.pdb
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\DemoUnitTest.dll
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\DemoUnitTest.pdb
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.csprojAssemblyReference.cache
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.csproj.CoreCompileInputs.cache
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.AssemblyInfoInputs.cache
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.AssemblyInfo.cs
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.csproj.CopyComplete
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.dll
+C:\Users\PC\source\repos\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.pdb
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\NUnit3.TestAdapter.dll
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\NUnit3.TestAdapter.pdb
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\nunit.engine.netstandard.dll
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.deps.json
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.runtimeconfig.json
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.runtimeconfig.dev.json
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.dll
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\MyUnitTest.pdb
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\DemoUnitTest.dll
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\bin\Debug\netcoreapp2.1\DemoUnitTest.pdb
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.csprojAssemblyReference.cache
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.csproj.CoreCompileInputs.cache
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.AssemblyInfoInputs.cache
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.AssemblyInfo.cs
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.csproj.CopyComplete
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.dll
+D:\Capstone project\capstone_project\study\Unit test\DemoUnitTest\MyUnitTest\obj\Debug\netcoreapp2.1\MyUnitTest.pdb

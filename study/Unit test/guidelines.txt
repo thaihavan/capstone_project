@@ -1,0 +1,9 @@
+1. Right click on Project -> Click "Manage Nuget Packages.." from context menu
+
+2. Go to Browse tab and search for NUnit
+
+3. Select NUnit, NUnit3TestAdapter, Microsoft.NET.Test.Sdk 
+	-> Click Install at the right side 
+	-> Click OK from Preview pop up
+
+4. With function need fake then install Moq by Manage Nuget Packages.. in Test project 

@@ -1,0 +1,138 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\MyUnitTest\\MyUnitTest.csproj": {}
+  },
+  "projects": {
+    "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\DemoUnitTest\\DemoUnitTest.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\DemoUnitTest\\DemoUnitTest.csproj",
+        "projectName": "DemoUnitTest",
+        "projectPath": "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\DemoUnitTest\\DemoUnitTest.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\DemoUnitTest\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.11.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[3.13.0, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\MyUnitTest\\MyUnitTest.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\MyUnitTest\\MyUnitTest.csproj",
+        "projectName": "MyUnitTest",
+        "projectPath": "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\MyUnitTest\\MyUnitTest.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\MyUnitTest\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {
+              "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\DemoUnitTest\\DemoUnitTest.csproj": {
+                "projectPath": "D:\\Capstone project\\capstone_project\\study\\Unit test\\DemoUnitTest\\DemoUnitTest\\DemoUnitTest.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.1.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.10.1, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.11.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[3.13.0, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

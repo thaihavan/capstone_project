@@ -1,1 +1,3 @@
 # Ignore
+study/**/.vs/
+study/Unit test/DemoUnitTest/packages/
