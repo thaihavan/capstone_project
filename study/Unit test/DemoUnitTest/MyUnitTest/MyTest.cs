@@ -7,13 +7,20 @@ namespace MyUnitTest
     [TestFixture]
     public class MyTest
     {
-        Mock myInterfaceMock;
+        DemoUnitTest.Functions func;
+        Mock<DemoUnitTest.Functions> moqResult;
+
+       [SetUp]
+        public void Config()
+        {
+            func = new DemoUnitTest.Functions();
+            moqResult = new Mock<DemoUnitTest.Functions>();
+        }
 
      
         [TestCase]
         public void TestAddisTrue()
         {
-            var func = new DemoUnitTest.Functions();
             int resultExpected = 11;
             int resultFunc = func.add(5, 6);
             Assert.AreEqual(resultExpected, resultFunc);
@@ -22,7 +29,6 @@ namespace MyUnitTest
         [TestCase]
         public void TestAddisFalse()
         {
-            var func = new DemoUnitTest.Functions();
             int resultExpected = 6;
             int resultFunc = func.add(5, 6);
             Assert.AreEqual(resultExpected, resultFunc);
@@ -31,7 +37,6 @@ namespace MyUnitTest
         [TestCase]
         public void TestCheckOdd()
         {
-            var func = new DemoUnitTest.Functions();
             bool resultFunc = func.checkOdd(6);
             Assert.IsTrue(resultFunc);
         }
@@ -40,7 +45,6 @@ namespace MyUnitTest
         public void DemoMoq()
         {
             int numberToReturn = 4;
-            Mock< DemoUnitTest.Functions> moqResult = new Mock<DemoUnitTest.Functions> ();
             moqResult.CallBase = true;
             moqResult.Setup(x => x.SquareOfRandom()).Returns(numberToReturn);
 
