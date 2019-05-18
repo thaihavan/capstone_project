@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'cp-sms-frontend'`, () => {
+  it(`should have as title 'cp-trip-sharing-frontend'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('cp-sms-frontend');
+    expect(app.title).toEqual('cp-trip-sharing-frontend');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to cp-sms-frontend!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to cp-trip-sharing-frontend!');
   });
 });

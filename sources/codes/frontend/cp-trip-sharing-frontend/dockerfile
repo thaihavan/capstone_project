@@ -12,6 +12,6 @@ RUN npm run build
 # Stage 2
 FROM nginx:alpine
 
-COPY --from=node /usr/src/app/dist/cp-sms-frontend /usr/share/nginx/html
+COPY --from=node /usr/src/app/dist/cp-trip-sharing-frontend /usr/share/nginx/html
 
 COPY Docker.nginx.default.conf /etc/nginx/conf.d/default.conf

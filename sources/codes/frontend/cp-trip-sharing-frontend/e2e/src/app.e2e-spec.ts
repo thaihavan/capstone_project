@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to cp-sms-frontend!');
+    expect(page.getTitleText()).toEqual('Welcome to cp-trip-sharing-frontend!');
   });
 
   afterEach(async () => {
