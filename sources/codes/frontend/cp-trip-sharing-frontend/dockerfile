@@ -1,7 +1,7 @@
 # Stage 1
 FROM node as node
 
-WORKDIR /usr/src/app
+WORKDIR /src/app
 
 COPY . .
 
@@ -12,6 +12,6 @@ RUN npm run build
 # Stage 2
 FROM nginx:alpine
 
-COPY --from=node /usr/src/app/dist/cp-trip-sharing-frontend /usr/share/nginx/html
+COPY --from=node /src/app/dist/cp-trip-sharing-frontend /share/nginx/html
 
 COPY Docker.nginx.default.conf /etc/nginx/conf.d/default.conf
