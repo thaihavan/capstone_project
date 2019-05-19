@@ -5,10 +5,10 @@ EXPOSE 443
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
-COPY ["IdentityProvider/IdentityProvider.csproj", "IdentityProvider/"]
+COPY ["IdentityProvider.csproj", "IdentityProvider/"]
 RUN dotnet restore "IdentityProvider/IdentityProvider.csproj"
-COPY . .
 WORKDIR "/src/IdentityProvider"
+COPY . .
 RUN dotnet build "IdentityProvider.csproj" -c Release -o /app
 
 FROM build AS publish
