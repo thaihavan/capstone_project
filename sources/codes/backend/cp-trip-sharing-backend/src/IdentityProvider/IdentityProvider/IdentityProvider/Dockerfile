@@ -17,4 +17,10 @@ RUN dotnet publish "IdentityProvider.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+COPY certificate.pfx .
+
+ENV ASPNETCORE_URLS="https://+;http://+"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password="123456"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path="certificate.pfx"
+
 ENTRYPOINT ["dotnet", "IdentityProvider.dll"]
