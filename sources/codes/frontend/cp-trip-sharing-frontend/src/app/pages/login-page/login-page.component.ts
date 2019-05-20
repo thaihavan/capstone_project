@@ -8,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class LoginPageComponent implements OnInit {
   showformLogin = false;
   showformLoginFB = true;
-
+  isRegisterForm = true;
+  isLoginForm = false;
+  isClickRegister = false;
   constructor() { }
 
   ngOnInit() {
@@ -23,6 +25,26 @@ export class LoginPageComponent implements OnInit {
       this.showformLoginFB = false;
     }
     
+  }
+
+  checkSigInOrSignUp(){
+    if(this.isRegisterForm == true && this.isLoginForm == false ){
+      this.isRegisterForm=false;
+      this.isLoginForm = true;
+    }
+    else{
+      this.isRegisterForm=true;
+      this.isLoginForm = false;
+    }
+    
+  }
+
+  checkClickRegister(){
+    this.isClickRegister = true;
+    this.showformLogin = false;
+    this.showformLoginFB = false;
+    this.isRegisterForm = false;
+    this.isLoginForm = false;
   }
 
 

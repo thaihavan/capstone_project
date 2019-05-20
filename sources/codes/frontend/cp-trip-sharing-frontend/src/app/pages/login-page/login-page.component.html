@@ -4,24 +4,66 @@
                  
             <div class="col" *ngIf="showformLoginFB">
               <a href="#" class="fb btn">
-                <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                <i class="btn-facebook"></i> Tiếp tục với Facebook
                </a>
               
-              <a href="#" class="google btn"><i class="fa fa-google fa-fw">
-                </i> Login with Google+
+              <a href="#" class="google btn"><i class="btn-google">
+                </i> Tiếp tục bằng Google+
               </a>
             <hr>
               <a href="#" class="twitter btn" (click)="changePage()">
-                    <i class="fa fa-twitter fa-fw"></i> Login with Email
+                    <i class="btn-twitter"></i> Tiếp tục bằng Email
               </a>
+              <br>
+              <p>Bằng việc tiếp tục, bạn đồng ý với
+                <a href="#">Điều khoản sử dụng </a>
+                và xác nhận bạn đã đọc 
+                <a href="#">Chính sách riêng tư </a>của chúng tôi.
+              </p>
             </div>
             
             <div class="col" *ngIf="showformLogin">
-              <h3>Join now – it’s free!</h3>
-              <input type="text" name="username" placeholder="Email address " required>
-              <input type="password" name="password" placeholder="Create a password " required>
-              <input type="submit" value="Join">
-              <span><br>Want to use Facebook or Google instead? <a href="#" (click)="changePage()">Go back</a></span>
+              <h3>Tham gia ngay - Miễn phí!</h3>
+              <input type="text" name="username" placeholder="Địa chỉ Email " required>
+              <input type="password" name="password" placeholder="Tạo mật khẩu " required><br><br>
+              <input *ngIf="isRegisterForm" type="submit" value="Đăng Ký"  (click)="checkClickRegister()">
+              <input *ngIf="isLoginForm" type="submit" value="Đăng Nhập">
+              <a *ngIf="isLoginForm" href="#">
+                Quên Mật Khẩu
+              </a>
+              <span *ngIf="isRegisterForm">
+                <br><br>Bạn đã có tài khoản? <a href="#" (click)="checkSigInOrSignUp()">Đăng nhập</a>
+              </span>
+              <span *ngIf="isLoginForm">
+                <br><br>Bạn chưa có tài khoản? <a href="#" (click)="checkSigInOrSignUp()">Đăng Ký</a>
+              </span>
+              <span>
+                <br><br>Bạn muốn thay bằng sử dụng Facebook hoặc Google? <a href="#" (click)="changePage()">Quay lại</a>
+              </span>
+            </div>
+
+            <div class="col" *ngIf="isClickRegister">
+              <h3 style="text-align: center">Chọn tên hiển thị và @tennguoidung chưa có ai sử dụng</h3>
+              <p id="title_choice_uname">
+                Tên hiển thị
+              </p>
+              <p id="title_choice_uname_annotation">
+                  Tên này xuất hiện trên hồ sơ của bạn cũng như mọi nội dung bạn đăng.
+              </p>
+      
+              <input type="text" name="username" placeholder="Ví dụ: John Due" required>
+              <p id="title_choice_uname">
+                Tên người dùng
+              </p>
+              <p id="title_choice_uname_annotation">
+                Tên duy nhất này giúp khách du lịch tìm kiếm bạn.
+              </p>
+              <input type="password" name="password" placeholder="Ví dụ: JohnDue@123" required>
+              <p>Bằng việc nhấp vào Xác nhận, bạn đồng ý với 
+                <a href="#">Điều khoản sử dụng </a>của chúng tôi.
+              </p>
+              <br>
+              <input *ngIf="isClickRegister" type="submit" value="Xác Thực">
             </div>
         </div>
 </div>

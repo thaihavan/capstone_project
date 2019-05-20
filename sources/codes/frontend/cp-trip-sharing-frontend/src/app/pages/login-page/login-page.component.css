@@ -1,7 +1,9 @@
 * {
     box-sizing: border-box;
   }
-  
+  hr{
+    font-weight: bold;
+  }
   /* style the container */
   .container {
     position: relative;
@@ -95,4 +97,12 @@
   @keyframes animatezoom {
     from {transform: scale(0)} 
     to {transform: scale(1)}
+  }
+  #title_choice_uname{
+    font-weight: bold;
+  }
+
+  #title_choice_uname_annotation{
+    font-size: 15px;
+    padding: 0px;
   }
