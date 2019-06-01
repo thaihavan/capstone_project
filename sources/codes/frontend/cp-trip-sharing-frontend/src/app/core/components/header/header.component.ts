@@ -14,10 +14,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openDialogLoginForm(){
-    const dialogRef = this.dialog.open(LoginPageComponent, {
-      height: '65%',
-      width: '32%',
-    });
+    const dialogRef = this.dialog.open(LoginPageComponent, {});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

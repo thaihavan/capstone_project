@@ -12,6 +12,9 @@ import { GoogleMapComponent } from './shared/components/google-map/google-map.co
 import { AgmCoreModule } from '@agm/core';
 import {HeaderComponent} from 'src/app/core/components/header/header.component'
 import {MatDialogModule} from "@angular/material";
+import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule } from "@angular/material";
+import { FlexLayoutModule } from "@angular/flex-layout";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,10 +23,17 @@ import {MatDialogModule} from "@angular/material";
     LoginPageComponent,
     GoogleMapComponent,
     HeaderComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    FlexLayoutModule,
     BrowserAnimationsModule,
     SharedModule,
     MatDialogModule,

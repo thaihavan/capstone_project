@@ -1,59 +1,43 @@
-   .header{
-        height: 4em;
-        width: 100%;
-        margin-bottom: 0.5em;
-        background-color: gray;
-    }
-  
-  .topnav {
-    width: 45%;
-    float: right;
-    list-style-type: none;
-    margin: 0;
-    overflow: hidden;
-    height: 100%;
-    padding: 0;
-    }
+.menu-spacer {
+  flex: 1 1 auto;
+}
+.nav-left a{
+  font-weight: bold;
+}
 
-    .topnav span{
-      display: block;
-    }
-    
-    .topnav li {
-      border-right: 1px solid;
-        margin-top: 0.7em;
-        float: left;
-        height:70%;
-      }
-    
-    .topnav li a {
-      display: block;
-      color: black;
-      text-align: center;
-      text-decoration: none;
-    }
-    
-    .topnav span{
-      font-size: 0.9em;
-    }
-    .topnav li a:hover{color:#078171;}
-   
-    button[type=submit] {
-        background-color:#078171;
-        color: white;
-        cursor: pointer;
-        width: 7em;
-        height: 2.5em;
-        font-size: 1em;
-        font-weight: bold;  
-        border-radius: 0.5em;   
-        border: none;
-      }
-      
-     button[type=submit]:hover {
-        background-color:#078171;
-      }
-  
-  
-  
-    
+.nav-top a{
+  padding: 0px;
+  border-right: 1px solid;
+  padding: 1em;
+}
+
+.nav-left span{
+  padding-left: 1em;
+}
+
+.nav-left :hover{
+  background: #3f51b5 !important;
+    color: #fff !important;
+}
+
+.nav-top :hover{
+   background: lightblue !important;
+    color:honeydew;
+}
+
+.nav-top span{
+  display: block;
+  margin-top: -0.5em;
+}
+
+.btn{
+  margin-top: -1.5em;
+  font-weight: bold;
+  margin-left: 1em;
+}
+
+#usr{
+  float: right;
+  width: 30%;
+  margin-top: 1.8em;
+}
