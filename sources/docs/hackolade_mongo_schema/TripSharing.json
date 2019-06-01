@@ -2,7 +2,7 @@
     "GUID": "0d745560-83c3-11e9-aba0-07d257d5c4d5",
     "modelName": "TripSharing",
     "code": "",
-    "lastModifTS": "2019-06-01T19:47:51.936Z",
+    "lastModifTS": "2019-06-01T20:09:05.194Z",
     "persistenceSchemaVersion": "3",
     "description": "",
     "comments": "",
@@ -34,7 +34,9 @@
                         "cd571e10-83a2-11e9-bae6-137e86c6b28c",
                         "94fc4760-83a3-11e9-bae6-137e86c6b28c",
                         "c7a25d60-83a5-11e9-bae6-137e86c6b28c",
-                        "527021c0-8419-11e9-80c6-f99e3f41590a"
+                        "527021c0-8419-11e9-80c6-f99e3f41590a",
+                        "0199d8f0-84a9-11e9-a1e3-e13135ab3ce2",
+                        "03d040f0-84a9-11e9-a1e3-e13135ab3ce2"
                     ],
                     "foreignCollection": "",
                     "foreignField": [],
@@ -3211,7 +3213,160 @@
                             "childRelationships": [],
                             "foreignCollection": "",
                             "foreignField": [],
-                            "properties": [],
+                            "properties": [
+                                {
+                                    "type": "objectId",
+                                    "format": "",
+                                    "primaryKey": false,
+                                    "relationshipType": "Foreign Key",
+                                    "parentRelationship": "03d040f0-84a9-11e9-a1e3-e13135ab3ce2",
+                                    "childRelationships": [],
+                                    "foreignCollection": "a6825630-801c-11e9-a1ed-87367d2594e8",
+                                    "foreignField": [
+                                        "a6825630-801c-11e9-a1ed-87367d2594e8",
+                                        "e13c0f00-801c-11e9-a1ed-87367d2594e8"
+                                    ],
+                                    "sample": "",
+                                    "GUID": "62805320-84a8-11e9-a1e3-e13135ab3ce2",
+                                    "name": "sender_id",
+                                    "code": "",
+                                    "description": "",
+                                    "comments": "",
+                                    "dependencies": [],
+                                    "required": false,
+                                    "id": "",
+                                    "hackoladeMeta": {},
+                                    "error": {
+                                        "name": false
+                                    }
+                                },
+                                {
+                                    "type": "objectId",
+                                    "format": "",
+                                    "primaryKey": false,
+                                    "relationshipType": "Foreign Key",
+                                    "parentRelationship": "faf6c800-84a8-11e9-a1e3-e13135ab3ce2",
+                                    "childRelationships": [],
+                                    "foreignCollection": "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2",
+                                    "foreignField": [
+                                        "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2",
+                                        "e4062190-84a8-11e9-a1e3-e13135ab3ce2"
+                                    ],
+                                    "sample": "",
+                                    "GUID": "7b786250-84a8-11e9-a1e3-e13135ab3ce2",
+                                    "name": "notification_type_id",
+                                    "code": "",
+                                    "description": "",
+                                    "comments": "",
+                                    "dependencies": [],
+                                    "required": false,
+                                    "id": "",
+                                    "hackoladeMeta": {},
+                                    "error": {
+                                        "name": false
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": "",
+                                    "maxLength": "",
+                                    "pattern": "",
+                                    "format": "",
+                                    "default": "",
+                                    "primaryKey": false,
+                                    "relationshipType": "",
+                                    "parentRelationship": "",
+                                    "childRelationships": [],
+                                    "foreignCollection": "",
+                                    "foreignField": [],
+                                    "enum": [],
+                                    "sample": "",
+                                    "GUID": "8fda2080-84a8-11e9-a1e3-e13135ab3ce2",
+                                    "name": "url",
+                                    "code": "",
+                                    "description": "",
+                                    "comments": "",
+                                    "dependencies": [],
+                                    "required": false,
+                                    "id": "",
+                                    "hackoladeMeta": {},
+                                    "error": {
+                                        "name": false
+                                    }
+                                },
+                                {
+                                    "type": "boolean",
+                                    "default": "",
+                                    "enum": [],
+                                    "primaryKey": false,
+                                    "relationshipType": "",
+                                    "parentRelationship": "",
+                                    "childRelationships": [],
+                                    "foreignCollection": "",
+                                    "foreignField": [],
+                                    "sample": "",
+                                    "GUID": "9fdca340-84a8-11e9-a1e3-e13135ab3ce2",
+                                    "name": "read",
+                                    "code": "",
+                                    "description": "",
+                                    "comments": "",
+                                    "dependencies": [],
+                                    "required": false,
+                                    "id": "",
+                                    "hackoladeMeta": {},
+                                    "error": {
+                                        "name": false
+                                    }
+                                },
+                                {
+                                    "type": "boolean",
+                                    "default": "",
+                                    "enum": [],
+                                    "primaryKey": false,
+                                    "relationshipType": "",
+                                    "parentRelationship": "",
+                                    "childRelationships": [],
+                                    "foreignCollection": "",
+                                    "foreignField": [],
+                                    "sample": "",
+                                    "GUID": "bd0b5740-84a8-11e9-a1e3-e13135ab3ce2",
+                                    "name": "delete",
+                                    "code": "",
+                                    "description": "",
+                                    "comments": "",
+                                    "dependencies": [],
+                                    "required": false,
+                                    "id": "",
+                                    "hackoladeMeta": {},
+                                    "error": {
+                                        "name": false
+                                    }
+                                },
+                                {
+                                    "type": "timestamp",
+                                    "primaryKey": false,
+                                    "relationshipType": "",
+                                    "parentRelationship": "",
+                                    "childRelationships": [],
+                                    "foreignCollection": "",
+                                    "foreignField": [],
+                                    "default": "",
+                                    "format": "",
+                                    "sample": "",
+                                    "GUID": "11f725e0-84a9-11e9-a1e3-e13135ab3ce2",
+                                    "name": "date",
+                                    "code": "",
+                                    "description": "",
+                                    "comments": "",
+                                    "dependencies": [],
+                                    "required": false,
+                                    "id": "",
+                                    "hackoladeMeta": {},
+                                    "error": {
+                                        "name": false
+                                    }
+                                }
+                            ],
                             "minProperties": "",
                             "maxProperties": "",
                             "additionalProperties": false,
@@ -3249,12 +3404,152 @@
                     "error": {
                         "name": false
                     }
+                },
+                {
+                    "type": "objectId",
+                    "format": "",
+                    "primaryKey": false,
+                    "relationshipType": "Foreign Key",
+                    "parentRelationship": "0199d8f0-84a9-11e9-a1e3-e13135ab3ce2",
+                    "childRelationships": [],
+                    "foreignCollection": "a6825630-801c-11e9-a1ed-87367d2594e8",
+                    "foreignField": [
+                        "a6825630-801c-11e9-a1ed-87367d2594e8",
+                        "e13c0f00-801c-11e9-a1ed-87367d2594e8"
+                    ],
+                    "sample": "",
+                    "GUID": "4daf7f70-84a8-11e9-a1e3-e13135ab3ce2",
+                    "name": "recipient",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {},
+                    "error": {
+                        "name": false
+                    }
                 }
             ],
             "definitions": {
                 "type": "definitions",
                 "properties": [],
                 "GUID": "345addb0-846e-11e9-9822-593c410c6fae"
+            },
+            "capped": false,
+            "validationLevel": "Off",
+            "validationAction": "Warn",
+            "size": "",
+            "max": "",
+            "storageEngineName": "WiredTiger",
+            "collectionUsers": [],
+            "indexes": [],
+            "collation": {},
+            "sharding": {
+                "key": "",
+                "hashed": false,
+                "unique": true,
+                "numInitialChunks": "",
+                "collation": "null",
+                "zone": "",
+                "comments": ""
+            },
+            "bucketId": "5040b100-801b-11e9-a1ed-87367d2594e8"
+        },
+        {
+            "GUID": "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2",
+            "collectionName": "notification_type",
+            "code": "",
+            "type": "object",
+            "description": "",
+            "comments": "",
+            "$schema": "",
+            "additionalProperties": false,
+            "properties": [
+                {
+                    "type": "objectId",
+                    "format": "",
+                    "primaryKey": false,
+                    "relationshipType": "",
+                    "parentRelationship": "",
+                    "childRelationships": [
+                        "faf6c800-84a8-11e9-a1e3-e13135ab3ce2"
+                    ],
+                    "foreignCollection": "",
+                    "foreignField": [],
+                    "sample": "",
+                    "GUID": "e4062190-84a8-11e9-a1e3-e13135ab3ce2",
+                    "name": "_id",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {},
+                    "error": {
+                        "name": false
+                    }
+                },
+                {
+                    "type": "string",
+                    "minLength": "",
+                    "maxLength": "",
+                    "pattern": "",
+                    "format": "",
+                    "default": "",
+                    "primaryKey": false,
+                    "relationshipType": "",
+                    "parentRelationship": "",
+                    "childRelationships": [],
+                    "foreignCollection": "",
+                    "foreignField": [],
+                    "enum": [],
+                    "sample": "",
+                    "GUID": "e8c1add0-84a8-11e9-a1e3-e13135ab3ce2",
+                    "name": "name",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {}
+                },
+                {
+                    "type": "string",
+                    "minLength": "",
+                    "maxLength": "",
+                    "pattern": "",
+                    "format": "",
+                    "default": "",
+                    "primaryKey": false,
+                    "relationshipType": "",
+                    "parentRelationship": "",
+                    "childRelationships": [],
+                    "foreignCollection": "",
+                    "foreignField": [],
+                    "enum": [],
+                    "sample": "",
+                    "GUID": "f3d81e70-84a8-11e9-a1e3-e13135ab3ce2",
+                    "name": "content",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {},
+                    "error": {
+                        "name": false
+                    }
+                }
+            ],
+            "definitions": {
+                "type": "definitions",
+                "properties": [],
+                "GUID": "dae58d80-84a8-11e9-a1e3-e13135ab3ce2"
             },
             "capped": false,
             "validationLevel": "Off",
@@ -3298,7 +3593,8 @@
                 "f9b7e570-83a2-11e9-bae6-137e86c6b28c",
                 "0a65bfc0-8419-11e9-80c6-f99e3f41590a",
                 "cf520aa0-8419-11e9-80c6-f99e3f41590a",
-                "34335880-846e-11e9-9822-593c410c6fae"
+                "34335880-846e-11e9-9822-593c410c6fae",
+                "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2"
             ],
             "backgroundColor": {
                 "r": 254,
@@ -3750,6 +4046,67 @@
                 "a5e09a60-846e-11e9-9822-593c410c6fae"
             ],
             "childCardinality": "1"
+        },
+        {
+            "GUID": "faf6c800-84a8-11e9-a1e3-e13135ab3ce2",
+            "name": "fk notification_type._id to notification.notifications.[0].notification_type_id",
+            "description": "",
+            "comments": "",
+            "relationshipType": "Foreign Key",
+            "parentCollection": "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2",
+            "parentField": [
+                "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2",
+                "e4062190-84a8-11e9-a1e3-e13135ab3ce2"
+            ],
+            "parentCardinality": "1",
+            "childCollection": "34335880-846e-11e9-9822-593c410c6fae",
+            "childField": [
+                "34335880-846e-11e9-9822-593c410c6fae",
+                "48c4d940-846e-11e9-9822-593c410c6fae",
+                "491e6af0-846e-11e9-9822-593c410c6fae",
+                "7b786250-84a8-11e9-a1e3-e13135ab3ce2"
+            ],
+            "childCardinality": "1"
+        },
+        {
+            "GUID": "0199d8f0-84a9-11e9-a1e3-e13135ab3ce2",
+            "name": "fk user._id to notification.recipient",
+            "description": "",
+            "comments": "",
+            "relationshipType": "Foreign Key",
+            "parentCollection": "a6825630-801c-11e9-a1ed-87367d2594e8",
+            "parentField": [
+                "a6825630-801c-11e9-a1ed-87367d2594e8",
+                "e13c0f00-801c-11e9-a1ed-87367d2594e8"
+            ],
+            "parentCardinality": "1",
+            "childCollection": "34335880-846e-11e9-9822-593c410c6fae",
+            "childField": [
+                "34335880-846e-11e9-9822-593c410c6fae",
+                "4daf7f70-84a8-11e9-a1e3-e13135ab3ce2"
+            ],
+            "childCardinality": "1"
+        },
+        {
+            "GUID": "03d040f0-84a9-11e9-a1e3-e13135ab3ce2",
+            "name": "fk user._id to notification.notifications.[0].sender_id",
+            "description": "",
+            "comments": "",
+            "relationshipType": "Foreign Key",
+            "parentCollection": "a6825630-801c-11e9-a1ed-87367d2594e8",
+            "parentField": [
+                "a6825630-801c-11e9-a1ed-87367d2594e8",
+                "e13c0f00-801c-11e9-a1ed-87367d2594e8"
+            ],
+            "parentCardinality": "1",
+            "childCollection": "34335880-846e-11e9-9822-593c410c6fae",
+            "childField": [
+                "34335880-846e-11e9-9822-593c410c6fae",
+                "48c4d940-846e-11e9-9822-593c410c6fae",
+                "491e6af0-846e-11e9-9822-593c410c6fae",
+                "62805320-84a8-11e9-a1e3-e13135ab3ce2"
+            ],
+            "childCardinality": "1"
         }
     ],
     "users": [],
@@ -3890,7 +4247,21 @@
         "6a9a5900-846e-11e9-9822-593c410c6fae": "active",
         "8b519780-846e-11e9-9822-593c410c6fae": "contribution_point",
         "a5e09a60-846e-11e9-9822-593c410c6fae": "avatar",
-        "b1686a70-846e-11e9-9822-593c410c6fae": "fk photo._id to user.avatar"
+        "b1686a70-846e-11e9-9822-593c410c6fae": "fk photo._id to user.avatar",
+        "4daf7f70-84a8-11e9-a1e3-e13135ab3ce2": "recipient",
+        "62805320-84a8-11e9-a1e3-e13135ab3ce2": "sender_id",
+        "7b786250-84a8-11e9-a1e3-e13135ab3ce2": "notification_type_id",
+        "8fda2080-84a8-11e9-a1e3-e13135ab3ce2": "url",
+        "9fdca340-84a8-11e9-a1e3-e13135ab3ce2": "read",
+        "bd0b5740-84a8-11e9-a1e3-e13135ab3ce2": "delete",
+        "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2": "notification_type",
+        "e4062190-84a8-11e9-a1e3-e13135ab3ce2": "_id",
+        "e8c1add0-84a8-11e9-a1e3-e13135ab3ce2": "name",
+        "f3d81e70-84a8-11e9-a1e3-e13135ab3ce2": "content",
+        "faf6c800-84a8-11e9-a1e3-e13135ab3ce2": "fk notification_type._id to notification.notifications.[0].notification_type_id",
+        "0199d8f0-84a9-11e9-a1e3-e13135ab3ce2": "fk user._id to notification.recipient",
+        "03d040f0-84a9-11e9-a1e3-e13135ab3ce2": "fk user._id to notification.notifications.[0].sender_id",
+        "11f725e0-84a9-11e9-a1e3-e13135ab3ce2": "date"
     },
     "definitions": {
         "type": "definitions",
@@ -4016,8 +4387,16 @@
                     },
                     {
                         "GUID": "34335880-846e-11e9-9822-593c410c6fae",
-                        "x": 1221.0167597765362,
-                        "y": 1213.5025124059798,
+                        "x": 1133.0167597765362,
+                        "y": 1202.5025124059798,
+                        "width": 250,
+                        "height": 192,
+                        "color": {}
+                    },
+                    {
+                        "GUID": "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2",
+                        "x": 1177.1354702257229,
+                        "y": 1493.5239178791523,
                         "width": 240,
                         "height": 100,
                         "color": {}
