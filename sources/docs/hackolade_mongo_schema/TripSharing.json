@@ -2,7 +2,7 @@
     "GUID": "0d745560-83c3-11e9-aba0-07d257d5c4d5",
     "modelName": "TripSharing",
     "code": "",
-    "lastModifTS": "2019-06-01T20:09:05.194Z",
+    "lastModifTS": "2019-06-02T04:55:25.268Z",
     "persistenceSchemaVersion": "3",
     "description": "",
     "comments": "",
@@ -36,7 +36,8 @@
                         "c7a25d60-83a5-11e9-bae6-137e86c6b28c",
                         "527021c0-8419-11e9-80c6-f99e3f41590a",
                         "0199d8f0-84a9-11e9-a1e3-e13135ab3ce2",
-                        "03d040f0-84a9-11e9-a1e3-e13135ab3ce2"
+                        "03d040f0-84a9-11e9-a1e3-e13135ab3ce2",
+                        "89cbd5e0-84f2-11e9-ab98-8f9701449c5f"
                     ],
                     "foreignCollection": "",
                     "foreignField": [],
@@ -517,7 +518,8 @@
                     "childRelationships": [
                         "78c33550-82a3-11e9-ad40-c14dcd729094",
                         "5fab0400-83a0-11e9-bae6-137e86c6b28c",
-                        "54ea7090-8419-11e9-80c6-f99e3f41590a"
+                        "54ea7090-8419-11e9-80c6-f99e3f41590a",
+                        "8fcd76b0-84f2-11e9-ab98-8f9701449c5f"
                     ],
                     "foreignCollection": "",
                     "foreignField": [],
@@ -3570,6 +3572,193 @@
                 "comments": ""
             },
             "bucketId": "5040b100-801b-11e9-a1ed-87367d2594e8"
+        },
+        {
+            "GUID": "534c6b60-84f2-11e9-ab98-8f9701449c5f",
+            "collectionName": "bookmark",
+            "code": "",
+            "type": "object",
+            "description": "",
+            "comments": "",
+            "$schema": "",
+            "additionalProperties": false,
+            "properties": [
+                {
+                    "type": "objectId",
+                    "format": "",
+                    "primaryKey": false,
+                    "relationshipType": "",
+                    "parentRelationship": "",
+                    "childRelationships": [],
+                    "foreignCollection": "",
+                    "foreignField": [],
+                    "sample": "",
+                    "GUID": "5ce45250-84f2-11e9-ab98-8f9701449c5f",
+                    "name": "_id",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {},
+                    "error": {
+                        "name": false
+                    }
+                },
+                {
+                    "type": "objectId",
+                    "format": "",
+                    "primaryKey": false,
+                    "relationshipType": "Foreign Key",
+                    "parentRelationship": "89cbd5e0-84f2-11e9-ab98-8f9701449c5f",
+                    "childRelationships": [],
+                    "foreignCollection": "a6825630-801c-11e9-a1ed-87367d2594e8",
+                    "foreignField": [
+                        "a6825630-801c-11e9-a1ed-87367d2594e8",
+                        "e13c0f00-801c-11e9-a1ed-87367d2594e8"
+                    ],
+                    "sample": "",
+                    "GUID": "66a1e9b0-84f2-11e9-ab98-8f9701449c5f",
+                    "name": "user_id",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {},
+                    "error": {
+                        "name": false
+                    }
+                },
+                {
+                    "type": "array",
+                    "properties": [
+                        {
+                            "type": "document",
+                            "primaryKey": false,
+                            "relationshipType": "",
+                            "parentRelationship": "",
+                            "childRelationships": [],
+                            "foreignCollection": "",
+                            "foreignField": [],
+                            "properties": [
+                                {
+                                    "type": "objectId",
+                                    "format": "",
+                                    "primaryKey": false,
+                                    "relationshipType": "",
+                                    "parentRelationship": "",
+                                    "childRelationships": [],
+                                    "foreignCollection": "",
+                                    "foreignField": [],
+                                    "sample": "",
+                                    "GUID": "7e275610-84f2-11e9-ab98-8f9701449c5f",
+                                    "name": "post_id",
+                                    "code": "",
+                                    "description": "",
+                                    "comments": "",
+                                    "dependencies": [],
+                                    "required": false,
+                                    "id": "",
+                                    "hackoladeMeta": {},
+                                    "error": {
+                                        "name": false
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": "",
+                                    "maxLength": "",
+                                    "pattern": "",
+                                    "format": "",
+                                    "default": "",
+                                    "primaryKey": false,
+                                    "relationshipType": "",
+                                    "parentRelationship": "",
+                                    "childRelationships": [],
+                                    "foreignCollection": "",
+                                    "foreignField": [],
+                                    "enum": [],
+                                    "sample": "",
+                                    "GUID": "84cc3bc0-84f2-11e9-ab98-8f9701449c5f",
+                                    "name": "note",
+                                    "code": "",
+                                    "description": "",
+                                    "comments": "",
+                                    "dependencies": [],
+                                    "required": false,
+                                    "id": "",
+                                    "hackoladeMeta": {},
+                                    "error": {
+                                        "name": false
+                                    }
+                                }
+                            ],
+                            "minProperties": "",
+                            "maxProperties": "",
+                            "additionalProperties": false,
+                            "enum": [],
+                            "GUID": "6f983970-84f2-11e9-ab98-8f9701449c5f",
+                            "description": "",
+                            "comments": "",
+                            "required": false,
+                            "id": "",
+                            "hackoladeMeta": {},
+                            "arrayItem": true,
+                            "arrayParentType": "array"
+                        }
+                    ],
+                    "primaryKey": false,
+                    "relationshipType": "",
+                    "parentRelationship": "",
+                    "childRelationships": [],
+                    "foreignCollection": "",
+                    "foreignField": [],
+                    "additionalItems": true,
+                    "minItems": "",
+                    "maxItems": "",
+                    "uniqueItems": false,
+                    "enum": [],
+                    "GUID": "6f4fbec0-84f2-11e9-ab98-8f9701449c5f",
+                    "name": "bookmarks",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {},
+                    "error": {
+                        "name": false
+                    }
+                }
+            ],
+            "definitions": {
+                "type": "definitions",
+                "properties": [],
+                "GUID": "53639ce0-84f2-11e9-ab98-8f9701449c5f"
+            },
+            "capped": false,
+            "validationLevel": "Off",
+            "validationAction": "Warn",
+            "size": "",
+            "max": "",
+            "storageEngineName": "WiredTiger",
+            "collectionUsers": [],
+            "indexes": [],
+            "collation": {},
+            "sharding": {
+                "key": "",
+                "hashed": false,
+                "unique": true,
+                "numInitialChunks": "",
+                "collation": "null",
+                "zone": "",
+                "comments": ""
+            },
+            "bucketId": "5040b100-801b-11e9-a1ed-87367d2594e8"
         }
     ],
     "buckets": [
@@ -3594,7 +3783,8 @@
                 "0a65bfc0-8419-11e9-80c6-f99e3f41590a",
                 "cf520aa0-8419-11e9-80c6-f99e3f41590a",
                 "34335880-846e-11e9-9822-593c410c6fae",
-                "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2"
+                "dad2c8d0-84a8-11e9-a1e3-e13135ab3ce2",
+                "534c6b60-84f2-11e9-ab98-8f9701449c5f"
             ],
             "backgroundColor": {
                 "r": 254,
@@ -4107,6 +4297,46 @@
                 "62805320-84a8-11e9-a1e3-e13135ab3ce2"
             ],
             "childCardinality": "1"
+        },
+        {
+            "GUID": "89cbd5e0-84f2-11e9-ab98-8f9701449c5f",
+            "name": "fk user._id to bookmark.user_id",
+            "description": "",
+            "comments": "",
+            "relationshipType": "Foreign Key",
+            "parentCollection": "a6825630-801c-11e9-a1ed-87367d2594e8",
+            "parentField": [
+                "a6825630-801c-11e9-a1ed-87367d2594e8",
+                "e13c0f00-801c-11e9-a1ed-87367d2594e8"
+            ],
+            "parentCardinality": "1",
+            "childCollection": "534c6b60-84f2-11e9-ab98-8f9701449c5f",
+            "childField": [
+                "534c6b60-84f2-11e9-ab98-8f9701449c5f",
+                "66a1e9b0-84f2-11e9-ab98-8f9701449c5f"
+            ],
+            "childCardinality": "1"
+        },
+        {
+            "GUID": "8fcd76b0-84f2-11e9-ab98-8f9701449c5f",
+            "name": "fk post._id to bookmark.bookmarks.[0].post_id",
+            "description": "",
+            "comments": "",
+            "relationshipType": "Foreign Key",
+            "parentCollection": "44c6f870-8020-11e9-a1ed-87367d2594e8",
+            "parentField": [
+                "44c6f870-8020-11e9-a1ed-87367d2594e8",
+                "51333510-8020-11e9-a1ed-87367d2594e8"
+            ],
+            "parentCardinality": "1",
+            "childCollection": "534c6b60-84f2-11e9-ab98-8f9701449c5f",
+            "childField": [
+                "534c6b60-84f2-11e9-ab98-8f9701449c5f",
+                "6f4fbec0-84f2-11e9-ab98-8f9701449c5f",
+                "6f983970-84f2-11e9-ab98-8f9701449c5f",
+                "7e275610-84f2-11e9-ab98-8f9701449c5f"
+            ],
+            "childCardinality": "1"
         }
     ],
     "users": [],
@@ -4261,7 +4491,15 @@
         "faf6c800-84a8-11e9-a1e3-e13135ab3ce2": "fk notification_type._id to notification.notifications.[0].notification_type_id",
         "0199d8f0-84a9-11e9-a1e3-e13135ab3ce2": "fk user._id to notification.recipient",
         "03d040f0-84a9-11e9-a1e3-e13135ab3ce2": "fk user._id to notification.notifications.[0].sender_id",
-        "11f725e0-84a9-11e9-a1e3-e13135ab3ce2": "date"
+        "11f725e0-84a9-11e9-a1e3-e13135ab3ce2": "date",
+        "534c6b60-84f2-11e9-ab98-8f9701449c5f": "bookmark",
+        "5ce45250-84f2-11e9-ab98-8f9701449c5f": "_id",
+        "66a1e9b0-84f2-11e9-ab98-8f9701449c5f": "user_id",
+        "6f4fbec0-84f2-11e9-ab98-8f9701449c5f": "bookmarks",
+        "7e275610-84f2-11e9-ab98-8f9701449c5f": "post_id",
+        "84cc3bc0-84f2-11e9-ab98-8f9701449c5f": "note",
+        "89cbd5e0-84f2-11e9-ab98-8f9701449c5f": "fk user._id to bookmark.user_id",
+        "8fcd76b0-84f2-11e9-ab98-8f9701449c5f": "fk post._id to bookmark.bookmarks.[0].post_id"
     },
     "definitions": {
         "type": "definitions",
@@ -4399,6 +4637,14 @@
                         "y": 1493.5239178791523,
                         "width": 240,
                         "height": 100,
+                        "color": {}
+                    },
+                    {
+                        "GUID": "534c6b60-84f2-11e9-ab98-8f9701449c5f",
+                        "x": 1233.5184919322119,
+                        "y": 1699.6825317561872,
+                        "width": 254,
+                        "height": 147,
                         "color": {}
                     }
                 ],
