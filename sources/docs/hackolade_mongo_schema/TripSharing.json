@@ -2,7 +2,7 @@
     "GUID": "0d745560-83c3-11e9-aba0-07d257d5c4d5",
     "modelName": "TripSharing",
     "code": "",
-    "lastModifTS": "2019-06-02T04:55:25.268Z",
+    "lastModifTS": "2019-06-02T06:04:45.822Z",
     "persistenceSchemaVersion": "3",
     "description": "",
     "comments": "",
@@ -518,8 +518,7 @@
                     "childRelationships": [
                         "78c33550-82a3-11e9-ad40-c14dcd729094",
                         "5fab0400-83a0-11e9-bae6-137e86c6b28c",
-                        "54ea7090-8419-11e9-80c6-f99e3f41590a",
-                        "8fcd76b0-84f2-11e9-ab98-8f9701449c5f"
+                        "54ea7090-8419-11e9-80c6-f99e3f41590a"
                     ],
                     "foreignCollection": "",
                     "foreignField": [],
@@ -3645,27 +3644,29 @@
                             "foreignField": [],
                             "properties": [
                                 {
-                                    "type": "objectId",
+                                    "type": "string",
+                                    "minLength": "",
+                                    "maxLength": "",
+                                    "pattern": "",
                                     "format": "",
+                                    "default": "",
                                     "primaryKey": false,
                                     "relationshipType": "",
                                     "parentRelationship": "",
                                     "childRelationships": [],
                                     "foreignCollection": "",
                                     "foreignField": [],
+                                    "enum": [],
                                     "sample": "",
                                     "GUID": "7e275610-84f2-11e9-ab98-8f9701449c5f",
-                                    "name": "post_id",
+                                    "name": "url",
                                     "code": "",
                                     "description": "",
                                     "comments": "",
                                     "dependencies": [],
                                     "required": false,
                                     "id": "",
-                                    "hackoladeMeta": {},
-                                    "error": {
-                                        "name": false
-                                    }
+                                    "hackoladeMeta": {}
                                 },
                                 {
                                     "type": "string",
@@ -4316,27 +4317,6 @@
                 "66a1e9b0-84f2-11e9-ab98-8f9701449c5f"
             ],
             "childCardinality": "1"
-        },
-        {
-            "GUID": "8fcd76b0-84f2-11e9-ab98-8f9701449c5f",
-            "name": "fk post._id to bookmark.bookmarks.[0].post_id",
-            "description": "",
-            "comments": "",
-            "relationshipType": "Foreign Key",
-            "parentCollection": "44c6f870-8020-11e9-a1ed-87367d2594e8",
-            "parentField": [
-                "44c6f870-8020-11e9-a1ed-87367d2594e8",
-                "51333510-8020-11e9-a1ed-87367d2594e8"
-            ],
-            "parentCardinality": "1",
-            "childCollection": "534c6b60-84f2-11e9-ab98-8f9701449c5f",
-            "childField": [
-                "534c6b60-84f2-11e9-ab98-8f9701449c5f",
-                "6f4fbec0-84f2-11e9-ab98-8f9701449c5f",
-                "6f983970-84f2-11e9-ab98-8f9701449c5f",
-                "7e275610-84f2-11e9-ab98-8f9701449c5f"
-            ],
-            "childCardinality": "1"
         }
     ],
     "users": [],
@@ -4496,10 +4476,9 @@
         "5ce45250-84f2-11e9-ab98-8f9701449c5f": "_id",
         "66a1e9b0-84f2-11e9-ab98-8f9701449c5f": "user_id",
         "6f4fbec0-84f2-11e9-ab98-8f9701449c5f": "bookmarks",
-        "7e275610-84f2-11e9-ab98-8f9701449c5f": "post_id",
+        "7e275610-84f2-11e9-ab98-8f9701449c5f": "url",
         "84cc3bc0-84f2-11e9-ab98-8f9701449c5f": "note",
-        "89cbd5e0-84f2-11e9-ab98-8f9701449c5f": "fk user._id to bookmark.user_id",
-        "8fcd76b0-84f2-11e9-ab98-8f9701449c5f": "fk post._id to bookmark.bookmarks.[0].post_id"
+        "89cbd5e0-84f2-11e9-ab98-8f9701449c5f": "fk user._id to bookmark.user_id"
     },
     "definitions": {
         "type": "definitions",
