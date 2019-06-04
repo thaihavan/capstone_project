@@ -10,11 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { GoogleMapComponent } from './shared/components/google-map/google-map.component';
 import { AgmCoreModule } from '@agm/core';
-import {HeaderComponent} from 'src/app/core/components/header/header.component'
-import {MatDialogModule} from "@angular/material";
-import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule } from "@angular/material";
-import { FlexLayoutModule } from "@angular/flex-layout";
-
+import {HeaderComponent} from 'src/app/core/components/header/header.component';
+import { MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { GoogleMapSearchComponent } from './shared/components/google-map-search/google-map-search.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +22,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     LoginPageComponent,
     GoogleMapComponent,
     HeaderComponent,
-    
+    GoogleMapSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +37,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     SharedModule,
     MatDialogModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDIPTZ7dpn5_hralWGDP4glqkqAaac6qeA'
+      apiKey: 'AIzaSyDIPTZ7dpn5_hralWGDP4glqkqAaac6qeA',
+      libraries: ['places']
     })
   ],
   providers: [],

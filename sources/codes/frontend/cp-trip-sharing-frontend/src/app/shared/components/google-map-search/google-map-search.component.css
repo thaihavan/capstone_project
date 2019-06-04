@@ -1,0 +1,28 @@
+.form-group{
+    display: flex;
+}
+.form-group .form-control {
+    padding-right: 2.375rem;
+    border-radius: 30px !important;
+}
+.form-control{
+    height: 40px;
+}
+
+.form-group .form-control-icon {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 40px;
+    text-align: center;
+    pointer-events: none;
+    color: #e74c3c;
+    float: right;
+    right: 45px;
+}
+.form-control:focus{
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 0 0.2rem #ffcfcf;
+}

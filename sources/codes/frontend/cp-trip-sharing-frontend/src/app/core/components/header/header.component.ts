@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogConfig} from "@angular/material";
-import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component'
+import {MatDialog, MatDialogConfig} from '@angular/material';
+import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDialogLoginForm(){
+  openDialogLoginForm() {
     const dialogRef = this.dialog.open(LoginPageComponent, {});
 
     dialogRef.afterClosed().subscribe(result => {
