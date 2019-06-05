@@ -14,6 +14,7 @@ import {HeaderComponent} from 'src/app/core/components/header/header.component'
 import {MatDialogModule} from "@angular/material";
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule } from "@angular/material";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     LoginPageComponent,
     GoogleMapComponent,
     HeaderComponent,
+    RegisterPageComponent,
     
   ],
   imports: [
