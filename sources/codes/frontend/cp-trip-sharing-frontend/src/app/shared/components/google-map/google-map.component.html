@@ -1,21 +1,27 @@
+<div style="margin-bottom: 100px">
 <p>
   google-map works!
 </p>
-<div>
-  <button mat-button>click me!</button>
-  <button mat-raised-button>Hello me</button>
-</div>
-<div>
-  <button color="primary" mat-button>Primary</button>
-  <button color="accent" mat-button>Accent</button>
-  <button color="warn" mat-button>Warn</button>
-  <button color="primary" disableRipple mat-raised-button>Primary</button>
-  <button color="accent" mat-raised-button>Accent</button>
-  <button color="warn" mat-raised-button>Warn</button>
-</div>
 <h1>{{ title }}</h1>
 <div>
-    <agm-map [latitude]="lat" [longitude]="lng">
-        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-      </agm-map>
+    <agm-map [latitude]="lat" [longitude]="lng" [fitBounds]="locationMarker.length > 1">
+          <agm-marker [agmFitBounds]="true" *ngFor="let marker of locationMarker" [latitude]="marker.lattitude" [longitude]="marker.longtitude"></agm-marker>
+    </agm-map>
+</div>
+<h3>Position</h3>
+<div class="flext">
+  <div class="ml-5" *ngFor="let location of locationMarker">
+      <p>Localily: {{location.locality}}</p>
+      <p>Latitude: {{location.lattitude}}</p>
+      <p>Longitude: {{location.longtitude}}</p>
+  </div>
+</div>
+<div class="input-container mt-5">
+    <app-google-map-search width="500" height="50" (onSelect)="setAddress($event)"></app-google-map-search>
+    <ul style="list-style-type: none;">
+      <li *ngFor="let key of addrKeys">
+        <span style="font-weight: bold">{{key}}</span>: <span>{{addr[key]}}</span>
+      </li>
+    </ul>
+</div>
 </div>

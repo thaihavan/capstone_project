@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IdentityProvider.Helpers;
 using IdentityProvider.Services;
+using IdentityProvider.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,13 +57,13 @@ namespace IdentityProvider
                     ValidateIssuer = true,
                     ValidIssuer = "auth.tripsharing.com",
                     ValidateAudience = true,
-                    ValidAudiences = new List<string> { "admin", "user"},
+                    ValidAudiences = new List<string> { "admin", "member"},
                     RequireExpirationTime = true
                 };
             });
 
             // Configure DI for application services
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
