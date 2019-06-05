@@ -2,7 +2,7 @@
   .loginForm {
     position: relative;
     overflow: hidden;
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     padding-top: 0.5em;
   } 
@@ -68,17 +68,58 @@
   /* style the submit button */
   input[type=submit] {
     margin-bottom: 1em;
-    background-color: #4CAF50;
+    background-color: #3f51b5;
     color: white;
     cursor: pointer;
     height: 2.5em;
   }
   
   input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #3f51b5;
   }
   
-
+  input[type=checkbox]{
+    padding: 0;
+    margin: 0;
+    float: left;
+    width: 2.5em;
+    margin-top: 0.28em;
+  }
   
+  .checkbox {
+    padding: 0;
+  }
+  .remember-forget {
+     margin: 1em 0 1em 0;
+  }
    
+  .remember-forget a{
+    float: right;
+  }
  
+  @media screen and (max-width: 414px) {
+    .loginForm{
+      width: 100%;
+      padding: 0;
+    }
+
+    input[type=checkbox]{
+      padding: 0;
+      margin: 0;
+      float: left;
+      width: 2.5em;
+      margin-top: 0.28em;
+    }
+    
+    .checkbox {
+      padding: 0;
+    }
+    .remember-forget {
+       margin: 1em 0 1em 0;
+       font-size: 1em !important;
+    }
+     
+    .remember-forget a{
+      float: left;
+    }
+  }

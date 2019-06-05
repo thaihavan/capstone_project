@@ -1,24 +1,32 @@
 <div class="loginForm">
   <span class="title-login">Đăng nhập</span>
-    <a href="#" class="fb btn">
-        <i class="fa fa-facebook-square"></i> Tiếp tục với Facebook
-    </a>
-    <a href="#" class="google btn">
-        <i class="fa fa-google-plus-square"></i> Tiếp tục bằng Google+
-    </a>
-    <div class="line-email"></div>
-    <div class="LoginbyEmailForm">
-      <input type="text" name="username" placeholder="Địa chỉ Email " required>
-      <input type="password" name="password" placeholder="Tạo mật khẩu " required><br><br>
-      <div class="row">
-        <div class="col-xs-6 col-md-6">
-            <input type="submit" value="Đăng Nhập">
-        </div>
-        <div class="col-xs-6 col-md-6">
-            <input type="submit" value="Đăng Ký">
-        </div>
-       
+  <a href="#" class="fb btn">
+    <i class="fa fa-facebook-square"></i> Tiếp tục với Facebook
+  </a>
+  <a href="#" class="google btn">
+    <i class="fa fa-google-plus-square"></i> Tiếp tục bằng Google+
+  </a>
+  <div class="line-email"></div>
+  <div class="LoginbyEmailForm">
+    <input type="text" name="username" placeholder="Địa chỉ Email " required>
+    <input type="password" name="password" placeholder="Tạo mật khẩu " required>
+    <div class="row remember-forget">
+      <div class="checkbox col-md-6 col-sm-6">
+        <input type="checkbox" value=""/><span>Ghi nhớ đăng nhập</span>
       </div>
-   
+      <div class="forget col-md-6 col-sm-6">
+        <a href="#">Quên mật khẩu</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-md-6">
+        <input type="submit" value="Đăng Nhập">
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <input routerLink="/register" type="submit"  (click)="callRegisterPage()"  value="Đăng Ký">
+      </div>
+
+    </div>
+
   </div>
 </div>

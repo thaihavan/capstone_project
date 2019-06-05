@@ -8,10 +8,10 @@
       <span class="menu-spacer"></span>
       <div fxShow="true" fxHide.lt-md class="nav-top">
         <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-        <a href="#" mat-button><i class="fa fa-plus-circle"></i><span>Đăng</span></a>
-        <a href="#" mat-button><i class="fa fa-suitcase"></i><span>Chuyến đi</span></a>
-        <a href="#" mat-button><i class="fa fa-envelope"></i><span>Hộp thư đến</span></a>
-        <a href="#" mat-button><i class="fa fa-user-circle"></i><span>Hồ sơ</span></a>
+        <a href="#" mat-button><i class="fa fa-plus-circle fa-2x"></i><span>Đăng</span></a>
+        <a href="#" mat-button><i class="fa fa-suitcase fa-2x"></i><span>Chuyến đi</span></a>
+        <a href="#" mat-button><i class="fa fa-envelope fa-2x"></i><span>Hộp thư đến</span></a>
+        <a href="#" mat-button><i class="fa fa-user-circle fa-2x"></i><span>Hồ sơ</span></a>
         <button type="button" class="btn btn-success" (click)="openDialogLoginForm()">Đăng nhập</button>
         <input mat-button type="text" class="form-control" id="usr" placeholder="Search">
       </div>
@@ -22,14 +22,17 @@
     <mat-sidenav #sidenav>
       <mat-nav-list>
         <div class="nav-left">
-          <a href="#" mat-list-item><i class="fa fa-plus-circle"></i><span>Đăng</span></a>
-          <a href="#" mat-list-item><i class="fa fa-suitcase"></i><span>Chuyến đi</span></a>
-          <a href="#" mat-list-item><i class="fa fa-envelope"></i><span>Hộp thư đến</span></a>
-          <a href="#" mat-list-item><i class="fa fa-user-circle"></i><span>Hồ sơ</span></a>
-          <a mat-list-item (click)="openDialogLoginForm()"><i class="fa fa-sign-in"></i><span>Đăng nhập</span></a>
-          <a href="#" mat-list-item><i class="fa fa-search"></i><span>Tìm kiếm</span></a>
+          <a href="#" mat-list-item><i class="fa fa-plus-circle fa-2x"></i><span>Đăng</span></a>
+          <a href="#" mat-list-item><i class="fa fa-suitcase fa-2x"></i><span>Chuyến đi</span></a>
+          <a href="#" mat-list-item><i class="fa fa-envelope fa-2x"></i><span>Hộp thư đến</span></a>
+          <a href="#" mat-list-item><i class="fa fa-user-circle fa-2x"></i><span>Hồ sơ</span></a>
+          <a mat-list-item (click)="openDialogLoginForm()"><i class="fa fa-sign-in fa-2x"></i><span>Đăng nhập</span></a>
+          <a href="#" mat-list-item><i class="fa fa-search fa-2x"></i><span>Tìm kiếm</span></a>
         </div>
       </mat-nav-list>
     </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+      <app-register-page></app-register-page>
+    </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

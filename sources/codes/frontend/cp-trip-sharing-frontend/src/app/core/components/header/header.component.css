@@ -1,13 +1,11 @@
 .menu-spacer {
   flex: 1 1 auto;
 }
-.nav-left a{
-  font-weight: bold;
-}
 
 .nav-top a{
-  padding: 0px;
-  border-right: 1px solid;
+  font-weight: normal;
+  text-decoration: none;
+  border-right: 1px solid white;
   padding: 1em;
 }
 
@@ -16,13 +14,13 @@
 }
 
 .nav-left :hover{
-  background: #3f51b5 !important;
-    color: #fff !important;
+  background: #3f51b5;
+    color: #fff;
 }
 
-.nav-top :hover{
-   background: lightblue !important;
-    color:honeydew;
+.fa :hover{
+    background-color: none !important;
+    color:red !important;
 }
 
 .nav-top span{
@@ -32,7 +30,7 @@
 
 .btn{
   margin-top: -1.5em;
-  font-weight: bold;
+  font-weight: normal;
   margin-left: 1em;
 }
 
@@ -41,3 +39,9 @@
   width: 30%;
   margin-top: 1.8em;
 }
+
+.hr-nav{
+  height: 90%;
+  border: 1px solid white;
+}
+
