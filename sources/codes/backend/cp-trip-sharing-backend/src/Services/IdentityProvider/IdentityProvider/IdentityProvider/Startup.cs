@@ -56,8 +56,7 @@ namespace IdentityProvider
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = true,
                     ValidIssuer = "auth.tripsharing.com",
-                    ValidateAudience = true,
-                    ValidAudiences = new List<string> { "admin", "member"},
+                    ValidateAudience = false,
                     RequireExpirationTime = true
                 };
             });

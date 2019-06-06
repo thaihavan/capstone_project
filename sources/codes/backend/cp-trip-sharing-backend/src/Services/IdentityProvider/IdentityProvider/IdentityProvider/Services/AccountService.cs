@@ -23,20 +23,24 @@ namespace IdentityProvider.Services
             _settings = settings;
         }
 
-        public string Authenticate(string email, string password)
+        public Account Authenticate(string email, string password)
         {
-            var token = "";
             var account = _accountRepository.GetByEmail(email);
             if (account != null)
             {
                 var isValid = Hash.HashPassword(password, account.PasswordSalt) == account.Password;
                 if (isValid)
                 {
-                    token = JwtToken.Generate(_settings.Value.Secret, account);
+                    account.Token = JwtToken.Generate(_settings.Value.Secret, account);
                 }
+                // Set important fields to null
+                account.Id = null;
+                account.Password = null;
+                account.PasswordSalt = null;
+                account.UserId = null;
             }
 
-            return token;
+            return account;
         }
 
         public IEnumerable<Account> GetAll()
