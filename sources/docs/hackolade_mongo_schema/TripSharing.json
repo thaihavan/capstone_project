@@ -2,7 +2,7 @@
     "GUID": "0d745560-83c3-11e9-aba0-07d257d5c4d5",
     "modelName": "TripSharing",
     "code": "",
-    "lastModifTS": "2019-06-03T08:00:24.156Z",
+    "lastModifTS": "2019-06-06T07:13:18.706Z",
     "persistenceSchemaVersion": "3",
     "description": "",
     "comments": "",
@@ -2894,7 +2894,7 @@
                     }
                 },
                 {
-                    "type": "date",
+                    "type": "timestamp",
                     "primaryKey": false,
                     "relationshipType": "",
                     "parentRelationship": "",
@@ -2906,6 +2906,54 @@
                     "sample": "",
                     "GUID": "fb333380-8552-11e9-92be-896973889458",
                     "name": "date",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {}
+                },
+                {
+                    "type": "objectId",
+                    "format": "",
+                    "primaryKey": false,
+                    "relationshipType": "",
+                    "parentRelationship": "",
+                    "childRelationships": [],
+                    "foreignCollection": "",
+                    "foreignField": [],
+                    "sample": "",
+                    "GUID": "59176460-882a-11e9-9c52-85182f96115d",
+                    "name": "actor",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {},
+                    "error": {
+                        "name": false
+                    }
+                },
+                {
+                    "type": "string",
+                    "minLength": "",
+                    "maxLength": "",
+                    "pattern": "",
+                    "format": "",
+                    "default": "",
+                    "primaryKey": false,
+                    "relationshipType": "",
+                    "parentRelationship": "",
+                    "childRelationships": [],
+                    "foreignCollection": "",
+                    "foreignField": [],
+                    "enum": [],
+                    "sample": "",
+                    "GUID": "66373990-882a-11e9-9c52-85182f96115d",
+                    "name": "url",
                     "code": "",
                     "description": "",
                     "comments": "",
@@ -3001,7 +3049,38 @@
                     "dependencies": [],
                     "required": false,
                     "id": "",
-                    "hackoladeMeta": {}
+                    "hackoladeMeta": {},
+                    "error": {
+                        "name": false
+                    }
+                },
+                {
+                    "type": "string",
+                    "minLength": "",
+                    "maxLength": "",
+                    "pattern": "",
+                    "format": "",
+                    "default": "",
+                    "primaryKey": false,
+                    "relationshipType": "",
+                    "parentRelationship": "",
+                    "childRelationships": [],
+                    "foreignCollection": "",
+                    "foreignField": [],
+                    "enum": [],
+                    "sample": "",
+                    "GUID": "81b8b2c0-882a-11e9-9c52-85182f96115d",
+                    "name": "content",
+                    "code": "",
+                    "description": "",
+                    "comments": "",
+                    "dependencies": [],
+                    "required": false,
+                    "id": "",
+                    "hackoladeMeta": {},
+                    "error": {
+                        "name": false
+                    }
                 }
             ],
             "definitions": {
@@ -4463,7 +4542,10 @@
         "b82b7fd0-85c9-11e9-aa6e-4b2a57784f4a": "fk posts._id to bookmarks.bookmarks.[0].post_id",
         "c53757d0-85c9-11e9-aa6e-4b2a57784f4a": "post_type",
         "ab8e1250-85cf-11e9-aa6e-4b2a57784f4a": "fk topics._id to articles.topics.[0]",
-        "fa5658e0-85d2-11e9-b83a-2dc0e73e3b41": "fk topics._id to users.interests.[0]"
+        "fa5658e0-85d2-11e9-b83a-2dc0e73e3b41": "fk topics._id to users.interests.[0]",
+        "59176460-882a-11e9-9c52-85182f96115d": "actor",
+        "66373990-882a-11e9-9c52-85182f96115d": "url",
+        "81b8b2c0-882a-11e9-9c52-85182f96115d": "content"
     },
     "definitions": {
         "type": "definitions",
