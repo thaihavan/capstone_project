@@ -14,6 +14,7 @@ import {HeaderComponent} from 'src/app/core/components/header/header.component';
 import { MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GoogleMapSearchComponent } from './shared/components/google-map-search/google-map-search.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { GoogleMapSearchComponent } from './shared/components/google-map-search/
     LoginPageComponent,
     GoogleMapComponent,
     HeaderComponent,
-    GoogleMapSearchComponent
+    GoogleMapSearchComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,

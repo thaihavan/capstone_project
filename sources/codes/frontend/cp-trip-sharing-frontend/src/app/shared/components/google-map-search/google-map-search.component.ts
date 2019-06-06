@@ -1,6 +1,6 @@
+/// <reference types="@types/googlemaps" />
 import { Component, OnInit, Output, EventEmitter, ViewChild, AfterViewInit, Input } from '@angular/core';
 /// <reference path="<relevant path>/node_modules/@types/googlemaps/index.d.ts" />
-import {} from 'googlemaps';
 import {MapsAPILoader} from '@agm/core';
 @Component({
   selector: 'app-google-map-search',
