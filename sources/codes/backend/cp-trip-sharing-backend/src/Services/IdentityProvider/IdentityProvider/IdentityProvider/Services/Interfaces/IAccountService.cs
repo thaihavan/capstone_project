@@ -10,6 +10,6 @@ namespace IdentityProvider.Services.Interfaces
     {
         IEnumerable<Account> GetAll();
 
-        string Authenticate(string email, string password);
+        Account Authenticate(string email, string password);
     }
 }

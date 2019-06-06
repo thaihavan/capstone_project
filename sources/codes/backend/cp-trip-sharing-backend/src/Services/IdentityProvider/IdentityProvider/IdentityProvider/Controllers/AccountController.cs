@@ -35,14 +35,14 @@ namespace IdentityProvider.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]Account accountParam)
         {
-            var token = _accountService.Authenticate(accountParam.Email, accountParam.Password);
+            Account account = _accountService.Authenticate(accountParam.Email, accountParam.Password);
 
-            if (token.Equals(""))
+            if (account.Token == null)
             {
                 return BadRequest(new { message = "Username or password is incorrect" });
             }
                 
-            return Ok(token);
+            return Ok(account);
         }
     }
 }

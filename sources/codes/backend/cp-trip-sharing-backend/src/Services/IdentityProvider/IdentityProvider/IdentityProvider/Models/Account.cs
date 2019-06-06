@@ -32,5 +32,7 @@ namespace IdentityProvider.Models
 
         [BsonElement("role")]
         public string Role { get; set; }
+
+        public string Token { get; set; }
     }
 }
