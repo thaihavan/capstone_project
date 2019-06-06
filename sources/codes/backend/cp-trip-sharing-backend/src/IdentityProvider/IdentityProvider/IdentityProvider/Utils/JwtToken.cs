@@ -21,14 +21,14 @@ namespace IdentityProvider.Utils
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, account.Id)
+                    new Claim(ClaimTypes.Name, account.Id),
+                    new Claim(ClaimTypes.Role,account.Role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(6),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key), 
                     SecurityAlgorithms.HmacSha256Signature),
-                Issuer = "auth.tripsharing.com",
-                Audience = account.Role
+                Issuer = "auth.tripsharing.com"      
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

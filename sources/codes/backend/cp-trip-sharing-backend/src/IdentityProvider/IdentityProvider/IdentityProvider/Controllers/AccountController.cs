@@ -23,7 +23,8 @@ namespace IdentityProvider.Controllers
             _accountService = accountService;
         }
 
-        // Will be removed
+        // Will be removed, 
+        [Authorize(Roles ="member")]
         [HttpGet("all")]
         public IActionResult GetAll()
         {
