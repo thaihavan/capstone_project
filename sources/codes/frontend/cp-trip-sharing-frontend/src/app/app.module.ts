@@ -11,7 +11,6 @@ import { SharedModule } from './shared/shared.module';
 import { GoogleMapComponent } from './shared/components/google-map/google-map.component';
 import { AgmCoreModule } from '@agm/core';
 import {HeaderComponent} from 'src/app/core/components/header/header.component';
-import {  } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GoogleMapSearchComponent } from './shared/components/google-map-search/google-map-search.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';

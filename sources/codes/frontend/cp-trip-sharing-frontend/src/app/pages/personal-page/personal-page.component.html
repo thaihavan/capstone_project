@@ -1,3 +1,29 @@
-<p>
-  personal-page works!
-</p>
+<div class="">
+  <div class="personal-page">
+    <div class="timeline-cover">
+      <div>
+        <img class="cover-image" src="{{coverImage}}">
+      </div>
+      <div class="profile-infor">
+        <div class="avatar-display">
+          <a href="#"><img src="{{avatar}}" class="avatar-img"></a>
+        </div>
+      </div>
+      <a href="#"><span class="personal-name">Phong Nguyễn</span></a>
+    </div>
+    <div>
+        <nav mat-tab-nav-bar mat-align-tabs="center">
+            <a mat-tab-link
+               *ngFor="let link of navLinks"
+               [routerLink]="link.link"
+               routerLinkActive #rla="routerLinkActive"
+               [active]="rla.isActive">
+              {{link.label}}
+            </a>
+          </nav>
+    </div>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
