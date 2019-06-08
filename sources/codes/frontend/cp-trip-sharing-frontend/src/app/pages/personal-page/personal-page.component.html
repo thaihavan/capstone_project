@@ -11,19 +11,75 @@
       </div>
       <a href="#"><span class="personal-name">Phong Nguyễn</span></a>
     </div>
-    <div>
-        <nav mat-tab-nav-bar mat-align-tabs="center">
-            <a mat-tab-link
-               *ngFor="let link of navLinks"
-               [routerLink]="link.link"
-               routerLinkActive #rla="routerLinkActive"
-               [active]="rla.isActive">
-              {{link.label}}
+  
+    <div class="row personal-content">
+      <div class="col-lg-3 card-personal">
+        <!-- Card -->
+        <div class="card promoting-card">
+
+          <!-- Card content -->
+          <div class="card-body card-header d-flex flex-row">
+
+            <!-- Avatar -->
+            <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg" class="rounded-circle mr-3" height="50px"
+              width="50px" alt="avatar"> -->
+
+            <!-- Content -->
+            <div>
+              <!-- Title -->
+              <h5 class="card-title font-weight-bold mb-2 ">Nguyễn Văn Phong</h5>
+              <!-- Subtitle -->
+              <!-- <p class="card-text"><i class="fa fa-clock-o"></i> 07/24/2018</p> -->
+              <p class="card-sub-title">Cuộc đời là những chuyến đi!</p>
+            </div>
+
+          </div>
+
+          <!-- Card image -->
+          <!-- <div class="view overlay">
+            <img class="card-img-top rounded-0" src="https://mdbootstrap.com/img/Photos/Horizontal/Food/full page/2.jpg"
+              alt="Card image cap">
+            <a href="#!">
+              <div class="mask rgba-white-slight"></div>
             </a>
-          </nav>
-    </div>
-    <div>
+          </div> -->
+
+          <!-- Card content -->
+          <div class="card-body">
+              <!-- Text -->
+              <div class="card-person-infor"> 
+                <a href="#" class="mat-button">
+                  <i class="fa fa-product-hunt"></i>
+                  <span>Contribution point <i>1.2345</i></span>
+                </a>
+              </div>
+              <div class="card-person-infor">
+                <a href="#" class="mat-button">
+                    <i class="fa fa-envelope"></i>
+                    <span>Nhắn tin</span>
+                </a>
+              </div>
+              <!-- Button -->
+              <i class="fa fa-share-alt text-muted float-right p-1 my-1" data-toggle="tooltip" data-placement="top"
+                title="Share this post"></i>
+              <i class="fa fa-heart text-muted float-right p-1 my-1 mr-3" data-toggle="tooltip" data-placement="top"
+                title="I like it"></i>
+          </div>
+
+        </div>
+        <!-- Card -->
+      </div>
+      <div class="col-lg-8">
+          <div>
+              <nav mat-tab-nav-bar mat-align-tabs="center">
+                <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive #rla="routerLinkActive"
+                  [active]="rla.isActive">
+                  {{link.label}}
+                </a>
+              </nav>
+            </div>
         <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 </div>

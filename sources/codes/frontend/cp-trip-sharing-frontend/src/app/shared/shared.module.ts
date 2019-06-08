@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // tslint:disable-next-line:max-line-length
-import { MatButtonModule, MatTabsModule, MatButtonToggleModule, MatIconModule, MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatTabsModule, MatButtonToggleModule, MatIconModule, MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule } from '@angular/material';
 import { AgmCoreModule } from '@agm/core';
 const Material = [
   MatButtonModule,
@@ -13,6 +13,7 @@ const Material = [
   MatButtonModule,
   MatIconModule,
   MatTabsModule,
+  MatCardModule
  ];
 @NgModule({
   declarations: [

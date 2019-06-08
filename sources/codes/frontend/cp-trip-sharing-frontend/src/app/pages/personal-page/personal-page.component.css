@@ -31,7 +31,7 @@ a:hover {
   position: absolute;
   z-index: 999;
   bottom: 0px;
-  margin-left: 20%;
+  margin-left: 22%;
 }
 .mat-tab-label.mat-tab-label-active {
   background-color:coral;
@@ -39,4 +39,32 @@ a:hover {
 .header{
   position: sticky;
   top: 0px;
+}
+.card-personal{
+  margin-top: 3.4em;
+}
+.card-title{
+  color:#4051b5 !important;
+}
+.personal-content{
+  width: 90%;
+  margin: auto;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+.card-person-infor{
+  margin: 10px 0px;
+}
+.card-person-infor span{
+  padding-left: 10px;
+}
+.card-sub-title{
+  opacity: 0.7;
+  font-weight: 400;
+  font-size: 14px;
+  font-style: italic;
+}
+.mat-button{
+  padding: 0px 0px !important;
 }
