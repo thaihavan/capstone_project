@@ -22,7 +22,8 @@ namespace IdentityProvider.Utils
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, account.Id),
-                    new Claim(ClaimTypes.Role, account.Role)
+                    new Claim(ClaimTypes.Role, account.Role),
+                    new Claim("user_id",account.UserId)
                 }),
                 Expires = DateTime.UtcNow.AddHours(6),
                 SigningCredentials = new SigningCredentials(

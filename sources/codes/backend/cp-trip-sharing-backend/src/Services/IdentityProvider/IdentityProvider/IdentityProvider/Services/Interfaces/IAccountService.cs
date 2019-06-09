@@ -11,5 +11,11 @@ namespace IdentityProvider.Services.Interfaces
         IEnumerable<Account> GetAll();
 
         Account Authenticate(string email, string password);
+
+        bool Register(Account account);
+
+        bool ChangePassword(string userId, string newPassword);
+
+        bool ResetPassword(string email);
     }
 }

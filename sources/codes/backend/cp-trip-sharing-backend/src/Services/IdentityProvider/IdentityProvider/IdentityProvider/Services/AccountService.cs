@@ -47,5 +47,29 @@ namespace IdentityProvider.Services
         {
             return _accountRepository.GetAll();
         }
+
+        public bool Register(Account account)
+        {
+            if (_accountRepository.GetByEmail(account.Email) != null) return false;
+            var salt = Salt.Generate();
+            var encryptedAccount = new Account()
+            {
+                Username = account.Username,
+                Email = account.Email,
+                Password=Hash.HashPassword(account.Password, salt),
+                PasswordSalt=salt,
+                Role="member"
+            };
+            return _accountRepository.Add(encryptedAccount);
+        }
+
+        public bool ChangePassword(string userId, string newPassword) {
+            return _accountRepository.ChangePassword(userId, newPassword);
+        }
+
+        public bool ResetPassword(string email)
+        {
+            return _accountRepository.ResetPassword(email);
+        }
     }
 }
