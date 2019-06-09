@@ -72,7 +72,6 @@ namespace IdentityProvider.Repositories
 
         public bool ResetPassword(string email)
         {
-
             var salt = _accounts.Find(x => x.Email.Equals(email)).FirstOrDefault().PasswordSalt;
             //Generate new encrypted password for db
             var newEncryptedPassword = Hash.HashPassword(GenerateRandomPassword(), salt);
