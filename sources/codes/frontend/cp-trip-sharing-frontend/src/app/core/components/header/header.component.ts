@@ -18,9 +18,5 @@ export class HeaderComponent implements OnInit {
       height: 'auto',
       width: '400px'
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 }
