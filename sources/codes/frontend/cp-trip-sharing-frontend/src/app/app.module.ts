@@ -15,6 +15,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { GoogleMapSearchComponent } from './shared/components/google-map-search/google-map-search.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
+import {ForgotpasswordPageComponent} from './pages/forgotpassword-page/forgotpassword-page.component';
+import { InterestedtopicPageComponent } from './pages/interestedtopic-page/interestedtopic-page.component'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +28,9 @@ import { PersonalPageComponent } from './pages/personal-page/personal-page.compo
     HeaderComponent,
     GoogleMapSearchComponent,
     RegisterPageComponent,
-    PersonalPageComponent
+    PersonalPageComponent,
+    ForgotpasswordPageComponent,
+    InterestedtopicPageComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +45,6 @@ import { PersonalPageComponent } from './pages/personal-page/personal-page.compo
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent]
+  entryComponents: [LoginPageComponent,InterestedtopicPageComponent]
 })
 export class AppModule { }

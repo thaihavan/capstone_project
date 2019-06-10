@@ -123,3 +123,16 @@
       float: left;
     }
   }
+
+  .forget a{
+    color: #3B5998;
+    text-decoration: underline #3B5998;
+  }
+
+  .iconlogin, .iconsignup{
+    padding-right: 1em;
+  }
+  
+  .btn-primary{
+    background-color:#3f51b5;
+  }

@@ -7,10 +7,15 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<LoginPageComponent>) { }
 
   ngOnInit() {
   }
-  callRegisterPage() {
+  callRegisterPage() : void{
+    this.dialogRef.close();
+  }
+
+  forgotPassword() : void{
+    this.dialogRef.close();
   }
 }

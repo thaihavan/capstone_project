@@ -12,20 +12,23 @@
     <input type="password" name="password" placeholder="Tạo mật khẩu " required>
     <div class="row remember-forget">
       <div class="checkbox col-md-6 col-sm-6">
-        <input type="checkbox" value=""/><span>Ghi nhớ đăng nhập</span>
+        <input type="checkbox" value="" /><span>Ghi nhớ đăng nhập</span>
       </div>
       <div class="forget col-md-6 col-sm-6">
-        <a href="#">Quên mật khẩu</a>
+        <a routerLink="/forgot" (click)="forgotPassword()">Quên mật khẩu</a>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-6 col-md-6">
-        <input type="submit" value="Đăng Nhập">
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-sign-in iconlogin"></i>Đăng nhập
+        </button>
       </div>
       <div class="col-xs-6 col-md-6">
-        <input routerLink="/register" type="submit"  (click)="callRegisterPage()"  value="Đăng Ký">
+        <button routerLink="/register" type="submit" class="btn btn-primary" (click)="callRegisterPage()">
+          <i class="fa fa-user-plus iconsignup"></i> Đăng Ký
+        </button>
       </div>
-
     </div>
 
   </div>

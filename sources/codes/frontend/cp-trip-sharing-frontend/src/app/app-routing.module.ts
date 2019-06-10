@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { GoogleMapComponent } from './shared/components/google-map/google-map.component';
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotpassword-page.component';
 
 const routes: Routes = [
   { path: 'heroes', component: GoogleMapComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   },
   { path: 'register', component: RegisterPageComponent},
   { path: 'virtual', component: GoogleMapComponent},
-  { path: '', redirectTo: 'personal', pathMatch: 'full'}
+  { path: '', redirectTo: 'personal', pathMatch: 'full'},
+  { path: 'forgot', component: ForgotpasswordPageComponent},
 ];
 
 @NgModule({
