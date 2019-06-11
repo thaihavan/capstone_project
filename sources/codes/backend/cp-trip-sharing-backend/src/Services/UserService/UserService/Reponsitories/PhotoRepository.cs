@@ -17,7 +17,7 @@ namespace UserServices.Reponsitories
         public PhotoRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDBContext(settings);
-            _photos = dbContext.PhotosCollection;
+            _photos = dbContext.PhotoCollection;
         }
 
         public bool Add(Photo document)
@@ -31,9 +31,9 @@ namespace UserServices.Reponsitories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Photo> GetAll(string id)
+        public IEnumerable<Photo> GetAll(string userId)
         {
-            List<Photo> photos = _photos.Find(temp => temp.Author.Equals(id)).ToList();
+            List<Photo> photos = _photos.Find(temp => temp.Author.Equals(userId)).ToList();
             return photos;
         }
 

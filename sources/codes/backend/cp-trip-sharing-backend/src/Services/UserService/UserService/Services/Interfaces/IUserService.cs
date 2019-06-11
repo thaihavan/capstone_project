@@ -18,6 +18,9 @@ namespace UserServices.Services.Interfaces
         Bookmark GetUserBookmark(string userId);
 
         bool AddPhoto(Photo photo);
-        IEnumerable<Photo> GetAllPhotos(string userId);
+        IEnumerable<Photo> GetAllPhoto(string userId);
+
+        bool Block(Block block);
+        bool UnBlock(Block block);
     }
 }

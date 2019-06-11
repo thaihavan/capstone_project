@@ -17,7 +17,7 @@ namespace UserServices.Reponsitories
         public FollowRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDBContext(settings);
-            _follows = dbContext.FollowsCollection;
+            _follows = dbContext.FollowCollection;
         }
 
         public bool Add(Follow follows)

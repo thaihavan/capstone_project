@@ -12,11 +12,11 @@ namespace UserServices.Models
         [BsonId]
         [BsonElement("_id")]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("author")]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Author { get; set; }
+        public ObjectId Author { get; set; }
 
         [BsonElement("url")]
         public string Url { get; set; }

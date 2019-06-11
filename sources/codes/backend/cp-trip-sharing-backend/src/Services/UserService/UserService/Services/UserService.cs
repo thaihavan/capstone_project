@@ -12,58 +12,70 @@ namespace UserServices.Services
 {
     public class UserService : IUserService
     {
-        private readonly FollowRepository _followsRepository = null;
-        private readonly BookmarkRepository _bookmarksRepository = null;
-        private readonly PhotoRepository _photosRepository = null;
+        private readonly FollowRepository _followRepository = null;
+        private readonly BookmarkRepository _bookmarkRepository = null;
+        private readonly PhotoRepository _photoRepository = null;
+        private readonly BlockRepository _blockRepository = null;
 
         private readonly IOptions<AppSettings> _settings = null;
 
         public UserService(IOptions<AppSettings> settings)
         {
-            _followsRepository = new FollowRepository(settings);
-            _bookmarksRepository = new BookmarkRepository(settings);
+            _followRepository = new FollowRepository(settings);
+            _bookmarkRepository = new BookmarkRepository(settings);
+            _photoRepository = new PhotoRepository(settings);
             _settings = settings;
         }
 
         public IEnumerable<Follow> GetAll()
         {
-            return _followsRepository.GetAll();
+            return _followRepository.GetAll();
         }
 
         //add follows to DB
         public bool AddFollows(Follow follows)
         {
-            return _followsRepository.Add(follows);
+            return _followRepository.Add(follows);
         }
 
         public bool Unfollow(Follow follows)
         {
-            return _followsRepository.Unfollow(follows);
+            return _followRepository.Unfollow(follows);
         }
 
         public bool AddBookmark(Bookmark bookmark)
         {
-            return _bookmarksRepository.Add(bookmark);
+            return _bookmarkRepository.Add(bookmark);
         }
 
         public bool DeleteBookmark(Bookmark bookmark)
         {
-            return _bookmarksRepository.Delete(bookmark);
+            return _bookmarkRepository.Delete(bookmark);
         }
 
         public Bookmark GetUserBookmark(string userId)
         {
-            return _bookmarksRepository.GetById(userId);
+            return _bookmarkRepository.GetById(userId);
         }
 
         public bool AddPhoto(Photo photo)
         {
-            return _photosRepository.Add(photo);
+            return _photoRepository.Add(photo);
         }
 
-        public IEnumerable<Photo> GetAllPhotos(string userId)
+        public IEnumerable<Photo> GetAllPhoto(string userId)
         {
-            return _photosRepository.GetAll(userId);
+            return _photoRepository.GetAll(userId);
+        }
+
+        public bool Block(Block block)
+        {
+            return _blockRepository.Add(block);
+        }
+
+        public bool UnBlock(Block block)
+        {
+            return _blockRepository.Delete(block);
         }
     }
 }

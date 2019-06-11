@@ -23,7 +23,7 @@ namespace UserServices.Reponsitories.DbContext
         }
 
         //Get "follows" collection from MongoDN
-        public IMongoCollection<Follow> FollowsCollection
+        public IMongoCollection<Follow> FollowCollection
         {
             get
             {
@@ -35,7 +35,7 @@ namespace UserServices.Reponsitories.DbContext
             }
         }
 
-        public IMongoCollection<Bookmark> BookmarksCollection
+        public IMongoCollection<Bookmark> BookmarkCollection
         {
             get
             {
@@ -47,13 +47,25 @@ namespace UserServices.Reponsitories.DbContext
             }
         }
 
-        public IMongoCollection<Photo> PhotosCollection
+        public IMongoCollection<Photo> PhotoCollection
         {
             get
             {
                 if (_database != null)
                 {
                     return _database.GetCollection<Photo>("photos");
+                }
+                return null;
+            }
+        }
+
+        public IMongoCollection<Block> BlockCollection
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<Block>("blocks");
                 }
                 return null;
             }

@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using UserServices.Models;
 using UserServices.Services;
 using UserServices.Services.Interfaces;
@@ -31,14 +32,14 @@ namespace UserServices.Controllers
         }
 
         // POST: api/UserServices/follow
-        // param: { following : "id" }
+        // body: { following : "id" }
         [HttpPost("follow")]
-        public IActionResult Follow([FromBody] Follow follows)
+        public IActionResult Follow([FromBody] Follow param)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
-            follows.Follower = userId;
-            if (_userService.AddFollows(follows))
+            param.Follower = new ObjectId(userId);
+            if (_userService.AddFollows(param))
             {
                 return Ok();
             }
@@ -49,13 +50,13 @@ namespace UserServices.Controllers
         }
 
         // DELETE: api/UserServices/unfollow
-        // param: { following : "id" }
+        // body: { following : "id" }
         [HttpDelete("unfollow")]
         public IActionResult Unfollow([FromBody] Follow follows)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
-            follows.Follower = userId;
+            follows.Follower = new ObjectId(userId);
             if (_userService.Unfollow(follows))
             {
                 return Ok();
@@ -67,13 +68,13 @@ namespace UserServices.Controllers
         }
 
         // POST: api/UserService/bookmark
-        // param { postId : "id" }
+        // body { postId : "id" }
         [HttpPost("bookmark")]
         public IActionResult Bookmark([FromBody] Bookmark bookmark)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
-            bookmark.UserId = userId;
+            bookmark.UserId = new ObjectId(userId);
             if (_userService.AddBookmark(bookmark))
             {
                 return Ok();
@@ -85,13 +86,13 @@ namespace UserServices.Controllers
         }
 
         // DELETE: api/UserServices/deletebookmark
-        // param { postId : "id" }
+        // body { postId : "id" }
         [HttpDelete("deletebookmark")]
         public IActionResult DeleteBookmark([FromBody] Bookmark bookmark)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
-            bookmark.UserId = userId;
+            bookmark.UserId = new ObjectId(userId);
             if (_userService.DeleteBookmark(bookmark))
             {
                 return Ok();
@@ -108,23 +109,56 @@ namespace UserServices.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
-            var photos = _userService.GetAllPhotos(userId);
+            var photos = _userService.GetAllPhoto(userId);
             return new OkObjectResult(photos);
         }
 
         // POST: api/UserServices/addphoto
-        // param: { url : "url", date : "date" }
+        // body: { url : "url", date : "date" }
         [HttpPost("addphoto")]
         public IActionResult AddPhoto([FromBody] Photo photo)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
-            photo.Author = userId;
+            photo.Author = new ObjectId(userId);
             if (_userService.AddPhoto(photo))
             {
                 return Ok();
             }
             return NotFound();
+        }
+
+        // POST: api/UserServices/addblock
+        // body: { blockedId : "id" }
+        [HttpPost("addblock")]
+        public IActionResult AddBlock([FromBody] Block block)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_Id").Value;
+            block.BlockerId = new ObjectId(userId);
+            if (_userService.Block(block))
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
+        // DELETE: api/UserServices/unblock
+        // body { BlockedId : "id" }
+        [HttpDelete("unblock")]
+        public IActionResult UnBlock([FromBody] Block block)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_Id").Value;
+            block.BlockerId = new ObjectId(userId);
+            if (_userService.UnBlock(block))
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ namespace UserServices.Reponsitories
         public BookmarkRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDBContext(settings);
-            _bookmarks = dbContext.BookmarksCollection;
+            _bookmarks = dbContext.BookmarkCollection;
         }
 
         public bool Add(Bookmark bookmarks)
