@@ -22,25 +22,29 @@ namespace User.Controllers
         }
 
         [Authorize(Roles ="member")]
-        [HttpPost("register")]
-        public IActionResult Register([FromBody] Models.User user)
-        {
-            //var isRegistered = _userService.GetUserByAccountId(User.Claims.)==null? false :true;
-            //if (isRegistered)
-            //{
-            //    return BadRequest(new { message = "created" });
-            //}
-            var result = _userService.Add(user);
-            return Created("",user);
+        [HttpPost("Register")]
+        public IActionResult Register([FromBody] Models.User userParam)
+        {           
+            var result = _userService.Add(userParam);
+            return Created("", userParam);
         }
-
-        [Authorize(Roles = "member")]
+        
+        [Authorize(Roles = "admin")]
         [HttpGet("All")]
-        public IActionResult GetAll([FromBody] Models.User user)
+        public IActionResult GetAll([FromBody] Models.User userParam)
         {
             var result = _userService.GetAll();
             return Ok(result);
         }
+
+        [AllowAnonymous]
+        [HttpGet("User")]
+        public IActionResult GetUserById([FromQuery] string userId)
+        {
+            var result = _userService.GetUserById(userId);
+            return Ok(result);
+        }
+     
 
     }
 }

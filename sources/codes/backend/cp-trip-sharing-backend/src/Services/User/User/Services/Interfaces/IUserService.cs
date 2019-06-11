@@ -11,6 +11,6 @@ namespace User.Services.Interfaces
 
         Models.User Add(Models.User user);
 
-        Models.User GetUserByAccountId(string userId);
+        Models.User GetUserById(string userId);
     }
 }

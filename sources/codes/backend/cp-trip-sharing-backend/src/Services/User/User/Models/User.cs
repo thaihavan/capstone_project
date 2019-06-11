@@ -48,5 +48,8 @@ namespace User.Models
         [BsonElement("created_date")]
         public DateTime CreatedDate { get; set; }
 
+        [BsonElement("is_first_time")]
+        public bool IsFirstTime { get; set; }
+
     }
 }

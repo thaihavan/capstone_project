@@ -33,9 +33,9 @@ namespace User.Services
             return _userRepository.GetAll();
         }
 
-        public Models.User GetUserByAccountId(string accountId)
+        public Models.User GetUserById(string accountId)
         {
-            return _userRepository.GetUserByAccountId(accountId);
+            return _userRepository.GetUserById(accountId);
         }
     }
 }
