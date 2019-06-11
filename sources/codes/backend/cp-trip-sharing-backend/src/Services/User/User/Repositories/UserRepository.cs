@@ -34,18 +34,18 @@ namespace User.Repositories
 
         public Models.User GetById(string id)
         {
-            var user = _users.Find(x => x.Id.Equals(id)) as Models.User;
+            var user = _users.Find(x => x.Id.Equals(id)).FirstOrDefault();
             return user;
         }
 
-        public Models.User update(Models.User user)
+        public Models.User Update(Models.User user)
         {
             throw new NotImplementedException();
         }
 
-        public Models.User GetUserByAccountId(string id)
+        public Models.User GetUserById(string id)
         {
-            return _users.Find(x => x.AccountId.Equals(id)).FirstOrDefault();
+            return _users.Find(x => x.Id.Equals(id)).FirstOrDefault();
         }
     }
 }

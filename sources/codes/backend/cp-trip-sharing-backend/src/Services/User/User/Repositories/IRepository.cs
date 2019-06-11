@@ -14,8 +14,9 @@ namespace User.Repositories
 
         T Add(T user);
 
-        T update(T user);
+        T Update(T user);
 
+        
 
     }
 }
