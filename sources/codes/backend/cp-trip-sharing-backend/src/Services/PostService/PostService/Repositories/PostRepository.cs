@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using PostService.Helpers;
 using PostService.Models;
@@ -29,12 +30,12 @@ namespace PostService.Repositories
 
         public IEnumerable<Post> GetAll()
         {
-            return _posts.AsQueryable().Select(x=>x).ToList();
+            return _posts.Find(x=>true).ToList();
         }
 
         public Post GetById(string id)
         {
-            return _posts.AsQueryable().Where(x=>x.Id.Equals(id)).Select(x=>x).SingleOrDefault();
+            return _posts.Find(Builders<Post>.Filter.Eq("_id", ObjectId.Parse(id))).FirstOrDefault();
         }
     }
 }

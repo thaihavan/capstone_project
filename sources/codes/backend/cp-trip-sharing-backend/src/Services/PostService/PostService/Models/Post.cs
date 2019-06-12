@@ -33,6 +33,6 @@ namespace PostService.Models
 
         [BsonElement("author")]
         public Author Author { get; set; }
-
+              
     }
 }
