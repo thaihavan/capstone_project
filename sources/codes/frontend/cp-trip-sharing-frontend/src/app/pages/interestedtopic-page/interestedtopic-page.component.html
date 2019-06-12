@@ -1,7 +1,7 @@
 <div class="allinterested">
   <h5 id="title">Chọn tất cả các chủ đề mà bạn muốn đọc</h5>
   <div class="interestedtopic" >
-    <div (click)="changeClass()" type="submit" class="{{nameclass}}" *ngFor="let eachtopic of listinterestedtopic">
+    <div (click)="changeClass(eachtopic)" [class]="eachtopic === selectedTopic ? 'changeClass' : 'eachtopic'"  *ngFor="let eachtopic of listinterestedtopic">
       <span class="nametopic">{{eachtopic.nameTopic}}</span>
       <img class="imageInterested" src="{{eachtopic.urlImage}}" />
     </div>

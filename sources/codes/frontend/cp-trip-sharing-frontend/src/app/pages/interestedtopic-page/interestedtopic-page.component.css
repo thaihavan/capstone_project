@@ -1,5 +1,5 @@
 .allinterested{
-    width: 80%;
+    width: 90%;
     height: 550px;
     border-radius: 3px;
     margin: 0 auto;
@@ -11,31 +11,39 @@
     overflow: auto;
 }
 .changeClass{
-    width: 22%;
-    height: 100px;
-    float: left;  
+    border-radius: 5px;
+    width: 23%;
+    height: 21%;
+    float: left;
     margin: 0 auto;
-    margin-top: 1em;
-    margin-left: 1em;
     opacity: 0.5;
+    margin-top: 1em;
+    margin-left: 0.5em;
 }
 .eachtopic{
     border-radius: 5px;
     width: 23%;
-    height: 95px;
+    height: 21%;
     float: left;
     margin: 0 auto;
     margin-top: 1em;
     margin-left: 0.5em;
 }
 
+.eachtopic :hover{
+    cursor: pointer;
+    border:2px solid #3f51b5;
+}
+
 .nametopic{
+    border: none !important;
     margin-left: 2.5em;
     z-index: 9999;
     position: relative;
     font-weight: bold;
     top: 35px;
     color: crimson;
+    font-size: 1em;
 }
 
 .imageInterested{
@@ -45,13 +53,6 @@
     height: 100%;
     z-index: 10;
     margin-top: -1.5em;
-}
-img{
-    border-radius: 5px;
-}
-
-img :hover{
-    background-color: aqua;
 }
 
 .btn{
@@ -87,4 +88,8 @@ img :hover{
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #3f51b5; 
+  }
+
+  .selected {
+    opacity: 0.5 !important;
   }

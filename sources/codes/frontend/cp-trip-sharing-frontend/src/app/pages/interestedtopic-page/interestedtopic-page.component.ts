@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./interestedtopic-page.component.css']
 })
 export class InterestedtopicPageComponent implements OnInit {
+
+   selectedTopic: Topic;
+   listselectedTopic : Array<Topic> = [];
    listinterestedtopic: Topic[]=[
      {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
      {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
@@ -24,17 +27,18 @@ export class InterestedtopicPageComponent implements OnInit {
      {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
      {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
      {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
-     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"}
+     {nameTopic:"Loại Khác",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"}
     ];
 
-    nameclass:string ="eachtopic";
   constructor() { }
 
   ngOnInit() {
   }
   
-  changeClass(): void{
-    this.nameclass="changeClass";
+  changeClass(topic : Topic): void{
+    this.selectedTopic = topic;
+    this.listselectedTopic.push(topic)
+    console.log(this.listselectedTopic);
   }
 }
 
