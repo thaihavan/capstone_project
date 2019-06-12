@@ -31,9 +31,8 @@ namespace PostService.Models
         [BsonElement("post_type")]
         public string PostType { get; set; }
 
-        [BsonElement("author_id")]
-        public BsonObjectId AuthorId { get; set; }
-
+        [BsonElement("author")]
+        public Author Author { get; set; }
 
     }
 }
