@@ -11,8 +11,7 @@ namespace IdentityProvider.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public BsonObjectId Id { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("email")]
         public string Email { get; set; }
@@ -27,7 +26,6 @@ namespace IdentityProvider.Models
         public string PasswordSalt { get; set; }
 
         [BsonElement("user_id")]
-        [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId UserId { get; set; }
 
         [BsonElement("role")]
