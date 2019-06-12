@@ -42,10 +42,14 @@ namespace PostService.Controllers
         }
 
         
-        [HttpGet("get")]
+        [HttpGet]
         public IActionResult GetById([FromQuery]string postId)
         {
             var result = _postService.GetById(postId);
+            if (result == null)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
 
