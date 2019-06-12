@@ -34,40 +34,58 @@ a:hover {
   margin-left: 22%;
 }
 .mat-tab-label.mat-tab-label-active {
-  background-color:coral;
+  background-color: coral;
 }
-.header{
+.header {
   position: sticky;
   top: 0px;
 }
-.card-personal{
-  margin-top:  6.4em;
+.card-personal {
+  margin-top: 6.4em;
 }
-.card-title{
-  color:#4051b5 !important;
+.card-title {
+  color: #4051b5 !important;
 }
-.personal-content{
+.personal-content {
   width: 90%;
   margin: auto;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 500;
 }
-.card-person-infor{
+.card-person-infor {
   margin: 10px 0px;
 }
-.card-person-infor span{
+.card-person-infor span {
   padding-left: 10px;
 }
-.card-sub-title{
+.card-sub-title {
   opacity: 0.7;
   font-weight: 400;
   font-size: 14px;
   font-style: italic;
 }
-.mat-button{
+.mat-button {
   padding: 0px 0px !important;
 }
-.navlinks{
+.navlinks {
   margin-bottom: 2.9em;
+}
+.scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+button:focus {
+  outline: none;
+  outline: none !important;
+}
+.material-icons{
+  transition: line-height 0.4s;
+}
+.mat-fab:hover{
+  box-shadow: 0px 3px 5px 4px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+.mat-fab:hover .material-icons{
+  line-height: 0;
 }

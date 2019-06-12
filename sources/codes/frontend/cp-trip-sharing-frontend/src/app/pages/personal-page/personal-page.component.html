@@ -79,12 +79,16 @@
           </nav>
         </div>
         <router-outlet (activate)="onActivate($event)"></router-outlet>
-        <button (click)="onScroll()">click me</button>
       </div>
     </div>
   </div>
 </div>
 <div class="search-results" 
-infiniteScroll [infiniteScrollDistance]="2" 
-[infiniteScrollThrottle]="500"
+infiniteScroll [infiniteScrollDistance]="0" 
+[infiniteScrollThrottle]="1000"
   (scrolled)="onScroll()"></div>
+<div *ngIf="isScrollTopShow" class="scroll-top">
+<button (click)="gotoTop()" mat-fab color="primary">
+    <mat-icon>keyboard_arrow_up</mat-icon>
+</button>
+</div>
