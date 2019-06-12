@@ -21,7 +21,7 @@ import { CreatedPostComponent } from './pages/personal-page/components/created-p
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatMenuModule} from '@angular/material/menu';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { Globals } from 'src/globals/globalvalues'
+import { Globals } from 'src/globals/globalvalues';
 import { InMemoryService } from './core/services/service-1/inMemory.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InterestedtopicPageComponent } from './pages/interestedtopic-page/interestedtopic-page.component';
@@ -56,12 +56,12 @@ import { InterestedtopicPageComponent } from './pages/interestedtopic-page/inter
     }),
     HttpClientModule,
     InfiniteScrollModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryService, { dataEncapsulation: false }
-    )
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryService, { dataEncapsulation: false }
+    // )
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent,InterestedtopicPageComponent]
+  entryComponents: [LoginPageComponent, InterestedtopicPageComponent]
 })
 export class AppModule { }
