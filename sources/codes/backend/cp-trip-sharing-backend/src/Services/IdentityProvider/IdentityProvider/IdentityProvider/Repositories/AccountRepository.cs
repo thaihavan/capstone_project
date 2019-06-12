@@ -53,7 +53,7 @@ namespace IdentityProvider.Repositories
         }
 
         public Account GetByEmail(string email)
-        {
+        {      
             return _accounts.Find(account => account.Email.Equals(email)).FirstOrDefault();
         }
 

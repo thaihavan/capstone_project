@@ -40,9 +40,9 @@ namespace IdentityProvider.Controllers
         {
             Account account = _accountService.Authenticate(accountParam.Email, accountParam.Password);
 
-            if (account.Token == null)
+            if (account == null||account.Token == null)
             {
-                return BadRequest(new { message = "Username or password is incorrect" });
+                return BadRequest(new { message = "Email or password is incorrect" });
             }
             return Ok(account);
         }
