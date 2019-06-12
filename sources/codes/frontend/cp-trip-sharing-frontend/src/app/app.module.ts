@@ -16,8 +16,12 @@ import { GoogleMapSearchComponent } from './shared/components/google-map-search/
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
 import {ForgotpasswordPageComponent} from './pages/forgotpassword-page/forgotpassword-page.component';
-import { InterestedtopicPageComponent } from './pages/interestedtopic-page/interestedtopic-page.component'
-
+import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
+import { CreatedPostComponent } from './pages/personal-page/components/created-post/created-post.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryService } from './core/services/service-1/inMemory.service';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +34,8 @@ import { InterestedtopicPageComponent } from './pages/interestedtopic-page/inter
     RegisterPageComponent,
     PersonalPageComponent,
     ForgotpasswordPageComponent,
-    InterestedtopicPageComponent
+    CreatePostPageComponent,
+    CreatedPostComponent
   ],
   imports: [
     BrowserModule,
@@ -41,10 +46,15 @@ import { InterestedtopicPageComponent } from './pages/interestedtopic-page/inter
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDIPTZ7dpn5_hralWGDP4glqkqAaac6qeA',
       libraries: ['places']
-    })
+    }),
+    HttpClientModule,
+    InfiniteScrollModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryService, { dataEncapsulation: false }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent,InterestedtopicPageComponent]
+  entryComponents: [LoginPageComponent]
 })
 export class AppModule { }

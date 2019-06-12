@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./personal-page.component.css']
 })
 export class PersonalPageComponent implements OnInit {
+  componentRefer: any;
   coverImage = '../../../assets/coverimg.jpg';
   avatar = '../../../assets/img_avatar.png';
   title = 'angular-material-tab-router';
@@ -15,7 +16,7 @@ export class PersonalPageComponent implements OnInit {
     this.navLinks = [
         {
             label: 'Bản tin hoạt động ',
-            link: './register',
+            link: './personalfeed',
             index: 0
         }, {
             label: 'Chuyến đi',
@@ -33,5 +34,10 @@ ngOnInit(): void {
       this.activeLinkIndex = this.navLinks.indexOf(this.navLinks.find(tab => tab.link === '.' + this.router.url));
   });
 }
-
+onActivate(componentRef) {
+  this.componentRefer = componentRef;
+}
+onScroll() {
+  this.componentRefer.onScroll();
+}
 }

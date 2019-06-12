@@ -41,7 +41,7 @@ a:hover {
   top: 0px;
 }
 .card-personal{
-  margin-top: 3.4em;
+  margin-top:  6.4em;
 }
 .card-title{
   color:#4051b5 !important;
@@ -67,4 +67,7 @@ a:hover {
 }
 .mat-button{
   padding: 0px 0px !important;
+}
+.navlinks{
+  margin-bottom: 2.9em;
 }
