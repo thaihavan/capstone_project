@@ -23,7 +23,7 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [Route("All")]
+        [HttpGet("All")]
         public IActionResult GetAll()
         {
             var result = _postService.GetAll();
@@ -31,7 +31,7 @@ namespace PostService.Controllers
         }
 
         [Authorize(Roles = "member")]
-        [Route("Create")]
+        [HttpPost("Create")]
         public IActionResult Create([FromBody] Post postParam) {
             var result = _postService.Add(postParam);
             if (result == null)
@@ -42,7 +42,7 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [Route("test")]
+        [HttpGet("test")]
         public IActionResult test()
         {
             return Create(new Post()
@@ -51,7 +51,13 @@ namespace PostService.Controllers
                 IsActive = true,
                 IsPublic=true,
                 PubDate=DateTime.Now,
-                PostType="test"
+                PostType="test",
+                Author=new Author()
+                {
+                    AuthorId= MongoDB.Bson.BsonObjectId.Parse("5cfa6d85dad2b82ed0f8eb6f"),
+                    AuthorImage="some url",
+                    AuthorName="linhlp1"
+                }              
             });
         }
     }

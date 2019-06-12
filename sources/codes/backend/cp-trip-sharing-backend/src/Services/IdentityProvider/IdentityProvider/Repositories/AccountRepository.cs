@@ -37,7 +37,7 @@ namespace IdentityProvider.Repositories
 
         public Account Get(string id)
         {
-            Account account = _accounts.Find(x => x.Id.Equals(id, StringComparison.Ordinal)).ToList().FirstOrDefault();
+            Account account = _accounts.Find(x => x.Id.ToString().Equals(id, StringComparison.Ordinal)).ToList().FirstOrDefault();
             return account;
         }
 

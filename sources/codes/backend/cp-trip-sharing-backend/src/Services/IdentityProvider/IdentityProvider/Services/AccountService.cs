@@ -34,10 +34,8 @@ namespace IdentityProvider.Services
                     account.Token = JwtToken.Generate(_settings.Value.Secret, account);
                 }
                 // Set important fields to null
-                account.Id = null;
                 account.Password = null;
                 account.PasswordSalt = null;
-                account.UserId = null;
             }
 
             return account;

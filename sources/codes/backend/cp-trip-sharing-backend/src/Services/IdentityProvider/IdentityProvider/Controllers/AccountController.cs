@@ -24,16 +24,6 @@ namespace IdentityProvider.Controllers
             _accountService = accountService;
         }
 
-        // Will be removed, 
-        //[Authorize(Roles ="member")]
-        //[HttpGet("all")]
-        //public IActionResult GetAll()
-        //{
-        //    var identity = (ClaimsIdentity)User.Identity;
-        //    var userId = identity.FindFirst("user_id").Value;
-        //    return Ok(userId);
-        //}
-
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]Account accountParam)
