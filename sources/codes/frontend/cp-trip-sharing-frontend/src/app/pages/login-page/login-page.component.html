@@ -8,8 +8,8 @@
   </a>
   <div class="line-email"></div>
   <div class="LoginbyEmailForm">
-    <input type="text" name="username" placeholder="Địa chỉ Email " required>
-    <input type="password" name="password" placeholder="Tạo mật khẩu " required>
+    <input type="text" name="username" placeholder="Địa chỉ Email " [(ngModel)]="email" required>
+    <input type="password" name="password" placeholder="Tạo mật khẩu " [(ngModel)]="password" required>
     <div class="row remember-forget">
       <div class="checkbox col-md-6 col-sm-6">
         <input type="checkbox" value="" /><span>Ghi nhớ đăng nhập</span>
@@ -20,7 +20,7 @@
     </div>
     <div class="row">
       <div class="col-xs-6 col-md-6">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" (click)="loginFunction()">
             <i class="fa fa-sign-in iconlogin"></i>Đăng nhập
         </button>
       </div>
@@ -30,6 +30,6 @@
         </button>
       </div>
     </div>
-
   </div>
+  <h5 class="messageLogin">{{message}}</h5>
 </div>

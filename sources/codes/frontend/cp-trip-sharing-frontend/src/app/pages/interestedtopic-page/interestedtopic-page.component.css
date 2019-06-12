@@ -5,9 +5,10 @@
     margin: 0 auto;
 }
 .interestedtopic{
-    width: 90%;
+    width: 100%;
     height: 450px;
     margin: 0 auto;
+    overflow: auto;
 }
 .changeClass{
     width: 22%;
@@ -19,7 +20,7 @@
     opacity: 0.5;
 }
 .eachtopic{
-    border-radius: 18px;
+    border-radius: 5px;
     width: 23%;
     height: 95px;
     float: left;
@@ -28,12 +29,8 @@
     margin-left: 0.5em;
 }
 
-.eachtopic :hover{
-    border: 1px solid #3f51b5;
-}
-
 .nametopic{
-    margin: 1px;
+    margin-left: 2.5em;
     z-index: 9999;
     position: relative;
     font-weight: bold;
@@ -42,18 +39,52 @@
 }
 
 .imageInterested{
+    border-radius: 5px;
     position: relative;
     width: 100%;
     height: 100%;
     z-index: 10;
+    margin-top: -1.5em;
+}
+img{
     border-radius: 5px;
+}
+
+img :hover{
+    background-color: aqua;
 }
 
 .btn{
     float: right;
     margin: 1em 2em 0em 0em;
+    background-color: #3f51b5;
+    outline: none !important;
 }
 
 #title{
-    padding-left: 1.75em;
+    padding-left: .2em;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+    border-radius: 3px;
+    margin-top: 1em;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 3px;
+    margin-top: 1em;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #3f51b5; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3f51b5; 
+  }

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -19,9 +19,12 @@ import {ForgotpasswordPageComponent} from './pages/forgotpassword-page/forgotpas
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
 import { CreatedPostComponent } from './pages/personal-page/components/created-post/created-post.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatMenuModule} from '@angular/material/menu';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { Globals } from 'src/globals/globalvalues'
 import { InMemoryService } from './core/services/service-1/inMemory.service';
 import { HttpClientModule } from '@angular/common/http';
+import { InterestedtopicPageComponent } from './pages/interestedtopic-page/interestedtopic-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,14 +38,18 @@ import { HttpClientModule } from '@angular/common/http';
     PersonalPageComponent,
     ForgotpasswordPageComponent,
     CreatePostPageComponent,
-    CreatedPostComponent
+    CreatedPostComponent,
+    InterestedtopicPageComponent
   ],
   imports: [
+    MatMenuModule,
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
     SharedModule,
+    HttpClientModule,
+    FormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDIPTZ7dpn5_hralWGDP4glqkqAaac6qeA',
       libraries: ['places']
@@ -53,8 +60,8 @@ import { HttpClientModule } from '@angular/common/http';
       InMemoryService, { dataEncapsulation: false }
     )
   ],
-  providers: [],
+  providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent]
+  entryComponents: [LoginPageComponent,InterestedtopicPageComponent]
 })
 export class AppModule { }

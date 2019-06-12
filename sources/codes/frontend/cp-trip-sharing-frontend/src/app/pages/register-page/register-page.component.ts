@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
-// import { InterestedtopicPageComponent } from '../interestedtopic-page/interestedtopic-page.component';
+import { InterestedtopicPageComponent } from '../interestedtopic-page/interestedtopic-page.component';
 
 @Component({
   selector: 'app-register-page',
@@ -15,9 +15,9 @@ export class RegisterPageComponent implements OnInit {
   }
 
   callInterestedtopicPage(): void {
-    // const dialogRef = this.dialog.open(InterestedtopicPageComponent, {
-    //   height: 'auto',
-    //   width: '60%'
-    // });
+    const dialogRef = this.dialog.open(InterestedtopicPageComponent, {
+      height: 'auto',
+      width: '60%'
+    });
   }
 }

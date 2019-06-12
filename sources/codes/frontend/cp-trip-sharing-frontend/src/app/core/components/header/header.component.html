@@ -28,7 +28,16 @@
               <span>Tin nhắn</span>
             </div>
           </a>
-          <button type="button" class="btn btn-prime" (click)="openDialogLoginForm()">Đăng nhập</button>
+          <button *ngIf="checkLogin" type="button" class="btn btn-primary" (click)="openDialogLoginForm()">Đăng nhập</button>
+          <div *ngIf="checkLogined" class="iconuser" [matMenuTriggerFor]="menu">
+            <img class="imgavatar" src="{{urlImgavatar}}"/>
+          </div>
+          <mat-menu  #menu="matMenu">
+            <button class="options" routerLink="/register" mat-menu-item>Trang cá nhân</button>
+            <button mat-menu-item>Blog của bạn</button>
+            <button mat-menu-item>Đổi mật khẩu</button>
+            <button (click)="signOut()" mat-menu-item>Đăng xuất</button>
+          </mat-menu>
           <div class="inputsearch">
             <input type="text" class="form-control" placeholder="Search"><i class="fa fa-search iconserach"></i>
           </div>

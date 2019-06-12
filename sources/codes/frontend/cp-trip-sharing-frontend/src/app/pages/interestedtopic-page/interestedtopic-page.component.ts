@@ -11,6 +11,19 @@ export class InterestedtopicPageComponent implements OnInit {
      {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
      {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
      {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
+     {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"},
      {nameTopic:"Văn Hóa",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"}
     ];
 
