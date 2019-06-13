@@ -14,12 +14,10 @@ namespace PostService.Services
     {
 
         private readonly PostRepository _postRepository = null;
-        private readonly IOptions<AppSettings> _settings = null;
 
-        public PostService(IOptions<AppSettings> settings)
+        public PostService()
         {
-            _postRepository = new PostRepository(settings);
-            _settings = settings;
+            _postRepository = new PostRepository();
         }
 
         public Post Add(Post param)

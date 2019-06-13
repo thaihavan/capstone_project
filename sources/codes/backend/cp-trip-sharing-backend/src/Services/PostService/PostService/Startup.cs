@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Google.Cloud.PubSub.V1;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PostService.Helpers;
 using PostService.Services.Interfaces;
+using PostService.Services.Processes;
 
 namespace PostService
 {
@@ -59,6 +62,10 @@ namespace PostService
                     RequireExpirationTime = true
                 };
             });
+
+            // Thread for pulling messages from pubsub
+            AuthorPullProcess authorPullThread = new AuthorPullProcess();
+            authorPullThread.Start();
 
             // Configure DI for application services
             services.AddScoped<IPostService, PostService.Services.PostService>();

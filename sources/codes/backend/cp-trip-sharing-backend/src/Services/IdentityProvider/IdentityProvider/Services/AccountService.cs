@@ -8,6 +8,7 @@ using IdentityProvider.Repositories;
 using IdentityProvider.Services.Interfaces;
 using IdentityProvider.Utils;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 
 namespace IdentityProvider.Services
 {
@@ -19,7 +20,7 @@ namespace IdentityProvider.Services
 
         public AccountService(IOptions<AppSettings> settings)
         {
-            _accountRepository = new AccountRepository(settings);
+            _accountRepository = new AccountRepository();
             _settings = settings;
         }
 
@@ -31,6 +32,7 @@ namespace IdentityProvider.Services
                 var isValid = Hash.HashPassword(password, account.PasswordSalt) == account.Password;
                 if (isValid)
                 {
+                    account.UserId = new BsonObjectId(ObjectId.GenerateNewId());
                     account.Token = JwtToken.Generate(_settings.Value.Secret, account);
                 }
                 // Set important fields to null

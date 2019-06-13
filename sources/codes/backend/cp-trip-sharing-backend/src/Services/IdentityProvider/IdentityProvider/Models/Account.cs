@@ -11,7 +11,7 @@ namespace IdentityProvider.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        public ObjectId Id { get; set; }
+        public BsonObjectId Id { get; set; }
 
         [BsonElement("email")]
         public string Email { get; set; }
@@ -26,17 +26,12 @@ namespace IdentityProvider.Models
         public string PasswordSalt { get; set; }
 
         [BsonElement("user_id")]
-        public ObjectId UserId { get; set; }
+        public BsonObjectId UserId { get; set; }
 
         [BsonElement("role")]
         public string Role { get; set; }
 
         [BsonIgnore]
         public string Token { get; set; }
-
-        public Account()
-        {
-            UserId = ObjectId.GenerateNewId();
-        }
     }
 }

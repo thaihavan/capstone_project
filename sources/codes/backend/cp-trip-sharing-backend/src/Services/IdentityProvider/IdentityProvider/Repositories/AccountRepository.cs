@@ -18,9 +18,9 @@ namespace IdentityProvider.Repositories
         private static Random random = new Random();
         private readonly IMongoCollection<Account> _accounts = null;
 
-        public AccountRepository(IOptions<AppSettings> settings)
+        public AccountRepository()
         {
-            var dbContext = new MongoDbContext(settings);
+            var dbContext = new MongoDbContext();
             _accounts = dbContext.Accounts;
         }
 
@@ -37,7 +37,7 @@ namespace IdentityProvider.Repositories
 
         public Account Get(string id)
         {
-            Account account = _accounts.Find(x => x.Id.ToString().Equals(id, StringComparison.Ordinal)).ToList().FirstOrDefault();
+            Account account = _accounts.Find(Builders<Account>.Filter.Eq("_id",ObjectId.Parse(id))).ToList().FirstOrDefault();
             return account;
         }
 
@@ -60,7 +60,7 @@ namespace IdentityProvider.Repositories
         public bool ChangePassword(string userId, string newPassword) {
             //Get account salt from db 
             var salt = _accounts.Find(x => x.UserId.Equals(userId)).FirstOrDefault().PasswordSalt;
-            //Generate new encrypted password for db
+            // Generate new encrypted password for db
             var newEncryptedPassword = Hash.HashPassword(newPassword, salt);
 
             _accounts.FindOneAndUpdate(
@@ -73,7 +73,7 @@ namespace IdentityProvider.Repositories
         public bool ResetPassword(string email)
         {
             var salt = _accounts.Find(x => x.Email.Equals(email)).FirstOrDefault().PasswordSalt;
-            //Generate new encrypted password for db
+            // Generate new encrypted password for db
             var newEncryptedPassword = Hash.HashPassword(GenerateRandomPassword(), salt);
 
             _accounts.FindOneAndUpdate(
@@ -83,7 +83,7 @@ namespace IdentityProvider.Repositories
             return true;
         }
 
-        //Generate new random password to reset password
+        // Generate new random password to reset password
         public string GenerateRandomPassword()
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
