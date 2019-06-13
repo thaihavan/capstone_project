@@ -8,6 +8,7 @@ using PostService.Services.Interfaces;
 using PostService.Services;
 using Microsoft.AspNetCore.Authorization;
 using PostService.Models;
+using MongoDB.Bson;
 
 namespace PostService.Controllers
 {
@@ -66,7 +67,7 @@ namespace PostService.Controllers
                 PostType="test",
                 Author=new Author()
                 {
-                    AuthorId= MongoDB.Bson.BsonObjectId.Parse("5cfa6d85dad2b82ed0f8eb6f"),
+                    AuthorId= new BsonObjectId(ObjectId.Parse("5cfa6d85dad2b82ed0f8eb6f")),
                     AuthorImage="some url",
                     AuthorName="linhlp1"
                 },              

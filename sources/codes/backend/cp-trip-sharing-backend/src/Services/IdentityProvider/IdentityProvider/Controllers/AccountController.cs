@@ -54,11 +54,10 @@ namespace IdentityProvider.Controllers
 
         [Authorize(Roles = "member")]
         [HttpPost("changePassword")]
-        public IActionResult ChangePassword([FromBody] Account accountParam)
+        public IActionResult ChangePassword([FromBody] ChangePasswordModel param)
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_id").Value;
-            var result =_accountService.ChangePassword(userId, accountParam.Password);
+            var accountId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var result =_accountService.ChangePassword(accountId, param.oldPassword,param.newPassword);
             if (!result)
             {
                 return BadRequest(new { message = "Error" });

@@ -63,8 +63,8 @@ namespace IdentityProvider.Services
             return _accountRepository.Add(encryptedAccount);
         }
 
-        public bool ChangePassword(string userId, string newPassword) {
-            return _accountRepository.ChangePassword(userId, newPassword);
+        public bool ChangePassword(string accountId,string oldPassword, string newPassword) {
+            return _accountRepository.ChangePassword(accountId, oldPassword, newPassword);
         }
 
         public bool ResetPassword(string email)

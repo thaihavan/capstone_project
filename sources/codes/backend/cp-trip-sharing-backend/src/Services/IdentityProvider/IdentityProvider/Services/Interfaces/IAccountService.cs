@@ -14,7 +14,7 @@ namespace IdentityProvider.Services.Interfaces
 
         bool Register(Account account);
 
-        bool ChangePassword(string userId, string newPassword);
+        bool ChangePassword(string userId,string oldPassword, string newPassword);
 
         bool ResetPassword(string email);
     }

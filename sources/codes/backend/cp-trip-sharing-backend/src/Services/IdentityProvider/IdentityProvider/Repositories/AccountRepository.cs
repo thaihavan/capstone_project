@@ -57,14 +57,20 @@ namespace IdentityProvider.Repositories
             return _accounts.Find(account => account.Email.Equals(email)).FirstOrDefault();
         }
 
-        public bool ChangePassword(string userId, string newPassword) {
+        public bool ChangePassword(string accountId, string oldPassword, string newPassword) {
             //Get account salt from db 
-            var salt = _accounts.Find(x => x.UserId.Equals(userId)).FirstOrDefault().PasswordSalt;
+            var salt = _accounts.Find(Builders<Account>.Filter.Eq("_id", ObjectId.Parse(accountId))).FirstOrDefault().PasswordSalt;
+            //Get the account with eq accountId and password
+            var account = _accounts.Find(
+                Builders<Account>.Filter.Eq("_id",ObjectId.Parse(accountId))
+                & Builders<Account>.Filter.Eq("password",Hash.HashPassword(oldPassword,salt))
+                ).FirstOrDefault();
+            
             // Generate new encrypted password for db
             var newEncryptedPassword = Hash.HashPassword(newPassword, salt);
 
             _accounts.FindOneAndUpdate(
-                Builders<Account>.Filter.Eq("UserId", userId),
+                Builders<Account>.Filter.Eq("_id", ObjectId.Parse(accountId)),
                 Builders<Account>.Update.Set("Password", newEncryptedPassword)
                 );
             return true;
