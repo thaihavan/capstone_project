@@ -58,7 +58,8 @@ namespace IdentityProvider.Services
                 Email = account.Email,
                 Password=Hash.HashPassword(account.Password, salt),
                 PasswordSalt=salt,
-                Role="member"
+                Role="member",
+                UserId=new BsonObjectId(ObjectId.GenerateNewId())
             };
             return _accountRepository.Add(encryptedAccount);
         }
