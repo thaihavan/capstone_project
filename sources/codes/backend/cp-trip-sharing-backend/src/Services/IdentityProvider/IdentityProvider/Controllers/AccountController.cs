@@ -49,7 +49,7 @@ namespace IdentityProvider.Controllers
             }
             Account account = _accountService.Authenticate(accountParam.Email, accountParam.Password);
 
-            return Ok(account.Token);
+            return Ok(new { token=account.Token});
         }
 
         [Authorize(Roles = "member")]
