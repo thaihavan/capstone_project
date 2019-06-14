@@ -12,7 +12,7 @@ using MongoDB.Bson;
 
 namespace PostService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/postservice/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
     {
@@ -24,7 +24,7 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("All")]
+        [HttpGet("all")]
         public IActionResult GetAll()
         {
             var result = _postService.GetAll();
@@ -32,12 +32,12 @@ namespace PostService.Controllers
         }
 
         [Authorize(Roles = "member")]
-        [HttpPost("Create")]
+        [HttpPost("create")]
         public IActionResult Create([FromBody] Post postParam) {
             var result = _postService.Add(postParam);
             if (result == null)
             {
-                return BadRequest(new { message = "error" });
+                return BadRequest(new ErrorMessage { Message = "Error" });
             }
             return Created("", result);
         }

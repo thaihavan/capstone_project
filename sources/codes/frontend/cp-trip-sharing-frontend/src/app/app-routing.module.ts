@@ -6,6 +6,7 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotpassword-page.component';
 import { CreatedPostComponent } from './pages/personal-page/components/created-post/created-post.component';
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
+import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
 
 const routes: Routes = [
   { path: 'heroes', component: GoogleMapComponent },
@@ -21,7 +22,7 @@ const routes: Routes = [
   { path: 'virtual', component: GoogleMapComponent},
   { path: '', redirectTo: 'personal', pathMatch: 'full'},
   { path: 'forgot', component: ForgotpasswordPageComponent},
-  {path: 'createpost', component: CreatePostPageComponent }
+  {path: 'createpost', component: CreatePostPageComponent },
 ];
 
 @NgModule({

@@ -25,6 +25,10 @@ import { Globals } from 'src/globals/globalvalues';
 import { InMemoryService } from './core/services/service-1/inMemory.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InterestedtopicPageComponent } from './pages/interestedtopic-page/interestedtopic-page.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
+import { CropImageComponent } from './shared/components/upload-image/crop-image/crop-image.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +43,9 @@ import { InterestedtopicPageComponent } from './pages/interestedtopic-page/inter
     ForgotpasswordPageComponent,
     CreatePostPageComponent,
     CreatedPostComponent,
-    InterestedtopicPageComponent
+    InterestedtopicPageComponent,
+    UploadImageComponent,
+    CropImageComponent
   ],
   imports: [
     MatMenuModule,
@@ -58,10 +64,12 @@ import { InterestedtopicPageComponent } from './pages/interestedtopic-page/inter
     InfiniteScrollModule,
     // HttpClientInMemoryWebApiModule.forRoot(
     //   InMemoryService, { dataEncapsulation: false }
-    // )
+    // ),
+    CKEditorModule,
+    ImageCropperModule
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, InterestedtopicPageComponent]
+  entryComponents: [LoginPageComponent, InterestedtopicPageComponent, CropImageComponent]
 })
 export class AppModule { }

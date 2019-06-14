@@ -1,0 +1,15 @@
+.cropreview img{
+    width: 100%;
+}
+.cropreview{
+    padding: 5px;
+}
+.btndialog button{
+    margin-left: 10px; 
+}
+.btndialog{
+    text-align: center;
+}
+.cancle{
+    background-color: red !important;
+}
