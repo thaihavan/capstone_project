@@ -14,21 +14,22 @@ namespace UserServices.Reponsitories
     {
         private readonly IMongoCollection<Block> _blocks = null;
 
-        public BlockRepository(IOptions<AppSettings> settings)
+        public BlockRepository()
         {
-            var dbContext = new MongoDBContext(settings);
+            var dbContext = new MongoDbContext();
             _blocks = dbContext.BlockCollection;
         }
 
-        public bool Add(Block document)
+        public Block Add(Block document)
         {
             _blocks.InsertOne(document);
-            return true;
+            return document;
         }
 
-        public bool Delete(Block document)
+        public Block Delete(Block document)
         {
-            return _blocks.DeleteOne(temp => temp.BlockedId.Equals(document.BlockedId) && temp.BlockerId.Equals(document.BlockerId)).IsAcknowledged;
+            _blocks.DeleteOne(temp => temp.BlockedId.Equals(document.BlockedId) && temp.BlockerId.Equals(document.BlockerId));
+            return document;
         }
 
         public IEnumerable<Block> GetAll(string id)
@@ -41,7 +42,7 @@ namespace UserServices.Reponsitories
             throw new NotImplementedException();
         }
 
-        public bool Update(Block document)
+        public Block Update(Block document)
         {
             throw new NotImplementedException();
         }
