@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace IdentityProvider.Models
 {
-    public class ChangePasswordModel
+    public class ChangePasswordModel:Model
     {
-        public string CurrentPassword { get; set; }
-        public string NewPassword { get; set; }
+        public string oldPassword { get; set; }
+        public string newPassword { get; set; }
     }
 }

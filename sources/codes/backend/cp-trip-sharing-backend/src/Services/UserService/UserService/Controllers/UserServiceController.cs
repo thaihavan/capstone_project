@@ -39,7 +39,7 @@ namespace UserServices.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
             param.Follower = new ObjectId(userId);
-            if (_userService.AddFollows(param) != null)
+            if (_userService.AddFollows(param))
             {
                 return Ok();
             }
@@ -57,7 +57,7 @@ namespace UserServices.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
             follows.Follower = new ObjectId(userId);
-            if (_userService.Unfollow(follows) != null)
+            if (_userService.Unfollow(follows))
             {
                 return Ok();
             }
@@ -75,7 +75,7 @@ namespace UserServices.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
             bookmark.UserId = new ObjectId(userId);
-            if (_userService.AddBookmark(bookmark) != null)
+            if (_userService.AddBookmark(bookmark))
             {
                 return Ok();
             }
@@ -93,7 +93,7 @@ namespace UserServices.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
             bookmark.UserId = new ObjectId(userId);
-            if (_userService.DeleteBookmark(bookmark) != null)
+            if (_userService.DeleteBookmark(bookmark))
             {
                 return Ok();
             }
@@ -121,7 +121,7 @@ namespace UserServices.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
             photo.Author = new ObjectId(userId);
-            if (_userService.AddPhoto(photo) != null)
+            if (_userService.AddPhoto(photo))
             {
                 return Ok();
             }
@@ -136,7 +136,7 @@ namespace UserServices.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
             block.BlockerId = new ObjectId(userId);
-            if (_userService.Block(block) != null)
+            if (_userService.Block(block))
             {
                 return Ok();
             }
@@ -151,7 +151,7 @@ namespace UserServices.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
             block.BlockerId = new ObjectId(userId);
-            if (_userService.UnBlock(block) != null)
+            if (_userService.UnBlock(block))
             {
                 return Ok();
             }

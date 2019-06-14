@@ -14,16 +14,16 @@ namespace UserServices.Reponsitories
     {
         private readonly IMongoCollection<Follow> _follows = null;
 
-        public FollowRepository()
+        public FollowRepository(IOptions<AppSettings> settings)
         {
-            var dbContext = new MongoDbContext();
+            var dbContext = new MongoDBContext(settings);
             _follows = dbContext.FollowCollection;
         }
 
-        public Follow Add(Follow follow)
+        public bool Add(Follow follows)
         {
-            _follows.InsertOne(follow);
-            return follow;
+            _follows.InsertOne(follows);
+            return true;
         }
 
         public Follow GetById(string id)
@@ -37,18 +37,17 @@ namespace UserServices.Reponsitories
             return follows;
         }
 
-        public Follow Unfollow(Follow follow)
+        public bool Unfollow(Follow follows)
         {
-            _follows.DeleteOne(temp => temp.Follower.Equals(follow.Follower) && temp.Following.Equals(follow.Following));
-            return follow;
+            return _follows.DeleteOne(follow => follow.Follower.Equals(follows.Follower) && follow.Following.Equals(follows.Following)).IsAcknowledged;
         }
 
-        public Follow Update(Follow document)
+        public bool Update(Follow document)
         {
             throw new NotImplementedException();
         }
 
-        public Follow Delete(Follow document)
+        public bool Delete(Follow document)
         {
             throw new NotImplementedException();
         }

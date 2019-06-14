@@ -14,19 +14,19 @@ namespace UserServices.Reponsitories
     {
         private readonly IMongoCollection<Photo> _photos = null;
 
-        public PhotoRepository()
+        public PhotoRepository(IOptions<AppSettings> settings)
         {
-            var dbContext = new MongoDbContext();
+            var dbContext = new MongoDBContext(settings);
             _photos = dbContext.PhotoCollection;
         }
 
-        public Photo Add(Photo document)
+        public bool Add(Photo document)
         {
             _photos.InsertOne(document);
-            return document;
+            return true;
         }
 
-        public Photo Delete(Photo document)
+        public bool Delete(Photo document)
         {
             throw new NotImplementedException();
         }
@@ -42,7 +42,7 @@ namespace UserServices.Reponsitories
             throw new NotImplementedException();
         }
 
-        public Photo Update(Photo document)
+        public bool Update(Photo document)
         {
             throw new NotImplementedException();
         }

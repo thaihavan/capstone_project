@@ -14,16 +14,16 @@ namespace UserServices.Reponsitories
     {
         private readonly IMongoCollection<Bookmark> _bookmarks = null;
 
-        public BookmarkRepository()
+        public BookmarkRepository(IOptions<AppSettings> settings)
         {
-            var dbContext = new MongoDbContext();
+            var dbContext = new MongoDBContext(settings);
             _bookmarks = dbContext.BookmarkCollection;
         }
 
-        public Bookmark Add(Bookmark bookmark)
+        public bool Add(Bookmark bookmarks)
         {
-            _bookmarks.InsertOne(bookmark);
-            return bookmark;
+            _bookmarks.InsertOne(bookmarks);
+            return true;
         }
 
         public Bookmark GetById(string user_id)
@@ -36,15 +36,14 @@ namespace UserServices.Reponsitories
             throw new NotImplementedException();
         }
 
-        public Bookmark Update(Bookmark document)
+        public bool Update(Bookmark document)
         {
             throw new NotImplementedException();
         }
 
-        public Bookmark Delete(Bookmark document)
+        public bool Delete(Bookmark document)
         {
-            _bookmarks.DeleteOne(item => item.UserId.Equals(document.UserId) && item.PostId.Equals(document.PostId));
-            return document;
+            return _bookmarks.DeleteOne(item => item.UserId.Equals(document.UserId) && item.PostId.Equals(document.PostId)).IsAcknowledged;
         }
 
         public IEnumerable<Bookmark> GetAll(string id)
