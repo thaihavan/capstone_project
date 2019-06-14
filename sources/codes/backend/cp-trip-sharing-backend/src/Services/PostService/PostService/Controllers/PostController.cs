@@ -16,7 +16,7 @@ namespace PostService.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
-        private readonly IPostService _postService=null;
+        private readonly IPostService _postService = null;
 
         public PostController(IPostService postService)
         {
@@ -34,7 +34,7 @@ namespace PostService.Controllers
         [Authorize(Roles = "member")]
         [HttpPost("create")]
         public IActionResult Create([FromBody] Post postParam) {
-            var result = _postService.Add(postParam);
+            var result = _postService.AddPost(postParam);
             if (result == null)
             {
                 return BadRequest(new ErrorMessage { Message = "Error" });
@@ -46,10 +46,22 @@ namespace PostService.Controllers
         [HttpGet]
         public IActionResult GetById([FromQuery]string postId)
         {
-            var result = _postService.GetById(postId);
+            var result = _postService.GetPostById(postId);
             if (result == null)
             {
                 return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "member")]
+        [HttpPost("create")]
+        public IActionResult AddVirtualTrip([FromBody]VirtualTrip trip)
+        {
+            var result = _postService.AddVirtualTrip(trip);
+            if (result == null)
+            {
+                return NoContent();
             }
             return Ok(result);
         }

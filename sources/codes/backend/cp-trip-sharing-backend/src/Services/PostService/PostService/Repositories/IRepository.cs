@@ -6,7 +6,7 @@ using PostService.Models;
 
 namespace PostService.Repositories
 {
-    public interface IRepository<T> where T:Post
+    public interface IRepository<T> where T : Model
     {
         IEnumerable<T> GetAll();
 

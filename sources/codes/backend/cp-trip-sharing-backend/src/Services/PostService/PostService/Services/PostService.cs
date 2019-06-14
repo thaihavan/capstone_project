@@ -14,13 +14,14 @@ namespace PostService.Services
     {
 
         private readonly PostRepository _postRepository = null;
+        private readonly VirtualTripRepository _virtualTripRepository = null;
 
         public PostService()
         {
             _postRepository = new PostRepository();
         }
 
-        public Post Add(Post param)
+        public Post AddPost(Post param)
         {
             return _postRepository.Add(param);
         }
@@ -30,9 +31,20 @@ namespace PostService.Services
             return _postRepository.GetAll();
         }
 
-        public Post GetById(string id)
+        public Post GetPostById(string id)
         {
             return _postRepository.GetById(id);
         }
+
+        public VirtualTrip AddVirtualTrip(VirtualTrip param)
+        {
+            return _virtualTripRepository.Add(param);
+        }
+
+        public IEnumerable<VirtualTrip> GetAllTrip()
+        {
+            return _virtualTripRepository.GetAll();
+        }
+
     }
 }

@@ -52,5 +52,17 @@ namespace PostService.Repositories.DbContext
                 return null;
             }
         }
+
+        public IMongoCollection<VirtualTrip> VirtualTrips
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<VirtualTrip>("VirtualTrips");
+                }
+                return null;
+            }
+        }
     }
 }
