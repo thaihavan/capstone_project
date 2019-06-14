@@ -53,7 +53,7 @@ namespace IdentityProvider.Controllers
         }
 
         [Authorize(Roles = "member")]
-        [HttpPost("changePassword")]
+        [HttpPost("changepassword")]
         public IActionResult ChangePassword([FromBody] ChangePasswordModel param)
         {
             var accountId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
