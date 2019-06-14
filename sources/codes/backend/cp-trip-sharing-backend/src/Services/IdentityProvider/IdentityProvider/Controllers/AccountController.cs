@@ -62,7 +62,7 @@ namespace IdentityProvider.Controllers
             {
                 return BadRequest(new ErrorMessage { Message = "Error" });
             }
-            return Ok();
+            return Ok(new { message = "change password succes" });
         }
 
         [AllowAnonymous]

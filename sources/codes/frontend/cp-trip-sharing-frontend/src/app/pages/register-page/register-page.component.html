@@ -5,30 +5,31 @@
                 <h2>Đăng ký</h2>
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                <input type="email" name="email" placeholder="Họ tên" required />
+                <input type="email" name="email" placeholder="Username" [(ngModel)]="username" required />
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
-                <input type="email" name="email" placeholder="Email" required />
+                <input type="email" name="email" placeholder="Email" [(ngModel)]="email" required />
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-                <input type="password" name="password" placeholder="Nhập password" required />
+                <input type="password" name="password" placeholder="Nhập password" [(ngModel)]="password" required />
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-                <input type="password" name="password" placeholder="Nhập lại password" required />
+                <input type="password" name="password" placeholder="Nhập lại password" [(ngModel)]="repass" required />
             </div>
 
-            <div class="input_field radio_option">
+            <!-- <div class="input_field radio_option">
                 <input type="radio" name="radiogroup1" id="rd1">
                 <label for="rd1">Nam</label>
                 <input type="radio" name="radiogroup1" id="rd2">
                 <label for="rd2">Nữ</label>
-            </div>
+            </div> -->
             <div class="input_field checkbox_option">
                 <input type="checkbox" id="cb1">
                 <label for="cb1">Tôi đồng ý quy định của <a href="#">Tripsharing.com.vn</a></label>
             </div>
             <input class="button" type="submit" (click)="callInterestedtopicPage()" value="Register" />
         </div>
-        <p class="credit">Bạn đã có tài khoản <a href="#" target="_blank">Đăng nhập</a></p>
+        <p class="credit">Bạn đã có tài khoản <span target="_blank" (click)="openDialogLoginForm()">Đăng nhập</span></p>
+        <span style="color: red;margin: 0 auto;">{{message}}</span>
     </div>
 </div>

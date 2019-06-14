@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Globals } from 'src/globals/globalvalues';
+
 @Component({
   selector: 'app-interestedtopic-page',
   templateUrl: './interestedtopic-page.component.html',
   styleUrls: ['./interestedtopic-page.component.css']
 })
 export class InterestedtopicPageComponent implements OnInit {
-
    selectedTopic: Topic;
    listselectedTopic : Array<Topic> = [];
    listinterestedtopic: Topic[]=[
@@ -30,7 +31,7 @@ export class InterestedtopicPageComponent implements OnInit {
      {nameTopic:"Loại Khác",urlImage: "https://gody.vn/public/v3/images/bg/br-register.jpg"}
     ];
 
-  constructor() { }
+  constructor(private globals : Globals) { }
 
   ngOnInit() {
   }
@@ -39,6 +40,10 @@ export class InterestedtopicPageComponent implements OnInit {
     this.selectedTopic = topic;
     this.listselectedTopic.push(topic)
     console.log(this.listselectedTopic);
+  }
+
+  gotoHomepage(){
+    window.location.href = this.globals.urllocal;
   }
 }
 

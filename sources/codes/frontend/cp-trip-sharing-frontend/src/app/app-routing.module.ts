@@ -7,6 +7,7 @@ import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotp
 import { CreatedPostComponent } from './pages/personal-page/components/created-post/created-post.component';
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
 import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
+import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component'
 
 const routes: Routes = [
   { path: 'heroes', component: GoogleMapComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'personal', pathMatch: 'full'},
   { path: 'forgot', component: ForgotpasswordPageComponent},
   {path: 'createpost', component: CreatePostPageComponent },
+  {path: 'changePassword',component: ChangepasswordPageComponent }
 ];
 
 @NgModule({

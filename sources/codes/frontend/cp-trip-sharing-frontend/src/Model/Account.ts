@@ -1,7 +1,10 @@
 export class Account {
-    public email: string;
-    public password: string;
-    public username: string;
-    public role: string;
-    public token:string;
+    public UserId: string;
+    public Email: string;
+    public Password : string;
+    public OldPassword: string;
+    public NewPassword: string;
+    public Username: string;
+    public Role: string;
+    public Token: string;
   }

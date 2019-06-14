@@ -29,6 +29,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
 import { CropImageComponent } from './shared/components/upload-image/crop-image/crop-image.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +47,9 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     CreatedPostComponent,
     InterestedtopicPageComponent,
     UploadImageComponent,
-    CropImageComponent
+    CropImageComponent,
+    InterestedtopicPageComponent,
+    ChangepasswordPageComponent
   ],
   imports: [
     MatMenuModule,

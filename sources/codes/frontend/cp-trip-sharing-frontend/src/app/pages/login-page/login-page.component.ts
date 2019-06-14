@@ -11,8 +11,8 @@ import { Globals } from 'src/globals/globalvalues';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
-  email = 'linhlp1@fpt.edu.vn';
-  password = 'new_password';
+  email : string = "";
+  password : string = "";
   account: Account;
   message: string;
 
@@ -31,22 +31,18 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginFunction() {
-    this.account.email = this.email;
-    this.account.password = this.password;
+    this.account.Email = this.email;
+    this.account.Password = this.password;
     this.userService.getAccount(this.account).subscribe((acc: any) => {
-      if (acc != null) {
+        localStorage.setItem("UserId",acc.userId);
         localStorage.setItem('Token', acc.token);
         localStorage.setItem('Email', acc.email);
         localStorage.setItem('Username', acc.username);
         localStorage.setItem('Role', acc.role);
         window.location.href = this.globals.urllocal;
         this.dialogRef.close();
-      } else {
-        this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
-      }
-
-    }, (err: HttpErrorResponse) => { this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
-                                     console.log(err); });
-
+    },(err: HttpErrorResponse) => { 
+      this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
+      console.log(err); });
   }
 }
