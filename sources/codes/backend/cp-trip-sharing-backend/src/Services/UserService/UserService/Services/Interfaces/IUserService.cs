@@ -8,19 +8,22 @@ namespace UserServices.Services.Interfaces
 {
     public interface IUserService
     {
-        IEnumerable<Follow> GetAll();
+        IEnumerable<User> GetAll();
 
-        bool AddFollows(Follow follows);
-        bool Unfollow(Follow follows);
+        User Add(User user);
+        User GetUserById(string userId);
 
-        bool AddBookmark(Bookmark bookmark);
-        bool DeleteBookmark(Bookmark bookmark);
+        Follow AddFollows(Follow follows);
+        Follow Unfollow(Follow follows);
+
+        Bookmark AddBookmark(Bookmark bookmark);
+        Bookmark DeleteBookmark(Bookmark bookmark);
         Bookmark GetUserBookmark(string userId);
 
-        bool AddPhoto(Photo photo);
+        Photo AddPhoto(Photo photo);
         IEnumerable<Photo> GetAllPhoto(string userId);
 
-        bool Block(Block block);
-        bool UnBlock(Block block);
+        Block Block(Block block);
+        Block UnBlock(Block block);
     }
 }
