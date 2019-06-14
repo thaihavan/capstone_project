@@ -52,5 +52,17 @@ namespace PostService.Repositories.DbContext
                 return null;
             }
         }
+
+        public IMongoCollection<Article> Articles
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<Article>("Articles");
+                }
+                return null;
+            }
+        }
     }
 }

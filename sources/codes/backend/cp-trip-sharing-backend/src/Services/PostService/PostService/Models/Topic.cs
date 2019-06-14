@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace User.Models
+namespace PostService.Models
 {
-    public class Model
+    public class Topic
     {
     }
 }

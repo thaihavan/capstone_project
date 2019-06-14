@@ -42,7 +42,6 @@ namespace PostService.Controllers
             return Created("", result);
         }
 
-        
         [HttpGet]
         public IActionResult GetById([FromQuery]string postId)
         {
@@ -52,27 +51,6 @@ namespace PostService.Controllers
                 return NotFound();
             }
             return Ok(result);
-        }
-
-        [AllowAnonymous]
-        [HttpGet("test")]
-        public IActionResult test()
-        {          
-            return Create(new Post()
-            {   Title = "test1",
-                Content = "test1",
-                IsActive = true,
-                IsPublic=true,
-                PubDate=DateTime.Now,
-                PostType="test",
-                Author=new Author()
-                {
-                    AuthorId= new BsonObjectId(ObjectId.Parse("5cfa6d85dad2b82ed0f8eb6f")),
-                    AuthorImage="some url",
-                    AuthorName="linhlp1"
-                },              
-            });
-
         }
     }
 }
