@@ -2,39 +2,39 @@
   "ReRoutes": [
     {
       "DownstreamPathTemplate": "/api/identity/{catchAll}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "34.96.97.110",
           "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/identity/{catchAll}"
     },
     {
-      "DownstreamPathTemplate": "/api/user/{catchAll}",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/userservice/{catchAll}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "34.96.97.110",
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/user/{catchAll}"
+      "UpstreamPathTemplate": "/api/userservice/{catchAll}"
     },
     {
-      "DownstreamPathTemplate": "/api/post/{catchAll}",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/postservice/{catchAll}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44352
+          "Host": "34.96.97.110",
+          "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/post/{catchAll}"
+      "UpstreamPathTemplate": "/api/postservice/{catchAll}"
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44345"
+    "BaseUrl": "http://107.178.242.201"
   }
 }

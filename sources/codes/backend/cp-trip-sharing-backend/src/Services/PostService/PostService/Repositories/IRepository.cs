@@ -13,5 +13,9 @@ namespace PostService.Repositories
         T GetById(string id);
 
         T Add(T param);
+
+        bool Delete(string id);
+
+        T Update(T param);
     }
 }

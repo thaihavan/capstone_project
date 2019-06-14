@@ -28,6 +28,11 @@ namespace PostService.Repositories
             return param;
         }
 
+        public bool Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Post> GetAll()
         {
             return _posts.Find(x=>true).ToList();
@@ -35,7 +40,12 @@ namespace PostService.Repositories
 
         public Post GetById(string id)
         {
-            return _posts.Find(Builders<Post>.Filter.Eq("_id", ObjectId.Parse(id))).FirstOrDefault();
+            return _posts.Find(p => p.Id.Equals(new BsonObjectId(id))).FirstOrDefault();
+        }
+
+        public Post Update(Post param)
+        {
+            throw new NotImplementedException();
         }
     }
 }

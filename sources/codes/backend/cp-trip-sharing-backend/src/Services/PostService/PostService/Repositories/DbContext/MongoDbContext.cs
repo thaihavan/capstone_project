@@ -53,13 +53,27 @@ namespace PostService.Repositories.DbContext
             }
         }
 
+
         public IMongoCollection<VirtualTrip> VirtualTrips
+        {
+            get
+            {
+                if(_database != null)
+                {
+                    return _database.GetCollection<VirtualTrip>("VirtualTrips");
+                }
+                return null;
+            }
+        }
+
+        public IMongoCollection<Article> Articles
+
         {
             get
             {
                 if (_database != null)
                 {
-                    return _database.GetCollection<VirtualTrip>("VirtualTrips");
+                    return _database.GetCollection<Article>("Articles");
                 }
                 return null;
             }

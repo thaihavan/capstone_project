@@ -42,7 +42,6 @@ namespace PostService.Controllers
             return Created("", result);
         }
 
-        
         [HttpGet]
         public IActionResult GetById([FromQuery]string postId)
         {
@@ -86,5 +85,6 @@ namespace PostService.Controllers
             });
 
         }
+
     }
 }

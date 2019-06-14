@@ -69,6 +69,7 @@ namespace PostService
 
             // Configure DI for application services
             services.AddScoped<IPostService, PostService.Services.PostService>();
+            services.AddScoped<IArticleService, PostService.Services.ArticleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
