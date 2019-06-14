@@ -1,0 +1,15 @@
+<div>
+  <image-cropper [imageChangedEvent]="data.imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="3/ 1"
+  [resizeToWidth]="1350" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+  (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+</image-cropper>
+<div class="cropreview row align-items-center">
+  <div class="col-6">
+      <img [src]="croppedImage" />
+  </div>
+  <div class="col-6 mx-auto btndialog">
+      <button mat-raised-button color="primary" class="cancle" (click)="onNoClick()">Huỷ đăng</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Đăng ảnh</button>
+  </div>
+</div>
+</div>
