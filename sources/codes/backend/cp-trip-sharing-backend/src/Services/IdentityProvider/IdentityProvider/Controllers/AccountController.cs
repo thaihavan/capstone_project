@@ -30,9 +30,9 @@ namespace IdentityProvider.Controllers
         {
             Account account = _accountService.Authenticate(accountParam.Email, accountParam.Password);
 
-            if (account == null||account.Token == null)
+            if (account == null || account.Token == null)
             {
-                return BadRequest(new { message = "Email or password is incorrect" });
+                return BadRequest(new ErrorMessage { Message = "Email or password is incorrect" });
             }
             return Ok(account);
         }
@@ -45,11 +45,11 @@ namespace IdentityProvider.Controllers
             var result = _accountService.Register(accountParam);
             if (!result)
             {
-                return BadRequest(new { message = "Email is in use" });
+                return BadRequest(new ErrorMessage { Message = "Email is in use" });
             }
             Account account = _accountService.Authenticate(accountParam.Email, accountParam.Password);
 
-            return Ok(new { token=account.Token});
+            return Ok(new { token = account.Token });
         }
 
         [Authorize(Roles = "member")]
@@ -57,10 +57,10 @@ namespace IdentityProvider.Controllers
         public IActionResult ChangePassword([FromBody] ChangePasswordModel param)
         {
             var accountId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
-            var result =_accountService.ChangePassword(accountId, param.oldPassword,param.newPassword);
+            var result = _accountService.ChangePassword(accountId, param.CurrentPassword, param.NewPassword);
             if (!result)
             {
-                return BadRequest(new { message = "Error" });
+                return BadRequest(new ErrorMessage { Message = "Error" });
             }
             return Ok();
         }
@@ -70,8 +70,9 @@ namespace IdentityProvider.Controllers
         public IActionResult ResetPassword([FromBody]Account accountParam)
         {
             var result = _accountService.ResetPassword(accountParam.Email);
-            if (!result) {
-                return BadRequest(new { message = "Error" });
+            if (!result)
+            {
+                return BadRequest(new ErrorMessage { Message = "Error" });
             }
             return Ok();
 
