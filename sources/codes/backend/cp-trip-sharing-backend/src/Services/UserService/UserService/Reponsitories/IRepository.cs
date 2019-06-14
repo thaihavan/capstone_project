@@ -12,11 +12,11 @@ namespace UserServices.Reponsitories
 
         T GetById(string id);
 
-        bool Add(T document);
+        T Add(T document);
 
-        bool Update(T document);
+        T Update(T document);
 
-        bool Delete(T document);
+        T Delete(T document);
 
     }
 }
