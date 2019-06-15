@@ -12,10 +12,16 @@ namespace IdentityProvider.Services.Interfaces
 
         Account Authenticate(string email, string password);
 
-        bool Register(Account account);
+        Account Register(Account account);
 
         bool ChangePassword(string userId,string oldPassword, string newPassword);
 
-        bool ResetPassword(string email);
+        string GetResetPasswordToken(string email);
+
+        string GenerateRandomPassword();
+
+        bool VerifyEmail(string id);
+
+        bool ResetPassword(string accountId, string newPassword);
     }
 }

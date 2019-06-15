@@ -14,6 +14,8 @@ namespace IdentityProvider.Services
 {
     public class AccountService : IAccountService
     {
+        private static Random _random = new Random();
+
         private readonly AccountRepository _accountRepository = null;
 
         private readonly IOptions<AppSettings> _settings = null;
@@ -48,9 +50,9 @@ namespace IdentityProvider.Services
             return _accountRepository.GetAll();
         }
 
-        public bool Register(Account account)
+        public Account Register(Account account)
         {
-            if (_accountRepository.GetByEmail(account.Email) != null) return false;
+            if (_accountRepository.GetByEmail(account.Email) != null) return null;
             var salt = Salt.Generate();
             var encryptedAccount = new Account()
             {
@@ -58,19 +60,58 @@ namespace IdentityProvider.Services
                 Email = account.Email,
                 Password=Hash.HashPassword(account.Password, salt),
                 PasswordSalt=salt,
-                Role="member",
+                Role= "UNVERIFIED",
                 UserId=new BsonObjectId(ObjectId.GenerateNewId())
             };
-            return _accountRepository.Add(encryptedAccount);
+            _accountRepository.Add(encryptedAccount);
+            return encryptedAccount;
         }
 
-        public bool ChangePassword(string accountId,string oldPassword, string newPassword) {
-            return _accountRepository.ChangePassword(accountId, oldPassword, newPassword);
+        public bool ChangePassword(string accountId,string currentPassword, string newPassword) {
+            var account = _accountRepository.Get(accountId);
+            var salt = account.PasswordSalt;
+            if (Hash.HashPassword(currentPassword, salt).Equals(account.Password))
+            {
+                string newEncryptedPassword = Hash.HashPassword(newPassword, salt);
+                account.Password = newEncryptedPassword;
+                var result = _accountRepository.Update(account);
+                return result;
+            }
+            else return false;
         }
 
-        public bool ResetPassword(string email)
+        public string GetResetPasswordToken(string email)
         {
-            return _accountRepository.ResetPassword(email);
+            var account = _accountRepository.GetByEmail(email);
+            var result=JwtToken.GenerateResetPasswordToken(_settings.Value.Secret, account);
+            return result;
+        }
+
+        public string GenerateRandomPassword()
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 10)
+              .Select(s => s[_random.Next(s.Length)]).ToArray());
+        }
+
+        public bool VerifyEmail(string id)
+        {
+            //get eq account and set role to member
+            var account=_accountRepository.Get(id);
+            account.Role = "member";
+            //update account with member role
+            return _accountRepository.Update(account);           
+        }
+
+        public bool ResetPassword(string accountId, string newPassword)
+        {
+            var account = _accountRepository.Get(accountId);
+            var salt = account.PasswordSalt;
+            string newEncryptedPassword = Hash.HashPassword(newPassword, salt);
+            account.Password = newEncryptedPassword;
+            var result = _accountRepository.Update(account);
+            return result;
+           
         }
     }
 }
