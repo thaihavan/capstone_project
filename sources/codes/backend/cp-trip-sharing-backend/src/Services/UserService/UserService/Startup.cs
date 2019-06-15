@@ -37,8 +37,6 @@ namespace UserServices
             // Configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-            
-            //services.AddTransient<IUserService, UserService>();
 
             // Configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
@@ -62,7 +60,8 @@ namespace UserServices
                     RequireExpirationTime = true
                 };
             });
-
+            
+            // Configure DI for application services
             services.AddScoped<IUserService, UserService>();
             
         }
