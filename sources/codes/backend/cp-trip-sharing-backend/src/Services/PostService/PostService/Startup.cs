@@ -73,6 +73,7 @@ namespace PostService
             services.AddScoped<IPostService, PostService.Services.PostService>();
             services.AddScoped<IArticleService, PostService.Services.ArticleService>();
             services.AddScoped<IVirtualTripService, PostService.Services.VirtualTripService>();
+            services.AddScoped<IUploadFileService, PostService.Services.UploadFileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +87,11 @@ namespace PostService
             {
                 app.UseHsts();
             }
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
