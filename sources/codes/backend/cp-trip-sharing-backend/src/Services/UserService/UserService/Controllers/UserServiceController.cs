@@ -50,12 +50,12 @@ namespace UserServices.Controllers
 
         // POST: api/UserServices/follow
         // body: { following : "id" }
-        
+        [Authorize(Roles = "member")]
         [HttpPost("follow")]
         public IActionResult Follow([FromBody] Follow param)
         {
             var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_Id").Value;
+            var userId = identity.FindFirst("user_id").Value;
             param.Follower =  ObjectId.Parse(userId);
             if (_userService.AddFollows(param) != null)
             {
@@ -78,7 +78,7 @@ namespace UserServices.Controllers
                 Following = ObjectId.Parse(followingId)
             };
             var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_Id").Value;
+            var userId = identity.FindFirst("user_id").Value;
             param.Follower = new ObjectId(userId);
             if (_userService.Unfollow(param) != null)
             {
@@ -97,7 +97,7 @@ namespace UserServices.Controllers
         public IActionResult Bookmark([FromBody] Bookmark bookmark)
         {
             var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_Id").Value;
+            var userId = identity.FindFirst("user_id").Value;
             bookmark.UserId = new ObjectId(userId);
             if (_userService.AddBookmark(bookmark) != null)
             {
@@ -120,7 +120,7 @@ namespace UserServices.Controllers
                 PostId = new ObjectId(postId)
             };
             var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_Id").Value;
+            var userId = identity.FindFirst("user_id").Value;
             bookmark.UserId = new ObjectId(userId);
             if (_userService.DeleteBookmark(bookmark) != null)
             {
@@ -137,7 +137,7 @@ namespace UserServices.Controllers
         public IActionResult GetAllPhoto()
         {
             var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_Id").Value;
+            var userId = identity.FindFirst("user_id").Value;
             var photos = _userService.GetAllPhoto(userId);
             return new OkObjectResult(photos);
         }
@@ -148,7 +148,7 @@ namespace UserServices.Controllers
         public IActionResult AddPhoto([FromBody] Photo photo)
         {
             var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_Id").Value;
+            var userId = identity.FindFirst("user_id").Value;
             photo.Author = new ObjectId(userId);
             if (_userService.AddPhoto(photo) != null)
             {
@@ -163,7 +163,7 @@ namespace UserServices.Controllers
         public IActionResult AddBlock([FromBody] Block block)
         {
             var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_Id").Value;
+            var userId = identity.FindFirst("user_id").Value;
             block.BlockerId = new ObjectId(userId);
             if (_userService.Block(block) != null)
             {
@@ -178,7 +178,7 @@ namespace UserServices.Controllers
         public IActionResult UnBlock([FromBody] Block block)
         {
             var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_Id").Value;
+            var userId = identity.FindFirst("user_id").Value;
             block.BlockerId = new ObjectId(userId);
             if (_userService.UnBlock(block) != null)
             {
