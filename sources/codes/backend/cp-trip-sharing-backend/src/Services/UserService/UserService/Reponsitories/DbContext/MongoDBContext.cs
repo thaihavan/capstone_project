@@ -47,7 +47,7 @@ namespace UserServices.Reponsitories.DbContext
             {
                 if(_database != null)
                 {
-                    return _database.GetCollection<Follow>("follows");
+                    return _database.GetCollection<Follow>("Follows");
                 }
                 return null;
             }
@@ -59,7 +59,7 @@ namespace UserServices.Reponsitories.DbContext
             {
                 if (_database != null)
                 {
-                    return _database.GetCollection<Bookmark>("bookmarks");
+                    return _database.GetCollection<Bookmark>("Bookmarks");
                 }
                 return null;
             }
@@ -71,7 +71,7 @@ namespace UserServices.Reponsitories.DbContext
             {
                 if (_database != null)
                 {
-                    return _database.GetCollection<Photo>("photos");
+                    return _database.GetCollection<Photo>("Photos");
                 }
                 return null;
             }
@@ -83,7 +83,7 @@ namespace UserServices.Reponsitories.DbContext
             {
                 if (_database != null)
                 {
-                    return _database.GetCollection<Block>("blocks");
+                    return _database.GetCollection<Block>("Blocks");
                 }
                 return null;
             }

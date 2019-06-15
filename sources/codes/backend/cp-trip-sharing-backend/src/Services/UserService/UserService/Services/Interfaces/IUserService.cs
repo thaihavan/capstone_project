@@ -13,17 +13,6 @@ namespace UserServices.Services.Interfaces
         User Add(User user);
         User GetUserById(string userId);
 
-        Follow AddFollows(Follow follows);
-        Follow Unfollow(Follow follows);
-
-        Bookmark AddBookmark(Bookmark bookmark);
-        Bookmark DeleteBookmark(Bookmark bookmark);
-        Bookmark GetUserBookmark(string userId);
-
-        Photo AddPhoto(Photo photo);
-        IEnumerable<Photo> GetAllPhoto(string userId);
-
-        Block Block(Block block);
-        Block UnBlock(Block block);
+        
     }
 }

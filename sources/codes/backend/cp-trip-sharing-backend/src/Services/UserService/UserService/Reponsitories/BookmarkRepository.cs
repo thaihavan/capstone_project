@@ -10,14 +10,20 @@ using UserServices.Reponsitories.DbContext;
 
 namespace UserServices.Reponsitories
 {
-    public class BookmarkRepository : IRepository<Bookmark>
+    public class BookmarkRepository : IBookmarkRepository
     {
         private readonly IMongoCollection<Bookmark> _bookmarks = null;
+        private IOptions<AppSettings> settings;
 
         public BookmarkRepository()
         {
             var dbContext = new MongoDbContext();
             _bookmarks = dbContext.BookmarkCollection;
+        }
+
+        public BookmarkRepository(IOptions<AppSettings> settings)
+        {
+            this.settings = settings;
         }
 
         public Bookmark Add(Bookmark bookmark)
@@ -31,16 +37,6 @@ namespace UserServices.Reponsitories
             return _bookmarks.Find(bookmark => bookmark.UserId.Equals(user_id)).FirstOrDefault();
         }
 
-        public IEnumerable<Bookmark> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Bookmark Update(Bookmark document)
-        {
-            throw new NotImplementedException();
-        }
-
         public Bookmark Delete(Bookmark document)
         {
             _bookmarks.DeleteOne(item => item.UserId.Equals(document.UserId) && item.PostId.Equals(document.PostId));
@@ -51,6 +47,11 @@ namespace UserServices.Reponsitories
         {
             List<Bookmark> bookmarks = _bookmarks.Find(temp => temp.UserId.Equals(id)).ToList();
             return bookmarks;
+        }
+
+        public Bookmark Update(Bookmark document)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,12 +7,20 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using UserServices.Helpers;
 using UserServices.Reponsitories.DbContext;
+using MongoDB.Bson;
+using UserServices.Reponsitories.Interfaces;
 
 namespace UserServices.Reponsitories
 {
-    public class PhotoRepository : IRepository<Photo>
+    public class PhotoRepository : IPhotoRepository
     {
         private readonly IMongoCollection<Photo> _photos = null;
+        private readonly IOptions<AppSettings> settings;
+
+        public PhotoRepository(IOptions<AppSettings> settings)
+        {
+            this.settings = settings;
+        }
 
         public PhotoRepository()
         {
@@ -33,7 +41,7 @@ namespace UserServices.Reponsitories
 
         public IEnumerable<Photo> GetAll(string userId)
         {
-            List<Photo> photos = _photos.Find(temp => temp.Author.Equals(userId)).ToList();
+            List<Photo> photos = _photos.Find(temp => temp.Author.Equals(new BsonObjectId(ObjectId.Parse(userId)))).ToList();
             return photos;
         }
 

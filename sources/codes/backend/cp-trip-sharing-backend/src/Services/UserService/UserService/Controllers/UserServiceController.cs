@@ -49,17 +49,20 @@ namespace UserServices.Controllers
         }
 
         // POST: api/UserServices/follow
-        // body: { following : "id" }
         [Authorize(Roles = "member")]
         [HttpPost("follow")]
-        public IActionResult Follow([FromBody] Follow param)
+        public IActionResult Follow([FromQuery] string following)
         {
+            var follow = new Follow()
+            {
+                Following = new BsonObjectId(ObjectId.Parse(following))
+            };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            param.Follower =  ObjectId.Parse(userId);
-            if (_userService.AddFollows(param) != null)
+            follow.Follower = new BsonObjectId(ObjectId.Parse(userId));
+            if (_userService.AddFollows(follow) != null)
             {
-                return Ok();
+                return Ok(follow);
             }
             else
             {
@@ -68,21 +71,20 @@ namespace UserServices.Controllers
         }
 
         // DELETE: api/UserServices/unfollow
-        // body: { following : "id" }
         [Authorize(Roles = "member")]
         [HttpDelete("unfollow")]
-        public IActionResult Unfollow([FromQuery] string followingId)
+        public IActionResult Unfollow([FromQuery] string following)
         {
-            var param = new Follow
+            var follow = new Follow
             {
-                Following = ObjectId.Parse(followingId)
+                Following = ObjectId.Parse(following)
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            param.Follower = new ObjectId(userId);
-            if (_userService.Unfollow(param) != null)
+            follow.Follower = new ObjectId(userId);
+            if (_userService.Unfollow(follow) != null)
             {
-                return Ok(param);
+                return Ok(follow);
             }
             else
             {
@@ -91,21 +93,24 @@ namespace UserServices.Controllers
         }
 
         // POST: api/UserService/bookmark
-        // body { postId : "id" }
         [Authorize(Roles = "member")]
         [HttpPost("bookmark")]
-        public IActionResult Bookmark([FromBody] Bookmark bookmark)
+        public IActionResult Bookmark([FromQuery] string postId)
         {
+            var bookmark = new Bookmark()
+            {
+                PostId = new BsonObjectId(ObjectId.Parse(postId))
+            };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            bookmark.UserId = new ObjectId(userId);
+            bookmark.UserId = new BsonObjectId(ObjectId.Parse(userId));
             if (_userService.AddBookmark(bookmark) != null)
             {
-                return Ok();
+                return Ok(bookmark);
             }
             else
             {
-                return NotFound();
+                return BadRequest();
             }
         }
 
@@ -117,18 +122,18 @@ namespace UserServices.Controllers
         {
             var bookmark = new Bookmark
             {
-                PostId = new ObjectId(postId)
+                PostId = new BsonObjectId(ObjectId.Parse(postId))
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            bookmark.UserId = new ObjectId(userId);
+            bookmark.UserId = new BsonObjectId(ObjectId.Parse(userId));
             if (_userService.DeleteBookmark(bookmark) != null)
             {
-                return Ok();
+                return Ok(bookmark);
             }
             else
             {
-                return NotFound();
+                return BadRequest();
             }
         }
 
@@ -143,28 +148,35 @@ namespace UserServices.Controllers
         }
 
         // POST: api/UserServices/addphoto
-        // body: { url : "url", date : "date" }
         [HttpPost("addphoto")]
-        public IActionResult AddPhoto([FromBody] Photo photo)
+        public IActionResult AddPhoto([FromQuery] string url,[FromQuery] DateTime date)
         {
+            var photo = new Photo()
+            {
+                Url = url,
+                Date = date
+            };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            photo.Author = new ObjectId(userId);
+            photo.Author = new BsonObjectId(ObjectId.Parse(userId));
             if (_userService.AddPhoto(photo) != null)
             {
-                return Ok();
+                return Ok(photo);
             }
-            return NotFound();
+            return BadRequest();
         }
 
         // POST: api/UserServices/addblock
-        // body: { blockedId : "id" }
         [HttpPost("addblock")]
-        public IActionResult AddBlock([FromBody] Block block)
+        public IActionResult AddBlock([FromQuery] string blocked)
         {
+            var block = new Block()
+            {
+                BlockedId = new BsonObjectId(ObjectId.Parse(blocked))
+            };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            block.BlockerId = new ObjectId(userId);
+            block.BlockerId = new BsonObjectId(ObjectId.Parse(userId));
             if (_userService.Block(block) != null)
             {
                 return Ok();
@@ -173,13 +185,16 @@ namespace UserServices.Controllers
         }
 
         // DELETE: api/UserServices/unblock
-        // body { BlockedId : "id" }
         [HttpDelete("unblock")]
-        public IActionResult UnBlock([FromBody] Block block)
+        public IActionResult UnBlock([FromQuery] string blocked)
         {
+            var block = new Block()
+            {
+                BlockedId = new BsonObjectId(ObjectId.Parse(blocked))
+            };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            block.BlockerId = new ObjectId(userId);
+            block.BlockerId = new BsonObjectId(ObjectId.Parse(userId));
             if (_userService.UnBlock(block) != null)
             {
                 return Ok();

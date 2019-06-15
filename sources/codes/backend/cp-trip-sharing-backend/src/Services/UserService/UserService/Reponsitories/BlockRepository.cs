@@ -10,14 +10,20 @@ using UserServices.Reponsitories.DbContext;
 
 namespace UserServices.Reponsitories
 {
-    public class BlockRepository : IRepository<Block>
+    public class BlockRepository : IBlockRepository
     {
         private readonly IMongoCollection<Block> _blocks = null;
+        private IOptions<AppSettings> settings;
 
         public BlockRepository()
         {
             var dbContext = new MongoDbContext();
             _blocks = dbContext.BlockCollection;
+        }
+
+        public BlockRepository(IOptions<AppSettings> settings)
+        {
+            this.settings = settings;
         }
 
         public Block Add(Block document)

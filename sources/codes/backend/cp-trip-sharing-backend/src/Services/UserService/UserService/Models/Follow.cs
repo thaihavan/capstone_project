@@ -11,15 +11,12 @@ namespace UserServices.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Id { get; set; }
+        public BsonObjectId Id { get; set; }
 
         [BsonElement("follower")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Follower { get; set; }
+        public BsonObjectId Follower { get; set; }
 
         [BsonElement("following")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Following { get; set; }
+        public BsonObjectId Following { get; set; }
     }
 }

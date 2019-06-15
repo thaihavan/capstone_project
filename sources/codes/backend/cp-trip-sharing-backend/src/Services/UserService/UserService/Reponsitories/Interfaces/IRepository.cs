@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using UserServices.Models;
 
-namespace UserServices.Reponsitories
+namespace UserServices.Reponsitories.Interfaces
 {
-    interface IRepository<T> where T : Model
+    public interface IRepository<T> where T : Model
     {
         IEnumerable<T> GetAll(string id);
 

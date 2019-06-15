@@ -8,16 +8,22 @@ using UserServices.Helpers;
 using UserServices.Models;
 using UserServices.Reponsitories.DbContext;
 
-namespace UserServices.Reponsitories
+namespace UserServices.Reponsitories.Interfaces
 {
-    public class FollowRepository : IRepository<Follow>
+    public class FollowRepository : IFollowRepository
     {
         private readonly IMongoCollection<Follow> _follows = null;
+        private readonly IOptions<AppSettings> settings;
 
         public FollowRepository()
         {
             var dbContext = new MongoDbContext();
             _follows = dbContext.FollowCollection;
+        }
+
+        public FollowRepository(IOptions<AppSettings> settings)
+        {
+            this.settings = settings;
         }
 
         public Follow Add(Follow follow)
@@ -26,7 +32,7 @@ namespace UserServices.Reponsitories
             return follow;
         }
 
-        public Follow GetById(string id)
+        public Follow Delete(Follow document)
         {
             throw new NotImplementedException();
         }
@@ -37,6 +43,16 @@ namespace UserServices.Reponsitories
             return follows;
         }
 
+        public IEnumerable<Follow> GetAll(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Follow GetById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Follow Unfollow(Follow follow)
         {
             _follows.DeleteOne(temp => temp.Follower.Equals(follow.Follower) && temp.Following.Equals(follow.Following));
@@ -44,16 +60,6 @@ namespace UserServices.Reponsitories
         }
 
         public Follow Update(Follow document)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Follow Delete(Follow document)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Follow> GetAll(string id)
         {
             throw new NotImplementedException();
         }

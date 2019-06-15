@@ -11,15 +11,12 @@ namespace UserServices.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Id { get; set; }
+        public BsonObjectId Id { get; set; }
 
         [BsonElement("blocker")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId BlockerId { get; set; }
+        public BsonObjectId BlockerId { get; set; }
 
         [BsonElement("blocked")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId BlockedId { get; set; }
+        public BsonObjectId BlockedId { get; set; }
     }
 }
