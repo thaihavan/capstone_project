@@ -16,7 +16,7 @@ namespace IdentityProvider.Repositories
     public class AccountRepository : IAccountRepository
     {
 
-        
+
         private readonly IMongoCollection<Account> _accounts = null;
 
         public AccountRepository(IOptions<AppSettings> settings)
@@ -29,10 +29,10 @@ namespace IdentityProvider.Repositories
         {
         }
 
-        public bool Add(Account account)
+        public Account Add(Account account)
         {
             _accounts.InsertOne(account);
-            return true;
+            return account;
         }
 
         public bool Delete(string id)
@@ -42,29 +42,30 @@ namespace IdentityProvider.Repositories
 
         public Account Get(string id)
         {
-            Account account = _accounts.Find(Builders<Account>.Filter.Eq("_id",ObjectId.Parse(id))).ToList().FirstOrDefault();
-            
-return account;
+            Account account = _accounts.Find(
+                Builders<Account>.Filter.Eq("_id", ObjectId.Parse(id))).ToList().FirstOrDefault();
+
+            return account;
         }
 
         public IEnumerable<Account> GetAll()
         {
             List<Account> accounts = _accounts.Find(account => true).ToList();
+
             return accounts;
         }
 
-        public bool Update(Account account)
+        public Account Update(Account account)
         {
-            _accounts.FindOneAndReplace(
-                Builders<Account>.Filter.Eq("_id", account.Id),
-                account);
-            return true;
+            _accounts.FindOneAndReplace(Builders<Account>.Filter.Eq("_id", account.Id), account);
+
+            return account;
         }
 
         public Account GetByEmail(string email)
-        {      
+        {
             return _accounts.Find(account => account.Email.Equals(email)).FirstOrDefault();
         }
-      
+
     }
 }

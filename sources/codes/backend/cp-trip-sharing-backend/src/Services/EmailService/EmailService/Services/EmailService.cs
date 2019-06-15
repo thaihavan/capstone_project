@@ -1,6 +1,5 @@
 ﻿using EmailService.Helpers;
 using EmailService.Models;
-using EmailService.Repositories;
 using EmailService.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -19,11 +18,11 @@ namespace EmailService.Services
     public class EmailService : IEmailService
     {
         private readonly string _apiKey;
-        private readonly IOptions<AppSettings> _settings = null;        
+        private readonly IOptions<AppSettings> _settings = null;     
 
         public EmailService(IOptions<AppSettings> settings){
             _settings = settings;
-            _apiKey = _settings.Value.ApiKey;           
+            _apiKey = _settings.Value.ApiKey;
         }
         public HttpResponseMessage SendEmail(Email param)
         {

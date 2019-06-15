@@ -12,11 +12,11 @@ namespace IdentityProvider.Services.Interfaces
 
         Account Authenticate(string email, string password);
 
-        Account Register(Account account);
+        Task<Account> RegisterAsync(Account account);
 
         bool ChangePassword(string userId,string oldPassword, string newPassword);
 
-        string GetResetPasswordToken(string email);
+        Task<string> GetResetPasswordTokenAsync(string email);
 
         string GenerateRandomPassword();
 

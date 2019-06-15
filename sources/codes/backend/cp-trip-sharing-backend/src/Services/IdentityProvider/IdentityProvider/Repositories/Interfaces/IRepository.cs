@@ -12,10 +12,10 @@ namespace IdentityProvider.Repositories.Interfaces
 
         T Get(string id);
 
-        bool Add(T account);
+        T Add(T param);
 
         bool Delete(string id);
 
-        bool Update(T account);
+        T Update(T param);
     }
 }

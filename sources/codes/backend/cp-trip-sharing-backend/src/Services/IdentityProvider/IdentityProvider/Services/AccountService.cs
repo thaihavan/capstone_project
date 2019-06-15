@@ -20,20 +20,18 @@ namespace IdentityProvider.Services
         private readonly IAccountRepository _accountRepository = null;
 
         private readonly IOptions<AppSettings> _settings = null;
+        private readonly PublishToTopic _publishToTopic = null;
 
         public AccountService(IOptions<AppSettings> settings)
         {
             _accountRepository = new AccountRepository(settings);
+            _publishToTopic = new PublishToTopic();
             _settings = settings;
         }
 
-        public AccountService(IAccountRepository accountRepository, IOptions<AppSettings> settings)
-        {
-            _accountRepository = accountRepository;
-            _settings = settings;
-        }
-
-        public AccountService(IAccountRepository accountRepository,IOptions<AppSettings> settings)
+        public AccountService(IAccountRepository accountRepository, 
+            IOptions<AppSettings> settings,
+            IPublishToTopic publishToTopic)
         {
             _accountRepository = accountRepository;
             _settings = settings;
@@ -63,7 +61,7 @@ namespace IdentityProvider.Services
             return _accountRepository.GetAll();
         }
 
-        public Account Register(Account account)
+        public async Task<Account> RegisterAsync(Account account)
         {
             if (_accountRepository.GetByEmail(account.Email) != null) return null;
             var salt = Salt.Generate();
@@ -71,16 +69,32 @@ namespace IdentityProvider.Services
             {
                 Username = account.Username,
                 Email = account.Email,
-                Password=Hash.HashPassword(account.Password, salt),
-                PasswordSalt=salt,
-                Role= "unverified",
-                UserId=new BsonObjectId(ObjectId.GenerateNewId())
+                Password = Hash.HashPassword(account.Password, salt),
+                PasswordSalt = salt,
+                Role = "unverified",
+                UserId = new BsonObjectId(ObjectId.GenerateNewId())
             };
-            _accountRepository.Add(encryptedAccount);
-            return encryptedAccount;
+
+            var result = _accountRepository.Add(encryptedAccount);
+
+            if(result != null)
+            {
+                Mail mail = new Mail()
+                {
+                    Subject = "Thanks for joining TripSharing",
+                    To = result.Email,
+                    Url = $"/api/identity/account/verify?token={result.Token}",
+                    EmailType = "EmailConfirm"
+                };
+
+                await _publishToTopic.PublishEmail(mail);
+            }
+
+            return result;
         }
 
-        public bool ChangePassword(string accountId,string currentPassword, string newPassword) {
+        public bool ChangePassword(string accountId, string currentPassword, string newPassword)
+        {
             var account = _accountRepository.Get(accountId);
             var salt = account.PasswordSalt;
             if (Hash.HashPassword(currentPassword, salt).Equals(account.Password))
@@ -88,16 +102,30 @@ namespace IdentityProvider.Services
                 string newEncryptedPassword = Hash.HashPassword(newPassword, salt);
                 account.Password = newEncryptedPassword;
                 var result = _accountRepository.Update(account);
-                return result;
+                return result != null;
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
 
-        public string GetResetPasswordToken(string email)
+        public async Task<string> GetResetPasswordTokenAsync(string email)
         {
             var account = _accountRepository.GetByEmail(email);
-            var result=JwtToken.GenerateResetPasswordToken(_settings.Value.Secret, account);
-            return result;
+            var token = JwtToken.GenerateResetPasswordToken(_settings.Value.Secret, account);
+
+            Mail mail = new Mail()
+            {
+                Subject = "Reset password",
+                To = email,
+                Url = $"/api/identity/account/resetpassword?token={token}",
+                EmailType = "EmailConfirm"
+            };
+
+            await _publishToTopic.PublishEmail(mail);
+
+            return token;
         }
 
         public string GenerateRandomPassword()
@@ -109,11 +137,11 @@ namespace IdentityProvider.Services
 
         public bool VerifyEmail(string id)
         {
-            //get eq account and set role to member
-            var account=_accountRepository.Get(id);
+            // get eq account and set role to member
+            var account = _accountRepository.Get(id);
             account.Role = "member";
-            //update account with member role
-            return _accountRepository.Update(account);           
+            // update account with member role
+            return _accountRepository.Update(account) != null;
         }
 
         public bool ResetPassword(string accountId, string newPassword)
@@ -123,8 +151,8 @@ namespace IdentityProvider.Services
             string newEncryptedPassword = Hash.HashPassword(newPassword, salt);
             account.Password = newEncryptedPassword;
             var result = _accountRepository.Update(account);
-            return result;
-           
+            return result != null;
+
         }
     }
 }

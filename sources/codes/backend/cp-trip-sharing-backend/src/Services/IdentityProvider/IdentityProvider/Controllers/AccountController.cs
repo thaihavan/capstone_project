@@ -49,7 +49,7 @@ namespace IdentityProvider.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody]Account accountParam)
         {
-            var result = _accountService.Register(accountParam);
+            var result = _accountService.RegisterAsync(accountParam);
             if (result==null)
             {
                 return BadRequest(new ErrorMessage { Message = "Email is in use" });
@@ -85,7 +85,7 @@ namespace IdentityProvider.Controllers
         [HttpPost("forgotpassword")]
         public IActionResult ForgotPassword([FromBody]Account accountParam)
         {
-            var result = _accountService.GetResetPasswordToken(accountParam.Email);           
+            var result = _accountService.GetResetPasswordTokenAsync(accountParam.Email);           
             return Ok();
         }
 
