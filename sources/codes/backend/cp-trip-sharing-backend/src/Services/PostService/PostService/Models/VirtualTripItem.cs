@@ -7,16 +7,16 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace PostService.Models
 {
-    public class VirtualTripItem : Model
+    public class VirtualTripItem
     {
         [BsonElement("name")]
         public string Name { get; set; }
 
         [BsonElement("longitude")]
-        public double Longitude { get; set; }
+        public float Longitude { get; set; }
 
         [BsonElement("latitude")]
-        public double Latitude { get; set; }
+        public float Latitude { get; set; }
 
         [BsonElement("note")]
         public string Note { get; set; }
