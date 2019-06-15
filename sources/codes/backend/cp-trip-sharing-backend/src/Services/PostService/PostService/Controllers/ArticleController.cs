@@ -44,12 +44,14 @@ namespace PostService.Controllers
         }
 
         [Authorize(Roles = "member")]
-        [HttpPost]
+        [HttpPost("create")]
         public IActionResult CreateArticle([FromBody] Article article)
         {
-            if (article.Post.Id != article.PostId)
+            var authorId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+            if (!article.Post.Author.AuthorId.Equals(new BsonObjectId(authorId)))
             {
-                return BadRequest(new ErrorMessage() { Message = "PostId doesn't match." });
+                return Unauthorized();
             }
 
             Post addedPost = _postService.Add(article.Post);

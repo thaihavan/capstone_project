@@ -22,7 +22,7 @@ namespace IdentityProvider.Services
 
         public AccountService(IOptions<AppSettings> settings)
         {
-            _accountRepository = new AccountRepository();
+            _accountRepository = new AccountRepository(settings);
             _settings = settings;
         }
 

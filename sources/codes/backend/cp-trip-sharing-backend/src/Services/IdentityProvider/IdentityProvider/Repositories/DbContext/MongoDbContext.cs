@@ -15,13 +15,12 @@ namespace IdentityProvider.Repositories.DbContext
     {
         private readonly IMongoDatabase _database = null;
 
-        public MongoDbContext()
+        public MongoDbContext(IOptions<AppSettings> settings)
         {
-            var settings = _readAppSettings();
-            var mongoClient = new MongoClient(settings.ConnectionString);
+            var mongoClient = new MongoClient(settings.Value.ConnectionString);
             if (mongoClient != null)
             {
-                _database = mongoClient.GetDatabase(settings.DatabaseName);
+                _database = mongoClient.GetDatabase(settings.Value.DatabaseName);
             }
         }
 

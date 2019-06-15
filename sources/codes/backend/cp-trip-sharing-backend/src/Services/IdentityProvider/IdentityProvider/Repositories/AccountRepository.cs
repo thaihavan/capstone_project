@@ -18,9 +18,9 @@ namespace IdentityProvider.Repositories
         
         private readonly IMongoCollection<Account> _accounts = null;
 
-        public AccountRepository()
+        public AccountRepository(IOptions<AppSettings> settings)
         {
-            var dbContext = new MongoDbContext();
+            var dbContext = new MongoDbContext(settings);
             _accounts = dbContext.Accounts;
         }
 
