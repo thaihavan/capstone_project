@@ -38,18 +38,27 @@ namespace IdentityProvider.Controllers
         }
 
         // Call user service to create new account
+        // pub/sub to email service
+        //{
+        //  "subject":"test send email",
+        //  "To":"linhlpse04693@gmail.com",
+        //  "Url":"TripSharing.com/account/verify?token=account.token",
+        //  "EmailType":"ConfirmEmail"
+        //}
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody]Account accountParam)
         {
             var result = _accountService.Register(accountParam);
-            if (!result)
+            if (result==null)
             {
                 return BadRequest(new ErrorMessage { Message = "Email is in use" });
             }
+
             Account account = _accountService.Authenticate(accountParam.Email, accountParam.Password);
 
-            return Ok(new { token = account.Token });
+            return Ok(new { Message = "success"});
+            
         }
 
         [Authorize(Roles = "member")]
@@ -62,20 +71,37 @@ namespace IdentityProvider.Controllers
             {
                 return BadRequest(new ErrorMessage { Message = "Error" });
             }
-            return Ok(new { message = "change password succes" });
+            return Ok(new { Message = "change password succes" });
         }
 
         [AllowAnonymous]
-        [HttpPost("resetpassword")]
-        public IActionResult ResetPassword([FromBody]Account accountParam)
+        [HttpPost("forgotpassword")]
+        public IActionResult ForgotPassword([FromBody]Account accountParam)
         {
-            var result = _accountService.ResetPassword(accountParam.Email);
-            if (!result)
-            {
-                return BadRequest(new ErrorMessage { Message = "Error" });
-            }
+            var result = _accountService.GetResetPasswordToken(accountParam.Email);           
             return Ok();
-
         }
+
+        [Authorize(Roles = "unverified")]
+        [HttpPost("verify")]
+        public IActionResult VerifyEmailAddress()
+        {
+            var  accountId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            if(_accountService.VerifyEmail(accountId))return Ok(new { Message = "verified"});
+            return BadRequest(new ErrorMessage() { Message = "Error" });
+        }
+
+        [Authorize(Roles ="forgotpassword")]
+        [HttpPost("resetpassword")]
+        public IActionResult ResetPassword([FromBody]ResetPasswordModel param)
+        {
+            var accountId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            if(!_accountService.ResetPassword(accountId, param.NewPassword))
+            {
+                return BadRequest(new ErrorMessage() { Message = "Error" });
+            }
+            return Ok(new { Message = "Success" });
+        }
+
     }
 }

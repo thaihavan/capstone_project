@@ -1,21 +1,22 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace PostService.Models
 {
-    public class VirtualTripItem
+    public class VirtualTripItem : Model
     {
         [BsonElement("name")]
         public string Name { get; set; }
 
         [BsonElement("longitude")]
-        public float Longitude { get; set; }
+        public double Longitude { get; set; }
 
         [BsonElement("latitude")]
-        public float Latitude { get; set; }
+        public double Latitude { get; set; }
 
         [BsonElement("note")]
         public string Note { get; set; }

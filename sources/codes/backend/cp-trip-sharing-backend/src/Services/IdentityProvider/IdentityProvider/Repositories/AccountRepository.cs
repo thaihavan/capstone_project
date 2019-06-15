@@ -49,52 +49,16 @@ namespace IdentityProvider.Repositories
 
         public bool Update(Account account)
         {
-            throw new NotImplementedException();
+            _accounts.FindOneAndReplace(
+                Builders<Account>.Filter.Eq("_id", account.Id),
+                account);
+            return true;
         }
 
         public Account GetByEmail(string email)
         {      
             return _accounts.Find(account => account.Email.Equals(email)).FirstOrDefault();
         }
-
-        public bool ChangePassword(string accountId, string oldPassword, string newPassword) {
-            //Get account salt from db 
-            var salt = _accounts.Find(Builders<Account>.Filter.Eq("_id", ObjectId.Parse(accountId))).FirstOrDefault().PasswordSalt;
-            //Get the account with eq accountId and password
-            var account = _accounts.Find(
-                Builders<Account>.Filter.Eq("_id",ObjectId.Parse(accountId))
-                & Builders<Account>.Filter.Eq("password",Hash.HashPassword(oldPassword,salt))
-                ).FirstOrDefault();
-            
-            // Generate new encrypted password for db
-            var newEncryptedPassword = Hash.HashPassword(newPassword, salt);
-
-            _accounts.FindOneAndUpdate(
-                Builders<Account>.Filter.Eq("_id", ObjectId.Parse(accountId)),
-                Builders<Account>.Update.Set("Password", newEncryptedPassword)
-                );
-            return true;
-        }
-
-        public bool ResetPassword(string email)
-        {
-            var salt = _accounts.Find(x => x.Email.Equals(email)).FirstOrDefault().PasswordSalt;
-            // Generate new encrypted password for db
-            var newEncryptedPassword = Hash.HashPassword(GenerateRandomPassword(), salt);
-
-            _accounts.FindOneAndUpdate(
-                Builders<Account>.Filter.Eq("Email", email),
-                Builders<Account>.Update.Set("Password", newEncryptedPassword)
-                );
-            return true;
-        }
-
-        // Generate new random password to reset password
-        public string GenerateRandomPassword()
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, 10)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
+      
     }
 }

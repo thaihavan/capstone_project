@@ -29,16 +29,27 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            var filter = Builders<VirtualTrip>.Filter.Eq(v => v.Id, new BsonObjectId(id));
-
-            _virtualTrips.DeleteOne(filter);
-
-            return true;
+            return _virtualTrips.DeleteOne(x => x.Id.Equals(new BsonObjectId(id))).IsAcknowledged;
         }
 
         public IEnumerable<VirtualTrip> GetAll()
         {
             return _virtualTrips.Find(v => true).ToList();
+        }
+
+        public IEnumerable<VirtualTrip> GetAllTripWithPost()
+        {
+            var virtualTrips = from vt in _virtualTrips.AsQueryable()
+                               join p in _post.AsQueryable() on vt.PostId equals p.Id into joined
+                               from post in joined
+                               select new VirtualTrip
+                               {
+                                   Id = vt.Id,
+                                   PostId = vt.PostId,
+                                   Items = vt.Items,
+                                   Post = post
+                               };
+            return virtualTrips.ToList();
         }
 
         public VirtualTrip GetById(string id)

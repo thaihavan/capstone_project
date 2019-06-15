@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PostService.Helpers;
-using PostService.Repositories.DbContext;
+using PostService.Services;
 using PostService.Services.Interfaces;
 using PostService.Services.Processes;
 
