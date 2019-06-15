@@ -27,9 +27,10 @@ namespace IdentityProvider.Services
             _settings = settings;
         }
 
-        public AccountService(IAccountRepository accountRepository)
+        public AccountService(IAccountRepository accountRepository, IOptions<AppSettings> settings)
         {
             _accountRepository = accountRepository;
+            _settings = settings;
         }
 
         public Account Authenticate(string email, string password)
