@@ -15,7 +15,7 @@ namespace IdentityProvider.Repositories
     public class AccountRepository : IRepository<Account>
     {
 
-        private static Random random = new Random();
+        
         private readonly IMongoCollection<Account> _accounts = null;
 
         public AccountRepository()
