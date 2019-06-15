@@ -54,11 +54,12 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpPost("update")]
-        public IActionResult UpdateArticle([FromBody] Post post)
+        public IActionResult Update([FromBody] Post post)
         {
-            var authorId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
 
-            if (!post.Author.AuthorId.Equals(new BsonObjectId(authorId)))
+            if (!post.Author.AuthorId.Equals(new BsonObjectId(userId)))
             {
                 return Unauthorized();
             }

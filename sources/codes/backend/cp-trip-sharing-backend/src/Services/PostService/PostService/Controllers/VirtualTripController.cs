@@ -61,9 +61,10 @@ namespace PostService.Controllers
         [HttpPost("update")]
         public IActionResult UpdateArticle([FromBody] VirtualTrip virtualTrip)
         {
-            var authorId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
 
-            if (!virtualTrip.Post.Author.AuthorId.Equals(new BsonObjectId(authorId)))
+            if (!virtualTrip.Post.Author.AuthorId.Equals(new BsonObjectId(userId)))
             {
                 return Unauthorized();
             }

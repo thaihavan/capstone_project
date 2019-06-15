@@ -1,5 +1,7 @@
-﻿using MongoDB.Bson;
+﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using PostService.Helpers;
 using PostService.Models;
 using PostService.Repositories.DbContext;
 using System;
@@ -14,9 +16,9 @@ namespace PostService.Repositories
         private readonly IMongoCollection<VirtualTrip> _virtualTrips = null;
         private readonly IMongoCollection<Post> _post = null;
 
-        public VirtualTripRepository()
+        public VirtualTripRepository(IOptions<AppSettings> settings)
         {
-            var dbContext = new MongoDbContext();
+            var dbContext = new MongoDbContext(settings);
             _virtualTrips = dbContext.VirtualTrips;
             _post = dbContext.Posts;
         }

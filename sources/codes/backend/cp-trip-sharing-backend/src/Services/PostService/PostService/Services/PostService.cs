@@ -15,9 +15,9 @@ namespace PostService.Services
 
         private readonly PostRepository _postRepository = null;
 
-        public PostService()
+        public PostService(IOptions<AppSettings> settings)
         {
-            _postRepository = new PostRepository();
+            _postRepository = new PostRepository(settings);
         }
 
         public Post Add(Post param)

@@ -1,4 +1,6 @@
-﻿using PostService.Models;
+﻿using Microsoft.Extensions.Options;
+using PostService.Helpers;
+using PostService.Models;
 using PostService.Repositories;
 using PostService.Services.Interfaces;
 using System;
@@ -12,9 +14,9 @@ namespace PostService.Services
     {
         private readonly ArticleRepository _articleRepository = null;
 
-        public ArticleService()
+        public ArticleService(IOptions<AppSettings> settings)
         {
-            _articleRepository = new ArticleRepository();
+            _articleRepository = new ArticleRepository(settings);
         }
 
         public Article Add(Article article)

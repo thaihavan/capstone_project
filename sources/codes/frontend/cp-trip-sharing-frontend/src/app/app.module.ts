@@ -30,7 +30,6 @@ import { UploadImageComponent } from './shared/components/upload-image/upload-im
 import { CropImageComponent } from './shared/components/upload-image/crop-image/crop-image.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +69,7 @@ import { ChangepasswordPageComponent } from './pages/changepassword-page/changep
     //   InMemoryService, { dataEncapsulation: false }
     // ),
     CKEditorModule,
-    ImageCropperModule
+    ImageCropperModule,
   ],
   providers: [Globals],
   bootstrap: [AppComponent],

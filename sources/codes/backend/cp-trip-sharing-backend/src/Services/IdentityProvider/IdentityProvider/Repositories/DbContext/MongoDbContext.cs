@@ -24,21 +24,6 @@ namespace IdentityProvider.Repositories.DbContext
             }
         }
 
-        private AppSettings _readAppSettings()
-        {
-            var configurationBuilder = new ConfigurationBuilder();
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
-            configurationBuilder.AddJsonFile(path, false);
-
-            var appSettings = configurationBuilder.Build().GetSection("AppSettings");
-
-            return new AppSettings()
-            {
-                ConnectionString = appSettings.GetSection("ConnectionString").Value,
-                DatabaseName = appSettings.GetSection("DatabaseName").Value
-            };
-        }
-
         // Get "accounts" collection
         public IMongoCollection<Account> Accounts
         {
