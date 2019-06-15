@@ -8,74 +8,73 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using PostService.Models;
-using PostService.Services;
 using PostService.Services.Interfaces;
 
 namespace PostService.Controllers
 {
     [Route("api/postservice/[controller]")]
-    [ApiController]
     [Authorize]
-    public class ArticleController : ControllerBase
+    [ApiController]
+    public class VirtualTripController : ControllerBase
     {
-        private readonly IArticleService _articleService = null;
+        private readonly IVirtualTripService _virtualTripService = null;
         private readonly IPostService _postService = null;
 
-        public ArticleController(IArticleService articleService, IPostService postService)
+        public VirtualTripController(IVirtualTripService virtualTripService, IPostService postService)
         {
-            _articleService = articleService;
+            _virtualTripService = virtualTripService;
             _postService = postService;
         }
 
         [AllowAnonymous]
         [HttpGet("all")]
-        public IActionResult GetAllArticleWithPost()
+        public IActionResult GetAllVirtualTripWithPost()
         {
-            var articles = _articleService.GetAllArticleWithPost();
-            return Ok(articles);
+            var virtualTrips = _virtualTripService.GetAllVirtualTripWithPost();
+            return Ok(virtualTrips);
         }
 
         [AllowAnonymous]
         [HttpGet]
         public IActionResult GetById([FromQuery] string id)
         {
-            var article = _articleService.GetById(id);
-            return Ok(article);
+            var virtualTrip = _virtualTripService.GetById(id);
+            return Ok(virtualTrip);
         }
 
         [Authorize(Roles = "member")]
         [HttpPost]
-        public IActionResult CreateArticle([FromBody] Article article)
+        public IActionResult CreateArticle([FromBody] VirtualTrip virtualTrip)
         {
-            if (article.Post.Id != article.PostId)
+            if (virtualTrip.Post.Id != virtualTrip.PostId)
             {
                 return BadRequest(new ErrorMessage() { Message = "PostId doesn't match." });
             }
 
-            Post addedPost = _postService.Add(article.Post);
-            Article addedArticle = _articleService.Add(article);
+            Post addedPost = _postService.Add(virtualTrip.Post);
+            VirtualTrip addedVirtualTrip = _virtualTripService.Add(virtualTrip);
 
-            return Ok(addedArticle);
+            return Ok(addedVirtualTrip);
         }
 
         [Authorize(Roles = "member")]
         [HttpPost("update")]
-        public IActionResult UpdateArticle([FromBody] Article article)
+        public IActionResult UpdateArticle([FromBody] VirtualTrip virtualTrip)
         {
             var authorId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-            if (!article.Post.Author.AuthorId.Equals(new BsonObjectId(authorId)))
+            if (!virtualTrip.Post.Author.AuthorId.Equals(new BsonObjectId(authorId)))
             {
                 return Unauthorized();
             }
 
-            if (article.Post.Id != article.PostId)
+            if (virtualTrip.Post.Id != virtualTrip.PostId)
             {
                 return BadRequest(new ErrorMessage() { Message = "PostId doesn't match." });
             }
 
-            Post updatedPost = _postService.Add(article.Post);
-            Article updatedArticle = _articleService.Update(article);
+            Post updatedPost = _postService.Add(virtualTrip.Post);
+            VirtualTrip updatedArticle = _virtualTripService.Update(virtualTrip);
 
             return Ok(updatedArticle);
         }

@@ -29,12 +29,16 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Article>.Filter.Eq(a => a.Id, new BsonObjectId(id));
+
+            _articles.DeleteOne(filter);
+
+            return true;
         }
 
         public IEnumerable<Article> GetAll()
         {
-            return _articles.Find(x => true).ToList();
+            return _articles.Find(a => true).ToList();
         }
 
         public Article GetById(string id)
@@ -44,7 +48,13 @@ namespace PostService.Repositories
 
         public Article Update(Article param)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Article>.Filter.Eq(a => a.Id, param.Id);
+            var relult = _articles.ReplaceOne(filter, param);
+            if (!relult.IsAcknowledged)
+            {
+                return null;
+            }
+            return param;
         }
 
         public IEnumerable<Article> GetAllArticleWithPost()

@@ -11,5 +11,11 @@ namespace PostService.Services.Interfaces
         IEnumerable<Article> GetAllArticleWithPost();
 
         Article GetById(string id);
+
+        Article Add(Article article);
+
+        Article Update(Article article);
+
+        bool Delete(string id);
     }
 }

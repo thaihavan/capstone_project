@@ -13,11 +13,13 @@ namespace PostService.Models
         [BsonElement("_id")]
         public BsonObjectId Id { get; set; }
 
-        [BsonElement("postId")]
+        [BsonElement("post_id")]
         public BsonObjectId PostId { get; set; }
 
-        [BsonElement("destinations")]
-        public BsonArray Destiantions { get; set; }
+        [BsonElement("items")]
+        public List<VirtualTripItem> Items { get; set; }
 
+        [BsonIgnore]
+        public Post Post { get; set; }
     }
 }

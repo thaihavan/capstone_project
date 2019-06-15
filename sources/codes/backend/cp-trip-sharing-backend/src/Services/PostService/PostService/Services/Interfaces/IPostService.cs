@@ -10,10 +10,12 @@ namespace PostService.Services.Interfaces
     {
         IEnumerable<Post> GetAll();
 
-        Post GetPostById(string id);
+        Post GetById(string id);
 
-        Post AddPost(Post param);
+        Post Add(Post post);
 
-        VirtualTrip AddVirtualTrip(VirtualTrip param);
+        Post Update(Post post);
+
+        bool Delete(string id);
     }
 }

@@ -10,11 +10,21 @@ namespace PostService.Services
 {
     public class ArticleService : IArticleService
     {
-        private ArticleRepository _articleRepository = null;
+        private readonly ArticleRepository _articleRepository = null;
 
         public ArticleService()
         {
             _articleRepository = new ArticleRepository();
+        }
+
+        public Article Add(Article article)
+        {
+            return _articleRepository.Add(article);
+        }
+
+        public bool Delete(string id)
+        {
+            return _articleRepository.Delete(id);
         }
 
         public IEnumerable<Article> GetAllArticleWithPost()
@@ -25,6 +35,11 @@ namespace PostService.Services
         public Article GetById(string id)
         {
             return _articleRepository.GetById(id);
+        }
+
+        public Article Update(Article article)
+        {
+            return _articleRepository.Update(article);
         }
     }
 }

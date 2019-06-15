@@ -12,11 +12,13 @@ namespace PostService.Repositories
     public class VirtualTripRepository : IRepository<VirtualTrip>
     {
         private readonly IMongoCollection<VirtualTrip> _virtualTrips = null;
+        private readonly IMongoCollection<Post> _post = null;
 
         public VirtualTripRepository()
         {
             var dbContext = new MongoDbContext();
             _virtualTrips = dbContext.VirtualTrips;
+            _post = dbContext.Posts;
         }
 
         public VirtualTrip Add(VirtualTrip param)
@@ -25,16 +27,49 @@ namespace PostService.Repositories
             return param;
         }
 
+        public bool Delete(string id)
+        {
+            var filter = Builders<VirtualTrip>.Filter.Eq(v => v.Id, new BsonObjectId(id));
+
+            _virtualTrips.DeleteOne(filter);
+
+            return true;
+        }
+
         public IEnumerable<VirtualTrip> GetAll()
         {
-            return _virtualTrips.Find(x => true).ToList();
+            return _virtualTrips.Find(v => true).ToList();
         }
 
         public VirtualTrip GetById(string id)
         {
-            return _virtualTrips.Find(Builders<VirtualTrip>.Filter.Eq("_id", ObjectId.Parse(id))).FirstOrDefault();
+            return _virtualTrips.Find(v => v.Id.Equals(new BsonObjectId(id))).FirstOrDefault();
         }
 
-        
+        public VirtualTrip Update(VirtualTrip param)
+        {
+            var filter = Builders<VirtualTrip>.Filter.Eq(v => v.Id, param.Id);
+            var relult = _virtualTrips.ReplaceOne(filter, param);
+            if (!relult.IsAcknowledged)
+            {
+                return null;
+            }
+            return param;
+        }
+
+        public IEnumerable<VirtualTrip> GetAllVirtualTripWithPost()
+        {
+            var virtualTrips = from v in _virtualTrips.AsQueryable()
+                           join p in _post.AsQueryable() on v.PostId equals p.Id into joined
+                           from post in joined
+                           select new VirtualTrip
+                           {
+                               Id = v.Id,
+                               PostId = v.PostId,
+                               Items = v.Items,
+                               Post = post
+                           };
+            return virtualTrips.ToList();
+        }
     }
 }
