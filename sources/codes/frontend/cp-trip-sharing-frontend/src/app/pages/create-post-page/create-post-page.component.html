@@ -35,10 +35,24 @@
     </div>
 </div>
 <div class="create-post-body">
-    <ckeditor [editor]="Editor" data="<p>Hello world!</p>" (ready)="onReady($event)"></ckeditor>
+    <ckeditor [config]="config" #myEditor [editor]="Editor" data="<p>Hello world!</p>" (ready)="onReady($event)"></ckeditor>
     <div class="row btnCreate">
-        <button mat-raised-button color="primary">Tạo bài viết</button>
+        <button mat-raised-button (click)="createPost()" color="primary">Tạo bài viết</button>
     </div>
 </div>
 
 <!-- <input #file type="file" (change)='uploadImg(file.files)' /> -->
+<div>
+    <h2>Data stream</h2>
+    <blockquote>
+        <p><strong>Observers :</strong> Observable là nhà cung cấp thì Observer là nơi tiêu thụ dữ liệu của nhà cung cấp
+            Observable emitted. Việc đầu tiên để nhận được dữ liệu từ Observable nó sẽ đăng ký (subscibe) bằng cách sử
+            dụng phương thức subscibeOn(),</p>
+    </blockquote>
+    <p><strong>Observers :</strong><mark class="marker-pink">Observable là nhà cung cấp thì Observer là nơi tiêu thụ dữ
+            liệu của nhà cung cấp Observable emitted</mark>. Việc đầu tiên để nhận được dữ liệu từ Observable nó sẽ đăng
+        ký (subscibe) bằng cách sử dụng phương thức subscibeOn(),</p>
+    <figure class="media">
+        <!-- <oembed url="https://www.youtube.com/watch?v=llMHKYyzCEo&amp;list=RDllMHKYyzCEo&amp;start_radio=1"></oembed> -->
+    </figure>
+</div>

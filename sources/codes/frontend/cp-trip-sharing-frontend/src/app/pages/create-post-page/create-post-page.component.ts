@@ -2,6 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
+import Image from '@ckeditor/ckeditor5-image/src/image';
+import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
+import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
+import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
+import { UploadAdapterService } from 'src/app/core/services/post-service/UploadAdapter.service';
+import { UploadAdapter } from 'src/app/model/UploadAdapter';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-create-post-page',
   templateUrl: './create-post-page.component.html',
@@ -9,8 +16,26 @@ import { UploadImageComponent } from 'src/app/shared/components/upload-image/upl
 })
 export class CreatePostPageComponent implements OnInit {
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
+  @ViewChild('myEditor') myEditor;
   imgUrl: any;
   isHasImg = false;
+  config = {
+    filebrowserUploadUrl: 'http://192.168.0.107:8000/api/crm/v1.0/crm-distribution-library-files',
+    fileTools_requestHeaders: {
+        'X-Requested-With': 'xhr',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    },
+    filebrowserUploadMethod: 'xhr',
+    on: {
+        instanceReady( evt ) {
+            const editor = evt.editor;
+            console.log('editor ===>', editor);
+        },
+        fileUploadRequest(evt) {
+            console.log( 'evt ===>', evt );
+        },
+    },
+};
   public Editor = DecoupledEditor;
   public onReady(editor) {
     editor.ui
@@ -19,10 +44,16 @@ export class CreatePostPageComponent implements OnInit {
         editor.ui.view.toolbar.element,
         editor.ui.getEditableElement()
       );
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        // tslint:disable-next-line:no-string-literal
+        console.log(loader['file']);
+        return new UploadAdapter(loader, '', this.http);
+      };
   }
-  constructor() {}
+  constructor( private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
   uploadImg(files) {
     if (files.lenght === 0) {
       return;
@@ -40,6 +71,7 @@ export class CreatePostPageComponent implements OnInit {
     };
   }
   fileClick() {
+    console.log(this.uploadImage.file);
     this.uploadImage.file.nativeElement.click();
   }
   ImageCropted(image) {
@@ -49,5 +81,10 @@ export class CreatePostPageComponent implements OnInit {
   removeImage() {
     this.imgUrl = '';
     this.isHasImg = false;
+  }
+  createPost() {
+    if (this.myEditor && this.myEditor.editorInstance) {
+      console.log(this.myEditor.editorInstance.getData());
+    }
   }
 }
