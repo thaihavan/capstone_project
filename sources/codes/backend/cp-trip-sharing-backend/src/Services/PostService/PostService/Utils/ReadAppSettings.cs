@@ -45,5 +45,22 @@ namespace PostService.Utils
 
             return settings;
         }
+
+        public static IOptions<CloudStorageSettings> ReadCloudStorageSettings()
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+            configurationBuilder.AddJsonFile(path, false);
+
+            var storageSettings = configurationBuilder.Build().GetSection("CloudStorage");
+
+            var settings = Options.Create(new CloudStorageSettings()
+            {
+                BucketName = storageSettings.GetSection("BucketName").Value,
+                BaseUrl = storageSettings.GetSection("BaseUrl").Value
+            });
+
+            return settings;
+        }
     }
 }

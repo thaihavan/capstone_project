@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PostService.Models;
 using PostService.Services.Interfaces;
 
 namespace PostService.Controllers
@@ -20,9 +21,15 @@ namespace PostService.Controllers
         }
 
         [HttpPost("uploadimage")]
-        public IActionResult UploadImage()
+        public IActionResult UploadImage([FromBody] ImageParam imageParam)
         {
-            string imageUrl = _uploadFileService.UploadImage();
+            if(imageParam.Type == null || imageParam.Type.Trim() == "")
+            {
+                return BadRequest("Image doesn't recognized!");
+            }
+
+            string imageUrl = _uploadFileService.UploadImage(imageParam);
+
             return Ok(imageUrl);
         }
     }
