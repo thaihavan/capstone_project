@@ -1,7 +1,9 @@
 ﻿using Google.Cloud.PubSub.V1;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using PostService.Helpers;
 using PostService.Repositories;
+using PostService.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,17 +17,17 @@ namespace PostService.Services.Processes
     public class AuthorPullProcess
     {
         private PostRepository _postRepository = null;
-        private PubsubSettings _pubsubSettings = null;
+        private IOptions<PubsubSettings> _pubsubSettings = null;
 
         public AuthorPullProcess()
         {
-            _pubsubSettings = _readPubsubSettings();
-            _postRepository = new PostRepository();
+            _pubsubSettings = ReadAppSettings.ReadPubsubSettings();
+            _postRepository = new PostRepository(ReadAppSettings.ReadDbSettings());
         }
 
         public void Start()
         {
-            PullMessagesAsync(_pubsubSettings.ProjectId, _pubsubSettings.SubscriptionId, true);
+            PullMessagesAsync(_pubsubSettings.Value.ProjectId, _pubsubSettings.Value.SubscriptionId, true);
         }
 
         private async Task<object> PullMessagesAsync(string projectId, string subscriptionId, bool acknowledge)
@@ -55,22 +57,6 @@ namespace PostService.Services.Processes
 
             // [END pubsub_subscriber_async_pull]
             return 0;
-        }
-
-        private PubsubSettings _readPubsubSettings()
-        {
-            var configurationBuilder = new ConfigurationBuilder();
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
-            configurationBuilder.AddJsonFile(path, false);
-
-            var pubsubSettings = configurationBuilder.Build().GetSection("PubsubSettings");
-
-            return new PubsubSettings()
-            {
-                ProjectId = pubsubSettings.GetSection("ProjectId").Value,
-                TopicId = pubsubSettings.GetSection("TopicId").Value,
-                SubscriptionId = pubsubSettings.GetSection("SubscriptionId").Value
-            };
         }
     }
 }

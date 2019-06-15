@@ -16,9 +16,9 @@ namespace PostService.Repositories
 
         private readonly IMongoCollection<Post> _posts = null;
 
-        public PostRepository()
+        public PostRepository(IOptions<AppSettings> settings)
         {
-            var dbContext = new MongoDbContext();
+            var dbContext = new MongoDbContext(settings);
             _posts = dbContext.Posts;
         }
 

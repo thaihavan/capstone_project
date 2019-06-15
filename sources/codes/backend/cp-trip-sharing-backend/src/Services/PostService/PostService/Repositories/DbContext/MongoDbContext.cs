@@ -15,31 +15,14 @@ namespace PostService.Repositories.DbContext
     {
         private readonly IMongoDatabase _database = null;
 
-        public MongoDbContext()
+        public MongoDbContext(IOptions<AppSettings> settings)
         {
-            var settings = _readAppSettings();
-            var mongoClient = new MongoClient(settings.ConnectionString);
+            var mongoClient = new MongoClient(settings.Value.ConnectionString);
             if (mongoClient != null)
             {
-                _database = mongoClient.GetDatabase(settings.DatabaseName);
+                _database = mongoClient.GetDatabase(settings.Value.DatabaseName);
             }
         }
-
-        private AppSettings _readAppSettings()
-        {
-            var configurationBuilder = new ConfigurationBuilder();
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
-            configurationBuilder.AddJsonFile(path, false);
-
-            var appSettings = configurationBuilder.Build().GetSection("AppSettings");
-
-            return new AppSettings()
-            {
-                ConnectionString = appSettings.GetSection("ConnectionString").Value,
-                DatabaseName = appSettings.GetSection("DatabaseName").Value
-            };
-        }
-
 
         public IMongoCollection<Post> Posts
         {

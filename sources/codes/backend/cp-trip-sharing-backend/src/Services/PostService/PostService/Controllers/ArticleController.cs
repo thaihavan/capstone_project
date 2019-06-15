@@ -47,9 +47,10 @@ namespace PostService.Controllers
         [HttpPost("create")]
         public IActionResult CreateArticle([FromBody] Article article)
         {
-            var authorId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
 
-            if (!article.Post.Author.AuthorId.Equals(new BsonObjectId(authorId)))
+            if (!article.Post.Author.AuthorId.Equals(new BsonObjectId(userId)))
             {
                 return Unauthorized();
             }
@@ -64,9 +65,10 @@ namespace PostService.Controllers
         [HttpPost("update")]
         public IActionResult UpdateArticle([FromBody] Article article)
         {
-            var authorId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
 
-            if (!article.Post.Author.AuthorId.Equals(new BsonObjectId(authorId)))
+            if (!article.Post.Author.AuthorId.Equals(new BsonObjectId(userId)))
             {
                 return Unauthorized();
             }

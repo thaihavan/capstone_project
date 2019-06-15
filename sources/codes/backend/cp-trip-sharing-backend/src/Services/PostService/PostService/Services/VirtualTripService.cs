@@ -1,4 +1,6 @@
-﻿using PostService.Models;
+﻿using Microsoft.Extensions.Options;
+using PostService.Helpers;
+using PostService.Models;
 using PostService.Repositories;
 using PostService.Services.Interfaces;
 using System;
@@ -12,9 +14,9 @@ namespace PostService.Services
     {
         private readonly VirtualTripRepository _virtualTripRepository = null;
 
-        public VirtualTripService()
+        public VirtualTripService(IOptions<AppSettings> settings)
         {
-            _virtualTripRepository = new VirtualTripRepository();
+            _virtualTripRepository = new VirtualTripRepository(settings);
         }
 
         public VirtualTrip Add(VirtualTrip virtualTrip)
