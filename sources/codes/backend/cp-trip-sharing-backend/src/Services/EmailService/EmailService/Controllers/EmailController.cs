@@ -31,7 +31,7 @@ namespace EmailService.Controllers
             var result = _emailService.SendEmail(param);
             if (result.StatusCode == HttpStatusCode.Accepted)
             {
-                return Ok(result);
+                return Ok();
             }
             return BadRequest(new { message = "error" });
         }
