@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PostService.Models;
 
-namespace PostService.Repositories
+namespace PostService.Repositories.Interfaces
 {
     public interface IRepository<T> where T : Model
     {

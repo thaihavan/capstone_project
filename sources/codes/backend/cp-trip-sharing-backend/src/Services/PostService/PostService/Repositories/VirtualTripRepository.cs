@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using PostService.Helpers;
 using PostService.Models;
 using PostService.Repositories.DbContext;
+using PostService.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PostService.Repositories
 {
-    public class VirtualTripRepository : IRepository<VirtualTrip>
+    public class VirtualTripRepository : IVirtualTripRepository
     {
         private readonly IMongoCollection<VirtualTrip> _virtualTrips = null;
         private readonly IMongoCollection<Post> _post = null;
@@ -37,21 +38,6 @@ namespace PostService.Repositories
         public IEnumerable<VirtualTrip> GetAll()
         {
             return _virtualTrips.Find(v => true).ToList();
-        }
-
-        public IEnumerable<VirtualTrip> GetAllTripWithPost()
-        {
-            var virtualTrips = from vt in _virtualTrips.AsQueryable()
-                               join p in _post.AsQueryable() on vt.PostId equals p.Id into joined
-                               from post in joined
-                               select new VirtualTrip
-                               {
-                                   Id = vt.Id,
-                                   PostId = vt.PostId,
-                                   Items = vt.Items,
-                                   Post = post
-                               };
-            return virtualTrips.ToList();
         }
 
         public VirtualTrip GetById(string id)

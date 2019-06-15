@@ -2,6 +2,7 @@
 using PostService.Helpers;
 using PostService.Models;
 using PostService.Repositories;
+using PostService.Repositories.Interfaces;
 using PostService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,16 @@ namespace PostService.Services
 {
     public class VirtualTripService : IVirtualTripService
     {
-        private readonly VirtualTripRepository _virtualTripRepository = null;
+        private readonly IVirtualTripRepository _virtualTripRepository = null;
 
         public VirtualTripService(IOptions<AppSettings> settings)
         {
             _virtualTripRepository = new VirtualTripRepository(settings);
+        }
+
+        public VirtualTripService(IVirtualTripRepository virtualTripRepository)
+        {
+            _virtualTripRepository = virtualTripRepository;
         }
 
         public VirtualTrip Add(VirtualTrip virtualTrip)

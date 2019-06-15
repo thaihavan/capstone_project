@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using PostService.Helpers;
 using PostService.Models;
 using PostService.Repositories.DbContext;
+using PostService.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PostService.Repositories
 {
-    public class PostRepository : IRepository<Post>
+    public class PostRepository : IPostRepository
     {
 
         private readonly IMongoCollection<Post> _posts = null;

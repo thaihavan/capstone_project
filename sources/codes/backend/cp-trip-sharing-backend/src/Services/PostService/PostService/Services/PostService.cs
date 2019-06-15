@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using PostService.Helpers;
 using PostService.Models;
 using PostService.Repositories;
+using PostService.Repositories.Interfaces;
 using PostService.Services.Interfaces;
 
 namespace PostService.Services
@@ -13,11 +14,16 @@ namespace PostService.Services
     public class PostService : IPostService
     {
 
-        private readonly PostRepository _postRepository = null;
+        private readonly IPostRepository _postRepository = null;
 
         public PostService(IOptions<AppSettings> settings)
         {
             _postRepository = new PostRepository(settings);
+        }
+
+        public PostService(IPostRepository postRepository)
+        {
+            _postRepository = postRepository;
         }
 
         public Post Add(Post param)
