@@ -27,8 +27,8 @@ namespace UserServices.Models
         [BsonElement("display_name")]
         public string DisplayName { get; set; }
 
-        [BsonElement("intersted")]
-        public List<string> Instrested { get; set; }
+        [BsonElement("interested")]
+        public List<string> Interested { get; set; }
 
         [BsonElement("gender")]
         public string Gender { get; set; }

@@ -44,48 +44,55 @@ namespace UserServices.Controllers
         [HttpGet("User")]
         public IActionResult GetUserById([FromQuery] string userId)
         {
-            var result = _userService.
+            var result = _userService.GetUserById(userId);
             return Ok(result);
         }
 
         // POST: api/UserServices/follow
         // body: { following : "id" }
+        
         [HttpPost("follow")]
         public IActionResult Follow([FromBody] Follow param)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
-            param.Follower = new ObjectId(userId);
+            param.Follower =  ObjectId.Parse(userId);
             if (_userService.AddFollows(param) != null)
             {
                 return Ok();
             }
             else
             {
-                return NotFound();
+                return BadRequest();
             }
         }
 
         // DELETE: api/UserServices/unfollow
         // body: { following : "id" }
+        [Authorize(Roles = "member")]
         [HttpDelete("unfollow")]
-        public IActionResult Unfollow([FromBody] Follow follows)
+        public IActionResult Unfollow([FromQuery] string followingId)
         {
+            var param = new Follow
+            {
+                Following = ObjectId.Parse(followingId)
+            };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
-            follows.Follower = new ObjectId(userId);
-            if (_userService.Unfollow(follows) != null)
+            param.Follower = new ObjectId(userId);
+            if (_userService.Unfollow(param) != null)
             {
-                return Ok();
+                return Ok(param);
             }
             else
             {
-                return NotFound();
+                return BadRequest();
             }
         }
 
         // POST: api/UserService/bookmark
         // body { postId : "id" }
+        [Authorize(Roles = "member")]
         [HttpPost("bookmark")]
         public IActionResult Bookmark([FromBody] Bookmark bookmark)
         {
@@ -104,9 +111,14 @@ namespace UserServices.Controllers
 
         // DELETE: api/UserServices/deletebookmark
         // body { postId : "id" }
+        [Authorize(Roles ="member")]
         [HttpDelete("deletebookmark")]
-        public IActionResult DeleteBookmark([FromBody] Bookmark bookmark)
+        public IActionResult DeleteBookmark([FromQuery] string postId)
         {
+            var bookmark = new Bookmark
+            {
+                PostId = new ObjectId(postId)
+            };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_Id").Value;
             bookmark.UserId = new ObjectId(userId);
