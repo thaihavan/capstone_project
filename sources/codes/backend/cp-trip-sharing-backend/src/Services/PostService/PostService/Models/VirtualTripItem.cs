@@ -7,7 +7,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace PostService.Models
 {
-    public class Destination : Model
+    public class VirtualTripItem : Model
     {
         [BsonElement("name")]
         public string name { get; set; }
@@ -20,5 +20,8 @@ namespace PostService.Models
 
         [BsonElement("note")]
         public string note { get; set; }
+
+        [BsonElement("image")]
+        public string image { get; set; }
     }
 }

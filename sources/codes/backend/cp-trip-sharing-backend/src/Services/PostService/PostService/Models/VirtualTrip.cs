@@ -16,8 +16,10 @@ namespace PostService.Models
         [BsonElement("postId")]
         public BsonObjectId PostId { get; set; }
 
-        [BsonElement("destinations")]
-        public BsonArray Destiantions { get; set; }
+        [BsonElement("items")]
+        public BsonArray Items { get; set; }
 
+        [BsonIgnore]
+        public Post Post { get; set; }
     }
 }

@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PostService.Helpers;
+using PostService.Services;
 using PostService.Services.Interfaces;
 using PostService.Services.Processes;
 
@@ -70,6 +71,7 @@ namespace PostService
             // Configure DI for application services
             services.AddScoped<IPostService, PostService.Services.PostService>();
             services.AddScoped<IArticleService, PostService.Services.ArticleService>();
+            services.AddScoped<IVirtualTripService, VirtualTripService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

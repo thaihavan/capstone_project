@@ -53,18 +53,6 @@ namespace PostService.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "member")]
-        [HttpPost("create")]
-        public IActionResult AddVirtualTrip([FromBody]VirtualTrip trip)
-        {
-            var result = _postService.AddVirtualTrip(trip);
-            if (result == null)
-            {
-                return NoContent();
-            }
-            return Ok(result);
-        }
-
         [AllowAnonymous]
         [HttpGet("test")]
         public IActionResult test()
