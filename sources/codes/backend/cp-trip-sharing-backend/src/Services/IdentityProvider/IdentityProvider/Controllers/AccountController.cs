@@ -21,10 +21,12 @@ namespace IdentityProvider.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService = null;
+        private readonly ITokenManager _tokenManager = null;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, ITokenManager tokenManager)
         {
             _accountService = accountService;
+            _tokenManager = tokenManager;
         }
 
         [AllowAnonymous]
@@ -109,9 +111,13 @@ namespace IdentityProvider.Controllers
             }          
             return Ok(new { Token=result});
         }
-
-        //[AllowAnonymous]
-        //[HttpPost("authenticate/facebook")]
-        //public i
+       
+        [Authorize(Roles ="member,admin,unverified")]
+        [HttpPost("logout")]
+        public async Task<ActionResult> logout()
+        {
+            await _tokenManager.DeactivateCurrentAsync();
+            return Ok(new { Message="Logged out"});
+        }
     }
 }

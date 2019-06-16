@@ -9,12 +9,11 @@ using IdentityProvider.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityProvider
@@ -61,6 +60,13 @@ namespace IdentityProvider
                 };
             });
 
+            //
+            services.AddSession();
+            services.AddTransient<TokenManagerMiddleware>();
+            services.AddTransient<ITokenManager, Services.TokenManager>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddDistributedMemoryCache();
+
             // Configure DI for application services
             services.AddScoped<IAccountService, AccountService>();
         }
@@ -81,9 +87,10 @@ namespace IdentityProvider
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-
+        
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseMiddleware<TokenManagerMiddleware>();
             app.UseMvc();
         }
     }
