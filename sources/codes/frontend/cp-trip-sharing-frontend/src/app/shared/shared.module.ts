@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule, MatButtonModule, MatTabsModule, MatButtonToggleModule, MatIconModule, MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule, MatProgressSpinnerModule } from '@angular/material';
 import { AgmCoreModule } from '@agm/core';
 import {MatMenuModule} from '@angular/material/menu';
+import { SingleCommentComponent } from './components/single-comment/single-comment.component';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -19,8 +20,7 @@ const Material = [
   MatProgressSpinnerModule
  ];
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     Material,

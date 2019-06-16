@@ -30,6 +30,9 @@ import { UploadImageComponent } from './shared/components/upload-image/upload-im
 import { CropImageComponent } from './shared/components/upload-image/crop-image/crop-image.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
+import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
+import { SingleCommentComponent } from './shared/components/single-comment/single-comment.component'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +51,9 @@ import { ChangepasswordPageComponent } from './pages/changepassword-page/changep
     UploadImageComponent,
     CropImageComponent,
     InterestedtopicPageComponent,
-    ChangepasswordPageComponent
+    ChangepasswordPageComponent,
+    DetailpostPageComponent,
+    SingleCommentComponent
   ],
   imports: [
     MatMenuModule,
