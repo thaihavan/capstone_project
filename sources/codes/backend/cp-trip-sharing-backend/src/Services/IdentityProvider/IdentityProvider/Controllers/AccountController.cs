@@ -74,6 +74,13 @@ namespace IdentityProvider.Controllers
             return Ok(new { Message = "change password succes" });
         }
 
+        // pub/sub to email service
+        //{
+        //  "subject":"test send email",
+        //  "To":"linhlpse04693@gmail.com",
+        //  "Url":"TripSharing.com/account/resetpassword?token=account.token",
+        //  "EmailType":"ResetPasswordEmail"
+        //}
         [AllowAnonymous]
         [HttpPost("forgotpassword")]
         public IActionResult ForgotPassword([FromBody]Account accountParam)

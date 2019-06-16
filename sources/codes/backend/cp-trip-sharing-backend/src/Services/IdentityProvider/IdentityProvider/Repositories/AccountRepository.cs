@@ -1,6 +1,7 @@
 ﻿using IdentityProvider.Helpers;
 using IdentityProvider.Models;
 using IdentityProvider.Repositories.DbContext;
+using IdentityProvider.Repositories.Interfaces;
 using IdentityProvider.Utils;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace IdentityProvider.Repositories
 {
-    public class AccountRepository : IRepository<Account>
+    public class AccountRepository : IAccountRepository
     {
 
         
@@ -22,6 +23,10 @@ namespace IdentityProvider.Repositories
         {
             var dbContext = new MongoDbContext(settings);
             _accounts = dbContext.Accounts;
+        }
+
+        public AccountRepository()
+        {
         }
 
         public bool Add(Account account)
@@ -38,7 +43,8 @@ namespace IdentityProvider.Repositories
         public Account Get(string id)
         {
             Account account = _accounts.Find(Builders<Account>.Filter.Eq("_id",ObjectId.Parse(id))).ToList().FirstOrDefault();
-            return account;
+            
+return account;
         }
 
         public IEnumerable<Account> GetAll()

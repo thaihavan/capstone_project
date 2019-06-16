@@ -19,13 +19,11 @@ namespace EmailService.Services
     public class EmailService : IEmailService
     {
         private readonly string _apiKey;
-        private readonly IOptions<AppSettings> _settings = null;
-        private readonly EmailRepository _emailRepository = null;       
+        private readonly IOptions<AppSettings> _settings = null;        
 
         public EmailService(IOptions<AppSettings> settings){
             _settings = settings;
-            _apiKey = _settings.Value.ApiKey;
-            _emailRepository = new EmailRepository();
+            _apiKey = _settings.Value.ApiKey;           
         }
         public HttpResponseMessage SendEmail(Email param)
         {

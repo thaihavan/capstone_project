@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityProvider.Repositories
+namespace IdentityProvider.Repositories.Interfaces
 {
     public interface IRepository<T> where T : Model
     {

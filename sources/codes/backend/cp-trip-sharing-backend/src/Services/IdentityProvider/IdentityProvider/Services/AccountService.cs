@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IdentityProvider.Helpers;
 using IdentityProvider.Models;
 using IdentityProvider.Repositories;
+using IdentityProvider.Repositories.Interfaces;
 using IdentityProvider.Services.Interfaces;
 using IdentityProvider.Utils;
 using Microsoft.Extensions.Options;
@@ -16,7 +17,7 @@ namespace IdentityProvider.Services
     {
         private static Random _random = new Random();
 
-        private readonly AccountRepository _accountRepository = null;
+        private readonly IAccountRepository _accountRepository = null;
 
         private readonly IOptions<AppSettings> _settings = null;
 
@@ -24,6 +25,11 @@ namespace IdentityProvider.Services
         {
             _accountRepository = new AccountRepository(settings);
             _settings = settings;
+        }
+
+        public AccountService(IAccountRepository accountRepository)
+        {
+            _accountRepository = accountRepository;
         }
 
         public Account Authenticate(string email, string password)
@@ -60,7 +66,7 @@ namespace IdentityProvider.Services
                 Email = account.Email,
                 Password=Hash.HashPassword(account.Password, salt),
                 PasswordSalt=salt,
-                Role= "UNVERIFIED",
+                Role= "unverified",
                 UserId=new BsonObjectId(ObjectId.GenerateNewId())
             };
             _accountRepository.Add(encryptedAccount);
