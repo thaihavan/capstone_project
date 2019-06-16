@@ -28,9 +28,9 @@ export class RegisterPageComponent implements OnInit {
     this.account.Email = this.email;
     this.account.Password = this.password;
     this.account.Username = this.username;
+    this.openDialogMessageConfirm();
     this.userService.registerAccount(this.account).subscribe((message: any) => {
       this.openDialogMessageConfirm();
-      console.log('Register OK');
     }, (err: HttpErrorResponse) => {
       this.message = 'Đăng kí thất bại!';
     });
@@ -38,13 +38,13 @@ export class RegisterPageComponent implements OnInit {
 
   openDialogMessageConfirm() {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '400px',
+      width: '380px',
       height: '200px',
       position: {
         top: '10px'
       }
     });
     const instance = dialogRef.componentInstance;
-    instance.message = 'Đăng kí thành công, vui lòng kiểm tra lại email';
+    instance.message = 'Đăng kí thành công, vui lòng kiểm tra lại email!';
   }
 }
