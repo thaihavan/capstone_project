@@ -65,9 +65,21 @@ namespace PostService.Repositories.DbContext
         {
             get
             {
-                if(_database!= null)
+                if (_database != null)
                 {
                     return _database.GetCollection<Like>("Likes");
+                }
+                return null;
+            }
+        }
+
+        public IMongoCollection<Comment> Comments
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<Comment>("Comments");
                 }
                 return null;
             }

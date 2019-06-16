@@ -11,7 +11,7 @@ using PostService.Services.Interfaces;
 
 namespace PostService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/postservice/[controller]")]
     [ApiController]
     [Authorize]
     public class LikeController : ControllerBase
