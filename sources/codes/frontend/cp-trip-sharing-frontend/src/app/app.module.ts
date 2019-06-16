@@ -56,7 +56,6 @@ import { StepCreatePostComponent } from './shared/components/step-create-post/st
     InterestedtopicPageComponent,
     ChangepasswordPageComponent,
     DetailpostPageComponent,
-    SingleCommentComponent,
     EmailConfirmPageComponent,
     ResetPasswordPageComponent,
     StepCreatePostComponent

@@ -92,7 +92,7 @@ namespace IdentityProvider.Services
                 {
                     Subject = "Thanks for joining TripSharing",
                     To = result.Email,
-                    Url = $"/api/identity/account/verify?token={result.Token}",
+                    Url = $"http://localhost:4200/email-confirm/{result.Token}",
                     EmailType = "EmailConfirm"
                 };
 
@@ -128,7 +128,7 @@ namespace IdentityProvider.Services
             {
                 Subject = "Reset password",
                 To = email,
-                Url = $"/api/identity/account/resetpassword?token={token}",
+                Url = $"http://localhost:4200/reset-password/{token}",
                 EmailType = "EmailResetPassword"
             };
 

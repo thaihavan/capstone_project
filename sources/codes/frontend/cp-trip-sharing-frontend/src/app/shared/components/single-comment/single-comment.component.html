@@ -1,37 +1,52 @@
-<div class=" row comment-post">
-  <div class="col-md-3 icon-user-name">
-    <div class="icon-user">
-      <img src="{{urlImgavatar}}">
-    </div>
-    <span class="name-user">{{nameuser}}</span>
-  </div>
-  <div class="col-md-8 comment-content-right">
-    <div class="content-comment">
-      <p class="text">{{content}}</p>
-    </div>
-    <div class="bottom-like-share">
-      <span class="time">{{time}}</span>
-      <span class="number-like"><i class="fa fa-thumbs-up"></i> {{numberlike}}</span>
-      <span class="rep-comment" (click)="showRepComment()">Trả lời</span>
-      <div *ngIf="showRep" class="rep-comment-btn">
-        <textarea class="form-control repComent" rows="5" id="comment" name="text"></textarea>
-        <button type="button" class="btn btn-primary btn-rep">Trả lời</button>
+<div class="signle-comment">
+  <div class="comment-post">
+    <div class="icon-user-name">
+      <div class="icon-user">
+        <img src="{{comment.userImageUrl}}">
+      </div>
+      <div class="">
+        <span class="name-user">{{comment.userDisplayName}}</span>
+        <br />
+        <span class="time">{{comment.date}}</span>
       </div>
     </div>
-  </div>
-  <div class="col-md-1 icon-menu ">
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-      <mat-icon>more_horiz</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>flag</mat-icon>
-        <span>Báo cáo</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>edit</mat-icon>
-        <span>Chỉnh sửa</span>
-      </button>
-    </mat-menu>
+    <div class="comment-body">
+      <div class="comment-row">
+        <div class="content-comment">
+          <p class="text">{{comment.content}}</p>
+        </div>
+        <div class="icon-menu">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>flag</mat-icon>
+              <span>Báo cáo</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Chỉnh sửa</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="bottom-like-share">
+        <span class="number-like"><i class="fa fa-thumbs-up"></i> {{comment.numLikes}}</span>
+        <span class="rep-comment" (click)="showRepComment()">Trả lời</span>
+        <div *ngIf="showRep" class="rep-comment-btn">
+          <textarea class="form-control repComent" rows="5" id="comment" name="text"></textarea>
+          <button type="button" class="btn btn-primary btn-rep">Trả lời</button>
+        </div>
+      </div>
+
+      <!-- Childs -->
+      <div ng-if="comment.childs != null && comment.childs.length > 0">
+        <div *ngFor="let item of comment.childs">
+          <app-single-comment [comment]="item"></app-single-comment>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

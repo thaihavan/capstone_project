@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 import { Globals } from 'src/globals/globalvalues';
 
 @Component({
@@ -10,6 +11,7 @@ export class InterestedtopicPageComponent implements OnInit {
    selectedTopic: Topic[] = [];
    @Input() ListToppic;
    @Output() EventToppic: EventEmitter<any> = new EventEmitter();
+   listselectedTopic: Array<Topic> = [];
    listinterestedtopic: Topic[] = [
      {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
      {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
@@ -51,6 +53,7 @@ export class InterestedtopicPageComponent implements OnInit {
     }
     return false;
   }
+
   gotoHomepage() {
     window.location.href = this.globals.urllocal;
   }

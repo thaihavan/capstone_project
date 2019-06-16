@@ -8,6 +8,8 @@ import { SingleCommentComponent } from './components/single-comment/single-comme
 import { MessagePopupComponent } from './components/message-popup/message-popup.component';
 import {MatStepperModule} from '@angular/material/stepper';
 
+import { CommentContainerComponent } from './components/comment-container/comment-container.component';
+
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -27,12 +29,19 @@ const Material = [
   MatChipsModule
  ];
 @NgModule({
-  declarations: [MessagePopupComponent],
+  declarations: [
+    MessagePopupComponent,
+    CommentContainerComponent,
+    SingleCommentComponent
+  ],
   imports: [
     CommonModule,
     Material,
     AgmCoreModule
   ],
-  exports: [Material]
+  exports: [
+    Material,
+    SingleCommentComponent,
+    CommentContainerComponent]
 })
 export class SharedModule { }

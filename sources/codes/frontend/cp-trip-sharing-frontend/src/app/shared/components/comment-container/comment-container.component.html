@@ -1,0 +1,6 @@
+<div class="comment-container">
+  <!-- Loop through list of comments -->
+  <div *ngFor="let item of comments">
+    <app-single-comment [comment]="item"></app-single-comment>
+  </div>
+</div>
