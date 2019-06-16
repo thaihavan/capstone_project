@@ -27,11 +27,11 @@ namespace EmailService.Services
         public HttpResponseMessage SendEmail(Email param)
         {
             string emailTemplate = null;
-            if (param.EmailType.Equals("ConfirmEmail"))
+            if (param.EmailType.Equals("EmailConfirm"))
             {
                 emailTemplate = GetTemplate("EmailService.EmailTemplate.VerifyEmailTemplate.html");
             }
-            else if (param.EmailType.Equals("ResetPasswordEmail"))
+            else if (param.EmailType.Equals("EmailResetPassword"))
             {
                 emailTemplate = GetTemplate("EmailService.EmailTemplate.ResetPasswordEmailTemplate.html");
             }

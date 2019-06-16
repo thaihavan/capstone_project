@@ -30,7 +30,7 @@ namespace PostService.Controllers
 
             string imageUrl = _uploadFileService.UploadImage(imageParam);
 
-            return Ok(imageUrl);
+            return Ok(new { Image = imageUrl });
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EmailService.Helpers;
 using EmailService.Models;
 using EmailService.Utils;
+using Google.Api;
 using Google.Cloud.PubSub.V1;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -41,11 +42,12 @@ namespace EmailService.Services.Processes
                 {
                     string json = Encoding.UTF8.GetString(message.Data.ToArray());
 
+                    await Console.Out.WriteLineAsync($"Message {message.MessageId}: {json}");
+
                     // Handle received message. 
                     Email email = JsonConvert.DeserializeObject<Email>(json);
                     _emailService.SendEmail(email);
-
-                    await Console.Out.WriteLineAsync($"Message {message.MessageId}: {json}");
+                    
                     return acknowledge ? SubscriberClient.Reply.Ack : SubscriberClient.Reply.Nack;
                 });
 

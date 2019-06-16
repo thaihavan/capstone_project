@@ -74,8 +74,10 @@ namespace IdentityProvider.Services
                 Role = "unverified",
                 UserId = new BsonObjectId(ObjectId.GenerateNewId())
             };
-
             var result = _accountRepository.Add(encryptedAccount);
+
+            // Generate token
+            result.Token = JwtToken.Generate(_settings.Value.Secret, encryptedAccount);
 
             if(result != null)
             {
