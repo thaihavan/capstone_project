@@ -50,13 +50,24 @@ namespace PostService.Repositories.DbContext
         }
 
         public IMongoCollection<Article> Articles
-
         {
             get
             {
                 if (_database != null)
                 {
                     return _database.GetCollection<Article>("Articles");
+                }
+                return null;
+            }
+        }
+
+        public IMongoCollection<Like> Likes
+        {
+            get
+            {
+                if(_database!= null)
+                {
+                    return _database.GetCollection<Like>("Likes");
                 }
                 return null;
             }
