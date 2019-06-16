@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using IdentityProvider.Helpers;
 using IdentityProvider.Models;
@@ -10,6 +12,7 @@ using IdentityProvider.Services.Interfaces;
 using IdentityProvider.Utils;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 
 namespace IdentityProvider.Services
 {
@@ -66,13 +69,14 @@ namespace IdentityProvider.Services
             if (_accountRepository.GetByEmail(account.Email) != null) return null;
             var salt = Salt.Generate();
             var encryptedAccount = new Account()
-            {
+            {               
                 Username = account.Username,
                 Email = account.Email,
                 Password = Hash.HashPassword(account.Password, salt),
                 PasswordSalt = salt,
                 Role = "unverified",
-                UserId = new BsonObjectId(ObjectId.GenerateNewId())
+                UserId = new BsonObjectId(ObjectId.GenerateNewId()),
+                Id=new BsonObjectId(ObjectId.GenerateNewId())
             };
             var result = _accountRepository.Add(encryptedAccount);
 
@@ -156,5 +160,54 @@ namespace IdentityProvider.Services
             return result != null;
 
         }
+
+        public GoogleUser GetGoogleUserInformation(string accessToken)
+        {
+            GoogleUser userInfo = null;
+            string url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken + "";
+
+            WebRequest request = WebRequest.Create(url);
+            request.Credentials = CredentialCache.DefaultCredentials;
+            using (var response = request.GetResponse())
+            {
+                using (var stream= response.GetResponseStream())
+                {
+                    using (var reader = new StreamReader(stream))
+                    {
+                        string result = reader.ReadToEnd();
+                        userInfo = JsonConvert.DeserializeObject<GoogleUser>(result);
+                    }
+                }
+            }
+            return userInfo;            
+        }
+
+        public string GoogleAuthenticate (string accessToken)
+        {
+            var userInfo = GetGoogleUserInformation(accessToken);
+            if (userInfo == null)
+            {
+                return null;
+            }
+            var user = _accountRepository.GetByEmail(userInfo.email);
+            if (user != null)
+            {
+                return JwtToken.Generate(_settings.Value.Secret, user);
+            }else
+            {   
+                var newAccount= new Account()
+                {
+                    Email = userInfo.email,
+                    Password = null,
+                    PasswordSalt = null,
+                    Role = "member",
+                    Username = userInfo.given_name,
+                    UserId = new BsonObjectId(ObjectId.GenerateNewId())
+                };
+                _accountRepository.Add(newAccount);
+                return JwtToken.Generate(_settings.Value.Secret, newAccount);
+            }           
+        }
+        
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityProvider.Models;
@@ -9,6 +11,7 @@ using IdentityProvider.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace IdentityProvider.Controllers
 {
@@ -95,5 +98,16 @@ namespace IdentityProvider.Controllers
             return Ok(new { Message = "Success" });
         }
 
+        [AllowAnonymous]
+        [HttpPost("authenticate/google")]
+        public IActionResult GoogleAuthenticate([FromBody] string accessToken)
+        {
+            var result = _accountService.GoogleAuthenticate(accessToken);
+            if (result == null)
+            {
+                return BadRequest(new ErrorMessage() { Message = "Google access token is not valid" });
+            }          
+            return Ok(new { Token=result});
+        }
     }
 }

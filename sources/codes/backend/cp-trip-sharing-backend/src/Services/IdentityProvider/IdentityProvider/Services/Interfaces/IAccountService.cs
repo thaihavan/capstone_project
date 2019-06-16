@@ -23,5 +23,9 @@ namespace IdentityProvider.Services.Interfaces
         bool VerifyEmail(string id);
 
         bool ResetPassword(string accountId, string newPassword);
+
+        GoogleUser GetGoogleUserInformation(string accessToken);
+
+        string GoogleAuthenticate(string accessToken);
     }
 }
