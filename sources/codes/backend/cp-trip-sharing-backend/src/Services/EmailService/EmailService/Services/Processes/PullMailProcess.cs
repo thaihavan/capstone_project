@@ -26,7 +26,7 @@ namespace EmailService.Services.Processes
             _emailService = new EmailService(_appSettings);
         }
 
-        public async Task StartAsync()
+        public async void StartAsync()
         {
             await PullMessagesAsync(_pubsubSettings.Value.ProjectId, _pubsubSettings.Value.SubscriptionId, true);
         }

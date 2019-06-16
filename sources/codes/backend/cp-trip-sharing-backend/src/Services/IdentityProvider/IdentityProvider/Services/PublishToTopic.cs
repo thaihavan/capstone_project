@@ -22,7 +22,7 @@ namespace IdentityProvider.Services
             _pubsubSettings = ReadAppSettings.ReadPubsubSettings();
         }
 
-        public async Task<bool> PublishEmail(Mail mail)
+        public async void PublishEmail(Mail mail)
         {
             var topicName = new TopicName(_pubsubSettings.Value.ProjectId, _pubsubSettings.Value.TopicId);
 
@@ -36,8 +36,6 @@ namespace IdentityProvider.Services
 
             // Publish it
             var response = publisher.PublishAsync(message);
-
-            return true;
         }
     }
 }

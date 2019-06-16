@@ -8,6 +8,6 @@ namespace IdentityProvider.Services.Interfaces
 {
     public interface IPublishToTopic
     {
-        Task<bool> PublishEmail(Mail mail);
+        void PublishEmail(Mail mail);
     }
 }

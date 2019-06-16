@@ -37,20 +37,12 @@ namespace IdentityProvider.Controllers
             return Ok(account);
         }
 
-        // Call user service to create new account
-        // pub/sub to email service
-        //{
-        //  "subject":"test send email",
-        //  "To":"linhlpse04693@gmail.com",
-        //  "Url":"TripSharing.com/account/verify?token=account.token",
-        //  "EmailType":"ConfirmEmail"
-        //}
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody]Account accountParam)
         {
-            var result = _accountService.RegisterAsync(accountParam);
-            if (result==null)
+            var result = _accountService.Register(accountParam);
+            if (result == null)
             {
                 return BadRequest(new ErrorMessage { Message = "Email is in use" });
             }
@@ -74,18 +66,11 @@ namespace IdentityProvider.Controllers
             return Ok(new { Message = "change password succes" });
         }
 
-        // pub/sub to email service
-        //{
-        //  "subject":"test send email",
-        //  "To":"linhlpse04693@gmail.com",
-        //  "Url":"TripSharing.com/account/resetpassword?token=account.token",
-        //  "EmailType":"ResetPasswordEmail"
-        //}
         [AllowAnonymous]
         [HttpPost("forgotpassword")]
         public IActionResult ForgotPassword([FromBody]Account accountParam)
         {
-            var result = _accountService.GetResetPasswordTokenAsync(accountParam.Email);           
+            var result = _accountService.GetResetPasswordToken(accountParam.Email);           
             return Ok();
         }
 

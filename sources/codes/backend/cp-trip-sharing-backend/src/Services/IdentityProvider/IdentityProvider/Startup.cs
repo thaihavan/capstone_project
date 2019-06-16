@@ -84,10 +84,7 @@ namespace IdentityProvider
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseMvc(routes => 
-            {
-                routes.MapRoute("default", "/");
-            });
+            app.UseMvc();
         }
     }
 }

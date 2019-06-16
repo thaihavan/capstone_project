@@ -14,14 +14,14 @@
 //namespace IdentityProvider.Test
 //{
 //    [TestFixture]
-//   public class AccountServiceTest
+//    public class AccountServiceTest
 //    {
 //        Mock<IAccountRepository> moqResult;
 //        AppSettings _setting;
 //        [SetUp]
 //        public void config()
 //        {
-//             _setting = new AppSettings()
+//            _setting = new AppSettings()
 //            {
 //                Secret = "VGhpcyBpcyB0aGUgc2VjcmV0IGtleQ==",
 //                ConnectionString = "mongodb://tripsharing:tripsharing@cluster0-shard-00-00-vkzdk.gcp.mongodb.net:27017,cluster0-shard-00-01-vkzdk.gcp.mongodb.net:27017,cluster0-shard-00-02-vkzdk.gcp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority",
@@ -70,7 +70,7 @@
 //        {
 //            Account acc = new Account() { UserId = ObjectId.Parse("5d027f3e8254691f48a4ab7c"), Email = "linhlp4@fpt.edu.vn", Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=", Role = "member", Username = "linhlp", PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==", Token = "asvaanbfbsgnnsn", Id = ObjectId.Parse("5d027f3e8254691f48a4ab7d") };
 //            moqResult.Setup(x => x.Get(It.IsAny<string>())).Returns(acc);
-//            var testService = new AccountService(moqResult.Object,Options.Create(_setting));
+//            var testService = new AccountService(moqResult.Object, Options.Create(_setting));
 //            bool changePassResult = testService.ChangePassword("abc@gmail.com", "new_password", "123456789");
 //            Assert.IsFalse(changePassResult);
 //        }
@@ -98,13 +98,20 @@
 
 //        public void TestResetPassword()
 //        {
-//            Account acc = new Account() { UserId = ObjectId.Parse("5d027f3e8254691f48a4ab7c"),
-//                Email = "linhlp4@fpt.edu.vn", Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=", Role = "member",
-//                Username = "linhlp", PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==",
-//                Token = "asvaanbfbsgnnsn", Id = ObjectId.Parse("5d027f3e8254691f48a4ab7d") };
+//            Account acc = new Account()
+//            {
+//                UserId = ObjectId.Parse("5d027f3e8254691f48a4ab7c"),
+//                Email = "linhlp4@fpt.edu.vn",
+//                Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=",
+//                Role = "member",
+//                Username = "linhlp",
+//                PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==",
+//                Token = "asvaanbfbsgnnsn",
+//                Id = ObjectId.Parse("5d027f3e8254691f48a4ab7d")
+//            };
 //            moqResult.Setup(x => x.Get(It.IsAny<string>())).Returns(acc);
 //            var testService = new AccountService(moqResult.Object, Options.Create(_setting));
-//            bool checkResetPassword = testService.ResetPassword("","123456789");
+//            bool checkResetPassword = testService.ResetPassword("", "123456789");
 //            Assert.IsFalse(checkResetPassword);
 //        }
 //    }

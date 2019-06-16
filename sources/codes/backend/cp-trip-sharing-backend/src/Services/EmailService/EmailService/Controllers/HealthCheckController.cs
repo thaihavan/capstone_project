@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityProvider.Controllers
+namespace EmailService.Controllers
 {
     [Route("/")]
     [ApiController]
     public class HealthCheckController : ControllerBase
     {
         [HttpGet]
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            return Ok("Welcome to IdentityProvider!");
+            return Ok("Welcom to EmailService!");
         }
     }
 }

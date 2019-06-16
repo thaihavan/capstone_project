@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EmailService.Helpers;
 using EmailService.Services.Interfaces;
+using EmailService.Services.Processes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,10 @@ namespace EmailService
             // Configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
+
+            // Pubsub: Start receiving message to send email
+            PullMailProcess pullMailProcess = new PullMailProcess();
+            pullMailProcess.StartAsync();
 
             // Configure DI for application services
             services.AddScoped<IEmailService, Services.EmailService>();

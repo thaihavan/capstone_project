@@ -61,7 +61,7 @@ namespace IdentityProvider.Services
             return _accountRepository.GetAll();
         }
 
-        public async Task<Account> RegisterAsync(Account account)
+        public Account Register(Account account)
         {
             if (_accountRepository.GetByEmail(account.Email) != null) return null;
             var salt = Salt.Generate();
@@ -87,7 +87,7 @@ namespace IdentityProvider.Services
                     EmailType = "EmailConfirm"
                 };
 
-                await _publishToTopic.PublishEmail(mail);
+                _publishToTopic.PublishEmail(mail);
             }
 
             return result;
@@ -110,7 +110,7 @@ namespace IdentityProvider.Services
             }
         }
 
-        public async Task<string> GetResetPasswordTokenAsync(string email)
+        public string GetResetPasswordToken(string email)
         {
             var account = _accountRepository.GetByEmail(email);
             var token = JwtToken.GenerateResetPasswordToken(_settings.Value.Secret, account);
@@ -120,10 +120,10 @@ namespace IdentityProvider.Services
                 Subject = "Reset password",
                 To = email,
                 Url = $"/api/identity/account/resetpassword?token={token}",
-                EmailType = "EmailConfirm"
+                EmailType = "EmailResetPassword"
             };
 
-            await _publishToTopic.PublishEmail(mail);
+            _publishToTopic.PublishEmail(mail);
 
             return token;
         }
