@@ -32,6 +32,12 @@ namespace IdentityProvider.Services
             _accountRepository = accountRepository;
         }
 
+        public AccountService(IAccountRepository accountRepository,IOptions<AppSettings> settings)
+        {
+            _accountRepository = accountRepository;
+            _settings = settings;
+        }
+
         public Account Authenticate(string email, string password)
         {
             var account = _accountRepository.GetByEmail(email);
