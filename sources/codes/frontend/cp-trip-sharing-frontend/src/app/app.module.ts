@@ -31,8 +31,8 @@ import { CropImageComponent } from './shared/components/upload-image/crop-image/
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
-import { SingleCommentComponent } from './shared/components/single-comment/single-comment.component'
-
+import { SingleCommentComponent } from './shared/components/single-comment/single-comment.component';
+import { MessagePopupComponent } from './shared/components/message-popup/message-popup.component'
 import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-confirm-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 @NgModule({
@@ -55,7 +55,7 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
     InterestedtopicPageComponent,
     ChangepasswordPageComponent,
     DetailpostPageComponent,
-    SingleCommentComponent
+    SingleCommentComponent,
     EmailConfirmPageComponent,
     ResetPasswordPageComponent
   ],
@@ -82,6 +82,6 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, InterestedtopicPageComponent, CropImageComponent]
+  entryComponents: [LoginPageComponent, InterestedtopicPageComponent, CropImageComponent,MessagePopupComponent]
 })
 export class AppModule { }

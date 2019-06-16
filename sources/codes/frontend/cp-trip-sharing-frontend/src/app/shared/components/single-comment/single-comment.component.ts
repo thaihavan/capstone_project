@@ -6,18 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./single-comment.component.css']
 })
 export class SingleCommentComponent implements OnInit {
-  nameuser: string = "Ha Van Thai";
-  urlImgavatar:string = "https://gody.vn/public/v3/images/bg/br-register.jpg";
-  time: string = "5 phút trước"
-  numberlike: string = "10";
-  showRep: boolean = false;
-  content: string = "This technology was on an episode on Better off Ted about 10 years ago. They found out their department head was a magicians assistant in her spare time.";
+  nameuser = 'Ha Van Thai';
+  urlImgavatar = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
+  time = '5 phút trước';
+  numberlike = '10';
+  showRep = false;
+  content = 'This technology was on an episode on Better off Ted about 10 years ago. They found out their department head was a magicians assistant in her spare time.';
   constructor() { }
 
   ngOnInit() {
   }
-  
-  showRepComment(){
+
+  showRepComment() {
     this.showRep = !this.showRep;
   }
 }

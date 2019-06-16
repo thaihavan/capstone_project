@@ -30,13 +30,19 @@ export class UserService {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('Token')
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
     return this.http.post<any>(this.apiUrl + 'changePassword', account, httpOption);
   }
 
   verifyEmail(token: string): Observable<any> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
     return this.http.post<any>(this.apiUrl + 'verify', null, httpOptions);
   }
 }

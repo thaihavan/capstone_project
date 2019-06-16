@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
-import { UserService } from 'src/app/core/services/user-service/user.service';
-import { InterestedtopicPageComponent } from '../interestedtopic-page/interestedtopic-page.component';
-import { Account } from 'src/Model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component'
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { UserService } from 'src/app/core/services/user-service/user.service';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
+import { Account } from 'src/Model/Account';
 
 @Component({
   selector: 'app-register-page',
@@ -12,10 +11,10 @@ import { LoginPageComponent } from 'src/app/pages/login-page/login-page.componen
   styleUrls: ['./register-page.component.css']
 })
 export class RegisterPageComponent implements OnInit {
-  username: string = "";
-  email: string = "";
-  password: string = "";
-  repass: string = "";
+  username = '';
+  email = '';
+  password = '';
+  repass = '';
   account: Account;
   message: string;
   constructor(private dialog: MatDialog, private userService: UserService) {
@@ -30,17 +29,22 @@ export class RegisterPageComponent implements OnInit {
     this.account.Password = this.password;
     this.account.Username = this.username;
     this.userService.registerAccount(this.account).subscribe((message: any) => {
-      // TODO: hiển thị popup đăng ký thành công, vui long kiểm tra email.
-      // user click OK thì redirect sang trang login.
+      this.openDialogMessageConfirm();
+      console.log('Register OK');
     }, (err: HttpErrorResponse) => {
       this.message = 'Đăng kí thất bại!';
     });
   }
 
-  openDialogLoginForm() {
-    const dialogRef = this.dialog.open(LoginPageComponent, {
-      height: 'auto',
-      width: '400px'
+  openDialogMessageConfirm() {
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '400px',
+      height: '200px',
+      position: {
+        top: '10px'
+      }
     });
+    const instance = dialogRef.componentInstance;
+    instance.message = 'Đăng kí thành công, vui lòng kiểm tra lại email';
   }
 }

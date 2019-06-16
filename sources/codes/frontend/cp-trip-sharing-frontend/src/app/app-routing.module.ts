@@ -7,10 +7,11 @@ import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotp
 import { CreatedPostComponent } from './pages/personal-page/components/created-post/created-post.component';
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
 import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
-import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component'
+import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
 import { HeaderComponent } from './core/components/header/header.component';
 import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-confirm-page.component';
+import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 
 const routes: Routes = [
   { path: 'email-confirm/:token', component: EmailConfirmPageComponent },
@@ -30,11 +31,11 @@ const routes: Routes = [
       { path: '', redirectTo: 'personal', pathMatch: 'full'},
       { path: 'forgot', component: ForgotpasswordPageComponent},
       {path: 'createpost', component: CreatePostPageComponent },
-      {path: 'changePassword',component: ChangepasswordPageComponent }
-    ]
-  {path: 'changePassword',component: ChangepasswordPageComponent },
-  {path: 'detailpost',component: DetailpostPageComponent}
-  }
+      {path: 'changePassword', component: ChangepasswordPageComponent },
+      {path: 'reset-password/:token', component: ResetPasswordPageComponent },
+      { path: 'changePassword', component: ChangepasswordPageComponent },
+      { path: 'detailpost', component: DetailpostPageComponent}
+    ]},
 ];
 
 @NgModule({

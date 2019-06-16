@@ -5,6 +5,7 @@ import { MatCardModule, MatButtonModule, MatTabsModule, MatButtonToggleModule, M
 import { AgmCoreModule } from '@agm/core';
 import {MatMenuModule} from '@angular/material/menu';
 import { SingleCommentComponent } from './components/single-comment/single-comment.component';
+import { MessagePopupComponent } from './components/message-popup/message-popup.component';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -20,7 +21,7 @@ const Material = [
   MatProgressSpinnerModule
  ];
 @NgModule({
-  declarations: [],
+  declarations: [MessagePopupComponent],
   imports: [
     CommonModule,
     Material,
