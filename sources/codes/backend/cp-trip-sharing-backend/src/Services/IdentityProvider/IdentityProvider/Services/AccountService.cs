@@ -23,7 +23,7 @@ namespace IdentityProvider.Services
         private readonly IAccountRepository _accountRepository = null;
 
         private readonly IOptions<AppSettings> _settings = null;
-        private readonly PublishToTopic _publishToTopic = null;
+        private readonly IPublishToTopic _publishToTopic = null;
 
         public AccountService(IOptions<AppSettings> settings)
         {
@@ -37,6 +37,7 @@ namespace IdentityProvider.Services
             IPublishToTopic publishToTopic)
         {
             _accountRepository = accountRepository;
+            _publishToTopic = publishToTopic;
             _settings = settings;
         }
 
