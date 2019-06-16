@@ -43,6 +43,6 @@ export class UserService {
         Authorization: 'Bearer ' + token
       })
     };
-    return this.http.post<any>(this.apiUrl + 'verify', null, httpOptions);
+    return this.http.post<any>(this.apiUrl + 'verify', null, httpOption);
   }
 }

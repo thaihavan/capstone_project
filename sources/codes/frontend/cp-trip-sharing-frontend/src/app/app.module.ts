@@ -55,7 +55,6 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
     InterestedtopicPageComponent,
     ChangepasswordPageComponent,
     DetailpostPageComponent,
-    SingleCommentComponent,
     EmailConfirmPageComponent,
     ResetPasswordPageComponent
   ],

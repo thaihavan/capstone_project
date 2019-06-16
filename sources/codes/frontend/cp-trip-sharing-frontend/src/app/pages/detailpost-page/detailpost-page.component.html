@@ -28,7 +28,10 @@
     <div class="comment text">
       <h3>Bình luận</h3>
       <div class="iconuser-textarea">
-        <app-single-comment></app-single-comment>
+        
+        <!-- Comment container include all comments -->
+        <app-comment-container [comments]="comments"></app-comment-container>
+
         <div class="form-group">
           <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
         </div>

@@ -6,6 +6,7 @@ import { AgmCoreModule } from '@agm/core';
 import {MatMenuModule} from '@angular/material/menu';
 import { SingleCommentComponent } from './components/single-comment/single-comment.component';
 import { MessagePopupComponent } from './components/message-popup/message-popup.component';
+import { CommentContainerComponent } from './components/comment-container/comment-container.component';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -21,12 +22,19 @@ const Material = [
   MatProgressSpinnerModule
  ];
 @NgModule({
-  declarations: [MessagePopupComponent],
+  declarations: [
+    MessagePopupComponent,
+    CommentContainerComponent,
+    SingleCommentComponent
+  ],
   imports: [
     CommonModule,
     Material,
     AgmCoreModule
   ],
-  exports: [Material]
+  exports: [
+    Material,
+    SingleCommentComponent,
+    CommentContainerComponent]
 })
 export class SharedModule { }
