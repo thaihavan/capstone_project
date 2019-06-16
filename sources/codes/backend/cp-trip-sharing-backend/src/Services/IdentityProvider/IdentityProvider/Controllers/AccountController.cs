@@ -109,5 +109,9 @@ namespace IdentityProvider.Controllers
             }          
             return Ok(new { Token=result});
         }
+
+        //[AllowAnonymous]
+        //[HttpPost("authenticate/facebook")]
+        //public i
     }
 }

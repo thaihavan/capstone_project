@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using IdentityProvider.Helpers;
 using IdentityProvider.Models;
@@ -13,6 +14,7 @@ using IdentityProvider.Utils;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace IdentityProvider.Services
 {
@@ -23,7 +25,7 @@ namespace IdentityProvider.Services
         private readonly IAccountRepository _accountRepository = null;
 
         private readonly IOptions<AppSettings> _settings = null;
-        private readonly IPublishToTopic _publishToTopic = null;
+        private readonly PublishToTopic _publishToTopic = null;
 
         public AccountService(IOptions<AppSettings> settings)
         {
@@ -37,7 +39,6 @@ namespace IdentityProvider.Services
             IPublishToTopic publishToTopic)
         {
             _accountRepository = accountRepository;
-            _publishToTopic = publishToTopic;
             _settings = settings;
         }
 
@@ -70,7 +71,7 @@ namespace IdentityProvider.Services
             if (_accountRepository.GetByEmail(account.Email) != null) return null;
             var salt = Salt.Generate();
             var encryptedAccount = new Account()
-            {               
+            {  
                 Username = account.Username,
                 Email = account.Email,
                 Password = Hash.HashPassword(account.Password, salt),
@@ -163,23 +164,30 @@ namespace IdentityProvider.Services
         }
 
         public GoogleUser GetGoogleUserInformation(string accessToken)
-        {
+        {           
             GoogleUser userInfo = null;
             string url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken + "";
-
-            WebRequest request = WebRequest.Create(url);
-            request.Credentials = CredentialCache.DefaultCredentials;
-            using (var response = request.GetResponse())
+            try
             {
-                using (var stream= response.GetResponseStream())
+                WebRequest request = WebRequest.Create(url);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                using (var response = request.GetResponse())
                 {
-                    using (var reader = new StreamReader(stream))
+                    using (var stream = response.GetResponseStream())
                     {
-                        string result = reader.ReadToEnd();
-                        userInfo = JsonConvert.DeserializeObject<GoogleUser>(result);
+                        using (var reader = new StreamReader(stream))
+                        {
+                            string result = reader.ReadToEnd();
+                            userInfo = JsonConvert.DeserializeObject<GoogleUser>(result);
+                        }
                     }
                 }
-            }
+            }catch(WebException ex)
+            {
+                var response = ex.Response as HttpWebResponse;
+                if(response!=null&& response.StatusCode==HttpStatusCode.BadRequest)
+                return null;
+            }          
             return userInfo;            
         }
 
@@ -190,7 +198,7 @@ namespace IdentityProvider.Services
             {
                 return null;
             }
-            var user = _accountRepository.GetByEmail(userInfo.email);
+            var user = _accountRepository.GetByEmail(userInfo.Email);
             if (user != null)
             {
                 return JwtToken.Generate(_settings.Value.Secret, user);
@@ -198,17 +206,18 @@ namespace IdentityProvider.Services
             {   
                 var newAccount= new Account()
                 {
-                    Email = userInfo.email,
+                    Email = userInfo.Email,
                     Password = null,
                     PasswordSalt = null,
                     Role = "member",
-                    Username = userInfo.given_name,
+                    Username = userInfo.Given_name,
                     UserId = new BsonObjectId(ObjectId.GenerateNewId())
                 };
                 _accountRepository.Add(newAccount);
                 return JwtToken.Generate(_settings.Value.Secret, newAccount);
             }           
         }
+       
         
     }
 }
