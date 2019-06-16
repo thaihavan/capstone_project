@@ -11,6 +11,7 @@ export class SingleCommentComponent implements OnInit {
   time = '5 phút trước';
   numberlike = '10';
   showRep = false;
+  // tslint:disable-next-line:max-line-length
   content = 'This technology was on an episode on Better off Ted about 10 years ago. They found out their department head was a magicians assistant in her spare time.';
   constructor() { }
 

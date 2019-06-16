@@ -4,6 +4,8 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { UploadAdapter } from 'src/app/model/UploadAdapter';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material';
+import { StepCreatePostComponent } from 'src/app/shared/components/step-create-post/step-create-post.component';
 @Component({
   selector: 'app-create-post-page',
   templateUrl: './create-post-page.component.html',
@@ -45,7 +47,7 @@ export class CreatePostPageComponent implements OnInit {
         return new UploadAdapter(loader, this.http);
       };
   }
-  constructor( private http: HttpClient) {}
+  constructor( private http: HttpClient, public dialog: MatDialog) {}
 
   ngOnInit() {
   }
@@ -77,9 +79,26 @@ export class CreatePostPageComponent implements OnInit {
     this.imgUrl = '';
     this.isHasImg = false;
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(StepCreatePostComponent, {
+      width: '60%',
+      data: {
+        contenPost: this.myEditor.editorInstance.getData(),
+        locations: [],
+        interestedToppics: []
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+      }
+    });
+  }
   createPost() {
     if (this.myEditor && this.myEditor.editorInstance) {
       console.log(this.myEditor.editorInstance.getData());
     }
+    this.openDialog();
   }
 }

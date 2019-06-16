@@ -4,6 +4,11 @@ import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Account } from 'src/Model/Account';
+<<<<<<< Updated upstream
+=======
+import { HttpErrorResponse } from '@angular/common/http';
+import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component';
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-register-page',
@@ -28,8 +33,20 @@ export class RegisterPageComponent implements OnInit {
     this.account.Email = this.email;
     this.account.Password = this.password;
     this.account.Username = this.username;
+<<<<<<< Updated upstream
     this.userService.registerAccount(this.account).subscribe((message: any) => {
       this.openDialogMessageConfirm();
+=======
+    this.userService.registerAccount(this.account).subscribe((token: any) => {
+      localStorage.setItem('Token', token.token);
+      if (localStorage.getItem('Token') != null) {
+        const dialogRef = this.dialog.open(InterestedtopicPageComponent, {
+          height: 'auto',
+          width: '60%',
+          disableClose: true
+        });
+      }
+>>>>>>> Stashed changes
     }, (err: HttpErrorResponse) => {
       this.message = 'Đăng kí thất bại!';
     });

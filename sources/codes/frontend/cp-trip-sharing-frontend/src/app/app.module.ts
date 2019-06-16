@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -32,9 +32,10 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
 import { SingleCommentComponent } from './shared/components/single-comment/single-comment.component';
-import { MessagePopupComponent } from './shared/components/message-popup/message-popup.component'
+import { MessagePopupComponent } from './shared/components/message-popup/message-popup.component';
 import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-confirm-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
+import { StepCreatePostComponent } from './shared/components/step-create-post/step-create-post.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +58,8 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
     DetailpostPageComponent,
     SingleCommentComponent,
     EmailConfirmPageComponent,
-    ResetPasswordPageComponent
+    ResetPasswordPageComponent,
+    StepCreatePostComponent
   ],
   imports: [
     MatMenuModule,
@@ -68,6 +70,7 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
     SharedModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDIPTZ7dpn5_hralWGDP4glqkqAaac6qeA',
       libraries: ['places']
@@ -82,6 +85,7 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, InterestedtopicPageComponent, CropImageComponent,MessagePopupComponent]
+  entryComponents: [LoginPageComponent, InterestedtopicPageComponent, CropImageComponent, MessagePopupComponent, StepCreatePostComponent]
+
 })
 export class AppModule { }

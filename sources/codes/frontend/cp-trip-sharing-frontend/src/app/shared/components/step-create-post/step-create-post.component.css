@@ -1,0 +1,31 @@
+.step-create-post{
+}
+.fake-input{
+    display: none;
+}
+.select-location{
+    margin-top: 10px;
+}
+.step-title{
+    text-align: center;
+    color: #4051b5;
+    margin-bottom: 30px;
+}
+.step-body {
+    margin-top: 20px;
+    text-align: -webkit-center;
+}
+.btn-step{
+text-align: right;
+}
+button:focus {
+    outline: none;
+    outline: none !important;
+  }
+  ::ng-deep .mat-chip-list-wrapper {
+    justify-content: center;
+}
+.btn-step button{
+margin-left: 15px;
+margin-top: 25px;
+}

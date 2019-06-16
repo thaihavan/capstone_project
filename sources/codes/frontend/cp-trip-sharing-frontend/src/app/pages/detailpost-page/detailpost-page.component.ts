@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from 'src/app/core/services/service-1/post.service';
-import {Post} from 'src/Model/Post'
+import {Post} from 'src/Model/Post';
 
 @Component({
   selector: 'app-detailpost-page',
