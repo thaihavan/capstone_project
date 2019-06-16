@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UserServices.Helpers;
 using UserServices.Models;
 using UserServices.Reponsitories.DbContext;
+using UserServices.Reponsitories.Interfaces;
 
 namespace UserServices.Reponsitories
 {

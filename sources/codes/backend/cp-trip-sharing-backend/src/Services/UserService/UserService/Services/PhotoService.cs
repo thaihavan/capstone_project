@@ -6,6 +6,7 @@ using UserServices.Reponsitories;
 using Microsoft.Extensions.Options;
 using UserServices.Helpers;
 using UserServices.Models;
+using UserServices.Services.Interfaces;
 
 namespace UserServices.Services
 {

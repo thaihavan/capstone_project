@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UserServices.Helpers;
 using UserServices.Models;
 using UserServices.Reponsitories;
+using UserServices.Services.Interfaces;
 
 namespace UserServices.Services
 {
