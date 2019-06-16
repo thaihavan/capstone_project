@@ -29,15 +29,9 @@ export class RegisterPageComponent implements OnInit {
     this.account.Email = this.email;
     this.account.Password = this.password;
     this.account.Username = this.username;
-    this.userService.registerAccount(this.account).subscribe((token: any) => {
-      localStorage.setItem("Token", token.token);
-      if (localStorage.getItem("Token") != null) {
-        let dialogRef = this.dialog.open(InterestedtopicPageComponent, {
-          height: 'auto',
-          width: '60%',
-          disableClose: true
-        });
-      }
+    this.userService.registerAccount(this.account).subscribe((message: any) => {
+      // TODO: hiển thị popup đăng ký thành công, vui long kiểm tra email.
+      // user click OK thì redirect sang trang login.
     }, (err: HttpErrorResponse) => {
       this.message = 'Đăng kí thất bại!';
     });

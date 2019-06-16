@@ -15,10 +15,10 @@ export class HeaderComponent implements OnInit {
   constructor(private globals: Globals,private dialog: MatDialog) { }
 
   ngOnInit() {
-    if(localStorage.getItem("Token")!=null){
+    if (localStorage.getItem("Token")!=null){
         this.checkLogin = false;
         this.checkLogined = true;
-    }else{
+    } else {
       this.checkLogin = true;
       this.checkLogined = false;
     }

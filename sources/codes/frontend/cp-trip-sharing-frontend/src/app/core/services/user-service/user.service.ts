@@ -13,7 +13,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-  apiUrl = 'https://localhost:44353/api/identity/account/';
+  // apiUrl = 'https://localhost:44353/api/identity/account/';
+  apiUrl = 'http://107.178.242.201/api/identity/account/';
+
   constructor(private http: HttpClient) { }
 
   getAccount(account: Account): Observable<Account> {
@@ -28,9 +30,13 @@ export class UserService {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization':'Bearer '+ localStorage.getItem("Token")
+        'Authorization': 'Bearer ' + localStorage.getItem('Token')
       })
     };
     return this.http.post<any>(this.apiUrl + 'changePassword', account, httpOption);
+  }
+
+  verifyEmail(token: string): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'verify', null, httpOptions);
   }
 }

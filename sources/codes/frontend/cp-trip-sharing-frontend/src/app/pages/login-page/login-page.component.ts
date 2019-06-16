@@ -41,6 +41,10 @@ export class LoginPageComponent implements OnInit {
         localStorage.setItem('Role', acc.role);
         window.location.href = this.globals.urllocal;
         this.dialogRef.close();
+        // Nếu là đăng nhập lần đầu thì redirect sang trang initial-user-information
+        // trong initial-user-information gồm có cập nhật tt cá nhân, bước thứ 2 là chọn chủ để quan tâm
+        // xem angular material step.
+        // cuối cùng là ra trang homepage
     },(err: HttpErrorResponse) => { 
       this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
       console.log(err); });

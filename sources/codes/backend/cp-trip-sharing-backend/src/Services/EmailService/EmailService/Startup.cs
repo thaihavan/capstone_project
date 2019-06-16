@@ -38,7 +38,7 @@ namespace EmailService
 
             // Pubsub: Start receiving message to send email
             PullMailProcess pullMailProcess = new PullMailProcess();
-            //pullMailProcess.StartAsync();
+            pullMailProcess.StartAsync();
 
             // Configure DI for application services
             services.AddScoped<IEmailService, Services.EmailService>();

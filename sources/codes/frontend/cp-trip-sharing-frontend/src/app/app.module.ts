@@ -33,6 +33,8 @@ import { ChangepasswordPageComponent } from './pages/changepassword-page/changep
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
 import { SingleCommentComponent } from './shared/components/single-comment/single-comment.component'
 
+import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-confirm-page.component';
+import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +56,8 @@ import { SingleCommentComponent } from './shared/components/single-comment/singl
     ChangepasswordPageComponent,
     DetailpostPageComponent,
     SingleCommentComponent
+    EmailConfirmPageComponent,
+    ResetPasswordPageComponent
   ],
   imports: [
     MatMenuModule,
