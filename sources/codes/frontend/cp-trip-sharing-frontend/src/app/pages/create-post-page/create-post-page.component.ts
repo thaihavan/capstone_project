@@ -2,11 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
-import Image from '@ckeditor/ckeditor5-image/src/image';
-import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
-import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
-import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
-import { UploadAdapterService } from 'src/app/core/services/post-service/UploadAdapter.service';
 import { UploadAdapter } from 'src/app/model/UploadAdapter';
 import { HttpClient } from '@angular/common/http';
 @Component({
@@ -47,7 +42,7 @@ export class CreatePostPageComponent implements OnInit {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
         // tslint:disable-next-line:no-string-literal
         console.log(loader['file']);
-        return new UploadAdapter(loader, '', this.http);
+        return new UploadAdapter(loader, this.http);
       };
   }
   constructor( private http: HttpClient) {}

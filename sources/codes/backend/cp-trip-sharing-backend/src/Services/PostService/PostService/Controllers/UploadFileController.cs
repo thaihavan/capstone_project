@@ -29,8 +29,6 @@ namespace PostService.Controllers
             }
 
             string imageUrl = _uploadFileService.UploadImage(imageParam);
-
             return Ok(new { Image = imageUrl });
-        }
     }
 }
