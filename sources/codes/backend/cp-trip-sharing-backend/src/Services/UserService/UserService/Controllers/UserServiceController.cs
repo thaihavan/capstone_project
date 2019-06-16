@@ -47,49 +47,6 @@ namespace UserServices.Controllers
             var result = _userService.GetUserById(userId);
             return Ok(result);
         }
-        
 
-        
-
-        
-
-        //// POST: api/UserServices/addblock
-        //[HttpPost("addblock")]
-        //public IActionResult AddBlock([FromQuery] string blocked)
-        //{
-        //    var block = new Block()
-        //    {
-        //        BlockedId = new BsonObjectId(ObjectId.Parse(blocked))
-        //    };
-        //    var identity = (ClaimsIdentity)User.Identity;
-        //    var userId = identity.FindFirst("user_id").Value;
-        //    block.BlockerId = new BsonObjectId(ObjectId.Parse(userId));
-        //    if (_userService.Block(block) != null)
-        //    {
-        //        return Ok();
-        //    }
-        //    return NotFound();
-        //}
-
-        //// DELETE: api/UserServices/unblock
-        //[HttpDelete("unblock")]
-        //public IActionResult UnBlock([FromQuery] string blocked)
-        //{
-        //    var block = new Block()
-        //    {
-        //        BlockedId = new BsonObjectId(ObjectId.Parse(blocked))
-        //    };
-        //    var identity = (ClaimsIdentity)User.Identity;
-        //    var userId = identity.FindFirst("user_id").Value;
-        //    block.BlockerId = new BsonObjectId(ObjectId.Parse(userId));
-        //    if (_userService.UnBlock(block) != null)
-        //    {
-        //        return Ok();
-        //    }
-        //    else
-        //    {
-        //        return NotFound();
-        //    }
-        //}
     }
 }
