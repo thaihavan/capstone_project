@@ -52,8 +52,8 @@ namespace PostService.Repositories
         public Article Update(Article param)
         {
             var filter = Builders<Article>.Filter.Eq(a => a.Id, param.Id);
-            var relult = _articles.ReplaceOne(filter, param);
-            if (!relult.IsAcknowledged)
+            var result = _articles.ReplaceOne(filter, param);
+            if (!result.IsAcknowledged)
             {
                 return null;
             }
