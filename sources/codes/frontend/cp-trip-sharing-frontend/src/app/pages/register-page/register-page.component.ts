@@ -28,7 +28,6 @@ export class RegisterPageComponent implements OnInit {
     this.account.Email = this.email;
     this.account.Password = this.password;
     this.account.Username = this.username;
-    this.openDialogMessageConfirm();
     this.userService.registerAccount(this.account).subscribe((message: any) => {
       this.openDialogMessageConfirm();
     }, (err: HttpErrorResponse) => {
