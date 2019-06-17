@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {Account} from 'src/Model/Account';
+import { Account } from 'src/app/model/Account';
 
 const httpOptions = {
   headers: new HttpHeaders({

@@ -21,7 +21,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatMenuModule} from '@angular/material/menu';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { Globals } from 'src/globals/globalvalues';
-import { InMemoryService } from './core/services/service-1/inMemory.service';
+import { InMemoryService } from './core/services/fackeData-service/inMemory.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InterestedtopicPageComponent } from './pages/interestedtopic-page/interestedtopic-page.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';

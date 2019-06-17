@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Globals } from 'src/globals/globalvalues';
-import { Account } from 'src/Model/Account';
+import { Account } from 'src/app/model/Account';
 
 @Component({
   selector: 'app-login-page',

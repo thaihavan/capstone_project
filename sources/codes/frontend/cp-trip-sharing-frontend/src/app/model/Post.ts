@@ -1,3 +1,5 @@
+import { Account } from './Account';
+
 export class Post {
     id: string;
     title: string;

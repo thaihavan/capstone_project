@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
-import { Account } from 'src/Model/Account';
+import { Account } from 'src/app/model/Account';
 
 @Component({
   selector: 'app-register-page',
