@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Comment} from 'src/app/model/Comment';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-single-comment',
@@ -7,14 +6,17 @@ import { Comment} from 'src/app/model/Comment';
   styleUrls: ['./single-comment.component.css']
 })
 export class SingleCommentComponent implements OnInit {
-  @Input() comment: Comment;
-
+  nameuser = 'Ha Van Thai';
+  urlImgavatar = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
+  time = '5 phút trước';
+  numberlike = '10';
   showRep = false;
-
-  ngOnInit(): void {
-  }
-
+  // tslint:disable-next-line:max-line-length
+  content = 'This technology was on an episode on Better off Ted about 10 years ago. They found out their department head was a magicians assistant in her spare time.';
   constructor() { }
+
+  ngOnInit() {
+  }
 
   showRepComment() {
     this.showRep = !this.showRep;
