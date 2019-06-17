@@ -4,19 +4,27 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { UploadAdapter } from 'src/app/model/UploadAdapter';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { StepCreatePostComponent } from 'src/app/shared/components/step-create-post/step-create-post.component';
+import { Article } from 'src/app/model/Article';
+import { Post } from 'src/app/model/Post';
+import { Ptor } from 'protractor';
+import { PostService } from 'src/app/core/services/post-service/post.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-create-post-page',
   templateUrl: './create-post-page.component.html',
-  styleUrls: ['./create-post-page.component.css']
+  styleUrls: ['./create-post-page.component.css'],
+  providers: [DatePipe]
 })
 export class CreatePostPageComponent implements OnInit {
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @ViewChild('myEditor') myEditor;
   imgUrl: any;
   isHasImg = false;
+  isPublic = true;
+  title: string;
   config = {
     filebrowserUploadUrl: 'http://192.168.0.107:8000/api/crm/v1.0/crm-distribution-library-files',
     fileTools_requestHeaders: {
@@ -48,7 +56,9 @@ export class CreatePostPageComponent implements OnInit {
         return new UploadAdapter(loader, this.http);
       };
   }
-  constructor( private http: HttpClient, public dialog: MatDialog) {}
+  constructor( private http: HttpClient, public dialog: MatDialog,
+               private postService: PostService,
+               private datePipe: DatePipe) {}
 
   ngOnInit() {
   }
@@ -83,18 +93,27 @@ export class CreatePostPageComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(StepCreatePostComponent, {
       width: '60%',
-      data:  {
-        topics: [],
+      data: {
+        toppics: [],
         destinations: [],
     }
-
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log('result', result);
-      if (result !== undefined) {
-        console.log('result', result);
+    dialogRef.afterClosed().subscribe(res => {
+      if (res !== undefined) {
+        const article = new Article();
+        article.toppics = res.toppics;
+        article.destinations = res.destinations;
+        const post = new Post();
+        post.title = this.title;
+        post.author = null;
+        post.content = this.myEditor.editorInstance.getData();
+        post.isPublic = this.isPublic;
+        post.pubDate = this.datePipe.transform( new Date(), 'yyyy-MM-dd hh:mm');
+        article.post = post;
+        this.postService.createPost(article).subscribe(data => {
+        }, error => {
+          console.log(error);
+        });
       }
     });
   }

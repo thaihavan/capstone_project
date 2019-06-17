@@ -6,4 +6,4 @@ export class Post {
     description: string;
     likes: number;
     comments: number;
-  }
+}

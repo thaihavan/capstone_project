@@ -1,0 +1,95 @@
+.allinterested{
+    width: 90%;
+    border-radius: 3px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.interestedtopic{
+    width: 100%;
+    height: 450px;
+    margin: 0 auto;
+    overflow: auto;
+}
+.changeClass{
+    border-radius: 5px;
+    width: 23%;
+    height: 21%;
+    float: left;
+    margin: 0 auto;
+    opacity: 0.5;
+    margin-top: 1em;
+    margin-left: 0.5em;
+}
+.eachtopic{
+    border-radius: 5px;
+    width: 23%;
+    height: 21%;
+    float: left;
+    margin: 0 auto;
+    margin-top: 1em;
+    margin-left: 0.5em;
+}
+
+.eachtopic :hover{
+    cursor: pointer;
+    border:2px solid #3f51b5;
+}
+
+.nametopic{
+    border: none !important;
+    margin-left: 2.5em;
+    z-index: 9999;
+    position: relative;
+    font-weight: bold;
+    top: 35px;
+    color: crimson;
+    font-size: 1em;
+}
+
+.imageInterested{
+    border-radius: 5px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    margin-top: -1.5em;
+}
+
+.btn{
+    float: right;
+    margin: 1em 2em 0em 0em;
+    background-color: #3f51b5;
+    outline: none !important;
+}
+
+#title{
+    padding-left: .2em;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+    border-radius: 3px;
+    margin-top: 1em;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 3px;
+    margin-top: 1em;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #3f51b5; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3f51b5; 
+  }
+
+  .selected {
+    opacity: 0.5 !important;
+  }
