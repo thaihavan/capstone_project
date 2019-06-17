@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { post } from 'selenium-webdriver/http';
 import { Post } from 'src/app/model/Post';
 import { Account } from 'src/app/model/Account';
 

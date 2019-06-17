@@ -10,19 +10,19 @@
         <span class="menu-spacer"></span>
         <div fxShow="true" fxHide.lt-md class="nav-top">
           <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-          <a routerLink="/createpost" mat-button>
+          <a routerLink="/create-article" mat-button>
             <div class="nav-icon-text">
               <i class="fa fa-plus-circle"></i>
               <span>Đăng</span>
             </div>
           </a>
-          <a href="#" mat-button>
+          <a href="/virtual-trips" mat-button>
             <div class="nav-icon-text">
               <i class="fa fa-suitcase"></i>
               <span>Chuyến đi</span>
             </div>
           </a>
-          <a routerLink="/detailpost" mat-button>
+          <a routerLink="#" mat-button>
             <div class="nav-icon-text">
               <i class="fa fa-envelope"></i>
               <span>Tin nhắn</span>
@@ -33,9 +33,9 @@
             <img class="imgavatar" src="{{urlImgavatar}}"/>
           </div>
           <mat-menu  #menu="matMenu">
-            <button class="options" routerLink="/register" mat-menu-item>Trang cá nhân</button>
+            <button class="options" routerLink="/personal" mat-menu-item>Trang cá nhân</button>
             <button mat-menu-item>Blog của bạn</button>
-            <button routerLink="/changePassword" mat-menu-item>Đổi mật khẩu</button>
+            <button routerLink="/change-password" mat-menu-item>Đổi mật khẩu</button>
             <button (click)="signOut()" mat-menu-item>Đăng xuất</button>
           </mat-menu>
           <div class="inputsearch">

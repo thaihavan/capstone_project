@@ -17,31 +17,34 @@ import { ListPostComponent } from './shared/components/list-post/list-post.compo
 
 const routes: Routes = [
   { path: 'email-confirm/:token', component: EmailConfirmPageComponent },
-  { path: '', component: HeaderComponent,
+  {
+    path: '', component: HeaderComponent,
     children: [
-      { path: 'home', component: HomePageComponent,
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: 'home', component: HomePageComponent,
         children: [
-          { path: ':nav', component: ListPostComponent }
-        ]},
-      { path: 'heroes', component: GoogleMapComponent },
-      { path: 'personal', component: PersonalPageComponent,
-        children: [
-          {path: 'register', component: RegisterPageComponent },
-          {path: 'virtual', component: GoogleMapComponent},
-          {path: '', redirectTo: 'personalfeed', pathMatch: 'full'},
-          {path: 'personalfeed', component: CreatedPostComponent },
+          { path: '', redirectTo: 'for-you', pathMatch: 'full' },
+          { path: ':home-nav', component: ListPostComponent }
         ]
       },
-      { path: 'register', component: RegisterPageComponent},
-      { path: 'virtual', component: GoogleMapComponent},
-      { path: '', redirectTo: 'personal', pathMatch: 'full'},
-      { path: 'forgot', component: ForgotpasswordPageComponent},
-      {path: 'createpost', component: CreatePostPageComponent },
-      {path: 'changePassword', component: ChangepasswordPageComponent },
-      {path: 'reset-password/:token', component: ResetPasswordPageComponent },
-      { path: 'changePassword', component: ChangepasswordPageComponent },
-      { path: 'detailpost', component: DetailpostPageComponent}
-    ]},
+      {
+        path: 'personal', component: PersonalPageComponent,
+        children: [
+          { path: '', redirectTo: 'article', pathMatch: 'full' },
+          { path: ':personal-nav', component: ListPostComponent }
+        ]
+      },
+      { path: 'register', component: RegisterPageComponent },
+      { path: 'virtual-trips', component: GoogleMapComponent },
+      { path: 'forgot-password', component: ForgotpasswordPageComponent },
+      { path: 'create-article', component: CreatePostPageComponent },
+      { path: 'change-password', component: ChangepasswordPageComponent },
+      { path: 'reset-password/:token', component: ResetPasswordPageComponent },
+      { path: 'change-password', component: ChangepasswordPageComponent },
+      { path: 'post-detail', component: DetailpostPageComponent }
+    ]
+  },
 ];
 
 @NgModule({
