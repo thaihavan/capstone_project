@@ -55,6 +55,10 @@ namespace PostService.Controllers
                 return Unauthorized();
             }
 
+            article.Id = new BsonObjectId(ObjectId.GenerateNewId());
+            article.PostId = new BsonObjectId(ObjectId.GenerateNewId());
+            article.Post.Id = article.PostId;
+
             Post addedPost = _postService.Add(article.Post);
             Article addedArticle = _articleService.Add(article);
 
