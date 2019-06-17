@@ -15,16 +15,10 @@ namespace UserServices.Reponsitories
     public class PhotoRepository : IPhotoRepository
     {
         private readonly IMongoCollection<Photo> _photos = null;
-        private readonly IOptions<AppSettings> settings;
 
         public PhotoRepository(IOptions<AppSettings> settings)
         {
-            this.settings = settings;
-        }
-
-        public PhotoRepository()
-        {
-            var dbContext = new MongoDbContext();
+            var dbContext = new MongoDbContext(settings);
             _photos = dbContext.PhotoCollection;
         }
 
