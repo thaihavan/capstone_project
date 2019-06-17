@@ -7,15 +7,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PostService {
-baseUrl = 'https://localhost:5001/api/postservice/article/create';
-constructor(private http: HttpClient) { }
-createPost(article: Article): Observable<Article> {
-  const httpOption = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('Token')
-    })
-  };
-  return this.http.post<Article>(this.baseUrl, article, httpOption);
-}
+  baseUrl = 'https://localhost:44352/api/postservice/article/create';
+  constructor(private http: HttpClient) { }
+  createPost(article: Article): Observable<Article> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.post<Article>(this.baseUrl, article, httpOption);
+  }
 }

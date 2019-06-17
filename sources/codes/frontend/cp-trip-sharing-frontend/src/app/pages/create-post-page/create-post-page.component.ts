@@ -108,8 +108,7 @@ export class CreatePostPageComponent implements OnInit {
         const post = new Post();
         post.title = this.title;
         const author = new Author();
-        // author.authorId = localStorage.getItem('UserId');
-        post.author = null;
+        post.author = author;
         post.content = this.myEditor.editorInstance.getData();
         post.isPublic = this.isPublic;
         post.pubDate = this.datePipe.transform( new Date(), 'yyyy-MM-dd hh:mm:ss');
