@@ -35,7 +35,6 @@ export class UploadImageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result !== undefined) {
         if (result.croppedImage !== '') {
           this.croppedImage.emit(result.croppedImage);

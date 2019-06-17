@@ -12,7 +12,6 @@ import { GoogleMapComponent } from './shared/components/google-map/google-map.co
 import { AgmCoreModule } from '@agm/core';
 import {HeaderComponent} from 'src/app/core/components/header/header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { GoogleMapSearchComponent } from './shared/components/google-map-search/google-map-search.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
 import {ForgotpasswordPageComponent} from './pages/forgotpassword-page/forgotpassword-page.component';
@@ -26,16 +25,12 @@ import { InMemoryService } from './core/services/service-1/inMemory.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InterestedtopicPageComponent } from './pages/interestedtopic-page/interestedtopic-page.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
-import { CropImageComponent } from './shared/components/upload-image/crop-image/crop-image.component';
-import { ImageCropperModule } from 'ngx-image-cropper';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
 import { SingleCommentComponent } from './shared/components/single-comment/single-comment.component';
 import { MessagePopupComponent } from './shared/components/message-popup/message-popup.component';
 import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-confirm-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
-import { StepCreatePostComponent } from './shared/components/step-create-post/step-create-post.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,21 +39,17 @@ import { StepCreatePostComponent } from './shared/components/step-create-post/st
     LoginPageComponent,
     GoogleMapComponent,
     HeaderComponent,
-    GoogleMapSearchComponent,
     RegisterPageComponent,
     PersonalPageComponent,
     ForgotpasswordPageComponent,
     CreatePostPageComponent,
     CreatedPostComponent,
     InterestedtopicPageComponent,
-    UploadImageComponent,
-    CropImageComponent,
     InterestedtopicPageComponent,
     ChangepasswordPageComponent,
     DetailpostPageComponent,
     EmailConfirmPageComponent,
     ResetPasswordPageComponent,
-    StepCreatePostComponent
   ],
   imports: [
     MatMenuModule,
@@ -80,11 +71,10 @@ import { StepCreatePostComponent } from './shared/components/step-create-post/st
     //   InMemoryService, { dataEncapsulation: false }
     // ),
     CKEditorModule,
-    ImageCropperModule,
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, InterestedtopicPageComponent, CropImageComponent, MessagePopupComponent, StepCreatePostComponent]
+  entryComponents: [LoginPageComponent, InterestedtopicPageComponent, MessagePopupComponent]
 
 })
 export class AppModule { }
