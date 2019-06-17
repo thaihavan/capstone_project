@@ -1,4 +1,4 @@
-import { Account } from './Account';
+import { Author } from './Author';
 
 export class Post {
     id: string;
@@ -10,7 +10,7 @@ export class Post {
     isActive: boolean;
     pubDate: string;
     postType: null;
-    author: Account;
+    author: Author;
     time: string;
     likes: number;
     comments: number;

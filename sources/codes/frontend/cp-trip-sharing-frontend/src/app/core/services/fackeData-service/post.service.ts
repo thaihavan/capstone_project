@@ -16,9 +16,9 @@ constructor(private http: HttpClient) {
 fackeData() {
   this.post = new Post();
   this.post.title = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit consectetur deserunt illo esse distinctio.';
-  this.account = new Account();
-  this.account.Username = 'PhongNV';
-  this.post.author = this.account;
+  // this.account = new Account();
+  // this.account.Username = 'PhongNV';
+  this.post.author = null;
   this.post.comments = 123;
   this.post.likes = 123;
   this.post.image = 'luff.jpg';

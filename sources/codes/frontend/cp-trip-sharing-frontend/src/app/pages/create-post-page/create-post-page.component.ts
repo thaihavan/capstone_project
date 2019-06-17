@@ -11,6 +11,8 @@ import { Post } from 'src/app/model/Post';
 import { Ptor } from 'protractor';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { DatePipe } from '@angular/common';
+import { Account } from 'src/app/model/Account';
+import { Author } from 'src/app/model/Author';
 
 @Component({
   selector: 'app-create-post-page',
@@ -105,10 +107,12 @@ export class CreatePostPageComponent implements OnInit {
         article.destinations = res.destinations;
         const post = new Post();
         post.title = this.title;
+        const author = new Author();
+        // author.authorId = localStorage.getItem('UserId');
         post.author = null;
         post.content = this.myEditor.editorInstance.getData();
         post.isPublic = this.isPublic;
-        post.pubDate = this.datePipe.transform( new Date(), 'yyyy-MM-dd hh:mm');
+        post.pubDate = this.datePipe.transform( new Date(), 'yyyy-MM-dd hh:mm:ss');
         article.post = post;
         this.postService.createPost(article).subscribe(data => {
         }, error => {

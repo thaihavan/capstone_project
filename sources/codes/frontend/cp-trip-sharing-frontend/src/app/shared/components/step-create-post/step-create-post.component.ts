@@ -73,8 +73,8 @@ remove(location) {
 }
 createPost() {
   if (this.fakeinput1 !== '') {
-    this.data.toppics = this.selectedToppic;
-    this.data.destinations = this.selectedLocation;
+    this.data.toppics = this.selectedToppic.map(top => top.nameTopic);
+    this.data.destinations = this.selectedLocation.map(dest => dest.locality);
     this.dialogRef.close(this.data);
   }
 }
