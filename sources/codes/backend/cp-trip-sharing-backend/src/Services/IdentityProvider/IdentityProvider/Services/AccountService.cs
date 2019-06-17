@@ -50,8 +50,7 @@ namespace IdentityProvider.Services
             {
                 var isValid = Hash.HashPassword(password, account.PasswordSalt) == account.Password;
                 if (isValid)
-                {
-                    account.UserId = new BsonObjectId(ObjectId.GenerateNewId());
+                {                
                     account.Token = JwtToken.Generate(_settings.Value.Secret, account);
                 }
                 // Set important fields to null
