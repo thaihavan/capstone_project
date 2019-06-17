@@ -8,6 +8,7 @@ import { SingleCommentComponent } from './components/single-comment/single-comme
 import { MessagePopupComponent } from './components/message-popup/message-popup.component';
 import { CommentContainerComponent } from './components/comment-container/comment-container.component';
 import { ListPostComponent } from './components/list-post/list-post.component';
+import { ArticleComponent } from './components/article/article.component';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -27,7 +28,8 @@ const Material = [
     MessagePopupComponent,
     CommentContainerComponent,
     SingleCommentComponent,
-    ListPostComponent
+    ListPostComponent,
+    ArticleComponent
   ],
   imports: [
     CommonModule,

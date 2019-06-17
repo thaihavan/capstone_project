@@ -1,0 +1,81 @@
+<div class="overview-post card gedf-card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="mr-2">
+          <img class="rounded-circle" width="45" src="../../../../assets/img_avatar.png" alt="">
+        </div>
+        <div class="ml-2">
+          <div class="h5 m-0">{{post.user}}</div>
+          <div class="text-muted h7"> <i class="fa fa-clock-o"></i> {{post.time}}</div>
+        </div>
+      </div>
+      <div>
+        <button mat-icon-button>
+          <mat-icon>person_add</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>flag</mat-icon>
+            <span>Báo cáo</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Chỉnh sửa</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <a class="card-link" href="#">
+      <h5 class="card-title">{{post.title}}</h5>
+    </a>
+    <div class="card-body-image mb-3">
+      <img src="../../../../assets/luff.jpg" alt="">
+    </div>
+    <p class="card-text">{{post.description}}</p>
+    <div>
+      <span class="badge badge-primary">JavaScript</span>
+      <span class="badge badge-primary">Android</span>
+      <span class="badge badge-primary">PHP</span>
+      <span class="badge badge-primary">Node.js</span>
+      <span class="badge badge-primary">Ruby</span>
+      <span class="badge badge-primary">Paython</span>
+    </div>
+  </div>
+  <div class="card-footer d-flex">
+    <div class="card-footer-content pr-4">
+      <button mat-icon-button>
+        <mat-icon>thumb_up_alt</mat-icon>
+      </button>
+      <span>{{post.likes}} Thích</span>
+    </div>
+    <div class="card-footer-content pr-4">
+      <button mat-icon-button>
+        <mat-icon>mode_comment</mat-icon>
+      </button>
+      <span>{{post.comments}} Bình luận</span>
+    </div>
+    <div class="card-footer-content pr-4">
+      <button mat-icon-button [matMenuTriggerFor]="menushare">
+        <mat-icon>share</mat-icon>
+      </button>
+      <span>Chia sẻ</span>
+      <mat-menu #menushare="matMenu">
+        <button mat-menu-item>
+          <mat-icon>flag</mat-icon>
+          <span>Báo cáo</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Chỉnh sửa</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</div>
+<br>
