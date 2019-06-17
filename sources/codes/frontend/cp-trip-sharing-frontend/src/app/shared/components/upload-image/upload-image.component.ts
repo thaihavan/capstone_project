@@ -40,6 +40,7 @@ export class UploadImageComponent implements OnInit {
         if (result.croppedImage !== '') {
           this.croppedImage.emit(result.croppedImage);
           this.file.nativeElement.value = '';
+          console.log('cropimage', result.croppedImage);
         }
       }
     });

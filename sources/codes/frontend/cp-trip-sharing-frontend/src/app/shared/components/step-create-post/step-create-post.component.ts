@@ -1,9 +1,11 @@
-import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, Inject } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { LocationMarker } from 'src/app/model/LocationMarker';
 import { MatStepper } from '@angular/material';
 import { Topic } from 'src/app/pages/interestedtopic-page/interestedtopic-page.component';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { CreatePostPageComponent } from 'src/app/pages/create-post-page/create-post-page.component';
 @Component({
   selector: 'app-step-create-post',
   templateUrl: './step-create-post.component.html',
@@ -23,8 +25,10 @@ export class StepCreatePostComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
   fakeinput1 = '';
   fakeinput2 = '';
-  constructor(private formBuilder: FormBuilder, private zone: NgZone) {}
-
+  constructor(private formBuilder: FormBuilder,
+              private zone: NgZone,
+              public dialogRef: MatDialogRef<CreatePostPageComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {}
   ngOnInit() {
     this.firstFormGroup = this.formBuilder.group({
       firstCtrl: ['', Validators.required]
@@ -66,5 +70,15 @@ remove(location) {
   if (this.selectedLocation.length === 0) {
     this.fakeinput1 = '';
   }
+}
+createPost() {
+  if (this.fakeinput1 !== '') {
+    this.data.topics = this.selectedToppic;
+    this.data.destinations = this.selectedLocation;
+  }
+}
+loaddata() {
+  this.dialogRef.close();
+
 }
 }

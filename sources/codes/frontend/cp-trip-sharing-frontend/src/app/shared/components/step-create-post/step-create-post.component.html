@@ -45,7 +45,8 @@
       </div>
       <div class="btn-step">
         <button mat-raised-button color="primary" matStepperPrevious>Trở lại</button>
-        <button mat-raised-button color="primary" >Tạo bài viết</button>
+        <button mat-raised-button color="primary" (click)="createPost()" >Tạo bài viết</button>
+        <button (click)="loaddata()">loaddata</button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

@@ -6,6 +6,7 @@ import { UploadAdapter } from 'src/app/model/UploadAdapter';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { StepCreatePostComponent } from 'src/app/shared/components/step-create-post/step-create-post.component';
+
 @Component({
   selector: 'app-create-post-page',
   templateUrl: './create-post-page.component.html',
@@ -82,16 +83,18 @@ export class CreatePostPageComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(StepCreatePostComponent, {
       width: '60%',
-      data: {
-        contenPost: this.myEditor.editorInstance.getData(),
-        locations: [],
-        interestedToppics: []
-      }
+      data:  {
+        topics: [],
+        destinations: [],
+    }
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      console.log('result', result);
       if (result !== undefined) {
+        console.log('result', result);
       }
     });
   }
