@@ -46,7 +46,7 @@
 }
 
 .comment-row {
-    padding-right: 10px;
+    padding-right: 0px;
     margin-left: 31px;
 }
 
@@ -66,7 +66,7 @@
     word-break: break-word;
     overflow: auto;
     padding-top: .6em;
-    padding-right: 24px;
+    padding-right: 0px;
 }
 
 .number-like,.rep-comment{

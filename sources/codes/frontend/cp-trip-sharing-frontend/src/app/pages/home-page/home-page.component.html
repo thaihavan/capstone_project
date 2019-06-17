@@ -1,10 +1,29 @@
-<p>
-  home-page works!
-</p>
-<div class="container">
-  <div class="row">
-    <div class="col-sm-3">Three</div>
-    <div class="col-sm-6">Six</div>
-    <div class="col-sm-3">Three</div>
+<div class="home-container">
+  <div class="home-cover">
+    <div>
+      <img class="cover-image" src="{{coverImage}}">
+    </div>
   </div>
+
+  <nav class="container" >
+    <div class="row">
+      <div class="col-sm-2">
+
+      </div>
+      <div class="col-sm-8">
+        <div class="nav-links">
+          <nav mat-tab-nav-bar mat-align-tabs="left">
+            <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive
+              #rla="routerLinkActive" [active]="rla.isActive">
+              {{link.label}}
+            </a>
+          </nav>
+        </div>
+        <router-outlet (activate)="onActivate($event)"></router-outlet>
+      </div>
+      <div class="col-sm-2">
+
+      </div>
+    </div>
+  </nav>
 </div>

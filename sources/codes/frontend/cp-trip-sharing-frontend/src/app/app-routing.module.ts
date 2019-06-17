@@ -12,11 +12,17 @@ import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page
 import { HeaderComponent } from './core/components/header/header.component';
 import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-confirm-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { ListPostComponent } from './shared/components/list-post/list-post.component';
 
 const routes: Routes = [
   { path: 'email-confirm/:token', component: EmailConfirmPageComponent },
   { path: '', component: HeaderComponent,
     children: [
+      { path: 'home', component: HomePageComponent,
+        children: [
+          { path: ':nav', component: ListPostComponent }
+        ]},
       { path: 'heroes', component: GoogleMapComponent },
       { path: 'personal', component: PersonalPageComponent,
         children: [
