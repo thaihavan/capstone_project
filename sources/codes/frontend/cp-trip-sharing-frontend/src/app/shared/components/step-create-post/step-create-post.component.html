@@ -1,0 +1,53 @@
+<div class="step-create-post">
+  <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <ng-template matStepLabel>Chọn địa điểm</ng-template>
+      <div class="select-location">
+        <div class="step-title">
+          <h3 color="primary">Chọn địa điểm cho bài viết</h3>
+        </div>
+        <div class="step-body">
+          <app-google-map-search width="500" height="45" (onSelect)="setAddress($event)"></app-google-map-search>
+          <div class="selected-location">
+            <mat-chip-list>
+              <mat-chip selected color="primary" *ngFor="let location of selectedLocation" [selectable]="selectable"
+                [removable]="removable" (removed)="remove(location)">
+                {{location.locality}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+        <div class="btn-step">
+          <button mat-raised-button color="primary" matStepperNext>Tiếp tục</button>
+        </div>
+        <form class="fake-input" [formGroup]="firstFormGroup">
+          <mat-form-field>
+            <input matInput [(ngModel)]="fakeinput1" placeholder="Last name, First name" formControlName="firstCtrl"
+              required>
+          </mat-form-field>
+        </form>
+      </div>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <ng-template matStepLabel>Chọn chủ đề</ng-template>
+      <div class="step-title">
+        <h3>Chọn chủ đề cho bài viết</h3>
+      </div>
+      <div class="step-body">
+        <app-interestedtopic-page (EventToppic)="selectedToppics($event)"></app-interestedtopic-page>
+        <form class="fake-input" [formGroup]="secondFormGroup">
+          <mat-form-field>
+            <input matInput [(ngModel)]="fakeinput2" placeholder="Address" formControlName="secondCtrl" required>
+          </mat-form-field>
+
+        </form>
+      </div>
+      <div class="btn-step">
+        <button mat-raised-button color="primary" matStepperPrevious>Trở lại</button>
+        <button mat-raised-button color="primary" (click)="createPost()" >Tạo bài viết</button>
+        <button (click)="loaddata()">loaddata</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
