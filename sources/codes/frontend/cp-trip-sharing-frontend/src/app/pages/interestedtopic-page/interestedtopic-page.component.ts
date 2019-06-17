@@ -1,4 +1,5 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 import { Globals } from 'src/globals/globalvalues';
 
 @Component({
@@ -7,7 +8,9 @@ import { Globals } from 'src/globals/globalvalues';
   styleUrls: ['./interestedtopic-page.component.css']
 })
 export class InterestedtopicPageComponent implements OnInit {
-   selectedTopic: Topic;
+   selectedTopic: Topic[] = [];
+   @Input() ListToppic;
+   @Output() EventToppic: EventEmitter<any> = new EventEmitter();
    listselectedTopic: Array<Topic> = [];
    listinterestedtopic: Topic[] = [
      {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
@@ -36,10 +39,19 @@ export class InterestedtopicPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  changeClass(topic: Topic): void {
-    this.selectedTopic = topic;
-    this.listselectedTopic.push(topic);
-    console.log(this.listselectedTopic);
+  onSelectToppic(topic: Topic): void {
+    if (this.selectedTopic.indexOf(topic) !== -1) {
+      this.selectedTopic = this.selectedTopic.filter(item => item !== topic);
+    } else {
+      this.selectedTopic.push(topic);
+    }
+    this.EventToppic.emit(this.selectedTopic);
+  }
+  IsChecked(topic) {
+    if (this.selectedTopic.indexOf(topic) !== -1) {
+      return true;
+    }
+    return false;
   }
 
   gotoHomepage() {
