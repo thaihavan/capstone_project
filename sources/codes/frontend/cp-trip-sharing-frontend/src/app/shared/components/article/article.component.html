@@ -6,7 +6,7 @@
           <img class="rounded-circle" width="45" src="../../../../assets/img_avatar.png" alt="">
         </div>
         <div class="ml-2">
-          <div class="h5 m-0">{{post.user}}</div>
+          <div class="h5 m-0 name-author">{{name}}</div>
           <div class="text-muted h7"> <i class="fa fa-clock-o"></i> {{post.time}}</div>
         </div>
       </div>
@@ -31,12 +31,12 @@
     </div>
   </div>
   <div class="card-body">
-    <a class="card-link" href="#">
-      <h5 class="card-title">{{post.title}}</h5>
-    </a>
     <div class="card-body-image mb-3">
       <img src="../../../../assets/luff.jpg" alt="">
     </div>
+    <a class="card-link" href="#">
+      <h5 class="card-title">{{post.title}}</h5>
+    </a>
     <p class="card-text">{{post.description}}</p>
     <div>
       <span class="badge badge-primary">JavaScript</span>

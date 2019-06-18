@@ -18,4 +18,9 @@ export class PostService {
     };
     return this.http.post<Article>(this.baseUrl, article, httpOption);
   }
+
+  getDetail(postId: string) {
+    const baseUrl = 'https://localhost:44352/api/postservice/Post/getpost';
+    return this.http.get(baseUrl + '?postId=' + postId);
+  }
 }

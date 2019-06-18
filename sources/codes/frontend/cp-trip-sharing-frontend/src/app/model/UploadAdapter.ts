@@ -5,7 +5,7 @@ class ImagePost {
   type: string;
 }
 export class UploadAdapter {
-  url = 'https://localhost:5001/api/postservice/uploadfile/uploadimage';
+  url = 'https://localhost:44352/api/postservice/uploadfile/uploadimage';
   constructor(private loader, private http: HttpClient) {
     this.ImagePost = new ImagePost();
   }
