@@ -1,5 +1,5 @@
 agm-map {
-    height: 300px;
+    height: 700px;
   }
   
 .input-container {
@@ -17,4 +17,22 @@ agm-map {
 .flext{
     display: flex;
     border: 1px slategray;
+}
+.google-map{
+    position: relative;
+}
+.search-box{
+    position: absolute;
+    z-index: 1000;
+    top:20px;
+    right:10px;
+}
+.over-flow{
+    position: absolute;
+    height: 700px;
+    z-index: 999;
+    width: 100%;
+    content: '';
+    background: #131313;
+    opacity: 0.4;
 }

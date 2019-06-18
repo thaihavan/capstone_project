@@ -10,6 +10,6 @@ namespace PostService.Services.Interfaces
     {
         Like Add(Like like);
         bool Delete(string objectId, string userId);
-        IEnumerable<Like> GetLikeWithPost();
+        IEnumerable<Like> GetLikeWithPost(string id);
     }
 }

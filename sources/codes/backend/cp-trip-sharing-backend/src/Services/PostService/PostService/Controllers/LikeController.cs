@@ -27,9 +27,9 @@ namespace PostService.Controllers
 
         [AllowAnonymous]
         [HttpGet("all")]
-        public IActionResult GetAllLikeWithPost()
+        public IActionResult GetAllLikeWithPost([FromQuery] string postId)
         {
-            var likes = _likeService.GetLikeWithPost();
+            var likes = _likeService.GetLikeWithPost(postId);
             return Ok(likes);
         }
 

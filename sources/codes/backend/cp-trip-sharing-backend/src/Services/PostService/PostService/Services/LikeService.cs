@@ -35,9 +35,9 @@ namespace PostService.Services
             return _likeRepository.Delete(objectId, userId);
         }
 
-        public IEnumerable<Like> GetLikeWithPost()
+        public IEnumerable<Like> GetLikeWithPost(string id)
         {
-            return _likeRepository.GetLikeWithPost();
+            return _likeRepository.GetLikeWithPost(id);
         }
     }
 }
