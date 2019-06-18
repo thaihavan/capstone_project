@@ -36,9 +36,9 @@ namespace PostService.Repositories
             return _likes.DeleteOne(filter).IsAcknowledged;
         }
 
-        public IEnumerable<Like> GetLikeWithPost()
+        public IEnumerable<Like> GetLikeWithPost(string postId)
         {
-            var likes = from like in _likes.AsQueryable()
+            var likes = from like in _likes.AsQueryable() where like.LikedObject.Equals(new BsonObjectId(ObjectId.Parse(postId)))
                         join p in _post.AsQueryable() on like.LikedObject equals p.Id into joined
                         from post in joined
                         select new Like
