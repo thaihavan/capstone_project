@@ -48,7 +48,10 @@ export class StepCreatePostComponent implements OnInit {
         lattitude: addrObj.lat,
         country: addrObj.country,
         locality: addrObj.locality,
-        icon: ''
+        icon: '',
+        image: '',
+        name: '',
+        note: ''
       };
      this.selectedLocation.push(location);
      this.fakeinput1 = 'abc';

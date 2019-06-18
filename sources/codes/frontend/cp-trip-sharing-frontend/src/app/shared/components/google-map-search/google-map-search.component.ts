@@ -34,9 +34,17 @@ export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
     // tslint:disable-next-line:forin
     for (const i in place.address_components) {
       const item = place.address_components[i];
-
       // tslint:disable-next-line:no-string-literal
       locationObj['formatted_address'] = place.formatted_address;
+      // tslint:disable-next-line:no-string-literal
+      locationObj['name'] = place.name;
+      // tslint:disable-next-line:no-string-literal
+      locationObj['icon'] = place.icon;
+      // tslint:disable-next-line:no-string-literal
+      if (item.types.indexOf('photos') > -1) {
+        // tslint:disable-next-line:no-string-literal
+        locationObj['image'] = place.photos[0].getUrl();
+      }
       if (item.types.indexOf('locality') > -1) {
         // tslint:disable-next-line:no-string-literal
         locationObj['locality'] = item.long_name;
