@@ -7,10 +7,16 @@ import {MatMenuModule} from '@angular/material/menu';
 import { SingleCommentComponent } from './components/single-comment/single-comment.component';
 import { MessagePopupComponent } from './components/message-popup/message-popup.component';
 import {MatStepperModule} from '@angular/material/stepper';
-
 import { CommentContainerComponent } from './components/comment-container/comment-container.component';
 import { ListPostComponent } from './components/list-post/list-post.component';
 import { ArticleComponent } from './components/article/article.component';
+import { StepCreatePostComponent } from './components/step-create-post/step-create-post.component';
+import { GoogleMapSearchComponent } from './components/google-map-search/google-map-search.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InterestedToppicComponent } from './components/interested-toppic/interested-toppic.component';
+import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { CropImageComponent } from './components/upload-image/crop-image/crop-image.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -35,19 +41,32 @@ const Material = [
     CommentContainerComponent,
     SingleCommentComponent,
     ListPostComponent,
-    ArticleComponent
+    ArticleComponent,
+    StepCreatePostComponent,
+    GoogleMapSearchComponent,
+    InterestedToppicComponent,
+    UploadImageComponent,
+    CropImageComponent
   ],
   imports: [
     CommonModule,
     Material,
-    AgmCoreModule
+    AgmCoreModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ImageCropperModule
   ],
   exports: [
     Material,
     SingleCommentComponent,
     CommentContainerComponent,
     ArticleComponent,
-    ListPostComponent
-  ]
+    ListPostComponent,
+    StepCreatePostComponent,
+    GoogleMapSearchComponent,
+    InterestedToppicComponent,
+    UploadImageComponent,
+    CropImageComponent
+  ], entryComponents: [StepCreatePostComponent, CropImageComponent]
 })
 export class SharedModule { }

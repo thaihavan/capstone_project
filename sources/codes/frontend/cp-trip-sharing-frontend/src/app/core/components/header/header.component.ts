@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component';
-import { Globals } from 'src/globals/globalvalues'
+import { Globals } from 'src/globals/globalvalues';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +11,11 @@ import { Globals } from 'src/globals/globalvalues'
 export class HeaderComponent implements OnInit {
   checkLogin: boolean;
   checkLogined: boolean;
-  urlImgavatar:string = "https://gody.vn/public/v3/images/bg/br-register.jpg";
-  constructor(private globals: Globals,private dialog: MatDialog) { }
+  urlImgavatar = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
+  constructor(private globals: Globals, private dialog: MatDialog) { }
 
   ngOnInit() {
-    if (localStorage.getItem("Token")!=null){
+    if (localStorage.getItem('Token') != null) {
         this.checkLogin = false;
         this.checkLogined = true;
     } else {
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  signOut(){
+  signOut() {
     localStorage.clear();
     window.location.href = window.location.href = this.globals.urllocal;
   }

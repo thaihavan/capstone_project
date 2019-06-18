@@ -14,19 +14,13 @@ namespace UserServices.Reponsitories
     public class BookmarkRepository : IBookmarkRepository
     {
         private readonly IMongoCollection<Bookmark> _bookmarks = null;
-        private IOptions<AppSettings> settings;
-
-        public BookmarkRepository()
-        {
-            var dbContext = new MongoDbContext();
-            _bookmarks = dbContext.BookmarkCollection;
-        }
-
+        
         public BookmarkRepository(IOptions<AppSettings> settings)
         {
-            this.settings = settings;
+            var dbContext = new MongoDbContext(settings);
+            _bookmarks = dbContext.BookmarkCollection;
         }
-
+        
         public Bookmark Add(Bookmark bookmark)
         {
             _bookmarks.InsertOne(bookmark);

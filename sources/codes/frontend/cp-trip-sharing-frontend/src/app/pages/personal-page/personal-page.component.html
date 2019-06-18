@@ -71,7 +71,7 @@
       </div>
       <div class="col-lg-8">
         <div class="navlinks">
-          <nav mat-tab-nav-bar mat-align-tabs="center">
+          <nav mat-tab-nav-bar mat-align-tabs="left">
             <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive
               #rla="routerLinkActive" [active]="rla.isActive">
               {{link.label}}

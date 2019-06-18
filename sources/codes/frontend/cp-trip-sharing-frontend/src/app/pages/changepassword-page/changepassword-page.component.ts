@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Account } from 'src/Model/Account';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Account } from 'src/app/model/Account';
 
 @Component({
   selector: 'app-changepassword-page',

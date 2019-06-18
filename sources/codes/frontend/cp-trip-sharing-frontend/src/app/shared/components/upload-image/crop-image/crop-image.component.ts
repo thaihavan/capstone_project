@@ -9,7 +9,8 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class CropImageComponent implements OnInit {
   croppedImage: any = '';
-  constructor(public dialogRef: MatDialogRef<UploadImageComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(public dialogReferent: MatDialogRef<UploadImageComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }
@@ -28,6 +29,6 @@ export class CropImageComponent implements OnInit {
       // show message
   }
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogReferent.close();
   }
 }

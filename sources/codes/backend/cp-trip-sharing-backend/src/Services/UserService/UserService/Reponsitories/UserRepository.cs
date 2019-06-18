@@ -14,19 +14,13 @@ namespace UserServices.Reponsitories
     public class UserRepository : IUserRepository
     {
         private readonly IMongoCollection<User> _users = null;
-        private IOptions<AppSettings> settings;
-
-        public UserRepository()
-        {
-            var dbContext = new MongoDbContext();
-            _users = dbContext.Users;
-        }
 
         public UserRepository(IOptions<AppSettings> settings)
         {
-            this.settings = settings;
+            var dbContext = new MongoDbContext(settings);
+            _users = dbContext.Users;
         }
-
+        
         public User Add(User user)
         {
             _users.InsertOne(user);

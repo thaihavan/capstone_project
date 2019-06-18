@@ -13,17 +13,11 @@ namespace UserServices.Reponsitories.Interfaces
     public class FollowRepository : IFollowRepository
     {
         private readonly IMongoCollection<Follow> _follows = null;
-        private readonly IOptions<AppSettings> settings;
-
-        public FollowRepository()
-        {
-            var dbContext = new MongoDbContext();
-            _follows = dbContext.FollowCollection;
-        }
-
+        
         public FollowRepository(IOptions<AppSettings> settings)
         {
-            this.settings = settings;
+            var dbContext = new MongoDbContext(settings);
+            _follows = dbContext.FollowCollection;
         }
 
         public Follow Add(Follow follow)

@@ -50,8 +50,7 @@ namespace IdentityProvider.Services
             {
                 var isValid = Hash.HashPassword(password, account.PasswordSalt) == account.Password;
                 if (isValid)
-                {
-                    account.UserId = new BsonObjectId(ObjectId.GenerateNewId());
+                {                
                     account.Token = JwtToken.Generate(_settings.Value.Secret, account);
                 }
                 // Set important fields to null
@@ -72,8 +71,7 @@ namespace IdentityProvider.Services
             if (_accountRepository.GetByEmail(account.Email) != null) return null;
             var salt = Salt.Generate();
             var encryptedAccount = new Account()
-            {  
-                Username = account.Username,
+            {
                 Email = account.Email,
                 Password = Hash.HashPassword(account.Password, salt),
                 PasswordSalt = salt,
@@ -211,7 +209,6 @@ namespace IdentityProvider.Services
                     Password = null,
                     PasswordSalt = null,
                     Role = "member",
-                    Username = userInfo.Given_name,
                     UserId = new BsonObjectId(ObjectId.GenerateNewId())
                 };
                 _accountRepository.Add(newAccount);

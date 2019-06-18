@@ -24,7 +24,7 @@ namespace UserServices.Controllers
         }
 
         // POST: api/UserServices/addblock
-        [Authorize(Roles ="member")]
+        [AllowAnonymous]
         [HttpPost("addblock")]
         public IActionResult AddBlock([FromQuery] string blocked)
         {

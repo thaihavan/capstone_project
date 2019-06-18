@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {Account} from 'src/Model/Account';
+import { Account } from 'src/app/model/Account';
 import { User } from 'src/app/model/User';
 
 
@@ -93,8 +93,8 @@ export class UserService {
 
 //   getAll(): Observable<any> {
 //     const params: URLSearchParams = new URLSearchParams();
-// â€¢	return this.http.get<any>(this.apiUserService + 'All');
-// â€¢	}
+// •	return this.http.get<any>(this.apiUserService + 'All');
+// •	}
 
   getUserById(userId: string): Observable<any> {
     const token = localStorage.getItem('Token');

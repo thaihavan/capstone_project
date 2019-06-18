@@ -16,7 +16,11 @@ export class EmailConfirmPageComponent implements OnInit {
   token: string = null;
   message: string = null;
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private dialog: MatDialog, public globals: Globals) {
+  constructor(private route: ActivatedRoute,
+              private userService: UserService,
+              private dialog: MatDialog,
+              public globals: Globals
+  ) {
 
   }
 

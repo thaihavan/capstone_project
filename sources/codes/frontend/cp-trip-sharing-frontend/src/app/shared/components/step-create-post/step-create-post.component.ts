@@ -27,7 +27,7 @@ export class StepCreatePostComponent implements OnInit {
   fakeinput2 = '';
   constructor(private formBuilder: FormBuilder,
               private zone: NgZone,
-              public dialogRef: MatDialogRef<CreatePostPageComponent>,
+              private dialogRef: MatDialogRef<StepCreatePostComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {}
   ngOnInit() {
     this.firstFormGroup = this.formBuilder.group({
@@ -73,12 +73,9 @@ remove(location) {
 }
 createPost() {
   if (this.fakeinput1 !== '') {
-    this.data.topics = this.selectedToppic;
-    this.data.destinations = this.selectedLocation;
+    this.data.toppics = this.selectedToppic.map(top => top.nameTopic);
+    this.data.destinations = this.selectedLocation.map(dest => dest.locality);
+    this.dialogRef.close(this.data);
   }
-}
-loaddata() {
-  this.dialogRef.close();
-
 }
 }

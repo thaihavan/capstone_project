@@ -30,18 +30,18 @@ export class PersonalPageComponent implements OnInit {
   constructor(private router: Router) {
     this.navLinks = [
       {
-        label: 'Bản tin hoạt động ',
-        link: './personalfeed',
+        label: 'Bài viết',
+        link: './articles',
         index: 0
       },
       {
         label: 'Chuyến đi',
-        link: './virtual',
+        link: './virtual-trips',
         index: 1
       },
       {
         label: 'Tìm bạn đồng hành',
-        link: './third',
+        link: './companion-posts',
         index: 2
       }
     ];

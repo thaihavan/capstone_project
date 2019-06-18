@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from 'src/app/core/services/service-1/post.service';
-import {Post} from 'src/Model/Post';
+import { PostService } from 'src/app/core/services/fackeData-service/post.service';
 import { Comment} from 'src/app/model/Comment';
+import { Post } from 'src/app/model/Post';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -30,6 +30,7 @@ export class DetailpostPageComponent implements OnInit {
       this.comment.userDisplayName = 'Ha Van Thai';
       this.comment.userImageUrl = 'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
       this.comment.date = '5 phút trước';
+      // tslint:disable-next-line:max-line-length
       this.comment.content = 'Thật không dễ dàng để chọn ra những từ đẹp nhất trong tổng số khoảng 750 000 từ tiếng Anh. Với bài học này, chúng ta cùng tìm hiểu 12 từ được coi là đẹp nhất trong tiếng Anh ở khía cạnh nào đó.';
       this.comment.numLikes = 30;
 

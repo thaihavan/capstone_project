@@ -16,6 +16,9 @@ namespace UserServices.Models
         [BsonElement("account_id")]
         public BsonObjectId AccountId { get; set; }
 
+        [BsonElement("username")]
+        public string UserName { get; set; }
+
         [BsonElement("first_name")]
         public string FirstName { get; set; }
 

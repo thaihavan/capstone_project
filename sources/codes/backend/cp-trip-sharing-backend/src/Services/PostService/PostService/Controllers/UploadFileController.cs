@@ -23,12 +23,13 @@ namespace PostService.Controllers
         [HttpPost("uploadimage")]
         public IActionResult UploadImage([FromBody] ImageParam imageParam)
         {
-            if(imageParam.Type == null || imageParam.Type.Trim() == "")
+            if (imageParam.Type == null || imageParam.Type.Trim() == "")
             {
                 return BadRequest("Image doesn't recognized!");
             }
 
             string imageUrl = _uploadFileService.UploadImage(imageParam);
             return Ok(new { Image = imageUrl });
+        }
     }
 }

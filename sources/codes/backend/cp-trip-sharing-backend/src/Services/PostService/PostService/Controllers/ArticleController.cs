@@ -50,10 +50,15 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            if (!article.Post.Author.AuthorId.Equals(new BsonObjectId(userId)))
+            if (article.Post.Author == null)
             {
-                return Unauthorized();
+                article.Post.Author = new Author();
             }
+            article.Post.Author.AuthorId = new BsonObjectId(userId);
+
+            article.Id = new BsonObjectId(ObjectId.GenerateNewId());
+            article.PostId = new BsonObjectId(ObjectId.GenerateNewId());
+            article.Post.Id = article.PostId;
 
             Post addedPost = _postService.Add(article.Post);
             Article addedArticle = _articleService.Add(article);

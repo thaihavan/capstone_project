@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
-import { Account } from 'src/Model/Account';
+import { Account } from 'src/app/model/Account';
 
 @Component({
   selector: 'app-register-page',
@@ -11,7 +11,6 @@ import { Account } from 'src/Model/Account';
   styleUrls: ['./register-page.component.css']
 })
 export class RegisterPageComponent implements OnInit {
-  username = '';
   email = '';
   password = '';
   repass = '';
@@ -27,7 +26,6 @@ export class RegisterPageComponent implements OnInit {
   callInterestedtopicPage(): void {
     this.account.Email = this.email;
     this.account.Password = this.password;
-    this.account.Username = this.username;
     this.userService.registerAccount(this.account).subscribe((message: any) => {
       this.openDialogMessageConfirm();
     }, (err: HttpErrorResponse) => {
