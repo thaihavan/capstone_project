@@ -36,40 +36,42 @@
               <mat-icon>share</mat-icon>
             </button>
           </mat-card-actions>
-          <mat-card-content>
-            <div class="child-content">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                alt="Photo of a Shiba Inu">
-              <div class="title-lacotion">
-                <span>Hà Nội</span>
-                <button class="btn-edit" mat-icon-button>
+          <div *ngIf="virtualTrip.virtualTripItems!=undefined">
+            <mat-card-content *ngFor="let item of virtualTrip.virtualTripItems">
+              <div class="child-content">
+                <img mat-card-image src="{{item.image}}"
+                  alt="Photo of a Shiba Inu">
+                <div class="title-lacotion">
+                  <span>{{item.name}}</span>
+                  <button class="btn-edit" mat-icon-button>
                     <mat-icon>more_horiz</mat-icon>
-                </button>
-              </div>
-              <p><span class="sub-title">Việt Nam</span></p>
-              <div class="note row">
-                <div class="author-avatar col-2">
-                  <figure class="profile-note">
-                    <img src="https://picsum.photos/200/150/?random" class="profile-avatar" alt="">
-                  </figure>
+                  </button>
                 </div>
-                <div class="note-text col-10">
-                  <a href="#"><span class="author-name">PhongNV</span></a>
-                  <span>
-                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                    A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                    bred for hunting.
-                  </span>
+                <p><span class="sub-title">{{item.country}}</span></p>
+                <div class="note row">
+                  <div class="author-avatar col-2">
+                    <figure class="profile-note">
+                      <img src="https://picsum.photos/200/150/?random" class="profile-avatar" alt="">
+                    </figure>
+                  </div>
+                  <div class="note-text col-10">
+                    <a href="#"><span class="author-name">PhongNV</span></a>
+                    <span>
+                      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                      bred for hunting.
+                    </span>
+                  </div>
                 </div>
+                <a href="#">+ Thêm ghi chú mới</a>
               </div>
-              <a href="#">+ Thêm ghi chú mới</a>
-            </div>
-          </mat-card-content>
+            </mat-card-content>
+          </div>
         </mat-card>
       </div>
     </div>
     <div class="col-8 right-content">
-      <app-google-map></app-google-map>
+      <app-google-map (addDestination)="addDestination($event)"></app-google-map>
     </div>
   </div>
 </div>
