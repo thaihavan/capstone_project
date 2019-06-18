@@ -13,19 +13,20 @@ using UserServices.Services.Interfaces;
 
 namespace UserServices.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/userservice/[controller]")]
     [ApiController]
-    public class UserServiceController : ControllerBase
+    [Authorize]
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService = null;
 
-        public UserServiceController(IUserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
 
         [Authorize(Roles = "member")]
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public IActionResult Register([FromBody] User userParam)
         {
             var result = _userService.Add(userParam);
@@ -33,7 +34,7 @@ namespace UserServices.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpGet("All")]
+        [HttpGet("all")]
         public IActionResult GetAll([FromBody] User userParam)
         {
             var result = _userService.GetAll();
@@ -41,12 +42,11 @@ namespace UserServices.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("User")]
+        [HttpGet]
         public IActionResult GetUserById([FromQuery] string userId)
         {
             var result = _userService.GetUserById(userId);
             return Ok(result);
         }
-
     }
 }

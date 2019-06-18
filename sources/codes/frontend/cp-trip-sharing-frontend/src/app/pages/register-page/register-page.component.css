@@ -11,7 +11,7 @@
     width: 360px;
     border-radius: 10px;
     padding: 25px;
-    margin: 2% 0% 0% 62%;
+    margin: 4% 0% 0% 62%;
     border-top: 5px solid #3f51b5;
     height: 80%;
   }
@@ -23,6 +23,7 @@
   .form_wrapper .title_container {
     text-align: center;
     padding-bottom: 15px;
+    margin-bottom: 20px;
   }
   .form_wrapper h3 {
     font-size: 1.1em;

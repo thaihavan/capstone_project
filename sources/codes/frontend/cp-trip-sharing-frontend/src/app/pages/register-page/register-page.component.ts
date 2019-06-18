@@ -11,7 +11,6 @@ import { Account } from 'src/app/model/Account';
   styleUrls: ['./register-page.component.css']
 })
 export class RegisterPageComponent implements OnInit {
-  username = '';
   email = '';
   password = '';
   repass = '';
@@ -27,7 +26,6 @@ export class RegisterPageComponent implements OnInit {
   callInterestedtopicPage(): void {
     this.account.Email = this.email;
     this.account.Password = this.password;
-    this.account.Username = this.username;
     this.userService.registerAccount(this.account).subscribe((message: any) => {
       this.openDialogMessageConfirm();
     }, (err: HttpErrorResponse) => {

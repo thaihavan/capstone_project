@@ -71,8 +71,7 @@ namespace IdentityProvider.Services
             if (_accountRepository.GetByEmail(account.Email) != null) return null;
             var salt = Salt.Generate();
             var encryptedAccount = new Account()
-            {  
-                Username = account.Username,
+            {
                 Email = account.Email,
                 Password = Hash.HashPassword(account.Password, salt),
                 PasswordSalt = salt,
@@ -210,7 +209,6 @@ namespace IdentityProvider.Services
                     Password = null,
                     PasswordSalt = null,
                     Role = "member",
-                    Username = userInfo.Given_name,
                     UserId = new BsonObjectId(ObjectId.GenerateNewId())
                 };
                 _accountRepository.Add(newAccount);
