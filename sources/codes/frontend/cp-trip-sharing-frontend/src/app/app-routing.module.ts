@@ -14,6 +14,7 @@ import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-conf
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ListPostComponent } from './shared/components/list-post/list-post.component';
+import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
 
 const routes: Routes = [
   { path: 'email-confirm/:token', component: EmailConfirmPageComponent },
@@ -40,7 +41,8 @@ const routes: Routes = [
       {path: 'changePassword', component: ChangepasswordPageComponent },
       {path: 'reset-password/:token', component: ResetPasswordPageComponent },
       { path: 'changePassword', component: ChangepasswordPageComponent },
-      { path: 'detailpost', component: DetailpostPageComponent}
+      { path: 'detailpost', component: DetailpostPageComponent},
+      { path: 'initial', component: InitialUserInformationPageComponent}
     ]},
 ];
 

@@ -1,0 +1,48 @@
+<div class="initialUser">
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Thêm thông tin người dùng</ng-template>
+        <div class="form_wrapper">
+          <div class="form_container">
+              <div class="title_container">
+                  <h4>Thông tin người dùng</h4>
+              </div>
+              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                  <input type="text" name="email" placeholder="Họ" [value]='firstname' (input)='firstname = $event.target.value' required />
+              </div>
+              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                <input type="text" placeholder="Tên" [value]='lastname' (input)='lastname = $event.target.value' required />
+            </div>
+              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                  <input type="email" [value]='phonenumber' (input)='phonenumber = $event.target.value'  placeholder="Số điện thoại" required />
+              </div>
+              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                  <input type="date" [value]='dob' (input)='dob = $event.target.value'  placeholder="Ngày sinh"  required />
+              </div>
+              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                  <input type="text" [value]='address' (input)='address = $event.target.value' placeholder="Địa chỉ"  required />
+              </div>  
+              <div class="input_field radio_option">
+                  <input type="radio" name="radiogroup1" id="rd1" value="male" #male>
+                  <label for="rd1">Nam</label>
+                  <input type="radio" name="radiogroup1" id="rd2" value="male" #female>
+                  <label for="rd2">Nữ</label>
+              </div>           
+              <input class="button" type="submit" (click)="callInterestedtopicPage(stepper)" value="Tiếp tục" />
+          </div>
+          <span style="color: red;margin: 0 auto;">{{message}}</span>
+      </div>
+      </form>
+    </mat-step>
+    <mat-step *ngIf="expression" [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Chọn chủ đề</ng-template>
+        <div class="interestedTopic">
+          <app-interestedtopic-page (EventToppic)="selectedToppics($event)"></app-interestedtopic-page>
+          <button type="button" class="btn btn-primary" (click)="registerUser()">Tiếp tục</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

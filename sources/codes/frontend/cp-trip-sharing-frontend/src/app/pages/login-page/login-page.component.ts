@@ -34,14 +34,14 @@ export class LoginPageComponent implements OnInit {
     this.account.Email = this.email;
     this.account.Password = this.password;
     this.userService.getAccount(this.account).subscribe((acc: any) => {
-        localStorage.setItem('UserId', acc.userId);
+        localStorage.setItem('Account', acc);
         localStorage.setItem('Token', acc.token);
-        localStorage.setItem('Email', acc.email);
-        localStorage.setItem('Username', acc.username);
-        localStorage.setItem('Role', acc.role);
-        window.location.href = this.globals.urllocal;
+        console.log(acc.token);
         // Call http request to userservice để lấy thông tin user
-        this.dialogRef.close();
+       // this.userService.getUserById(acc.userId).subscribe((result: any) => {
+         //  console.log(result);
+        // this.dialogRef.close();
+        //});
         // Nếu là đăng nhập lần đầu thì redirect sang trang initial-user-information
         // trong initial-user-information gồm có cập nhật tt cá nhân, bước thứ 2 là chọn chủ để quan tâm
         // xem angular material step.

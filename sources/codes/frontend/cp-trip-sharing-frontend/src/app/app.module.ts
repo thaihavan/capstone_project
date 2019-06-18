@@ -10,16 +10,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { GoogleMapComponent } from './shared/components/google-map/google-map.component';
 import { AgmCoreModule } from '@agm/core';
-import {HeaderComponent} from 'src/app/core/components/header/header.component';
+import { HeaderComponent } from 'src/app/core/components/header/header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GoogleMapSearchComponent } from './shared/components/google-map-search/google-map-search.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
-import {ForgotpasswordPageComponent} from './pages/forgotpassword-page/forgotpassword-page.component';
+import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotpassword-page.component';
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
 import { CreatedPostComponent } from './pages/personal-page/components/created-post/created-post.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { Globals } from 'src/globals/globalvalues';
 import { InMemoryService } from './core/services/service-1/inMemory.service';
@@ -58,7 +58,8 @@ import { StepCreatePostComponent } from './shared/components/step-create-post/st
     DetailpostPageComponent,
     EmailConfirmPageComponent,
     ResetPasswordPageComponent,
-    StepCreatePostComponent
+    StepCreatePostComponent,
+    InitialUserInformationPageComponent
   ],
   imports: [
     MatMenuModule,
@@ -81,6 +82,12 @@ import { StepCreatePostComponent } from './shared/components/step-create-post/st
     // ),
     CKEditorModule,
     ImageCropperModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
