@@ -37,7 +37,7 @@ namespace PostService.Test
                 Active = true
             };
             Comment testAddDb = _commentRepository.Add(cmt);
-            Assert.IsNotNull(testAddDb);
+            Assert.AreEqual(testAddDb, cmt);
         }
 
         [TestCase]
