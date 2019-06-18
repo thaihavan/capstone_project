@@ -25,6 +25,7 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllPost();
     // this.postService.getDetailPost().subscribe(post => {
     //   this.post = post;
 
@@ -75,6 +76,12 @@ export class DetailpostPageComponent implements OnInit {
     });
 
     console.log('Comments value in detail-post: ' + this.comments);
+  }
+
+  getAllPost() {
+    this.postService.getAllPost().subscribe((result: any) => {
+        console.log(result);
+    });
   }
 
 }

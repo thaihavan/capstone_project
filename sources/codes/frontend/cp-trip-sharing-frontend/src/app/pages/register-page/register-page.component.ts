@@ -42,6 +42,6 @@ export class RegisterPageComponent implements OnInit {
       }
     });
     const instance = dialogRef.componentInstance;
-    instance.message = 'Đăng kí thành công, vui lòng kiểm tra lại email!';
+    instance.message.messageText = 'Đăng kí thành công, vui lòng kiểm tra lại email!';
   }
 }

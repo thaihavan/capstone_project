@@ -24,7 +24,7 @@ fackeData() {
   this.post.image = 'luff.jpg';
   this.post.time = 'A month ago';
 // tslint:disable-next-line:max-line-length
-  this.post.description = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam omnis nihil, aliquam est, voluptates officiis iure soluta alias vel odit, placeat reiciendis ut libero! Quas aliquid natus cumque quae repellendus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, excepturi. Doloremque, reprehenderit! Quos in maiores, soluta doloremque molestiae reiciendis libero expedita assumenda fuga quae. Consectetur id molestias itaque facere? Hic!';
+  this.post.description = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam omnis nihil, aliquam est, voluptates officiis iure soluta alias vel odit, placeat reiciendis ut libero! Quas aliquid natus cumque quae repellendus.';
   // tslint:disable-next-line:new-parens
   this.posts.push(this.post);
   this.posts.push(this.post);

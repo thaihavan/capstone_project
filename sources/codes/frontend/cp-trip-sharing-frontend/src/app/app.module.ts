@@ -76,7 +76,7 @@ import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-tr
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, MessagePopupComponent, MessagePopupComponent]
+  entryComponents: [LoginPageComponent, MessagePopupComponent]
 
 })
 export class AppModule { }

@@ -53,6 +53,7 @@ a:hover {
 }
 
 .image img {
+  overflow: hidden;
   display: block;
   margin: 0 auto;
   max-width: 100%;
@@ -67,9 +68,8 @@ a:hover {
   margin-top: 1em;
 }
 
-.text p{
-  font-size: 15px;
-  line-height: 22px;
+textarea{
+  resize: none;
 }
 
 .text h3 {

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PostService {
-  baseUrl = 'https://localhost:44352/api/postservice/article/create';
+  baseUrl = 'https://localhost:44352/api/postservice/article/';
   constructor(private http: HttpClient) { }
   createPost(article: Article): Observable<Article> {
     const httpOption = {
@@ -16,11 +16,14 @@ export class PostService {
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post<Article>(this.baseUrl, article, httpOption);
+    return this.http.post<Article>(this.baseUrl + 'create', article, httpOption);
   }
 
   getDetail(postId: string) {
-    const baseUrl = 'https://localhost:44352/api/postservice/Post/getpost';
-    return this.http.get(baseUrl + '?postId=' + postId);
+    return this.http.get(this.baseUrl + '?id=' + postId);
+  }
+
+  getAllPost() {
+    return this.http.get(this.baseUrl + 'all');
   }
 }

@@ -39,7 +39,10 @@
     width: 100%;
     height: 100%;
 }
-
+textarea{
+    resize: none;
+  }
+  
 .comment-body {
     border-left: solid 2px #DDDDDD;
     margin-left: 19px;

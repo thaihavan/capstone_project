@@ -36,13 +36,13 @@ export class UserService {
   }
 
   changePassword(account: Account): Observable<any> {
-    const httpOption = {
+    const httpOptionAu = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post<any>(this.apiUrl + 'changePassword', account, httpOption);
+    return this.http.post<any>(this.apiUrl + 'changePassword', account, httpOptionAu);
   }
 
   verifyEmail(token: string): Observable<any> {
@@ -89,7 +89,6 @@ export class UserService {
   }
 
   registerUser(user: User): Observable<any> {
-   
     return this.http.post<any>(this.apiUserService + 'user/register', user, httpOptionAuthen);
   }
 

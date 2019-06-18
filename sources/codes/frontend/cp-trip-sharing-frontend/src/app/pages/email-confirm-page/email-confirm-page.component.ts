@@ -20,9 +20,7 @@ export class EmailConfirmPageComponent implements OnInit {
               private userService: UserService,
               private dialog: MatDialog,
               public globals: Globals
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     this.token = this.route.snapshot.paramMap.get('token');
@@ -49,6 +47,7 @@ export class EmailConfirmPageComponent implements OnInit {
       }
     });
     const instance = dialogRef.componentInstance;
-    instance.message = message;
+    instance.message.messageText = message;
+    instance.message.url = '/home';
   }
 }
