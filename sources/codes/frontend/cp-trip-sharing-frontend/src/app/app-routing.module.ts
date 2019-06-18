@@ -15,6 +15,8 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ListPostComponent } from './shared/components/list-post/list-post.component';
 import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
+import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
+
 
 const routes: Routes = [
   { path: 'email-confirm/:token', component: EmailConfirmPageComponent },
@@ -37,7 +39,7 @@ const routes: Routes = [
         ]
       },
       { path: 'register', component: RegisterPageComponent },
-      { path: 'virtual-trips', component: GoogleMapComponent },
+      { path: 'virtual-trips', component: VirtualTripsPageComponent },
       { path: 'forgot-password', component: ForgotpasswordPageComponent },
       { path: 'create-article', component: CreatePostPageComponent },
       { path: 'change-password', component: ChangepasswordPageComponent },
