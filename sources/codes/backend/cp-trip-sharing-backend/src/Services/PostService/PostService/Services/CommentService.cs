@@ -15,10 +15,13 @@ namespace PostService.Services
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository = null;
+        private readonly IOptions<AppSettings> _settings = null;
 
-        public CommentService(ICommentRepository commentRepository)
+        public CommentService(ICommentRepository commentRepository, IOptions<AppSettings> settings)
         {
             _commentRepository = commentRepository;
+            _settings = settings;
+
         }
 
         public CommentService(IOptions<AppSettings> settings)
@@ -39,7 +42,7 @@ namespace PostService.Services
 
         public IEnumerable<Comment> GetCommentByPost(string id)
         {
-            return _commentRepository.CommentDict(id);
+            return _commentRepository.GetCommentByPost(id);
         }
 
         public Comment Update(Comment cmt)

@@ -22,7 +22,7 @@ namespace PostService.Controllers
             _commentService = commentService;
         }
 
-        [Authorize(Roles = "member")]
+        [AllowAnonymous]
         [HttpGet("all")]
         public IActionResult GetCommentByPost([FromQuery] string id)
         {

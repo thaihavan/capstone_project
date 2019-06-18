@@ -40,12 +40,12 @@ namespace PostService.Repositories
 
         public IEnumerable<Comment> GetAll()
         {
-            throw new NotImplementedException();
+            return _comments.Find(x => true).ToList();
         }
 
         public Comment GetById(string id)
         {
-            return _comments.Find(x => x.Id.Equals(new BsonObjectId(id))).FirstOrDefault();
+            return _comments.Find(Builders<Comment>.Filter.Eq("_id", new BsonObjectId(id))).ToList().FirstOrDefault();
         }
 
         public Comment Update(Comment param)
@@ -59,7 +59,7 @@ namespace PostService.Repositories
             return param;
         }
 
-        public IEnumerable<Comment> CommentDict(string postId)
+        public IEnumerable<Comment> GetCommentByPost(string postId)
         {
             List<Comment> comments = new List<Comment>();
             var allComment = _comments.Find(x => x.PostId.Equals(new BsonObjectId(postId))).ToList();
