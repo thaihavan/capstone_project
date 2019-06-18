@@ -29,13 +29,24 @@ namespace UserServices.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody] User userParam)
         {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+            var accountId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
+
+            userParam.Id = new BsonObjectId(new ObjectId(userId));
+            userParam.AccountId = new BsonObjectId(new ObjectId(accountId));
+            userParam.Active = true;
+            userParam.ContributionPoint = 0;
+            userParam.CreatedDate = DateTime.Now;
+            userParam.IsFirstTime = false;
+
             var result = _userService.Add(userParam);
             return Created("", userParam);
         }
 
         [Authorize(Roles = "admin")]
         [HttpGet("all")]
-        public IActionResult GetAll([FromBody] User userParam)
+        public IActionResult GetAll()
         {
             var result = _userService.GetAll();
             return Ok(result);

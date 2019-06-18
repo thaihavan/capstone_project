@@ -35,9 +35,14 @@ namespace PostService.Services
             return _articleRepository.Delete(id);
         }
 
-        public IEnumerable<Article> GetAllArticleWithPost()
+        public IEnumerable<Article> GetAllArticleInfo()
         {
-            return _articleRepository.GetAllArticleWithPost();
+            return _articleRepository.GetAllArticleInfo();
+        }
+
+        public Article GetArticleInfoById(string id)
+        {
+            return _articleRepository.GetArticleInfoById(id);
         }
 
         public Article GetById(string id)

@@ -9,7 +9,6 @@ namespace PostService.Services.Interfaces
     public interface ILikeService
     {
         Like Add(Like like);
-        bool Delete(string objectId, string userId);
-        IEnumerable<Like> GetLikeWithPost(string id);
+        bool Delete(Like like);
     }
 }

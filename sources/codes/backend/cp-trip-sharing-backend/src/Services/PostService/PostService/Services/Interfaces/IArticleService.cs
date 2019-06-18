@@ -8,7 +8,9 @@ namespace PostService.Services.Interfaces
 {
     public interface IArticleService
     {
-        IEnumerable<Article> GetAllArticleWithPost();
+        IEnumerable<Article> GetAllArticleInfo();
+
+        Article GetArticleInfoById(string id);
 
         Article GetById(string id);
 

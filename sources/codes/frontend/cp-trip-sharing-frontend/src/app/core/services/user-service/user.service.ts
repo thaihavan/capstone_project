@@ -6,11 +6,18 @@ import { Account } from 'src/app/model/Account';
 import { User } from 'src/app/model/User';
 
 
-const httpOptions = {
+const httpOption = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
   })
 };
+
+const httpOptionAuthen = {
+  headers: new HttpHeaders({
+    Authorization: 'Bearer ' + localStorage.getItem('Token')
+  })
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,11 +28,11 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getAccount(account: Account): Observable<Account> {
-    return this.http.post<Account>(this.apiUrl + 'authenticate', account, httpOptions);
+    return this.http.post<Account>(this.apiUrl + 'authenticate', account, httpOption);
   }
 
   registerAccount(account: Account): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'register', account, httpOptions);
+    return this.http.post<any>(this.apiUrl + 'register', account, httpOption);
   }
 
   changePassword(account: Account): Observable<any> {
@@ -39,71 +46,60 @@ export class UserService {
   }
 
   verifyEmail(token: string): Observable<any> {
-    const httpOption = {
+    const httpAuthen = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token
       })
     };
-    return this.http.post<any>(this.apiUrl + 'verify', null, httpOption);
+    return this.http.post<any>(this.apiUrl + 'verify', null, httpAuthen);
   }
 
   addBlock(blocked: string): Observable<any> {
-    return this.http.post<any>(this.apiUserService + 'addblock', blocked, httpOptions);
+    return this.http.post<any>(this.apiUserService + 'user/addblock', blocked, httpOption);
   }
 
   unBlock(blocked: string): Observable<any> {
-    return this.http.delete<any>(this.apiUserService + 'unblock' + blocked);
+    return this.http.delete<any>(this.apiUserService + 'user/unblock' + blocked);
   }
 
   bookMark(postId: string): Observable<any> {
-    return this.http.post<any>(this.apiUserService + 'bookmark', postId, httpOptions);
+    return this.http.post<any>(this.apiUserService + 'user/bookmark', postId, httpOption);
   }
 
   deleteBookmark(postId: string): Observable<any> {
-    return this.http.delete<any>(this.apiUserService + 'deletebookmark' + postId);
+    return this.http.delete<any>(this.apiUserService + 'user/deletebookmark' + postId);
   }
 
   addFollow(following: string): Observable<any> {
-    return this.http.post<any>(this.apiUserService + 'follow', following, httpOptions);
+    return this.http.post<any>(this.apiUserService + 'user/follow', following, httpOption);
   }
 
   unFollow(following: string): Observable<any> {
-    return this.http.delete<any>(this.apiUserService + 'unfollow?following=' + following);
+    return this.http.delete<any>(this.apiUserService + 'user/unfollow?following=' + following);
   }
 
   getAllPhoto(): Observable<any> {
-    return this.http.get<any>(this.apiUserService + 'allphoto');
+    return this.http.get<any>(this.apiUserService + 'user/allphoto');
   }
 
   addPhoto(url: string, date: Date): Observable<any> {
     const objectJson = '{"url":' + '"' + url + '"' + ',' + '"date":' + '"' + date + '"';
-    return this.http.post<any>(this.apiUserService + 'addphoto', JSON.parse(objectJson), httpOptions);
+    return this.http.post<any>(this.apiUserService + 'user/addphoto', JSON.parse(objectJson), httpOption);
   }
 
   registerUser(user: User): Observable<any> {
-    const httpOption = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('Token')
-      })
-    };
-    return this.http.post<any>(this.apiUserService + 'Register', user, httpOptions);
+   
+    return this.http.post<any>(this.apiUserService + 'user/register', user, httpOptionAuthen);
   }
 
 //   getAll(): Observable<any> {
 //     const params: URLSearchParams = new URLSearchParams();
-// •	return this.http.get<any>(this.apiUserService + 'All');
-// •	}
+// ï¿½	return this.http.get<any>(this.apiUserService + 'All');
+// ï¿½	}
 
   getUserById(userId: string): Observable<any> {
-    const token = localStorage.getItem('Token');
-    const httpOption = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + token
-      })
-    };
-    return this.http.get<any>(this.apiUserService + 'User?userId=' + userId, httpOption);
+    return this.http.get<any>(this.apiUserService + 'user?userId=' + userId, httpOptionAuthen);
   }
 
 }

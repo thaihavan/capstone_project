@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Globals } from 'src/globals/globalvalues';
+import { Topic } from 'src/app/model/Topic';
 
 @Component({
   selector: 'app-interested-toppic',
@@ -8,58 +9,42 @@ import { Globals } from 'src/globals/globalvalues';
 })
 export class InterestedToppicComponent implements OnInit {
 
-  selectedTopic: Topic[] = [];
+  selectedTopic: string[] = [];
   @Input() ListToppic;
-  @Output() EventToppic: EventEmitter<any> = new EventEmitter();
+  @Output() EventToppic: EventEmitter<string[]> = new EventEmitter();
   listselectedTopic: Array<Topic> = [];
   listinterestedtopic: Topic[] = [
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Văn Hóa', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'},
-    {nameTopic: 'Loại Khác', urlImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg'}
-   ];
+    { topicId: 'topic-id-1', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' },
+    { topicId: 'topic-id-2', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' },
+    { topicId: 'topic-id-3', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' },
+    { topicId: 'topic-id-4', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' },
+    { topicId: 'topic-id-5', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' }
+  ];
 
- constructor(private globals: Globals) { }
+  constructor(private globals: Globals) { }
 
- ngOnInit() {
- }
+  ngOnInit() {
+  }
 
- onSelectToppic(topic: Topic): void {
-   if (this.selectedTopic.indexOf(topic) !== -1) {
-     this.selectedTopic = this.selectedTopic.filter(item => item !== topic);
-   } else {
-     this.selectedTopic.push(topic);
-   }
-   this.EventToppic.emit(this.selectedTopic);
- }
- IsChecked(topic) {
-   if (this.selectedTopic.indexOf(topic) !== -1) {
-     return true;
-   }
-   return false;
- }
+  onSelectToppic(topic: Topic): void {
+    if (this.selectedTopic.indexOf(topic.topicId) === -1) {
+      this.selectedTopic.push(topic.topicId);
+    } else {
+      const unselected = this.selectedTopic.indexOf(topic.topicId);
+      this.selectedTopic.splice(unselected, 1);
+    }
+    this.EventToppic.emit(this.selectedTopic);
+  }
+  IsChecked(topic: Topic) {
+    if (this.selectedTopic.indexOf(topic.topicId) !== -1) {
+      return true;
+    }
+    return false;
+  }
 
- gotoHomepage() {
-   window.location.href = this.globals.urllocal;
- }
+  gotoHomepage() {
+    window.location.href = this.globals.urllocal;
+  }
 
 }
-export class Topic {
-  nameTopic: string;
-  urlImage: string;
-}
+

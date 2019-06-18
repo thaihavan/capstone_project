@@ -60,7 +60,7 @@ namespace PostService.Repositories
             return param;
         }
 
-        public IEnumerable<Article> GetAllArticleWithPost()
+        public IEnumerable<Article> GetAllArticleInfo()
         {
             var articles = from a in _articles.AsQueryable()
                            join p in _post.AsQueryable() on a.PostId equals p.Id into joined
@@ -74,6 +74,22 @@ namespace PostService.Repositories
                                Post = post
                            };
             return articles.ToList();
+        }
+
+        public Article GetArticleInfoById(string id)
+        {
+            var article = from a in _articles.AsQueryable()
+                          join p in _post.AsQueryable() on a.PostId equals p.Id into joined
+                          from post in joined where a.Id == new BsonObjectId(new ObjectId(id))
+                          select new Article
+                          {
+                              Id = a.Id,
+                              Topics = a.Topics,
+                              Destinations = a.Destinations,
+                              PostId = a.PostId,
+                              Post = post
+                          };
+            return article.FirstOrDefault();
         }
     }
 }

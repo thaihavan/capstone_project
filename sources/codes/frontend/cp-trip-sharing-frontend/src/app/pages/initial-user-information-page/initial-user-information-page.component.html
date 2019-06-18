@@ -1,45 +1,59 @@
-<div class="initialUser">
-  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+<div class="initial-user">
+  <mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Thêm thông tin người dùng</ng-template>
+        <ng-template matStepLabel>Thông tin</ng-template>
         <div class="form_wrapper">
           <div class="form_container">
-              <div class="title_container">
-                  <h4>Thông tin người dùng</h4>
-              </div>
-              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                  <input type="text" name="email" placeholder="Họ" [value]='firstname' (input)='firstname = $event.target.value' required />
-              </div>
-              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                <input type="text" placeholder="Tên" [value]='lastname' (input)='lastname = $event.target.value' required />
+            <div class="title_container">
+              <h4>Cập nhật thông tin</h4>
             </div>
-              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                  <input type="email" [value]='phonenumber' (input)='phonenumber = $event.target.value'  placeholder="Số điện thoại" required />
-              </div>
-              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                  <input type="date" [value]='dob' (input)='dob = $event.target.value'  placeholder="Ngày sinh"  required />
-              </div>
-              <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                  <input type="text" [value]='address' (input)='address = $event.target.value' placeholder="Địa chỉ"  required />
-              </div>  
-              <div class="input_field radio_option">
-                  <input type="radio" name="radiogroup1" id="rd1" value="male" #male>
-                  <label for="rd1">Nam</label>
-                  <input type="radio" name="radiogroup1" id="rd2" value="male" #female>
-                  <label for="rd2">Nữ</label>
-              </div>           
-              <input class="button" type="submit" (click)="callInterestedtopicPage(stepper)" value="Tiếp tục" />
+            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+              <input matInput type="text" placeholder="@username" [value]='user.UserName'
+                formControlName='usernameFormCtrl' (input)='user.UserName = $event.target.value' required />
+            </div>
+            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+              <input matInput type="text" placeholder="Tên hiển thị" [value]='user.DisplayName'
+                formControlName='displayNameFormCtrl' (input)='user.DisplayName = $event.target.value' required />
+            </div>
+            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+              <input matInput type="text" placeholder="Họ" [value]='user.FirstName'
+                (input)='user.FirstName = $event.target.value' formControlName='firstnameFormCtrl' required />
+            </div>
+            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+              <input matInput type="text" placeholder="Tên" [value]='user.LastName'
+                (input)='user.LastName = $event.target.value' formControlName='lastnameFormCtrl' required />
+            </div>
+            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+              <input type="date" [value]='user.Dob' (input)='user.Dob = $event.target.value' placeholder="Ngày sinh" />
+
+            </div>
+            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+              <input type="text" [value]='user.Address' (input)='user.Address = $event.target.value'
+                placeholder="Địa chỉ" />
+            </div>
+            <div class="input_field radio_option">
+              <input type="radio" name="radiogroup1" id="rd1" value="true" (change)="user.Gender = $event.target.value">
+              <label for="rd1">Nam</label>
+              <input type="radio" name="radiogroup1" id="rd2" value="false"
+                (change)="user.Gender = $event.target.value">
+              <label for="rd2">Nữ</label>
+            </div>
+            <input matStepperNext class="button" type="submit" (click)="callInterestedtopicPage(stepper)"
+              value="Tiếp tục" />
           </div>
           <span style="color: red;margin: 0 auto;">{{message}}</span>
-      </div>
+        </div>
       </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
       <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Chọn chủ đề</ng-template>
+        <ng-template matStepLabel>Quan tâm</ng-template>
         <div class="interestedTopic">
-          <app-interestedtopic-page (EventToppic)="selectedToppics($event)"></app-interestedtopic-page>
+          <div class="interested-topic-title">
+            <h4>Chọn ít nhất 3 chủ đề bạn quan tâm</h4>
+          </div>
+          <app-interested-toppic (EventToppic)="selectedToppics($event)"></app-interested-toppic>
           <button type="button" class="btn btn-primary" (click)="registerUser()">Tiếp tục</button>
         </div>
       </form>

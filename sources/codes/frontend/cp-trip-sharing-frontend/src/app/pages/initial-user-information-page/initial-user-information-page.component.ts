@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { Topic } from 'src/app/pages/interestedtopic-page/interestedtopic-page.component';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/core/services/user-service/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-initial-user-information-page',
@@ -14,24 +14,26 @@ export class InitialUserInformationPageComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  firstname = '';
-  phonenumber = '';
-  lastname = '';
-  dob = '';
-  address = '';
-  expression: boolean;
-  male = '';
-  female = '';
+
   user: User;
   selectedToppic: string[] = [];
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
-
     this.user = new User();
+    this.user.UserName = '';
+    this.user.DisplayName = '';
+    this.user.FirstName = '';
+    this.user.LastName = '';
+    this.user.Dob = '';
+    this.user.Gender = true;
+    this.user.Address = '';
   }
 
   ngOnInit() {
     this.firstFormGroup = this.formBuilder.group({
-      firstCtrl: ['', Validators.required]
+      usernameFormCtrl: ['', Validators.required],
+      firstnameFormCtrl: ['', Validators.required],
+      lastnameFormCtrl: ['', Validators.required],
+      displayNameFormCtrl: ['', Validators.required],
     });
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
@@ -39,24 +41,27 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   callInterestedtopicPage(stepper: MatStepper) {
-      console.log(this.firstname);
-      console.log(this.lastname);
-      console.log(this.dob);
-      console.log(this.phonenumber);
-      console.log(this.address);
-      console.log(this.female);
-      console.log(this.male);
-
+    console.log(this.user);
+    stepper.next();
   }
 
   selectedToppics(topics) {
-    this.selectedToppic = topics;
-    console.log(this.selectedToppic);
+    this.user.Interested = topics;
+    console.log(this.user.Interested);
+  }
+
+  onGenderChange(value) {
+    this.user.Gender = value;
   }
 
   registerUser() {
+    if (this.user.Dob == null) {
+      this.user.Dob = '';
+    }
     this.userService.registerUser(this.user).subscribe((result: any) => {
-      console.log(result);
+      window.location.href = '/home';
+    }, (err: HttpErrorResponse) => {
+      window.location.href = '/initial';
     });
   }
 }

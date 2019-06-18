@@ -23,7 +23,6 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { Globals } from 'src/globals/globalvalues';
 import { InMemoryService } from './core/services/fackeData-service/inMemory.service';
 import { HttpClientModule } from '@angular/common/http';
-import { InterestedtopicPageComponent } from './pages/interestedtopic-page/interestedtopic-page.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
@@ -47,7 +46,6 @@ import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-tr
     ForgotpasswordPageComponent,
     CreatePostPageComponent,
     CreatedPostComponent,
-    InterestedtopicPageComponent,
     ChangepasswordPageComponent,
     DetailpostPageComponent,
     EmailConfirmPageComponent,
@@ -78,7 +76,7 @@ import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-tr
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, InterestedtopicPageComponent, MessagePopupComponent]
+  entryComponents: [LoginPageComponent, MessagePopupComponent, MessagePopupComponent]
 
 })
 export class AppModule { }

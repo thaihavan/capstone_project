@@ -25,21 +25,13 @@ namespace PostService.Controllers
             _postService = postService;
         }
 
-        [AllowAnonymous]
-        [HttpGet("all")]
-        public IActionResult GetAllLikeWithPost([FromQuery] string postId)
-        {
-            var likes = _likeService.GetLikeWithPost(postId);
-            return Ok(likes);
-        }
-
         [Authorize(Roles = "member")]
         [HttpPost("like")]
         public IActionResult Like([FromBody] Like param)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            if(!param.UserId.Equals(new MongoDB.Bson.BsonObjectId(userId)))
+            if(!param.UserId.Equals(userId))
             {
                 return Unauthorized();
             }
@@ -49,14 +41,18 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpDelete("unlike")]
-        public IActionResult Unlike([FromQuery] string objectId)
+        public IActionResult Unlike([FromBody] Like like)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            if(!_likeService.Delete(objectId, userId))
+
+            if(like.UserId != userId)
             {
-                return BadRequest();
+                return Unauthorized();
             }
+
+            _likeService.Delete(like);
+
             return Ok();
         }
     }

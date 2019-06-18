@@ -3,9 +3,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { LocationMarker } from 'src/app/model/LocationMarker';
 import { MatStepper } from '@angular/material';
-import { Topic } from 'src/app/pages/interestedtopic-page/interestedtopic-page.component';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CreatePostPageComponent } from 'src/app/pages/create-post-page/create-post-page.component';
+import { Topic } from 'src/app/model/Topic';
 @Component({
   selector: 'app-step-create-post',
   templateUrl: './step-create-post.component.html',
@@ -73,7 +73,7 @@ remove(location) {
 }
 createPost() {
   if (this.fakeinput1 !== '') {
-    this.data.toppics = this.selectedToppic.map(top => top.nameTopic);
+    this.data.toppics = this.selectedToppic.map(top => top.topicId);
     this.data.destinations = this.selectedLocation.map(dest => dest.locality);
     this.dialogRef.close(this.data);
   }

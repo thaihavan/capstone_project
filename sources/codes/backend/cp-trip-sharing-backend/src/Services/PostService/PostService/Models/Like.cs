@@ -14,18 +14,15 @@ namespace PostService.Models
         public BsonObjectId Id { get; set; }
 
         [BsonElement("object_id")]
-        public BsonObjectId LikedObject { get; set; }
+        public string ObjectId { get; set; }
 
         [BsonElement("object_type")]
-        public BsonString ObjectType { get; set; }
+        public string ObjectType { get; set; }
 
         [BsonElement("date")]
-        public BsonDateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
         [BsonElement("user_id")]
-        public BsonObjectId UserId { get; set; }
-
-        [BsonIgnore]
-        public Post Post { get; set; }
+        public string UserId { get; set; }
     }
 }

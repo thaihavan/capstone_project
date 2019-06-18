@@ -8,5 +8,12 @@ namespace PostService.Repositories.Interfaces
 {
     public interface IPostRepository : IRepository<Post>
     {
+        bool IncreaseLikeCount(string id);
+
+        bool DecreaseLikeCount(string id);
+
+        bool IncreaseCommentCount(string id);
+
+        bool DecreaseCommentCount(string id);
     }
 }

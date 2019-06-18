@@ -1,28 +1,17 @@
-.initialUser{
+.initial-user{
     width: 70%;
-    margin: 0 auto;
+    margin: 2% auto;
 }
 .interestedTopic{
-    width: 85% !important;
     margin: 0 auto;
 }
-.registerform{
-    background-image: url(https://gody.vn/public/v3/images/bg/br-register.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height: 600px;
-    display: flex;
-  }  
   .form_wrapper {
     background: #fff;
     width: 360px;
     border-radius: 10px;
     padding: 25px;
     margin: 0 auto;
-    border-top: 5px solid #3f51b5;
     height: 80%;
-    background-color: cornflowerblue;
   }
   .form_wrapper h2 {
     font-size: 1.5em;
@@ -403,4 +392,7 @@
   .interestedTopic button{
     float: right;
     margin-right: 35px;
+  }
+  .interested-topic-title {
+    text-align: center;
   }

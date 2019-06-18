@@ -34,23 +34,26 @@ export class LoginPageComponent implements OnInit {
     this.account.Email = this.email;
     this.account.Password = this.password;
     this.userService.getAccount(this.account).subscribe((acc: any) => {
-        localStorage.setItem('Account', acc);
-        localStorage.setItem('Token', acc.token);
-        console.log(acc.token);
-        // Call http request to userservice để lấy thông tin user
-       // this.userService.getUserById(acc.userId).subscribe((result: any) => {
-         //  console.log(result);
-        // this.dialogRef.close();
-        //});
-        // Nếu là đăng nhập lần đầu thì redirect sang trang initial-user-information
-        // trong initial-user-information gồm có cập nhật tt cá nhân, bước thứ 2 là chọn chủ để quan tâm
-        // xem angular material step.
-        // cuối cùng là ra trang homepage
+      localStorage.setItem('Account', acc);
+      localStorage.setItem('Token', acc.token);
+      console.log(acc.token);
+      // Call http request to userservice để lấy thông tin user
+      this.userService.getUserById(acc.userId).subscribe((user: any) => {
+        if (user == null) {
+          window.location.href = '/initial';
+        } else {
+          window.location.href = '/home';
+        }
+      });
+      // Nếu là đăng nhập lần đầu thì redirect sang trang initial-user-information
+      // trong initial-user-information gồm có cập nhật tt cá nhân, bước thứ 2 là chọn chủ để quan tâm
+      // xem angular material step.
+      // cuối cùng là ra trang homepage
 
     },
-    (err: HttpErrorResponse) => {
-      this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
-      console.log(err);
-    });
+      (err: HttpErrorResponse) => {
+        this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
+        console.log(err);
+      });
   }
 }

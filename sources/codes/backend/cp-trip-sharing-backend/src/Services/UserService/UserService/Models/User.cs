@@ -32,10 +32,10 @@ namespace UserServices.Models
         public List<string> Interested { get; set; }
 
         [BsonElement("gender")]
-        public string Gender { get; set; }
+        public bool Gender { get; set; }
 
         [BsonElement("dob")]
-        public DateTime Dob { get; set; }
+        public string Dob { get; set; }
 
         [BsonElement("is_active")]
         public bool Active { get; set; }
