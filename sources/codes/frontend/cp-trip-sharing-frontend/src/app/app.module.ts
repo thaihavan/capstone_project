@@ -52,7 +52,6 @@ import { InitialUserInformationPageComponent } from './pages/initial-user-inform
     DetailpostPageComponent,
     EmailConfirmPageComponent,
     ResetPasswordPageComponent,
-    StepCreatePostComponent,
     InitialUserInformationPageComponent
   ],
   imports: [

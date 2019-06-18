@@ -26,6 +26,10 @@ button:focus {
     justify-content: center;
 }
 .btn-step button{
-margin-left: 15px;
-margin-top: 25px;
+    margin-left: 15px;
+    margin-top: 25px;
+}
+.pac-container {
+    background-color: blue;
+    border: solid 5px black;
 }
