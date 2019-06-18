@@ -111,3 +111,93 @@ img {
   width: 80%;
 }
 
+/*get property*/
+
+.text-tiny {
+  font-size: .7em;
+}
+
+.text-small {
+  font-size: .85em;
+}
+
+.text-big {
+  font-size: 1.4em;
+}
+
+.text-huge {
+  font-size: 1.8em;
+}
+
+.marker-yellow {
+  background-color: var(--ck-highlight-marker-yellow);
+}
+
+.marker-green {
+  background-color: var(--ck-highlight-marker-green);
+}
+
+.marker-pink {
+  background-color: var(--ck-highlight-marker-pink);
+}
+
+.marker-blue {
+  background-color: var(--ck-highlight-marker-blue);
+}
+
+.pen-red {
+  color: var(--ck-highlight-pen-red);
+}
+
+.pen-green, .pen-red {
+  background-color: transparent;
+}
+
+.detail-post blockquote{
+  overflow: hidden;
+    padding-right: 1.5em;
+    padding-left: 1.5em;
+    margin-left: 0;
+    font-style: italic;
+    border-left: 5px solid #ccc;
+    margin: 0 0 1rem;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 40px;
+    margin-inline-end: 40px;
+    margin-bottom: var(--ck-spacing-large);
+}
+
+.detail-post .image {
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  clear: both;
+  text-align: center;
+  margin: 1em 0;
+  border-style: none;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.detail-post table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px double #b3b3b3;
+  color: #212529;
+}
+
+.detail-post table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px double #b3b3b3;
+  color: #212529;
+}
+
+.detail-post td{
+  min-width: 2em;
+  padding: .4em;
+  border-color: #d9d9d9
+}
