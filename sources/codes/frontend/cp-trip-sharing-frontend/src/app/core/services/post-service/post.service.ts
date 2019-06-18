@@ -20,7 +20,8 @@ export class PostService {
   }
 
   getDetail(postId: string) {
-    return this.http.get(this.baseUrl + '?id=' + postId);
+    const baseUrl = 'https://localhost:44352/api/postservice/post';
+    return this.http.get(baseUrl + '?postId=' + postId);
   }
 
   getAllPost() {

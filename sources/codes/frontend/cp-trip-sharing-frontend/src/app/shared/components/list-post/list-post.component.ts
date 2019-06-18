@@ -42,7 +42,11 @@ export class ListPostComponent implements OnInit {
     this.getPost();
   }
   onScroll() {
+    console.log('list-post-on-scrole');
     this.isLoading = true;
+
+    // Continue loading data
+    this.getPost();
   }
 
   setNavParams() {

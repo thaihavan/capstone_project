@@ -23,7 +23,7 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.user.DisplayName = '';
     this.user.FirstName = '';
     this.user.LastName = '';
-    this.user.Dob = '';
+    this.user.Dob = null;
     this.user.Gender = true;
     this.user.Address = '';
   }
@@ -55,9 +55,7 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   registerUser() {
-    if (this.user.Dob == null) {
-      this.user.Dob = '';
-    }
+    debugger;
     this.userService.registerUser(this.user).subscribe((result: any) => {
       window.location.href = '/home';
     }, (err: HttpErrorResponse) => {

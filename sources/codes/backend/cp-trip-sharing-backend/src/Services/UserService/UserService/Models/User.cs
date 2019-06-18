@@ -35,7 +35,7 @@ namespace UserServices.Models
         public bool Gender { get; set; }
 
         [BsonElement("dob")]
-        public string Dob { get; set; }
+        public DateTime? Dob { get; set; }
 
         [BsonElement("is_active")]
         public bool Active { get; set; }

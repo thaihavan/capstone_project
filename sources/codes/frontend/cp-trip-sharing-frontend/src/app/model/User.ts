@@ -4,7 +4,7 @@ export class User {
     public DisplayName: string;
     public FirstName: string;
     public LastName: string;
-    public Dob: string;
+    public Dob: Date;
     public Interested: string[];
     public Gender: boolean;
     public Address: string;

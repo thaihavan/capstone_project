@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -6,12 +7,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
+  activeLinkIndex = 0;
+  isScrollTopShow = false;
+  topPosToStartShowing = 100;
+
+  componentRefer: any;
 
   navLinks: any[];
   coverImage = '../../../assets/coverimg.jpg';
-  activeLinkIndex = 0;
 
-  constructor() {
+  @HostListener('window:scroll') checkScroll() {
+    const scrollPosition =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+    if (scrollPosition >= this.topPosToStartShowing) {
+      this.isScrollTopShow = true;
+    } else {
+      this.isScrollTopShow = false;
+    }
+  }
+
+  constructor(private router: Router) {
     this.navLinks = [
       {
         label: 'Đề xuất',
@@ -39,9 +57,30 @@ export class HomePageComponent implements OnInit {
         index: 4
       }
     ];
-   }
+  }
 
   ngOnInit() {
+    this.router.events.subscribe(res => {
+      this.activeLinkIndex = this.navLinks.indexOf(
+        this.navLinks.find(tab => tab.link === '.' + this.router.url)
+      );
+    });
+  }
+
+  onActivate(componentRef) {
+    this.componentRefer = componentRef;
+  }
+
+  onScroll() {
+    this.componentRefer.onScroll();
+  }
+
+  gotoTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
 }

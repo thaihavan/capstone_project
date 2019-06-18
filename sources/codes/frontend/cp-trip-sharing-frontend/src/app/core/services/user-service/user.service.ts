@@ -14,6 +14,7 @@ const httpOption = {
 
 const httpOptionAuthen = {
   headers: new HttpHeaders({
+    'Content-Type': 'application/json',
     Authorization: 'Bearer ' + localStorage.getItem('Token')
   })
 };
@@ -92,10 +93,10 @@ export class UserService {
     return this.http.post<any>(this.apiUserService + 'user/register', user, httpOptionAuthen);
   }
 
-//   getAll(): Observable<any> {
-//     const params: URLSearchParams = new URLSearchParams();
-// �	return this.http.get<any>(this.apiUserService + 'All');
-// �	}
+  //   getAll(): Observable<any> {
+  //     const params: URLSearchParams = new URLSearchParams();
+  // �	return this.http.get<any>(this.apiUserService + 'All');
+  // �	}
 
   getUserById(userId: string): Observable<any> {
     return this.http.get<any>(this.apiUserService + 'user?userId=' + userId, httpOptionAuthen);
