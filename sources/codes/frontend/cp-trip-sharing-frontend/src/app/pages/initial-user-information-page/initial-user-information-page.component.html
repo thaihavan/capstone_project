@@ -35,7 +35,7 @@
       </div>
       </form>
     </mat-step>
-    <mat-step *ngIf="expression" [stepControl]="secondFormGroup">
+    <mat-step [stepControl]="secondFormGroup">
       <form [formGroup]="secondFormGroup">
         <ng-template matStepLabel>Chọn chủ đề</ng-template>
         <div class="interestedTopic">

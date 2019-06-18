@@ -10,15 +10,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { GoogleMapComponent } from './shared/components/google-map/google-map.component';
 import { AgmCoreModule } from '@agm/core';
-import {HeaderComponent} from 'src/app/core/components/header/header.component';
+import { HeaderComponent } from 'src/app/core/components/header/header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
-import {ForgotpasswordPageComponent} from './pages/forgotpassword-page/forgotpassword-page.component';
+import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotpassword-page.component';
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
 import { CreatedPostComponent } from './pages/personal-page/components/created-post/created-post.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { Globals } from 'src/globals/globalvalues';
 import { InMemoryService } from './core/services/fackeData-service/inMemory.service';
@@ -31,6 +31,8 @@ import { SingleCommentComponent } from './shared/components/single-comment/singl
 import { MessagePopupComponent } from './shared/components/message-popup/message-popup.component';
 import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-confirm-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
+import { StepCreatePostComponent } from './shared/components/step-create-post/step-create-post.component';
+import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +53,7 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
     EmailConfirmPageComponent,
     ResetPasswordPageComponent,
     StepCreatePostComponent,
-	InitialUserInformationPageComponent
+    InitialUserInformationPageComponent
   ],
   imports: [
     MatMenuModule,

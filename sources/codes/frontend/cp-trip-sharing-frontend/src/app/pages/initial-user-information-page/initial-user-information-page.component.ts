@@ -23,9 +23,9 @@ export class InitialUserInformationPageComponent implements OnInit {
   male = '';
   female = '';
   user: User;
-  selectedToppic: Topic[] = [];
+  selectedToppic: string[] = [];
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
-    this.expression = false;
+
     this.user = new User();
   }
 
@@ -36,14 +36,9 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
-    this.secondFormGroup = this.formBuilder.group({
-      check: [false, Validators.requiredTrue]
-    });
   }
 
   callInterestedtopicPage(stepper: MatStepper) {
-    if (this.firstname !== '' && this.lastname !== '' && this.dob !== '' &&
-      this.phonenumber !== '' && this.address !== '') {
       console.log(this.firstname);
       console.log(this.lastname);
       console.log(this.dob);
@@ -51,15 +46,7 @@ export class InitialUserInformationPageComponent implements OnInit {
       console.log(this.address);
       console.log(this.female);
       console.log(this.male);
-      // this.user.FirstName = this.firstname;
-      this.user.LastName = this.lastname;
-      this.user.Dob = new Date(this.dob);
-      this.user.Interested = this.selectedToppic;
-      this.expression = true;
-      setTimeout(() => {
-        stepper.next();
-      }, 80);
-    }
+
   }
 
   selectedToppics(topics) {
