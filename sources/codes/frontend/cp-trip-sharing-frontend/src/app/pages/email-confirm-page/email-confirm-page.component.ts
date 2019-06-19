@@ -29,6 +29,7 @@ export class EmailConfirmPageComponent implements OnInit {
       this.openDialogMessageConfirm(this.message);
       setTimeout(() => {
         this.dialog.closeAll();
+        window.location.href = this.globals.urllocal;
       }, 5000);
     }, (err: HttpErrorResponse) => {
       this.message = 'Xác nhận email thất bại';

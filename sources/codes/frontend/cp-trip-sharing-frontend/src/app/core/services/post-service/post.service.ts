@@ -19,7 +19,7 @@ export class PostService {
     return this.http.post<Article>(this.baseUrl + 'create', article, httpOption);
   }
 
-  getDetail(postId: string) {
+  getDetail(postId: string): Observable<any>  {
     const baseUrl = 'https://localhost:44352/api/postservice/post';
     return this.http.get(baseUrl + '?postId=' + postId);
   }
@@ -27,4 +27,10 @@ export class PostService {
   getAllPost() {
     return this.http.get(this.baseUrl + 'all');
   }
+
+  getCommentByPost(postId: string): Observable<any> {
+    const url = 'https://localhost:44352/api/postservice/comment/all';
+    return this.http.get(url + '?id=' + postId);
+  }
+
 }

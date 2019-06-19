@@ -27,6 +27,7 @@ export class DetailpostPageComponent implements OnInit {
   ngOnInit() {
     const postid: string = this.route.snapshot.queryParamMap.get('postId');
     this.loadDetaiPost(postid);
+    this.getCommentByPostId(postid);
   }
   loadDetaiPost(postid: string) {
     this.postService.getDetail(postid).subscribe((data: any) => {
@@ -53,5 +54,15 @@ export class DetailpostPageComponent implements OnInit {
     });
 
     console.log('Comments value in detail-post: ' + this.comments);
+  }
+
+  getCommentByPostId(postId: string) {
+    this.postService.getCommentByPost(postId).subscribe((data: any) => {
+      if (data != null) {
+
+      } else {
+
+      }
+    });
   }
 }

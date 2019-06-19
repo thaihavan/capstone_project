@@ -34,7 +34,7 @@ export class LoginPageComponent implements OnInit {
     this.account.Email = this.email;
     this.account.Password = this.password;
     this.userService.getAccount(this.account).subscribe((acc: any) => {
-      localStorage.setItem('Account', acc);
+      localStorage.setItem('Account', JSON.stringify(acc));
       localStorage.setItem('Token', acc.token);
       console.log(acc);
       // Call http request to userservice để lấy thông tin user

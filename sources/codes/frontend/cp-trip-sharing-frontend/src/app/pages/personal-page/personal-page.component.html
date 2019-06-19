@@ -9,7 +9,7 @@
           <a href="#"><img src="{{avatar}}" class="avatar-img"></a>
         </div>
       </div>
-      <a href="#"><span class="personal-name">Phong Nguyễn</span></a>
+      <a href="#"><span class="personal-name">{{user.UserName}}</span></a>
     </div>
 
     <div class="row personal-content">
@@ -27,7 +27,7 @@
             <!-- Content -->
             <div>
               <!-- Title -->
-              <h5 class="card-title font-weight-bold mb-2 ">Nguyễn Văn Phong</h5>
+              <h5 class="card-title font-weight-bold mb-2 ">{{user.DisplayName}}</h5>
               <!-- Subtitle -->
               <!-- <p class="card-text"><i class="fa fa-clock-o"></i> 07/24/2018</p> -->
               <p class="card-sub-title">Cuộc đời là những chuyến đi!</p>
@@ -50,7 +50,25 @@
             <div class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span>Contribution point <i>1.2345</i></span>
+                <span>Contribution point <i>{{user.ContributionPoint}}</i></span>
+              </a>
+            </div>
+            <div class="card-person-infor">
+              <a href="#" class="mat-button">
+                <i class="fa fa-product-hunt"></i>
+                <span>Ngày sinh:  <i>{{user.Dob | date: 'dd-MM-yyyy'}}</i></span>
+              </a>
+            </div>
+            <div class="card-person-infor">
+              <a href="#" class="mat-button">
+                <i class="fa fa-product-hunt"></i>
+                <span>Giới tính: <i>{{gender}}</i></span>
+              </a>
+            </div>
+            <div class="card-person-infor">
+              <a href="#" class="mat-button">
+                <i class="fa fa-product-hunt"></i>
+                <span>Địa chỉ: <i>Nam Định</i></span>
               </a>
             </div>
             <div class="card-person-infor">

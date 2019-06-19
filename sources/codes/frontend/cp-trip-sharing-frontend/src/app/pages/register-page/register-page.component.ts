@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Account } from 'src/app/model/Account';
+import { Globals } from 'src/globals/globalvalues';
 
 @Component({
   selector: 'app-register-page',
@@ -16,7 +17,7 @@ export class RegisterPageComponent implements OnInit {
   repass = '';
   account: Account;
   message: string;
-  constructor(private dialog: MatDialog, private userService: UserService) {
+  constructor(private dialog: MatDialog, private userService: UserService,public globals: Globals) {
     this.account = new Account();
   }
 
@@ -28,6 +29,9 @@ export class RegisterPageComponent implements OnInit {
     this.account.Password = this.password;
     this.userService.registerAccount(this.account).subscribe((message: any) => {
       this.openDialogMessageConfirm();
+      setTimeout(() => {
+        window.location.href = this.globals.urllocal;
+      }, 5000);
     }, (err: HttpErrorResponse) => {
       this.message = 'Đăng kí thất bại!';
     });
@@ -43,5 +47,6 @@ export class RegisterPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Đăng kí thành công, vui lòng kiểm tra lại email!';
+    instance.message.url = '/home';
   }
 }
