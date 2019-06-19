@@ -117,8 +117,7 @@ export class CreatePostPageComponent implements OnInit {
         post.pubDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
         article.post = post;
         this.postService.createPost(article).subscribe((data: any) => {
-          this.articlereturn = data;
-          console.log(JSON.parse(JSON.stringify(data)) + 'OK');
+          this.articlereturn.post = data.post;
           this.openDialogMessageConfirm('Bạn đã đăng bài thành công');
         }, error => {
           console.log(error);
@@ -133,11 +132,12 @@ export class CreatePostPageComponent implements OnInit {
       height: '200px',
       position: {
         top: '10px'
-      }
+      },
+      disableClose: true
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
-    instance.message.url = '/post-detail';
+    instance.message.url = '/post-detail?postId=' + this.articlereturn.post.id;
   }
   createPost() {
     if (this.myEditor && this.myEditor.editorInstance) {

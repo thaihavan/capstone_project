@@ -45,7 +45,8 @@ export class EmailConfirmPageComponent implements OnInit {
       height: '200px',
       position: {
         top: '10px'
-      }
+      },
+      disableClose: true
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
