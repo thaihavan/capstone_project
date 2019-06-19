@@ -20,8 +20,19 @@
   border-radius: 100%;
   max-width: 160px;
   border: 4px solid #fff;
-  margin-top: -12em;
+  margin-top: -18em;
+  margin-left: 54px;
 }
+
+.mat-raised-button{
+  background-color: #2196f3 !important;
+  height: 40px !important;
+  color: white;
+  margin: 0 auto;
+  padding: 0;
+  margin-top: 5px;
+}
+
 .a {
   text-decoration: none;
 }
@@ -29,12 +40,13 @@ a:hover {
   text-decoration: none;
 }
 .personal-name {
-  color: black;
-  padding-left: -25px;
   font-size: 24px;
   font-weight: 500;
   bottom: 0px;
-  margin-left: 6%;
+  margin-left: 22%;
+  text-transform: uppercase;
+  position: relative;
+  color: var(--txt-sub-color-blue-1);
 }
 
 .content-post-page{
@@ -52,13 +64,13 @@ a:hover {
   font-weight: bold;
 }
 
-.image img {
+/* .image img {
   overflow: hidden;
   display: block;
   margin: 0 auto;
   max-width: 100%;
   width: 100% !important;
-}
+} */
 
 .text{
   color: #3d3d3d;
@@ -147,12 +159,15 @@ button:focus {
   width: 60%;
   margin: 0 auto;
   clear: both;
+  border-bottom: 2px solid gray;
+  height: 52px;
 }
 
 .like-number, .follow-number{
   padding: 0;
   margin: 0;
   color: black;
+  text-align: center;
 }
 
 .number-like-follow{
@@ -207,32 +222,32 @@ button:focus {
 }
 
 .detail-post blockquote{
-  overflow: hidden;
-    padding-right: 1.5em;
-    padding-left: 1.5em;
-    margin-left: 0;
-    font-style: italic;
-    border-left: 5px solid #ccc;
-    margin: 0 0 1rem;
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 40px;
-    margin-inline-end: 40px;
-    margin-bottom: var(--ck-spacing-large);
+    overflow: hidden !important;
+    padding-right: 1.5em !important;
+    padding-left: 1.5em !important;
+    margin-left: 0 !important;
+    font-style: italic !important;
+    border-left: 5px solid #ccc !important;
+    margin: 0 0 1rem !important;
+    display: block !important;
+    margin-block-start: 1em !important;
+    margin-block-end: 1em !important;
+    margin-inline-start: 40px !important;
+    margin-inline-end: 40px !important;
+    margin-bottom: var(--ck-spacing-large) !important;
 }
 
 .image {
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-  clear: both;
-  text-align: center;
-  margin: 1em 0;
-  border-style: none;
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
+  margin: 0 auto  !important;
+  position: relative  !important;
+  overflow: hidden  !important;
+  clear: both  !important;
+  text-align: center  !important;
+  margin: 1em 0  !important;
+  border-style: none  !important;
+  display: block  !important;
+  margin: 0 auto  !important;
+  max-width: 100%  !important;
 }
 
 .image img{
