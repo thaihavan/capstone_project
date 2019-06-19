@@ -4,4 +4,7 @@ export interface LocationMarker {
     locality: string;
     country: string;
     icon: any;
+    name: string;
+    image: string;
+    note: string;
 }

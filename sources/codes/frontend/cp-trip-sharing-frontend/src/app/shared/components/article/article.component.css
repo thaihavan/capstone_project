@@ -18,9 +18,14 @@ button:focus {
 .card-footer-content:hover {
   cursor: pointer;
 }
+
+.card-footer{
+  padding: 0 !important;
+}
+
 .card-body-image img {
   overflow: hidden;
-  height: 350px;
+  height: 200px;
   transition: transform 1s; /* Animation */
 }
 .card-body-image img:hover {
@@ -29,9 +34,38 @@ button:focus {
   ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .card-body-image {
-  overflow: hidden;
-  text-align: center;
+    overflow: hidden;
+    text-align: center;
+    font-size: 30px;
+    line-height: 1.04;
+    letter-spacing: -.015em;
 }
 .overview-post:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-header{
+  padding: 0.2rem 1.25rem !important;
+}
+
+.card-title{
+  color: black !important;
+  font-size: 24px;
+}
+
+.name-author, .card-title{
+  letter-spacing: 0;
+  font-style: normal;
+  fill: rgba(0,0,0,.54);
+}
+
+.time-post{
+  font-size: 14px;
+  letter-spacing: 0;
+  font-style: normal;
+}
+
+.card-text{
+  letter-spacing: 0;
+  line-height: 1.8;
 }

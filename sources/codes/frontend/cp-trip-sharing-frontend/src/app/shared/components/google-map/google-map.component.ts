@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, Output, EventEmitter } from '@angular/core';
 import { LocationMarker } from 'src/app/model/LocationMarker';
 
 @Component({
@@ -7,18 +7,19 @@ import { LocationMarker } from 'src/app/model/LocationMarker';
   styleUrls: ['./google-map.component.css']
 })
 export class GoogleMapComponent implements OnInit {
-  title = 'My first AGM project';
+  @Output() addDestination = new EventEmitter();
   lat: number;
   lng: number;
+  isFirstTime = true;
   public addrKeys: string[];
   public addr: object;
-  locationMarker: LocationMarker [] = [];
+  locationMarker: LocationMarker[] = [];
   constructor(private zone: NgZone) {
     this.setCurrentLocation();
-   }
-
-  ngOnInit() {
   }
+
+  ngOnInit() {}
+  // on google-map-search submit add address location.
   setAddress(addrObj) {
     this.zone.run(() => {
       this.addr = addrObj;
@@ -26,24 +27,36 @@ export class GoogleMapComponent implements OnInit {
       const location: LocationMarker = {
         longtitude: addrObj.lng,
         lattitude: addrObj.lat,
-        country: addrObj.country,
+        country: addrObj.formatted_address,
         locality: addrObj.locality,
-        icon: ''
+        icon: addrObj.icon,
+        image: addrObj.image,
+        name: addrObj.name,
+        note: ''
       };
+      if (this.isFirstTime) {
+        this.locationMarker.pop();
+        this.isFirstTime = false;
+      }
       this.locationMarker.push(location);
       this.lat = addrObj.lat;
       this.lng = addrObj.lng;
     });
+    this.addDestination.emit(this.locationMarker);
   }
+  // get your current location
   private setCurrentLocation() {
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.getCurrentPosition(position => {
         const location: LocationMarker = {
           longtitude: position.coords.longitude,
           lattitude: position.coords.latitude,
           country: 'VN',
           locality: '',
-          icon: ''
+          icon: '',
+          image: '',
+          name: '',
+          note: ''
         };
         this.locationMarker.push(location);
         this.lat = position.coords.latitude;

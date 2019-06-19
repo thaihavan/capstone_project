@@ -6,8 +6,8 @@
           <img class="rounded-circle" width="45" src="../../../../assets/img_avatar.png" alt="">
         </div>
         <div class="ml-2">
-          <div class="h5 m-0">{{post.user}}</div>
-          <div class="text-muted h7"> <i class="fa fa-clock-o"></i> {{post.time}}</div>
+          <div class="h5 m-0 name-author">{{post.author.authorName}}</div>
+          <div class="text-muted h7"> <i class="fa fa-clock-o time-post"></i> {{post.pubDate}}</div>
         </div>
       </div>
       <div>
@@ -31,20 +31,16 @@
     </div>
   </div>
   <div class="card-body">
-    <a class="card-link" href="#">
-      <h5 class="card-title">{{post.title}}</h5>
-    </a>
     <div class="card-body-image mb-3">
       <img src="../../../../assets/luff.jpg" alt="">
     </div>
-    <p class="card-text">{{post.description}}</p>
+    <a class="card-link" href="/post-detail?postId={{post.id}}">
+      <h5 class="card-title">{{post.title}}</h5>
+    </a>
+    <div class="card-text" [innerHTML]="post.content"></div>
     <div>
-      <span class="badge badge-primary">JavaScript</span>
-      <span class="badge badge-primary">Android</span>
-      <span class="badge badge-primary">PHP</span>
-      <span class="badge badge-primary">Node.js</span>
-      <span class="badge badge-primary">Ruby</span>
-      <span class="badge badge-primary">Paython</span>
+      <span href="" class="badge badge-primary">Đọc tiếp</span>
+
     </div>
   </div>
   <div class="card-footer d-flex">
@@ -52,13 +48,13 @@
       <button mat-icon-button>
         <mat-icon>thumb_up_alt</mat-icon>
       </button>
-      <span>{{post.likes}} Thích</span>
+      <span>Thích</span>
     </div>
     <div class="card-footer-content pr-4">
       <button mat-icon-button>
         <mat-icon>mode_comment</mat-icon>
       </button>
-      <span>{{post.comments}} Bình luận</span>
+      <span>Bình luận</span>
     </div>
     <div class="card-footer-content pr-4">
       <button mat-icon-button [matMenuTriggerFor]="menushare">

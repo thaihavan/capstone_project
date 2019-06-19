@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace UserServices.Reponsitories
 
         public User GetById(string id)
         {
-            var user = _users.Find(x => x.Id.Equals(id)).FirstOrDefault();
+            var user = _users.Find(x => x.Id.Equals(new BsonObjectId(new ObjectId(id)))).FirstOrDefault();
             return user;
         }
 

@@ -1,6 +1,7 @@
 .detail-post{
   width: 100%;
   height: 100%;
+  line-height: 2;
 }
 .timeline-cover {
   position: relative;
@@ -29,15 +30,15 @@ a:hover {
 }
 .personal-name {
   color: black;
-  padding-left: 14px;
-  font-size: 28px;
+  padding-left: -25px;
+  font-size: 24px;
   font-weight: 500;
   bottom: 0px;
-  margin-left: 22%;
+  margin-left: 6%;
 }
 
 .content-post-page{
-  width: 60%;
+  width: 60% !important;
   height: auto;
   margin: 0 auto;
   margin-bottom: 1em;
@@ -47,32 +48,19 @@ a:hover {
   width: 90%;
   height: 13%;
   margin-top: 1em !important;
-  margin: 0 auto;
   font-size: 1.5em;
   font-weight: bold;
 }
 
-.title span{
-  font-size: 40px;
-  font-weight: 300;
-  line-height: 45px;
-  padding-bottom: 20px;
-  padding-top: 25px;
-}
-
-.image-post{
-  width: 90%;
-  height: 450px;
+.image img {
+  overflow: hidden;
+  display: block;
   margin: 0 auto;
-}
-
-img {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  width: 100% !important;
 }
 
 .text{
-  width: 90%;
   color: #3d3d3d;
   font-size: 15px;
   line-height: 20px;
@@ -80,9 +68,8 @@ img {
   margin-top: 1em;
 }
 
-.text p{
-  font-size: 15px;
-  line-height: 22px;
+textarea{
+  resize: none;
 }
 
 .text h3 {
@@ -111,6 +98,72 @@ img {
   width: 80%;
 }
 
+.material-icons{
+  transition: line-height 0.4s;
+  width: 20px;
+}
+.mat-fab:hover{
+  box-shadow: 0px 3px 5px 4px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+.mat-fab:hover .material-icons{
+  line-height: 0;
+}
+.mat-button {
+  padding: 0px 0px !important;
+}
+button:focus {
+  outline: none;
+  outline: none !important;
+}
+.mat-icon {
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: 25px;
+  width: 25px;
+}
+
+.like-post {
+  position: fixed;
+  bottom: 50%;
+  left: 70px;
+}
+
+.book-mark {
+  position: fixed;
+  bottom: 40%;
+  left: 70px;
+}
+
+.commet-material{
+  position: fixed;
+  bottom: 30%;
+  left: 70px;
+}
+
+.top-infor{
+  padding: 0;
+  margin: 0;
+  width: 60%;
+  margin: 0 auto;
+  clear: both;
+}
+
+.like-number, .follow-number{
+  padding: 0;
+  margin: 0;
+  color: black;
+}
+
+.number-like-follow{
+  padding-top: 8px;
+  font-weight: 500;
+}
+
+.mat-fab{
+  width: 50px;
+  height: 50px;
+}
 /*get property*/
 
 .text-tiny {
@@ -169,7 +222,7 @@ img {
     margin-bottom: var(--ck-spacing-large);
 }
 
-.detail-post .image {
+.image {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -182,11 +235,8 @@ img {
   max-width: 100%;
 }
 
-.detail-post table{
-  border-collapse: collapse;
-  border-spacing: 0;
-  border: 1px double #b3b3b3;
-  color: #212529;
+.image img{
+  width: 100%;
 }
 
 .detail-post table{

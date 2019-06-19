@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from 'src/app/core/services/fackeData-service/post.service';
-import { Comment} from 'src/app/model/Comment';
+import { PostService } from 'src/app/core/services/post-service/post.service';
+import { Comment } from 'src/app/model/Comment';
 import { Post } from 'src/app/model/Post';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -19,14 +20,18 @@ export class DetailpostPageComponent implements OnInit {
   child2: Comment;
   child3: Comment;
 
-  constructor(private postService: PostService) {
+  constructor(private postService: PostService, private route: ActivatedRoute) {
     this.post = new Post();
   }
 
   ngOnInit() {
-    this.postService.getDetailPost().subscribe(post => {
-      this.post = post;
-
+    const postid: string = this.route.snapshot.queryParamMap.get('postId');
+    this.loadDetaiPost(postid);
+  }
+  loadDetaiPost(postid: string) {
+    this.postService.getDetail(postid).subscribe((data: any) => {
+      this.post = data;
+      console.log(data);
       this.comment.userDisplayName = 'Ha Van Thai';
       this.comment.userImageUrl = 'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
       this.comment.date = '5 phút trước';
@@ -49,5 +54,4 @@ export class DetailpostPageComponent implements OnInit {
 
     console.log('Comments value in detail-post: ' + this.comments);
   }
-
 }

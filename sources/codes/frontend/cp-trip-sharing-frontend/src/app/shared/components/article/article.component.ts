@@ -9,7 +9,7 @@ import { Post } from 'src/app/model/Post';
 export class ArticleComponent implements OnInit {
 
   @Input() post: Post;
-
+  name = 'PhongNV';
   constructor() { }
 
   ngOnInit() {

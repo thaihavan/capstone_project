@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Component  } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,7 +23,6 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { Globals } from 'src/globals/globalvalues';
 import { InMemoryService } from './core/services/fackeData-service/inMemory.service';
 import { HttpClientModule } from '@angular/common/http';
-import { InterestedtopicPageComponent } from './pages/interestedtopic-page/interestedtopic-page.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
@@ -31,8 +30,9 @@ import { SingleCommentComponent } from './shared/components/single-comment/singl
 import { MessagePopupComponent } from './shared/components/message-popup/message-popup.component';
 import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-confirm-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
-import { StepCreatePostComponent } from './shared/components/step-create-post/step-create-post.component';
 import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
+import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,13 +46,12 @@ import { InitialUserInformationPageComponent } from './pages/initial-user-inform
     ForgotpasswordPageComponent,
     CreatePostPageComponent,
     CreatedPostComponent,
-    InterestedtopicPageComponent,
-    InterestedtopicPageComponent,
     ChangepasswordPageComponent,
     DetailpostPageComponent,
     EmailConfirmPageComponent,
     ResetPasswordPageComponent,
-    InitialUserInformationPageComponent
+    InitialUserInformationPageComponent,
+    VirtualTripsPageComponent
   ],
   imports: [
     MatMenuModule,
@@ -77,7 +76,7 @@ import { InitialUserInformationPageComponent } from './pages/initial-user-inform
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, InterestedtopicPageComponent, MessagePopupComponent]
+  entryComponents: [LoginPageComponent, MessagePopupComponent]
 
 })
 export class AppModule { }

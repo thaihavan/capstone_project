@@ -36,23 +36,6 @@ namespace PostService.Repositories
             return _likes.DeleteOne(filter).IsAcknowledged;
         }
 
-        public IEnumerable<Like> GetLikeWithPost(string postId)
-        {
-            var likes = from like in _likes.AsQueryable() where like.LikedObject.Equals(new BsonObjectId(ObjectId.Parse(postId)))
-                        join p in _post.AsQueryable() on like.LikedObject equals p.Id into joined
-                        from post in joined
-                        select new Like
-                        {
-                            Id = like.Id,
-                            LikedObject = like.LikedObject,
-                            ObjectType = "post",
-                            Date = like.Date,
-                            UserId = like.UserId,
-                            Post = post
-                        };
-            return likes.ToList();
-        }
-
         public IEnumerable<Like> GetAll()
         {
             throw new NotImplementedException();
@@ -70,7 +53,7 @@ namespace PostService.Repositories
 
         public bool Delete(string objectId, string userId)
         {
-            var filter = Builders<Like>.Filter.Eq(a => a.LikedObject, new BsonObjectId(objectId)) & Builders<Like>.Filter.Eq(a => a.UserId, new BsonObjectId(userId));
+            var filter = Builders<Like>.Filter.Eq(a => a.ObjectId, objectId) & Builders<Like>.Filter.Eq(a => a.UserId, userId);
             return _likes.DeleteOne(filter).IsAcknowledged;
         }
     }

@@ -32,7 +32,7 @@
           <div *ngIf="checkLogined" class="iconuser" [matMenuTriggerFor]="menu">
             <img class="imgavatar" src="{{urlImgavatar}}"/>
           </div>
-          <mat-menu  #menu="matMenu">
+          <mat-menu #menu="matMenu">
             <button class="options" routerLink="/personal" mat-menu-item>Trang cá nhân</button>
             <button mat-menu-item>Blog của bạn</button>
             <button routerLink="/change-password" mat-menu-item>Đổi mật khẩu</button>

@@ -14,30 +14,44 @@ namespace PostService.Services
     public class LikeService : ILikeService
     {
         private readonly ILikeRepository _likeRepository = null;
+        private readonly IPostRepository _postRepository = null;
 
-        public LikeService(ILikeRepository likeRepository)
+        public LikeService(ILikeRepository likeRepository, IPostRepository postRepository)
         {
             _likeRepository = likeRepository;
+            _postRepository = postRepository;
         }
 
         public LikeService(IOptions<AppSettings> settings)
         {
             _likeRepository = new LikeRepository(settings);
+            _postRepository = new PostRepository(settings);
         }
 
         public Like Add(Like like)
         {
+            switch (like.ObjectType)
+            {
+                case "post":
+                    _postRepository.IncreaseLikeCount(like.ObjectId);
+                    break;
+                case "comment":
+                    break;
+            }
             return _likeRepository.Add(like);
         }
 
-        public bool Delete(string objectId, string userId)
+        public bool Delete(Like like)
         {
-            return _likeRepository.Delete(objectId, userId);
-        }
-
-        public IEnumerable<Like> GetLikeWithPost(string id)
-        {
-            return _likeRepository.GetLikeWithPost(id);
+            switch (like.ObjectType)
+            {
+                case "post":
+                    _postRepository.DecreaseLikeCount(like.ObjectId);
+                    break;
+                case "comment":
+                    break;
+            }
+            return _likeRepository.Delete(like.ObjectId, like.UserId);
         }
     }
 }

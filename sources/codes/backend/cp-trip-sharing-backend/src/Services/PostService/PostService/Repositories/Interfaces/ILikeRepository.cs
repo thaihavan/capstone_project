@@ -7,6 +7,5 @@ namespace PostService.Repositories.Interfaces
     {
         Like Add(Like param);
         bool Delete(string objectId, string userId);
-        IEnumerable<Like> GetLikeWithPost(string postId);
     }
 }

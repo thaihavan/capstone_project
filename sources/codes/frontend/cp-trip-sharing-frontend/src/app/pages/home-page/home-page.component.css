@@ -17,3 +17,9 @@
 .mat-tab-link {
     min-width: 100px !important; 
 }
+
+.scroll-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }

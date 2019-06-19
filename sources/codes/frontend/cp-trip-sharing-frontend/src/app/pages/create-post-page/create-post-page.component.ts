@@ -13,6 +13,7 @@ import { PostService } from 'src/app/core/services/post-service/post.service';
 import { DatePipe } from '@angular/common';
 import { Account } from 'src/app/model/Account';
 import { Author } from 'src/app/model/Author';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 
 @Component({
   selector: 'app-create-post-page',
@@ -30,20 +31,20 @@ export class CreatePostPageComponent implements OnInit {
   config = {
     filebrowserUploadUrl: 'http://192.168.0.107:8000/api/crm/v1.0/crm-distribution-library-files',
     fileTools_requestHeaders: {
-        'X-Requested-With': 'xhr',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+      'X-Requested-With': 'xhr',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
     },
     filebrowserUploadMethod: 'xhr',
     on: {
-        instanceReady( evt ) {
-            const editor = evt.editor;
-            console.log('editor ===>', editor);
-        },
-        fileUploadRequest(evt) {
-            console.log( 'evt ===>', evt );
-        },
+      instanceReady(evt) {
+        const editor = evt.editor;
+        console.log('editor ===>', editor);
+      },
+      fileUploadRequest(evt) {
+        console.log('evt ===>', evt);
+      },
     },
-};
+  };
   public Editor = DecoupledEditor;
   public onReady(editor) {
     editor.ui
@@ -53,14 +54,14 @@ export class CreatePostPageComponent implements OnInit {
         editor.ui.getEditableElement()
       );
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-        // tslint:disable-next-line:no-string-literal
-        console.log(loader['file']);
-        return new UploadAdapter(loader, this.http);
-      };
+      // tslint:disable-next-line:no-string-literal
+      console.log(loader['file']);
+      return new UploadAdapter(loader, this.http);
+    };
   }
-  constructor( private http: HttpClient, public dialog: MatDialog,
-               private postService: PostService,
-               private datePipe: DatePipe) {}
+  constructor(private http: HttpClient, public dialog: MatDialog,
+              private postService: PostService,
+              private datePipe: DatePipe) { }
 
   ngOnInit() {
   }
@@ -98,7 +99,7 @@ export class CreatePostPageComponent implements OnInit {
       data: {
         toppics: [],
         destinations: [],
-    }
+      }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res !== undefined) {
@@ -111,14 +112,29 @@ export class CreatePostPageComponent implements OnInit {
         post.author = author;
         post.content = this.myEditor.editorInstance.getData();
         post.isPublic = this.isPublic;
-        post.pubDate = this.datePipe.transform( new Date(), 'yyyy-MM-dd hh:mm:ss');
+        post.pubDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
         article.post = post;
         this.postService.createPost(article).subscribe(data => {
+          console.log(data + 'OK');
+          this.openDialogMessageConfirm('Bạn đã đăng bài thành công');
         }, error => {
           console.log(error);
         });
       }
     });
+  }
+
+  openDialogMessageConfirm(message: string) {
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '400px',
+      height: '200px',
+      position: {
+        top: '10px'
+      }
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = message;
+    instance.message.url = '/post-detail';
   }
   createPost() {
     if (this.myEditor && this.myEditor.editorInstance) {

@@ -29,9 +29,9 @@ namespace PostService.Controllers
 
         [AllowAnonymous]
         [HttpGet("all")]
-        public IActionResult GetAllArticleWithPost()
+        public IActionResult GetAllArticleInfo()
         {
-            var articles = _articleService.GetAllArticleWithPost();
+            var articles = _articleService.GetAllArticleInfo();
             return Ok(articles);
         }
 
@@ -44,10 +44,18 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
+
         [HttpGet("userid")]
         public IActionResult GetByUserId([FromQuery] string id)
         {
             var article = _articleService.GetAllArticleByUser(id);
+            return Ok(article);
+        }
+        [HttpGet("full")]
+        public IActionResult GetArticleInfoById([FromQuery] string id)
+        {
+            var article = _articleService.GetArticleInfoById(id);
+
             return Ok(article);
         }
 
@@ -67,6 +75,8 @@ namespace PostService.Controllers
             article.Id = new BsonObjectId(ObjectId.GenerateNewId());
             article.PostId = new BsonObjectId(ObjectId.GenerateNewId());
             article.Post.Id = article.PostId;
+            article.Post.LikeCount = 0;  
+            article.Post.CommentCount = 0;
 
             Post addedPost = _postService.Add(article.Post);
             Article addedArticle = _articleService.Add(article);

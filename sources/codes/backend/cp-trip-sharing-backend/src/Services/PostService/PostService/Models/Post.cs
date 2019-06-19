@@ -33,6 +33,12 @@ namespace PostService.Models
 
         [BsonElement("author")]
         public Author Author { get; set; }
-              
+
+        [BsonElement("like_count")]
+        public int LikeCount { get; set; }
+
+        [BsonElement("comment_count")]
+        public int CommentCount { get; set; }
+
     }
 }
