@@ -1,9 +1,16 @@
 <div *ngFor="let post of posts">
   <app-article [post] = "post"></app-article>
 </div>
-<!-- <div class="">
-  <mat-spinner color="primary" mode="indeterminate" value="50"></mat-spinner>
-</div> -->
+
+<div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200"
+(scrolled)="onScroll()"></div>
+
 <div class="loading-dots">
   <h1 class="dot one">.</h1><h1 class="dot two">.</h1><h1 class="dot three">.</h1>
+</div>
+
+<div *ngIf="isScrollTopShow" class="scroll-top">
+  <button (click)="gotoTop()" mat-fab color="primary">
+    <mat-icon>keyboard_arrow_up</mat-icon>
+  </button>
 </div>

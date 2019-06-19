@@ -51,5 +51,8 @@ namespace UserServices.Models
 
         [BsonElement("is_first_time")]
         public bool IsFirstTime { get; set; }
+
+        [BsonElement("address")]
+        public string Address { get; set; }
     }
 }

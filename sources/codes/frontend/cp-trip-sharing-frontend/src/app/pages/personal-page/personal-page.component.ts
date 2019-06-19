@@ -11,26 +11,11 @@ import { User } from 'src/app/model/User';
 export class PersonalPageComponent implements OnInit {
   user: User;
   gender = '';
-  componentRefer: any;
   coverImage = '../../../assets/coverimg.jpg';
   avatar = '../../../assets/img_avatar.png';
   title = 'angular-material-tab-router';
   navLinks: any[];
   activeLinkIndex = 0;
-  isScrollTopShow = false;
-  topPosToStartShowing = 100;
-  @HostListener('window:scroll') checkScroll() {
-    const scrollPosition =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0;
-    if (scrollPosition >= this.topPosToStartShowing) {
-      this.isScrollTopShow = true;
-    } else {
-      this.isScrollTopShow = false;
-    }
-  }
 
   constructor(private router: Router, private userService: UserService) {
     this.navLinks = [
@@ -60,19 +45,6 @@ export class PersonalPageComponent implements OnInit {
       this.activeLinkIndex = this.navLinks.indexOf(
         this.navLinks.find(tab => tab.link === '.' + this.router.url)
       );
-    });
-  }
-  onActivate(componentRef) {
-    this.componentRefer = componentRef;
-  }
-  onScroll() {
-    this.componentRefer.onScroll();
-  }
-  gotoTop() {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
     });
   }
 

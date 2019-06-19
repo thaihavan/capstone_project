@@ -17,6 +17,7 @@ import { InterestedTopicComponent } from './components/interested-toppic/interes
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
 import { CropImageComponent } from './components/upload-image/crop-image/crop-image.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -54,10 +55,12 @@ const Material = [
     AgmCoreModule,
     FormsModule,
     ReactiveFormsModule,
-    ImageCropperModule
+    ImageCropperModule,
+    InfiniteScrollModule
   ],
   exports: [
     Material,
+    InfiniteScrollModule,
     SingleCommentComponent,
     CommentContainerComponent,
     ArticleComponent,

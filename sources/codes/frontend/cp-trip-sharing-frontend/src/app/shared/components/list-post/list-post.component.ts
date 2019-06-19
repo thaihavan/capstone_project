@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Post } from 'src/app/model/Post';
 import { ActivatedRoute } from '@angular/router';
@@ -32,6 +32,22 @@ export class ListPostComponent implements OnInit {
 
   homeNav: string;
   personalNav: string;
+
+  isScrollTopShow = false;
+  topPosToStartShowing = 100;
+
+  @HostListener('window:scroll') checkScroll() {
+    const scrollPosition =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+    if (scrollPosition >= this.topPosToStartShowing) {
+      this.isScrollTopShow = true;
+    } else {
+      this.isScrollTopShow = false;
+    }
+  }
 
   constructor(private route: ActivatedRoute, private postService: PostService) { }
 
@@ -88,5 +104,13 @@ export class ListPostComponent implements OnInit {
         this.isLoading = false;
       });
     }
+  }
+
+  gotoTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 }
