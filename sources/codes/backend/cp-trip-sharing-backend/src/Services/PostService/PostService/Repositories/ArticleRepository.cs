@@ -99,5 +99,10 @@ namespace PostService.Repositories
                           };
             return article.FirstOrDefault();
         }
+
+        public IEnumerable<Article> GetAllArticleWithPost()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
