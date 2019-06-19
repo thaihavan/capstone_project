@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PostService } from 'src/app/core/services/fackeData-service/post.service';
+import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Post } from 'src/app/model/Post';
 import { ActivatedRoute } from '@angular/router';
-
+import { forEach } from '@angular/router/src/utils/collection';
+import { Article } from 'src/app/model/Article';
 @Component({
   selector: 'app-list-post',
   templateUrl: './list-post.component.html',
@@ -25,6 +26,7 @@ export class ListPostComponent implements OnInit {
   ];
 
   posts: Post[] = [];
+  articles: Article[] = [];
   pageIndex: 1;
   isLoading = true;
 
@@ -68,17 +70,23 @@ export class ListPostComponent implements OnInit {
   getPost(): void {
     if (this.homeNav != null) {
       // Call api
-      this.postService.getPosts().subscribe(posts => {
-        this.posts.push(...posts);
+      this.postService.getAllPost().subscribe((data: any) => {
+        this.articles = data;
+        this.articles.forEach(post => {
+          this.posts.push(post.post);
+        });
+        console.log(this.posts);
         this.isLoading = false;
       });
     } else if (this.personalNav != null) {
       // Call api
-      this.postService.getPosts().subscribe(posts => {
-        this.posts.push(...posts);
+      this.postService.getAllPost().subscribe((data: any) => {
+        this.articles = data;
+        this.articles.forEach(post => {
+          this.posts.push(post.post);
+        });
         this.isLoading = false;
       });
     }
   }
-
 }

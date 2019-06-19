@@ -6,8 +6,8 @@
           <img class="rounded-circle" width="45" src="../../../../assets/img_avatar.png" alt="">
         </div>
         <div class="ml-2">
-          <div class="h5 m-0 name-author">{{name}}</div>
-          <div class="text-muted h7"> <i class="fa fa-clock-o time-post"></i> {{post.time}}</div>
+          <div class="h5 m-0 name-author">{{post.author.authorName}}</div>
+          <div class="text-muted h7"> <i class="fa fa-clock-o time-post"></i> {{post.pubDate}}</div>
         </div>
       </div>
       <div>
@@ -34,13 +34,13 @@
     <div class="card-body-image mb-3">
       <img src="../../../../assets/luff.jpg" alt="">
     </div>
-    <a class="card-link" href="#">
+    <a class="card-link" href="/post-detail?postId={{post.id}}">
       <h5 class="card-title">{{post.title}}</h5>
     </a>
-    <p class="card-text">{{post.description}}</p>
+    <div class="card-text" [innerHTML]="post.content"></div>
     <div>
-      <span class="badge badge-primary">Đọc tiếp</span>
-     
+      <span href="" class="badge badge-primary">Đọc tiếp</span>
+
     </div>
   </div>
   <div class="card-footer d-flex">
@@ -48,13 +48,13 @@
       <button mat-icon-button>
         <mat-icon>thumb_up_alt</mat-icon>
       </button>
-      <span>{{post.likes}} Thích</span>
+      <span>Thích</span>
     </div>
     <div class="card-footer-content pr-4">
       <button mat-icon-button>
         <mat-icon>mode_comment</mat-icon>
       </button>
-      <span>{{post.comments}} Bình luận</span>
+      <span>Bình luận</span>
     </div>
     <div class="card-footer-content pr-4">
       <button mat-icon-button [matMenuTriggerFor]="menushare">
