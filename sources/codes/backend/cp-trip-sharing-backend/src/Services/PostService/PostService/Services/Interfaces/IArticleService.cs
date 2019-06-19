@@ -12,6 +12,8 @@ namespace PostService.Services.Interfaces
 
         Article GetArticleInfoById(string id);
 
+        IEnumerable<Article> GetAllArticleByUser(string userId);
+
         Article GetById(string id);
 
         Article Add(Article article);

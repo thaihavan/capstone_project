@@ -54,5 +54,10 @@ namespace PostService.Services
         {
             return _articleRepository.Update(article);
         }
+
+        public IEnumerable<Article> GetAllArticleByUser(string userId)
+        {
+            return _articleRepository.GetAllArticleByUser(userId);
+        }
     }
 }

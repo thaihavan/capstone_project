@@ -8,9 +8,14 @@ namespace PostService.Repositories.Interfaces
 {
     public interface IArticleRepository : IRepository<Article>
     {
+
+        IEnumerable<Article> GetAllArticleWithPost();
+        IEnumerable<Article> GetAllArticleByUser(string userId);
+
         IEnumerable<Article> GetAllArticleInfo();
 
         Article GetArticleInfoById(string id);
+
 
     }
 }

@@ -44,10 +44,18 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
+
+        [HttpGet("userid")]
+        public IActionResult GetByUserId([FromQuery] string id)
+        {
+            var article = _articleService.GetAllArticleByUser(id);
+            return Ok(article);
+        }
         [HttpGet("full")]
         public IActionResult GetArticleInfoById([FromQuery] string id)
         {
             var article = _articleService.GetArticleInfoById(id);
+
             return Ok(article);
         }
 
