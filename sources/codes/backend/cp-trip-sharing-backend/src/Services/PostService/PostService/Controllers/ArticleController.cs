@@ -43,6 +43,14 @@ namespace PostService.Controllers
             return Ok(article);
         }
 
+        [AllowAnonymous]
+        [HttpGet("userid")]
+        public IActionResult GetByUserId([FromQuery] string id)
+        {
+            var article = _articleService.GetAllArticleByUser(id);
+            return Ok(article);
+        }
+
         [Authorize(Roles = "member")]
         [HttpPost("create")]
         public IActionResult CreateArticle([FromBody] Article article)

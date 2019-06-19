@@ -75,5 +75,12 @@ namespace PostService.Repositories
                            };
             return articles.ToList();
         }
+
+        public IEnumerable<Article> GetAllArticleByUser(string userId)
+        {
+            var c = GetAllArticleWithPost();
+            var result = c.Where(x => x.Post.Author.AuthorId.Equals(new BsonObjectId(ObjectId.Parse(userId)))).Select(x=>x).ToList();
+            return result;
+        }
     }
 }
