@@ -32,6 +32,11 @@ namespace PostService.Models
         public BsonBoolean Active { get; set; }
 
         [BsonIgnore]
-        public Comment Child { get; set; }
+        public List<Comment> Childs { get; set; }
+
+        public Comment()
+        {
+            Childs = new List<Comment>();
+        }
     }
 }

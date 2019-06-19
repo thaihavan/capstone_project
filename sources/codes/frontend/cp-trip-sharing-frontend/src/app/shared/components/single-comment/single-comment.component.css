@@ -1,5 +1,6 @@
 .signle-comment {
     margin-left: 24px;
+    margin-top: 20px;
 }
 .comment-post{
     margin: 0 auto;
@@ -39,9 +40,6 @@
     width: 100%;
     height: 100%;
 }
-textarea{
-    resize: none;
-  }
   
 .comment-body {
     border-left: solid 2px #DDDDDD;
@@ -64,7 +62,7 @@ textarea{
     font-family: "Noto Sans", Arial, sans-serif;
     font-size: 14px;
     font-weight: 400;
-    line-height: 21px;
+    line-height: 2;
     color: rgb(26, 26, 27);
     word-break: break-word;
     overflow: auto;
@@ -98,7 +96,6 @@ textarea{
 }
 
 button:focus {
-    outline: none;
     outline: none !important;
   }
 .material-icons:hover {
@@ -110,12 +107,24 @@ button:focus {
 .mat-menu-item:hover .material-icons {
     color: #4051b5;
 }
-.rep-comment-btn{
-display: block;
+.comment-textarea-container{
+    display: block;
 }
-.repComent{
-     height: 40px;
-     font-size: 13px;
+.comment-textarea-container textarea{
+    height: 40px;
+    font-size: 13px;
+    resize: vertical;
+    width: 100%;
+    border-radius: 6px;
+    line-height: 2;
+    height: auto;
+    outline: none !important;
+    font-size: 15px;
+    padding: 0px 10px;
+}
+
+.comment-textarea-container textarea:focus {
+    outline: none !important;
 }
 
 .btn-rep{
