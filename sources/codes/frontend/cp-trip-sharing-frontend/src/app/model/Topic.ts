@@ -1,5 +1,5 @@
 export class Topic {
-    topicId: string;
-    topicName: string;
-    topicImage: string;
+    id: string;
+    name: string;
+    imgUrl: string;
 }

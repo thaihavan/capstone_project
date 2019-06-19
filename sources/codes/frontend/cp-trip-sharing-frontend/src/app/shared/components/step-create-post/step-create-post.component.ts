@@ -19,7 +19,7 @@ export class StepCreatePostComponent implements OnInit {
   secondFormGroup: FormGroup;
   isOptional = false;
   selectedLocation: LocationMarker [] = [];
-  selectedToppic: Topic [] = [];
+  selectedTopic: Topic [] = [];
   selectable = true;
   removable = true;
   @ViewChild('stepper') stepper: MatStepper;
@@ -57,10 +57,10 @@ export class StepCreatePostComponent implements OnInit {
      this.fakeinput1 = 'abc';
     });
   }
-  selectedToppics(topics) {
+  selectedTopics(topics) {
     this.zone.run(() => {
     console.log(topics);
-    this.selectedToppic = topics;
+    this.selectedTopic = topics;
     if (topics.length >= 1) {
       this.fakeinput2 = 'abc';
     } else {
@@ -76,7 +76,7 @@ remove(location) {
 }
 createPost() {
   if (this.fakeinput1 !== '') {
-    this.data.toppics = this.selectedToppic.map(top => top.topicId);
+    this.data.toppics = this.selectedTopic.map(top => top.id);
     this.data.destinations = this.selectedLocation.map(dest => dest.locality);
     this.dialogRef.close(this.data);
   }

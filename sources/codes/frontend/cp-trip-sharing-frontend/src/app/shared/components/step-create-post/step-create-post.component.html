@@ -35,7 +35,7 @@
         <h3>Chọn chủ đề cho bài viết</h3>
       </div>
       <div class="step-body">
-        <app-interested-toppic (EventToppic)="selectedToppics($event)"></app-interested-toppic>
+        <app-interested-toppic (EventTopic)="selectedTopics($event)"></app-interested-toppic>
         <form class="fake-input" [formGroup]="secondFormGroup">
           <mat-form-field>
             <input matInput [(ngModel)]="fakeinput2" placeholder="Address" formControlName="secondCtrl" required>

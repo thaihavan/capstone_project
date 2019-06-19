@@ -16,7 +16,7 @@ export class InitialUserInformationPageComponent implements OnInit {
   secondFormGroup: FormGroup;
 
   user: User;
-  selectedToppic: string[] = [];
+  selectedTopic: string[] = [];
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.user = new User();
     this.user.UserName = '';
@@ -45,7 +45,7 @@ export class InitialUserInformationPageComponent implements OnInit {
     stepper.next();
   }
 
-  selectedToppics(topics) {
+  selectedTopics(topics) {
     this.user.Interested = topics;
     console.log(this.user.Interested);
   }

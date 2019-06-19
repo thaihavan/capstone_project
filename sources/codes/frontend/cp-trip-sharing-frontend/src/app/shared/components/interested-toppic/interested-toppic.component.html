@@ -1,11 +1,10 @@
 <div class="allinterested">
   <!-- <h5 id="title">Chọn tất cả các chủ đề mà bạn muốn đọc</h5> -->
   <div class="interestedtopic" >
-    <div (click)="onSelectToppic(eachtopic)" [class]=" IsChecked(eachtopic) ? 'topic-active':'topic-disable'"  
-    *ngFor="let eachtopic of listinterestedtopic">
-      <span class="nametopic">{{eachtopic.topicName}}</span>
-      <img class="imageInterested" src="{{eachtopic.topicImage}}" />
+    <div (click)="onSelectTopic(eachtopic)" [class]="IsChecked(eachtopic) ? 'topic topic-active':'topic topic-disable'"  
+    *ngFor="let eachtopic of listTopics">
+      <img class="imageInterested" src="{{eachtopic.imgUrl}}" />
+      <span class="name-topic">{{eachtopic.name}}</span>
     </div>
   </div>
-  <!-- <button (click)="Toppics()" type="submit" class="btn btn-primary">Tiếp tục</button> -->
 </div>

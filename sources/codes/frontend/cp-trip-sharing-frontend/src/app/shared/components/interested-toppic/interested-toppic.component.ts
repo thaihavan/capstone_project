@@ -1,42 +1,38 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Globals } from 'src/globals/globalvalues';
 import { Topic } from 'src/app/model/Topic';
+import { PostService } from 'src/app/core/services/post-service/post.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-interested-toppic',
   templateUrl: './interested-toppic.component.html',
   styleUrls: ['./interested-toppic.component.css']
 })
-export class InterestedToppicComponent implements OnInit {
+export class InterestedTopicComponent implements OnInit {
 
   selectedTopic: string[] = [];
-  @Input() ListToppic;
-  @Output() EventToppic: EventEmitter<string[]> = new EventEmitter();
+  @Input() listTopics: Topic[];
+  @Output() EventTopic: EventEmitter<string[]> = new EventEmitter();
   listselectedTopic: Array<Topic> = [];
-  listinterestedtopic: Topic[] = [
-    { topicId: 'topic-id-1', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' },
-    { topicId: 'topic-id-2', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' },
-    { topicId: 'topic-id-3', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' },
-    { topicId: 'topic-id-4', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' },
-    { topicId: 'topic-id-5', topicName: 'Văn Hóa', topicImage: 'https://gody.vn/public/v3/images/bg/br-register.jpg' }
-  ];
 
-  constructor(private globals: Globals) { }
+  constructor(private globals: Globals, private postService: PostService) { }
 
   ngOnInit() {
+    this.getAllTopics();
   }
 
-  onSelectToppic(topic: Topic): void {
-    if (this.selectedTopic.indexOf(topic.topicId) === -1) {
-      this.selectedTopic.push(topic.topicId);
+  onSelectTopic(topic: Topic): void {
+    if (this.selectedTopic.indexOf(topic.id) === -1) {
+      this.selectedTopic.push(topic.id);
     } else {
-      const unselected = this.selectedTopic.indexOf(topic.topicId);
+      const unselected = this.selectedTopic.indexOf(topic.id);
       this.selectedTopic.splice(unselected, 1);
     }
-    this.EventToppic.emit(this.selectedTopic);
+    this.EventTopic.emit(this.selectedTopic);
   }
   IsChecked(topic: Topic) {
-    if (this.selectedTopic.indexOf(topic.topicId) !== -1) {
+    if (this.selectedTopic.indexOf(topic.id) !== -1) {
       return true;
     }
     return false;
@@ -44,6 +40,14 @@ export class InterestedToppicComponent implements OnInit {
 
   gotoHomepage() {
     window.location.href = this.globals.urllocal;
+  }
+
+  getAllTopics() {
+    this.postService.getAllTopics().subscribe((topics: Topic[]) => {
+      this.listTopics = topics;
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
   }
 
 }

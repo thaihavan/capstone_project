@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
 import { Observable } from 'rxjs';
+import { Topic } from 'src/app/model/Topic';
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +34,8 @@ export class PostService {
     return this.http.get(url + '?id=' + postId);
   }
 
+
+  getAllTopics() {
+    return this.http.get('https://localhost:44352/api/postservice/topic/all');
+  }
 }
