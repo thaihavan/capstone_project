@@ -29,14 +29,22 @@ namespace PostService.Repositories
             return param;
         }
 
-        public bool DecreaseCommentCount(string id)
-        {
-            throw new NotImplementedException();
+        public bool DecreaseCommentCount(string id,int commentCount)
+        {       
+            _posts.FindOneAndUpdate(
+                Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
+                Builders<Post>.Update.Set("comment_count", commentCount - 1)
+                );
+            return true;
         }
 
-        public bool DecreaseLikeCount(string id)
+        public bool DecreaseLikeCount(string id,int likeCount)
         {
-            throw new NotImplementedException();
+            _posts.FindOneAndUpdate(
+                Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
+                Builders<Post>.Update.Set("like_count", likeCount - 1)
+                );
+            return true;
         }
 
         public bool Delete(string id)
@@ -58,14 +66,24 @@ namespace PostService.Repositories
             return _posts.Find(p => p.Id.Equals(new BsonObjectId(id))).FirstOrDefault();
         }
 
-        public bool IncreaseCommentCount(string id)
+        public bool IncreaseCommentCount(string id,int commentCount)
         {
-            throw new NotImplementedException();
+            var post = GetById(id);
+            _posts.FindOneAndUpdate(
+                Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
+                Builders<Post>.Update.Set("like_count", commentCount + 1)
+                );
+            return true;
         }
 
-        public bool IncreaseLikeCount(string id)
+        public bool IncreaseLikeCount(string id,int likeCount)
         {
-            throw new NotImplementedException();
+            var post = GetById(id);
+            _posts.FindOneAndUpdate(
+                Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
+                Builders<Post>.Update.Set("like_count", likeCount + 1)
+                );
+            return true;
         }
 
         public Post Update(Post param)

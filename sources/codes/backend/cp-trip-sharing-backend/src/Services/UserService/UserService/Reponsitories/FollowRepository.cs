@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,16 @@ namespace UserServices.Reponsitories.Interfaces
         public Follow Update(Follow document)
         {
             throw new NotImplementedException();
+        }
+        
+        public IEnumerable<Follow> GetAllFollower(string userId)
+        {
+           return _follows.Find(x => x.Following.Equals(new BsonObjectId(ObjectId.Parse(userId)))).ToList();            
+        }
+
+        public IEnumerable<Follow> GetAllFollowing(string userId)
+        {
+            return _follows.Find(x => x.Follower.Equals(new BsonObjectId(ObjectId.Parse(userId)))).ToList();
         }
     }
 }
