@@ -27,7 +27,6 @@ namespace UserServices.Services
 
         public Follow AddFollows(Follow follow)
         {
-
             return _followRepository.Add(follow);
         }
 
