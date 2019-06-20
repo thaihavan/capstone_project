@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ResetPasswordModel } from 'src/app/model/ResetPasswordModel';
 import { Account } from 'src/app/model/Account';
 import { User } from 'src/app/model/User';
+import { ChangePassword } from 'src/app/model/ChangePassword';
 
 
 const httpOption = {
@@ -40,14 +41,14 @@ export class UserService {
     return this.http.post<any>(this.apiUrl + 'forgotpassword', account, httpOption);
   }
 
-  changePassword(account: Account): Observable<any> {
+  changePassword(changePasswordObject: ChangePassword): Observable<any> {
     const httpOptionAu = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post<any>(this.apiUrl + 'changePassword', account, httpOptionAu);
+    return this.http.post<any>(this.apiUrl + 'changePassword', changePasswordObject, httpOptionAu);
   }
 
   resetPassword(token: string, newpassword: ResetPasswordModel): Observable<any> {
