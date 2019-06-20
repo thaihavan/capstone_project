@@ -2,6 +2,8 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { User } from 'src/app/model/User';
+import { MatDialog } from '@angular/material/dialog';
+import { InitialUserInformationPageComponent } from '../initial-user-information-page/initial-user-information-page.component';
 
 @Component({
   selector: 'app-personal-page',
@@ -17,7 +19,7 @@ export class PersonalPageComponent implements OnInit {
   navLinks: any[];
   activeLinkIndex = 0;
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router, private userService: UserService, public dialog: MatDialog) {
     this.navLinks = [
       {
         label: 'Bài viết',
@@ -58,6 +60,7 @@ export class PersonalPageComponent implements OnInit {
       this.user.Interested = data.interested;
       this.user.LastName = data.lastName;
       this.user.UserName = data.userName;
+      this.user.Address = data.address;
       if (this.user.Gender === true) {
         this.gender = 'Nam';
       } else {
@@ -66,4 +69,30 @@ export class PersonalPageComponent implements OnInit {
       console.log(this.user);
     });
   }
+
+  callUpdateProfile() {
+    this.openDialog();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(InitialUserInformationPageComponent, {
+      width: '60%',
+      data: {
+        toppics: [],
+        destinations: [],
+      }
+    });
+    const instance = dialogRef.componentInstance;
+    instance.user.UserName = this.user.UserName;
+    instance.user.DisplayName = this.user.DisplayName;
+    instance.user.FirstName = this.user.FirstName;
+    instance.user.Gender = this.user.Gender;
+    instance.user.Interested = this.user.Interested;
+    instance.user.LastName = this.user.LastName;
+    instance.user.UserName = this.user.UserName;
+    instance.user.Address = this.user.Address;
+    instance.user.Dob = this.user.Dob;
+    instance.user.Gender = this.user.Gender;
+  }
+
 }

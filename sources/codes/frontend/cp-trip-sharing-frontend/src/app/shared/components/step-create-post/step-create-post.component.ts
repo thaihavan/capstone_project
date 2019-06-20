@@ -50,10 +50,10 @@ export class StepCreatePostComponent implements OnInit {
       addr = addrObj;
       addrKeys = Object.keys(addrObj);
       const location: LocationMarker = {
-        longtitude: addrObj.lng,
-        lattitude: addrObj.lat,
+        longitude: addrObj.lng,
+        latitude: addrObj.lat,
         formattedAddress: addrObj.formattedAddress,
-        locality: addrObj.locality,
+        locationId: addrObj.locationId,
         icon: '',
         image: '',
         name: addrObj.name,
@@ -74,10 +74,16 @@ export class StepCreatePostComponent implements OnInit {
       }
     });
   }
+  remove(location) {
+    this.selectedLocation = this.selectedLocation.filter(item => item !== location);
+    if (this.selectedLocation.length === 0) {
+      this.fakeinput1 = '';
+    }
+  }
   createPost() {
     if (this.fakeinput1 !== '') {
       this.data.topics = this.selectedTopic.map(top => top.id);
-      this.data.destinations = this.selectedLocation.map(dest => dest.locality);
+      this.data.destinations = this.selectedLocation.map(dest => dest.name);
       this.dialogRef.close(this.data);
     }
   }

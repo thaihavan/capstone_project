@@ -5,7 +5,7 @@ import { ResetPasswordModel } from 'src/app/model/ResetPasswordModel';
 import { Account } from 'src/app/model/Account';
 import { User } from 'src/app/model/User';
 import { ChangePassword } from 'src/app/model/ChangePassword';
-
+import { HostGlobal } from 'src/app/core/global-variables';
 
 const httpOption = {
   headers: new HttpHeaders({
@@ -24,10 +24,12 @@ const httpOptionAuthen = {
   providedIn: 'root'
 })
 export class UserService {
-  // apiUrl = 'https://localhost:44353/api/identity/account/';
-  apiUrl = 'http://107.178.242.201/api/identity/account/';
-  apiUserService = 'https://localhost:44351/api/userservice/';
-  constructor(private http: HttpClient) { }
+  apiUrl: string = null;
+  apiUserService: string = null;
+  constructor(private http: HttpClient) {
+    this.apiUrl = HostGlobal.HOST_IDENTITY_PROVIDER + '/api/identity/account/';
+    this.apiUserService = HostGlobal.HOST_USER_SERVICE + '/api/userservice/';
+  }
 
   getAccount(account: Account): Observable<Account> {
     return this.http.post<Account>(this.apiUrl + 'authenticate', account, httpOption);

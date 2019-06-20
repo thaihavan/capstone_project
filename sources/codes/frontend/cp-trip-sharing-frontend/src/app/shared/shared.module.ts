@@ -19,6 +19,7 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
 import { CropImageComponent } from './components/upload-image/crop-image/crop-image.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoadingScreenComponent } from './components/loading-screen/loading-screen.component';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -36,7 +37,7 @@ const Material = [
   MatFormFieldModule,
   MatInputModule,
   MatChipsModule,
-  MatRadioModule
+  MatRadioModule,
  ];
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ const Material = [
     GoogleMapSearchComponent,
     InterestedTopicComponent,
     UploadImageComponent,
-    CropImageComponent
+    CropImageComponent,
+    LoadingScreenComponent
   ],
   imports: [
     CommonModule,
@@ -71,7 +73,8 @@ const Material = [
     GoogleMapSearchComponent,
     InterestedTopicComponent,
     UploadImageComponent,
-    CropImageComponent
-  ], entryComponents: [StepCreatePostComponent, CropImageComponent]
+    CropImageComponent,
+    LoadingScreenComponent
+  ], entryComponents: [StepCreatePostComponent, CropImageComponent, LoadingScreenComponent]
 })
 export class SharedModule { }
