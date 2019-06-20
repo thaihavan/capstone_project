@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // tslint:disable-next-line:max-line-length
 import { MatChipsModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatTabsModule, MatButtonToggleModule, MatIconModule, MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule, MatProgressSpinnerModule } from '@angular/material';
+import {MatRadioModule} from '@angular/material/radio';
 import { AgmCoreModule } from '@agm/core';
 import {MatMenuModule} from '@angular/material/menu';
 import { SingleCommentComponent } from './components/single-comment/single-comment.component';
@@ -34,7 +35,8 @@ const Material = [
   MatStepperModule,
   MatFormFieldModule,
   MatInputModule,
-  MatChipsModule
+  MatChipsModule,
+  MatRadioModule
  ];
 @NgModule({
   declarations: [

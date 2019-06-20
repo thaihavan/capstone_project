@@ -1,0 +1,51 @@
+<div class="create-virtual-popup">
+  <div class="panel-popup p-2 primary-color">
+    <div class="pt-2 pl-3">
+      <mat-icon>directions_run</mat-icon>
+    </div>
+    <div class="pt-2 pl-1">
+      <span>Tạo một chuyến đi</span>
+    </div>
+  </div>
+  <div class="btn-close">
+    <button mat-icon-button (click)="onClose()" class="close-button-icon">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="clear"></div>
+  <div class="content-popup">
+    <div class="input-title">
+      <h5 class="mb-3">Tên chuyến đi</h5>
+      <div class="form-group">
+        <input [(ngModel)]="title" (ngModelChange)="onChange()" type="text" class="form-control" id="title" aria-describedby="helpId"
+          placeholder="Nhập tên chuyến đi">
+        <small id="helpId" class="form-text text-muted">50 kí tự</small>
+      </div>
+    </div>
+    <div class="radio-policy">
+      <h5>Chọn quyền riêng tư</h5>
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" name="isPublic" [value]="true">
+        <mat-radio-button class="example-radio-button" [value]="true">
+          <div class="item-radio">
+            <div class="">
+              <mat-icon>lock_open</mat-icon>
+            </div>
+            <div>
+              Công khai
+              Hiển thị với mọi khách du lịch trên TripAdvisor, bao gồm mọi bạn bè được bạn chia sẻ Chuyến đi
+            </div>
+          </div>
+        </mat-radio-button>
+        <mat-radio-button class="example-radio-button" [value]="false">
+          <mat-icon>lock</mat-icon>
+          <span>Riêng tư
+            Không hiển thị với người dùng và thành viên TripAdvisor khác, trừ bạn và bạn bè được chia sẻ Chuyến đi.
+          </span>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="btn-create">
+      <button (click)="onCreate()" [disabled]=isHasTitle mat-raised-button color="primary">Tạo</button>
+    </div>
+  </div>
+</div>

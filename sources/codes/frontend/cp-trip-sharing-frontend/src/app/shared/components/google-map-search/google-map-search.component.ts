@@ -9,6 +9,7 @@ import {MapsAPILoader} from '@agm/core';
 })
 
 export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
+  textInput = '';
   constructor(private mapLoader: MapsAPILoader) {
   }
   @ViewChild('searchmap') inputSearch;
@@ -34,16 +35,19 @@ export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
     // tslint:disable-next-line:forin
     for (const i in place.address_components) {
       const item = place.address_components[i];
+      let name: string;
+      name = this.inputSearch.nativeElement.value;
+      name = name.slice(0, name.indexOf(','));
       // tslint:disable-next-line:no-string-literal
       locationObj['formatted_address'] = place.formatted_address;
       // tslint:disable-next-line:no-string-literal
-      locationObj['name'] = place.name;
+      locationObj['name'] = name;
       // tslint:disable-next-line:no-string-literal
       locationObj['icon'] = place.icon;
       // tslint:disable-next-line:no-string-literal
-      if (item.types.indexOf('photos') > -1) {
+      if (place.photos != null) {
         // tslint:disable-next-line:no-string-literal
-        locationObj['image'] = place.photos[0].getUrl();
+      locationObj['image'] = place.photos[0].getUrl();
       }
       if (item.types.indexOf('locality') > -1) {
         // tslint:disable-next-line:no-string-literal
@@ -64,6 +68,8 @@ export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
         // tslint:disable-next-line:no-string-literal
         locationObj['postal_code'] = item.short_name;
       }
+      this.textInput = '';
+      // tslint:disable-next-line:no-string-literal
     }
     // tslint:disable-next-line:no-string-literal
     locationObj['lat'] = place.geometry.location.lat();

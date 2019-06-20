@@ -32,6 +32,7 @@ import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-conf
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
 import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
+import { DialogCreateTripComponent } from './pages/virtual-trips-page/dialog-create-trip/dialog-create-trip.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-tr
     EmailConfirmPageComponent,
     ResetPasswordPageComponent,
     InitialUserInformationPageComponent,
-    VirtualTripsPageComponent
+    VirtualTripsPageComponent,
+    DialogCreateTripComponent
   ],
   imports: [
     MatMenuModule,
@@ -76,7 +78,7 @@ import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-tr
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, MessagePopupComponent]
+  entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent]
 
 })
 export class AppModule { }

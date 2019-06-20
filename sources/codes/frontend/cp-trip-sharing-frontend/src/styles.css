@@ -6,3 +6,7 @@ button:focus {
     outline: none;
     outline: none !important;
   }
+  .primary-color{
+    background-color: #2195f3;
+    color: white;
+  }
