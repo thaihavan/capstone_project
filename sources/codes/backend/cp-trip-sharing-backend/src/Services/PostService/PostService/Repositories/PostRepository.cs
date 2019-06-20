@@ -29,20 +29,20 @@ namespace PostService.Repositories
             return param;
         }
 
-        public bool DecreaseCommentCount(string id,int commentCount)
+        public bool DecreaseCommentCount(string id)
         {       
             _posts.FindOneAndUpdate(
                 Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("comment_count", commentCount - 1)
+                Builders<Post>.Update.Inc("comment_count",1)
                 );
             return true;
         }
 
-        public bool DecreaseLikeCount(string id,int likeCount)
+        public bool DecreaseLikeCount(string id)
         {
             _posts.FindOneAndUpdate(
                 Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("like_count", likeCount - 1)
+                Builders<Post>.Update.Set("like_count",-1)
                 );
             return true;
         }
@@ -66,22 +66,20 @@ namespace PostService.Repositories
             return _posts.Find(p => p.Id.Equals(new BsonObjectId(id))).FirstOrDefault();
         }
 
-        public bool IncreaseCommentCount(string id,int commentCount)
-        {
-            var post = GetById(id);
+        public bool IncreaseCommentCount(string id)
+        {            
             _posts.FindOneAndUpdate(
                 Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("like_count", commentCount + 1)
+                Builders<Post>.Update.Set("like_count",1)
                 );
             return true;
         }
 
-        public bool IncreaseLikeCount(string id,int likeCount)
-        {
-            var post = GetById(id);
+        public bool IncreaseLikeCount(string id)
+        {           
             _posts.FindOneAndUpdate(
                 Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("like_count", likeCount + 1)
+                Builders<Post>.Update.Set("like_count", -1)
                 );
             return true;
         }
