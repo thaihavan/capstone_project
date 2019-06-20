@@ -5,9 +5,9 @@ import { PostService } from 'src/app/core/services/post-service/post.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-interested-toppic',
-  templateUrl: './interested-toppic.component.html',
-  styleUrls: ['./interested-toppic.component.css']
+  selector: 'app-interested-topic',
+  templateUrl: './interested-topic.component.html',
+  styleUrls: ['./interested-topic.component.css']
 })
 export class InterestedTopicComponent implements OnInit {
 
@@ -43,6 +43,7 @@ export class InterestedTopicComponent implements OnInit {
   }
 
   getAllTopics() {
+    debugger;
     this.postService.getAllTopics().subscribe((topics: Topic[]) => {
       this.listTopics = topics;
     }, (err: HttpErrorResponse) => {

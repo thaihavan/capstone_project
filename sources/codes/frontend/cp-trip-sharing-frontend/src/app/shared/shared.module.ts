@@ -14,7 +14,7 @@ import { ArticleComponent } from './components/article/article.component';
 import { StepCreatePostComponent } from './components/step-create-post/step-create-post.component';
 import { GoogleMapSearchComponent } from './components/google-map-search/google-map-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InterestedTopicComponent } from './components/interested-toppic/interested-toppic.component';
+import { InterestedTopicComponent } from './components/interested-topic/interested-topic.component';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
 import { CropImageComponent } from './components/upload-image/crop-image/crop-image.component';
 import { ImageCropperModule } from 'ngx-image-cropper';

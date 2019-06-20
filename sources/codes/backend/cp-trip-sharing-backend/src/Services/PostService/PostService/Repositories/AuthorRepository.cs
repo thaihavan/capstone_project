@@ -23,7 +23,8 @@ namespace PostService.Repositories
 
         public Author Add(Author param)
         {
-            throw new NotImplementedException();
+            _authors.InsertOne(param);
+            return param;
         }
 
         public bool Delete(string id)

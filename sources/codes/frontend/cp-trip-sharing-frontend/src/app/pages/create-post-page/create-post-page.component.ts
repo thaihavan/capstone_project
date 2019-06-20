@@ -99,23 +99,24 @@ export class CreatePostPageComponent implements OnInit {
     const dialogRef = this.dialog.open(StepCreatePostComponent, {
       width: '60%',
       data: {
-        toppics: [],
+        topics: [],
         destinations: [],
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res !== undefined) {
         const article = new Article();
-        article.toppics = res.toppics;
+        article.topics = res.topics;
+        article.topics = []; // Because res.topics is undefined. will be removed
         article.destinations = res.destinations;
         const post = new Post();
         post.title = this.title;
-        const author = new Author();
-        post.author = author;
         post.content = this.myEditor.editorInstance.getData();
         post.isPublic = this.isPublic;
         post.pubDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
         article.post = post;
+
+        console.log('article param:', article);
         this.postService.createPost(article).subscribe((data: any) => {
           this.articlereturn.post = data.post;
           this.openDialogMessageConfirm('Bạn đã đăng bài thành công');

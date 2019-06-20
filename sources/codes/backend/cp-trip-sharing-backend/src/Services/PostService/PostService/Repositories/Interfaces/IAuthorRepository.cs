@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PostService.Repositories.Interfaces
 {
-    interface IAuthorRepository : IRepository<Author>
+    public interface IAuthorRepository : IRepository<Author>
     {
     }
 }

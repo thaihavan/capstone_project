@@ -76,7 +76,7 @@ export class StepCreatePostComponent implements OnInit {
   }
   createPost() {
     if (this.fakeinput1 !== '') {
-      this.data.toppics = this.selectedTopic.map(top => top.id);
+      this.data.topics = this.selectedTopic.map(top => top.id);
       this.data.destinations = this.selectedLocation.map(dest => dest.locality);
       this.dialogRef.close(this.data);
     }

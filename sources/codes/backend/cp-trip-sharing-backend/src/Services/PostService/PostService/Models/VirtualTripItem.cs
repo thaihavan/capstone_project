@@ -23,5 +23,14 @@ namespace PostService.Models
 
         [BsonElement("image")]
         public string Image { get; set; }
+
+        [BsonElement("location_id")]
+        public string LocationId { get; set; }
+
+        [BsonElement("icon")]
+        public string Icon { get; set; }
+
+        [BsonElement("formatted_address")]
+        public string FormattedAddress { get; set; }
     }
 }
