@@ -25,7 +25,7 @@ export class PostService {
     return this.http.get(baseUrl + '?postId=' + postId);
   }
 
-  getAllPost() {
+  getAllPost(): Observable<any> {
     return this.http.get(this.baseUrl + 'all');
   }
 
@@ -35,7 +35,7 @@ export class PostService {
   }
 
 
-  getAllTopics() {
+  getAllTopics(): Observable<any> {
     return this.http.get('https://localhost:44352/api/postservice/topic/all');
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ResetPasswordModel } from 'src/app/model/ResetPasswordModel';
 import { Account } from 'src/app/model/Account';
 import { User } from 'src/app/model/User';
 
@@ -36,6 +36,10 @@ export class UserService {
     return this.http.post<any>(this.apiUrl + 'register', account, httpOption);
   }
 
+  forgotPassword(account: Account): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'forgotpassword', account, httpOption);
+  }
+
   changePassword(account: Account): Observable<any> {
     const httpOptionAu = {
       headers: new HttpHeaders({
@@ -44,6 +48,16 @@ export class UserService {
       })
     };
     return this.http.post<any>(this.apiUrl + 'changePassword', account, httpOptionAu);
+  }
+
+  resetPassword(token: string, newpassword: ResetPasswordModel): Observable<any> {
+    const httpOptionAu = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.post<any>(this.apiUrl + 'resetpassword', newpassword, httpOptionAu);
   }
 
   verifyEmail(token: string): Observable<any> {
