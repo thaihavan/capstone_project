@@ -5,6 +5,8 @@ import { Author } from 'src/app/model/Author';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { DialogCreateTripComponent } from './dialog-create-trip/dialog-create-trip.component';
+import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
+import { LoadingScreenComponent } from 'src/app/shared/components/loading-screen/loading-screen.component';
 
 @Component({
   selector: 'app-virtual-trips-page',
@@ -21,15 +23,17 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   note: string;
   isPublic: boolean;
   post: Post;
+  coverImage = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
   @ViewChild('leftContent') leftContent;
-  constructor(private datePipe: DatePipe, public dialog: MatDialog) {
+  constructor(private datePipe: DatePipe, public dialog: MatDialog, private tripService: VirtualTripService) {
    }
 
   ngOnInit() {
     this.virtualTrip = new VirtualTrip();
     this.post = new Post();
     this.post.pubDate = this.datePipe.transform( new Date(), 'yyyy-MM-dd hh:mm:ss');
-    const author = new Author();
+    let author = new Author();
+    author = JSON.parse(localStorage.getItem('author'));
     this.post.author = author;
     this.isPublic = true;
     this.getScreenSize();
@@ -48,9 +52,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
 
   // add destination from google-map-search
   addDestination(destinations) {
-    this.virtualTrip.virtualTripItems = destinations;
-    this.post.title = this.title;
-    this.post.isPublic = this.isPublic;
+    this.virtualTrip.items = destinations;
   }
   // set policy for virtual post
   setPolicy() {
@@ -72,8 +74,30 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       disableClose: true,
      });
     dialogRef.afterClosed().subscribe(result => {
-       this.title = result.title;
-       this.isPublic = result.isPublic;
+      if (result !== undefined) {
+        this.title = result.title;
+        this.isPublic = result.isPublic;
+      }
      });
+  }
+  // create virtual trip
+  createTrip() {
+    this.post.title = this.title;
+    this.post.isPublic = this.isPublic;
+    this.post.image = this.coverImage;
+    this.virtualTrip.post = this.post;
+    const dialogRef = this.dialog.open(LoadingScreenComponent, {
+      width: '100%',
+      data: {
+        title: '',
+        isPublic: ''
+      },
+      disableClose: true,
+     });
+    this.tripService.createVirtualTrip(this.virtualTrip).subscribe( result => {
+      // tslint:disable-next-line:no-unused-expression
+      console.log('create success!');
+      dialogRef.close();
+    });
   }
 }

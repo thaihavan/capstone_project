@@ -34,6 +34,8 @@ export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
     const locationObj = {};
     // tslint:disable-next-line:forin
     for (const i in place.address_components) {
+      // tslint:disable-next-line:no-debugger
+      debugger;
       const item = place.address_components[i];
       let name: string;
       name = this.inputSearch.nativeElement.value;
@@ -42,6 +44,8 @@ export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
       locationObj['formatted_address'] = place.formatted_address;
       // tslint:disable-next-line:no-string-literal
       locationObj['name'] = name;
+      // tslint:disable-next-line:no-string-literal
+      locationObj['locationId'] = place.id;
       // tslint:disable-next-line:no-string-literal
       locationObj['icon'] = place.icon;
       // tslint:disable-next-line:no-string-literal

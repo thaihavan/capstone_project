@@ -6,7 +6,7 @@
   </div>  
 <div [style.height.px]="heightMap">
     <agm-map [ngClass.gt-lg]="" [latitude]="lat" [longitude]="lng" [fitBounds]="locationMarker.length > 1">
-          <agm-marker [agmFitBounds]="true" *ngFor="let marker of locationMarker" [latitude]="marker.lattitude" [longitude]="marker.longtitude"></agm-marker>
+          <agm-marker [agmFitBounds]="true" *ngFor="let marker of locationMarker" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
     </agm-map>
 </div>
 </div>

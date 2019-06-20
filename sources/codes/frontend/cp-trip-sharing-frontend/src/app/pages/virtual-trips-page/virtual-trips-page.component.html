@@ -13,7 +13,7 @@
           <mat-card class="example-card">
             <div class="header-card">
               <div class="image-header">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                <img mat-card-image src="{{coverImage}}"
                   alt="Photo of a Shiba Inu">
               </div>
               <figure class="profile">
@@ -21,7 +21,7 @@
               </figure>
               <figure class="profile-right">
                 <button mat-icon-button (click)="setPolicy()">
-                  <mat-icon>{{ isPublic ? 'lock' : 'lock_open'}}</mat-icon>
+                  <mat-icon>{{ isPublic ? 'lock_open' : 'lock'}}</mat-icon>
                 </button>
               </figure>
               <button class="edit" mat-icon-button [matMenuTriggerFor]="menu"
@@ -57,8 +57,8 @@
                 <mat-icon>share</mat-icon>
               </button>
             </mat-card-actions>
-            <div *ngIf="virtualTrip.virtualTripItems!=undefined">
-              <mat-card-content *ngFor="let item of virtualTrip.virtualTripItems">
+            <div *ngIf="virtualTrip.items!=undefined">
+              <mat-card-content *ngFor="let item of virtualTrip.items">
                 <div class='line'></div>
                 <div class="child-content">
                   <div class="image-header">
@@ -104,11 +104,13 @@
             </span>
         </div>
     </div>
-    
     <div class="col-12 right-content pl-0 pr-0 mt-0 ">
       <div class="fixed">
         <app-google-map [heightMap]="screenHeight" (addDestination)="addDestination($event)"></app-google-map>
       </div>
     </div>
+  </div>
+  <div class="btn-create">
+    <button mat-fab color="accent" (click)="createTrip()">Tạo</button>
   </div>
 </div>

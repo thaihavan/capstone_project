@@ -24,7 +24,7 @@
     </div>
     <div class="radio-policy">
       <h5>Chọn quyền riêng tư</h5>
-      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" name="isPublic" [value]="true">
+      <mat-radio-group aria-labelledby="example-radio-group-label"  [(ngModel)]="isPublic" class="example-radio-group" >
         <mat-radio-button class="example-radio-button" [value]="true">
           <div class="item-radio">
             <div class="">
