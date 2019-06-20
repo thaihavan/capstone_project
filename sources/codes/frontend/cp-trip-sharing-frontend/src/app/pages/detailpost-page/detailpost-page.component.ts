@@ -3,6 +3,7 @@ import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Comment } from 'src/app/model/Comment';
 import { Post } from 'src/app/model/Post';
 import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -11,27 +12,24 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetailpostPageComponent implements OnInit {
   post: Post;
+  postId: string;
   coverImage = '../../../assets/coverimg.jpg';
   avatar = '../../../assets/img_avatar.png';
 
+  commentContent = '';
   comments: Comment[];
-
-  // For fake comments
-  comment = new Comment();
-  child1: Comment;
-  child2: Comment;
-  child3: Comment;
 
   constructor(private postService: PostService, private route: ActivatedRoute) {
     this.post = new Post();
+    this.comments = [];
   }
 
   ngOnInit() {
-    const postid: string = this.route.snapshot.queryParamMap.get('postId');
-    this.loadDetaiPost(postid);
-    this.getCommentByPostId(postid);
-    
+    this.postId = this.route.snapshot.queryParamMap.get('postId');
+    this.loadDetaiPost(this.postId);
+    this.getCommentByPostId(this.postId);
   }
+
   loadDetaiPost(postid: string) {
     this.postService.getDetail(postid).subscribe((data: any) => {
       this.post = data;
@@ -44,33 +42,25 @@ export class DetailpostPageComponent implements OnInit {
       if (data != null) {
         console.log('Comment: ' + data);
         console.log('Total comment: ', data.length);
-        console.log(data[0]);
-        console.log(data[1]);
-        console.log(data[2]);
         this.comments = data;
-        // Load fake comments
-        this.loadFakeComment();
       } else {
         console.log('Can not get comments of this post.');
       }
     });
   }
 
-  loadFakeComment() {
-    this.comment.userDisplayName = 'Ha Van Thai';
-    this.comment.userImageUrl = 'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
-    this.comment.date = '5 phút trước';
-      // tslint:disable-next-line:max-line-length
-    this.comment.content = 'Thật không dễ dàng để chọn ra những từ đẹp nhất trong tổng số khoảng 750 000 từ tiếng Anh. Với bài học này, chúng ta cùng tìm hiểu 12 từ được coi là đẹp nhất trong tiếng Anh ở khía cạnh nào đó.';
-    this.comment.numLikes = 30;
+  submitComment() {
+    const comment = new Comment();
+    comment.content = this.commentContent;
+    comment.postId = this.postId;
+    comment.parentId = null;
 
-    this.child1 = JSON.parse(JSON.stringify(this.comment));
-    this.child2 = JSON.parse(JSON.stringify(this.comment));
-    this.child3 = JSON.parse(JSON.stringify(this.comment));
-
-    this.child1.childs = [this.child3];
-    this.comment.childs = [this.child1, this.child2];
-
-    this.comments.push(this.comment);
+    this.postService.addComment(comment).subscribe((res: Comment) => {
+      console.log('add comment res: ' + res);
+      this.comments.push(res);
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
+
 }

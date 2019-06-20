@@ -9,12 +9,15 @@
       </div>
     </div>
     <div class=" row top-infor">
-        <a href="#" class="col-md-4"><span class="personal-name">Phong Nguyễn</span></a>
-        <a href="#" class="col-md-3 number-like-follow"><span class="like-number"><i class="fa fa-sticky-note"></i>15 bài review</span></a>
-        <a href="#" class="col-md-3 number-like-follow"><span class="follow-number"><i class="fa fa-user-plus"></i>500 người follow</span></a>
-        <button class="col-md-2" mat-raised-button color="primary"><i style="color: white" class="fa fa-user-plus"></i>Theo dõi</button>
+      <a href="#" class="col-md-4"><span class="personal-name">Phong Nguyễn</span></a>
+      <a href="#" class="col-md-3 number-like-follow"><span class="like-number"><i class="fa fa-sticky-note"></i>15 bài
+          review</span></a>
+      <a href="#" class="col-md-3 number-like-follow"><span class="follow-number"><i class="fa fa-user-plus"></i>500
+          người follow</span></a>
+      <button class="col-md-2" mat-raised-button color="primary"><i style="color: white"
+          class="fa fa-user-plus"></i>Theo dõi</button>
     </div>
-   
+
   </div>
 
   <div class="content-post-page">
@@ -28,13 +31,14 @@
       <h3>Bình luận</h3>
       <div class="iconuser-textarea">
 
+        <div class="form-group">
+          <textarea class="form-control" rows="5" id="comment" name="text" [(ngModel)]="commentContent"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="submitComment()">Bình luận</button>
+
         <!-- Comment container include all comments -->
         <app-comment-container [comments]="comments"></app-comment-container>
 
-        <div class="form-group">
-          <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Bình luận</button>
       </div>
     </div>
     <div class="button-showcomment">
@@ -55,8 +59,8 @@
   </div>
 
   <div class="commet-material">
-      <button mat-fab color="primary">
-        <mat-icon>comment</mat-icon>
-      </button>
-    </div>
+    <button mat-fab color="primary">
+      <mat-icon>comment</mat-icon>
+    </button>
+  </div>
 </div>

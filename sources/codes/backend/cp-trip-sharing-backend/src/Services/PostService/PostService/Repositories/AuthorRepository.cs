@@ -39,7 +39,7 @@ namespace PostService.Repositories
 
         public Author GetById(string id)
         {
-            throw new NotImplementedException();
+            return _authors.Find(a => a.Id == id).FirstOrDefault();
         }
 
         public Author Update(Author param)

@@ -3,23 +3,26 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
 import { Observable } from 'rxjs';
 import { HostGlobal } from 'src/app/core/global-variables';
+import { Comment } from 'src/app/model/Comment';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class PostService {
   baseUrl: string = null;
   constructor(private http: HttpClient) {
     this.baseUrl = HostGlobal.HOST_POST_SERVICE + '/api/postservice/article/';
   }
   createPost(article: Article): Observable<Article> {
-    const httpOption = {
+    const httpOptionAuth = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post<Article>(this.baseUrl + 'create', article, httpOption);
+
+    return this.http.post<Article>(this.baseUrl + 'create', article, httpOptionAuth);
   }
 
   getDetail(postId: string): Observable<any> {
@@ -35,6 +38,17 @@ export class PostService {
   getCommentByPost(postId: string): Observable<any> {
     const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/all';
     return this.http.get(url + '?id=' + postId);
+  }
+
+  addComment(comment: Comment): Observable<any> {
+    const httpOptionAuth = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/add';
+    return this.http.post<Comment>(url, comment, httpOptionAuth);
   }
 
 

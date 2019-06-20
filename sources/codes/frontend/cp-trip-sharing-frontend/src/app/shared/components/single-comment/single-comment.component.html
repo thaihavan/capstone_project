@@ -2,10 +2,10 @@
   <div class="comment-post">
     <div class="icon-user-name">
       <div class="icon-user">
-        <img src="{{comment.userImageUrl}}">
+        <img src="{{comment.author.profileImage}}">
       </div>
       <div class="">
-        <span class="name-user">{{comment.userDisplayName}}</span>
+        <span class="name-user">{{comment.author.displayName}}</span>
         <br />
         <span class="time">{{comment.date}}</span>
       </div>
@@ -32,10 +32,10 @@
         </div>
       </div>
       <div class="bottom-like-share">
-        <span class="number-like"><i class="fa fa-thumbs-up"></i> {{comment.numLikes}}</span>
+        <span class="number-like"><i class="fa fa-thumbs-up"></i> {{comment.likeCount}}</span>
         <span class="rep-comment" (click)="showRepComment()">Trả lời</span>
         <div *ngIf="showRep" class="comment-textarea-container">
-          <textarea rows="3" (keydown.enter)="submitComment(comment.id)" [(ngModel)]="commentContent"></textarea>
+          <textarea rows="3" (keydown.enter)="submitComment()" [(ngModel)]="commentContent"></textarea>
         </div>
       </div>
 
