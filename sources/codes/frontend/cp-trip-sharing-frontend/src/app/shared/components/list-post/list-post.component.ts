@@ -64,7 +64,7 @@ export class ListPostComponent implements OnInit {
     this.isLoading = true;
 
     // Continue loading data
-    this.getPost();
+    // this.getPost();
   }
 
   setNavParams() {

@@ -20,6 +20,7 @@ namespace PostService.Controllers
     {
         private readonly IArticleService _articleService = null;
         private readonly IPostService _postService = null;
+        private readonly IAuthorService _authorService = null;
 
         public ArticleController(IArticleService articleService, IPostService postService)
         {
@@ -72,7 +73,7 @@ namespace PostService.Controllers
             article.Post.Id = article.PostId;
             article.Post.LikeCount = 0;  
             article.Post.CommentCount = 0;
-
+            
             Post addedPost = _postService.Add(article.Post);
             Article addedArticle = _articleService.Add(article);
 

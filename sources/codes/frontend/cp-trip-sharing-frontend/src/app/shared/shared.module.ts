@@ -14,11 +14,12 @@ import { ArticleComponent } from './components/article/article.component';
 import { StepCreatePostComponent } from './components/step-create-post/step-create-post.component';
 import { GoogleMapSearchComponent } from './components/google-map-search/google-map-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InterestedTopicComponent } from './components/interested-toppic/interested-toppic.component';
+import { InterestedTopicComponent } from './components/interested-topic/interested-topic.component';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
 import { CropImageComponent } from './components/upload-image/crop-image/crop-image.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoadingScreenComponent } from './components/loading-screen/loading-screen.component';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -36,7 +37,7 @@ const Material = [
   MatFormFieldModule,
   MatInputModule,
   MatChipsModule,
-  MatRadioModule
+  MatRadioModule,
  ];
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ const Material = [
     GoogleMapSearchComponent,
     InterestedTopicComponent,
     UploadImageComponent,
-    CropImageComponent
+    CropImageComponent,
+    LoadingScreenComponent
   ],
   imports: [
     CommonModule,
@@ -71,7 +73,8 @@ const Material = [
     GoogleMapSearchComponent,
     InterestedTopicComponent,
     UploadImageComponent,
-    CropImageComponent
-  ], entryComponents: [StepCreatePostComponent, CropImageComponent]
+    CropImageComponent,
+    LoadingScreenComponent
+  ], entryComponents: [StepCreatePostComponent, CropImageComponent, LoadingScreenComponent]
 })
 export class SharedModule { }

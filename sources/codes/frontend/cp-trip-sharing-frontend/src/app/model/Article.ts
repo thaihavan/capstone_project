@@ -2,7 +2,7 @@ import { Post } from './Post';
 
 export class Article {
     id: string;
-    toppics: [];
+    topics: [];
     destinations: [];
     postId: string;
     coverImage: string;

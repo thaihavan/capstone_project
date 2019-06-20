@@ -1,9 +1,9 @@
 export interface LocationMarker {
-    longtitude: number;
-    lattitude: number;
-    locality: string;
+    longitude: number;
+    latitude: number;
+    locationId: string;
     formattedAddress: string;
-    icon: any;
+    icon: string;
     name: string;
     image: string;
     note: string;

@@ -160,3 +160,9 @@
   border: none;
   border-radius: 0%;
 }
+.btn-create{
+  position: absolute;
+  right: 55px;
+  bottom: 25px;
+  z-index: 9999;
+}

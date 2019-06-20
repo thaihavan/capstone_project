@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class DialogCreateTripComponent implements OnInit {
   title: string;
-  isPublic: any;
+  isPublic = true;
   isHasTitle = true;
   constructor(
     private dialogRef: MatDialogRef<DialogCreateTripComponent>,
