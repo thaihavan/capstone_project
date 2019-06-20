@@ -157,6 +157,7 @@ namespace IdentityProvider.Services
             var salt = account.PasswordSalt;
             string newEncryptedPassword = Hash.HashPassword(newPassword, salt);
             account.Password = newEncryptedPassword;
+            account.Role = "member";
             var result = _accountRepository.Update(account);
             return result != null;
 

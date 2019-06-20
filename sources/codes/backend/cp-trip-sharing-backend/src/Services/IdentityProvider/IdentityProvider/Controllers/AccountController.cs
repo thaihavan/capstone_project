@@ -73,9 +73,9 @@ namespace IdentityProvider.Controllers
 
         [AllowAnonymous]
         [HttpPost("forgotpassword")]
-        public IActionResult ForgotPassword([FromBody]Account accountParam)
+        public IActionResult ForgotPassword([FromQuery]string email)
         {
-            var result = _accountService.GetResetPasswordToken(accountParam.Email);           
+            var result = _accountService.GetResetPasswordToken(email);           
             return Ok();
         }
 
