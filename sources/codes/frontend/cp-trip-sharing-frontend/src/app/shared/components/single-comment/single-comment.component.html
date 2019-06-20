@@ -13,7 +13,7 @@
     <div class="comment-body">
       <div class="comment-row">
         <div class="content-comment">
-          <p class="text">{{comment.content}}</p>
+          <div class="text">{{comment.content}}</div>
         </div>
         <div class="icon-menu">
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -34,9 +34,8 @@
       <div class="bottom-like-share">
         <span class="number-like"><i class="fa fa-thumbs-up"></i> {{comment.numLikes}}</span>
         <span class="rep-comment" (click)="showRepComment()">Trả lời</span>
-        <div *ngIf="showRep" class="rep-comment-btn">
-          <textarea class="form-control repComent" rows="5" id="comment" name="text"></textarea>
-          <button type="button" class="btn btn-primary btn-rep">Trả lời</button>
+        <div *ngIf="showRep" class="comment-textarea-container">
+          <textarea rows="3" (keydown.enter)="submitComment(comment.id)" [(ngModel)]="commentContent"></textarea>
         </div>
       </div>
 

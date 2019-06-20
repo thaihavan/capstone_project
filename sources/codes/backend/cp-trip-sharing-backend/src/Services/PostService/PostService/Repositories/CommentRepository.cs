@@ -73,7 +73,7 @@ namespace PostService.Repositories
                 else
                 {
                     var parent = dict[x.Value.ParentId];
-                    parent.Child = x.Value;
+                    parent.Childs.Add(x.Value);
                 }
             }
             return comments;

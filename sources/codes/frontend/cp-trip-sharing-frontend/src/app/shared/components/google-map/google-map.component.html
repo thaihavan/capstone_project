@@ -1,28 +1,12 @@
 <div class="google-map">
-  <div class="over-flow">
-
+  <div *ngIf="isFirstTime" [style.height.px]="heightMap" class="over-flow">
   </div>
   <div class="search-box">
       <app-google-map-search width="300" height="40" (onSelect)="setAddress($event)"></app-google-map-search>
   </div>  
-<div>
-    <agm-map [latitude]="lat" [longitude]="lng" [fitBounds]="locationMarker.length > 1">
+<div [style.height.px]="heightMap">
+    <agm-map [ngClass.gt-lg]="" [latitude]="lat" [longitude]="lng" [fitBounds]="locationMarker.length > 1">
           <agm-marker [agmFitBounds]="true" *ngFor="let marker of locationMarker" [latitude]="marker.lattitude" [longitude]="marker.longtitude"></agm-marker>
     </agm-map>
-</div>
-<h3>Position</h3>
-<div class="flext">
-  <div class="ml-5" *ngFor="let location of locationMarker">
-      <p>Localily: {{location.locality}}</p>
-      <p>Latitude: {{location.lattitude}}</p>
-      <p>Longitude: {{location.longtitude}}</p>
-  </div>
-</div>
-<div class="input-container mt-5">
-    <ul style="list-style-type: none;">
-      <li *ngFor="let key of addrKeys">
-        <span style="font-weight: bold">{{key}}</span>: <span>{{addr[key]}}</span>
-      </li>
-    </ul>
 </div>
 </div>

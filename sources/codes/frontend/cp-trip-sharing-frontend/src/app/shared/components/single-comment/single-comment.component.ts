@@ -8,6 +8,7 @@ import { Comment} from 'src/app/model/Comment';
 })
 export class SingleCommentComponent implements OnInit {
   @Input() comment: Comment;
+  commentContent = '';
 
   showRep = false;
 
@@ -18,5 +19,14 @@ export class SingleCommentComponent implements OnInit {
 
   showRepComment() {
     this.showRep = !this.showRep;
+  }
+
+  submitComment(commentId: string) {
+    console.log('id: ' + commentId);
+    console.log('content: ' + this.commentContent);
+
+    this.showRep = false;
+
+    this.commentContent = '';
   }
 }

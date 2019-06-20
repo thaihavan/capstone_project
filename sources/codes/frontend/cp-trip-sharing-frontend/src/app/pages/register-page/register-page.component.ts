@@ -43,7 +43,8 @@ export class RegisterPageComponent implements OnInit {
       height: '200px',
       position: {
         top: '10px'
-      }
+      },
+      disableClose: true
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Đăng kí thành công, vui lòng kiểm tra lại email!';

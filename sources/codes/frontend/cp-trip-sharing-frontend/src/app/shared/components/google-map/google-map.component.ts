@@ -1,4 +1,11 @@
-import { Component, OnInit, NgZone, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  NgZone,
+  Output,
+  EventEmitter,
+  Input
+} from '@angular/core';
 import { LocationMarker } from 'src/app/model/LocationMarker';
 
 @Component({
@@ -14,11 +21,13 @@ export class GoogleMapComponent implements OnInit {
   public addrKeys: string[];
   public addr: object;
   locationMarker: LocationMarker[] = [];
+  @Input() heightMap: any;
   constructor(private zone: NgZone) {
     this.setCurrentLocation();
   }
 
   ngOnInit() {}
+
   // on google-map-search submit add address location.
   setAddress(addrObj) {
     this.zone.run(() => {
@@ -27,7 +36,7 @@ export class GoogleMapComponent implements OnInit {
       const location: LocationMarker = {
         longtitude: addrObj.lng,
         lattitude: addrObj.lat,
-        country: addrObj.formatted_address,
+        formattedAddress: addrObj.formatted_address,
         locality: addrObj.locality,
         icon: addrObj.icon,
         image: addrObj.image,
@@ -44,6 +53,7 @@ export class GoogleMapComponent implements OnInit {
     });
     this.addDestination.emit(this.locationMarker);
   }
+
   // get your current location
   private setCurrentLocation() {
     if ('geolocation' in navigator) {
@@ -51,7 +61,7 @@ export class GoogleMapComponent implements OnInit {
         const location: LocationMarker = {
           longtitude: position.coords.longitude,
           lattitude: position.coords.latitude,
-          country: 'VN',
+          formattedAddress: 'VN',
           locality: '',
           icon: '',
           image: '',

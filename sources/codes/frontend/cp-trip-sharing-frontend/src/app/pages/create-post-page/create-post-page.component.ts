@@ -28,6 +28,7 @@ export class CreatePostPageComponent implements OnInit {
   isHasImg = false;
   isPublic = true;
   title: string;
+  articlereturn: Article;
   config = {
     filebrowserUploadUrl: 'http://192.168.0.107:8000/api/crm/v1.0/crm-distribution-library-files',
     fileTools_requestHeaders: {
@@ -64,6 +65,7 @@ export class CreatePostPageComponent implements OnInit {
               private datePipe: DatePipe) { }
 
   ngOnInit() {
+    this.articlereturn = new Article();
   }
   uploadImg(files) {
     if (files.lenght === 0) {
@@ -114,8 +116,8 @@ export class CreatePostPageComponent implements OnInit {
         post.isPublic = this.isPublic;
         post.pubDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
         article.post = post;
-        this.postService.createPost(article).subscribe(data => {
-          console.log(data + 'OK');
+        this.postService.createPost(article).subscribe((data: any) => {
+          this.articlereturn.post = data.post;
           this.openDialogMessageConfirm('Bạn đã đăng bài thành công');
         }, error => {
           console.log(error);
@@ -130,11 +132,12 @@ export class CreatePostPageComponent implements OnInit {
       height: '200px',
       position: {
         top: '10px'
-      }
+      },
+      disableClose: true
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
-    instance.message.url = '/post-detail';
+    instance.message.url = '/post-detail?postId=' + this.articlereturn.post.id;
   }
   createPost() {
     if (this.myEditor && this.myEditor.editorInstance) {
