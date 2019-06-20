@@ -76,6 +76,7 @@ namespace PostService
             services.AddScoped<IUploadFileService, PostService.Services.UploadFileService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<ILikeService, LikeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

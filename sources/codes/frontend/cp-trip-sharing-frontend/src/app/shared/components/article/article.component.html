@@ -38,18 +38,19 @@
       <h5 class="card-title">{{post.title}}</h5>
     </a>
     <!-- <div class="card-text" [innerHTML]="post.content"></div> -->
-    <div class="card-text">Đa phần du khách chọn Kumho để di chuyển đến hà Tiên bởi sự tiện lợi của nó, bao gồm xe trung chuyển tới cửa khẩu miễn phí, xe giường nằm thoải mái, có wifi vi vu với mức giá tầm 200k/giường.</div>
+    <div class="card-text">Đa phần du khách chọn Kumho để di chuyển đến hà Tiên bởi sự tiện lợi của nó, bao gồm xe trung
+      chuyển tới cửa khẩu miễn phí, xe giường nằm thoải mái, có wifi vi vu với mức giá tầm 200k/giường.</div>
     <div>
       <span href="" class="badge badge-primary">Đọc tiếp</span>
 
     </div>
   </div>
   <div class="card-footer d-flex">
-    <div class="card-footer-content pr-4">
+    <div [class]="liked ? 'likeClass':'unlikeClass'"  (click)="likePost()" class="card-footer-content pr-4">
       <button mat-icon-button>
         <mat-icon>thumb_up_alt</mat-icon>
+        <span>Thích</span>
       </button>
-      <span>Thích</span>
     </div>
     <div class="card-footer-content pr-4">
       <button mat-icon-button>

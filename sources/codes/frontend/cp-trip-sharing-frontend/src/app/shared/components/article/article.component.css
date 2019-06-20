@@ -69,3 +69,15 @@ button:focus {
   letter-spacing: 0;
   line-height: 1.8;
 }
+
+.likeClass{
+  color: #2196f3;
+  margin-right: 40px;
+  margin-left: 3px;
+}
+
+.unlikeClass{
+  color: black;
+  margin-right: 40px;
+  margin-left: 3px;
+}

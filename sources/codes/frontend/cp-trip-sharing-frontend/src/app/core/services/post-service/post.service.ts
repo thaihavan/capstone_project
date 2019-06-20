@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
 import { Observable } from 'rxjs';
 import { HostGlobal } from 'src/app/core/global-variables';
+import { Like } from 'src/app/model/Like';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,27 @@ export class PostService {
 
   getAllTopics(): Observable<any> {
     return this.http.get(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/all');
+  }
+
+  likeAPost(likeObject: Like): Observable<any> {
+    const httpOptionLike = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/like/like', likeObject, httpOptionLike);
+  }
+
+  unlikeAPost(likeObject: Like): Observable<any> {
+    debugger;
+    const httpOptionUnLike = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      }),
+      body: likeObject
+    };
+    return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/like/unlike', httpOptionUnLike);
   }
 }
