@@ -9,13 +9,14 @@ namespace PostService.Models
 {
     public class Author:Model
     {
-        [BsonElement("author_id")]
-        public BsonObjectId AuthorId { get; set; }
+        [BsonElement("_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
-        [BsonElement("author_name")]
-        public string AuthorName { get; set; }
+        [BsonElement("display_name")]
+        public string DisplayName { get; set; }
 
-        [BsonElement("author_image")]
-        public string AuthorImage { get; set; }
+        [BsonElement("profile_image")]
+        public string ProfileImage { get; set; }
     }
 }

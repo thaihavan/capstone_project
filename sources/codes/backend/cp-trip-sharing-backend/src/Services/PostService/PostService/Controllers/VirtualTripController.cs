@@ -64,7 +64,7 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            if (!virtualTrip.Post.Author.AuthorId.Equals(new BsonObjectId(userId)))
+            if (!virtualTrip.Post.AuthorId.Equals(new ObjectId(userId)))
             {
                 return Unauthorized();
             }

@@ -61,21 +61,8 @@ namespace PostService.Repositories
 
         public IEnumerable<Comment> GetCommentByPost(string postId)
         {
-            List<Comment> comments = new List<Comment>();
-            var allComment = _comments.Find(x => x.PostId.Equals(new BsonObjectId(postId))).ToList();
-            var dict = allComment.ToDictionary(x => x.Id, x => x);
-            foreach(var x in dict)
-            {
-                if (x.Value.ParentId == null)
-                {
-                    comments.Add(x.Value);
-                }
-                else
-                {
-                    var parent = dict[x.Value.ParentId];
-                    parent.Childs.Add(x.Value);
-                }
-            }
+            var comments = _comments.Find(x => x.PostId.Equals(new BsonObjectId(postId))).ToList();
+
             return comments;
         }
     }

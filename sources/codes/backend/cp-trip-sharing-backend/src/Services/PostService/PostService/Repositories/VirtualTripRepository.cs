@@ -15,13 +15,15 @@ namespace PostService.Repositories
     public class VirtualTripRepository : IVirtualTripRepository
     {
         private readonly IMongoCollection<VirtualTrip> _virtualTrips = null;
-        private readonly IMongoCollection<Post> _post = null;
+        private readonly IMongoCollection<Post> _posts = null;
+        private readonly IMongoCollection<Author> _authors = null;
 
         public VirtualTripRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
             _virtualTrips = dbContext.VirtualTrips;
-            _post = dbContext.Posts;
+            _posts = dbContext.Posts;
+            _authors = dbContext.Authors;
         }
 
         public VirtualTrip Add(VirtualTrip param)
@@ -58,17 +60,45 @@ namespace PostService.Repositories
 
         public IEnumerable<VirtualTrip> GetAllVirtualTripWithPost()
         {
-            var virtualTrips = from v in _virtualTrips.AsQueryable()
-                           join p in _post.AsQueryable() on v.PostId equals p.Id into joined
-                           from post in joined
-                           select new VirtualTrip
-                           {
-                               Id = v.Id,
-                               PostId = v.PostId,
-                               Items = v.Items,
-                               Post = post
-                           };
-            return virtualTrips.ToList();
+            var articles = _posts.AsQueryable().Join(
+                _authors.AsQueryable(),
+                post => post.AuthorId,
+                author => author.Id,
+                (post, author) => new
+                {
+                    Id = post.Id,
+                    Post = new Post
+                    {
+                        Id = post.Id,
+                        AuthorId = post.AuthorId,
+                        Content = post.Content,
+                        CommentCount = post.CommentCount,
+                        IsActive = post.IsActive,
+                        IsPublic = post.IsPublic,
+                        LikeCount = post.LikeCount,
+                        PostType = post.PostType,
+                        PubDate = post.PubDate,
+                        Title = post.Title,
+                        Author = new Author()
+                        {
+                            Id = author.Id,
+                            DisplayName = author.DisplayName,
+                            ProfileImage = author.ProfileImage
+                        }
+                    }
+                }).Join(
+                    _virtualTrips.AsQueryable(),
+                    pv => pv.Id,
+                    v => v.PostId,
+                    (pv, v) => new VirtualTrip()
+                    {
+                        Id = v.Id,
+                        Items = v.Items,
+                        PostId = v.PostId,
+                        Post = pv.Post
+                    }
+                );
+            return articles.ToList();
         }
     }
 }
