@@ -33,7 +33,7 @@ namespace PostService.Services
             switch (like.ObjectType)
             {
                 case "post":
-                    //_postRepository.IncreaseLikeCount(like.ObjectId);
+                    _postRepository.IncreaseLikeCount(like.ObjectId);
                     break;
                 case "comment":
                     break;
@@ -46,7 +46,7 @@ namespace PostService.Services
             switch (like.ObjectType)
             {
                 case "post":
-                    //_postRepository.DecreaseLikeCount(like.ObjectId);
+                    _postRepository.DecreaseLikeCount(like.ObjectId);
                     break;
                 case "comment":
                     break;

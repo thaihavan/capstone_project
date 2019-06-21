@@ -33,7 +33,7 @@ namespace PostService.Repositories
         {       
             _posts.FindOneAndUpdate(
                 Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Inc("comment_count",1)
+                Builders<Post>.Update.Inc("comment_count",-1)
                 );
             return true;
         }
@@ -42,7 +42,7 @@ namespace PostService.Repositories
         {
             _posts.FindOneAndUpdate(
                 Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("like_count",-1)
+                Builders<Post>.Update.Inc("like_count",-1)
                 );
             return true;
         }
@@ -70,7 +70,7 @@ namespace PostService.Repositories
         {            
             _posts.FindOneAndUpdate(
                 Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("like_count",1)
+                Builders<Post>.Update.Inc("like_count",1)
                 );
             return true;
         }
@@ -79,7 +79,7 @@ namespace PostService.Repositories
         {           
             _posts.FindOneAndUpdate(
                 Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("like_count", -1)
+                Builders<Post>.Update.Inc("like_count", 1)
                 );
             return true;
         }

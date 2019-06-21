@@ -65,7 +65,7 @@ namespace PostService.Repositories
         public IEnumerable<Comment> GetCommentByPost(string postId)
         {
             var comments = _comments.AsQueryable()
-                //.Where(c => c.PostId == postId)
+                .Where(c => c.PostId == postId)
                 .Join(
                    _authors.AsQueryable(),
                    comment => comment.AuthorId,
