@@ -60,7 +60,7 @@ namespace IdentityProvider
                 };
             });
 
-            //
+            // Memmory cache for blacklist token
             services.AddSession();
             services.AddTransient<TokenManagerMiddleware>();
             services.AddTransient<ITokenManager, Services.TokenManager>();
@@ -87,7 +87,7 @@ namespace IdentityProvider
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-        
+
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMiddleware<TokenManagerMiddleware>();
