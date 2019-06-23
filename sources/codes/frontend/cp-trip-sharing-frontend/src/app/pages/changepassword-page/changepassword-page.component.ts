@@ -30,8 +30,7 @@ export class ChangepasswordPageComponent implements OnInit {
       this.userService.changePassword(this.changePasswordObject).subscribe((message: any) => {
         this.message = 'Đổi mật khẩu thành công';
       }, (err: HttpErrorResponse) => {
-        this.message = 'Đổi mật khẩu thất password!';
-        console.log(err);
+        this.message = 'Đổi mật khẩu thất bại!';
       });
      }
   }

@@ -70,7 +70,7 @@
     padding-right: 0px;
 }
 
-.number-like,.rep-comment{
+.number-like,.like-comment,.rep-comment,.unlike-comment{
     margin-left: .8em;
 }
 
@@ -82,9 +82,18 @@
     width: 24px;
 }
 
-.rep-comment{
+.rep-comment,.like-comment,.unlike-comment{
     cursor: pointer;
 }
+
+.unlike-comment{
+ color: black;
+}
+
+.like-comment{
+ color: #2196f3;
+}
+
 
 .rep-comment span :hover{
     text-decoration: underline !important;

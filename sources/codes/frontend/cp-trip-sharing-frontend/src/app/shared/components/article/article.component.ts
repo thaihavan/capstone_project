@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Post } from 'src/app/model/Post';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Like } from 'src/app/model/Like';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-article',
@@ -29,10 +30,14 @@ export class ArticleComponent implements OnInit {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         console.log(data);
         this.liked = true;
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
       });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.liked = false;
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
       });
     }
   }
