@@ -11,7 +11,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ArticleComponent implements OnInit {
   like: Like;
-  liked = false;
   @Input() post: Post;
   name = 'PhongNV';
   constructor(private postService: PostService) {
@@ -21,21 +20,19 @@ export class ArticleComponent implements OnInit {
   ngOnInit() {
   }
 
-  likePost() {
-    this.liked = !this.liked;
-    console.log(this.liked);
+  likePost(like: any) {
     this.like.ObjectId = this.post.id;
     this.like.ObjectType = 'post';
-    if (this.liked) {
+    if (!like) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         console.log(data);
-        this.liked = true;
+        this.post.liked = true;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
-        this.liked = false;
+        this.post.liked = false;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
