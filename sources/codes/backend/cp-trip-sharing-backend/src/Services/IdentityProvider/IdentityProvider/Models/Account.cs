@@ -10,8 +10,9 @@ namespace IdentityProvider.Models
     public class Account : Model
     {
         [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        public string Id { get; set; }
 
         [BsonElement("email")]
         public string Email { get; set; }
@@ -22,13 +23,14 @@ namespace IdentityProvider.Models
         [BsonElement("password_salt")]
         public string PasswordSalt { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("user_id")]
-        public BsonObjectId UserId { get; set; }
+        public string UserId { get; set; }
 
         [BsonElement("role")]
         public string Role { get; set; }
 
         [BsonIgnore]
-        public string Token { get; set; }
+        public string Token { get; set; }       
     }
 }

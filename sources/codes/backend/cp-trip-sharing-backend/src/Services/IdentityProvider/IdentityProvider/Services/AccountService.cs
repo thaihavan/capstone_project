@@ -76,8 +76,8 @@ namespace IdentityProvider.Services
                 Password = Hash.HashPassword(account.Password, salt),
                 PasswordSalt = salt,
                 Role = "unverified",
-                UserId = new BsonObjectId(ObjectId.GenerateNewId()),
-                Id=new BsonObjectId(ObjectId.GenerateNewId())
+                UserId = ObjectId.GenerateNewId().ToString(),
+                Id= ObjectId.GenerateNewId().ToString()
             };
             var result = _accountRepository.Add(encryptedAccount);
 
@@ -210,7 +210,7 @@ namespace IdentityProvider.Services
                     Password = null,
                     PasswordSalt = null,
                     Role = "member",
-                    UserId = new BsonObjectId(ObjectId.GenerateNewId())
+                    UserId = ObjectId.GenerateNewId().ToString()
                 };
                 _accountRepository.Add(newAccount);
                 return JwtToken.Generate(_settings.Value.Secret, newAccount);

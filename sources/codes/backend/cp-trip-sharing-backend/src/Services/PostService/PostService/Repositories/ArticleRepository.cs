@@ -17,6 +17,7 @@ namespace PostService.Repositories
         private readonly IMongoCollection<Article> _articles = null;
         private readonly IMongoCollection<Post> _posts = null;
         private readonly IMongoCollection<Author> _authors = null;
+        private readonly IMongoCollection<Like> _likes = null;
 
         public ArticleRepository(IOptions<AppSettings> settings)
         {
@@ -24,6 +25,7 @@ namespace PostService.Repositories
             _articles = dbContext.Articles;
             _posts = dbContext.Posts;
             _authors = dbContext.Authors;
+            _likes = dbContext.Likes;
         }
 
         public Article Add(Article param)
@@ -104,7 +106,6 @@ namespace PostService.Repositories
             return articles.ToList();
         }
 
-
         public IEnumerable<Article> GetAllArticleByUser(string userId)
         {
             var c = GetAllArticleInfo();
@@ -160,6 +161,59 @@ namespace PostService.Repositories
         public IEnumerable<Article> GetAllArticleWithPost()
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<object> GetAllArticleInfo(string userId)
+        {
+            var articles = _posts.AsQueryable().Join(
+                _authors.AsQueryable(),
+                post => post.AuthorId,
+                author => author.Id,
+                (post, author) => new
+                {
+                    Id = post.Id,
+                    Post = new Post
+                    {
+                        Id = post.Id,
+                        AuthorId = post.AuthorId,
+                        Content = post.Content,
+                        CommentCount = post.CommentCount,
+                        IsActive = post.IsActive,
+                        IsPublic = post.IsPublic,
+                        LikeCount = post.LikeCount,
+                        PostType = post.PostType,
+                        PubDate = post.PubDate,
+                        Title = post.Title,
+                        Author = new Author()
+                        {
+                            Id = author.Id,
+                            DisplayName = author.DisplayName,
+                            ProfileImage = author.ProfileImage
+                        }
+                    }
+                }).Join(
+                    _articles.AsQueryable(),
+                    pa => pa.Id,
+                    article => article.PostId,
+                    (pa, article) => new Article()
+                    {
+                        Id = article.Id,
+                        Topics = article.Topics,
+                        Destinations = article.Destinations,
+                        PostId = article.PostId,
+                        CoverImage = article.CoverImage,
+                        Post = pa.Post
+                    }).GroupJoin(
+                    _likes.AsQueryable().Where(x=>x.UserId==userId&&x.ObjectType=="post"),
+                    article=> article.PostId,
+                    like=>like.ObjectId,
+                    (article, likes)=> new
+                    {
+                        Article=article,
+                        liked= likes.Count()>0? true:false
+                    }
+                );
+            return articles.ToList();
         }
     }
 }

@@ -42,9 +42,7 @@ namespace IdentityProvider.Repositories
 
         public Account Get(string id)
         {
-            Account account = _accounts.Find(
-                Builders<Account>.Filter.Eq("_id", ObjectId.Parse(id))).ToList().FirstOrDefault();
-
+            Account account = _accounts.Find(x=>x.Id==id).ToList().FirstOrDefault();
             return account;
         }
 

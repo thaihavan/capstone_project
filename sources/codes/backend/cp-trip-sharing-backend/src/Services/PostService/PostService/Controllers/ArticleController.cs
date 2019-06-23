@@ -32,7 +32,26 @@ namespace PostService.Controllers
         [HttpGet("all")]
         public IActionResult GetAllArticleInfo()
         {
-            var articles = _articleService.GetAllArticleInfo();
+            IEnumerable<object> articles = null;
+            var identity = (ClaimsIdentity)User.Identity;
+            switch (identity.Claims.Count())
+            {
+                case 0:
+                    {
+                        articles = _articleService.GetAllArticleInfo();
+                        break;
+                    }
+                case 3:
+                    {
+                        var userId = identity.FindFirst("user_id").Value;
+                        articles = _articleService.GetAllArticleInfo(userId);
+                        break;
+                    }
+                   
+            }
+
+            
+            
             return Ok(articles);
         }
 
