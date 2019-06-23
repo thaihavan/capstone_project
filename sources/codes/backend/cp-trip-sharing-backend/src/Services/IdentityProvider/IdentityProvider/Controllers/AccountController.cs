@@ -111,13 +111,13 @@ namespace IdentityProvider.Controllers
             }          
             return Ok(new { Token=result});
         }
-       
-        [Authorize(Roles ="member,admin,unverified")]
+
+        [Authorize(Roles = "member,admin,unverified")]
         [HttpPost("logout")]
-        public async Task<ActionResult> logout()
+        public async Task<ActionResult> Logout()
         {
             await _tokenManager.DeactivateCurrentAsync();
-            return Ok(new { Message="Logged out"});
+            return Ok(new { Message = "Logged out" });
         }
     }
 }

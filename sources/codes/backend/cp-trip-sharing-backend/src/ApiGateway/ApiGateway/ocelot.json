@@ -2,14 +2,17 @@
   "ReRoutes": [
     {
       "DownstreamPathTemplate": "/api/identity/{catchAll}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "34.96.97.110",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 44353
         }
       ],
-      "UpstreamPathTemplate": "/api/identity/{catchAll}"
+      "UpstreamPathTemplate": "/api/identity/{catchAll}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "auth-provider-key"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/userservice/{catchAll}",
@@ -20,7 +23,10 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/userservice/{catchAll}"
+      "UpstreamPathTemplate": "/api/userservice/{catchAll}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "auth-provider-key"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/postservice/{catchAll}",
@@ -31,10 +37,13 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/postservice/{catchAll}"
+      "UpstreamPathTemplate": "/api/postservice/{catchAll}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "auth-provider-key"
+      }
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://107.178.242.201"
+    "BaseUrl": "https://localhost:44345"
   }
 }

@@ -20,6 +20,7 @@ import { CropImageComponent } from './components/upload-image/crop-image/crop-im
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoadingScreenComponent } from './components/loading-screen/loading-screen.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -38,6 +39,7 @@ const Material = [
   MatInputModule,
   MatChipsModule,
   MatRadioModule,
+  MatGridListModule
  ];
 @NgModule({
   declarations: [
@@ -51,7 +53,7 @@ const Material = [
     InterestedTopicComponent,
     UploadImageComponent,
     CropImageComponent,
-    LoadingScreenComponent
+    LoadingScreenComponent,
   ],
   imports: [
     CommonModule,
@@ -74,7 +76,7 @@ const Material = [
     InterestedTopicComponent,
     UploadImageComponent,
     CropImageComponent,
-    LoadingScreenComponent
+    LoadingScreenComponent,
   ], entryComponents: [StepCreatePostComponent, CropImageComponent, LoadingScreenComponent]
 })
 export class SharedModule { }
