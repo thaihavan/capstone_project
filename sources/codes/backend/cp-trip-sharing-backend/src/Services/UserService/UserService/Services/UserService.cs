@@ -13,10 +13,12 @@ namespace UserServices.Services
     public class UserService : IUserService
     {
         private readonly UserRepository _userRepository = null;
+        private readonly IPublishToTopic _publishToTopic = null;
 
         public UserService(IOptions<AppSettings> settings)
         {
             _userRepository = new UserRepository(settings);
+            _publishToTopic = new PublishToTopic();
         }
 
         public UserService(UserRepository userRepository)
@@ -27,6 +29,18 @@ namespace UserServices.Services
         public User Add(User user)
         {
             var result = _userRepository.Add(user);
+            if (result != null)
+            {
+                var author = new Author()
+                {
+                    Id = user.Id.ToString(),
+                    DisplayName = user.DisplayName,
+                    ProfileImage = user.Avatar
+                };
+                
+                // Comment it if run in local environment
+                _publishToTopic.PublishAuthor(author);
+            }
             return result;
         }
 
@@ -38,6 +52,11 @@ namespace UserServices.Services
         public User GetUserById(string accountId)
         {
             return _userRepository.GetById(accountId);
+        }
+
+        public User Update(User user)
+        {
+            return _userRepository.Update(user);
         }
     }
 }

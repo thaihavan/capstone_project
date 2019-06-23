@@ -45,9 +45,14 @@ namespace UserServices.Reponsitories
             return user;
         }
 
-        public User Update(User document)
+        public User Update(User user)
         {
-            throw new NotImplementedException();
+            var result = _users.ReplaceOne(u => u.Id.Equals(user.Id), user);
+            if (!result.IsAcknowledged)
+            {
+                return null;
+            }
+            return user;
         }
     }
 }

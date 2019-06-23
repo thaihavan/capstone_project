@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using PostService.Helpers;
 using PostService.Models;
@@ -40,6 +41,25 @@ namespace PostService.Repositories
         public Author GetById(string id)
         {
             return _authors.Find(a => a.Id == id).FirstOrDefault();
+        }
+
+        public Author InsertOrUpdate(Author author)
+        {
+            var filter = Builders<Author>.Filter.Eq("_id", author.Id);
+            var updateDefinition = Builders<Author>.Update
+                .Set("display_name", author.DisplayName)
+                .Set("profile_image", author.ProfileImage);
+
+            var result = _authors.UpdateOne(
+                filter,
+                updateDefinition, 
+                new UpdateOptions { IsUpsert = true });
+
+            if(!result.IsAcknowledged)
+            {
+                return null;
+            }
+            return author;
         }
 
         public Author Update(Author param)

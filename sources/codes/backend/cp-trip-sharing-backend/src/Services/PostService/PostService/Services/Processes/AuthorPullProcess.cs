@@ -1,8 +1,11 @@
 ﻿using Google.Cloud.PubSub.V1;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using PostService.Helpers;
+using PostService.Models;
 using PostService.Repositories;
+using PostService.Repositories.Interfaces;
 using PostService.Utils;
 using System;
 using System.Collections.Generic;
@@ -16,13 +19,13 @@ namespace PostService.Services.Processes
 {
     public class AuthorPullProcess
     {
-        private PostRepository _postRepository = null;
+        private IAuthorRepository _authorRepository = null;
         private IOptions<PubsubSettings> _pubsubSettings = null;
 
         public AuthorPullProcess()
         {
             _pubsubSettings = ReadAppSettings.ReadPubsubSettings();
-            _postRepository = new PostRepository(ReadAppSettings.ReadDbSettings());
+            _authorRepository = new AuthorRepository(ReadAppSettings.ReadDbSettings());
         }
 
         public void Start()
@@ -38,16 +41,18 @@ namespace PostService.Services.Processes
             await subscription.StartAsync(
                 async (PubsubMessage message, CancellationToken cancel) =>
                 {
-                    string text = Encoding.UTF8.GetString(message.Data.ToArray());
+                    string json = Encoding.UTF8.GetString(message.Data.ToArray());
 
-                    // TODO: will be removed
-                    _postRepository.Add(new Models.Post()
+                    await Console.Out.WriteLineAsync($"Message {message.MessageId}: {json}");
+
+                    // Insert or update author
+                    Author author = JsonConvert.DeserializeObject<Author>(json);
+                    var result = _authorRepository.InsertOrUpdate(author);
+                    
+                    if (result == null)
                     {
-                        Title = "Test pull from pubsub",
-                        Content = text
-                    });
-
-                    await Console.Out.WriteLineAsync($"Message {message.MessageId}: {text}");
+                        return SubscriberClient.Reply.Nack;
+                    }
                     return acknowledge ? SubscriberClient.Reply.Ack : SubscriberClient.Reply.Nack;
                 });
 

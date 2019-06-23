@@ -8,5 +8,6 @@ namespace PostService.Repositories.Interfaces
 {
     public interface IAuthorRepository : IRepository<Author>
     {
+        Author InsertOrUpdate(Author author);
     }
 }

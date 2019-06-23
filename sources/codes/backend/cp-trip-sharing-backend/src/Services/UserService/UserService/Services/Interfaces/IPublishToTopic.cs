@@ -6,16 +6,8 @@ using UserServices.Models;
 
 namespace UserServices.Services.Interfaces
 {
-    public interface IUserService
+    public interface IPublishToTopic
     {
-        IEnumerable<User> GetAll();
-
-        User Add(User user);
-
-        User GetUserById(string userId);
-
-        User Update(User user);
-
-        
+        void PublishAuthor(Author author);
     }
 }

@@ -41,7 +41,28 @@ namespace UserServices.Controllers
             userParam.IsFirstTime = false;
 
             var result = _userService.Add(userParam);
-            return Created("", userParam);
+            return Created("", result);
+        }
+
+        [Authorize(Roles = "member")]
+        [HttpPost("update")]
+        public IActionResult Update([FromBody] User userParam)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            if(userParam == null)
+            {
+                return BadRequest("Parameter can not be null.");
+            }
+
+            if (!userParam.Id.Equals(new BsonObjectId(ObjectId.Parse(userId))))
+            {
+                return Unauthorized();
+            }
+
+            var result = _userService.Update(userParam);
+            return Created("", result);
         }
 
         [Authorize(Roles = "admin")]
