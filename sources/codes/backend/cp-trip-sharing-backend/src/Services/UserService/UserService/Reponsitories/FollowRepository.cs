@@ -38,11 +38,6 @@ namespace UserServices.Reponsitories.Interfaces
             return follows;
         }
 
-        public IEnumerable<Follow> GetAll(string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Follow GetById(string id)
         {
             throw new NotImplementedException();

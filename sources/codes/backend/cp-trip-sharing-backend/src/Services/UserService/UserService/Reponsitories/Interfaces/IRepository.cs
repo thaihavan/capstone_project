@@ -8,7 +8,7 @@ namespace UserServices.Reponsitories.Interfaces
 {
     public interface IRepository<T> where T : Model
     {
-        IEnumerable<T> GetAll(string id);
+        IEnumerable<T> GetAll();
 
         T GetById(string id);
 

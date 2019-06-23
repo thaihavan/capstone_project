@@ -48,5 +48,10 @@ namespace UserServices.Reponsitories
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Bookmark> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
