@@ -40,6 +40,11 @@ namespace PostService.Services
             return _virtualTripRepository.GetAllVirtualTripWithPost();
         }
 
+        public IEnumerable<VirtualTrip> GetAllVirtualTripWithPost(string userId)
+        {
+            return _virtualTripRepository.GetAllVirtualTripWithPost(userId);
+        }
+
         public VirtualTrip GetById(string id)
         {
             return _virtualTripRepository.GetById(id);

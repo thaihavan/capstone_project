@@ -165,7 +165,8 @@ namespace PostService.Repositories
 
         public IEnumerable<Article> GetAllArticleInfo(string userId)
         {
-            Func<Article, IEnumerable<Like>,Article> UpdateLike = ((a, b) => { a.liked = b.Count() > 0 ? true : false; return a; });
+            Func<Article, IEnumerable<Like>,Article> UpdateLike = 
+                ((article, likes) => { article.Post.liked = likes.Count() > 0 ? true : false; return article; });
             var articles = _posts.AsQueryable().Join(
                 _authors.AsQueryable(),
                 post => post.AuthorId,

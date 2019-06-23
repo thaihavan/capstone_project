@@ -17,5 +17,7 @@ namespace PostService.Services.Interfaces
         VirtualTrip Update(VirtualTrip virtualTrip);
 
         bool Delete(string id);
+
+        IEnumerable<VirtualTrip> GetAllVirtualTripWithPost(string userId);
     }
 }

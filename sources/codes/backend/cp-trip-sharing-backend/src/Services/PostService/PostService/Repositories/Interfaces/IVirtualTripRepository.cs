@@ -9,5 +9,7 @@ namespace PostService.Repositories.Interfaces
     public interface IVirtualTripRepository : IRepository<VirtualTrip>
     {
         IEnumerable<VirtualTrip> GetAllVirtualTripWithPost();
+
+        IEnumerable<VirtualTrip> GetAllVirtualTripWithPost(string userId);
     }
 }

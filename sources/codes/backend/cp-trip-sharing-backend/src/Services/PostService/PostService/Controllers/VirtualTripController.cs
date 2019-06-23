@@ -30,7 +30,17 @@ namespace PostService.Controllers
         [HttpGet("all")]
         public IActionResult GetAllVirtualTripWithPost()
         {
-            var virtualTrips = _virtualTripService.GetAllVirtualTripWithPost();
+            IEnumerable<VirtualTrip> virtualTrips = null;
+            var identity = (ClaimsIdentity)User.Identity;
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = identity.FindFirst("user_id").Value;
+                virtualTrips = _virtualTripService.GetAllVirtualTripWithPost(userId);
+            }
+            else
+            {
+                virtualTrips = _virtualTripService.GetAllVirtualTripWithPost();
+            }
             return Ok(virtualTrips);
         }
 

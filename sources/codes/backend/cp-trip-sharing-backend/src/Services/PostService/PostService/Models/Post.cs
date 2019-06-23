@@ -45,5 +45,8 @@ namespace PostService.Models
         [BsonIgnore]
         public Author Author { get; set; }
 
+        [BsonIgnore]
+        public bool liked { get; set; }
+
     }
 }

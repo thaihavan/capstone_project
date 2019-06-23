@@ -29,9 +29,6 @@ namespace PostService.Models
         public string CoverImage { get; set; }
 
         [BsonIgnore]
-        public Post Post { get; set; }
-
-        [BsonIgnore]
-        public bool liked { get; set; }
+        public Post Post { get; set; }       
     }
 }
