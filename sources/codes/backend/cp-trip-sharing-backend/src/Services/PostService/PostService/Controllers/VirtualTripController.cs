@@ -50,7 +50,7 @@ namespace PostService.Controllers
             {
                 return BadRequest(new ErrorMessage() { Message = "PostId doesn't match." });
             }
-            virtualTrip.Id = new BsonObjectId(ObjectId.GenerateNewId());
+            virtualTrip.Id = ObjectId.GenerateNewId().ToString();
 
             Post addedPost = _postService.Add(virtualTrip.Post);
             VirtualTrip addedVirtualTrip = _virtualTripService.Add(virtualTrip);

@@ -48,7 +48,7 @@ namespace PostService.Repositories
 
         public Comment GetById(string id)
         {
-            return _comments.Find(Builders<Comment>.Filter.Eq("_id", new BsonObjectId(id))).ToList().FirstOrDefault();
+            return _comments.Find(c => c.Id == id).ToList().FirstOrDefault();
         }
 
         public Comment Update(Comment param)
@@ -93,7 +93,7 @@ namespace PostService.Repositories
         public bool IncreaseLikeCount(string commentId)
         {
             _comments.FindOneAndUpdate(
-                Builders<Comment>.Filter.Eq("_id",new BsonObjectId(ObjectId.Parse(commentId))),
+                c => c.Id == commentId,
                 Builders<Comment>.Update.Inc("like_count", 1)
                 );
             return true;
@@ -102,7 +102,7 @@ namespace PostService.Repositories
         public bool DecreaseLikeCount(string commentId)
         {
             _comments.FindOneAndUpdate(
-                Builders<Comment>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(commentId))),
+                c => c.Id == commentId,
                 Builders<Comment>.Update.Inc("like_count", -1)
                 );
             return true;

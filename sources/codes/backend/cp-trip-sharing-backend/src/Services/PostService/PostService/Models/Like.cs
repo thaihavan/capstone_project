@@ -11,9 +11,11 @@ namespace PostService.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("object_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string ObjectId { get; set; }
 
         [BsonElement("object_type")]
@@ -23,6 +25,7 @@ namespace PostService.Models
         public DateTime Date { get; set; }
 
         [BsonElement("user_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string UserId { get; set; }
     }
 }

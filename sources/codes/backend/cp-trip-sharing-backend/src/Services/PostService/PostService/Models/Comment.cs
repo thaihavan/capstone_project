@@ -19,6 +19,7 @@ namespace PostService.Models
         public string AuthorId { get; set; }
 
         [BsonElement("post_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string PostId { get; set; }
 
         [BsonElement("parent_id")]

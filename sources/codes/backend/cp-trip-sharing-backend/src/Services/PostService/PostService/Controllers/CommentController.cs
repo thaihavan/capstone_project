@@ -62,7 +62,7 @@ namespace PostService.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            if (!authorId.Equals(new MongoDB.Bson.BsonObjectId(userId)))
+            if (!authorId.Equals(userId))
             {
                 return Unauthorized();
             }

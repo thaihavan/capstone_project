@@ -9,6 +9,7 @@ namespace PostService.Models
 {
     public class Author:Model
     {
+        [BsonId]
         [BsonElement("_id")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
