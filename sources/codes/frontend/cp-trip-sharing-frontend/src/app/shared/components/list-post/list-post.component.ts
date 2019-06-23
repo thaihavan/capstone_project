@@ -84,18 +84,32 @@ export class ListPostComponent implements OnInit {
   }
 
   getPost(): void {
+    const token = localStorage.getItem('Token');
     if (this.homeNav != null) {
       // Call api
-      this.postService.getAllPost().subscribe((data: any) => {
-        this.articles = data;
-        this.articles.forEach(post => {
-          this.posts.push(post.post);
+      if (token == null) {
+        this.postService.getAllPost().subscribe((data: any) => {
+          this.articles = data;
+          this.articles.forEach(post => {
+            this.posts.push(post.post);
+          });
+          console.log(this.posts);
+          this.isLoading = false;
+        }, (err: HttpErrorResponse) => {
+          console.log(err);
         });
-        console.log(this.posts);
-        this.isLoading = false;
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      } else {
+        this.postService.getAllPostwithToken(token).subscribe((data: any) => {
+          this.articles = data;
+          this.articles.forEach(post => {
+            this.posts.push(post.post);
+          });
+          console.log(this.posts);
+          this.isLoading = false;
+        }, (err: HttpErrorResponse) => {
+          console.log(err);
+        });
+      }
     } else if (this.personalNav != null) {
       // Call api
       const account = JSON.parse(localStorage.getItem('Account'));

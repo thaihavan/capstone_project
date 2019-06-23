@@ -36,6 +36,16 @@ export class PostService {
     return this.http.get(this.baseUrl + 'all');
   }
 
+  getAllPostwithToken(token: string): Observable<any> {
+    const httpOptionAuth = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.get(this.baseUrl + 'all', httpOptionAuth);
+  }
+
   getAllPostByUserId(userId: string): Observable<any> {
     return this.http.get<any>(this.baseUrl + 'userid?id=' + userId);
   }

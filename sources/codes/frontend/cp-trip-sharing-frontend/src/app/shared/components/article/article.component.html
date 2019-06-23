@@ -46,7 +46,7 @@
     </div>
   </div>
   <div class="card-footer d-flex">
-    <div [class]="liked ? 'likeClass':'unlikeClass'"  (click)="likePost()" class="card-footer-content pr-4">
+    <div [class]="post.liked ? 'likeClass':'unlikeClass'"  (click)="likePost(post.liked)" class="card-footer-content pr-4">
       <button mat-icon-button>
         <mat-icon>thumb_up_alt</mat-icon>
         <span>Thích</span>

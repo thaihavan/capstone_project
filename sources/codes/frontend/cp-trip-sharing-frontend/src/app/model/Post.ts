@@ -5,6 +5,7 @@ export class Post {
     title: string;
     description: string;
     content: string;
+    liked: boolean;
     image: string;
     isPublic: boolean;
     isActive: boolean;
