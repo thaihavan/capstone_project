@@ -11,5 +11,7 @@ namespace PostService.Repositories.Interfaces
         IEnumerable<Comment> GetAll();
         Comment GetById(string id);
         Comment Update(Comment param);
+        bool IncreaseLikeCount(string commentId);
+        bool DecreaseLikeCount(string commentId);
     }
 }

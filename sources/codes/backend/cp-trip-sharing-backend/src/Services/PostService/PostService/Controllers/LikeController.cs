@@ -44,11 +44,8 @@ namespace PostService.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-
             like.UserId = userId;
-
             _likeService.Delete(like);
-
             return Ok();
         }
     }

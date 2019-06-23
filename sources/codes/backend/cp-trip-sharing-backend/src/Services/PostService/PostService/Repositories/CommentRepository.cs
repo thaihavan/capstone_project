@@ -89,5 +89,24 @@ namespace PostService.Repositories
 
             return comments.ToList();
         }
+
+        public bool IncreaseLikeCount(string commentId)
+        {
+            _comments.FindOneAndUpdate(
+                Builders<Comment>.Filter.Eq("_id",new BsonObjectId(ObjectId.Parse(commentId))),
+                Builders<Comment>.Update.Inc("like_count", 1)
+                );
+            return true;
+        }
+
+        public bool DecreaseLikeCount(string commentId)
+        {
+            _comments.FindOneAndUpdate(
+                Builders<Comment>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(commentId))),
+                Builders<Comment>.Update.Inc("like_count", -1)
+                );
+            return true;
+        }
+
     }
 }
