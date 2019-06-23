@@ -41,7 +41,7 @@ namespace PostService.Controllers
                         articles = _articleService.GetAllArticleInfo();
                         break;
                     }
-                case 3:
+                default:
                     {
                         var userId = identity.FindFirst("user_id").Value;
                         articles = _articleService.GetAllArticleInfo(userId);

@@ -163,8 +163,9 @@ namespace PostService.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<object> GetAllArticleInfo(string userId)
+        public IEnumerable<Article> GetAllArticleInfo(string userId)
         {
+            Func<Article, IEnumerable<Like>,Article> UpdateLike = ((a, b) => { a.liked = b.Count() > 0 ? true : false; return a; });
             var articles = _posts.AsQueryable().Join(
                 _authors.AsQueryable(),
                 post => post.AuthorId,
@@ -207,11 +208,7 @@ namespace PostService.Repositories
                     _likes.AsQueryable().Where(x=>x.UserId==userId&&x.ObjectType=="post"),
                     article=> article.PostId,
                     like=>like.ObjectId,
-                    (article, likes)=> new
-                    {
-                        Article=article,
-                        liked= likes.Count()>0? true:false
-                    }
+                    UpdateLike                  
                 );
             return articles.ToList();
         }

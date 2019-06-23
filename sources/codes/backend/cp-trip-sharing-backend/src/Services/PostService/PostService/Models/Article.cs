@@ -30,5 +30,8 @@ namespace PostService.Models
 
         [BsonIgnore]
         public Post Post { get; set; }
+
+        [BsonIgnore]
+        public bool liked { get; set; }
     }
 }

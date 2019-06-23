@@ -22,6 +22,6 @@ namespace PostService.Services.Interfaces
 
         bool Delete(string id);
 
-        IEnumerable<object> GetAllArticleInfo(string userId);
+        IEnumerable<Article> GetAllArticleInfo(string userId);
     }
 }

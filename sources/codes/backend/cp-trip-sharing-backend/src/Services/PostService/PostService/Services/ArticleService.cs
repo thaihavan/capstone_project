@@ -60,7 +60,7 @@ namespace PostService.Services
             return _articleRepository.GetAllArticleByUser(userId);
         }
 
-        public IEnumerable<object> GetAllArticleInfo(string userId)
+        public IEnumerable<Article> GetAllArticleInfo(string userId)
         {
             return _articleRepository.GetAllArticleInfo(userId);
         }
