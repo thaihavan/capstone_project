@@ -82,8 +82,10 @@ button:focus {
   position: relative;
 }
 .btn-interact{
+  width: 70px;
   position: absolute;
   right: 0px;
+  display: inherit;
 }
 .mat-card-actions {
   margin-left: 0px; 
@@ -109,4 +111,12 @@ button:focus {
 }
 .virtual-trips .mat-card-content{
   padding: 16px;
+}
+
+.icon-followed{
+  color: #2196f3;
+}
+
+.icon-unfollow{
+  color: black;
 }
