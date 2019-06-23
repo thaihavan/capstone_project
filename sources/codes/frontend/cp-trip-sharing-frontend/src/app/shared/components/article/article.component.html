@@ -1,16 +1,10 @@
-<div class="overview-post card gedf-card">
-  <div class="card-header">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="mr-2">
-          <img class="rounded-circle" width="45" src="{{post.author.profileImage}}" alt="">
-        </div>
-        <div class="ml-2">
-          <div class="h5 m-0 name-author">{{post.author.displayName}}</div>
-          <div class="text-muted h7"> <i class="fa fa-clock-o time-post"></i> {{post.pubDate}}</div>
-        </div>
-      </div>
-      <div>
+<div class="mb-5">
+  <mat-card class="example-card">
+    <mat-card-header class=" post-header">
+      <img mat-card-avatar src="{{post.author.profileImage}}" />
+      <mat-card-title>{{post.author.displayName}}</mat-card-title>
+      <mat-card-subtitle>{{post.pubDate}}</mat-card-subtitle>
+      <div class="btn-interact">
         <button mat-icon-button>
           <mat-icon>person_add</mat-icon>
         </button>
@@ -28,52 +22,91 @@
           </button>
         </mat-menu>
       </div>
+    </mat-card-header>
+    <mat-card-title>
+      <a class="card-link" href="/post-detail?postId={{post.id}}">
+        <h5 class="card-title">{{post.title}}</h5>
+      </a>
+    </mat-card-title>
+    <div class="card-body-image">
+      <img mat-card-image src="../../../../assets/luff.jpg" alt="">
     </div>
-  </div>
-  <div class="card-body">
-    <div class="card-body-image mb-3">
-      <img src="../../../../assets/luff.jpg" alt="">
+    <mat-card-content>
+      <p>
+        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+        bred for hunting.
+      </p>
+    </mat-card-content>
+    <div class="d-flex justify-content-between ">
+      <mat-card-subtitle>1 thích</mat-card-subtitle>
+      <mat-card-subtitle>123 bình luận</mat-card-subtitle>
     </div>
-    <a class="card-link" href="/post-detail?postId={{post.id}}">
-      <h5 class="card-title">{{post.title}}</h5>
-    </a>
-    <!-- <div class="card-text" [innerHTML]="post.content"></div> -->
-    <div class="card-text">Đa phần du khách chọn Kumho để di chuyển đến hà Tiên bởi sự tiện lợi của nó, bao gồm xe trung
-      chuyển tới cửa khẩu miễn phí, xe giường nằm thoải mái, có wifi vi vu với mức giá tầm 200k/giường.</div>
-    <div>
-      <span href="" class="badge badge-primary">Đọc tiếp</span>
+    <mat-card-actions>
+      <div class="d-flex justify-content-between">
+        <div [class]="post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(post.liked)">
+          <button mat-button>
+            <mat-icon>thumb_up_alt</mat-icon>
+            <span>Thích</span>
+          </button>
+        </div>
+        <div>
+          <button mat-button>
+            <mat-icon>mode_comment</mat-icon>
+            <span>Bình luận</span>
+          </button>
+        </div>
+        <div>
+          <button mat-button [matMenuTriggerFor]="menushare">
+            <mat-icon>share</mat-icon>
+            <span>Chia sẻ</span>
+            <mat-menu #menushare="matMenu">
+              <button mat-menu-item>
+                <mat-icon>flag</mat-icon>
+                <span>Báo cáo</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Chỉnh sửa</span>
+              </button>
+            </mat-menu>
+          </button>
+        </div>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+  <!-- <div class="virtual-trips">
+    <mat-card>
+      <mat-card-header class="bg-primary text-white">
+        <div class="d-flex justify-content-between">
+          <div>
+            <mat-card-title>Một vòng Hà Nội</mat-card-title>
+            <mat-card-subtitle class="text-white">6 mục</mat-card-subtitle>
+          </div>
+          <div class="btn-interact">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Chỉnh sửa</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>remove</mat-icon>
+                <span>Xoá bỏ</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="" />
+      <mat-card-content>
+        <p>The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile
+          dog that copes very well with mountainous terrain, the Shiba Inu was originally bred for hunting.</p>
+      </mat-card-content>
+    </mat-card>
+  </div> -->
 
-    </div>
-  </div>
-  <div class="card-footer d-flex">
-    <div [class]="post.liked ? 'likeClass':'unlikeClass'"  (click)="likePost(post.liked)" class="card-footer-content pr-4">
-      <button mat-icon-button>
-        <mat-icon>thumb_up_alt</mat-icon>
-        <span>Thích</span>
-      </button>
-    </div>
-    <div class="card-footer-content pr-4">
-      <button mat-icon-button>
-        <mat-icon>mode_comment</mat-icon>
-      </button>
-      <span>Bình luận</span>
-    </div>
-    <div class="card-footer-content pr-4">
-      <button mat-icon-button [matMenuTriggerFor]="menushare">
-        <mat-icon>share</mat-icon>
-      </button>
-      <span>Chia sẻ</span>
-      <mat-menu #menushare="matMenu">
-        <button mat-menu-item>
-          <mat-icon>flag</mat-icon>
-          <span>Báo cáo</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>edit</mat-icon>
-          <span>Chỉnh sửa</span>
-        </button>
-      </mat-menu>
-    </div>
-  </div>
+
 </div>
-<br>
