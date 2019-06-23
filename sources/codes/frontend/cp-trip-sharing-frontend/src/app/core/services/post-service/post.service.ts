@@ -36,6 +36,10 @@ export class PostService {
     return this.http.get(this.baseUrl + 'all');
   }
 
+  getAllPostByUserId(userId: string): Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'userid?id=' + userId);
+  }
+
   getCommentByPost(postId: string): Observable<any> {
     const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/all';
     return this.http.get(url + '?id=' + postId);
@@ -68,7 +72,6 @@ export class PostService {
   }
 
   unlikeAPost(likeObject: Like): Observable<any> {
-    debugger;
     const httpOptionUnLike = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

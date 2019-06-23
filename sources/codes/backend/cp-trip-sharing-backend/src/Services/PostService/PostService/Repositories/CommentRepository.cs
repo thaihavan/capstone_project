@@ -84,7 +84,8 @@ namespace PostService.Repositories
                            Id = author.Id,
                            DisplayName = author.DisplayName,
                            ProfileImage = author.ProfileImage
-                       }
+                       },
+                       LikeCount= comment.LikeCount
                    });
 
             return comments.ToList();

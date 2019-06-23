@@ -51,12 +51,14 @@ export class SingleCommentComponent implements OnInit {
     this.like.ObjectType = 'comment';
     if (this.liked) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
+        this.comment.likeCount += 1;
         this.liked = true;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
+        this.comment.likeCount -= 1;
         this.liked = false;
       }, (err: HttpErrorResponse) => {
         console.log(err);
