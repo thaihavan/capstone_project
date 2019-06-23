@@ -34,24 +34,14 @@ namespace PostService.Controllers
         {
             IEnumerable<object> articles = null;
             var identity = (ClaimsIdentity)User.Identity;
-            switch (identity.Claims.Count())
+            if (User.Identity.IsAuthenticated)
             {
-                case 0:
-                    {
-                        articles = _articleService.GetAllArticleInfo();
-                        break;
-                    }
-                default:
-                    {
-                        var userId = identity.FindFirst("user_id").Value;
-                        articles = _articleService.GetAllArticleInfo(userId);
-                        break;
-                    }
-                   
-            }
-
-            
-            
+                var userId = identity.FindFirst("user_id").Value;
+                articles = _articleService.GetAllArticleInfo(userId);         
+            }else
+            {
+                articles = _articleService.GetAllArticleInfo();
+            }           
             return Ok(articles);
         }
 
