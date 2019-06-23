@@ -12,5 +12,6 @@ namespace PostService.Services.Interfaces
         bool Delete(string id);
         IEnumerable<Comment> GetCommentByPost(string id);
         Comment Update(Comment cmt);
+        IEnumerable<Comment> GetCommentByPost(string postId, string userId);
     }
 }

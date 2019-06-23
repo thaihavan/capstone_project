@@ -44,6 +44,9 @@ namespace PostService.Models
         [BsonIgnore]
         public Author Author { get; set; }
 
+        [BsonIgnore]
+        public bool Liked { get; set; }
+
         public Comment()
         {
             Childs = new List<Comment>();

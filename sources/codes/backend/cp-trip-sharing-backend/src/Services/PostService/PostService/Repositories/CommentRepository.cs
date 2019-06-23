@@ -16,6 +16,7 @@ namespace PostService.Repositories
     {
         private readonly IMongoCollection<Comment> _comments = null;
         private readonly IMongoCollection<Author> _authors = null;
+        private readonly IMongoCollection<Like> _likes = null;
 
         public CommentRepository(IMongoCollection<Comment> comments, IMongoCollection<Author> authors)
         {
@@ -28,6 +29,7 @@ namespace PostService.Repositories
             var dbContext = new MongoDbContext(settings);
             _comments = dbContext.Comments;
             _authors = dbContext.Authors;
+            _likes = dbContext.Likes;
         }
 
         public Comment Add(Comment param)
@@ -109,5 +111,39 @@ namespace PostService.Repositories
             return true;
         }
 
+        public IEnumerable<Comment> GetCommentByPost(string postId, string userId)
+        {
+            Func<Comment, IEnumerable<Like>, Comment> UpdateLiked =
+                ((comment, likes) => { comment.Liked = likes.Count() > 0 ? true : false; return comment; });
+            var comments = _comments.AsQueryable()
+                .Where(c => c.PostId == postId)
+                .Join(
+                   _authors.AsQueryable(),
+                   comment => comment.AuthorId,
+                   author => author.Id,
+                   (comment, author) => new Comment
+                   {
+                       Id = comment.Id,
+                       AuthorId = comment.AuthorId,
+                       Active = comment.Active,
+                       Content = comment.Content,
+                       ParentId = comment.ParentId,
+                       PostId = comment.PostId,
+                       Date = comment.Date,
+                       Author = new Author()
+                       {
+                           Id = author.Id,
+                           DisplayName = author.DisplayName,
+                           ProfileImage = author.ProfileImage
+                       },
+                       LikeCount = comment.LikeCount
+                   }).GroupJoin(
+                    _likes.AsQueryable().Where(x=>x.ObjectType=="comment"&&x.UserId==userId),
+                    comment=>comment.Id,
+                    like=>like.ObjectId,
+                    UpdateLiked
+                );
+            return comments.ToList();
+        }
     }
 }

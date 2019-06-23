@@ -30,12 +30,18 @@ namespace PostService.Controllers
         [HttpGet("all")]
         public IActionResult GetCommentByPost([FromQuery] string id)
         {
-            var cmts = _commentService.GetCommentByPost(id);
-            if (cmts != null)
+            IEnumerable<Comment> comments = null;
+            var identity = (ClaimsIdentity)User.Identity;
+            if (User.Identity.IsAuthenticated)
             {
-                return Ok(cmts);
+                var userId = identity.FindFirst("user_id").Value;
+                comments = _commentService.GetCommentByPost(id,userId);
             }
-            return BadRequest();
+            else
+            {
+                comments = _commentService.GetCommentByPost(id);
+            }
+            return Ok(comments);
         }
 
         [Authorize(Roles = "member")]

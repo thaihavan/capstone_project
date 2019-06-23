@@ -64,5 +64,10 @@ namespace PostService.Services
         {
             return _commentRepository.Update(cmt);
         }
+
+        public IEnumerable<Comment> GetCommentByPost(string postId, string userId)
+        {
+            return _commentRepository.GetCommentByPost(postId, userId);
+        }
     }
 }

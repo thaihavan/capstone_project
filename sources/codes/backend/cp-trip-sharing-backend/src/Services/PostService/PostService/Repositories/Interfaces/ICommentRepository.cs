@@ -7,6 +7,7 @@ namespace PostService.Repositories.Interfaces
     {
         Comment Add(Comment param);
         IEnumerable<Comment> GetCommentByPost(string postId);
+        IEnumerable<Comment> GetCommentByPost(string postId,string userId);
         bool Delete(string id);
         IEnumerable<Comment> GetAll();
         Comment GetById(string id);
