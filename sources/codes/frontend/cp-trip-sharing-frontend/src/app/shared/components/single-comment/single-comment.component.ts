@@ -44,22 +44,20 @@ export class SingleCommentComponent implements OnInit {
     this.commentContent = '';
   }
 
-  likeComment() {
-    this.liked = !this.liked;
-    console.log(this.comment.id);
-    this.like.ObjectId = this.comment.id;
+  likeComment(liked: any, commetId: any) {
+    this.like.ObjectId = commetId;
     this.like.ObjectType = 'comment';
-    if (this.liked) {
+    if (!liked) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         this.comment.likeCount += 1;
-        this.liked = true;
+        this.comment.liked = true;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.comment.likeCount -= 1;
-        this.liked = false;
+        this.comment.liked = false;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });

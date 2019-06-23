@@ -89,11 +89,23 @@ export class UserService {
     return this.http.delete<any>(this.apiUserService + 'user/deletebookmark' + postId);
   }
 
-  addFollow(following: string): Observable<any> {
-    return this.http.post<any>(this.apiUserService + 'user/follow', following, httpOption);
+  addFollow(following: string, token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.post<any>(this.apiUserService + 'user/follow?following=' + following , httpAuthen);
   }
 
-  unFollow(following: string): Observable<any> {
+  unFollow(following: string, token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
     return this.http.delete<any>(this.apiUserService + 'user/unfollow?following=' + following);
   }
 

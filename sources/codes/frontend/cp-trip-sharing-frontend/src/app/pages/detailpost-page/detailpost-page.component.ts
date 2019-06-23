@@ -15,7 +15,7 @@ export class DetailpostPageComponent implements OnInit {
   postId: string;
   coverImage = '../../../assets/coverimg.jpg';
   avatar = '../../../assets/img_avatar.png';
-
+  token: string;
   commentContent = '';
   comments: Comment[];
 
@@ -28,6 +28,7 @@ export class DetailpostPageComponent implements OnInit {
     this.postId = this.route.snapshot.queryParamMap.get('postId');
     this.loadDetaiPost(this.postId);
     this.getCommentByPostId(this.postId);
+    this.token = localStorage.getItem('Token');
   }
 
   loadDetaiPost(postid: string) {
@@ -38,15 +39,27 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   getCommentByPostId(postId: string) {
-    this.postService.getCommentByPost(postId).subscribe((data: any) => {
-      if (data != null) {
-        console.log('Comment: ' + data);
-        console.log('Total comment: ', data.length);
-        this.comments = data;
-      } else {
-        console.log('Can not get comments of this post.');
-      }
-    });
+    if (this.token == null) {
+      this.postService.getCommentByPost(postId).subscribe((data: any) => {
+        if (data != null) {
+          console.log('Comment: ' + data);
+          console.log('Total comment: ', data.length);
+          this.comments = data;
+        } else {
+          console.log('Can not get comments of this post.');
+        }
+      });
+    } else {
+      this.postService.getCommentByPostWithAuthen(postId, this.token).subscribe((data: any) => {
+        if (data != null) {
+          console.log('Comment: ' + data);
+          console.log('Total comment: ', data.length);
+          this.comments = data;
+        } else {
+          console.log('Can not get comments of this post.');
+        }
+      });
+    }
   }
 
   submitComment() {

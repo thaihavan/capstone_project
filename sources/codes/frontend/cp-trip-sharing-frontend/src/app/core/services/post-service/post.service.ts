@@ -55,6 +55,17 @@ export class PostService {
     return this.http.get(url + '?id=' + postId);
   }
 
+  getCommentByPostWithAuthen(postId: string, token: string): Observable<any> {
+    const httpOptionAuth = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/all';
+    return this.http.get(url + '?id=' + postId, httpOptionAuth);
+  }
+
   addComment(comment: Comment): Observable<any> {
     const httpOptionAuth = {
       headers: new HttpHeaders({

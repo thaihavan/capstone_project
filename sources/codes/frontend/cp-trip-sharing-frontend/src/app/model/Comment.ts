@@ -10,8 +10,9 @@ export class Comment {
     public childs: Comment[];
     public authorId: string;
     public author: Author;
+    public liked: boolean;
 
-    constructor(){
+    constructor() {
         this.author = new Author();
     }
 }
