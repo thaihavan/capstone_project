@@ -23,7 +23,7 @@ export class ArticleComponent implements OnInit {
   likePost(like: any) {
     this.like.ObjectId = this.post.id;
     this.like.ObjectType = 'post';
-    if (!like) {
+    if (like === false) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         console.log(data);
         this.post.liked = true;
