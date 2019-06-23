@@ -90,5 +90,8 @@ namespace PostService.Controllers
 
             return Ok(updatedArticle);
         }
+
+        //[Authorize(Roles = "member")]
+        //[HttpDelete("")]
     }
 }
