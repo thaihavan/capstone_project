@@ -11,10 +11,12 @@ namespace PostService.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("post_id")]
-        public BsonObjectId PostId { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string PostId { get; set; }
 
         [BsonElement("items")]
         public List<VirtualTripItem> Items { get; set; }

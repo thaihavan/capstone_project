@@ -34,7 +34,7 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            return _virtualTrips.DeleteOne(x => x.Id.Equals(new BsonObjectId(id))).IsAcknowledged;
+            return _virtualTrips.DeleteOne(x => x.Id == id).IsAcknowledged;
         }
 
         public IEnumerable<VirtualTrip> GetAll()
@@ -44,13 +44,12 @@ namespace PostService.Repositories
 
         public VirtualTrip GetById(string id)
         {
-            return _virtualTrips.Find(v => v.Id.Equals(new BsonObjectId(id))).FirstOrDefault();
+            return _virtualTrips.Find(v => v.Id == id).FirstOrDefault();
         }
 
         public VirtualTrip Update(VirtualTrip param)
         {
-            var filter = Builders<VirtualTrip>.Filter.Eq(v => v.Id, param.Id);
-            var relult = _virtualTrips.ReplaceOne(filter, param);
+            var relult = _virtualTrips.ReplaceOne(v => v.Id == param.Id, param);
             if (!relult.IsAcknowledged)
             {
                 return null;

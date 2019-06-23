@@ -11,16 +11,19 @@ namespace PostService.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("topics")]
-        public List<BsonObjectId> Topics { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public List<string> Topics { get; set; }
 
         [BsonElement("destinations")]
         public List<string> Destinations { get; set; }
 
         [BsonElement("post_id")]
-        public BsonObjectId PostId { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string PostId { get; set; }
 
         [BsonElement("cover_image")]
         public string CoverImage { get; set; }

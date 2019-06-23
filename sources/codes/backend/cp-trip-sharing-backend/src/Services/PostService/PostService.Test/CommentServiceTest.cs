@@ -35,7 +35,7 @@ namespace PostService.Test
         {
             Comment cmt = new Comment()
             {
-                PostId = new BsonObjectId(ObjectId.Parse("5d027ea59b358d247cd21a55")),
+                PostId = "5d027ea59b358d247cd21a55",
                 Content = "day la test commentservice",
                 Date = DateTime.Now,
                 Active = true
@@ -61,7 +61,7 @@ namespace PostService.Test
         {
             Comment cmt = new Comment()
             {
-                PostId = new BsonObjectId(ObjectId.Parse("5d027ea59b358d247cd21a55")),
+                PostId = "5d027ea59b358d247cd21a55",
                 Content = "day la test commentservice",
                 Date = DateTime.Now,
                 Active = true
@@ -79,7 +79,7 @@ namespace PostService.Test
         {
             Comment cmt = new Comment()
             {
-                PostId = new BsonObjectId(ObjectId.Parse("5d027ea59b358d247cd21a55")),
+                PostId = "5d027ea59b358d247cd21a55",
                 Content = "test commentservice",
                 Date = DateTime.Now,
                 Active = true

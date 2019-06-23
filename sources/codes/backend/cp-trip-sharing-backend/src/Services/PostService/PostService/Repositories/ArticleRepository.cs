@@ -34,9 +34,7 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            var filter = Builders<Article>.Filter.Eq(a => a.Id, new BsonObjectId(id));
-
-            _articles.DeleteOne(filter);
+            _articles.DeleteOne(a => a.Id == id);
 
             return true;
         }
@@ -48,13 +46,12 @@ namespace PostService.Repositories
 
         public Article GetById(string id)
         {
-            return _articles.Find(a => a.Id.Equals(new BsonObjectId(id))).FirstOrDefault();
+            return _articles.Find(a => a.Id == id).FirstOrDefault();
         }
 
         public Article Update(Article param)
         {
-            var filter = Builders<Article>.Filter.Eq(a => a.Id, param.Id);
-            var result = _articles.ReplaceOne(filter, param);
+            var result = _articles.ReplaceOne(a => a.Id == param.Id , param);
             if (!result.IsAcknowledged)
             {
                 return null;
@@ -111,7 +108,7 @@ namespace PostService.Repositories
         public IEnumerable<Article> GetAllArticleByUser(string userId)
         {
             var c = GetAllArticleInfo();
-            var result = c.Where(x => x.Post.AuthorId.Equals(ObjectId.Parse(userId))).Select(x => x).ToList();
+            var result = c.Where(x => x.Post.AuthorId == userId).ToList();
             return result;
         }
 

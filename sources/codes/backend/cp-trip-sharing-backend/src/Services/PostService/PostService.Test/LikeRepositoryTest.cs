@@ -35,21 +35,13 @@ namespace PostService.Test
         {
             Like like = new Like()
             {
-                LikedObject = new BsonObjectId(ObjectId.Parse("5d027ea59b358d247cd21a55")),
+                ObjectId = "5d027ea59b358d247cd21a55",
                 ObjectType = "comment",
-                UserId = new BsonObjectId(ObjectId.Parse("5d04cc646c9cec228cf9bb09")),
+                UserId = "5d04cc646c9cec228cf9bb09",
                 Date = DateTime.Now
             };
             Like testLike = _likeRepository.Add(like);
             Assert.AreEqual(testLike, like);
-        }
-
-        [TestCase]
-        public void TestGetLikeWithPost()
-        {
-            string postId = "5d027ea59b358d247cd21a55";
-            IEnumerable<Like> likes = _likeRepository.GetLikeWithPost(postId);
-            Assert.IsNotNull(likes);
         }
 
         [TestCase]
