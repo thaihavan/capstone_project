@@ -2,7 +2,7 @@ import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Post } from 'src/app/model/Post';
 import { ActivatedRoute } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
 @Component({
   selector: 'app-list-post',
@@ -64,7 +64,7 @@ export class ListPostComponent implements OnInit {
     this.isLoading = true;
 
     // Continue loading data
-    this.getPost();
+    // this.getPost();
   }
 
   setNavParams() {
@@ -93,15 +93,20 @@ export class ListPostComponent implements OnInit {
         });
         console.log(this.posts);
         this.isLoading = false;
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
       });
     } else if (this.personalNav != null) {
       // Call api
-      this.postService.getAllPost().subscribe((data: any) => {
+      const account = JSON.parse(localStorage.getItem('Account'));
+      this.postService.getAllPostByUserId(account.userId).subscribe((data: any) => {
         this.articles = data;
         this.articles.forEach(post => {
           this.posts.push(post.post);
         });
         this.isLoading = false;
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
       });
     }
   }

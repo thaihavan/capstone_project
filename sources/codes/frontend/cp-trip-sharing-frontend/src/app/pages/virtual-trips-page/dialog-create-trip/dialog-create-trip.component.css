@@ -1,0 +1,54 @@
+.create-virtual-popup {
+  position: relative;
+  margin: -24px;
+}
+.btn-close{
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    color: white;
+}
+.close-button-icon {
+  float: right;
+}
+.panel-popup{
+    display: flex;
+    flex-direction: row;
+}
+.content-popup {
+    margin: 20px 50px;
+}
+.sub-title-input {
+}
+.clear {
+  clear: both;
+}
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+.input-form {
+  display: block;
+}
+::ng-deep .mat-radio-label{
+  white-space: normal !important;
+}
+.item-radio{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+.row{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.btn-create{
+    display: flex;
+    flex-flow: row-reverse;
+    margin-bottom: 15px;
+}

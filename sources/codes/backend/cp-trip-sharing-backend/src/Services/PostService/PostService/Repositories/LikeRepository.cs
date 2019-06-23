@@ -32,8 +32,7 @@ namespace PostService.Repositories
         //Unlike
         public bool Delete(string id)
         {
-            var filter = Builders<Like>.Filter.Eq(a => a.Id, new BsonObjectId(id));
-            return _likes.DeleteOne(filter).IsAcknowledged;
+            return _likes.DeleteOne(l => l.Id == id).IsAcknowledged;
         }
 
         public IEnumerable<Like> GetAll()

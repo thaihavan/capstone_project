@@ -15,16 +15,19 @@ namespace PostService.Repositories
     public class CommentRepository : ICommentRepository
     {
         private readonly IMongoCollection<Comment> _comments = null;
+        private readonly IMongoCollection<Author> _authors = null;
 
-        public CommentRepository(IMongoCollection<Comment> comments)
+        public CommentRepository(IMongoCollection<Comment> comments, IMongoCollection<Author> authors)
         {
             _comments = comments;
+            _authors = authors;
         }
 
         public CommentRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
             _comments = dbContext.Comments;
+            _authors = dbContext.Authors;
         }
 
         public Comment Add(Comment param)
@@ -35,7 +38,7 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            return _comments.DeleteOne(temp => temp.Id.Equals(new BsonObjectId(id))).IsAcknowledged;
+            return _comments.DeleteOne(temp => temp.Id.Equals(id)).IsAcknowledged;
         }
 
         public IEnumerable<Comment> GetAll()
@@ -45,7 +48,7 @@ namespace PostService.Repositories
 
         public Comment GetById(string id)
         {
-            return _comments.Find(Builders<Comment>.Filter.Eq("_id", new BsonObjectId(id))).ToList().FirstOrDefault();
+            return _comments.Find(c => c.Id == id).ToList().FirstOrDefault();
         }
 
         public Comment Update(Comment param)
@@ -61,22 +64,50 @@ namespace PostService.Repositories
 
         public IEnumerable<Comment> GetCommentByPost(string postId)
         {
-            List<Comment> comments = new List<Comment>();
-            var allComment = _comments.Find(x => x.PostId.Equals(new BsonObjectId(postId))).ToList();
-            var dict = allComment.ToDictionary(x => x.Id, x => x);
-            foreach(var x in dict)
-            {
-                if (x.Value.ParentId == null)
-                {
-                    comments.Add(x.Value);
-                }
-                else
-                {
-                    var parent = dict[x.Value.ParentId];
-                    parent.Childs.Add(x.Value);
-                }
-            }
-            return comments;
+            var comments = _comments.AsQueryable()
+                .Where(c => c.PostId == postId)
+                .Join(
+                   _authors.AsQueryable(),
+                   comment => comment.AuthorId,
+                   author => author.Id,
+                   (comment, author) => new Comment
+                   {
+                       Id = comment.Id,
+                       AuthorId = comment.AuthorId,
+                       Active = comment.Active,
+                       Content = comment.Content,
+                       ParentId = comment.ParentId,
+                       PostId = comment.PostId,
+                       Date = comment.Date,
+                       Author = new Author()
+                       {
+                           Id = author.Id,
+                           DisplayName = author.DisplayName,
+                           ProfileImage = author.ProfileImage
+                       },
+                       LikeCount= comment.LikeCount
+                   });
+
+            return comments.ToList();
         }
+
+        public bool IncreaseLikeCount(string commentId)
+        {
+            _comments.FindOneAndUpdate(
+                c => c.Id == commentId,
+                Builders<Comment>.Update.Inc("like_count", 1)
+                );
+            return true;
+        }
+
+        public bool DecreaseLikeCount(string commentId)
+        {
+            _comments.FindOneAndUpdate(
+                c => c.Id == commentId,
+                Builders<Comment>.Update.Inc("like_count", -1)
+                );
+            return true;
+        }
+
     }
 }

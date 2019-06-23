@@ -32,7 +32,7 @@ namespace IdentityProvider.Test
         [TestCase]
         public void TestAddTrue()
         {
-            Account acc = new Account() { Email = "phongtv@gmail.com", Password = "123456789", Username = "phongtv" };
+            Account acc = new Account() { Email = "phongtv@gmail.com", Password = "123456789" };
             Account checkAddDB = _accountRepository.Add(acc);
             Assert.IsNotNull(checkAddDB);
         }

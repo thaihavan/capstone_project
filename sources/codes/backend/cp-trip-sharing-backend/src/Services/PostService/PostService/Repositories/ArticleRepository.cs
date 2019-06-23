@@ -15,13 +15,17 @@ namespace PostService.Repositories
     public class ArticleRepository : IArticleRepository
     {
         private readonly IMongoCollection<Article> _articles = null;
-        private readonly IMongoCollection<Post> _post = null;
+        private readonly IMongoCollection<Post> _posts = null;
+        private readonly IMongoCollection<Author> _authors = null;
+        private readonly IMongoCollection<Like> _likes = null;
 
         public ArticleRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
             _articles = dbContext.Articles;
-            _post = dbContext.Posts;
+            _posts = dbContext.Posts;
+            _authors = dbContext.Authors;
+            _likes = dbContext.Likes;
         }
 
         public Article Add(Article param)
@@ -32,9 +36,7 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            var filter = Builders<Article>.Filter.Eq(a => a.Id, new BsonObjectId(id));
-
-            _articles.DeleteOne(filter);
+            _articles.DeleteOne(a => a.Id == id);
 
             return true;
         }
@@ -46,13 +48,12 @@ namespace PostService.Repositories
 
         public Article GetById(string id)
         {
-            return _articles.Find(a => a.Id.Equals(new BsonObjectId(id))).FirstOrDefault();
+            return _articles.Find(a => a.Id == id).FirstOrDefault();
         }
 
         public Article Update(Article param)
         {
-            var filter = Builders<Article>.Filter.Eq(a => a.Id, param.Id);
-            var result = _articles.ReplaceOne(filter, param);
+            var result = _articles.ReplaceOne(a => a.Id == param.Id , param);
             if (!result.IsAcknowledged)
             {
                 return null;
@@ -62,47 +63,154 @@ namespace PostService.Repositories
 
         public IEnumerable<Article> GetAllArticleInfo()
         {
-            var articles = from a in _articles.AsQueryable()
-                           join p in _post.AsQueryable() on a.PostId equals p.Id into joined
-                           from post in joined
-                           select new Article
-                           {
-                               Id = a.Id,
-                               Topics = a.Topics,
-                               Destinations = a.Destinations,
-                               PostId = a.PostId,
-                               Post = post
-                           };
+            var articles = _posts.AsQueryable().Join(
+                _authors.AsQueryable(),
+                post => post.AuthorId,
+                author => author.Id,
+                (post, author) => new
+                {
+                    Id = post.Id,
+                    Post = new Post
+                    {
+                        Id = post.Id,
+                        AuthorId = post.AuthorId,
+                        Content = post.Content,
+                        CommentCount = post.CommentCount,
+                        IsActive = post.IsActive,
+                        IsPublic = post.IsPublic,
+                        LikeCount = post.LikeCount,
+                        PostType = post.PostType,
+                        PubDate = post.PubDate,
+                        Title = post.Title,
+                        Author = new Author()
+                        {
+                            Id = author.Id,
+                            DisplayName = author.DisplayName,
+                            ProfileImage = author.ProfileImage
+                        }
+                    }
+                }).Join(
+                    _articles.AsQueryable(),
+                    pa => pa.Id,
+                    article => article.PostId,
+                    (pa, article) => new Article()
+                    {
+                        Id = article.Id,
+                        Topics = article.Topics,
+                        Destinations = article.Destinations,
+                        PostId = article.PostId,
+                        CoverImage = article.CoverImage,
+                        Post = pa.Post
+                    }
+                );
             return articles.ToList();
         }
-
 
         public IEnumerable<Article> GetAllArticleByUser(string userId)
         {
             var c = GetAllArticleInfo();
-            var result = c.Where(x => x.Post.Author.AuthorId.Equals(new BsonObjectId(ObjectId.Parse(userId)))).Select(x => x).ToList();
+            var result = c.Where(x => x.Post.AuthorId == userId).ToList();
             return result;
         }
 
         public Article GetArticleInfoById(string id)
         {
-            var article = from a in _articles.AsQueryable()
-                          join p in _post.AsQueryable() on a.PostId equals p.Id into joined
-                          from post in joined where a.Id == new BsonObjectId(new ObjectId(id))
-                          select new Article
-                          {
-                              Id = a.Id,
-                              Topics = a.Topics,
-                              Destinations = a.Destinations,
-                              PostId = a.PostId,
-                              Post = post
-                          };
-            return article.FirstOrDefault();
+            var articles = _posts.AsQueryable().Join(
+                _authors.AsQueryable(),
+                post => post.AuthorId,
+                author => author.Id,
+                (post, author) => new
+                {
+                    Id = post.Id,
+                    Post = new Post
+                    {
+                        Id = post.Id,
+                        AuthorId = post.AuthorId,
+                        Content = post.Content,
+                        CommentCount = post.CommentCount,
+                        IsActive = post.IsActive,
+                        IsPublic = post.IsPublic,
+                        LikeCount = post.LikeCount,
+                        PostType = post.PostType,
+                        PubDate = post.PubDate,
+                        Title = post.Title,
+                        Author = new Author()
+                        {
+                            Id = author.Id,
+                            DisplayName = author.DisplayName,
+                            ProfileImage = author.ProfileImage
+                        }
+                    }
+                }).Join(
+                    _articles.AsQueryable().Where(a => a.Id == id),
+                    pa => pa.Id,
+                    article => article.PostId,
+                    (pa, article) => new Article()
+                    {
+                        Id = article.Id,
+                        Topics = article.Topics,
+                        Destinations = article.Destinations,
+                        PostId = article.PostId,
+                        CoverImage = article.CoverImage,
+                        Post = pa.Post
+                    }
+                );
+            return articles.FirstOrDefault();
         }
 
         public IEnumerable<Article> GetAllArticleWithPost()
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Article> GetAllArticleInfo(string userId)
+        {
+            Func<Article, IEnumerable<Like>,Article> UpdateLike = ((a, b) => { a.liked = b.Count() > 0 ? true : false; return a; });
+            var articles = _posts.AsQueryable().Join(
+                _authors.AsQueryable(),
+                post => post.AuthorId,
+                author => author.Id,
+                (post, author) => new
+                {
+                    Id = post.Id,
+                    Post = new Post
+                    {
+                        Id = post.Id,
+                        AuthorId = post.AuthorId,
+                        Content = post.Content,
+                        CommentCount = post.CommentCount,
+                        IsActive = post.IsActive,
+                        IsPublic = post.IsPublic,
+                        LikeCount = post.LikeCount,
+                        PostType = post.PostType,
+                        PubDate = post.PubDate,
+                        Title = post.Title,
+                        Author = new Author()
+                        {
+                            Id = author.Id,
+                            DisplayName = author.DisplayName,
+                            ProfileImage = author.ProfileImage
+                        }
+                    }
+                }).Join(
+                    _articles.AsQueryable(),
+                    pa => pa.Id,
+                    article => article.PostId,
+                    (pa, article) => new Article()
+                    {
+                        Id = article.Id,
+                        Topics = article.Topics,
+                        Destinations = article.Destinations,
+                        PostId = article.PostId,
+                        CoverImage = article.CoverImage,
+                        Post = pa.Post
+                    }).GroupJoin(
+                    _likes.AsQueryable().Where(x=>x.UserId==userId&&x.ObjectType=="post"),
+                    article=> article.PostId,
+                    like=>like.ObjectId,
+                    UpdateLike                  
+                );
+            return articles.ToList();
         }
     }
 }

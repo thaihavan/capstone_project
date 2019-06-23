@@ -35,7 +35,7 @@ namespace PostService.Test
         {
             Like like = new Like()
             {
-                ObjectId ="5d027ea59b358d247cd21a55",
+                ObjectId = "5d027ea59b358d247cd21a55",
                 ObjectType = "comment",
                 UserId = "5d04cc646c9cec228cf9bb09",
                 Date = DateTime.Now

@@ -1,12 +1,14 @@
-<div *ngFor="let post of posts">
-  <app-article [post] = "post"></app-article>
+<div *ngIf="posts!=null">
+  <div *ngFor="let post of posts">
+    <app-article [post]="post"></app-article>
+  </div>
 </div>
-
-<div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200"
-(scrolled)="onScroll()"></div>
+<div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" (scrolled)="onScroll()"></div>
 
 <div class="loading-dots">
-  <h1 class="dot one">.</h1><h1 class="dot two">.</h1><h1 class="dot three">.</h1>
+  <h1 class="dot one">.</h1>
+  <h1 class="dot two">.</h1>
+  <h1 class="dot three">.</h1>
 </div>
 
 <div *ngIf="isScrollTopShow" class="scroll-top">

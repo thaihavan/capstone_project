@@ -43,13 +43,14 @@ namespace PostService.Controllers
         }
 
         [Authorize(Roles = "member")]
-        [HttpPost]
+        [HttpPost("create")]
         public IActionResult CreateArticle([FromBody] VirtualTrip virtualTrip)
         {
             if (virtualTrip.Post.Id != virtualTrip.PostId)
             {
                 return BadRequest(new ErrorMessage() { Message = "PostId doesn't match." });
             }
+            virtualTrip.Id = ObjectId.GenerateNewId().ToString();
 
             Post addedPost = _postService.Add(virtualTrip.Post);
             VirtualTrip addedVirtualTrip = _virtualTripService.Add(virtualTrip);
@@ -64,7 +65,7 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            if (!virtualTrip.Post.Author.AuthorId.Equals(new BsonObjectId(userId)))
+            if (!virtualTrip.Post.AuthorId.Equals(new ObjectId(userId)))
             {
                 return Unauthorized();
             }

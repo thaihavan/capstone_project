@@ -15,17 +15,20 @@ namespace PostService.Services
     {
         private readonly ILikeRepository _likeRepository = null;
         private readonly IPostRepository _postRepository = null;
+        private readonly ICommentRepository _commentRepository = null;
 
-        public LikeService(ILikeRepository likeRepository, IPostRepository postRepository)
+        public LikeService(ILikeRepository likeRepository, IPostRepository postRepository, ICommentRepository commentRepository)
         {
             _likeRepository = likeRepository;
             _postRepository = postRepository;
+            _commentRepository = commentRepository;
         }
 
         public LikeService(IOptions<AppSettings> settings)
         {
             _likeRepository = new LikeRepository(settings);
             _postRepository = new PostRepository(settings);
+            _commentRepository = new CommentRepository(settings);
         }
 
         public Like Add(Like like)
@@ -33,9 +36,10 @@ namespace PostService.Services
             switch (like.ObjectType)
             {
                 case "post":
-                    //_postRepository.IncreaseLikeCount(like.ObjectId);
+                    _postRepository.IncreaseLikeCount(like.ObjectId);
                     break;
                 case "comment":
+                    _commentRepository.IncreaseLikeCount(like.ObjectId);
                     break;
             }
             return _likeRepository.Add(like);
@@ -46,9 +50,10 @@ namespace PostService.Services
             switch (like.ObjectType)
             {
                 case "post":
-                    //_postRepository.DecreaseLikeCount(like.ObjectId);
+                    _postRepository.DecreaseLikeCount(like.ObjectId);
                     break;
                 case "comment":
+                    _commentRepository.IncreaseLikeCount(like.ObjectId);
                     break;
             }
             return _likeRepository.Delete(like.ObjectId, like.UserId);

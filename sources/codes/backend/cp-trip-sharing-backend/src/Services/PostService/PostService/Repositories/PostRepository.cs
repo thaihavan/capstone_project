@@ -29,29 +29,27 @@ namespace PostService.Repositories
             return param;
         }
 
-        public bool DecreaseCommentCount(string id,int commentCount)
+        public bool DecreaseCommentCount(string id)
         {       
             _posts.FindOneAndUpdate(
-                Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("comment_count", commentCount - 1)
+                p => p.Id == id,
+                Builders<Post>.Update.Inc("comment_count",-1)
                 );
             return true;
         }
 
-        public bool DecreaseLikeCount(string id,int likeCount)
+        public bool DecreaseLikeCount(string id)
         {
             _posts.FindOneAndUpdate(
-                Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("like_count", likeCount - 1)
+                p => p.Id == id,
+                Builders<Post>.Update.Inc("like_count",-1)
                 );
             return true;
         }
 
         public bool Delete(string id)
         {
-            var filter = Builders<Post>.Filter.Eq(p => p.Id, new BsonObjectId(id));
-
-            _posts.DeleteOne(filter);
+            _posts.DeleteOne(p => p.Id == id);
 
             return true;
         }
@@ -63,33 +61,30 @@ namespace PostService.Repositories
 
         public Post GetById(string id)
         {
-            return _posts.Find(p => p.Id.Equals(new BsonObjectId(id))).FirstOrDefault();
+            return _posts.Find(p => p.Id == id).FirstOrDefault();
         }
 
-        public bool IncreaseCommentCount(string id,int commentCount)
-        {
-            var post = GetById(id);
+        public bool IncreaseCommentCount(string id)
+        {            
             _posts.FindOneAndUpdate(
-                Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("like_count", commentCount + 1)
+                p => p.Id == id,
+                Builders<Post>.Update.Inc("like_count",1)
                 );
             return true;
         }
 
-        public bool IncreaseLikeCount(string id,int likeCount)
-        {
-            var post = GetById(id);
+        public bool IncreaseLikeCount(string id)
+        {           
             _posts.FindOneAndUpdate(
-                Builders<Post>.Filter.Eq("_id", new BsonObjectId(ObjectId.Parse(id))),
-                Builders<Post>.Update.Set("like_count", likeCount + 1)
+                p => p.Id == id,
+                Builders<Post>.Update.Inc("like_count", 1)
                 );
             return true;
         }
 
         public Post Update(Post param)
         {
-            var filter = Builders<Post>.Filter.Eq(p => p.Id, param.Id);
-            var relult = _posts.ReplaceOne(filter, param);
+            var relult = _posts.ReplaceOne(p => p.Id == param.Id, param);
             if (!relult.IsAcknowledged)
             {
                 return null;

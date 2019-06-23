@@ -96,5 +96,17 @@ namespace PostService.Repositories.DbContext
                 return null;
             }
         }
+
+        public IMongoCollection<Author> Authors
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<Author>("Authors");
+                }
+                return null;
+            }
+        }
     }
 }

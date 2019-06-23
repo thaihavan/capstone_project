@@ -11,7 +11,8 @@ namespace PostService.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("title")]
         public string Title { get; set; }
@@ -31,14 +32,18 @@ namespace PostService.Models
         [BsonElement("post_type")]
         public string PostType { get; set; }
 
-        [BsonElement("author")]
-        public Author Author { get; set; }
+        [BsonElement("author_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string AuthorId { get; set; }
 
         [BsonElement("like_count")]
         public int LikeCount { get; set; }
 
         [BsonElement("comment_count")]
         public int CommentCount { get; set; }
+
+        [BsonIgnore]
+        public Author Author { get; set; }
 
     }
 }

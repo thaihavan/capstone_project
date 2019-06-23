@@ -33,17 +33,6 @@ namespace PostService.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "member")]
-        [HttpPost("create")]
-        public IActionResult Create([FromBody] Post postParam) {
-            var result = _postService.Add(postParam);
-            if (result == null)
-            {
-                return BadRequest(new ErrorMessage { Message = "Error" });
-            }
-            return Ok(result);
-        }
-
         [AllowAnonymous]
         [HttpGet]
         public IActionResult GetById([FromQuery]string postId)
@@ -52,21 +41,5 @@ namespace PostService.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "member")]
-        [HttpPost("update")]
-        public IActionResult Update([FromBody] Post post)
-        {
-            var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_id").Value;
-
-            if (!post.Author.AuthorId.Equals(new BsonObjectId(userId)))
-            {
-                return Unauthorized();
-            }
-
-            Post updatedPost = _postService.Add(post);
-
-            return Ok(updatedPost);
-        }
     }
 }

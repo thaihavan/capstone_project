@@ -42,7 +42,22 @@ namespace PostService.Services
 
         public IEnumerable<Comment> GetCommentByPost(string id)
         {
-            return _commentRepository.GetCommentByPost(id);
+            List<Comment> comments = new List<Comment>();
+            var allComment = _commentRepository.GetCommentByPost(id);
+            var dict = allComment.ToDictionary(x => x.Id, x => x);
+            foreach (var x in dict)
+            {
+                if (x.Value.ParentId == null)
+                {
+                    comments.Add(x.Value);
+                }
+                else
+                {
+                    var parent = dict[x.Value.ParentId];
+                    parent.Childs.Add(x.Value);
+                }
+            }
+            return comments;
         }
 
         public Comment Update(Comment cmt)

@@ -37,17 +37,17 @@ namespace UserServices.Reponsitories
             return document;
         }
 
-        public IEnumerable<Block> GetAll(string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Block GetById(string id)
         {
             throw new NotImplementedException();
         }
 
         public Block Update(Block document)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Block> GetAll()
         {
             throw new NotImplementedException();
         }

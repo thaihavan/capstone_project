@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ResetPasswordModel } from 'src/app/model/ResetPasswordModel';
 import { Account } from 'src/app/model/Account';
 import { User } from 'src/app/model/User';
-
+import { ChangePassword } from 'src/app/model/ChangePassword';
+import { HostGlobal } from 'src/app/core/global-variables';
 
 const httpOption = {
   headers: new HttpHeaders({
@@ -23,10 +24,12 @@ const httpOptionAuthen = {
   providedIn: 'root'
 })
 export class UserService {
-  // apiUrl = 'https://localhost:44353/api/identity/account/';
-  apiUrl = 'http://107.178.242.201/api/identity/account/';
-  apiUserService = 'https://localhost:44351/api/userservice/';
-  constructor(private http: HttpClient) { }
+  apiUrl: string = null;
+  apiUserService: string = null;
+  constructor(private http: HttpClient) {
+    this.apiUrl = HostGlobal.HOST_IDENTITY_PROVIDER + '/api/identity/account/';
+    this.apiUserService = HostGlobal.HOST_USER_SERVICE + '/api/userservice/';
+  }
 
   getAccount(account: Account): Observable<Account> {
     return this.http.post<Account>(this.apiUrl + 'authenticate', account, httpOption);
@@ -36,14 +39,28 @@ export class UserService {
     return this.http.post<any>(this.apiUrl + 'register', account, httpOption);
   }
 
-  changePassword(account: Account): Observable<any> {
+  forgotPassword(account: Account): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'forgotpassword', account, httpOption);
+  }
+
+  changePassword(changePasswordObject: ChangePassword): Observable<any> {
     const httpOptionAu = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post<any>(this.apiUrl + 'changePassword', account, httpOptionAu);
+    return this.http.post<any>(this.apiUrl + 'changePassword', changePasswordObject, httpOptionAu);
+  }
+
+  resetPassword(token: string, newpassword: ResetPasswordModel): Observable<any> {
+    const httpOptionAu = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.post<any>(this.apiUrl + 'resetpassword', newpassword, httpOptionAu);
   }
 
   verifyEmail(token: string): Observable<any> {

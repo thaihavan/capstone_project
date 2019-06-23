@@ -11,28 +11,38 @@ namespace PostService.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
-        [BsonElement("user_id")]
-        public BsonObjectId UserId { get; set; }
+        [BsonElement("author_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string AuthorId { get; set; }
 
         [BsonElement("post_id")]
-        public BsonObjectId PostId { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string PostId { get; set; }
 
         [BsonElement("parent_id")]
-        public BsonObjectId ParentId { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string ParentId { get; set; }
 
         [BsonElement("content")]
         public string Content { get; set; }
 
         [BsonElement("date")]
-        public BsonDateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
         [BsonElement("is_active")]
-        public BsonBoolean Active { get; set; }
+        public bool Active { get; set; }
+
+        [BsonElement("like_count")]
+        public int LikeCount { get; set; }
 
         [BsonIgnore]
         public List<Comment> Childs { get; set; }
+
+        [BsonIgnore]
+        public Author Author { get; set; }
 
         public Comment()
         {

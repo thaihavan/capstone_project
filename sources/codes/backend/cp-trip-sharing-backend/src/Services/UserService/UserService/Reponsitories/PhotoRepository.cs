@@ -39,6 +39,11 @@ namespace UserServices.Reponsitories
             return photos;
         }
 
+        public IEnumerable<Photo> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
         public Photo GetById(string id)
         {
             throw new NotImplementedException();

@@ -1,5 +1,5 @@
 
 <div class="form-group" [style.width.px]="width">
-  <input #searchmap type="text" class="form-control" [style.height.px]="height" placeholder="Search">
+  <input #searchmap [(ngModel)]="textInput" type="text" class="form-control" [style.height.px]="height" placeholder="Search">
   <span class="fa fa-search form-control-icon" [style.line-height.px]="height"></span>
 </div> 

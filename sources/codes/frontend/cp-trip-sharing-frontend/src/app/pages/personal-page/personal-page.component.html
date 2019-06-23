@@ -68,13 +68,13 @@
             <div class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span>Địa chỉ: <i>Nam Định</i></span>
+                <span>Địa chỉ: <i>{{user.Address}}</i></span>
               </a>
             </div>
             <div class="card-person-infor">
-              <a href="#" class="mat-button">
+              <a class="mat-button">
                 <i class="fa fa-envelope"></i>
-                <span>Nhắn tin</span>
+                <span (click)="callUpdateProfile()">Chỉnh sửa trang cá nhân</span>
               </a>
             </div>
             <!-- Button -->

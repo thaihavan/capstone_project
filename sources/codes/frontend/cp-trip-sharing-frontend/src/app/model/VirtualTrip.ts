@@ -3,8 +3,7 @@ import { LocationMarker } from './LocationMarker';
 
 export class VirtualTrip {
     id: string;
-    virtualTripItems: LocationMarker[];
+    items: LocationMarker[];
     postId: string;
-    coverImage: string;
     post: Post;
 }

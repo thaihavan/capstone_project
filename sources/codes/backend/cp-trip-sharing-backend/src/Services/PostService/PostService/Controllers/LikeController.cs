@@ -31,10 +31,9 @@ namespace PostService.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            if(!param.UserId.Equals(userId))
-            {
-                return Unauthorized();
-            }
+
+            param.UserId = userId;
+
             _likeService.Add(param);
             return Ok(param);
         }
@@ -45,14 +44,8 @@ namespace PostService.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-
-            if(like.UserId != userId)
-            {
-                return Unauthorized();
-            }
-
+            like.UserId = userId;
             _likeService.Delete(like);
-
             return Ok();
         }
     }

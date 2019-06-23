@@ -36,7 +36,7 @@ namespace IdentityProvider.Test
         [TestCase]
         public void TestAuthenticate()
         {
-            Account acc = new Account() { UserId = ObjectId.Parse("5d027f3e8254691f48a4ab7c"), Email = "linhlp4@fpt.edu.vn", Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=", Role = "member", Username = "linhlp", PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==", Token = "asvaanbfbsgnnsn", Id = ObjectId.Parse("5d027f3e8254691f48a4ab7d") };
+            Account acc = new Account() { UserId ="5d027f3e8254691f48a4ab7c", Email = "linhlp4@fpt.edu.vn", Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=", Role = "member", PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==", Token = "asvaanbfbsgnnsn", Id = "5d027f3e8254691f48a4ab7d" };
             moqIaccountservice.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             var testService = new AccountService(moqIaccountservice.Object, Options.Create(_setting), moqIpublishtotopic.Object);
             Account result = testService.Authenticate("abc@gmail..com", "new_password");
@@ -46,7 +46,7 @@ namespace IdentityProvider.Test
         [TestCase]
         public void TestGetAll()
         {
-            Account acc = new Account() { Email = "phongtv@gmail.com", Password = "123456789", Role = "member", Username = "phongtv", PasswordSalt = "asvfav", Token = "asvaanbfbsgnnsn" };
+            Account acc = new Account() { Email = "phongtv@gmail.com", Password = "123456789", Role = "member", PasswordSalt = "asvfav", Token = "asvaanbfbsgnnsn" };
             List<Account> accounts = new List<Account>();
             accounts.Add(acc);
             moqIaccountservice.Setup(x => x.GetAll()).Returns(accounts);
@@ -60,7 +60,7 @@ namespace IdentityProvider.Test
         public void TestRegister()
         {
             Account accNull = null;
-            Account acc = new Account() { Email = "linhlppp@fpt.edu.vn", Password = "125436458569679", Username = "linhlp" };
+            Account acc = new Account() { Email = "linhlppp@fpt.edu.vn", Password = "125436458569679" };
             moqIaccountservice.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(accNull);
             moqIaccountservice.Setup(x => x.Add(It.IsAny<Account>())).Returns(acc);
             var testService = new AccountService(moqIaccountservice.Object, Options.Create(_setting), moqIpublishtotopic.Object);
@@ -72,7 +72,7 @@ namespace IdentityProvider.Test
 
         public void TestRegisterIfreturnNull()
         {
-            Account acc = new Account() { Email = "linhlppp@fpt.edu.vn", Password = "125436458569679", Username = "linhlp" };
+            Account acc = new Account() { Email = "linhlppp@fpt.edu.vn", Password = "125436458569679"};
             moqIaccountservice.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             var testService = new AccountService(moqIaccountservice.Object, Options.Create(_setting), moqIpublishtotopic.Object);
             Account accResult = testService.Register(acc);
@@ -83,7 +83,7 @@ namespace IdentityProvider.Test
 
         public void TestChangePassword()
         {
-            Account acc = new Account() { UserId = ObjectId.Parse("5d027f3e8254691f48a4ab7c"), Email = "linhlp4@fpt.edu.vn", Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=", Role = "member", Username = "linhlp", PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==", Token = "asvaanbfbsgnnsn", Id = ObjectId.Parse("5d027f3e8254691f48a4ab7d") };
+            Account acc = new Account() { UserId = "5d027f3e8254691f48a4ab7c", Email = "linhlp4@fpt.edu.vn", Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=", Role = "member", PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==", Token = "asvaanbfbsgnnsn", Id = "5d027f3e8254691f48a4ab7d" };
             moqIaccountservice.Setup(x => x.Get(It.IsAny<string>())).Returns(acc);
             var testService = new AccountService(moqIaccountservice.Object, Options.Create(_setting), moqIpublishtotopic.Object);
             bool changePassResult = testService.ChangePassword("abc@gmail.com", "new_password", "123456789");
@@ -96,14 +96,13 @@ namespace IdentityProvider.Test
         {
             Account acc = new Account()
             {
-                UserId = ObjectId.Parse("5d027f10de896f17a87b1044"),
+                UserId = "5d027f10de896f17a87b1044",
                 Email = "linhlp2@fpt.edu.vn",
                 Password = "UUFLBkIWy9AeELxK3fi3smamVNdCmeJX4LWHPQM/3X4=",
                 Role = "member",
-                Username = "linhlp",
                 PasswordSalt = "LQ993XXKV5Eo6/IBmoytuQ==",
                 Token = "asvaanbfbsgnnsn",
-                Id = ObjectId.Parse("5d027f10de896f17a87b1045")
+                Id = "5d027f10de896f17a87b1045"
             };
             moqIaccountservice.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             var testService = new AccountService(moqIaccountservice.Object, Options.Create(_setting), moqIpublishtotopic.Object);
@@ -123,12 +122,12 @@ namespace IdentityProvider.Test
 
         public void TestResetPassword()
         {
-            Account acc = new Account() { UserId = ObjectId.Parse("5d027f10de896f17a87b1044"),
+            Account acc = new Account() { UserId = "5d027f10de896f17a87b1044",
                 Email = "linhlp2@fpt.edu.vn",
                 Password = "UUFLBkIWy9AeELxK3fi3smamVNdCmeJX4LWHPQM/3X4=",
-                Role = "member", Username = "linhlp", PasswordSalt = "LQ993XXKV5Eo6/IBmoytuQ==",
+                Role = "member", PasswordSalt = "LQ993XXKV5Eo6/IBmoytuQ==",
                 Token = "asvaanbfbsgnnsn",
-                Id = ObjectId.Parse("5d027f10de896f17a87b1045") };
+                Id = "5d027f10de896f17a87b1045" };
             moqIaccountservice.Setup(x => x.Get(It.IsAny<string>())).Returns(acc);
             var testService = new AccountService(moqIaccountservice.Object, Options.Create(_setting), moqIpublishtotopic.Object);
             bool checkResetPassword = testService.ResetPassword("", "123456789");

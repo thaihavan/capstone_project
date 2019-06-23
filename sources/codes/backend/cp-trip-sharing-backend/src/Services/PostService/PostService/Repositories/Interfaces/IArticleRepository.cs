@@ -10,12 +10,13 @@ namespace PostService.Repositories.Interfaces
     {
 
         IEnumerable<Article> GetAllArticleWithPost();
+
         IEnumerable<Article> GetAllArticleByUser(string userId);
 
         IEnumerable<Article> GetAllArticleInfo();
 
         Article GetArticleInfoById(string id);
 
-
+        IEnumerable<Article> GetAllArticleInfo(string userId);
     }
 }

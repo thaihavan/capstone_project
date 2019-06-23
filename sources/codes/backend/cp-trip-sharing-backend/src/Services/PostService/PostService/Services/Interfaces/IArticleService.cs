@@ -21,5 +21,7 @@ namespace PostService.Services.Interfaces
         Article Update(Article article);
 
         bool Delete(string id);
+
+        IEnumerable<Article> GetAllArticleInfo(string userId);
     }
 }

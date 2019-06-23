@@ -1,8 +1,8 @@
 export class Author {
     // tslint:disable-next-line:variable-name
-    authorId: string;
+    id: string;
     // tslint:disable-next-line:variable-name
-    authorName: string;
+    displayName: string;
     // tslint:disable-next-line:variable-name
-    authorImage: string;
+    profileImage: string;
 }

@@ -20,6 +20,7 @@ namespace PostService.Controllers
     {
         private readonly IArticleService _articleService = null;
         private readonly IPostService _postService = null;
+        private readonly IAuthorService _authorService = null;
 
         public ArticleController(IArticleService articleService, IPostService postService)
         {
@@ -31,7 +32,16 @@ namespace PostService.Controllers
         [HttpGet("all")]
         public IActionResult GetAllArticleInfo()
         {
-            var articles = _articleService.GetAllArticleInfo();
+            IEnumerable<object> articles = null;
+            var identity = (ClaimsIdentity)User.Identity;
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = identity.FindFirst("user_id").Value;
+                articles = _articleService.GetAllArticleInfo(userId);         
+            }else
+            {
+                articles = _articleService.GetAllArticleInfo();
+            }           
             return Ok(articles);
         }
 
@@ -44,7 +54,6 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-
         [HttpGet("userid")]
         public IActionResult GetByUserId([FromQuery] string id)
         {
@@ -66,19 +75,14 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            if (article.Post.Author == null)
-            {
-                article.Post.Author = new Author();
-            }
-            article.Post.Author.AuthorId = new BsonObjectId(userId);
-
-            article.Id = new BsonObjectId(ObjectId.GenerateNewId());
-            article.PostId = new BsonObjectId(ObjectId.GenerateNewId());
-            article.Post.Id = article.PostId;
-            article.Post.LikeCount = 0;  
-            article.Post.CommentCount = 0;
-
-            Post addedPost = _postService.Add(article.Post);
+            //article.Post.AuthorId = userId;
+            article.Id = ObjectId.GenerateNewId().ToString();
+            article.PostId = ObjectId.GenerateNewId().ToString();
+            //article.Post.Id = article.PostId;
+            //article.Post.LikeCount = 0;  
+            //article.Post.CommentCount = 0;
+            
+            //Post addedPost = _postService.Add(article.Post);
             Article addedArticle = _articleService.Add(article);
 
             return Ok(addedArticle);
@@ -91,7 +95,7 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            if (!article.Post.Author.AuthorId.Equals(new BsonObjectId(userId)))
+            if (!article.Post.AuthorId.Equals(new ObjectId(userId)))
             {
                 return Unauthorized();
             }

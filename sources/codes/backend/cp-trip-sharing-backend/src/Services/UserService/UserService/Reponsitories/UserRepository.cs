@@ -39,11 +39,6 @@ namespace UserServices.Reponsitories
             return users;
         }
 
-        public IEnumerable<User> GetAll(string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public User GetById(string id)
         {
             var user = _users.Find(x => x.Id.Equals(new BsonObjectId(new ObjectId(id)))).FirstOrDefault();
