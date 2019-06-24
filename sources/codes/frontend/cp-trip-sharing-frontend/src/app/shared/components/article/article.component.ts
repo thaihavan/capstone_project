@@ -14,13 +14,18 @@ export class ArticleComponent implements OnInit {
   like: Like;
   @Input() post: Post;
   token: string;
-  follow = false;
+  follow: boolean;
   constructor(private postService: PostService, private userServiceL: UserService) {
     this.like = new Like();
-    this.token = localStorage.getItem('Token');
   }
 
   ngOnInit() {
+    this.token = localStorage.getItem('Token');
+    this.userServiceL.getFollowed(this.post.author.id, this.token).subscribe((data: any) => {
+      this.follow = data.followed;
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
   }
 
   likePost(like: any) {
@@ -28,7 +33,6 @@ export class ArticleComponent implements OnInit {
     this.like.ObjectType = 'post';
     if (like === false) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
-        console.log(data);
         this.post.liked = true;
       }, (err: HttpErrorResponse) => {
         console.log(err);
@@ -43,17 +47,15 @@ export class ArticleComponent implements OnInit {
   }
 
   followPerson(userId: any) {
-    debugger;
-    this.follow = !this.follow;
-    if (this.follow === true) {
+    if (this.follow === false) {
       this.userServiceL.addFollow(userId, this.token).subscribe((data: any) => {
-        console.log(data + 'fo');
+        this.follow = true;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else {
       this.userServiceL.unFollow(userId, this.token).subscribe((data: any) => {
-        console.log(data + 'un');
+        this.follow = false;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
