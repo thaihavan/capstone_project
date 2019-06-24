@@ -66,14 +66,14 @@ namespace UserServices.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("followed")]
-        public IActionResult GetCurrentUserFollowed([FromBody] List<string> userIds)
+        [HttpGet("followed")]
+        public IActionResult GetCurrentUserFollowed([FromQuery] string following)
         {
             if (User.Identity.IsAuthenticated)
             {
                 var identity = User.Identity as ClaimsIdentity;
                 var userId = identity.FindFirst("user_id").Value;
-                return Ok(_followService.GetCurrentUserFollowed(userId, userIds));
+                return Ok(new { followed = _followService.IsFollowed(userId, following) });
             }
             else return NoContent();
         }
