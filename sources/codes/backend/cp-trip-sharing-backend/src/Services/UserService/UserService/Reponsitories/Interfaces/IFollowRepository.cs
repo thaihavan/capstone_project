@@ -8,6 +8,6 @@ namespace UserServices.Reponsitories.Interfaces
         Follow Unfollow(Follow follow);
         IEnumerable<Follow> GetAllFollower(string userId);
         IEnumerable<Follow> GetAllFollowing(string userId);
-        bool IsFollowed(string follower, string following);
+        IEnumerable<object> GetCurrentUserFollowed(string userId, List<string> userIds);
     }
 }

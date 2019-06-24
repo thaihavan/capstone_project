@@ -30,9 +30,9 @@ namespace UserServices.Services
             return _followRepository.Add(follow);
         }
 
-        public bool IsFollowed(string follower, string  following)
+        public IEnumerable<object> GetCurrentUserFollowed(string userId, List<string> userIds)
         {
-            return _followRepository.IsFollowed(follower, following);
+            return _followRepository.GetCurrentUserFollowed(userId, userIds);
         }
 
         public Follow Unfollow(Follow follow)
