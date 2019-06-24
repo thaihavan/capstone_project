@@ -22,14 +22,13 @@ export class DetailpostPageComponent implements OnInit {
   constructor(private postService: PostService, private route: ActivatedRoute) {
     this.post = new Post();
     this.comments = [];
-  }
-
-  ngOnInit() {
     this.postId = this.route.snapshot.queryParamMap.get('postId');
     this.loadDetaiPost(this.postId);
-    this.getCommentByPostId(this.postId);
     this.token = localStorage.getItem('Token');
+    this.getCommentByPostId(this.postId);
   }
+
+  ngOnInit() {}
 
   loadDetaiPost(postid: string) {
     this.postService.getDetail(postid).subscribe((data: any) => {

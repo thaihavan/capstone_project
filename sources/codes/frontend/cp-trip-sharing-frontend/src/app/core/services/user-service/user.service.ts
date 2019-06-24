@@ -92,21 +92,20 @@ export class UserService {
   addFollow(following: string, token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token
       })
     };
-    return this.http.post<any>(this.apiUserService + 'user/follow?following=' + following , httpAuthen);
+    return this.http.post<any>(this.apiUserService + 'follow/follow?following=' + following , null, httpAuthen);
   }
 
   unFollow(following: string, token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token
-      })
+      }),
+      body: null
     };
-    return this.http.delete<any>(this.apiUserService + 'user/unfollow?following=' + following);
+    return this.http.delete<any>(this.apiUserService + 'follow/unfollow?following=' + following, httpAuthen);
   }
 
   getAllPhoto(): Observable<any> {
