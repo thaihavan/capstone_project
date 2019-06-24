@@ -33,7 +33,7 @@
             <img class="imgavatar" src="{{urlImgavatar}}"/>
           </div>
           <mat-menu #menu="matMenu">
-            <button class="options" routerLink="/personal" mat-menu-item>Trang cá nhân</button>
+            <button class="options" (click)="gotoPersonalPage()" mat-menu-item>Trang cá nhân</button>
             <button mat-menu-item>Blog của bạn</button>
             <button routerLink="/change-password" mat-menu-item>Đổi mật khẩu</button>
             <button (click)="signOut()" mat-menu-item>Đăng xuất</button>

@@ -34,12 +34,14 @@ export class ArticleComponent implements OnInit {
     if (like === false) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         this.post.liked = true;
+        this.post.likeCount += 1;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.post.liked = false;
+        this.post.likeCount -= 1;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });

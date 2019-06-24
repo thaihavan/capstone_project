@@ -15,4 +15,6 @@ export class Post {
     time: string;
     likes: number;
     comments: number;
+    likeCount: number;
+    commentCount: number;
 }
