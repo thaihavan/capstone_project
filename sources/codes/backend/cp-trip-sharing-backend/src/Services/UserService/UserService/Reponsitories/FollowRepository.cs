@@ -64,18 +64,9 @@ namespace UserServices.Reponsitories.Interfaces
             return _follows.Find(x => x.Follower.Equals(new BsonObjectId(ObjectId.Parse(userId)))).ToList();
         }
 
-        public IEnumerable<object> GetCurrentUserFollowed(string userId, List<string> userIds)
+        public bool IsFollowed(string follower, string following)
         {
-            var query = userIds.GroupJoin(
-                _follows.AsQueryable().Where(x => x.Follower.Equals(userId)),
-                user => user,
-                follow => follow.Following,
-                (user, follow) => new
-                {
-                    userId = user,
-                    followed = follow.Count()>0? true:false
-                });
-            return query.ToList();
+            return _follows.CountDocuments(x=> x.Follower.Equals(follower)&&x.Following.Equals(following)) > 0 ? true : false;
         }
     }
 }

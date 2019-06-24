@@ -7,6 +7,6 @@ namespace UserServices.Services.Interfaces
     {
         Follow AddFollows(Follow follow);
         Follow Unfollow(Follow follow);
-        IEnumerable<object> GetCurrentUserFollowed(string userId, List<string> userIds);
+        bool IsFollowed(string follower, string following);
     }
 }
