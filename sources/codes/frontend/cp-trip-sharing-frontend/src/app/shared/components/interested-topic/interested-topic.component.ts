@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class InterestedTopicComponent implements OnInit {
 
   selectedTopic: string[] = [];
+  @Input() listTopicIdSelected: string[] = [];
   @Input() listTopics: Topic[];
   @Output() EventTopic: EventEmitter<string[]> = new EventEmitter();
   listselectedTopic: Array<Topic> = [];
@@ -20,6 +21,9 @@ export class InterestedTopicComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTopics();
+    this.listTopicIdSelected.forEach(topicId => {
+      console.log(topicId);
+    });
   }
 
   onSelectTopic(topic: Topic): void {
@@ -43,7 +47,6 @@ export class InterestedTopicComponent implements OnInit {
   }
 
   getAllTopics() {
-    debugger;
     this.postService.getAllTopics().subscribe((topics: Topic[]) => {
       this.listTopics = topics;
     }, (err: HttpErrorResponse) => {

@@ -9,34 +9,33 @@
               <h4>Cập nhật thông tin</h4>
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input matInput type="text" placeholder="@username" [value]='user.UserName'
-                formControlName='usernameFormCtrl' (input)='user.UserName = $event.target.value' required />
+              <input matInput type="text" placeholder="@username" [(ngModel)]="user.UserName"
+               [ngModelOptions]="{standalone: true}" required />
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input matInput type="text" placeholder="Tên hiển thị" [value]='user.DisplayName'
-                formControlName='displayNameFormCtrl' (input)='user.DisplayName = $event.target.value' required />
+              <input matInput type="text" placeholder="Tên hiển thị" [(ngModel)]="user.DisplayName"
+               [ngModelOptions]="{standalone: true}" required />
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input matInput type="text" placeholder="Họ" [value]='user.FirstName'
-                (input)='user.FirstName = $event.target.value' formControlName='firstnameFormCtrl' required />
+              <input matInput type="text" placeholder="Họ" [(ngModel)]="user.FirstName"
+              [ngModelOptions]="{standalone: true}" required />
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input matInput type="text" placeholder="Tên" [value]='user.LastName'
-                (input)='user.LastName = $event.target.value' formControlName='lastnameFormCtrl' required />
+              <input matInput type="text" placeholder="Tên" [(ngModel)]="user.LastName"
+              [ngModelOptions]="{standalone: true}" required />
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input type="date" [value]='user.Dob' (input)='user.Dob = $event.target.value' placeholder="Ngày sinh" />
+              <input type="date" [ngModelOptions]="{standalone: true}" [ngModel] ="user.Dob | date:'yyyy-MM-dd'" (ngModelChange)="user.Dob = $event" placeholder="Ngày sinh" />
 
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input type="text" [value]='user.Address' (input)='user.Address = $event.target.value'
+              <input type="text" [(ngModel)]="user.Address" [ngModelOptions]="{standalone: true}"
                 placeholder="Địa chỉ" />
             </div>
             <div class="input_field radio_option">
-              <input type="radio" name="radiogroup1" id="rd1" value="true" (change)="user.Gender = $event.target.value">
+              <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
               <label for="rd1">Nam</label>
-              <input type="radio" name="radiogroup1" id="rd2" value="false"
-                (change)="user.Gender = $event.target.value">
+              <input type="radio" name="gender" id="rd2" [value]="false" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
               <label for="rd2">Nữ</label>
             </div>
             <input matStepperNext class="button" type="submit" (click)="callInterestedtopicPage(stepper)"
@@ -53,7 +52,7 @@
           <div class="interested-topic-title">
             <h4>Chọn ít nhất 3 chủ đề bạn quan tâm</h4>
           </div>
-          <app-interested-topic (EventTopic)="selectedTopics($event)"></app-interested-topic>
+          <app-interested-topic [listTopicIdSelected]="user.Interested" (EventTopic)="selectedTopics($event)"></app-interested-topic>
           <button type="button" class="btn btn-primary" (click)="registerUser()">Tiếp tục</button>
         </div>
       </form>

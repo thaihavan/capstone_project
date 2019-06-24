@@ -14,7 +14,6 @@ export class InitialUserInformationPageComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-
   user: User;
   selectedTopic: string[] = [];
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
@@ -30,10 +29,7 @@ export class InitialUserInformationPageComponent implements OnInit {
 
   ngOnInit() {
     this.firstFormGroup = this.formBuilder.group({
-      usernameFormCtrl: ['', Validators.required],
-      firstnameFormCtrl: ['', Validators.required],
-      lastnameFormCtrl: ['', Validators.required],
-      displayNameFormCtrl: ['', Validators.required],
+
     });
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
@@ -41,21 +37,23 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   callInterestedtopicPage(stepper: MatStepper) {
-    console.log(this.user);
-    stepper.next();
+    if (this.user.UserName != null && this.user.FirstName != null && this.user.LastName != null && this.user.DisplayName != null) {
+      console.log(this.user);
+      stepper.next();
+    }
+
   }
 
-  selectedTopics(topics) {
+  selectedTopics(topics: any) {
     this.user.Interested = topics;
     console.log(this.user.Interested);
   }
 
-  onGenderChange(value) {
+  onGenderChange(value: any) {
     this.user.Gender = value;
   }
 
   registerUser() {
-    debugger;
     this.userService.registerUser(this.user).subscribe((result: any) => {
       window.location.href = '/home';
     }, (err: HttpErrorResponse) => {

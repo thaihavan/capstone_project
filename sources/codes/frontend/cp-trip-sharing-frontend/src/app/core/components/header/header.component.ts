@@ -13,10 +13,7 @@ export class HeaderComponent implements OnInit {
   checkLogined: boolean;
   userId: string;
   urlImgavatar = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
-  constructor(private globals: Globals, private dialog: MatDialog) {
-    const account = JSON.parse(localStorage.getItem('Account'));
-    this.userId = account.userId;
-  }
+  constructor(private globals: Globals, private dialog: MatDialog) {}
 
   ngOnInit() {
     if (localStorage.getItem('Token') != null) {
@@ -41,6 +38,8 @@ export class HeaderComponent implements OnInit {
   }
 
   gotoPersonalPage() {
+    const account = JSON.parse(localStorage.getItem('Account'));
+    this.userId = account.userId;
     window.location.href = '/personal/article?userId=' + this.userId;
   }
 }
