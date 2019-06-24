@@ -29,11 +29,11 @@ namespace UserServices.Controllers
         {
             var follow = new Follow()
             {
-                Following = new BsonObjectId(ObjectId.Parse(following))
+                Following = following
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            follow.Follower = new BsonObjectId(ObjectId.Parse(userId));
+            follow.Follower = userId;
             if (_followService.AddFollows(follow) != null)
             {
                 return Ok(follow);
@@ -50,11 +50,11 @@ namespace UserServices.Controllers
         {
             var follow = new Follow
             {
-                Following = ObjectId.Parse(following)
+                Following = following
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            follow.Follower = new ObjectId(userId);
+            follow.Follower = userId;
             if (_followService.Unfollow(follow) != null)
             {
                 return Ok(follow);
@@ -63,6 +63,19 @@ namespace UserServices.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("followed")]
+        public IActionResult GetCurrentUserFollowed([FromBody] List<string> userIds)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var identity = User.Identity as ClaimsIdentity;
+                var userId = identity.FindFirst("user_id").Value;
+                return Ok(_followService.GetCurrentUserFollowed(userId, userIds));
+            }
+            else return NoContent();
         }
     }
 }

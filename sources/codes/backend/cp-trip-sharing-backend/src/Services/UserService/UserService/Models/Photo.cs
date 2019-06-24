@@ -10,11 +10,13 @@ namespace UserServices.Models
     public class Photo : Model
     {
         [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("author")]
-        public BsonObjectId Author { get; set; }
+        public string Author { get; set; }
 
         [BsonElement("url")]
         public string Url { get; set; }

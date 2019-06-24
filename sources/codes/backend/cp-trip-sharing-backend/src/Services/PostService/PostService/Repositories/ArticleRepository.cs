@@ -209,8 +209,7 @@ namespace PostService.Repositories
                     _likes.AsQueryable().Where(x=>x.UserId==userId&&x.ObjectType=="post"),
                     article=> article.PostId,
                     like=>like.ObjectId,
-                    UpdateLike                  
-                );
+                    UpdateLike);
             return articles.ToList();
         }
     }

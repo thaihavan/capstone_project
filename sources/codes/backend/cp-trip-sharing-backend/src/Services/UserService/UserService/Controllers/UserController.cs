@@ -33,8 +33,8 @@ namespace UserServices.Controllers
             var userId = identity.FindFirst("user_id").Value;
             var accountId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
 
-            userParam.Id = new BsonObjectId(new ObjectId(userId));
-            userParam.AccountId = new BsonObjectId(new ObjectId(accountId));
+            userParam.Id = userId;
+            userParam.AccountId = accountId;
             userParam.Active = true;
             userParam.ContributionPoint = 0;
             userParam.CreatedDate = DateTime.Now;

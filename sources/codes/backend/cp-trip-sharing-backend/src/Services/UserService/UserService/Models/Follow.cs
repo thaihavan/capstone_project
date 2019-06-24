@@ -10,13 +10,16 @@ namespace UserServices.Models
     public class Follow : Model
     {
         [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("follower")]
-        public BsonObjectId Follower { get; set; }
+        public string Follower { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("following")]
-        public BsonObjectId Following { get; set; }
+        public string Following { get; set; }
     }
 }
