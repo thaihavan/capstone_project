@@ -14,7 +14,7 @@ export class ArticleComponent implements OnInit {
   like: Like;
   @Input() post: Post;
   token: string;
-  follow: boolean;
+  follow = false;
   constructor(private postService: PostService, private userServiceL: UserService) {
     this.like = new Like();
   }
@@ -22,7 +22,10 @@ export class ArticleComponent implements OnInit {
   ngOnInit() {
     this.token = localStorage.getItem('Token');
     this.userServiceL.getFollowed(this.post.author.id, this.token).subscribe((data: any) => {
-      this.follow = data.followed;
+      debugger;
+      if (data != null) {
+        this.follow = data.followed;
+      }
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });

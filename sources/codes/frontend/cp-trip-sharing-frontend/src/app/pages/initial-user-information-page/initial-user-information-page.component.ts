@@ -15,6 +15,8 @@ export class InitialUserInformationPageComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   user: User;
+  checkedRegister: boolean;
+  checkedUpdate: boolean;
   selectedTopic: string[] = [];
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.user = new User();
@@ -34,6 +36,14 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
+
+    if (this.user == null) {
+      this.checkedUpdate = false;
+      this.checkedRegister = true;
+    } else {
+      this.checkedUpdate = true;
+      this.checkedRegister = false;
+    }
   }
 
   callInterestedtopicPage(stepper: MatStepper) {
@@ -58,6 +68,14 @@ export class InitialUserInformationPageComponent implements OnInit {
       window.location.href = '/home';
     }, (err: HttpErrorResponse) => {
       window.location.href = '/initial';
+    });
+  }
+
+  updateUser() {
+    this.userService.updateUser(this.user).subscribe((result: any) => {
+      window.location.href = '/personal/article?userId=' + this.user.UserId;
+    }, (err: HttpErrorResponse) => {
+      window.location.href = '/personal/article?userId=' + this.user.UserId;
     });
   }
 }

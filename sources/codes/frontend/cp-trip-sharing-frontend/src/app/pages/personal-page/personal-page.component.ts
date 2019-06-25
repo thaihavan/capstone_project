@@ -83,6 +83,7 @@ export class PersonalPageComponent implements OnInit {
       }
     });
     const instance = dialogRef.componentInstance;
+    instance.user.UserId = this.userId;
     instance.user.UserName = this.user.UserName;
     instance.user.DisplayName = this.user.DisplayName;
     instance.user.FirstName = this.user.FirstName;

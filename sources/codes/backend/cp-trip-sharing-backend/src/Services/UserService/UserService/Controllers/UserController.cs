@@ -56,10 +56,7 @@ namespace UserServices.Controllers
                 return BadRequest("Parameter can not be null.");
             }
 
-            if (!userParam.Id.Equals(new BsonObjectId(ObjectId.Parse(userId))))
-            {
-                return Unauthorized();
-            }
+            userParam.Id = userId;
 
             var result = _userService.Update(userParam);
             return Created("", result);

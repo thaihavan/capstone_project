@@ -130,6 +130,10 @@ export class UserService {
     return this.http.post<any>(this.apiUserService + 'user/register', user, httpOptionAuthen);
   }
 
+  updateUser(user: User): Observable<any> {
+    return this.http.post<any>(this.apiUserService + 'user/update', user, httpOptionAuthen);
+  }
+
   //   getAll(): Observable<any> {
   //     const params: URLSearchParams = new URLSearchParams();
   // �	return this.http.get<any>(this.apiUserService + 'All');
