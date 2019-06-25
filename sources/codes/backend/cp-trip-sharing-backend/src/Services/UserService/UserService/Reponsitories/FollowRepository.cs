@@ -58,21 +58,21 @@ namespace UserServices.Reponsitories.Interfaces
         
         public IEnumerable<User> GetAllFollower(string userId)
         {
-            return _user.AsQueryable().Join(
-                _follows.AsQueryable().Where(x => x.Following.Equals(userId)),
-                user => user.Id,
+            return _follows.AsQueryable().Where(x => x.Following.Equals(userId)).Join(
+                _user.AsQueryable(),               
                 follow => follow.Follower,
-                (user, follow) => user
+                user => user.Id,
+                (follow, user) => user
                 ).ToList();    
         }
 
         public IEnumerable<User> GetAllFollowing(string userId)
         {
-            return _user.AsQueryable().Join(
-                _follows.AsQueryable().Where(x => x.Follower.Equals(userId)),
-                user => user.Id,
+            return _follows.AsQueryable().Where(x => x.Follower.Equals(userId)).Join(
+                _user.AsQueryable(),
                 follow => follow.Following,
-                (user, follow) => user
+                user => user.Id,
+                (follow, user) => user
                 ).ToList();
         }
 

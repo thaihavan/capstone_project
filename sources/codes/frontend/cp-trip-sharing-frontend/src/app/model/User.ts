@@ -9,4 +9,6 @@ export class User {
     public Gender: boolean;
     public Address: string;
     public ContributionPoint: number;
+    public FollowerCount: number;
+    public FollowingCount: number;
 }

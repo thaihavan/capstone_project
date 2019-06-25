@@ -56,5 +56,11 @@ namespace UserServices.Models
 
         [BsonElement("address")]
         public string Address { get; set; }
+
+        [BsonIgnore]
+        public int FollowerCount { get; set; }
+
+        [BsonIgnore]
+        public int FollowingCount { get; set; }
     }
 }

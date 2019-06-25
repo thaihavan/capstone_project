@@ -15,11 +15,13 @@ namespace UserServices.Reponsitories
     public class UserRepository : IUserRepository
     {
         private readonly IMongoCollection<User> _users = null;
+        private readonly IFollowRepository _followRepository = null;
 
         public UserRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
             _users = dbContext.Users;
+            _followRepository = new FollowRepository(settings);
         }
         
         public User Add(User user)
@@ -41,7 +43,11 @@ namespace UserServices.Reponsitories
 
         public User GetById(string id)
         {
-            var user = _users.Find(x => x.Id.Equals(new BsonObjectId(new ObjectId(id)))).FirstOrDefault();
+            var user = _users.Find(x => x.Id.Equals(id)).FirstOrDefault();
+            var followerCount = _followRepository.GetAllFollower(id).Count();
+            var followingCount = _followRepository.GetAllFollowing(id).Count();
+            user.FollowerCount = followerCount;
+            user.FollowingCount = followingCount;
             return user;
         }
 

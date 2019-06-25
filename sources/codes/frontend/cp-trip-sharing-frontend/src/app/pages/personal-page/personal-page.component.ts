@@ -52,6 +52,7 @@ export class PersonalPageComponent implements OnInit {
 
   getInforUser(userId: string) {
     this.userService.getUserById(userId).subscribe((data: any) => {
+      console.log(data);
       this.user.ContributionPoint = data.contributionPoint;
       this.user.Dob = data.dob;
       this.user.DisplayName = data.displayName;
@@ -61,6 +62,8 @@ export class PersonalPageComponent implements OnInit {
       this.user.LastName = data.lastName;
       this.user.UserName = data.userName;
       this.user.Address = data.address;
+      this.user.FollowerCount = data.followerCount;
+      this.user.FollowingCount = data.followingCount;
       if (this.user.Gender === true) {
         this.gender = 'Nam';
       } else {
