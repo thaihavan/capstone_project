@@ -6,8 +6,8 @@ namespace UserServices.Reponsitories.Interfaces
     public interface IFollowRepository : IRepository<Follow>
     {
         Follow Unfollow(Follow follow);
-        IEnumerable<Follow> GetAllFollower(string userId);
-        IEnumerable<Follow> GetAllFollowing(string userId);
+        IEnumerable<User> GetAllFollower(string userId);
+        IEnumerable<User> GetAllFollowing(string userId);
         bool IsFollowed(string follower, string following);
     }
 }

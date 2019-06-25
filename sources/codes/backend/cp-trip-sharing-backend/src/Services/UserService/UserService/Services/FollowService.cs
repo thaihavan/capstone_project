@@ -30,6 +30,16 @@ namespace UserServices.Services
             return _followRepository.Add(follow);
         }
 
+        public IEnumerable<User> GetAllFollower(string userId)
+        {
+            return _followRepository.GetAllFollower(userId);
+        }
+
+        public IEnumerable<User> GetAllFollowing(string userId)
+        {
+            return _followRepository.GetAllFollowing(userId);
+        }
+
         public bool IsFollowed(string follower, string  following)
         {
             return _followRepository.IsFollowed(follower, following);

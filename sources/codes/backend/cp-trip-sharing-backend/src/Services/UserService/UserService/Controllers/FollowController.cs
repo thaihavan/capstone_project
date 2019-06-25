@@ -77,5 +77,19 @@ namespace UserServices.Controllers
             }
             else return NoContent();
         }
+
+        [AllowAnonymous]
+        [HttpGet("follower")]
+        public IActionResult GetAllFollower([FromQuery] string userId)
+        {
+            return Ok(_followService.GetAllFollower(userId));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("following")]
+        public IActionResult GetAllFollowing([FromQuery] string userId)
+        {
+            return Ok(_followService.GetAllFollowing(userId));
+        }
     }
 }
