@@ -5,6 +5,9 @@ import { User } from 'src/app/model/User';
 import { MatDialog } from '@angular/material/dialog';
 import { InitialUserInformationPageComponent } from '../initial-user-information-page/initial-user-information-page.component';
 import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ListFollowComponent } from 'src/app/shared/components/list-follow/list-follow.component';
+
 @Component({
   selector: 'app-personal-page',
   templateUrl: './personal-page.component.html',
@@ -19,8 +22,9 @@ export class PersonalPageComponent implements OnInit {
   navLinks: any[];
   activeLinkIndex = 0;
   userId: string;
+  listUser: User[] = [];
 
-  constructor(private router: Router, private userService: UserService, public dialog: MatDialog,private route: ActivatedRoute) {
+  constructor(private router: Router, private userService: UserService, public dialog: MatDialog, private route: ActivatedRoute) {
     this.navLinks = [
       {
         label: 'Bài viết',
@@ -70,6 +74,8 @@ export class PersonalPageComponent implements OnInit {
         this.gender = 'Nữ';
       }
       console.log(this.user);
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
     });
   }
 
@@ -99,4 +105,32 @@ export class PersonalPageComponent implements OnInit {
     instance.user.Gender = this.user.Gender;
   }
 
+  showFollowingUser() {
+    this.userService.getAllFollowing(this.userId).subscribe((result: any) => {
+      console.log(result);
+      this.listUser = result;
+      this.openDialogFollow();
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  showFolowerUser() {
+    this.userService.getAllFollower(this.userId).subscribe((result: any) => {
+      console.log(result);
+      this.listUser = result;
+      this.openDialogFollow();
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  openDialogFollow() {
+    const dialogRef = this.dialog.open(ListFollowComponent, {
+      height: 'auto',
+      width: '80%'
+    });
+    const instance = dialogRef.componentInstance;
+    instance.listUser = this.listUser;
+  }
 }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Component  } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,7 +33,7 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
 import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
 import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
 import { DialogCreateTripComponent } from './pages/virtual-trips-page/dialog-create-trip/dialog-create-trip.component';
-
+import { ListFollowComponent } from './shared/components/list-follow/list-follow.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +78,7 @@ import { DialogCreateTripComponent } from './pages/virtual-trips-page/dialog-cre
   ],
   providers: [Globals],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent]
+  entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent, ListFollowComponent]
 
 })
 export class AppModule { }

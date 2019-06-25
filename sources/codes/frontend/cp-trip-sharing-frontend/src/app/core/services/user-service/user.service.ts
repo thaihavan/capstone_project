@@ -117,6 +117,14 @@ export class UserService {
     return this.http.get<any>(this.apiUserService + 'follow/followed?following=' + authorId, httpAuthen);
   }
 
+  getAllFollower(userId: any): Observable<any> {
+    return this.http.get<any>(this.apiUserService + 'follow/follower?userId=' + userId);
+  }
+
+  getAllFollowing(userId: any): Observable<any> {
+    return this.http.get<any>(this.apiUserService + 'follow/following?userId=' + userId);
+  }
+
   getAllPhoto(): Observable<any> {
     return this.http.get<any>(this.apiUserService + 'user/allphoto');
   }

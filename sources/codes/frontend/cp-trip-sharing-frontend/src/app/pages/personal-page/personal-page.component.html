@@ -72,15 +72,15 @@
               </a>
             </div>
             <div class="card-person-infor">
-              <a href="#" class="mat-button">
+              <a (click)="showFolowerUser()" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span><i>{{user.FollowerCount}} người theo dõi</i></span>
+                <span><i>{{user.FollowerCount}}</i> người theo dõi</span>
               </a>
             </div>
             <div class="card-person-infor">
-              <a href="#" class="mat-button">
+              <a (click)="showFollowingUser()" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span><i>{{user.FollowingCount}} người đang theo dõi</i></span>
+                <span><i>{{user.FollowingCount}}</i> người đang theo dõi</span>
               </a>
             </div>
             <div class="card-person-infor">
