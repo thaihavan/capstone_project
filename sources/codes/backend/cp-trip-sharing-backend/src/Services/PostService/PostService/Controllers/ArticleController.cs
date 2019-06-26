@@ -107,6 +107,7 @@ namespace PostService.Controllers
             article.Post.Id = article.PostId;
             article.Post.LikeCount = 0;
             article.Post.CommentCount = 0;
+            article.Post.PubDate = DateTime.Now;
 
             Post addedPost = _postService.Add(article.Post);
             Article addedArticle = _articleService.Add(article);
