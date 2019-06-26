@@ -4,6 +4,7 @@ import { Post } from 'src/app/model/Post';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
+import { UserService } from 'src/app/core/services/user-service/user.service';
 @Component({
   selector: 'app-list-post',
   templateUrl: './list-post.component.html',
@@ -29,7 +30,7 @@ export class ListPostComponent implements OnInit {
   articles: Article[] = [];
   pageIndex: 1;
   isLoading = true;
-
+  listUserIdFollowing: string[] = [];
   homeNav: string;
   personalNav: string;
 
@@ -49,15 +50,24 @@ export class ListPostComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private postService: PostService) { }
+  constructor(private route: ActivatedRoute, private postService: PostService, private userService: UserService) { }
 
   ngOnInit() {
     this.setNavParams();
-
     console.log('home-nav:', this.homeNav);
     console.log('personal-nav:', this.personalNav);
-
     this.getPost();
+    const token = localStorage.getItem('Token');
+    if (token != null) {
+      this.userService.getAllFollowingId(localStorage.getItem('Token')).subscribe((result: any) => {
+        this.listUserIdFollowing = result;
+        console.log(this.listUserIdFollowing + ' listId');
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+
+    }
   }
   onScroll() {
     console.log('list-post-on-scrole');

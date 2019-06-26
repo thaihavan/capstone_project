@@ -46,7 +46,7 @@
     </div>
     <mat-card-actions>
       <div class="d-flex justify-content-between">
-        <div [class]="post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(post.liked)">
+        <div *ngIf="checkUser" [class]="post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(post.liked)">
           <button mat-button>
             <mat-icon>thumb_up_alt</mat-icon>
             <span>Thích</span>

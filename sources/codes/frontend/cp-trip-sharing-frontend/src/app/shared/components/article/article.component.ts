@@ -4,6 +4,7 @@ import { PostService } from 'src/app/core/services/post-service/post.service';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Like } from 'src/app/model/Like';
 import { HttpErrorResponse } from '@angular/common/http';
+import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'app-article',
@@ -15,20 +16,28 @@ export class ArticleComponent implements OnInit {
   @Input() post: Post;
   token: string;
   follow = false;
+  checkUser = true;
+  user: any;
+  userId: string;
+  listUserIdFollowing: string[] = [];
   constructor(private postService: PostService, private userServiceL: UserService) {
     this.like = new Like();
+    this.token = localStorage.getItem('Token');
   }
 
   ngOnInit() {
-    this.token = localStorage.getItem('Token');
-    this.userServiceL.getFollowed(this.post.author.id, this.token).subscribe((data: any) => {
-      debugger;
-      if (data != null) {
-        this.follow = data.followed;
-      }
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    this.user = JSON.parse(localStorage.getItem('Account'));
+    if (this.user.userId === this.post.author.id) {
+      this.checkUser = false;
+    }
+    this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
+    if (this.listUserIdFollowing != null) {
+      this.listUserIdFollowing.forEach(userId => {
+        if (this.post.author.id === userId) {
+          this.follow = true;
+        }
+      });
+    }
   }
 
   likePost(like: any) {
@@ -55,12 +64,17 @@ export class ArticleComponent implements OnInit {
     if (this.follow === false) {
       this.userServiceL.addFollow(userId, this.token).subscribe((data: any) => {
         this.follow = true;
+        this.listUserIdFollowing.push(userId);
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else {
       this.userServiceL.unFollow(userId, this.token).subscribe((data: any) => {
         this.follow = false;
+        const unfollow = this.listUserIdFollowing.indexOf(userId);
+        this.listUserIdFollowing.splice(unfollow, 1);
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
