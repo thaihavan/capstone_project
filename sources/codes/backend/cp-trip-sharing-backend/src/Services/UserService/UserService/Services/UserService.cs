@@ -39,7 +39,7 @@ namespace UserServices.Services
                 };
                 
                 // Comment it if run in local environment
-                _publishToTopic.PublishAuthor(author);
+                //_publishToTopic.PublishAuthor(author);
             }
             return result;
         }

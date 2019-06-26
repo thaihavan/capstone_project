@@ -92,21 +92,46 @@ export class UserService {
   addFollow(following: string, token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token
       })
     };
-    return this.http.post<any>(this.apiUserService + 'user/follow?following=' + following , httpAuthen);
+    return this.http.post<any>(this.apiUserService + 'follow/follow?following=' + following, null, httpAuthen);
   }
 
   unFollow(following: string, token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }),
+      body: null
+    };
+    return this.http.delete<any>(this.apiUserService + 'follow/unfollow?following=' + following, httpAuthen);
+  }
+
+  getFollowed(authorId: string, token: string) {
+    const httpAuthen = {
+      headers: new HttpHeaders({
         Authorization: 'Bearer ' + token
       })
     };
-    return this.http.delete<any>(this.apiUserService + 'user/unfollow?following=' + following);
+    return this.http.get<any>(this.apiUserService + 'follow/followed?following=' + authorId, httpAuthen);
+  }
+
+  getAllFollower(userId: any): Observable<any> {
+    return this.http.get<any>(this.apiUserService + 'follow/follower?userId=' + userId);
+  }
+
+  getAllFollowing(userId: any): Observable<any> {
+    return this.http.get<any>(this.apiUserService + 'follow/following?userId=' + userId);
+  }
+
+  getAllFollowingId(token: any): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.get<any>(this.apiUserService + 'follow/followingids', httpAuthen);
   }
 
   getAllPhoto(): Observable<any> {
@@ -120,6 +145,10 @@ export class UserService {
 
   registerUser(user: User): Observable<any> {
     return this.http.post<any>(this.apiUserService + 'user/register', user, httpOptionAuthen);
+  }
+
+  updateUser(user: User): Observable<any> {
+    return this.http.post<any>(this.apiUserService + 'user/update', user, httpOptionAuthen);
   }
 
   //   getAll(): Observable<any> {

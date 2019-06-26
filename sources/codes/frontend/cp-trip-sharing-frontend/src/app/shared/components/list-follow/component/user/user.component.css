@@ -1,0 +1,19 @@
+/* .user-infor{
+    width: 150px;
+    height: 200px;
+    border: 1px solid
+} */
+
+.mat-card{
+    width: 20% !important;
+    height: 265px !important;
+}
+
+.example-header-image {
+    background-image: url(https://material.angular.io/assets/img/examples/shiba1.jpg) !important;
+    background-size: cover !important;
+}
+
+/* .mat-card-header{
+    border-bottom: 1px solid gray !important;
+} */

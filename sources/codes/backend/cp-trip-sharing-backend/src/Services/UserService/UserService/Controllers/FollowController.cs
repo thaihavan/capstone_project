@@ -29,11 +29,11 @@ namespace UserServices.Controllers
         {
             var follow = new Follow()
             {
-                Following = new BsonObjectId(ObjectId.Parse(following))
+                Following = following
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            follow.Follower = new BsonObjectId(ObjectId.Parse(userId));
+            follow.Follower = userId;
             if (_followService.AddFollows(follow) != null)
             {
                 return Ok(follow);
@@ -50,11 +50,11 @@ namespace UserServices.Controllers
         {
             var follow = new Follow
             {
-                Following = ObjectId.Parse(following)
+                Following = following
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            follow.Follower = new ObjectId(userId);
+            follow.Follower = userId;
             if (_followService.Unfollow(follow) != null)
             {
                 return Ok(follow);
@@ -63,6 +63,51 @@ namespace UserServices.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("followed")]
+        public IActionResult GetCurrentUserFollowed([FromQuery] string following)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var identity = User.Identity as ClaimsIdentity;
+                var userId = identity.FindFirst("user_id").Value;
+                return Ok(new { followed = _followService.IsFollowed(userId, following) });
+            }
+            else return NoContent();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("follower")]
+        public IActionResult GetAllFollower([FromQuery] string userId)
+        {
+            return Ok(_followService.GetAllFollower(userId));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("following")]
+        public IActionResult GetAllFollowing([FromQuery] string userId)
+        {
+            return Ok(_followService.GetAllFollowing(userId));
+        }
+
+        [Authorize(Roles ="member")]
+        [HttpGet("followerids")]
+        public IActionResult GetAllFollowerId()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+            return Ok(_followService.GetAllFollowerId(userId));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("followingids")]
+        public IActionResult GetAllFollowingId()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+            return Ok(_followService.GetAllFollowingId(userId));
         }
     }
 }

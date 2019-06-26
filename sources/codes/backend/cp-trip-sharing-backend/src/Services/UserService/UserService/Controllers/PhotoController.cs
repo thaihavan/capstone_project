@@ -46,7 +46,7 @@ namespace UserServices.Controllers
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            photo.Author = new BsonObjectId(ObjectId.Parse(userId));
+            photo.Author = userId;
             if (_photoService.AddPhoto(photo) != null)
             {
                 return Ok(photo);

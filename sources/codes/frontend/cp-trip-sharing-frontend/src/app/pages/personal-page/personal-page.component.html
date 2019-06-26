@@ -72,6 +72,18 @@
               </a>
             </div>
             <div class="card-person-infor">
+              <a (click)="showFolowerUser()" class="mat-button">
+                <i class="fa fa-product-hunt"></i>
+                <span><i>{{user.FollowerCount}}</i> người theo dõi</span>
+              </a>
+            </div>
+            <div class="card-person-infor">
+              <a (click)="showFollowingUser()" class="mat-button">
+                <i class="fa fa-product-hunt"></i>
+                <span><i>{{user.FollowingCount}}</i> người đang theo dõi</span>
+              </a>
+            </div>
+            <div class="card-person-infor">
               <a class="mat-button">
                 <i class="fa fa-envelope"></i>
                 <span (click)="callUpdateProfile()">Chỉnh sửa trang cá nhân</span>

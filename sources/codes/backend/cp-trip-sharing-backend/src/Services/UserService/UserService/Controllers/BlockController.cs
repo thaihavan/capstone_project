@@ -30,11 +30,11 @@ namespace UserServices.Controllers
         {
             var block = new Block()
             {
-                BlockedId = new BsonObjectId(ObjectId.Parse(blocked))
+                BlockedId = (blocked)
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            block.BlockerId = new BsonObjectId(ObjectId.Parse(userId));
+            block.BlockerId = (userId);
             if (_blockService.Block(block) != null)
             {
                 return Ok();
@@ -49,11 +49,11 @@ namespace UserServices.Controllers
         {
             var block = new Block()
             {
-                BlockedId = new BsonObjectId(ObjectId.Parse(blocked))
+                BlockedId = blocked
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            block.BlockerId = new BsonObjectId(ObjectId.Parse(userId));
+            block.BlockerId = userId;
             if (_blockService.UnBlock(block) != null)
             {
                 return Ok();

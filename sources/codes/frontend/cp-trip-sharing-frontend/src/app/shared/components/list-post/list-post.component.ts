@@ -4,6 +4,7 @@ import { Post } from 'src/app/model/Post';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
+import { UserService } from 'src/app/core/services/user-service/user.service';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { PostFilter } from 'src/app/model/PostFilter';
 import { Topic } from 'src/app/model/Topic';
@@ -34,6 +35,7 @@ export class ListPostComponent implements OnInit {
   isCheckedDict = {};
   pageIndex: 1;
   isLoading = true;
+  listUserIdFollowing: string[] = [];
   isDisplayFilter = false;
 
   homeNav: string;
@@ -56,13 +58,24 @@ export class ListPostComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private postService: PostService) { }
+  constructor(private route: ActivatedRoute, private postService: PostService, private userService: UserService) { }
 
   ngOnInit() {
     this.getTopics();
     this.setNavParams();
-  }
 
+    const token = localStorage.getItem('Token');
+    if (token != null) {
+      this.userService.getAllFollowingId(localStorage.getItem('Token')).subscribe((result: any) => {
+        this.listUserIdFollowing = result;
+        console.log(this.listUserIdFollowing + ' listId');
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+
+    }
+  }
   onScroll() {
     console.log('list-post-on-scrole');
     this.isLoading = true;

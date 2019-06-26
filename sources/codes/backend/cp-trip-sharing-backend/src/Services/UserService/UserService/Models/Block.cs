@@ -10,13 +10,16 @@ namespace UserServices.Models
     public class Block : Model
     {
         [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("blocker")]
-        public BsonObjectId BlockerId { get; set; }
+        public string BlockerId { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("blocked")]
-        public BsonObjectId BlockedId { get; set; }
+        public string BlockedId { get; set; }
     }
 }

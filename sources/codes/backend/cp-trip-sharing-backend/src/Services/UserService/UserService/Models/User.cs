@@ -10,11 +10,13 @@ namespace UserServices.Models
     public class User : Model
     {
         [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("account_id")]
-        public BsonObjectId AccountId { get; set; }
+        public string AccountId { get; set; }
 
         [BsonElement("username")]
         public string UserName { get; set; }
@@ -54,5 +56,11 @@ namespace UserServices.Models
 
         [BsonElement("address")]
         public string Address { get; set; }
+
+        [BsonIgnore]
+        public int FollowerCount { get; set; }
+
+        [BsonIgnore]
+        public int FollowingCount { get; set; }
     }
 }

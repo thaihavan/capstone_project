@@ -14,11 +14,13 @@ namespace UserServices.Reponsitories.Interfaces
     public class FollowRepository : IFollowRepository
     {
         private readonly IMongoCollection<Follow> _follows = null;
+        private readonly IMongoCollection<User> _user = null;
         
         public FollowRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
             _follows = dbContext.FollowCollection;
+            _user = dbContext.Users;
         }
 
         public Follow Add(Follow follow)
@@ -54,14 +56,45 @@ namespace UserServices.Reponsitories.Interfaces
             throw new NotImplementedException();
         }
         
-        public IEnumerable<Follow> GetAllFollower(string userId)
+        public IEnumerable<User> GetAllFollower(string userId)
         {
-           return _follows.Find(x => x.Following.Equals(new BsonObjectId(ObjectId.Parse(userId)))).ToList();            
+            return _follows.AsQueryable().Where(x => x.Following.Equals(userId)).Join(
+                _user.AsQueryable(),               
+                follow => follow.Follower,
+                user => user.Id,
+                (follow, user) => user
+                ).ToList();    
         }
 
-        public IEnumerable<Follow> GetAllFollowing(string userId)
+        public IEnumerable<User> GetAllFollowing(string userId)
         {
-            return _follows.Find(x => x.Follower.Equals(new BsonObjectId(ObjectId.Parse(userId)))).ToList();
+            return _follows.AsQueryable().Where(x => x.Follower.Equals(userId)).Join(
+                _user.AsQueryable(),
+                follow => follow.Following,
+                user => user.Id,
+                (follow, user) => user
+                ).ToList();
+        }
+
+        public bool IsFollowed(string follower, string following)
+        {
+            return _follows.CountDocuments(x=> x.Follower.Equals(follower)&&x.Following.Equals(following)) > 0 ? true : false;
+        }
+
+        public List<string> GetAllFollowingId(string userId)
+        {
+            return _follows.AsQueryable()
+                .Where(x=>x.Follower.Equals(userId))
+                .Select(x=> x.Following)
+                .ToList();
+        }
+
+        public List<string> GetAllFollowerId(string userId)
+        {
+            return _follows.AsQueryable()
+                .Where(x => x.Following.Equals(userId))
+                .Select(x => x.Follower)
+                .ToList();
         }
     }
 }

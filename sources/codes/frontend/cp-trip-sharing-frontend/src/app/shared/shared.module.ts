@@ -21,6 +21,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoadingScreenComponent } from './components/loading-screen/loading-screen.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { ListFollowComponent } from './components/list-follow/list-follow.component';
+import { UserComponent } from './components/list-follow/component/user/user.component';
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -55,6 +57,8 @@ const Material = [
     UploadImageComponent,
     CropImageComponent,
     LoadingScreenComponent,
+    ListFollowComponent,
+    UserComponent,
   ],
   imports: [
     CommonModule,

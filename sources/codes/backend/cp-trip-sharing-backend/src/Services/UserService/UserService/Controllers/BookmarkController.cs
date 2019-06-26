@@ -30,11 +30,11 @@ namespace UserServices.Controllers
         {
             var bookmark = new Bookmark()
             {
-                PostId = new BsonObjectId(ObjectId.Parse(postId))
+                PostId = postId
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            bookmark.UserId = new BsonObjectId(ObjectId.Parse(userId));
+            bookmark.UserId =userId;
             if (_bookmarkService.AddBookmark(bookmark) != null)
             {
                 return Ok(bookmark);
@@ -53,11 +53,11 @@ namespace UserServices.Controllers
         {
             var bookmark = new Bookmark
             {
-                PostId = new BsonObjectId(ObjectId.Parse(postId))
+                PostId = postId
             };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            bookmark.UserId = new BsonObjectId(ObjectId.Parse(userId));
+            bookmark.UserId = userId;
             if (_bookmarkService.DeleteBookmark(bookmark) != null)
             {
                 return Ok(bookmark);

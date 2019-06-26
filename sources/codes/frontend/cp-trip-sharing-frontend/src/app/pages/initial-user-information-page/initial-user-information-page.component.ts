@@ -14,8 +14,9 @@ export class InitialUserInformationPageComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-
   user: User;
+  checkedRegister: boolean;
+  checkedUpdate: boolean;
   selectedTopic: string[] = [];
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.user = new User();
@@ -30,36 +31,51 @@ export class InitialUserInformationPageComponent implements OnInit {
 
   ngOnInit() {
     this.firstFormGroup = this.formBuilder.group({
-      usernameFormCtrl: ['', Validators.required],
-      firstnameFormCtrl: ['', Validators.required],
-      lastnameFormCtrl: ['', Validators.required],
-      displayNameFormCtrl: ['', Validators.required],
+
     });
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
+
+    if (this.user == null) {
+      this.checkedUpdate = false;
+      this.checkedRegister = true;
+    } else {
+      this.checkedUpdate = true;
+      this.checkedRegister = false;
+    }
   }
 
   callInterestedtopicPage(stepper: MatStepper) {
-    console.log(this.user);
-    stepper.next();
+    if (this.user.UserName != null && this.user.FirstName != null && this.user.LastName != null && this.user.DisplayName != null) {
+      console.log(this.user);
+      stepper.next();
+    }
+
   }
 
-  selectedTopics(topics) {
+  selectedTopics(topics: any) {
     this.user.Interested = topics;
     console.log(this.user.Interested);
   }
 
-  onGenderChange(value) {
+  onGenderChange(value: any) {
     this.user.Gender = value;
   }
 
   registerUser() {
-    debugger;
     this.userService.registerUser(this.user).subscribe((result: any) => {
       window.location.href = '/home';
     }, (err: HttpErrorResponse) => {
       window.location.href = '/initial';
+    });
+  }
+
+  updateUser() {
+    this.userService.updateUser(this.user).subscribe((result: any) => {
+      window.location.href = '/personal/article?userId=' + this.user.UserId;
+    }, (err: HttpErrorResponse) => {
+      window.location.href = '/personal/article?userId=' + this.user.UserId;
     });
   }
 }

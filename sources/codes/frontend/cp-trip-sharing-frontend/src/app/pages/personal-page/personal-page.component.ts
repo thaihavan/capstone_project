@@ -4,6 +4,9 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { User } from 'src/app/model/User';
 import { MatDialog } from '@angular/material/dialog';
 import { InitialUserInformationPageComponent } from '../initial-user-information-page/initial-user-information-page.component';
+import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ListFollowComponent } from 'src/app/shared/components/list-follow/list-follow.component';
 
 @Component({
   selector: 'app-personal-page',
@@ -18,8 +21,10 @@ export class PersonalPageComponent implements OnInit {
   title = 'angular-material-tab-router';
   navLinks: any[];
   activeLinkIndex = 0;
+  userId: string;
+  listUser: User[] = [];
 
-  constructor(private router: Router, private userService: UserService, public dialog: MatDialog) {
+  constructor(private router: Router, private userService: UserService, public dialog: MatDialog, private route: ActivatedRoute) {
     this.navLinks = [
       {
         label: 'Bài viết',
@@ -38,9 +43,8 @@ export class PersonalPageComponent implements OnInit {
       }
     ];
     this.user = new User();
-    const account = JSON.parse(localStorage.getItem('Account'));
-    console.log(account);
-    this.getInforUser(account.userId);
+    this.userId = this.route.snapshot.queryParamMap.get('userId');
+    this.getInforUser(this.userId);
   }
   ngOnInit(): void {
     this.router.events.subscribe(res => {
@@ -52,6 +56,7 @@ export class PersonalPageComponent implements OnInit {
 
   getInforUser(userId: string) {
     this.userService.getUserById(userId).subscribe((data: any) => {
+      console.log(data);
       this.user.ContributionPoint = data.contributionPoint;
       this.user.Dob = data.dob;
       this.user.DisplayName = data.displayName;
@@ -61,12 +66,16 @@ export class PersonalPageComponent implements OnInit {
       this.user.LastName = data.lastName;
       this.user.UserName = data.userName;
       this.user.Address = data.address;
+      this.user.FollowerCount = data.followerCount;
+      this.user.FollowingCount = data.followingCount;
       if (this.user.Gender === true) {
         this.gender = 'Nam';
       } else {
         this.gender = 'Nữ';
       }
       console.log(this.user);
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
     });
   }
 
@@ -83,6 +92,7 @@ export class PersonalPageComponent implements OnInit {
       }
     });
     const instance = dialogRef.componentInstance;
+    instance.user.UserId = this.userId;
     instance.user.UserName = this.user.UserName;
     instance.user.DisplayName = this.user.DisplayName;
     instance.user.FirstName = this.user.FirstName;
@@ -95,4 +105,33 @@ export class PersonalPageComponent implements OnInit {
     instance.user.Gender = this.user.Gender;
   }
 
+  showFollowingUser() {
+    this.userService.getAllFollowing(this.userId).subscribe((result: any) => {
+      console.log(result);
+      this.listUser = result;
+      this.openDialogFollow('Danh sách những người đang theo dõi');
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  showFolowerUser() {
+    this.userService.getAllFollower(this.userId).subscribe((result: any) => {
+      console.log(result);
+      this.listUser = result;
+      this.openDialogFollow('Danh sách những người theo dõi');
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  openDialogFollow(title: any) {
+    const dialogRef = this.dialog.open(ListFollowComponent, {
+      height: 'auto',
+      width: '80%'
+    });
+    const instance = dialogRef.componentInstance;
+    instance.listUser = this.listUser;
+    instance.title = title;
+  }
 }

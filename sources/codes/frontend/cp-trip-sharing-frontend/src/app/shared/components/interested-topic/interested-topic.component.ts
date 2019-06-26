@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class InterestedTopicComponent implements OnInit {
 
   selectedTopic: string[] = [];
+  @Input() listTopicIdSelected: string[] = [];
   @Input() listTopics: Topic[];
   @Output() EventTopic: EventEmitter<string[]> = new EventEmitter();
   listselectedTopic: Array<Topic> = [];
@@ -20,19 +21,23 @@ export class InterestedTopicComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTopics();
+    this.listTopicIdSelected.forEach(topicId => {
+      this.onSelectTopic(topicId);
+      this.IsChecked(topicId);
+    });
   }
 
-  onSelectTopic(topic: Topic): void {
-    if (this.selectedTopic.indexOf(topic.id) === -1) {
-      this.selectedTopic.push(topic.id);
+  onSelectTopic(topicId: any): void {
+    if (this.selectedTopic.indexOf(topicId) === -1) {
+      this.selectedTopic.push(topicId);
     } else {
-      const unselected = this.selectedTopic.indexOf(topic.id);
+      const unselected = this.selectedTopic.indexOf(topicId);
       this.selectedTopic.splice(unselected, 1);
     }
     this.EventTopic.emit(this.selectedTopic);
   }
-  IsChecked(topic: Topic) {
-    if (this.selectedTopic.indexOf(topic.id) !== -1) {
+  IsChecked(topicId: any) {
+    if (this.selectedTopic.indexOf(topicId) !== -1) {
       return true;
     }
     return false;
@@ -43,7 +48,6 @@ export class InterestedTopicComponent implements OnInit {
   }
 
   getAllTopics() {
-    debugger;
     this.postService.getAllTopics().subscribe((topics: Topic[]) => {
       this.listTopics = topics;
     }, (err: HttpErrorResponse) => {

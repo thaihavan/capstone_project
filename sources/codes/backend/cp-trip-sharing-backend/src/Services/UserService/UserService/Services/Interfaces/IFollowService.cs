@@ -1,4 +1,5 @@
-﻿using UserServices.Models;
+﻿using System.Collections.Generic;
+using UserServices.Models;
 
 namespace UserServices.Services.Interfaces
 {
@@ -6,5 +7,10 @@ namespace UserServices.Services.Interfaces
     {
         Follow AddFollows(Follow follow);
         Follow Unfollow(Follow follow);
+        bool IsFollowed(string follower, string following);
+        IEnumerable<User> GetAllFollower(string userId);
+        IEnumerable<User> GetAllFollowing(string userId);
+        List<string> GetAllFollowingId(string userId);
+        List<string> GetAllFollowerId(string userId);
     }
 }

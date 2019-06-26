@@ -53,7 +53,7 @@ namespace PostService.Services
                     _postRepository.DecreaseLikeCount(like.ObjectId);
                     break;
                 case "comment":
-                    _commentRepository.IncreaseLikeCount(like.ObjectId);
+                    _commentRepository.DecreaseLikeCount(like.ObjectId);
                     break;
             }
             return _likeRepository.Delete(like.ObjectId, like.UserId);

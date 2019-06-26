@@ -10,14 +10,17 @@ namespace UserServices.Models
     public class Bookmark : Model
     {
         [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
-  
-        [BsonElement("user_id")]
-        public BsonObjectId UserId { get; set; }
+        public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("user_id")]
+        public string UserId { get; set; }
+
+        [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("post_id")]
-        public BsonObjectId PostId { get; set; }
+        public string PostId { get; set; }
 
     }
 }
