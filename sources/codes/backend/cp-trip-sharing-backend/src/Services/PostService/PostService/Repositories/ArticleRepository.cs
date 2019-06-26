@@ -246,6 +246,9 @@ namespace PostService.Repositories
                 topicFilter = a => true;
             }
 
+            Func<Article, IEnumerable<Like>, Article> UpdateLike =
+                ((article, likes) => { article.Post.liked = likes.Count() > 0 ? true : false; return article; });
+
             var articles = _posts.AsQueryable()
                 .Where(p => p.PubDate >= filterDate)
                 .Join(
@@ -286,7 +289,11 @@ namespace PostService.Repositories
                         PostId = article.PostId,
                         CoverImage = article.CoverImage,
                         Post = pa.Post
-                    }
+                    }).GroupJoin(
+                        _likes.AsQueryable().Where(x => x.UserId == userId && x.ObjectType == "post"),
+                        article => article.PostId,
+                        like => like.ObjectId,
+                        UpdateLike
                 ).Where(topicFilter.Compile()).Select(a => a);
             return articles.ToList();
         }

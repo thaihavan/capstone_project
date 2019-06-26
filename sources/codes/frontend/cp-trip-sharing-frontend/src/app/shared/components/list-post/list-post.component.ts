@@ -63,18 +63,7 @@ export class ListPostComponent implements OnInit {
   ngOnInit() {
     this.getTopics();
     this.setNavParams();
-
-    const token = localStorage.getItem('Token');
-    if (token != null) {
-      this.userService.getAllFollowingId(localStorage.getItem('Token')).subscribe((result: any) => {
-        this.listUserIdFollowing = result;
-        console.log(this.listUserIdFollowing + ' listId');
-        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
-
-    }
+    this.getFollowings();
   }
   onScroll() {
     console.log('list-post-on-scrole');
@@ -150,6 +139,18 @@ export class ListPostComponent implements OnInit {
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
+  }
+
+  getFollowings() {
+    const token = localStorage.getItem('Token');
+    if (token != null) {
+      this.userService.getAllFollowingId(localStorage.getItem('Token')).subscribe((result: any) => {
+        this.listUserIdFollowing = result;
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    }
   }
 
   getPosts(): void {

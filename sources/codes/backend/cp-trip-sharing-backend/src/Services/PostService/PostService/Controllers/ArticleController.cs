@@ -101,14 +101,14 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            //article.Post.AuthorId = userId;
+            article.Post.AuthorId = userId;
             article.Id = ObjectId.GenerateNewId().ToString();
             article.PostId = ObjectId.GenerateNewId().ToString();
-            //article.Post.Id = article.PostId;
-            //article.Post.LikeCount = 0;  
-            //article.Post.CommentCount = 0;
-            
-            //Post addedPost = _postService.Add(article.Post);
+            article.Post.Id = article.PostId;
+            article.Post.LikeCount = 0;
+            article.Post.CommentCount = 0;
+
+            Post addedPost = _postService.Add(article.Post);
             Article addedArticle = _articleService.Add(article);
 
             return Ok(addedArticle);

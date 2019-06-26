@@ -22,18 +22,20 @@ export class StepCreatePostComponent implements OnInit {
   secondFormGroup: FormGroup;
   isOptional = false;
   selectedLocation: LocationMarker[] = [];
-  selectedTopic: Topic[] = [];
+  selectedTopic: string[] = [];
   selectable = true;
   removable = true;
   @ViewChild('stepper') stepper: MatStepper;
   fakeinput1 = '';
   fakeinput2 = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private zone: NgZone,
     private dialogRef: MatDialogRef<StepCreatePostComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
+
   ngOnInit() {
     this.firstFormGroup = this.formBuilder.group({
       firstCtrl: ['', Validators.required]
@@ -42,6 +44,7 @@ export class StepCreatePostComponent implements OnInit {
       secondCtrl: ['', Validators.required]
     });
   }
+
   // google places search choose destination
   setAddress(addrObj) {
     this.zone.run(() => {
@@ -82,7 +85,7 @@ export class StepCreatePostComponent implements OnInit {
   }
   createPost() {
     if (this.fakeinput1 !== '') {
-      this.data.topics = this.selectedTopic.map(top => top.id);
+      this.data.topics = this.selectedTopic;
       this.data.destinations = this.selectedLocation.map(dest => dest.name);
       this.dialogRef.close(this.data);
     }

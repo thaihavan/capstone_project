@@ -34,8 +34,6 @@ export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
     const locationObj = {};
     // tslint:disable-next-line:forin
     for (const i in place.address_components) {
-      // tslint:disable-next-line:no-debugger
-      debugger;
       const item = place.address_components[i];
       let name: string;
       name = this.inputSearch.nativeElement.value;
