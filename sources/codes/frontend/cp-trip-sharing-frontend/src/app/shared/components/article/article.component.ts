@@ -20,7 +20,7 @@ export class ArticleComponent implements OnInit {
   user: any;
   userId: string;
   listUserIdFollowing: string[] = [];
-  constructor(private postService: PostService, private userServiceL: UserService) {
+  constructor(private postService: PostService, private userService: UserService) {
     this.like = new Like();
     this.token = localStorage.getItem('Token');
   }
@@ -32,11 +32,13 @@ export class ArticleComponent implements OnInit {
     }
     this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
     if (this.listUserIdFollowing != null) {
-      this.listUserIdFollowing.forEach(userId => {
-        if (this.post.author.id === userId) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.listUserIdFollowing.length; i++) {
+        if (this.post.author.id === this.listUserIdFollowing[i]) {
           this.follow = true;
+          break;
         }
-      });
+      }
     }
   }
 
@@ -62,7 +64,7 @@ export class ArticleComponent implements OnInit {
 
   followPerson(userId: any) {
     if (this.follow === false) {
-      this.userServiceL.addFollow(userId, this.token).subscribe((data: any) => {
+      this.userService.addFollow(userId, this.token).subscribe((data: any) => {
         this.follow = true;
         this.listUserIdFollowing.push(userId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
@@ -70,7 +72,7 @@ export class ArticleComponent implements OnInit {
         console.log(err);
       });
     } else {
-      this.userServiceL.unFollow(userId, this.token).subscribe((data: any) => {
+      this.userService.unFollow(userId, this.token).subscribe((data: any) => {
         this.follow = false;
         const unfollow = this.listUserIdFollowing.indexOf(userId);
         this.listUserIdFollowing.splice(unfollow, 1);
