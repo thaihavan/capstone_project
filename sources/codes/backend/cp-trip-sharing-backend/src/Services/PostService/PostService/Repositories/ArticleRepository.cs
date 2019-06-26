@@ -83,6 +83,7 @@ namespace PostService.Repositories
                         PostType = post.PostType,
                         PubDate = post.PubDate,
                         Title = post.Title,
+                        CoverImage = post.CoverImage,
                         Author = new Author()
                         {
                             Id = author.Id,
@@ -100,7 +101,6 @@ namespace PostService.Repositories
                         Topics = article.Topics,
                         Destinations = article.Destinations,
                         PostId = article.PostId,
-                        CoverImage = article.CoverImage,
                         Post = pa.Post
                     }
                 ).OrderByDescending(a => a.Post.PubDate);
@@ -135,6 +135,7 @@ namespace PostService.Repositories
                         PostType = post.PostType,
                         PubDate = post.PubDate,
                         Title = post.Title,
+                        CoverImage = post.CoverImage,
                         Author = new Author()
                         {
                             Id = author.Id,
@@ -152,7 +153,6 @@ namespace PostService.Repositories
                         Topics = article.Topics,
                         Destinations = article.Destinations,
                         PostId = article.PostId,
-                        CoverImage = article.CoverImage,
                         Post = pa.Post
                     }
                 ).Where(a => a.Id == id).Select(a => a);
@@ -183,6 +183,7 @@ namespace PostService.Repositories
                         PostType = post.PostType,
                         PubDate = post.PubDate,
                         Title = post.Title,
+                        CoverImage = post.CoverImage,
                         Author = new Author()
                         {
                             Id = author.Id,
@@ -200,7 +201,6 @@ namespace PostService.Repositories
                         Topics = article.Topics,
                         Destinations = article.Destinations,
                         PostId = article.PostId,
-                        CoverImage = article.CoverImage,
                         Post = pa.Post
                     }).GroupJoin(
                     _likes.AsQueryable().Where(x => x.UserId == userId && x.ObjectType == "post"),
@@ -270,6 +270,7 @@ namespace PostService.Repositories
                             PostType = post.PostType,
                             PubDate = post.PubDate,
                             Title = post.Title,
+                            CoverImage = post.CoverImage,
                             Author = new Author()
                             {
                                 Id = author.Id,
@@ -287,7 +288,6 @@ namespace PostService.Repositories
                         Topics = article.Topics,
                         Destinations = article.Destinations,
                         PostId = article.PostId,
-                        CoverImage = article.CoverImage,
                         Post = pa.Post
                     }).GroupJoin(
                         _likes.AsQueryable().Where(x => x.UserId == userId && x.ObjectType == "post"),
@@ -354,6 +354,7 @@ namespace PostService.Repositories
                             PostType = post.PostType,
                             PubDate = post.PubDate,
                             Title = post.Title,
+                            CoverImage = post.CoverImage,
                             Author = new Author()
                             {
                                 Id = author.Id,
@@ -371,7 +372,6 @@ namespace PostService.Repositories
                         Topics = article.Topics,
                         Destinations = article.Destinations,
                         PostId = article.PostId,
-                        CoverImage = article.CoverImage,
                         Post = pa.Post
                     }
                 ).Where(topicFilter.Compile()).Select(a => a);
