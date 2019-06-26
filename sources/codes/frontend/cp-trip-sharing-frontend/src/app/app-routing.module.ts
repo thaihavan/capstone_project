@@ -34,7 +34,7 @@ const routes: Routes = [
       {
         path: 'personal', component: PersonalPageComponent,
         children: [
-          { path: '', redirectTo: 'article', pathMatch: 'full' },
+          { path: '', redirectTo: 'articles', pathMatch: 'full' },
           { path: ':personal-nav', component: ListPostComponent }
         ]
       },

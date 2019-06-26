@@ -64,5 +64,20 @@ namespace PostService.Services
         {
             return _articleRepository.GetAllArticleInfo(userId);
         }
+
+        public IEnumerable<Article> GetAllArticleInfo(string userId, PostFilter postFilter)
+        {
+            return _articleRepository.GetAllArticleInfo(userId, postFilter);
+        }
+
+        public IEnumerable<Article> GetAllArticleInfo(PostFilter postFilter)
+        {
+            return _articleRepository.GetAllArticleInfo(postFilter);
+        }
+
+        public IEnumerable<Article> GetAllArticleByUser(string userId, PostFilter postFilter)
+        {
+            return _articleRepository.GetAllArticleByUser(userId, postFilter);
+        }
     }
 }

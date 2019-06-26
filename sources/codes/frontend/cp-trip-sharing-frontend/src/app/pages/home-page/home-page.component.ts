@@ -33,11 +33,6 @@ export class HomePageComponent implements OnInit {
         label: 'Theo dõi',
         link: './follower',
         index: 3
-      },
-      {
-        label: 'Chủ đề',
-        link: './topic',
-        index: 4
       }
     ];
   }

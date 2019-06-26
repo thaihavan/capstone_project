@@ -25,7 +25,8 @@ button:focus {
 
 .card-body-image img {
   overflow: hidden;
-  /* height: 200px; */
+  height: auto;
+  width: 100%;
   transition: transform 1s; /* Animation */
 }
 .card-body-image img:hover {
@@ -35,6 +36,7 @@ button:focus {
 }
 .card-body-image {
     overflow: hidden;
+    height: 200px;
     margin: 0px -16px 16px -16px;
 }
 .overview-post:hover {

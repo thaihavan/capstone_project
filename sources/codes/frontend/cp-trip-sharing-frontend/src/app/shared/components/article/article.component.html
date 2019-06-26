@@ -5,7 +5,7 @@
       <mat-card-title>{{post.author.displayName}}</mat-card-title>
       <mat-card-subtitle>{{post.pubDate}}</mat-card-subtitle>
       <div class="btn-interact">
-        <div [class]="follow ? 'icon-followed':'icon-unfollow'">
+        <div *ngIf="checkUser" [class]="follow ? 'icon-followed':'icon-unfollow'">
           <button (click)="followPerson(post.author.id)" mat-icon-button>
             <mat-icon>person_add</mat-icon>
           </button>
@@ -14,6 +14,10 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>bookmark</mat-icon>
+            <span>Lưu</span>
+          </button>
           <button mat-menu-item>
             <mat-icon>flag</mat-icon>
             <span>Báo cáo</span>
@@ -46,7 +50,7 @@
     </div>
     <mat-card-actions>
       <div class="d-flex justify-content-between">
-        <div *ngIf="checkUser" [class]="post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(post.liked)">
+        <div [class]="post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(post.liked)">
           <button mat-button>
             <mat-icon>thumb_up_alt</mat-icon>
             <span>Thích</span>
@@ -63,6 +67,10 @@
             <mat-icon>share</mat-icon>
             <span>Chia sẻ</span>
             <mat-menu #menushare="matMenu">
+              <button mat-menu-item>
+                <mat-icon>bookmark</mat-icon>
+                <span>Lưu</span>
+              </button>
               <button mat-menu-item>
                 <mat-icon>flag</mat-icon>
                 <span>Báo cáo</span>

@@ -107,7 +107,7 @@ export class CreatePostPageComponent implements OnInit {
       if (res !== undefined) {
         const article = new Article();
         article.topics = res.topics;
-        article.topics = []; // Because res.topics is undefined. will be removed
+        // article.topics = []; // Because res.topics is undefined. will be removed
         article.destinations = res.destinations;
         const post = new Post();
         post.title = this.title;

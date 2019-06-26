@@ -14,6 +14,8 @@ namespace PostService.Services.Interfaces
 
         IEnumerable<Article> GetAllArticleByUser(string userId);
 
+        IEnumerable<Article> GetAllArticleByUser(string userId, PostFilter postFilter);
+
         Article GetById(string id);
 
         Article Add(Article article);
@@ -23,5 +25,9 @@ namespace PostService.Services.Interfaces
         bool Delete(string id);
 
         IEnumerable<Article> GetAllArticleInfo(string userId);
+
+        IEnumerable<Article> GetAllArticleInfo(string userId, PostFilter postFilter);
+
+        IEnumerable<Article> GetAllArticleInfo(PostFilter postFilter);
     }
 }
