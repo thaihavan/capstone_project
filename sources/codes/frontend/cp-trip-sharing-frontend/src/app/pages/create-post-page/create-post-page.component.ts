@@ -8,12 +8,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { StepCreatePostComponent } from 'src/app/shared/components/step-create-post/step-create-post.component';
 import { Article } from 'src/app/model/Article';
 import { Post } from 'src/app/model/Post';
-import { Ptor } from 'protractor';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { DatePipe } from '@angular/common';
 import { Account } from 'src/app/model/Account';
 import { Author } from 'src/app/model/Author';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
+import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 
 @Component({
   selector: 'app-create-post-page',
@@ -57,12 +57,13 @@ export class CreatePostPageComponent implements OnInit {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
       // tslint:disable-next-line:no-string-literal
       console.log(loader['file']);
-      return new UploadAdapter(loader, this.http);
+      return new UploadAdapter(loader, this.imageService);
     };
   }
   constructor(private http: HttpClient, public dialog: MatDialog,
               private postService: PostService,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private imageService: UploadImageService) { }
 
   ngOnInit() {
     this.articlereturn = new Article();
@@ -84,7 +85,6 @@ export class CreatePostPageComponent implements OnInit {
     };
   }
   fileClick() {
-    console.log(this.uploadImage.file);
     this.uploadImage.file.nativeElement.click();
   }
   ImageCropted(image) {
@@ -127,6 +127,7 @@ export class CreatePostPageComponent implements OnInit {
     });
   }
 
+  // dialog crop image
   openDialogMessageConfirm(message: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
       width: '400px',

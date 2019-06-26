@@ -135,7 +135,7 @@ export class ListPostComponent implements OnInit {
       this.postFilter.topics = this.topics.map(t => t.id);
       this.topics.forEach(topic => {
         this.isCheckedDict[topic.id] = true;
-      })
+      });
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });

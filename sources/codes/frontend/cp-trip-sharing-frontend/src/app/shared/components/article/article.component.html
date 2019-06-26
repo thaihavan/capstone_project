@@ -1,122 +1,132 @@
 <div class="mb-5">
-  <mat-card class="example-card">
-    <mat-card-header class=" post-header">
-      <img mat-card-avatar src="{{post.author.profileImage}}" />
-      <mat-card-title>{{post.author.displayName}}</mat-card-title>
-      <mat-card-subtitle>{{post.pubDate}}</mat-card-subtitle>
-      <div class="btn-interact">
-        <div *ngIf="checkUser" [class]="follow ? 'icon-followed':'icon-unfollow'">
-          <button (click)="followPerson(post.author.id)" mat-icon-button>
-            <mat-icon>person_add</mat-icon>
-          </button>
-        </div>
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>bookmark</mat-icon>
-            <span>Lưu</span>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>flag</mat-icon>
-            <span>Báo cáo</span>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>edit</mat-icon>
-            <span>Chỉnh sửa</span>
-          </button>
-        </mat-menu>
-      </div>
-    </mat-card-header>
-    <mat-card-title>
-      <a class="card-link" href="/post-detail?postId={{post.id}}">
-        <h5 class="card-title">{{post.title}}</h5>
-      </a>
-    </mat-card-title>
-    <div class="card-body-image">
-      <img mat-card-image src="../../../../assets/luff.jpg" alt="">
-    </div>
-    <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
-      </p>
-    </mat-card-content>
-    <div class="d-flex justify-content-between ">
-      <mat-card-subtitle>{{post.likeCount}} thích</mat-card-subtitle>
-      <mat-card-subtitle>{{post.commentCount}} bình luận</mat-card-subtitle>
-    </div>
-    <mat-card-actions>
-      <div class="d-flex justify-content-between">
-        <div [class]="post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(post.liked)">
-          <button mat-button>
-            <mat-icon>thumb_up_alt</mat-icon>
-            <span>Thích</span>
-          </button>
-        </div>
-        <div>
-          <button mat-button>
-            <mat-icon>mode_comment</mat-icon>
-            <span>Bình luận</span>
-          </button>
-        </div>
-        <div>
-          <button mat-button [matMenuTriggerFor]="menushare">
-            <mat-icon>share</mat-icon>
-            <span>Chia sẻ</span>
-            <mat-menu #menushare="matMenu">
-              <button mat-menu-item>
-                <mat-icon>bookmark</mat-icon>
-                <span>Lưu</span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon>flag</mat-icon>
-                <span>Báo cáo</span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon>edit</mat-icon>
-                <span>Chỉnh sửa</span>
-              </button>
-            </mat-menu>
-          </button>
-        </div>
-      </div>
-    </mat-card-actions>
-  </mat-card>
-  <!-- <div class="virtual-trips">
-    <mat-card>
-      <mat-card-header class="bg-primary text-white">
-        <div class="d-flex justify-content-between">
-          <div>
-            <mat-card-title>Một vòng Hà Nội</mat-card-title>
-            <mat-card-subtitle class="text-white">6 mục</mat-card-subtitle>
+  <ng-container [ngSwitch]="postType">
+    <ng-container *ngSwitchCase="'virtualtrip'">
+        <div class="virtual-trips">
+            <mat-card>
+              <mat-card-header class="bg-header text-white">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <mat-card-title>Một vòng Hà Nội</mat-card-title>
+                    <mat-card-subtitle class="text-white">6 mục</mat-card-subtitle>
+                  </div>
+                  <div class="btn-interact">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item>
+                        <mat-icon>edit</mat-icon>
+                        <span>Chỉnh sửa</span>
+                      </button>
+                      <button mat-menu-item>
+                        <mat-icon>remove</mat-icon>
+                        <span>Xoá bỏ</span>
+                      </button>
+                    </mat-menu>
+                  </div>
+                </div>
+              </mat-card-header>
+              <slideshow #slideShow [minHeight]="'525px'" [showCaptions]="true" [autoPlay]="false" [showArrows]="true" [showDots]="true"
+                stopAutoPlayOnSlide="true" [imageUrls]="imageSources" [lazyLoad]="imageSources?.length > 1"
+                [autoPlayWaitForLazyLoad]="true">
+              </slideshow>
+              <mat-card-content>
+                <div  *ifChanges='currContent' [@myTrigger]>{{currContent}}</div>
+              </mat-card-content>
+            </mat-card>
           </div>
-          <div class="btn-interact">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item>
-                <mat-icon>edit</mat-icon>
-                <span>Chỉnh sửa</span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon>remove</mat-icon>
-                <span>Xoá bỏ</span>
-              </button>
-            </mat-menu>
-          </div>
-        </div>
-      </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="" />
-      <mat-card-content>
-        <p>The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile
-          dog that copes very well with mountainous terrain, the Shiba Inu was originally bred for hunting.</p>
-      </mat-card-content>
-    </mat-card>
-  </div> -->
+    </ng-container>
 
-
+    <ng-container *ngSwitchCase="2">
+      
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <mat-card class="example-card">
+            <mat-card-header class=" post-header">
+              <img mat-card-avatar src="{{post.author.profileImage}}" />
+              <mat-card-title>{{post.author.displayName}}</mat-card-title>
+              <mat-card-subtitle>{{post.pubDate}}</mat-card-subtitle>
+              <div class="btn-interact">
+                <div *ngIf="checkUser" [class]="follow ? 'icon-followed':'icon-unfollow'">
+                  <button (click)="followPerson(post.author.id)" mat-icon-button>
+                    <mat-icon>person_add</mat-icon>
+                  </button>
+                </div>
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <mat-icon>bookmark</mat-icon>
+                    <span>Lưu</span>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>flag</mat-icon>
+                    <span>Báo cáo</span>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>edit</mat-icon>
+                    <span>Chỉnh sửa</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </mat-card-header>
+            <mat-card-title>
+              <a class="card-link" href="/post-detail?postId={{post.id}}">
+                <h5 class="card-title">{{post.title}}</h5>
+              </a>
+            </mat-card-title>
+            <div class="card-body-image">
+              <img mat-card-image src="../../../../assets/luff.jpg" alt="">
+            </div>
+            <mat-card-content>
+              <p>
+                The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                bred for hunting.
+              </p>
+            </mat-card-content>
+            <div class="d-flex justify-content-between ">
+              <mat-card-subtitle>{{post.likeCount}} thích</mat-card-subtitle>
+              <mat-card-subtitle>{{post.commentCount}} bình luận</mat-card-subtitle>
+            </div>
+            <mat-card-actions>
+              <div class="d-flex justify-content-between">
+                <div [class]="post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(post.liked)">
+                  <button mat-button>
+                    <mat-icon>thumb_up_alt</mat-icon>
+                    <span>Thích</span>
+                  </button>
+                </div>
+                <div>
+                  <button mat-button>
+                    <mat-icon>mode_comment</mat-icon>
+                    <span>Bình luận</span>
+                  </button>
+                </div>
+                <div>
+                  <button mat-button [matMenuTriggerFor]="menushare">
+                    <mat-icon>share</mat-icon>
+                    <span>Chia sẻ</span>
+                    <mat-menu #menushare="matMenu">
+                      <button mat-menu-item>
+                        <mat-icon>bookmark</mat-icon>
+                        <span>Lưu</span>
+                      </button>
+                      <button mat-menu-item>
+                        <mat-icon>flag</mat-icon>
+                        <span>Báo cáo</span>
+                      </button>
+                      <button mat-menu-item>
+                        <mat-icon>edit</mat-icon>
+                        <span>Chỉnh sửa</span>
+                      </button>
+                    </mat-menu>
+                  </button>
+                </div>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+    </ng-container>
+  </ng-container>
 </div>

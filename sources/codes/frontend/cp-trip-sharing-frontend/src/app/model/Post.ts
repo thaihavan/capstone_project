@@ -6,7 +6,7 @@ export class Post {
     description: string;
     content: string;
     liked: boolean;
-    image: string;
+    coverImage: string;
     isPublic: boolean;
     isActive: boolean;
     pubDate: string;

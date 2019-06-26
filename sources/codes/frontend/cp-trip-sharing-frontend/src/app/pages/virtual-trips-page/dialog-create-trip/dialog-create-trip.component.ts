@@ -1,7 +1,5 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { VirtualTripsPageComponent } from '../virtual-trips-page.component';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,6 +10,7 @@ import { Router } from '@angular/router';
 export class DialogCreateTripComponent implements OnInit {
   title: string;
   isPublic = true;
+  note: string;
   isHasTitle = true;
   constructor(
     private dialogRef: MatDialogRef<DialogCreateTripComponent>,
@@ -20,13 +19,22 @@ export class DialogCreateTripComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.title = this.data.title;
+    this.note = this.data.note;
   }
 
   // input title has value
   onChange() {
-    if (this.title === '') {
+    if (this.title.trim() === '') {
       this.isHasTitle = true;
     } else {
+      this.isHasTitle = false;
+    }
+  }
+
+  // text are on change
+  onChangeArea() {
+    if (this.data.edit) {
       this.isHasTitle = false;
     }
   }
@@ -35,12 +43,18 @@ export class DialogCreateTripComponent implements OnInit {
   onCreate() {
     this.data.title = this.title;
     this.data.isPublic = this.isPublic;
+    this.data.note = this.note;
+    if (this.data.edit) {
+      this.data.save = true;
+    }
     this.dialogRef.close(this.data);
   }
 
   // close dialog redirect to home page
   onClose() {
     this.dialogRef.close();
-    this.router.navigate(['/home']);
+    if (!this.data.edit) {
+      this.router.navigate(['/home']);
+    }
   }
 }

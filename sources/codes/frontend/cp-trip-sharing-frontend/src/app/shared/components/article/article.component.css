@@ -122,3 +122,6 @@ button:focus {
 .icon-unfollow{
   color: black;
 }
+.bg-header{
+  background-color: #26c6da;
+}

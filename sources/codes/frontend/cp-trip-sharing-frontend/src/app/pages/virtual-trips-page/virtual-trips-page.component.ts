@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { DialogCreateTripComponent } from './dialog-create-trip/dialog-create-trip.component';
 import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
 import { LoadingScreenComponent } from 'src/app/shared/components/loading-screen/loading-screen.component';
+import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 
 @Component({
   selector: 'app-virtual-trips-page',
@@ -20,10 +21,12 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   expandWidth: number;
   virtualTrip: VirtualTrip;
   title = '';
-  note: string;
+  note = '';
   isPublic: boolean;
+  readMore = false;
   post: Post;
-  coverImage = 'https://material.angular.io/assets/img/examples/shiba2.jpg';
+  urlCoverImage = '';
+  @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @ViewChild('leftContent') leftContent;
   constructor(private datePipe: DatePipe, public dialog: MatDialog, private tripService: VirtualTripService) {
    }
@@ -40,7 +43,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.openDialog();
+      this.openDialog('', '' , true , true);
     }, 1000);
   }
 
@@ -64,19 +67,29 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     this.isExpandLeft = !this.isExpandLeft;
   }
   // Open dialog create virtual trips required title
-  openDialog() {
+  openDialog(diaTitle: string, diaNote: string, diaPublic: boolean, disAble: boolean) {
     const dialogRef = this.dialog.open(DialogCreateTripComponent, {
-      width: '40%',
+      width: '50%',
       data: {
-        title: '',
-        isPublic: ''
+        title: diaTitle,
+        isPublic: diaPublic,
+        note: diaNote,
+        edit: !disAble,
+        save: ''
       },
-      disableClose: true,
+      disableClose: disAble,
      });
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result !== undefined && disAble) {
         this.title = result.title;
         this.isPublic = result.isPublic;
+        this.note = result.note;
+      }
+      if (result !== undefined && !disAble) {
+        if (result.save) {
+          this.title = result.title;
+          this.note = result.note;
+        }
       }
      });
   }
@@ -84,7 +97,8 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   createTrip() {
     this.post.title = this.title;
     this.post.isPublic = this.isPublic;
-    this.post.image = this.coverImage;
+    this.post.coverImage = this.urlCoverImage;
+    this.post.content = this.note;
     this.virtualTrip.post = this.post;
     const dialogRef = this.dialog.open(LoadingScreenComponent, {
       width: '100%',
@@ -95,9 +109,31 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       disableClose: true,
      });
     this.tripService.createVirtualTrip(this.virtualTrip).subscribe( result => {
-      // tslint:disable-next-line:no-unused-expression
+    },
+    complete => {
       console.log('create success!');
       dialogRef.close();
     });
+  }
+
+  // open dialog for update
+  editAble() {
+    this.openDialog(this.title, this.note, this.isPublic, false);
+  }
+
+  // event when change image
+  fileClick() {
+    this.uploadImage.file.nativeElement.click();
+  }
+
+  // get image when crop image done
+  ImageCropted(image) {
+    this.urlCoverImage = image;
+  }
+
+  // update virtual trip to server
+  saveDestination(des) {
+    const foundIndex = this.virtualTrip.items.findIndex(x => x.locationId === des.locationId);
+    this.virtualTrip.items[foundIndex] = des;
   }
 }

@@ -1,108 +1,74 @@
 <div class="virtual-trip">
   <div class="row">
-    <div  class="col-4 pl-0 pr-0 left-content" [style.left.px]='isExpandLeft ? expandWidth : 0'>
+    <div class="col-4 pl-0 pr-0 left-content" [style.left.px]='isExpandLeft ? expandWidth : 0'>
       <div #leftContent class="row">
-        <!-- <div class="expand">
-          <span class="icon-expand">
-            <button mat-flat-button (click)='expandLeft()' color="accent">
-              <mat-icon>{{isExpandLeft ? 'keyboard_arrow_right' : 'keyboard_arrow_left'}}</mat-icon>
+        <mat-card class="example-card">
+          <div class="header-card">
+            <div class="image-header" [class.no-image]="!urlCoverImage">
+              <ng-container *ngIf="urlCoverImage; else coverImage">
+                <img mat-card-image src="{{urlCoverImage}}" alt="Photo cover">
+              </ng-container>
+              <ng-template #coverImage>
+                <button (click)="fileClick()" mat-icon-button class="">
+                  <mat-icon>add_photo_alternate</mat-icon>
+                  <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1'
+                    resizeToWidth="600" #uploadImage></app-upload-image>
+                </button>
+              </ng-template>
+            </div>
+            <figure class="profile">
+              <img src="https://picsum.photos/200/150/?random" class="profile-avatar" alt="">
+            </figure>
+            <figure class="profile-right">
+              <button mat-icon-button (click)="setPolicy()">
+                <mat-icon>{{ isPublic ? 'lock_open' : 'lock'}}</mat-icon>
+              </button>
+            </figure>
+            <button class="edit" mat-icon-button [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu">
+              <mat-icon>more_horiz</mat-icon>
             </button>
-          </span>
-        </div> -->
-        <div>
-          <mat-card class="example-card">
-            <div class="header-card">
-              <div class="image-header">
-                <img mat-card-image src="{{coverImage}}"
-                  alt="Photo of a Shiba Inu">
-              </div>
-              <figure class="profile">
-                <img src="https://picsum.photos/200/150/?random" class="profile-avatar" alt="">
-              </figure>
-              <figure class="profile-right">
-                <button mat-icon-button (click)="setPolicy()">
-                  <mat-icon>{{ isPublic ? 'lock_open' : 'lock'}}</mat-icon>
-                </button>
-              </figure>
-              <button class="edit" mat-icon-button [matMenuTriggerFor]="menu"
-                aria-label="Example icon-button with a menu">
-                <mat-icon>more_horiz</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>flag</mat-icon>
+                <span>Báo cáo</span>
               </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                  <mat-icon>flag</mat-icon>
-                  <span>Báo cáo</span>
-                </button>
-                <button mat-menu-item >
-                  <mat-icon>edit</mat-icon>
-                  <span>Chỉnh sửa</span>
-                </button>
-              </mat-menu>
-            </div>
-            <mat-card-content>
-              <div class="parent-content mt-5">
-                <h4>{{title == '' ? 'Tên chuyến đi' : title}}</h4>
-                <p><span class="sub-title">Bởi </span><a href="#"><span class="author-name">PhongNV</span></a></p>
-                <p>
-                  The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                  A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                  bred for hunting.
-                </p>
-                <a href="#">+ Thêm ghi chú mới</a>
-                <p><span class="sub-title">0 mục cập nhập vào tháng 6 năm 2019</span></p>
-              </div>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-icon-button>
-                <mat-icon>share</mat-icon>
+              <button (click)="editAble()" mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Chỉnh sửa</span>
               </button>
-            </mat-card-actions>
-            <div *ngIf="virtualTrip.items!=undefined">
-              <mat-card-content *ngFor="let item of virtualTrip.items">
-                <div class='line'></div>
-                <div class="child-content">
-                  <div class="image-header">
-                    <img mat-card-image src="{{item.image}}" alt="Photo of a Shiba Inu">
-                  </div>
-                  <div class="title-lacotion">
-                    <span>{{item.name}}</span>
-                    <button class="btn-edit" mat-icon-button>
-                      <mat-icon>more_horiz</mat-icon>
-                    </button>
-                  </div>
-                  <p><span class="sub-title">{{item.formattedAddress}}</span></p>
-                  <div class="note row">
-                    <div class="author-avatar col-2">
-                      <figure class="profile-note">
-                        <img src="https://picsum.photos/200/150/?random" class="profile-avatar" alt="">
-                      </figure>
-                    </div>
-                    <div class="note-text col-10">
-                      <a href="#"><span class="author-name">PhongNV</span></a>
-                      <span>
-                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                        bred for hunting.
-                      </span>
-                    </div>
-                  </div>
-                  <a href="#">+ Thêm ghi chú mới</a>
-                </div>
-              </mat-card-content>
+            </mat-menu>
+          </div>
+          <mat-card-content>
+            <div class="parent-content mt-5">
+              <h4>{{title == '' ? 'Tên chuyến đi' : title}}</h4>
+              <p><span class="sub-title">Bởi </span><a href="#"><span class="author-name">PhongNV</span></a></p>
+              <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
+              <a *ngIf="!note" href="#">+ Thêm ghi chú mới</a>
+              <p><span class="sub-title">0 mục cập nhập vào tháng 6 năm 2019</span></p>
             </div>
-          </mat-card>
-        </div>
-        
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-icon-button>
+              <mat-icon>share</mat-icon>
+            </button>
+          </mat-card-actions>
+          <div *ngIf="virtualTrip.items!=undefined">
+            <ng-container *ngFor="let item of virtualTrip.items">
+              <app-destination-trip (saveDestination)="saveDestination($event)" [item]='item'></app-destination-trip>
+            </ng-container>
+          </div>
+        </mat-card>
       </div>
     </div>
     <div>
-        <div [style.left.px]='isExpandLeft ? 0 : -expandWidth' class="expand">
-            <span class="icon-expand">
-              <button mat-flat-button (click)='expandLeft()' color="accent">
-                <mat-icon>{{isExpandLeft ? 'keyboard_arrow_right' : 'keyboard_arrow_left'}}</mat-icon>
-              </button>
-            </span>
-        </div>
+      <div [style.left.px]='isExpandLeft ? 0 : -expandWidth' class="expand">
+        <span class="icon-expand">
+          <button mat-flat-button (click)='expandLeft()' color="accent">
+            <mat-icon>{{isExpandLeft ? 'keyboard_arrow_right' : 'keyboard_arrow_left'}}</mat-icon>
+          </button>
+        </span>
+      </div>
     </div>
     <div class="col-12 right-content pl-0 pr-0 mt-0 ">
       <div class="fixed">

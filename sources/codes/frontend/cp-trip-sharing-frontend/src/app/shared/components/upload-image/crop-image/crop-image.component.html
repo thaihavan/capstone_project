@@ -1,6 +1,6 @@
 <div>
-  <image-cropper [imageChangedEvent]="data.imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="3/ 1"
-  [resizeToWidth]="1350" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+  <image-cropper [imageChangedEvent]="data.imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="data.aspectRatio"
+  [resizeToWidth]="data.resizeToWidth" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
   (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
 </image-cropper>
 <div class="cropreview row align-items-center">
