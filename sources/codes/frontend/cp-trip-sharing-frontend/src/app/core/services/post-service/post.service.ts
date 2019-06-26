@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HostGlobal } from 'src/app/core/global-variables';
 import { Comment } from 'src/app/model/Comment';
 import { Like } from 'src/app/model/Like';
+import { PostFilter } from 'src/app/model/PostFilter';
 
 @Injectable({
   providedIn: 'root'
@@ -31,23 +32,33 @@ export class PostService {
     return this.http.get(baseUrl + '?postId=' + postId);
   }
 
-  getAllPost(): Observable<any> {
-    console.log(this.baseUrl);
-    return this.http.get(this.baseUrl + 'all');
+  getAllArticles(postFilter: PostFilter): Observable<any> {
+    const token = localStorage.getItem('Token');
+    let httpOption = null;
+    if (token != null) {
+      httpOption = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        })
+      };
+    } else {
+      httpOption = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        })
+      };
+    }
+    return this.http.post<Article>(this.baseUrl + 'all', postFilter,  httpOption);
   }
 
-  getAllPostwithToken(token: string): Observable<any> {
-    const httpOptionAuth = {
+  getAllArticlesByUserId(userId: string, postFilter: PostFilter): Observable<any> {
+    const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token
       })
     };
-    return this.http.get(this.baseUrl + 'all', httpOptionAuth);
-  }
-
-  getAllPostByUserId(userId: string): Observable<any> {
-    return this.http.get<any>(this.baseUrl + 'userid?id=' + userId);
+    return this.http.post<Article>(this.baseUrl + 'user?userId=' + userId, postFilter, httpOption);
   }
 
   getCommentByPost(postId: string): Observable<any> {
