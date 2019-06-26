@@ -7,6 +7,7 @@ import { User } from 'src/app/model/User';
   styleUrls: ['./list-follow.component.css']
 })
 export class ListFollowComponent implements OnInit {
+  title: string;
   listUser: User[];
   listUser2: any[] = [];
   listUser3: any[] = [];
