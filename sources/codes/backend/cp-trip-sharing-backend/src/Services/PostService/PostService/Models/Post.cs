@@ -32,6 +32,9 @@ namespace PostService.Models
         [BsonElement("post_type")]
         public string PostType { get; set; }
 
+        [BsonElement("cover_image")]
+        public string CoverImage { get; set; }
+
         [BsonElement("author_id")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string AuthorId { get; set; }

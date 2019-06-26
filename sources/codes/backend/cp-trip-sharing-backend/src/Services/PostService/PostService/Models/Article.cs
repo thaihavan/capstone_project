@@ -25,9 +25,6 @@ namespace PostService.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string PostId { get; set; }
 
-        [BsonElement("cover_image")]
-        public string CoverImage { get; set; }
-
         [BsonIgnore]
         public Post Post { get; set; }       
     }
