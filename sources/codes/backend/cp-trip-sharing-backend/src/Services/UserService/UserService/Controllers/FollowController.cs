@@ -91,5 +91,23 @@ namespace UserServices.Controllers
         {
             return Ok(_followService.GetAllFollowing(userId));
         }
+
+        [Authorize(Roles ="member")]
+        [HttpGet("followerids")]
+        public IActionResult GetAllFollowerId()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+            return Ok(_followService.GetAllFollowerId(userId));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("followingids")]
+        public IActionResult GetAllFollowingId()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+            return Ok(_followService.GetAllFollowingId(userId));
+        }
     }
 }

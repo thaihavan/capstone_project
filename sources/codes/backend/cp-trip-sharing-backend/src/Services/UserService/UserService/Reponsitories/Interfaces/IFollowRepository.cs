@@ -9,5 +9,7 @@ namespace UserServices.Reponsitories.Interfaces
         IEnumerable<User> GetAllFollower(string userId);
         IEnumerable<User> GetAllFollowing(string userId);
         bool IsFollowed(string follower, string following);
+        List<string> GetAllFollowingId(string userId);
+        List<string> GetAllFollowerId(string userId);
     }
 }

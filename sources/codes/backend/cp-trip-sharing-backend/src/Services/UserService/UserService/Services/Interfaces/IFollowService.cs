@@ -10,5 +10,7 @@ namespace UserServices.Services.Interfaces
         bool IsFollowed(string follower, string following);
         IEnumerable<User> GetAllFollower(string userId);
         IEnumerable<User> GetAllFollowing(string userId);
+        List<string> GetAllFollowingId(string userId);
+        List<string> GetAllFollowerId(string userId);
     }
 }

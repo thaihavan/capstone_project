@@ -80,5 +80,21 @@ namespace UserServices.Reponsitories.Interfaces
         {
             return _follows.CountDocuments(x=> x.Follower.Equals(follower)&&x.Following.Equals(following)) > 0 ? true : false;
         }
+
+        public List<string> GetAllFollowingId(string userId)
+        {
+            return _follows.AsQueryable()
+                .Where(x=>x.Follower.Equals(userId))
+                .Select(x=> x.Following)
+                .ToList();
+        }
+
+        public List<string> GetAllFollowerId(string userId)
+        {
+            return _follows.AsQueryable()
+                .Where(x => x.Following.Equals(userId))
+                .Select(x => x.Follower)
+                .ToList();
+        }
     }
 }
