@@ -29,8 +29,8 @@ namespace UserService.Test
         {
             var expected = new Bookmark()
             {
-                PostId = new BsonObjectId(ObjectId.Parse("5d027ea59b358d247cd21a55")),
-                UserId = new BsonObjectId(ObjectId.Parse("5d027ea59b358d247cd21a55"))
+                PostId = "5d027ea59b358d247cd21a55",
+                UserId = "5d027ea59b358d247cd21a55"
             };
             var actual = _bookmarkRepository.Add(expected);
             Assert.AreEqual(expected, actual);
@@ -48,8 +48,8 @@ namespace UserService.Test
         {
             var expected = new Bookmark()
             {
-                PostId = new BsonObjectId(ObjectId.Parse("5d027ea59b358d247cd21a55")),
-                UserId = new BsonObjectId(ObjectId.Parse("5d027ea59b358d247cd21a55"))
+                PostId = "5d027ea59b358d247cd21a55",
+                UserId = "5d027ea59b358d247cd21a55"
             };
             var actual = _bookmarkRepository.Delete(expected);
             Assert.AreEqual(expected, actual);

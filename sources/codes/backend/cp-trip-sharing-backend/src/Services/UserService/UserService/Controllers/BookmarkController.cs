@@ -26,12 +26,8 @@ namespace UserServices.Controllers
         // POST: api/UserService/bookmark
         [Authorize(Roles = "member")]
         [HttpPost("bookmark")]
-        public IActionResult Bookmark([FromQuery] string postId)
+        public IActionResult Bookmark([FromBody] Bookmark bookmark)
         {
-            var bookmark = new Bookmark()
-            {
-                PostId = postId
-            };
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
             bookmark.UserId =userId;
@@ -41,7 +37,7 @@ namespace UserServices.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest(bookmark);
             }
         }
 

@@ -22,5 +22,12 @@ namespace UserServices.Models
         [BsonElement("post_id")]
         public string PostId { get; set; }
 
+        [BsonElement("title")]
+        public string Title { get; set; }
+        [BsonElement("cover_image")]
+        public string CoverImage { get; set; }
+
+        [BsonElement("post_type")]
+        public string PostType { get; set; }
     }
 }
