@@ -80,6 +80,7 @@ namespace PostService.Repositories
                         PostType = post.PostType,
                         PubDate = post.PubDate,
                         Title = post.Title,
+                        CoverImage = post.CoverImage,
                         Author = new Author()
                         {
                             Id = author.Id,
@@ -124,6 +125,7 @@ namespace PostService.Repositories
                         PostType = post.PostType,
                         PubDate = post.PubDate,
                         Title = post.Title,
+                        CoverImage = post.CoverImage,
                         Author = new Author()
                         {
                             Id = author.Id,
@@ -148,6 +150,50 @@ namespace PostService.Repositories
                     UpdateLiked
                 );
             return virtualTrips.ToList();
+        }
+
+        public VirtualTrip GetVirtualTrip(string id)
+        {
+            var virtualTrips = _posts.AsQueryable().Join(
+                _authors.AsQueryable(),
+                post => post.AuthorId,
+                author => author.Id,
+                (post, author) => new
+                {
+                    Id = post.Id,
+                    Post = new Post
+                    {
+                        Id = post.Id,
+                        AuthorId = post.AuthorId,
+                        Content = post.Content,
+                        CommentCount = post.CommentCount,
+                        IsActive = post.IsActive,
+                        IsPublic = post.IsPublic,
+                        LikeCount = post.LikeCount,
+                        PostType = post.PostType,
+                        PubDate = post.PubDate,
+                        Title = post.Title,
+                        CoverImage = post.CoverImage,
+                        Author = new Author()
+                        {
+                            Id = author.Id,
+                            DisplayName = author.DisplayName,
+                            ProfileImage = author.ProfileImage
+                        }
+                    }
+                }).Join(
+                    _virtualTrips.AsQueryable(),
+                    pv => pv.Id,
+                    v => v.PostId,
+                    (pv, v) => new VirtualTrip()
+                    {
+                        Id = v.Id,
+                        Items = v.Items,
+                        PostId = v.PostId,
+                        Post = pv.Post
+                    }
+                ).Where(v => v.Id == id).Select(v => v);
+            return virtualTrips.FirstOrDefault();
         }
     }
 }

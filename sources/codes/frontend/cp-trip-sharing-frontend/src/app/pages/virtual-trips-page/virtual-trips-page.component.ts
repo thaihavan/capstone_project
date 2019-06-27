@@ -8,6 +8,8 @@ import { DialogCreateTripComponent } from './dialog-create-trip/dialog-create-tr
 import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
 import { LoadingScreenComponent } from 'src/app/shared/components/loading-screen/loading-screen.component';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-virtual-trips-page',
@@ -20,19 +22,38 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   isExpandLeft = false;
   expandWidth: number;
   virtualTrip: VirtualTrip;
+  virtualTripId: string;
   title = '';
   note = '';
   isPublic: boolean;
   readMore = false;
   post: Post;
   urlCoverImage = '';
+  isViewDetailTrip: boolean;
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @ViewChild('leftContent') leftContent;
-  constructor(private datePipe: DatePipe, public dialog: MatDialog, private tripService: VirtualTripService) {
+  constructor(private datePipe: DatePipe, public dialog: MatDialog,
+              private tripService: VirtualTripService,
+              private route: ActivatedRoute) {
    }
 
   ngOnInit() {
     this.virtualTrip = new VirtualTrip();
+    this.virtualTripId = this.route.snapshot.queryParamMap.get('tripId');
+    if (this.virtualTripId !== undefined && this.virtualTripId !== null && this.virtualTripId !== '') {
+      this.isViewDetailTrip = true;
+      this.tripService.getDetailVtrip(this.virtualTripId).subscribe(trip => {
+        this.virtualTrip = trip;
+        this.isPublic = this.virtualTrip.post.isPublic;
+        this.title = this.virtualTrip.post.title;
+        this.note = this.virtualTrip.post.content;
+        this.urlCoverImage = this.virtualTrip.post.coverImage;
+      },
+      error => {
+        console.log(error);
+        alert(error.message);
+      });
+    }
     this.post = new Post();
     this.post.pubDate = this.datePipe.transform( new Date(), 'yyyy-MM-dd hh:mm:ss');
     let author = new Author();
@@ -42,9 +63,11 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     this.getScreenSize();
   }
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.openDialog('', '' , true , true);
-    }, 1000);
+    if (!this.isViewDetailTrip) {
+      setTimeout(() => {
+        this.openDialog('', '' , true , true);
+      }, 1000);
+    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -89,6 +112,15 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         if (result.save) {
           this.title = result.title;
           this.note = result.note;
+          this.virtualTrip.post.title = this.title;
+          this.virtualTrip.post.content = this.note;
+          if (this.isViewDetailTrip) {
+            this.tripService.updateVirtualTrip(this.virtualTrip).subscribe(
+              error => {
+                alert('update: ' + error);
+              }
+            );
+          }
         }
       }
      });
@@ -109,10 +141,11 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       disableClose: true,
      });
     this.tripService.createVirtualTrip(this.virtualTrip).subscribe( result => {
-    },
-    complete => {
       console.log('create success!');
       dialogRef.close();
+      this.openDialogMessageConfirm('Bàn đăng đã được tạo!', result.id);
+    },
+    complete => {
     });
   }
 
@@ -134,6 +167,29 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   // update virtual trip to server
   saveDestination(des) {
     const foundIndex = this.virtualTrip.items.findIndex(x => x.locationId === des.locationId);
+    // tslint:disable-next-line:no-debugger
+    debugger;
     this.virtualTrip.items[foundIndex] = des;
+    if (this.isViewDetailTrip) {
+      this.tripService.updateVirtualTrip(this.virtualTrip).subscribe(
+        error => {
+          alert(error);
+        }
+      );
+    }
+  }
+  // open dialog confirm
+  openDialogMessageConfirm(message: string, data) {
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '400px',
+      height: '200px',
+      position: {
+        top: '10px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = message;
+    instance.message.url = '/virtual-trips?tripId=' + data;
   }
 }

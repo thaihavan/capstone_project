@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // tslint:disable-next-line:max-line-length
 import { MatChipsModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatTabsModule, MatButtonToggleModule, MatIconModule, MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule, MatProgressSpinnerModule, MatCheckboxModule } from '@angular/material';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { AgmCoreModule } from '@agm/core';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { SingleCommentComponent } from './components/single-comment/single-comment.component';
 import { MessagePopupComponent } from './components/message-popup/message-popup.component';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { CommentContainerComponent } from './components/comment-container/comment-container.component';
 import { ListPostComponent } from './components/list-post/list-post.component';
 import { ArticleComponent } from './components/article/article.component';
@@ -20,10 +20,10 @@ import { CropImageComponent } from './components/upload-image/crop-image/crop-im
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoadingScreenComponent } from './components/loading-screen/loading-screen.component';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { ListFollowComponent } from './components/list-follow/list-follow.component';
 import { UserComponent } from './components/list-follow/component/user/user.component';
-import {SlideshowModule} from 'ng-simple-slideshow';
+import { SlideshowModule } from 'ng-simple-slideshow';
 import { IfChangesDirective } from './directives/if-changes.directive';
 import { ReadMoreComponent } from './components/read-more/read-more.component';
 import { EditableTextComponent } from './components/editable-text/editable-text.component';
@@ -48,7 +48,7 @@ const Material = [
   MatChipsModule,
   MatRadioModule,
   MatGridListModule
- ];
+];
 @NgModule({
   declarations: [
     MessagePopupComponent,

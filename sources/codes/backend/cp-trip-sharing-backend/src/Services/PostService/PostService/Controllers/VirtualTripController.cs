@@ -46,9 +46,9 @@ namespace PostService.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult GetById([FromQuery] string id)
+        public IActionResult GetVirtualTrip([FromQuery] string id)
         {
-            var virtualTrip = _virtualTripService.GetById(id);
+            var virtualTrip = _virtualTripService.GetVirtualTrip(id);
             return Ok(virtualTrip);
         }
 

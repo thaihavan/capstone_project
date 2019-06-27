@@ -37,6 +37,7 @@
   max-height: 250px;
   margin: -16px -16px 16px -16px;
   text-align: center;
+  min-height: 200px;
 }
 .image-header .mat-icon-button {
   margin-top: 15%;

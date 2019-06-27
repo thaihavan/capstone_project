@@ -16,12 +16,15 @@ import { isAbsolute } from 'path';
   styleUrls: ['./article.component.css'],
   animations: [
     trigger('myTrigger', [
-      state('void', style({ opacity: 0,
+      state('void', style({
+        opacity: 0,
         left: '-100%',
 
       })),
-      state('*', style({ opacity: 1,
-        left: '0%', })),
+      state('*', style({
+        opacity: 1,
+        left: '0%',
+      })),
       transition('void => *', [animate('0.5s ease-in')]),
     ])
   ],
@@ -40,9 +43,9 @@ export class ArticleComponent implements OnInit {
   @ViewChild('slideShow') slideShow: any;
   imageSources: (string | IImage)[] = [
     // tslint:disable-next-line:max-line-length
-    { url: 'http://static.asiawebdirect.com/m/bangkok/portals/vietnam/homepage/ha-long-bay/pagePropertiesImage/ha-long-bay.jpg', caption: 'The first slide', href: '#config'},
-    { url: 'http://toproomserbia.com/wp-content/uploads/st_uploadfont/The-Ultimate-Guide-to-Traveling-When-You%E2%80%99re-Broke.jpg'},
-    { url: 'http://static.asiawebdirect.com/m/bangkok/portals/vietnam/homepage/pagePropertiesImage/vietnam.jpg'}
+    { url: 'http://static.asiawebdirect.com/m/bangkok/portals/vietnam/homepage/ha-long-bay/pagePropertiesImage/ha-long-bay.jpg', caption: 'The first slide', href: '#config' },
+    { url: 'http://toproomserbia.com/wp-content/uploads/st_uploadfont/The-Ultimate-Guide-to-Traveling-When-You%E2%80%99re-Broke.jpg' },
+    { url: 'http://static.asiawebdirect.com/m/bangkok/portals/vietnam/homepage/pagePropertiesImage/vietnam.jpg' }
   ];
   arrContent = [
     // tslint:disable-next-line:max-line-length
@@ -51,14 +54,14 @@ export class ArticleComponent implements OnInit {
     'the Shiba Inu was originally bred for hunting.',
   ];
   currContent = '';
-  constructor(private postService: PostService,  private userService: UserService) {
+  constructor(private postService: PostService, private userService: UserService) {
     this.like = new Like();
     this.token = localStorage.getItem('Token');
   }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('Account'));
-    if (this.user.userId === this.post.author.id) {
+    if (this.user != null && this.user.userId === this.post.author.id) {
       this.checkUser = false;
     }
     this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
