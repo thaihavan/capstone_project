@@ -29,7 +29,7 @@ namespace UserServices.Reponsitories
 
         public Bookmark GetById(string user_id)
         {
-            return _bookmarks.Find(bookmark => bookmark.UserId.Equals(user_id)).FirstOrDefault();
+            throw new NotImplementedException();
         }
 
         public Bookmark Delete(Bookmark document)
