@@ -34,10 +34,12 @@ export class ArticleComponent implements OnInit {
   @Input() post: Post;
   token: string;
   follow = false;
+  bookmark = false;
   checkUser = true;
   user: any;
   userId: string;
   listUserIdFollowing: string[] = [];
+  listPostIdBookMark: string[] = [];
   postType: any;
   name = 'PhongNV';
   @ViewChild('slideShow') slideShow: any;
@@ -70,6 +72,16 @@ export class ArticleComponent implements OnInit {
       for (let i = 0; i < this.listUserIdFollowing.length; i++) {
         if (this.post.author.id === this.listUserIdFollowing[i]) {
           this.follow = true;
+          break;
+        }
+      }
+    }
+    this.listPostIdBookMark = JSON.parse(localStorage.getItem('listPostIdBookmark'));
+    if (this.listPostIdBookMark != null) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.listPostIdBookMark.length; i++) {
+        if (this.post.id === this.listPostIdBookMark[i]) {
+          this.bookmark = true;
           break;
         }
       }
@@ -117,6 +129,27 @@ export class ArticleComponent implements OnInit {
         const unfollow = this.listUserIdFollowing.indexOf(userId);
         this.listUserIdFollowing.splice(unfollow, 1);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    }
+  }
+
+  bookmarkPost(postId: any) {
+    if (this.bookmark === false) {
+      this.userService.addBookMark(postId, this.token).subscribe((data: any) => {
+        this.bookmark = true;
+        this.listPostIdBookMark.push(postId);
+        localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    } else {
+      this.userService.deleteBookMark(postId, this.token).subscribe((data: any) => {
+        this.bookmark = false;
+        const unbookmark = this.listPostIdBookMark.indexOf(postId);
+        this.listPostIdBookMark.splice(unbookmark, 1);
+        localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });

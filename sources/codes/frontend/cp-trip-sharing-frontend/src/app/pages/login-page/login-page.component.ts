@@ -15,7 +15,8 @@ export class LoginPageComponent implements OnInit {
   password = '';
   account: Account;
   message: string;
-
+  listUserIdFollowing: string[] = [];
+  listPostIdBookMark: string[] = [];
   constructor(private globals: Globals, private dialogRef: MatDialogRef<LoginPageComponent>, private userService: UserService) {
     this.account = new Account();
   }
@@ -36,7 +37,8 @@ export class LoginPageComponent implements OnInit {
     this.userService.getAccount(this.account).subscribe((acc: any) => {
       localStorage.setItem('Account', JSON.stringify(acc));
       localStorage.setItem('Token', acc.token);
-      console.log(acc);
+      this.getFollowings();
+      this.getListPostIdBookmark();
       // Call http request to userservice để lấy thông tin user
       this.userService.getUserById(acc.userId).subscribe((user: any) => {
         if (user == null) {
@@ -50,5 +52,29 @@ export class LoginPageComponent implements OnInit {
         this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
         console.log(err);
       });
+  }
+
+  getFollowings() {
+    const token = localStorage.getItem('Token');
+    if (token != null) {
+      this.userService.getAllFollowingId(token).subscribe((result: any) => {
+        this.listUserIdFollowing = result;
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    }
+  }
+
+  getListPostIdBookmark() {
+    const token = localStorage.getItem('Token');
+    if (token != null) {
+      this.userService.getListPostIdBookmarks(token).subscribe((result: any) => {
+        this.listPostIdBookMark = result;
+        localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    }
   }
 }

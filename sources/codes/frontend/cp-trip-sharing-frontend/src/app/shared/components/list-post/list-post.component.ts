@@ -35,7 +35,6 @@ export class ListPostComponent implements OnInit {
   isCheckedDict = {};
   pageIndex: 1;
   isLoading = true;
-  listUserIdFollowing: string[] = [];
   isDisplayFilter = false;
 
   homeNav: string;
@@ -63,7 +62,6 @@ export class ListPostComponent implements OnInit {
   ngOnInit() {
     this.getTopics();
     this.setNavParams();
-    this.getFollowings();
   }
   onScroll() {
     console.log('list-post-on-scrole');
@@ -139,18 +137,6 @@ export class ListPostComponent implements OnInit {
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
-  }
-
-  getFollowings() {
-    const token = localStorage.getItem('Token');
-    if (token != null) {
-      this.userService.getAllFollowingId(localStorage.getItem('Token')).subscribe((result: any) => {
-        this.listUserIdFollowing = result;
-        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
-    }
   }
 
   getPosts(): void {

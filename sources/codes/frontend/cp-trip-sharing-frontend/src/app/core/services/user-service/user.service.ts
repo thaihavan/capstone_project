@@ -73,20 +73,48 @@ export class UserService {
     return this.http.post<any>(this.apiUrl + 'verify', null, httpAuthen);
   }
 
-  addBlock(blocked: string): Observable<any> {
-    return this.http.post<any>(this.apiUserService + 'user/addblock', blocked, httpOption);
+  // addBlock(blocked: string): Observable<any> {
+  //   return this.http.post<any>(this.apiUserService + 'user/addblock', blocked, httpOption);
+  // }
+
+  // unBlock(blocked: string): Observable<any> {
+  //   return this.http.delete<any>(this.apiUserService + 'user/unblock' + blocked);
+  // }
+  getListPostIdBookmarks(token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.get<any>(this.apiUserService + 'bookmark/bookmark', httpAuthen);
   }
 
-  unBlock(blocked: string): Observable<any> {
-    return this.http.delete<any>(this.apiUserService + 'user/unblock' + blocked);
+  getListBookmarksFromUserId(token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.get<any>(this.apiUserService + 'bookmark/bookmarkPostId', httpAuthen);
   }
 
-  bookMark(postId: string): Observable<any> {
-    return this.http.post<any>(this.apiUserService + 'user/bookmark', postId, httpOption);
+  addBookMark(postId: string, token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.post<any>(this.apiUserService + 'bookmark/bookmark?postId=' + postId, null, httpAuthen);
   }
 
-  deleteBookmark(postId: string): Observable<any> {
-    return this.http.delete<any>(this.apiUserService + 'user/deletebookmark' + postId);
+  deleteBookMark(postId: string, token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      }),
+      body: null
+    };
+    return this.http.delete<any>(this.apiUserService + 'bookmark/bookmark?postId=' + postId, httpAuthen);
   }
 
   addFollow(following: string, token: string): Observable<any> {
@@ -134,14 +162,14 @@ export class UserService {
     return this.http.get<any>(this.apiUserService + 'follow/followingids', httpAuthen);
   }
 
-  getAllPhoto(): Observable<any> {
-    return this.http.get<any>(this.apiUserService + 'user/allphoto');
-  }
+  // getAllPhoto(): Observable<any> {
+  //   return this.http.get<any>(this.apiUserService + 'user/allphoto');
+  // }
 
-  addPhoto(url: string, date: Date): Observable<any> {
-    const objectJson = '{"url":' + '"' + url + '"' + ',' + '"date":' + '"' + date + '"';
-    return this.http.post<any>(this.apiUserService + 'user/addphoto', JSON.parse(objectJson), httpOption);
-  }
+  // addPhoto(url: string, date: Date): Observable<any> {
+  //   const objectJson = '{"url":' + '"' + url + '"' + ',' + '"date":' + '"' + date + '"';
+  //   return this.http.post<any>(this.apiUserService + 'user/addphoto', JSON.parse(objectJson), httpOption);
+  // }
 
   registerUser(user: User): Observable<any> {
     return this.http.post<any>(this.apiUserService + 'user/register', user, httpOptionAuthen);
@@ -159,5 +187,4 @@ export class UserService {
   getUserById(userId: string): Observable<any> {
     return this.http.get<any>(this.apiUserService + 'user?userId=' + userId, httpOptionAuthen);
   }
-
 }

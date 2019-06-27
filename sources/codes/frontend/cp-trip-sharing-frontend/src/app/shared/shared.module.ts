@@ -27,6 +27,7 @@ import { SlideshowModule } from 'ng-simple-slideshow';
 import { IfChangesDirective } from './directives/if-changes.directive';
 import { ReadMoreComponent } from './components/read-more/read-more.component';
 import { EditableTextComponent } from './components/editable-text/editable-text.component';
+import { BookmarkPostComponent } from './components/bookmark-post/bookmark-post.component';
 
 const Material = [
   MatButtonModule,
@@ -66,7 +67,8 @@ const Material = [
     UserComponent,
     IfChangesDirective,
     ReadMoreComponent,
-    EditableTextComponent
+    EditableTextComponent,
+    BookmarkPostComponent
   ],
   imports: [
     CommonModule,

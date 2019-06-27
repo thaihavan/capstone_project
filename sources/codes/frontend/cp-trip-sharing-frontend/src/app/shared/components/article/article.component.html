@@ -56,8 +56,8 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
-                    <mat-icon>bookmark</mat-icon>
+                  <button (click)="bookmarkPost(post.id)" [class]="bookmark ? 'mat-menu-item icon-bookmark':'mat-menu-item icon-unbookmark'" mat-menu-item>
+                    <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
                     <span>Lưu</span>
                   </button>
                   <button mat-menu-item>

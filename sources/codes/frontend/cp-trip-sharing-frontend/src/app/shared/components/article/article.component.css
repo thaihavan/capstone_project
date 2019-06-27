@@ -125,3 +125,10 @@ button:focus {
 .bg-header{
   background-color: #26c6da;
 }
+
+.icon-bookmark{
+  color: #2196f3 !important;
+}
+.icon-unbookmark{
+  color: black !important;
+}
