@@ -21,7 +21,7 @@ export class StepCreatePostComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isOptional = false;
-  selectedLocation: LocationMarker[] = [];
+  selectedLocation: string[] = [];
   selectedTopic: string[] = [];
   selectable = true;
   removable = true;
@@ -43,6 +43,11 @@ export class StepCreatePostComponent implements OnInit {
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
+    this.selectedLocation = this.data.destinations;
+    this.selectedTopic = this.data.topics;
+    if (this.selectedLocation.length > 0) {
+      this.fakeinput1 = 'abc';
+    }
   }
 
   // google places search choose destination
@@ -62,7 +67,8 @@ export class StepCreatePostComponent implements OnInit {
         name: addrObj.name,
         note: ''
       };
-      this.selectedLocation.push(location);
+      const locaName = addrObj.name;
+      this.selectedLocation.push(locaName);
       this.fakeinput1 = 'abc';
     });
   }
@@ -86,7 +92,7 @@ export class StepCreatePostComponent implements OnInit {
   createPost() {
     if (this.fakeinput1 !== '') {
       this.data.topics = this.selectedTopic;
-      this.data.destinations = this.selectedLocation.map(dest => dest.name);
+      this.data.destinations = this.selectedLocation;
       this.dialogRef.close(this.data);
     }
   }

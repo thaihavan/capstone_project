@@ -112,4 +112,24 @@ export class PostService {
     };
     return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/like/unlike', httpOptionUnLike);
   }
+
+  updateArticle(article: Article) {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.post( this.baseUrl + 'update', article , httpOption);
+  }
+
+  getArticleById(articleId: string): Observable<Article> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.get<Article>(this.baseUrl + 'full?id=' + articleId, httpOption);
+  }
 }

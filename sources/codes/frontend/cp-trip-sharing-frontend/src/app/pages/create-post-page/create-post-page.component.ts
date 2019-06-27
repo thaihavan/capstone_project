@@ -14,6 +14,7 @@ import { Account } from 'src/app/model/Account';
 import { Author } from 'src/app/model/Author';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-post-page',
@@ -24,13 +25,17 @@ import { UploadImageService } from 'src/app/core/services/upload-image-service/u
 export class CreatePostPageComponent implements OnInit {
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @ViewChild('myEditor') myEditor;
-  imgUrl: any;
+  imgUrl;
   isHasImg = false;
   isPublic = true;
   title: string;
+  content = '<p>Hello world!</p>';
   articlereturn: Article;
+  articleId: string;
+  isUpdate: boolean;
   config = {
-    filebrowserUploadUrl: 'http://192.168.0.107:8000/api/crm/v1.0/crm-distribution-library-files',
+    filebrowserUploadUrl:
+      'http://192.168.0.107:8000/api/crm/v1.0/crm-distribution-library-files',
     fileTools_requestHeaders: {
       'X-Requested-With': 'xhr',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
@@ -43,8 +48,8 @@ export class CreatePostPageComponent implements OnInit {
       },
       fileUploadRequest(evt) {
         console.log('evt ===>', evt);
-      },
-    },
+      }
+    }
   };
   public Editor = DecoupledEditor;
   public onReady(editor) {
@@ -54,19 +59,44 @@ export class CreatePostPageComponent implements OnInit {
         editor.ui.view.toolbar.element,
         editor.ui.getEditableElement()
       );
-    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    editor.plugins.get('FileRepository').createUploadAdapter = loader => {
       // tslint:disable-next-line:no-string-literal
       console.log(loader['file']);
       return new UploadAdapter(loader, this.imageService);
     };
   }
-  constructor(private http: HttpClient, public dialog: MatDialog,
-              private postService: PostService,
-              private datePipe: DatePipe,
-              private imageService: UploadImageService) { }
+  constructor(
+    private http: HttpClient,
+    public dialog: MatDialog,
+    private postService: PostService,
+    private datePipe: DatePipe,
+    private imageService: UploadImageService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.articlereturn = new Article();
+    this.articleId = this.route.snapshot.queryParamMap.get('id');
+    if (
+      this.articleId !== undefined &&
+      this.articleId !== null &&
+      this.articleId !== ''
+    ) {
+      this.isUpdate = true;
+      this.postService.getArticleById(this.articleId).subscribe(
+        res => {
+          this.title = res.post.title;
+          this.imgUrl = res.post.coverImage;
+          if (this.imgUrl !== undefined) {
+            this.isHasImg = true;
+          }
+          this.content = res.post.content;
+          this.articlereturn = res;
+        },
+        error => {},
+        () => {}
+      );
+    }
   }
   uploadImg(files) {
     if (files.lenght === 0) {
@@ -95,12 +125,13 @@ export class CreatePostPageComponent implements OnInit {
     this.imgUrl = '';
     this.isHasImg = false;
   }
-  openDialog(): void {
+  openDialog(arrTopics, arrDestinations): void {
     const dialogRef = this.dialog.open(StepCreatePostComponent, {
       width: '60%',
       data: {
-        topics: [],
-        destinations: [],
+        topics: arrTopics,
+        destinations: arrDestinations,
+        isUpdate: this.isUpdate
       }
     });
     dialogRef.afterClosed().subscribe(res => {
@@ -113,16 +144,42 @@ export class CreatePostPageComponent implements OnInit {
         post.title = this.title;
         post.content = this.myEditor.editorInstance.getData();
         post.isPublic = this.isPublic;
-        post.pubDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss');
+        post.pubDate = this.datePipe.transform(
+          new Date(),
+          'yyyy-MM-dd hh:mm:ss'
+        );
+        post.coverImage = this.imgUrl;
         article.post = post;
 
         console.log('article param:', article);
-        this.postService.createPost(article).subscribe((data: any) => {
-          this.articlereturn.post = data.post;
-          this.openDialogMessageConfirm('Bạn đã đăng bài thành công');
-        }, error => {
-          console.log(error);
-        });
+        if (this.isUpdate) {
+          this.articlereturn.post.title = post.title;
+          this.articlereturn.post.content = post.content;
+          this.articlereturn.post.pubDate = post.pubDate;
+          this.articlereturn.post.isPublic = post.isPublic;
+          this.articlereturn.post.coverImage = post.coverImage;
+          this.articlereturn.topics = res.topics;
+          this.articlereturn.destinations = res.destinations;
+          this.postService.updateArticle(this.articlereturn).subscribe(
+            data => {},
+            error => {
+              console.log(error);
+            },
+            () => {
+              this.openDialogMessageConfirm('Chỉnh sửa bài thành công');
+            }
+          );
+        } else {
+          this.postService.createPost(article).subscribe(
+            (data: any) => {
+              this.articlereturn.post = data.post;
+              this.openDialogMessageConfirm('Bạn đã đăng bài thành công');
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        }
       }
     });
   }
@@ -142,9 +199,15 @@ export class CreatePostPageComponent implements OnInit {
     instance.message.url = '/post-detail?postId=' + this.articlereturn.post.id;
   }
   createPost() {
-    if (this.myEditor && this.myEditor.editorInstance) {
-      console.log(this.myEditor.editorInstance.getData());
+    if (this.isUpdate) {
+      this.openDialog(
+        this.articlereturn.topics,
+        this.articlereturn.destinations
+      );
+    } else {
+      if (this.myEditor && this.myEditor.editorInstance) {
+      this.openDialog([], []);
+      }
     }
-    this.openDialog();
   }
 }

@@ -12,7 +12,7 @@
             <mat-chip-list>
               <mat-chip selected color="primary" *ngFor="let location of selectedLocation" [selectable]="selectable"
                 [removable]="removable" (removed)="remove(location)">
-                {{location.name}}
+                {{location}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
               </mat-chip>
             </mat-chip-list>
@@ -35,7 +35,7 @@
         <h3>Chọn chủ đề cho bài viết</h3>
       </div>
       <div class="step-body">
-        <app-interested-topic (EventTopic)="selectedTopics($event)"></app-interested-topic>
+        <app-interested-topic [listTopicIdSelected]="selectedTopic" (EventTopic)="selectedTopics($event)"></app-interested-topic>
         <form class="fake-input" [formGroup]="secondFormGroup">
           <mat-form-field>
             <input matInput [(ngModel)]="fakeinput2" placeholder="Address" formControlName="secondCtrl" required>
@@ -45,7 +45,7 @@
       </div>
       <div class="btn-step">
         <button mat-raised-button color="primary" matStepperPrevious>Trở lại</button>
-        <button mat-raised-button color="primary" (click)="createPost()" cdkFocusInitial>Tạo bài viết</button>
+        <button mat-raised-button color="primary" (click)="createPost()" cdkFocusInitial>{{ data.isUpdate ? 'Lưu thay đôi' : 'Tạo bài viết' }}</button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

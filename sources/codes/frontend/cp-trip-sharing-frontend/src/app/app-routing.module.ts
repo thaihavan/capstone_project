@@ -43,6 +43,7 @@ const routes: Routes = [
       { path: 'virtual-trips', component: VirtualTripsPageComponent },
       { path: 'forgot-password', component: ForgotpasswordPageComponent },
       { path: 'create-article', component: CreatePostPageComponent },
+      { path: 'update-article', component: CreatePostPageComponent },
       { path: 'change-password', component: ChangepasswordPageComponent },
       { path: 'reset-password/:token', component: ResetPasswordPageComponent },
       { path: 'change-password', component: ChangepasswordPageComponent },

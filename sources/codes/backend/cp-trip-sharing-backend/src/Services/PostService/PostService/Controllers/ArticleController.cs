@@ -123,7 +123,7 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            if (!article.Post.AuthorId.Equals(new ObjectId(userId)))
+            if (!article.Post.AuthorId.Equals((userId)))
             {
                 return Unauthorized();
             }
@@ -133,7 +133,7 @@ namespace PostService.Controllers
                 return BadRequest(new ErrorMessage() { Message = "PostId doesn't match." });
             }
 
-            Post updatedPost = _postService.Add(article.Post);
+            Post updatedPost = _postService.Update(article.Post);
             Article updatedArticle = _articleService.Update(article);
 
             return Ok(updatedArticle);

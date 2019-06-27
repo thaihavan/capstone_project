@@ -8,7 +8,7 @@
       <ng-template #coverImage>
         <button (click)="fileClick()" mat-icon-button class="">
           <mat-icon>add_photo_alternate</mat-icon>
-          <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1' resizeToWidth="600"
+          <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1' [resizeToWidth]="600"
             #uploadImage></app-upload-image>
         </button>
       </ng-template>

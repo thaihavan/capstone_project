@@ -10,6 +10,7 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
 import { isAbsolute } from 'path';
 import { Article } from 'src/app/model/Article';
 import { Bookmark } from 'src/app/model/Bookmark';
+import { Globals } from 'src/globals/globalvalues';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class ArticleComponent implements OnInit {
     'the Shiba Inu was originally bred for hunting.',
   ];
   currContent = '';
-  constructor(private postService: PostService, private userService: UserService) {
+  constructor(private postService: PostService, private userService: UserService, public globals: Globals) {
     this.like = new Like();
     this.bookmarkObject = new Bookmark();
     this.token = localStorage.getItem('Token');
@@ -164,12 +165,8 @@ export class ArticleComponent implements OnInit {
       });
     }
   }
-}
 
-export class VirtualDisplay {
-  urlImg = [
-    'https://www.statravel.co.uk/static/uk_division_web_live/assets/sta-travel-default-min.jpg',
-    'http://toproomserbia.com/wp-content/uploads/st_uploadfont/The-Ultimate-Guide-to-Traveling-When-You%E2%80%99re-Broke.jpg',
-    'https://cdn-images-1.medium.com/max/2600/0*8HkryPmlsZCucKbv'
-  ];
+  editPost() {
+    window.location.href = this.globals.urllocal + '/update-article?id=' + this.article.id;
+  }
 }

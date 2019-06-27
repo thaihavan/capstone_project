@@ -16,8 +16,6 @@ export class CropImageComponent implements OnInit {
   }
 
   imageCropped(event: ImageCroppedEvent) {
-    // tslint:disable-next-line:no-debugger
-      debugger;
       this.croppedImage = event.base64;
       this.data.croppedImage = event.base64;
       this.data.type = event.file.type;
