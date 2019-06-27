@@ -49,7 +49,7 @@ export class PostService {
         })
       };
     }
-    return this.http.post<Article>(this.baseUrl + 'all', postFilter,  httpOption);
+    return this.http.post<Article>(this.baseUrl + 'all', postFilter, httpOption);
   }
 
   getAllArticlesByUserId(userId: string, postFilter: PostFilter): Observable<any> {
@@ -61,20 +61,19 @@ export class PostService {
     return this.http.post<Article>(this.baseUrl + 'user?userId=' + userId, postFilter, httpOption);
   }
 
-  getCommentByPost(postId: string): Observable<any> {
+  getCommentByPost(postId: string, token: string): Observable<any> {
     const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/all';
-    return this.http.get(url + '?id=' + postId);
-  }
-
-  getCommentByPostWithAuthen(postId: string, token: string): Observable<any> {
-    const httpOptionAuth = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token
-      })
-    };
-    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/all';
-    return this.http.get(url + '?id=' + postId, httpOptionAuth);
+    if (token != null) {
+      const httpOptionAuth = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        })
+      };
+      return this.http.get(url + '?id=' + postId, httpOptionAuth);
+    } else {
+      return this.http.get(url + '?id=' + postId);
+    }
   }
 
   addComment(comment: Comment): Observable<any> {
