@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, HostListener, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  HostListener,
+  ViewChild
+} from '@angular/core';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { Post } from 'src/app/model/Post';
 import { Author } from 'src/app/model/Author';
@@ -28,69 +34,102 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   isPublic: boolean;
   readMore = false;
   post: Post;
+  author = new Author();
   urlCoverImage = '';
   isViewDetailTrip: boolean;
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @ViewChild('leftContent') leftContent;
-  constructor(private datePipe: DatePipe, public dialog: MatDialog,
-              private tripService: VirtualTripService,
-              private route: ActivatedRoute) {
-   }
+  constructor(
+    private datePipe: DatePipe,
+    public dialog: MatDialog,
+    private tripService: VirtualTripService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.virtualTrip = new VirtualTrip();
+    // check is view detail?
     this.virtualTripId = this.route.snapshot.queryParamMap.get('tripId');
-    if (this.virtualTripId !== undefined && this.virtualTripId !== null && this.virtualTripId !== '') {
+    if (
+      this.virtualTripId !== undefined ||
+      this.virtualTripId !== null ||
+      this.virtualTripId !== ''
+    ) {
       this.isViewDetailTrip = true;
-      this.tripService.getDetailVtrip(this.virtualTripId).subscribe(trip => {
-        this.virtualTrip = trip;
-        this.isPublic = this.virtualTrip.post.isPublic;
-        this.title = this.virtualTrip.post.title;
-        this.note = this.virtualTrip.post.content;
-        this.urlCoverImage = this.virtualTrip.post.coverImage;
-      },
-      error => {
-        console.log(error);
-        alert(error.message);
-      });
+      this.tripService.getDetailVtrip(this.virtualTripId).subscribe(
+        trip => {
+          this.virtualTrip = trip;
+          this.isPublic = this.virtualTrip.post.isPublic;
+          this.title = this.virtualTrip.post.title;
+          this.note = this.virtualTrip.post.content;
+          this.urlCoverImage = this.virtualTrip.post.coverImage;
+          this.author = this.virtualTrip.post.author;
+        },
+        error => {
+          console.log(error);
+          alert(error.message);
+        }
+      );
+    } else {
+      // set variable if is create
+      this.post = new Post();
+      this.post.pubDate = this.datePipe.transform(
+        new Date(),
+        'yyyy-MM-dd hh:mm:ss'
+      );
+      this.author = JSON.parse(localStorage.getItem('author'));
+      this.post.author = this.author;
+      this.isPublic = true;
     }
-    this.post = new Post();
-    this.post.pubDate = this.datePipe.transform( new Date(), 'yyyy-MM-dd hh:mm:ss');
-    let author = new Author();
-    author = JSON.parse(localStorage.getItem('author'));
-    this.post.author = author;
-    this.isPublic = true;
+
     this.getScreenSize();
   }
   ngAfterViewInit(): void {
     if (!this.isViewDetailTrip) {
       setTimeout(() => {
-        this.openDialog('', '' , true , true);
+        this.openDialog('', '', true, true);
       }, 1000);
     }
   }
 
+  // set resize google map and expand left menu
   @HostListener('window:resize', ['$event'])
-    getScreenSize(event?) {
-          this.screenHeight = window.innerHeight - 60;
-          this.expandWidth = -this.leftContent.nativeElement.clientWidth;
-    }
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight - 60;
+    this.expandWidth = -this.leftContent.nativeElement.clientWidth;
+  }
 
   // add destination from google-map-search
   addDestination(destinations) {
-    this.virtualTrip.items = destinations;
+    if (
+      this.virtualTrip.items === undefined ||
+      this.virtualTrip.items === null
+    ) {
+      this.virtualTrip.items = destinations;
+    } else {
+      this.virtualTrip.items.push(destinations.pop());
+      this.sendUpdateRequest();
+    }
   }
+
   // set policy for virtual post
   setPolicy() {
     this.isPublic = !this.isPublic;
   }
+
   // expand left conttent
   expandLeft() {
     this.expandWidth = -this.leftContent.nativeElement.clientWidth;
     this.isExpandLeft = !this.isExpandLeft;
   }
+
   // Open dialog create virtual trips required title
-  openDialog(diaTitle: string, diaNote: string, diaPublic: boolean, disAble: boolean) {
+  openDialog(
+    diaTitle: string,
+    diaNote: string,
+    diaPublic: boolean,
+    disAble: boolean
+  ) {
     const dialogRef = this.dialog.open(DialogCreateTripComponent, {
       width: '50%',
       data: {
@@ -100,8 +139,8 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         edit: !disAble,
         save: ''
       },
-      disableClose: disAble,
-     });
+      disableClose: disAble
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined && disAble) {
         this.title = result.title;
@@ -114,17 +153,12 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
           this.note = result.note;
           this.virtualTrip.post.title = this.title;
           this.virtualTrip.post.content = this.note;
-          if (this.isViewDetailTrip) {
-            this.tripService.updateVirtualTrip(this.virtualTrip).subscribe(
-              error => {
-                alert('update: ' + error);
-              }
-            );
-          }
+          this.sendUpdateRequest();
         }
       }
-     });
+    });
   }
+
   // create virtual trip
   createTrip() {
     this.post.title = this.title;
@@ -138,15 +172,20 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         title: '',
         isPublic: ''
       },
-      disableClose: true,
-     });
-    this.tripService.createVirtualTrip(this.virtualTrip).subscribe( result => {
-      console.log('create success!');
-      dialogRef.close();
-      this.openDialogMessageConfirm('Bàn đăng đã được tạo!', result.id);
-    },
-    complete => {
+      disableClose: true
     });
+    this.tripService.createVirtualTrip(this.virtualTrip).subscribe(
+      result => {
+        dialogRef.close();
+        this.openDialogMessageConfirm('Bàn đăng đã được tạo!', result.id);
+      },
+      error => {
+        alert('create ' + error.message);
+      },
+      () => {
+        console.log('create success!');
+      }
+    );
   }
 
   // open dialog for update
@@ -166,18 +205,19 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
 
   // update virtual trip to server
   saveDestination(des) {
-    const foundIndex = this.virtualTrip.items.findIndex(x => x.locationId === des.locationId);
-    // tslint:disable-next-line:no-debugger
-    debugger;
-    this.virtualTrip.items[foundIndex] = des;
-    if (this.isViewDetailTrip) {
-      this.tripService.updateVirtualTrip(this.virtualTrip).subscribe(
-        error => {
-          alert(error);
-        }
+    if (des.typeAction === 'remove') {
+      this.virtualTrip.items = this.virtualTrip.items.filter(
+        item => item.locationId !== des.item.locationId
       );
+    } else {
+      const foundIndex = this.virtualTrip.items.findIndex(
+        x => x.locationId === des.item.locationId
+      );
+      this.virtualTrip.items[foundIndex] = des.item;
     }
+    this.sendUpdateRequest();
   }
+
   // open dialog confirm
   openDialogMessageConfirm(message: string, data) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
@@ -191,5 +231,20 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
     instance.message.url = '/virtual-trips?tripId=' + data;
+  }
+
+  // send update request to server
+  sendUpdateRequest() {
+    if (this.isViewDetailTrip) {
+      this.tripService.updateVirtualTrip(this.virtualTrip).subscribe(
+        res => {},
+        error => {
+          alert('update ' + error.messageText);
+        },
+        () => {
+          console.log('update success!');
+        }
+      );
+    }
   }
 }

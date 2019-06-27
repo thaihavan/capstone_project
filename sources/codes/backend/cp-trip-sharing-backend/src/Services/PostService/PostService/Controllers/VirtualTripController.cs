@@ -80,7 +80,7 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            if (!virtualTrip.Post.AuthorId.Equals(new ObjectId(userId)))
+            if (!virtualTrip.Post.AuthorId.Equals(userId))
             {
                 return Unauthorized();
             }
@@ -90,7 +90,7 @@ namespace PostService.Controllers
                 return BadRequest(new ErrorMessage() { Message = "PostId doesn't match." });
             }
 
-            Post updatedPost = _postService.Add(virtualTrip.Post);
+            Post updatedPost = _postService.Update(virtualTrip.Post);
             VirtualTrip updatedArticle = _virtualTripService.Update(virtualTrip);
 
             return Ok(updatedArticle);

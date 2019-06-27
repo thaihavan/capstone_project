@@ -30,8 +30,8 @@
             </button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item>
-                <mat-icon>flag</mat-icon>
-                <span>Báo cáo</span>
+                <mat-icon>delete</mat-icon>
+                <span>Xoá</span>
               </button>
               <button (click)="editAble()" mat-menu-item>
                 <mat-icon>edit</mat-icon>
@@ -72,11 +72,11 @@
     </div>
     <div class="col-12 right-content pl-0 pr-0 mt-0 ">
       <div class="fixed">
-        <app-google-map [heightMap]="screenHeight" (addDestination)="addDestination($event)"></app-google-map>
+        <app-google-map [heightMap]="screenHeight" [locationMarker]="virtualTrip.items" (addDestination)="addDestination($event)"></app-google-map>
       </div>
     </div>
   </div>
-  <div class="btn-create">
+  <div *ngIf="!isViewDetailTrip" class="btn-create">
     <button mat-fab color="accent" (click)="createTrip()">Tạo</button>
   </div>
 </div>

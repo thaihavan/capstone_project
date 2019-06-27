@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { LocationMarker } from 'src/app/model/LocationMarker';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
+import { ActionDestination } from 'src/app/model/ActionDestination';
 
 @Component({
   selector: 'app-destination-trip',
@@ -11,6 +12,7 @@ export class DestinationTripComponent implements OnInit {
   @Input() item: LocationMarker;
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @Output() saveDestination = new EventEmitter();
+  acDestination = new ActionDestination();
   constructor() {}
 
   ngOnInit() {
@@ -24,12 +26,23 @@ export class DestinationTripComponent implements OnInit {
   // get image when crop image done
   ImageCropted(image) {
     this.item.image = image;
-    this.saveDestination.emit(this.item);
+    this.acDestination.typeAction = 'update';
+    this.acDestination.item = this.item;
+    this.saveDestination.emit(this.acDestination);
   }
 
   // update note
   updateDestination(text) {
     this.item.note = text;
-    this.saveDestination.emit(this.item);
+    this.acDestination.typeAction = 'update';
+    this.acDestination.item = this.item;
+    this.saveDestination.emit(this.acDestination);
   }
+  actionDestination(actionType) {
+    // const acDestination = new ActionDestination();
+    this.acDestination.typeAction = actionType;
+    this.acDestination.item = this.item;
+    this.saveDestination.emit(this.acDestination);
+  }
+
 }

@@ -4,7 +4,9 @@ import {
   NgZone,
   Output,
   EventEmitter,
-  Input
+  Input,
+  AfterViewInit,
+  OnChanges
 } from '@angular/core';
 import { LocationMarker } from 'src/app/model/LocationMarker';
 
@@ -13,20 +15,32 @@ import { LocationMarker } from 'src/app/model/LocationMarker';
   templateUrl: './google-map.component.html',
   styleUrls: ['./google-map.component.css']
 })
-export class GoogleMapComponent implements OnInit {
+export class GoogleMapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() addDestination = new EventEmitter();
   lat: number;
   lng: number;
-  isFirstTime = true;
+  isFirstTime: boolean;
   public addrKeys: string[];
   public addr: object;
-  locationMarker: LocationMarker[] = [];
   @Input() heightMap: any;
-  constructor(private zone: NgZone) {
-    this.setCurrentLocation();
-  }
+  @Input() locationMarker: LocationMarker[] = [];
+  constructor(private zone: NgZone) {}
 
   ngOnInit() {}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.locationMarker === undefined || this.locationMarker === null) {
+        this.locationMarker = [];
+        this.setCurrentLocation();
+        this.isFirstTime = true;
+      } else {
+        this.isFirstTime = false;
+      }
+    }, 1000);
+  }
+
+  ngOnChanges(): void {}
 
   // on google-map-search submit add address location.
   setAddress(addrObj) {
@@ -72,6 +86,15 @@ export class GoogleMapComponent implements OnInit {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
       });
+    }
+  }
+
+  // fitbound google maps
+  fitBound() {
+    if (this.locationMarker === undefined) {
+      return false;
+    } else {
+      return this.locationMarker.length > 1;
     }
   }
 }

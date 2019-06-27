@@ -19,7 +19,7 @@ export class VirtualTripService {
     return this.http.post<VirtualTrip>(this.baseUrl + '/create', virtualTrip, this.httpOption);
   }
   updateVirtualTrip(virtualTrip: VirtualTrip): Observable<VirtualTrip> {
-    return this.http.post<VirtualTrip>(this.baseUrl + '/update', this.httpOption);
+    return this.http.post<VirtualTrip>(this.baseUrl + '/update', virtualTrip, this.httpOption);
   }
   getDetailVtrip(id: string): Observable<VirtualTrip> {
     return this.http.get<VirtualTrip>(this.baseUrl + '?id=' + id, this.httpOption);
