@@ -4,7 +4,7 @@
       <mat-icon>directions_run</mat-icon>
     </div>
     <div class="pt-2 pl-1">
-      <span>Tạo một chuyến đi</span>
+      <span>{{ data.edit ? 'Chỉnh sửa chuyến đi' : 'Tạo một chuyến đi'}}</span>
     </div>
   </div>
   <div class="btn-close">
@@ -17,14 +17,19 @@
     <div class="input-title">
       <h5 class="mb-3">Tên chuyến đi</h5>
       <div class="form-group">
-        <input [(ngModel)]="title" (ngModelChange)="onChange()" type="text" class="form-control" id="title" aria-describedby="helpId"
-          placeholder="Nhập tên chuyến đi">
-        <small id="helpId" class="form-text text-muted">50 kí tự</small>
+        <input [(ngModel)]="title" (ngModelChange)="onChange()" type="text" class="form-control" id="title"
+          aria-describedby="helpId" placeholder="Nhập tên chuyến đi">
+        <small id="helpId" class="form-text text-muted text-right">50 kí tự</small>
       </div>
     </div>
+
     <div class="radio-policy">
-      <h5>Chọn quyền riêng tư</h5>
-      <mat-radio-group aria-labelledby="example-radio-group-label"  [(ngModel)]="isPublic" class="example-radio-group" >
+      <div class="form-group">
+        <h5>Miêu tả</h5>
+        <textarea class="form-control" (ngModelChange)="onChangeArea()" [(ngModel)]="note" rows="5"></textarea>
+        <small id="helpId" class="form-text text-muted text-right">300 kí tự</small>
+      </div>
+      <!-- <mat-radio-group aria-labelledby="example-radio-group-label"  [(ngModel)]="isPublic" class="example-radio-group" >
         <mat-radio-button class="example-radio-button" [value]="true">
           <div class="item-radio">
             <div class="">
@@ -43,9 +48,9 @@
           </span>
         </mat-radio-button>
       </mat-radio-group>
-    </div>
-    <div class="btn-create">
-      <button (click)="onCreate()" [disabled]=isHasTitle mat-raised-button color="primary">Tạo</button>
+    </div> -->
+      <div class="btn-create">
+        <button (click)="onCreate()" [disabled]=isHasTitle mat-raised-button color="primary">{{data.edit ? 'Lưu' : 'Tạo' }}</button>
+      </div>
     </div>
   </div>
-</div>

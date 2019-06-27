@@ -33,7 +33,8 @@ import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-pa
 import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
 import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
 import { DialogCreateTripComponent } from './pages/virtual-trips-page/dialog-create-trip/dialog-create-trip.component';
-import { ListFollowComponent } from './shared/components/list-follow/list-follow.component'
+import { ListFollowComponent } from './shared/components/list-follow/list-follow.component';
+import { DestinationTripComponent } from './pages/virtual-trips-page/destination-trip/destination-trip.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +54,8 @@ import { ListFollowComponent } from './shared/components/list-follow/list-follow
     ResetPasswordPageComponent,
     InitialUserInformationPageComponent,
     VirtualTripsPageComponent,
-    DialogCreateTripComponent
+    DialogCreateTripComponent,
+    DestinationTripComponent
   ],
   imports: [
     MatMenuModule,

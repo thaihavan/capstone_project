@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // tslint:disable-next-line:max-line-length
-import { MatChipsModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatTabsModule, MatButtonToggleModule, MatIconModule, MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatChipsModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatTabsModule, MatButtonToggleModule, MatIconModule, MatDialogModule, MatToolbarModule, MatSidenavModule, MatListModule, MatProgressSpinnerModule, MatCheckboxModule } from '@angular/material';
 import {MatRadioModule} from '@angular/material/radio';
 import { AgmCoreModule } from '@agm/core';
 import {MatMenuModule} from '@angular/material/menu';
@@ -23,6 +23,11 @@ import { LoadingScreenComponent } from './components/loading-screen/loading-scre
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ListFollowComponent } from './components/list-follow/list-follow.component';
 import { UserComponent } from './components/list-follow/component/user/user.component';
+import {SlideshowModule} from 'ng-simple-slideshow';
+import { IfChangesDirective } from './directives/if-changes.directive';
+import { ReadMoreComponent } from './components/read-more/read-more.component';
+import { EditableTextComponent } from './components/editable-text/editable-text.component';
+
 const Material = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -31,6 +36,7 @@ const Material = [
   MatSidenavModule,
   MatListModule,
   MatButtonModule,
+  MatCheckboxModule,
   MatIconModule,
   MatTabsModule,
   MatCardModule,
@@ -58,6 +64,9 @@ const Material = [
     LoadingScreenComponent,
     ListFollowComponent,
     UserComponent,
+    IfChangesDirective,
+    ReadMoreComponent,
+    EditableTextComponent
   ],
   imports: [
     CommonModule,
@@ -66,7 +75,8 @@ const Material = [
     FormsModule,
     ReactiveFormsModule,
     ImageCropperModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    SlideshowModule,
   ],
   exports: [
     Material,
@@ -81,6 +91,9 @@ const Material = [
     UploadImageComponent,
     CropImageComponent,
     LoadingScreenComponent,
+    IfChangesDirective,
+    ReadMoreComponent,
+    EditableTextComponent
   ], entryComponents: [StepCreatePostComponent, CropImageComponent, LoadingScreenComponent]
 })
 export class SharedModule { }

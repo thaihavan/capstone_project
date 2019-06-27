@@ -8,13 +8,14 @@ import { User } from 'src/app/model/User';
 })
 export class UserComponent implements OnInit {
   @Input() user: User;
+  user2: any;
   gender: string;
   constructor() { }
 
   ngOnInit() {
-    console.log(this.user);
-    if (this.user.Gender === true) {
-      this.gender = 'Name';
+    this.user2 = this.user;
+    if (this.user2.gender === true) {
+      this.gender = 'Nam';
     } else {
       this.gender = 'Nữ';
     }

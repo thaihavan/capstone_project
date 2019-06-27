@@ -1,0 +1,17 @@
+.show-less {
+    height: 60px;
+    overflow: hidden;
+  }
+  .show-more {
+    overflow: visible;
+    height: auto;
+  }
+  button{
+    border: none;
+    color: #2196f3;
+    padding: 0px;
+  }
+  .content{}
+  .note-display{
+    position: relative;
+  }

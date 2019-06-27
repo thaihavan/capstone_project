@@ -1,0 +1,21 @@
+<div class="note-display">
+  <ng-container *ngIf="(text.trim() == '') || (text == null) || (text.length<60); else viewMore">
+    <div class="mb-3">
+      {{text}}
+      <app-editable-text *ngIf="isEditable" [text]='text' (updatedText)="updateText($event)" [isInputText]='false'></app-editable-text>
+    </div>
+  </ng-container>
+  <ng-template #viewMore>
+    <div class="content" [class]=" isShowLess ? 'show-less' : 'show-more'">
+      <ng-container *ngIf="isShowLess; else elseTemplate">
+        {{text.substring(0,70)}}
+        <button (click)="isShowLess = false">...xem thêm</button>
+      </ng-container>
+      <ng-template #elseTemplate>
+        {{text}}
+        <button (click)="isShowLess = true">...rút ngọn</button>
+      </ng-template>
+      <app-editable-text *ngIf="isEditable" [text]='text' (updatedText)="updateText($event)" [isInputText]='false'></app-editable-text>
+    </div>
+  </ng-template>
+</div>

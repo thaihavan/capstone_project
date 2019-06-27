@@ -46,6 +46,24 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("all")]
+        public IActionResult GetAllArticles(PostFilter postFilter)
+        {
+            IEnumerable<object> articles = null;
+            var identity = (ClaimsIdentity)User.Identity;
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = identity.FindFirst("user_id").Value;
+                articles = _articleService.GetAllArticleInfo(userId, postFilter);
+            }
+            else
+            {
+                articles = _articleService.GetAllArticleInfo(postFilter);
+            }
+            return Ok(articles);
+        }
+
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetById([FromQuery] string id)
         {
@@ -54,10 +72,18 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("userid")]
-        public IActionResult GetByUserId([FromQuery] string id)
+        [HttpPost("user")]
+        public IActionResult GetByUserId([FromQuery] string userId, [FromBody] PostFilter postFilter)
         {
-            var article = _articleService.GetAllArticleByUser(id);
+            var article = _articleService.GetAllArticleByUser(userId, postFilter);
+            return Ok(article);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("user")]
+        public IActionResult GetByUserId([FromQuery] string userId)
+        {
+            var article = _articleService.GetAllArticleByUser(userId);
             return Ok(article);
         }
 
@@ -76,14 +102,15 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            //article.Post.AuthorId = userId;
+            article.Post.AuthorId = userId;
             article.Id = ObjectId.GenerateNewId().ToString();
             article.PostId = ObjectId.GenerateNewId().ToString();
-            //article.Post.Id = article.PostId;
-            //article.Post.LikeCount = 0;  
-            //article.Post.CommentCount = 0;
-            
-            //Post addedPost = _postService.Add(article.Post);
+            article.Post.Id = article.PostId;
+            article.Post.LikeCount = 0;
+            article.Post.CommentCount = 0;
+            article.Post.PubDate = DateTime.Now;
+
+            Post addedPost = _postService.Add(article.Post);
             Article addedArticle = _articleService.Add(article);
 
             return Ok(addedArticle);

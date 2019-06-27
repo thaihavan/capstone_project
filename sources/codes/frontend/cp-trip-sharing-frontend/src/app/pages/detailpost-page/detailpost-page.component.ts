@@ -4,6 +4,7 @@ import { Comment } from 'src/app/model/Comment';
 import { Post } from 'src/app/model/Post';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from 'src/app/core/services/user-service/user.service';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -18,8 +19,11 @@ export class DetailpostPageComponent implements OnInit {
   token: string;
   commentContent = '';
   comments: Comment[];
+  follow = false;
+  followed = false;
+  listUserIdFollowing: string[] = [];
 
-  constructor(private postService: PostService, private route: ActivatedRoute) {
+  constructor(private postService: PostService, private route: ActivatedRoute, private userService: UserService) {
     this.post = new Post();
     this.comments = [];
     this.postId = this.route.snapshot.queryParamMap.get('postId');
@@ -28,12 +32,25 @@ export class DetailpostPageComponent implements OnInit {
     this.getCommentByPostId(this.postId);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   loadDetaiPost(postid: string) {
     this.postService.getDetail(postid).subscribe((data: any) => {
       this.post = data;
-      console.log(data);
+      this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
+      if (this.listUserIdFollowing != null) {
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.listUserIdFollowing.length; i++) {
+          if (data.authorId === this.listUserIdFollowing[i]) {
+            this.followed = true;
+            this.follow = false;
+            break;
+          } else {
+            this.followed = false;
+            this.follow = true;
+          }
+        }
+      }
     });
   }
 
@@ -75,4 +92,26 @@ export class DetailpostPageComponent implements OnInit {
     });
   }
 
+  followPerson(userId: any) {
+    if (this.followed === false && this.follow === true) {
+      this.userService.addFollow(userId, this.token).subscribe((data: any) => {
+        this.followed = true;
+        this.follow = false;
+        this.listUserIdFollowing.push(userId);
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    } else {
+      this.userService.unFollow(userId, this.token).subscribe((data: any) => {
+        this.followed = false;
+        this.follow = true;
+        const unfollow = this.listUserIdFollowing.indexOf(userId);
+        this.listUserIdFollowing.splice(unfollow, 1);
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    }
+  }
 }

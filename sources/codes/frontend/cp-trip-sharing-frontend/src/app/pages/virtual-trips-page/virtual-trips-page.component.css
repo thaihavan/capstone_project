@@ -14,6 +14,9 @@
   padding-right: 15px;
   padding-left: 0px;
 }
+.example-card {
+  width: 100%;
+}
 .left-content {
   transition-duration: 0.6s;
   position: absolute;
@@ -26,15 +29,35 @@
   position: relative;
   overflow: hidden;
 }
-.mat-card{
+.mat-card {
   border-radius: 0px;
 }
 .image-header {
   overflow: hidden;
   max-height: 250px;
   margin: -16px -16px 16px -16px;
+  text-align: center;
 }
-.image-header img {
+.image-header .mat-icon-button {
+  margin-top: 15%;
+  width: 60px;
+  height: 60px;
+}
+.image-header .mat-icon {
+  color: #fff;
+  width: 50px;
+}
+.image-header .material-icons {
+  font-size: 45px;
+}
+.no-image {
+  opacity: 0.5;
+  background: #b3b0b0;
+  min-height: 200px;
+
+}
+.image-header:hover {
+  opacity: 1;
 }
 
 .profile {
@@ -108,9 +131,7 @@
   color: #b3b0b0;
   font-size: 13px;
 }
-.child-content {
-  padding-top: 10px;
-}
+
 .note {
   flex-wrap: wrap;
 }
@@ -126,12 +147,7 @@
   right: 0px;
   top: -10px;
 }
-.line {
-  border-top: 1px solid gray;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  content: "";
-}
+
 .fixed {
   /* position: fixed; */
   top: 100px;
@@ -160,7 +176,7 @@
   border: none;
   border-radius: 0%;
 }
-.btn-create{
+.btn-create {
   position: absolute;
   right: 55px;
   bottom: 25px;

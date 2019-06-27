@@ -56,11 +56,16 @@ namespace PostService.Controllers
         [HttpPost("create")]
         public IActionResult CreateArticle([FromBody] VirtualTrip virtualTrip)
         {
-            if (virtualTrip.Post.Id != virtualTrip.PostId)
-            {
-                return BadRequest(new ErrorMessage() { Message = "PostId doesn't match." });
-            }
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            virtualTrip.Post.AuthorId = userId;
             virtualTrip.Id = ObjectId.GenerateNewId().ToString();
+            virtualTrip.PostId = ObjectId.GenerateNewId().ToString();
+            virtualTrip.Post.Id = virtualTrip.PostId;
+            virtualTrip.Post.LikeCount = 0;
+            virtualTrip.Post.CommentCount = 0;
+            virtualTrip.Post.PubDate = DateTime.Now;
 
             Post addedPost = _postService.Add(virtualTrip.Post);
             VirtualTrip addedVirtualTrip = _virtualTripService.Add(virtualTrip);
