@@ -7,7 +7,7 @@ import { VirtualTrip } from 'src/app/model/VirtualTrip';
   providedIn: 'root'
 })
 export class VirtualTripService {
-  baseUrl = 'https://localhost:44352/api/postservice/virtualtrip/';
+  baseUrl = 'https://localhost:44352/api/postservice/virtualtrip';
   httpOption = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -16,9 +16,12 @@ export class VirtualTripService {
   };
   constructor(private http: HttpClient) {}
   createVirtualTrip(virtualTrip: VirtualTrip): Observable<VirtualTrip> {
-    return this.http.post<VirtualTrip>(this.baseUrl + 'create', virtualTrip, this.httpOption);
+    return this.http.post<VirtualTrip>(this.baseUrl + '/create', virtualTrip, this.httpOption);
   }
   updateVirtualTrip(virtualTrip: VirtualTrip): Observable<VirtualTrip> {
-    return this.http.post<VirtualTrip>(this.baseUrl + 'update', this.httpOption);
+    return this.http.post<VirtualTrip>(this.baseUrl + '/update', this.httpOption);
+  }
+  getDetailVtrip(id: string): Observable<VirtualTrip> {
+    return this.http.get<VirtualTrip>(this.baseUrl + '?id=' + id, this.httpOption);
   }
 }
