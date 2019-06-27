@@ -1,4 +1,5 @@
-﻿using UserServices.Models;
+﻿using System.Collections.Generic;
+using UserServices.Models;
 
 namespace UserServices.Services.Interfaces
 {
