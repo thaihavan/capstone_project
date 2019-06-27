@@ -35,6 +35,11 @@ namespace PostService.Services
             return _virtualTripRepository.Delete(id);
         }
 
+        public VirtualTrip GetVirtualTrip(string id)
+        {
+            return _virtualTripRepository.GetVirtualTrip(id);
+        }
+
         public IEnumerable<VirtualTrip> GetAllVirtualTripWithPost()
         {
             return _virtualTripRepository.GetAllVirtualTripWithPost();
