@@ -80,6 +80,7 @@ namespace PostService.Repositories
                         PostType = post.PostType,
                         PubDate = post.PubDate,
                         Title = post.Title,
+                        CoverImage = post.CoverImage,
                         Author = new Author()
                         {
                             Id = author.Id,
@@ -124,6 +125,7 @@ namespace PostService.Repositories
                         PostType = post.PostType,
                         PubDate = post.PubDate,
                         Title = post.Title,
+                        CoverImage = post.CoverImage,
                         Author = new Author()
                         {
                             Id = author.Id,
@@ -171,6 +173,7 @@ namespace PostService.Repositories
                         PostType = post.PostType,
                         PubDate = post.PubDate,
                         Title = post.Title,
+                        CoverImage = post.CoverImage,
                         Author = new Author()
                         {
                             Id = author.Id,
