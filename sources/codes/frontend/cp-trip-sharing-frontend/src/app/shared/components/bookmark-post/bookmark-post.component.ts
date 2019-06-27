@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/core/services/user-service/user.service';
-import { resource } from 'selenium-webdriver/http';
+import { Component, OnInit, Input } from '@angular/core';
+import { Bookmark } from 'src/app/model/Bookmark';
 
 @Component({
   selector: 'app-bookmark-post',
@@ -8,16 +7,20 @@ import { resource } from 'selenium-webdriver/http';
   styleUrls: ['./bookmark-post.component.css']
 })
 export class BookmarkPostComponent implements OnInit {
-  constructor(private userService: UserService) {
-    const token = localStorage.getItem('Token');
-    if (token != null) {
-      this.userService.getListBookmarksFromUserId(token).subscribe((result: any) => {
-        console.log(result + 'listbookmark' );
-      });
-    }
-  }
+  @Input() bookmark: any;
+  constructor() { }
 
   ngOnInit() {
+    if (this.bookmark.title == null) {
+      this.bookmark.title = 'Không có title nên để tạm như thế này nhé';
+    }
+    if (this.bookmark.postType == null) {
+      this.bookmark.postType = 'Không có postType';
+    }
+    if (this.bookmark.coverImage == null) {
+      this.bookmark.coverImage = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
+    }
+    console.log(this.bookmark.title);
   }
 
 }

@@ -9,6 +9,7 @@ import { IImage } from 'ng-simple-slideshow';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { isAbsolute } from 'path';
 import { Article } from 'src/app/model/Article';
+import { Bookmark } from 'src/app/model/Bookmark';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class ArticleComponent implements OnInit {
   follow = false;
   bookmark = false;
   checkUser = true;
+  bookmarkObject: Bookmark;
   user: any;
   userId: string;
   listUserIdFollowing: string[] = [];
@@ -59,6 +61,7 @@ export class ArticleComponent implements OnInit {
   currContent = '';
   constructor(private postService: PostService, private userService: UserService) {
     this.like = new Like();
+    this.bookmarkObject = new Bookmark();
     this.token = localStorage.getItem('Token');
   }
 
@@ -119,6 +122,7 @@ export class ArticleComponent implements OnInit {
     if (this.follow === false) {
       this.userService.addFollow(userId, this.token).subscribe((data: any) => {
         this.follow = true;
+
         this.listUserIdFollowing.push(userId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
       }, (err: HttpErrorResponse) => {
@@ -136,9 +140,13 @@ export class ArticleComponent implements OnInit {
     }
   }
 
-  bookmarkPost(postId: any) {
+  bookmarkPost(postId: any, title: any, imgCover: any, postType: any) {
     if (this.bookmark === false) {
-      this.userService.addBookMark(postId, this.token).subscribe((data: any) => {
+      this.bookmarkObject.CoverImage = imgCover;
+      this.bookmarkObject.PostId = postId;
+      this.bookmarkObject.PostType = postType;
+      this.bookmarkObject.Title = title;
+      this.userService.addBookMark(this.bookmarkObject, this.token).subscribe((data: any) => {
         this.bookmark = true;
         this.listPostIdBookMark.push(postId);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
@@ -157,6 +165,7 @@ export class ArticleComponent implements OnInit {
     }
   }
 }
+
 export class VirtualDisplay {
   urlImg = [
     'https://www.statravel.co.uk/static/uk_division_web_live/assets/sta-travel-default-min.jpg',

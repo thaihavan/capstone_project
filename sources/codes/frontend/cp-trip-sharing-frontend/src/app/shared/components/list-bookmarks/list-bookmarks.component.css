@@ -1,0 +1,12 @@
+.list-bookmark{
+    width: 100%;
+    height: auto;
+    clear: both;
+    padding: 10px;
+    margin-top: 75px;
+}
+
+.bookmark-item{
+    width: 100%;
+    height: auto;
+}

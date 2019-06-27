@@ -1,3 +1,5 @@
-<p>
-  list-bookmarks works!
-</p>
+<div class="list-bookmark">
+  <div class="bookmark-item" *ngFor="let bookmark of listBookmark">
+    <app-bookmark-post [bookmark]='bookmark'></app-bookmark-post>
+  </div>
+</div>

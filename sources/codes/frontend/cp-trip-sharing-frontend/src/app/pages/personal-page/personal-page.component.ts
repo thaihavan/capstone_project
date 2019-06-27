@@ -46,13 +46,19 @@ export class PersonalPageComponent implements OnInit {
     ];
     this.user = new User();
     this.userId = this.route.snapshot.queryParamMap.get('userId');
-    this.getInforUser(this.userId);
+    if (this.userId != null) {
+      this.getInforUser(this.userId);
+    } else {
+      const user = JSON.parse(localStorage.getItem('User'));
+      this.getInforUser(user.id);
+    }
+
   }
   ngOnInit(): void {
-    if(this.router.url.indexOf('bookmarks') !== -1) {
+    if (this.router.url.indexOf('bookmarks') !== -1) {
       this.isDisplayNav = false;
     }
-    
+
     this.router.events.subscribe(res => {
       this.activeLinkIndex = this.navLinks.indexOf(
         this.navLinks.find(tab => tab.link === '.' + this.router.url)

@@ -86,7 +86,7 @@ export class UserService {
         Authorization: 'Bearer ' + token
       })
     };
-    return this.http.get<any>(this.apiUserService + 'bookmark/bookmark', httpAuthen);
+    return this.http.get<any>(this.apiUserService + 'bookmark/bookmarkPostId', httpAuthen);
   }
 
   getListBookmarksFromUserId(token: string): Observable<any> {
@@ -95,16 +95,16 @@ export class UserService {
         Authorization: 'Bearer ' + token
       })
     };
-    return this.http.get<any>(this.apiUserService + 'bookmark/bookmarkPostId', httpAuthen);
+    return this.http.get<any>(this.apiUserService + 'bookmark/bookmark', httpAuthen);
   }
 
-  addBookMark(postId: string, token: string): Observable<any> {
+  addBookMark(bookmark: any, token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token
       })
     };
-    return this.http.post<any>(this.apiUserService + 'bookmark/bookmark?postId=' + postId, null, httpAuthen);
+    return this.http.post<any>(this.apiUserService + 'bookmark/bookmark', bookmark, httpAuthen);
   }
 
   deleteBookMark(postId: string, token: string): Observable<any> {
