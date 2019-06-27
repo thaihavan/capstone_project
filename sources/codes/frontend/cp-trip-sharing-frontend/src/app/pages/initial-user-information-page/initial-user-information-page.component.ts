@@ -65,6 +65,7 @@ export class InitialUserInformationPageComponent implements OnInit {
 
   registerUser() {
     this.userService.registerUser(this.user).subscribe((result: any) => {
+      localStorage.setItem('User', JSON.stringify(result));
       window.location.href = '/home';
     }, (err: HttpErrorResponse) => {
       window.location.href = '/initial';

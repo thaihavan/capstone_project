@@ -28,6 +28,7 @@ import { IfChangesDirective } from './directives/if-changes.directive';
 import { ReadMoreComponent } from './components/read-more/read-more.component';
 import { EditableTextComponent } from './components/editable-text/editable-text.component';
 import { BookmarkPostComponent } from './components/bookmark-post/bookmark-post.component';
+import { ListBookmarksComponent } from './components/list-bookmarks/list-bookmarks.component';
 
 const Material = [
   MatButtonModule,
@@ -68,6 +69,7 @@ const Material = [
     IfChangesDirective,
     ReadMoreComponent,
     EditableTextComponent,
+    ListBookmarksComponent,
     BookmarkPostComponent
   ],
   imports: [

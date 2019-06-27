@@ -44,6 +44,7 @@ export class LoginPageComponent implements OnInit {
         if (user == null) {
           window.location.href = '/initial';
         } else {
+          localStorage.setItem('User', JSON.stringify(user));
           window.location.href = '/home';
         }
       });

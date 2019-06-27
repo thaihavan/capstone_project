@@ -4,7 +4,6 @@ import { GoogleMapComponent } from './shared/components/google-map/google-map.co
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotpassword-page.component';
-import { CreatedPostComponent } from './pages/personal-page/components/created-post/created-post.component';
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
 import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
@@ -16,6 +15,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ListPostComponent } from './shared/components/list-post/list-post.component';
 import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
 import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
+import { ListBookmarksComponent } from './shared/components/list-bookmarks/list-bookmarks.component';
 
 
 const routes: Routes = [
@@ -35,6 +35,7 @@ const routes: Routes = [
         path: 'personal', component: PersonalPageComponent,
         children: [
           { path: '', redirectTo: 'articles', pathMatch: 'full' },
+          { path: 'bookmarks', component: ListBookmarksComponent },
           { path: ':personal-nav', component: ListPostComponent }
         ]
       },

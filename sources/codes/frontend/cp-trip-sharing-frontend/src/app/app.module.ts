@@ -16,7 +16,6 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
 import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotpassword-page.component';
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
-import { CreatedPostComponent } from './pages/personal-page/components/created-post/created-post.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -47,7 +46,6 @@ import { DestinationTripComponent } from './pages/virtual-trips-page/destination
     PersonalPageComponent,
     ForgotpasswordPageComponent,
     CreatePostPageComponent,
-    CreatedPostComponent,
     ChangepasswordPageComponent,
     DetailpostPageComponent,
     EmailConfirmPageComponent,
