@@ -9,12 +9,26 @@ namespace ChatService.Models
 {
     public class MessageDetail
     {
+        [BsonId]
+        [BsonElement("_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
+
+        [BsonElement("from_id")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string FromUserId { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public string ToUserId { get; set; }
+        public string ConversationId { get; set; }
 
+        [BsonElement("content")]
         public string Content { get; set; }
+
+        [BsonElement("time")]
+        public DateTime Time { get; set; }
+
+        [BsonElement("seen_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public List<string> SeenId { get; set; }
     }
 }

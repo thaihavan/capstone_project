@@ -9,6 +9,7 @@ using System;
 using MongoDB.Driver;
 using ChatService.DbContext;
 using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace ChatService.HubConfig
 {
@@ -16,22 +17,52 @@ namespace ChatService.HubConfig
     public class ChatHub : Hub
     {
         
-        private readonly static ConnectionMapping<string> _connections = new ConnectionMapping<string>();
-        //private readonly IMongoCollection<Conversation> _conversations = null;
+        
+        private readonly IMongoCollection<Conversation> _conversations = null;
         private readonly IMongoCollection<User> _users = null;
 
         public ChatHub(IOptions<AppSettings> options)
         {
             var dbContext = new MongoDbContext(options);
-            //_conversations = dbContext.Conversations;
+            _conversations = dbContext.Conversations;
             _users = dbContext.Users;
         }
 
-        public void SendToAll(string toUser, string message)
+        public void FindConversation(string fromUser, string toUser, string type)
         {
-            Clients.All.SendAsync("sendToAll", toUser, message);
+            var conversation = _conversations.Find(x => x.Receivers.Contains(fromUser)
+            && x.Receivers.Contains(toUser)
+            && type.Equals("private")).FirstOrDefault();
+            Clients.Caller.SendAsync("getConversationId", conversation.Id);
         }
 
+        public void SendToConversation(string conversationId, string message)
+        {
+
+            var connections = _conversations.AsQueryable().Where(x => x.Id.Equals(conversationId)).FirstOrDefault().Receivers.Join(
+                _users.AsQueryable(),
+                receiver => receiver,
+                user => user.UserId,
+                (receiver, user) => new
+                {
+                    user.Connections
+                }
+                ).ToList();
+            foreach(var c in connections)
+            {
+                Clients.Clients(c.Connections).SendAsync("sendToConversation", conversationId, message);
+            }
+            
+        }
+
+        public void AddNewConvesation(string type, List<string> receivers)
+        {
+            _conversations.InsertOne(new Conversation()
+            {
+                Type = type,
+                Receivers = receivers
+            });
+        }
 
         public override Task OnConnectedAsync()
         {
