@@ -8,6 +8,7 @@ import { User } from 'src/app/model/User';
 import { IImage } from 'ng-simple-slideshow';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { isAbsolute } from 'path';
+import { Article } from 'src/app/model/Article';
 
 
 @Component({
@@ -31,7 +32,7 @@ import { isAbsolute } from 'path';
 })
 export class ArticleComponent implements OnInit {
   like: Like;
-  @Input() post: Post;
+  @Input() article: Article;
   token: string;
   follow = false;
   bookmark = false;
@@ -63,14 +64,14 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('Account'));
-    if (this.user != null && this.user.userId === this.post.author.id) {
+    if (this.user != null && this.user.userId === this.article.post.author.id) {
       this.checkUser = false;
     }
     this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
     if (this.listUserIdFollowing != null) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.listUserIdFollowing.length; i++) {
-        if (this.post.author.id === this.listUserIdFollowing[i]) {
+        if (this.article.post.author.id === this.listUserIdFollowing[i]) {
           this.follow = true;
           break;
         }
@@ -80,14 +81,14 @@ export class ArticleComponent implements OnInit {
     if (this.listPostIdBookMark != null) {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.listPostIdBookMark.length; i++) {
-        if (this.post.id === this.listPostIdBookMark[i]) {
+        if (this.article.post.id === this.listPostIdBookMark[i]) {
           this.bookmark = true;
           break;
         }
       }
     }
-    if (this.post.postType === 'virtualtrip') {
-      this.postType = this.post.postType;
+    if (this.article.post.postType === 'virtualtrip') {
+      this.postType = this.article.post.postType;
       this.slideShow.onIndexChanged.subscribe(slide => {
         this.currContent = this.arrContent[this.slideShow.slideIndex];
       });
@@ -95,19 +96,19 @@ export class ArticleComponent implements OnInit {
   }
 
   likePost(like: any) {
-    this.like.ObjectId = this.post.id;
+    this.like.ObjectId = this.article.post.id;
     this.like.ObjectType = 'post';
     if (like === false) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
-        this.post.liked = true;
-        this.post.likeCount += 1;
+        this.article.post.liked = true;
+        this.article.post.likeCount += 1;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
-        this.post.liked = false;
-        this.post.likeCount -= 1;
+        this.article.post.liked = false;
+        this.article.post.likeCount -= 1;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });

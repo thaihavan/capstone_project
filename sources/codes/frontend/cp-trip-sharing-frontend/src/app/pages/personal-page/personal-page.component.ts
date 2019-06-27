@@ -24,6 +24,8 @@ export class PersonalPageComponent implements OnInit {
   userId: string;
   listUser: User[] = [];
 
+  isDisplayNav = true;
+
   constructor(private router: Router, private userService: UserService, public dialog: MatDialog, private route: ActivatedRoute) {
     this.navLinks = [
       {
@@ -47,6 +49,10 @@ export class PersonalPageComponent implements OnInit {
     this.getInforUser(this.userId);
   }
   ngOnInit(): void {
+    if(this.router.url.indexOf('bookmarks') !== -1) {
+      this.isDisplayNav = false;
+    }
+    
     this.router.events.subscribe(res => {
       this.activeLinkIndex = this.navLinks.indexOf(
         this.navLinks.find(tab => tab.link === '.' + this.router.url)

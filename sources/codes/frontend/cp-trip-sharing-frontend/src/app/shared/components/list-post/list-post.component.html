@@ -30,8 +30,8 @@
 </div>
 
 <div *ngIf="posts!=null">
-  <div *ngFor="let post of posts">
-    <app-article [post]="post"></app-article>
+  <div *ngFor="let article of articles">
+    <app-article [article]="article"></app-article>
   </div>
 </div>
 <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" (scrolled)="onScroll()"></div>

@@ -100,7 +100,7 @@
         <!-- Card -->
       </div>
       <div class="col-md-7">
-        <div class="navlinks">
+        <div class="navlinks" *ngIf="isDisplayNav">
           <nav mat-tab-nav-bar mat-align-tabs="left">
             <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive
               #rla="routerLinkActive" [active]="rla.isActive">
