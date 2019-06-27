@@ -34,6 +34,11 @@ namespace UserServices.Services
             return _bookmarkRepository.Delete(bookmark);
         }
 
+        public IEnumerable<string> GetUserBookmarkId(string id)
+        {
+            return _bookmarkRepository.GetUserBookmarkId(id);
+        }
+
         public IEnumerable<Bookmark> GetUserBookmarks(string userId)
         {
             return _bookmarkRepository.GetAll(userId);

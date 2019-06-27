@@ -77,5 +77,14 @@ namespace UserServices.Controllers
             var userId = identity.FindFirst("user_id").Value;
             return Ok(_bookmarkService.GetUserBookmarks(userId));
         }
+
+        [Authorize(Roles = "member")]
+        [HttpGet("bookmarkPostId")]
+        public IActionResult GetUserBookmarkIds()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+            return Ok(_bookmarkService.GetUserBookmarkId(userId));
+        }
     }
 }

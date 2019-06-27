@@ -53,5 +53,16 @@ namespace UserServices.Reponsitories
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<string> GetUserBookmarkId(string id)
+    
+        {
+            List<string> bookmarks = _bookmarks
+                .AsQueryable()
+                .Where(x => x.UserId
+                .Equals(id))
+                .Select(x => x.PostId).ToList();
+            return bookmarks;
+        }
     }
 }
