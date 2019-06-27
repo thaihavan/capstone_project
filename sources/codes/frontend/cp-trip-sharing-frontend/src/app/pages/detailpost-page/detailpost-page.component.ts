@@ -55,8 +55,7 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   getCommentByPostId(postId: string) {
-    if (this.token == null) {
-      this.postService.getCommentByPost(postId).subscribe((data: any) => {
+      this.postService.getCommentByPost(postId, this.token).subscribe((data: any) => {
         if (data != null) {
           console.log('Comment: ' + data);
           console.log('Total comment: ', data.length);
@@ -65,17 +64,6 @@ export class DetailpostPageComponent implements OnInit {
           console.log('Can not get comments of this post.');
         }
       });
-    } else {
-      this.postService.getCommentByPostWithAuthen(postId, this.token).subscribe((data: any) => {
-        if (data != null) {
-          console.log('Comment: ' + data);
-          console.log('Total comment: ', data.length);
-          this.comments = data;
-        } else {
-          console.log('Can not get comments of this post.');
-        }
-      });
-    }
   }
 
   submitComment() {

@@ -107,9 +107,9 @@ export class PersonalPageComponent implements OnInit {
 
   showFollowingUser() {
     this.userService.getAllFollowing(this.userId).subscribe((result: any) => {
-      console.log(result);
+      console.log(result + 'abc');
       this.listUser = result;
-      this.openDialogFollow('Danh sách những người đang theo dõi');
+      this.openDialogFollow('Danh sách những người đang theo dõi', this.listUser);
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
@@ -119,19 +119,19 @@ export class PersonalPageComponent implements OnInit {
     this.userService.getAllFollower(this.userId).subscribe((result: any) => {
       console.log(result);
       this.listUser = result;
-      this.openDialogFollow('Danh sách những người theo dõi');
+      this.openDialogFollow('Danh sách những người theo dõi', this.listUser);
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
   }
 
-  openDialogFollow(title: any) {
+  openDialogFollow(title: any, listUsers: any) {
     const dialogRef = this.dialog.open(ListFollowComponent, {
       height: 'auto',
       width: '80%'
     });
     const instance = dialogRef.componentInstance;
-    instance.listUser = this.listUser;
+    instance.listUser = listUsers;
     instance.title = title;
   }
 }
