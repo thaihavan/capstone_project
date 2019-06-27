@@ -45,10 +45,10 @@ namespace UserServices.Controllers
             }
         }
 
-        // DELETE: api/UserServices/deletebookmark
+        // DELETE: api/UserServices/bookmark
         // body { postId : "id" }
         [Authorize(Roles = "member")]
-        [HttpDelete("deletebookmark")]
+        [HttpDelete("bookmark")]
         public IActionResult DeleteBookmark([FromQuery] string postId)
         {
             var bookmark = new Bookmark
@@ -66,6 +66,16 @@ namespace UserServices.Controllers
             {
                 return BadRequest();
             }
+        }
+
+
+        [Authorize(Roles = "member")]
+        [HttpGet("bookmark")]
+        public IActionResult GetUserBookmarks()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+            return Ok(_bookmarkService.GetUserBookmarks(userId));
         }
     }
 }

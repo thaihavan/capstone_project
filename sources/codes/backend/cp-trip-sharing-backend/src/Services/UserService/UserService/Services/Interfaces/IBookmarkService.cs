@@ -6,6 +6,6 @@ namespace UserServices.Services.Interfaces
     {
         Bookmark AddBookmark(Bookmark bookmark);
         Bookmark DeleteBookmark(Bookmark bookmark);
-        Bookmark GetUserBookmark(string userId);
+        IEnumerable<Bookmark> GetUserBookmarks(string userId);
     }
 }
