@@ -5,7 +5,7 @@ import { Directive, TemplateRef, ViewContainerRef, Input } from '@angular/core';
 })
 export class IfChangesDirective {
   private currentValue: any;
-private hasView = false;
+  private hasView = false;
   constructor(private viewContainer: ViewContainerRef, private templateRef: TemplateRef<any>) { }
   @Input() set ifChanges(val: any) {
     if (!this.hasView) {

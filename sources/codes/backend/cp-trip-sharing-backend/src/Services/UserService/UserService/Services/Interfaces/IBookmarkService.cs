@@ -1,4 +1,5 @@
-﻿using UserServices.Models;
+﻿using System.Collections.Generic;
+using UserServices.Models;
 
 namespace UserServices.Services.Interfaces
 {
@@ -6,6 +7,6 @@ namespace UserServices.Services.Interfaces
     {
         Bookmark AddBookmark(Bookmark bookmark);
         Bookmark DeleteBookmark(Bookmark bookmark);
-        Bookmark GetUserBookmark(string userId);
+        IEnumerable<Bookmark> GetUserBookmarks(string userId);
     }
 }

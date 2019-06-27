@@ -86,6 +86,7 @@ namespace PostService.Controllers
             var article = _articleService.GetAllArticleByUser(userId);
             return Ok(article);
         }
+
         [HttpGet("full")]
         public IActionResult GetArticleInfoById([FromQuery] string id)
         {
