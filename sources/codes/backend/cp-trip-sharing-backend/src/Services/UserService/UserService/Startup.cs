@@ -67,7 +67,7 @@ namespace UserServices
             services.AddScoped<IBookmarkService, BookmarkService>();
             services.AddScoped<IFollowService, FollowService>();
             services.AddScoped<IPhotoService, PhotoService>();
-            
+            services.AddScoped<IPublishToTopic, PublishToTopic>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

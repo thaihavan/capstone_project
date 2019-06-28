@@ -50,7 +50,8 @@ export class PersonalPageComponent implements OnInit {
       this.getInforUser(this.userId);
     } else {
       const user = JSON.parse(localStorage.getItem('User'));
-      this.getInforUser(user.id);
+      this.userId = user.id;
+      this.getInforUser(this.userId);
     }
 
   }

@@ -44,6 +44,12 @@ namespace UserServices.Reponsitories
         public User GetById(string id)
         {
             var user = _users.Find(x => x.Id.Equals(id)).FirstOrDefault();
+
+            if (user == null)
+            {
+                return user;
+            }
+
             var followerCount = _followRepository.GetAllFollower(id).Count();
             var followingCount = _followRepository.GetAllFollowing(id).Count();
             user.FollowerCount = followerCount;

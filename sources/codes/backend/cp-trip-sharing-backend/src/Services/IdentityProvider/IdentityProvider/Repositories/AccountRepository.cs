@@ -42,7 +42,7 @@ namespace IdentityProvider.Repositories
 
         public Account Get(string id)
         {
-            Account account = _accounts.Find(x=>x.Id==id).ToList().FirstOrDefault();
+            Account account = _accounts.Find(x => x.Id == id).ToList().FirstOrDefault();
             return account;
         }
 
@@ -55,7 +55,7 @@ namespace IdentityProvider.Repositories
 
         public Account Update(Account account)
         {
-            _accounts.FindOneAndReplace(Builders<Account>.Filter.Eq("_id", account.Id), account);
+            _accounts.FindOneAndReplace(a => a.Id == account.Id, account);
 
             return account;
         }

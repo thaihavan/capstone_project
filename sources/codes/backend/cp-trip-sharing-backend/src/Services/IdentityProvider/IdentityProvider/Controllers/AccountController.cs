@@ -84,7 +84,10 @@ namespace IdentityProvider.Controllers
         public IActionResult VerifyEmailAddress()
         {
             var  accountId = User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value;
-            if(_accountService.VerifyEmail(accountId))return Ok(new { Message = "verified"});
+            if (_accountService.VerifyEmail(accountId))
+            {
+                return Ok(new { Message = "verified" });
+            }
             return BadRequest(new ErrorMessage() { Message = "Error" });
         }
 

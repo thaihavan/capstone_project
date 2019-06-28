@@ -37,14 +37,14 @@ export class LoginPageComponent implements OnInit {
     this.userService.getAccount(this.account).subscribe((acc: any) => {
       localStorage.setItem('Account', JSON.stringify(acc));
       localStorage.setItem('Token', acc.token);
-      this.getFollowings();
-      this.getListPostIdBookmark();
       // Call http request to userservice để lấy thông tin user
       this.userService.getUserById(acc.userId).subscribe((user: any) => {
         if (user == null) {
           window.location.href = '/initial';
         } else {
           localStorage.setItem('User', JSON.stringify(user));
+          this.getFollowings();
+          this.getListPostIdBookmark();
           window.location.href = '/home';
         }
       });

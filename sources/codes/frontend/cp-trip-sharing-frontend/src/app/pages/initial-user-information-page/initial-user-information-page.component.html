@@ -53,8 +53,8 @@
             <h4>Chọn ít nhất 3 chủ đề bạn quan tâm</h4>
           </div>
           <app-interested-topic [listTopicIdSelected]="user.Interested" (EventTopic)="selectedTopics($event)"></app-interested-topic>
-          <button *ngIf="checkedRegister" type="button" class="btn btn-primary" (click)="registerUser()">Tiếp tục</button>
-          <button *ngIf="checkedUpdate" type="button" class="btn btn-primary" (click)="updateUser()">Cập nhật</button>
+          <button *ngIf="isRegister" type="button" class="btn btn-primary" (click)="registerUser()">Tiếp tục</button>
+          <button *ngIf="!isRegister" type="button" class="btn btn-primary" (click)="updateUser()">Cập nhật</button>
         </div>
       </form>
     </mat-step>

@@ -15,8 +15,7 @@ export class InitialUserInformationPageComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   user: User;
-  checkedRegister: boolean;
-  checkedUpdate: boolean;
+  isRegister: boolean;
   selectedTopic: string[] = [];
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.user = new User();
@@ -27,6 +26,7 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.user.Dob = null;
     this.user.Gender = true;
     this.user.Address = '';
+    this.user.Interested = [];
   }
 
   ngOnInit() {
@@ -37,12 +37,10 @@ export class InitialUserInformationPageComponent implements OnInit {
       secondCtrl: ['', Validators.required]
     });
 
-    if (this.user == null) {
-      this.checkedUpdate = false;
-      this.checkedRegister = true;
+    if (!this.user || !this.user.UserId || this.user.UserId == null) {
+      this.isRegister = true;
     } else {
-      this.checkedUpdate = true;
-      this.checkedRegister = false;
+      this.isRegister = false;
     }
   }
 
@@ -64,6 +62,7 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   registerUser() {
+    debugger;
     this.userService.registerUser(this.user).subscribe((result: any) => {
       localStorage.setItem('User', JSON.stringify(result));
       window.location.href = '/home';

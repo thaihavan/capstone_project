@@ -45,13 +45,12 @@ namespace PostService.Repositories
 
         public Author InsertOrUpdate(Author author)
         {
-            var filter = Builders<Author>.Filter.Eq("_id", author.Id);
             var updateDefinition = Builders<Author>.Update
                 .Set("display_name", author.DisplayName)
                 .Set("profile_image", author.ProfileImage);
 
             var result = _authors.UpdateOne(
-                filter,
+                a => a.Id == author.Id,
                 updateDefinition, 
                 new UpdateOptions { IsUpsert = true });
 

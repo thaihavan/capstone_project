@@ -37,9 +37,9 @@ namespace UserServices.Services
                     DisplayName = user.DisplayName,
                     ProfileImage = user.Avatar
                 };
-                
+
                 // Comment it if run in local environment
-                //_publishToTopic.PublishAuthor(author);
+                _publishToTopic.PublishAuthor(author);
             }
             return result;
         }
@@ -49,9 +49,9 @@ namespace UserServices.Services
             return _userRepository.GetAll();
         }
 
-        public User GetUserById(string accountId)
+        public User GetUserById(string userId)
         {
-            return _userRepository.GetById(accountId);
+            return _userRepository.GetById(userId);
         }
 
         public User Update(User user)

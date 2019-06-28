@@ -23,6 +23,7 @@ export class EmailConfirmPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    debugger;
     this.token = this.route.snapshot.paramMap.get('token');
     this.userService.verifyEmail(this.token).subscribe((data: any) => {
       this.message = 'Xác nhận email thành công';

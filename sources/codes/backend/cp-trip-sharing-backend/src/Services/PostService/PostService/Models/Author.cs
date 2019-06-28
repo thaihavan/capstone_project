@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PostService.Models
 {
-    public class Author:Model
+    public class Author : Model
     {
         [BsonId]
         [BsonElement("_id")]
