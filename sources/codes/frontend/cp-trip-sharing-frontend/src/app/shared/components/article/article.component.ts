@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { Post } from 'src/app/model/Post';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { UserService } from 'src/app/core/services/user-service/user.service';
@@ -11,6 +11,7 @@ import { isAbsolute } from 'path';
 import { Article } from 'src/app/model/Article';
 import { Bookmark } from 'src/app/model/Bookmark';
 import { Globals } from 'src/globals/globalvalues';
+import { LocationMarker } from 'src/app/model/LocationMarker';
 
 
 @Component({
@@ -32,9 +33,11 @@ import { Globals } from 'src/globals/globalvalues';
     ])
   ],
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, AfterViewInit {
+
   like: Like;
-  @Input() article: Article;
+  @Input() article;
+  @Input() typeArticle;
   token: string;
   follow = false;
   bookmark = false;
@@ -44,22 +47,14 @@ export class ArticleComponent implements OnInit {
   userId: string;
   listUserIdFollowing: string[] = [];
   listPostIdBookMark: string[] = [];
-  postType: any;
   name = 'PhongNV';
+
+  // if article is virtual trip variable for virtual trip
   @ViewChild('slideShow') slideShow: any;
-  imageSources: (string | IImage)[] = [
-    // tslint:disable-next-line:max-line-length
-    { url: 'http://static.asiawebdirect.com/m/bangkok/portals/vietnam/homepage/ha-long-bay/pagePropertiesImage/ha-long-bay.jpg', caption: 'The first slide', href: '#config' },
-    { url: 'http://toproomserbia.com/wp-content/uploads/st_uploadfont/The-Ultimate-Guide-to-Traveling-When-You%E2%80%99re-Broke.jpg' },
-    { url: 'http://static.asiawebdirect.com/m/bangkok/portals/vietnam/homepage/pagePropertiesImage/vietnam.jpg' }
-  ];
-  arrContent = [
-    // tslint:disable-next-line:max-line-length
-    'The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small,',
-    'agile dog that copes very well with mountainous terrain,',
-    'the Shiba Inu was originally bred for hunting.',
-  ];
-  currContent = '';
+  imageSources: (string | IImage)[] = [];
+  desTitle = '';
+  desNote = '';
+  desFormat = '';
   constructor(private postService: PostService, private userService: UserService, public globals: Globals) {
     this.like = new Like();
     this.bookmarkObject = new Bookmark();
@@ -91,10 +86,25 @@ export class ArticleComponent implements OnInit {
         }
       }
     }
-    if (this.article.post.postType === 'virtualtrip') {
-      this.postType = this.article.post.postType;
+    // if article is virtual post get imageurls and post's contetn
+    if (this.typeArticle === 'virtual-trips') {
+      this.setVirtualTripDisplay();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    // set slideshow indexchage
+    if (this.typeArticle === 'virtual-trips') {
       this.slideShow.onIndexChanged.subscribe(slide => {
-        this.currContent = this.arrContent[this.slideShow.slideIndex];
+        if (this.slideShow.slideIndex === 0) {
+          this.desTitle = this.article.post.title;
+          this.desFormat = this.article.post.pubDate;
+          this.desNote = this.article.post.content;
+        } else {
+          this.desTitle = this.article.items[this.slideShow.slideIndex - 1].name;
+          this.desFormat = this.article.items[this.slideShow.slideIndex - 1].formattedAddress;
+          this.desNote = this.article.items[this.slideShow.slideIndex - 1].note;
+        }
       });
     }
   }
@@ -166,7 +176,31 @@ export class ArticleComponent implements OnInit {
     }
   }
 
+  // if article is virtualtrip get imageurl for slideshow.
+  setVirtualTripDisplay() {
+    if (this.article.post.coverImage !== null && this.article.post.coverImage !== '') {
+      const url = { url: this.article.post.coverImage, caption: this.article.post.title, href: '#config'};
+      this.imageSources.push(url);
+    } else {
+      // tslint:disable-next-line:max-line-length
+      const url = { url: 'https://1.bp.blogspot.com/-ZvShXfYhUGo/TsU-7srTr6I/AAAAAAAACkk/YAnQeyudiNo/s1600/Sapa_Vietnam.jpg', caption: this.article.post.title, href: '#config'};
+      this.imageSources.push(url);
+    }
+    this.article.items.forEach( art => {
+      const url = { url: art.image, caption: art.name, href: '#config'};
+      this.imageSources.push(url);
+    });
+
+    this.desTitle = this.article.post.title;
+    this.desFormat = this.article.post.pubDate;
+    this.desNote = this.article.post.content;
+  }
+
   editPost() {
-    window.location.href = this.globals.urllocal + '/update-article?id=' + this.article.id;
+    if (this.typeArticle === 'virtual-trips') {
+      window.location.href = this.globals.urllocal + '/virtual-trips?tripId=' + this.article.id;
+    } else {
+      window.location.href = this.globals.urllocal + '/update-article?id=' + this.article.id;
+    }
   }
 }

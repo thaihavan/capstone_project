@@ -34,7 +34,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   isPublic: boolean;
   readMore = false;
   post: Post;
-  author = new Author();
+  author: Author;
   urlCoverImage = '';
   isViewDetailTrip: boolean;
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
@@ -51,8 +51,8 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     // check is view detail?
     this.virtualTripId = this.route.snapshot.queryParamMap.get('tripId');
     if (
-      this.virtualTripId !== undefined ||
-      this.virtualTripId !== null ||
+      this.virtualTripId !== undefined &&
+      this.virtualTripId !== null &&
       this.virtualTripId !== ''
     ) {
       this.isViewDetailTrip = true;
@@ -77,8 +77,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         new Date(),
         'yyyy-MM-dd hh:mm:ss'
       );
-      this.author = JSON.parse(localStorage.getItem('author'));
-      this.post.author = this.author;
+      if (localStorage.getItem('Token') !== null) {
+        this.author = new Author();
+        this.post.author = this.author;
+      }
       this.isPublic = true;
     }
 

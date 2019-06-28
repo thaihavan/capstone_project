@@ -8,6 +8,8 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { PostFilter } from 'src/app/model/PostFilter';
 import { Topic } from 'src/app/model/Topic';
+import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
+import { ArticleDisplay } from 'src/app/model/ArticleDisplay';
 @Component({
   selector: 'app-list-post',
   templateUrl: './list-post.component.html',
@@ -28,6 +30,7 @@ export class ListPostComponent implements OnInit {
     'topic'
   ];
 
+  articleDisplay = new ArticleDisplay();
   posts: Post[] = [];
   articles: Article[] = [];
   virtualTrips: VirtualTrip[] = [];
@@ -57,7 +60,9 @@ export class ListPostComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private postService: PostService, private userService: UserService) { }
+  constructor(private route: ActivatedRoute, private postService: PostService,
+              private userService: UserService,
+              private tripService: VirtualTripService) { }
 
   ngOnInit() {
     this.getTopics();
@@ -150,6 +155,7 @@ export class ListPostComponent implements OnInit {
       this.getArticles(postFilter);
     } else if (this.personalNav === 'virtual-trips') {
       this.resetListPost();
+      this.getArticles(postFilter);
     } else if (this.personalNav === 'companion-posts') {
       this.resetListPost();
     }
@@ -159,8 +165,9 @@ export class ListPostComponent implements OnInit {
     if (this.homeNav != null) {
       // Call api
       this.postService.getAllArticles(postFilter).subscribe((data: any) => {
-        this.articles = data;
-        this.articles.forEach(post => {
+        this.articleDisplay.typeArticle = 'article';
+        this.articleDisplay.items = data;
+        this.articleDisplay.items.forEach(post => {
           this.posts.push(post.post);
         });
         console.log(this.posts);
@@ -168,18 +175,29 @@ export class ListPostComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
-    } else if (this.personalNav != null) {
+    } else if (this.personalNav === 'articles') {
       // Call api
       const account = JSON.parse(localStorage.getItem('Account'));
       this.postService.getAllArticlesByUserId(account.userId, postFilter).subscribe((data: any) => {
         this.resetListPost();
-        this.articles = data;
-        this.articles.forEach(post => {
+        this.articleDisplay.typeArticle = 'article';
+        this.articleDisplay.items = data;
+        this.articleDisplay.items.forEach(post => {
           this.posts.push(post.post);
         });
         this.isLoading = false;
       }, (err: HttpErrorResponse) => {
         console.log(err);
+      });
+    } else if (this.personalNav === 'virtual-trips') {
+        this.tripService.getVirtualTrips().subscribe(data => {
+        this.resetListPost();
+        this.articleDisplay.typeArticle = 'virtual-trips';
+        this.articleDisplay.items = data;
+        this.articleDisplay.items.forEach(post => {
+          this.posts.push(post.post);
+        });
+        this.isLoading = false;
       });
     }
   }

@@ -1,20 +1,20 @@
 <div class="mb-5">
-  <ng-container [ngSwitch]="postType">
-    <ng-container *ngSwitchCase="'virtualtrip'">
+  <ng-container [ngSwitch]="typeArticle">
+    <ng-container *ngSwitchCase="'virtual-trips'">
       <div class="virtual-trips">
         <mat-card>
           <mat-card-header class="bg-header text-white">
-            <div class="d-flex justify-content-between">
-              <div>
-                <mat-card-title>Một vòng Hà Nội</mat-card-title>
+                <img class="ml-3" mat-card-avatar src="{{article.post.author.profileImage}}" />
+                <mat-card-title>{{article.post.author.displayName}}</mat-card-title>
+                <mat-card-subtitle class="text-white">{{article.post.pubDate | date }}</mat-card-subtitle>
                 <mat-card-subtitle class="text-white">6 mục</mat-card-subtitle>
-              </div>
+            <div class="d-flex justify-content-between">
               <div class="btn-interact">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
+                  <button (click)="editPost()" mat-menu-item>
                     <mat-icon>edit</mat-icon>
                     <span>Chỉnh sửa</span>
                   </button>
@@ -31,7 +31,11 @@
             [lazyLoad]="imageSources?.length > 1" [autoPlayWaitForLazyLoad]="true">
           </slideshow>
           <mat-card-content>
-            <div *ifChanges='currContent' [@myTrigger]>{{currContent}}</div>
+            <div *ifChanges='desTitle' [@myTrigger]>
+              <h5>{{desTitle}}</h5>
+              <mat-card-subtitle>{{desFormat}}</mat-card-subtitle>
+              <p>{{desNote}}</p>
+            </div>
           </mat-card-content>
         </mat-card>
       </div>
@@ -56,7 +60,9 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button (click)="bookmarkPost(article.post.id,article.post.title,article.post.coverImage,article.post.postType)" [class]="bookmark ? 'mat-menu-item icon-bookmark':'mat-menu-item icon-unbookmark'" mat-menu-item>
+              <button
+                (click)="bookmarkPost(article.post.id,article.post.title,article.post.coverImage,article.post.postType)"
+                [class]="bookmark ? 'mat-menu-item icon-bookmark':'mat-menu-item icon-unbookmark'" mat-menu-item>
                 <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
                 <span>Lưu</span>
               </button>

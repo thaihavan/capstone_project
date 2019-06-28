@@ -24,4 +24,7 @@ export class VirtualTripService {
   getDetailVtrip(id: string): Observable<VirtualTrip> {
     return this.http.get<VirtualTrip>(this.baseUrl + '?id=' + id, this.httpOption);
   }
+  getVirtualTrips(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + '/all', this.httpOption);
+  }
 }

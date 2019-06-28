@@ -42,7 +42,7 @@
           <mat-card-content>
             <div class="parent-content mt-5">
               <h4>{{title == '' ? 'Tên chuyến đi' : title}}</h4>
-              <p><span class="sub-title">Bởi </span><a href="#"><span class="author-name">PhongNV</span></a></p>
+              <p><span class="sub-title">Bởi </span><a href="#"><span class="author-name">{{author.displayName}}</span></a></p>
               <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
               <a *ngIf="!note" href="#">+ Thêm ghi chú mới</a>
               <p><span class="sub-title">0 mục cập nhập vào tháng 6 năm 2019</span></p>
