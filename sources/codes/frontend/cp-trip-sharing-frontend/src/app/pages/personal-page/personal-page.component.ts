@@ -7,6 +7,7 @@ import { InitialUserInformationPageComponent } from '../initial-user-information
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ListFollowComponent } from 'src/app/shared/components/list-follow/list-follow.component';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 
 @Component({
   selector: 'app-personal-page',
@@ -146,5 +147,28 @@ export class PersonalPageComponent implements OnInit {
     const instance = dialogRef.componentInstance;
     instance.listUser = listUsers;
     instance.title = title;
+  }
+
+  blockUserById(userId: any) {
+    const token = localStorage.getItem('Token');
+    if (token != null) {
+      this.userService.addBlock(userId, token).subscribe((result: any) => {
+        this.openDialogMessageConfirm();
+      });
+    }
+  }
+
+  openDialogMessageConfirm() {
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '380px',
+      height: '200px',
+      position: {
+        top: '10px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = 'Chặn người dùng thành công! Quay về trang chủ!';
+    instance.message.url = '/home';
   }
 }

@@ -3,29 +3,34 @@
     height: 600px;
 }
 
-.form-control{
-    width: 50%;
-    float: left;
-    margin-left: 190px;
-}
-
-button{
-    float: left;
-    margin-left: 20px;
-}
 .title{
     padding-left: 270px;
-    margin-bottom: 10px;
+    display: inline;
+    text-align: center;
 }
 .header{
     width: 100%;
     display: inline-block;
 }
+.form-control{
+    width: 55%;
+    margin: 0 auto;
+    padding-right: 35px;
+    float: left;
+    margin-left: 20%;
+}
+.icon-search{
+    margin: 4px 0px -3px -32px;
+    float: left;
+    border-left: 1px solid gainsboro;
+    padding: 7px;
+    color: gainsboro;
+}
 
 .list-user-follow{
     width: 95%;
     height: 80%;
-    padding: 5px;
+    overflow: auto;
     margin: 0 auto;
     margin-top: 10px;
 }

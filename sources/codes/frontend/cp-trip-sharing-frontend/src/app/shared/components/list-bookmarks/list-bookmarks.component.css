@@ -6,6 +6,10 @@
     margin-top: 75px;
 }
 
+.list-bookmark h3{
+    text-align: center;
+}
+
 .bookmark-item{
     width: 100%;
     height: auto;

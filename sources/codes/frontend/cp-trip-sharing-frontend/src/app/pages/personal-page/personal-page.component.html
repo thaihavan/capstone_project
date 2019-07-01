@@ -10,6 +10,17 @@
         </div>
       </div>
       <a href="#"><span class="personal-name">{{user.UserName}}</span></a>
+      <div class="icon-block">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="blockUserById(userId)">
+            <mat-icon>block</mat-icon>
+            <span>Chặn</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
 
     <div class="row personal-content">
@@ -56,7 +67,7 @@
             <div class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span>Ngày sinh:  <i>{{user.Dob | date: 'dd-MM-yyyy'}}</i></span>
+                <span>Ngày sinh: <i>{{user.Dob | date: 'dd-MM-yyyy'}}</i></span>
               </a>
             </div>
             <div class="card-person-infor">

@@ -3,7 +3,20 @@
     <img src="{{bookmark.coverImage}}" />
   </div>
   <div class="content">
-    <h5>{{bookmark.title}}</h5>
+    <div class="title-icon-remove">
+      <div class="title"><span>{{bookmark.title}}</span></div>
+      <div class="icon-remove">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="removeBookmark(bookmark.postId)">
+            <mat-icon>remove</mat-icon>
+            <span>Xóa</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
     <p>Thể loại: {{bookmark.postType}}</p>
   </div>
 </div>

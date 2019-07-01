@@ -132,3 +132,6 @@ button:focus {
 .icon-unbookmark{
   color: black !important;
 }
+.mat-card-title{
+  cursor: pointer;
+}
