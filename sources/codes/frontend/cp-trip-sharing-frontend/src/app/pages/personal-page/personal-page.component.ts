@@ -65,6 +65,10 @@ export class PersonalPageComponent implements OnInit {
       this.isDisplayNav = false;
     }
 
+    if (this.router.url.indexOf('post-detail') !== -1) {
+      this.isDisplayNav = false;
+    }
+
     this.router.events.subscribe(res => {
       this.activeLinkIndex = this.navLinks.indexOf(
         this.navLinks.find(tab => tab.link === '.' + this.router.url)

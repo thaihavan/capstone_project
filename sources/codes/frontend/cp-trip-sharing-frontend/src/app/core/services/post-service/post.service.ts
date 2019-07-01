@@ -27,10 +27,10 @@ export class PostService {
     return this.http.post<Article>(this.baseUrl + 'create', article, httpOptionAuth);
   }
 
-  getDetail(postId: string): Observable<any> {
-    const baseUrl = HostGlobal.HOST_POST_SERVICE + '/api/postservice/post';
-    return this.http.get(baseUrl + '?postId=' + postId);
-  }
+  // getDetail(postId: string): Observable<any> {
+  //   const baseUrl = HostGlobal.HOST_POST_SERVICE + '/api/postservice/post';
+  //   return this.http.get(baseUrl + '?postId=' + postId);
+  // }
 
   getAllArticles(postFilter: PostFilter): Observable<any> {
     const token = localStorage.getItem('Token');

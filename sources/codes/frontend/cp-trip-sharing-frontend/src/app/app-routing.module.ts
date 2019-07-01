@@ -38,6 +38,7 @@ const routes: Routes = [
           { path: '', redirectTo: 'articles', pathMatch: 'full' },
           { path: 'bookmarks', component: ListBookmarksComponent },
           { path: 'blocked', component: ListUserBlockedComponent },
+          {path: 'post-detail/:articleId', component: DetailpostPageComponent },
           { path: ':personal-nav', component: ListPostComponent }
         ]
       },
