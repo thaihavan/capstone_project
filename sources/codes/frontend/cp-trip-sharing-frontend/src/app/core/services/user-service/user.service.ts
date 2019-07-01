@@ -93,6 +93,15 @@ export class UserService {
     return this.http.delete<any>(this.apiUserService + 'block/unblock?blocked=' + userId , httpAuthen);
   }
 
+  getAllUserBlockedByUserId(token: any): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.get<any>(this.apiUserService + 'block/blocked', httpAuthen);
+  }
+
   getListPostIdBookmarks(token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
@@ -102,13 +111,13 @@ export class UserService {
     return this.http.get<any>(this.apiUserService + 'bookmark/bookmarkPostId', httpAuthen);
   }
 
-  getListBookmarksFromUserId(token: string): Observable<Bookmark> {
+  getListBookmarksFromUserId(token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token
       })
     };
-    return this.http.get<Bookmark>(this.apiUserService + 'bookmark/bookmark', httpAuthen);
+    return this.http.get<any>(this.apiUserService + 'bookmark/bookmark', httpAuthen);
   }
 
   addBookMark(bookmark: any, token: string): Observable<any> {

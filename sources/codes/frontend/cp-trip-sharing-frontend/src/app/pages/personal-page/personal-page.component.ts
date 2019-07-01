@@ -142,7 +142,10 @@ export class PersonalPageComponent implements OnInit {
   openDialogFollow(title: any, listUsers: any) {
     const dialogRef = this.dialog.open(ListFollowComponent, {
       height: 'auto',
-      width: '80%'
+      width: '60%',
+       position: {
+        top: '10px'
+      },
     });
     const instance = dialogRef.componentInstance;
     instance.listUser = listUsers;
