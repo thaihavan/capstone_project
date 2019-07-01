@@ -63,5 +63,15 @@ namespace UserServices.Controllers
                 return NotFound();
             }
         }
+
+        [Authorize(Roles = "member")]
+        [HttpGet("blocked")]
+        public IActionResult GetBlockedUsers()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+            var result = _blockService.GetBlockedUsers(userId);
+            return Ok(result);
+        }
     }
 }
