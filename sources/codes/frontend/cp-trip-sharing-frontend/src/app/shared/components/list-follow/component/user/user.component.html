@@ -3,6 +3,17 @@
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{user.displayName}}</mat-card-title>
     <mat-card-subtitle>{{user.firstName}} {{user.lastName}}</mat-card-subtitle>
+    <div *ngIf="checkBlocked" class="icon-remove">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="removeBlocked(user.id)">
+          <mat-icon>remove</mat-icon>
+          <span>Bỏ chặn</span>
+        </button>
+      </mat-menu>
+    </div>
   </mat-card-header>
   <mat-card-content>
     <p>Điểm: {{user.contributionPoint}}</p>

@@ -61,6 +61,10 @@ export class PersonalPageComponent implements OnInit {
       this.isDisplayNav = false;
     }
 
+    if (this.router.url.indexOf('blocked') !== -1) {
+      this.isDisplayNav = false;
+    }
+
     this.router.events.subscribe(res => {
       this.activeLinkIndex = this.navLinks.indexOf(
         this.navLinks.find(tab => tab.link === '.' + this.router.url)
@@ -171,7 +175,7 @@ export class PersonalPageComponent implements OnInit {
       disableClose: true
     });
     const instance = dialogRef.componentInstance;
-    instance.message.messageText = 'Chặn người dùng thành công! Quay về trang chủ!';
-    instance.message.url = '/home';
+    instance.message.messageText = 'Chặn người dùng thành công!';
+    instance.message.url = '/personal/blocked';
   }
 }

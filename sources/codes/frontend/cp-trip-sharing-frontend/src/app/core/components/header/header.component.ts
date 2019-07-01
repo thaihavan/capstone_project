@@ -46,4 +46,8 @@ export class HeaderComponent implements OnInit {
   gotoBookmarkList() {
     window.location.href = '/personal/bookmarks';
   }
+
+  gotoBlockedList() {
+    window.location.href = '/personal/blocked';
+  }
 }

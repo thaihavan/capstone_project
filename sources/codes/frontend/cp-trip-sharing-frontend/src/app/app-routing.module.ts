@@ -16,6 +16,7 @@ import { ListPostComponent } from './shared/components/list-post/list-post.compo
 import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
 import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
 import { ListBookmarksComponent } from './shared/components/list-bookmarks/list-bookmarks.component';
+import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
 
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
         children: [
           { path: '', redirectTo: 'articles', pathMatch: 'full' },
           { path: 'bookmarks', component: ListBookmarksComponent },
+          { path: 'blocked', component: ListUserBlockedComponent },
           { path: ':personal-nav', component: ListPostComponent }
         ]
       },

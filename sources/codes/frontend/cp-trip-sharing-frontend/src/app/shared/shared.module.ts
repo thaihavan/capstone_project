@@ -29,6 +29,7 @@ import { ReadMoreComponent } from './components/read-more/read-more.component';
 import { EditableTextComponent } from './components/editable-text/editable-text.component';
 import { BookmarkPostComponent } from './components/bookmark-post/bookmark-post.component';
 import { ListBookmarksComponent } from './components/list-bookmarks/list-bookmarks.component';
+import { ListUserBlockedComponent } from './components/list-user-blocked/list-user-blocked.component';
 
 const Material = [
   MatButtonModule,
@@ -70,7 +71,8 @@ const Material = [
     ReadMoreComponent,
     EditableTextComponent,
     ListBookmarksComponent,
-    BookmarkPostComponent
+    BookmarkPostComponent,
+    ListUserBlockedComponent
   ],
   imports: [
     CommonModule,

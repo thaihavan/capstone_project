@@ -32,3 +32,13 @@
 .mat-card-content{
     padding: 5px;
 }
+
+.mat-card-title{
+    display: inline-block;
+}
+
+.icon-remove{
+    position: absolute;
+    right: 0px;
+    display: inherit;
+}
