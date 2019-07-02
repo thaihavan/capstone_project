@@ -120,16 +120,21 @@ export class PostService {
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post( this.baseUrl + 'update', article , httpOption);
+    return this.http.post(this.baseUrl + 'update', article, httpOption);
   }
 
   getArticleById(articleId: string): Observable<Article> {
+    const token = localStorage.getItem('Token');
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('Token')
+        Authorization: 'Bearer ' + token
       })
     };
-    return this.http.get<Article>(this.baseUrl + 'full?id=' + articleId, httpOption);
+    if (token != null) {
+      return this.http.get<Article>(this.baseUrl + 'full?id=' + articleId, httpOption);
+    } else {
+      return this.http.get<Article>(this.baseUrl + 'full?id=' + articleId);
+    }
   }
 }

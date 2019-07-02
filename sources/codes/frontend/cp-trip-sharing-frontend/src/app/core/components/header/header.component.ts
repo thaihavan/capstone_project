@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   userId: string;
   urlImgavatar = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
   numberNotification = 1;
+  checkMessageNotification = true;
   checkNotification = true;
   constructor(private globals: Globals, private dialog: MatDialog) { }
 
@@ -55,6 +56,9 @@ export class HeaderComponent implements OnInit {
 
   viewNotification() {
     this.checkNotification = false;
+  }
 
+  viewMessageNotification() {
+    this.checkMessageNotification = false;
   }
 }

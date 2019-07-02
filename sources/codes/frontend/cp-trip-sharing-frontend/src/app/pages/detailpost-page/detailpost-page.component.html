@@ -22,22 +22,15 @@
   <div class="button-showcomment">
     <button type="button" class="btn btn-primary">Tải thêm bình luận</button>
   </div>
-
 </div>
-<div class="like-post">
-  <button mat-fab color="primary">
+<div *ngIf="isScrollTopShow" class="icon-action">
+  <button [class]="post.liked ? 'iconLike':'iconUnLike'" (click)="likePost(article.post.liked)">
     <mat-icon>thumb_up</mat-icon>
   </button>
-</div>
-
-<div class="book-mark">
-  <button mat-fab color="primary">
-    <mat-icon>bookmark</mat-icon>
+  <button (click)="bookmarkPost(post.id,post.title,post.coverImage,post.postType)">
+    <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
   </button>
-</div>
-
-<div class="commet-material">
-  <button mat-fab color="primary">
+  <button (click)="commentPost()">
     <mat-icon>comment</mat-icon>
   </button>
 </div>
