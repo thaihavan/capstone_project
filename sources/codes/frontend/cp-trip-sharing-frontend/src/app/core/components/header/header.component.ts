@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   checkLogined: boolean;
   userId: string;
   urlImgavatar = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
+  numberNotification = 1;
+  checkNotification = true;
   constructor(private globals: Globals, private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -49,5 +51,10 @@ export class HeaderComponent implements OnInit {
 
   gotoBlockedList() {
     window.location.href = '/personal/blocked';
+  }
+
+  viewNotification() {
+    this.checkNotification = false;
+
   }
 }
