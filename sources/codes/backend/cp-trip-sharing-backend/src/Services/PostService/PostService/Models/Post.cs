@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PostService.Models
 {
+    [BsonIgnoreExtraElements]
     public class Post : Model
     {
         [BsonId]
@@ -46,9 +47,11 @@ namespace PostService.Models
         public int CommentCount { get; set; }
 
         [BsonIgnore]
+        [BsonExtraElements]
         public Author Author { get; set; }
 
         [BsonIgnore]
+        [BsonExtraElements]
         public bool liked { get; set; }
 
     }
