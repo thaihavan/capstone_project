@@ -7,7 +7,7 @@
   </div>
   <div class="comment text">
     <h3>Bình luận</h3>
-    <div class="iconuser-textarea">
+    <div class="iconuser-textarea" #target>
 
       <div class="form-group">
         <textarea class="form-control" rows="5" id="comment" name="text" [(ngModel)]="commentContent"></textarea>
@@ -30,7 +30,7 @@
   <button (click)="bookmarkPost(post.id,post.title,post.coverImage,post.postType)">
     <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
   </button>
-  <button (click)="commentPost()">
+  <button (click)="commentPost(target)">
     <mat-icon>comment</mat-icon>
   </button>
 </div>

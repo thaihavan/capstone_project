@@ -61,10 +61,13 @@ textarea{
   position: fixed;
   bottom: 40%;
   right: 12%;
-  opacity: 0.75;
-  display: inline-grid;
-  width: 54px;
-  height: 160px;
+  opacity: 0.5;
+  display: inline-grid;  
+  height: 150px;
+  width: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 26px;
 }
 
 .iconLike{
@@ -73,4 +76,9 @@ textarea{
 
 .iconUnLike{
   color:rgba(0, 0, 0, 0.87);
+}
+
+.icon-action button{
+  border: none;
+  background-color: snow;
 }

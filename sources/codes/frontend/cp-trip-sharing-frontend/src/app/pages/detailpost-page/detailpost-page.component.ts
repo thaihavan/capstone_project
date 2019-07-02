@@ -183,4 +183,8 @@ export class DetailpostPageComponent implements OnInit {
       });
     }
   }
+
+  commentPost(el: HTMLElement) {
+    el.scrollIntoView();
+  }
 }
