@@ -34,6 +34,8 @@ import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-tr
 import { DialogCreateTripComponent } from './pages/virtual-trips-page/dialog-create-trip/dialog-create-trip.component';
 import { ListFollowComponent } from './shared/components/list-follow/list-follow.component';
 import { DestinationTripComponent } from './pages/virtual-trips-page/destination-trip/destination-trip.component';
+import { ChatPageComponent } from './pages/chat-page/chat-page.component';
+import { MatInputModule } from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +55,8 @@ import { DestinationTripComponent } from './pages/virtual-trips-page/destination
     InitialUserInformationPageComponent,
     VirtualTripsPageComponent,
     DialogCreateTripComponent,
-    DestinationTripComponent
+    DestinationTripComponent,
+    ChatPageComponent
   ],
   imports: [
     MatMenuModule,
@@ -65,6 +68,7 @@ import { DestinationTripComponent } from './pages/virtual-trips-page/destination
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatInputModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDIPTZ7dpn5_hralWGDP4glqkqAaac6qeA',
       libraries: ['places']

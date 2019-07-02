@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { ImageUpload } from 'src/app/model/ImageUpload';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HostGlobal } from '../../global-variables';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadImageService {
-  url = 'https://localhost:44352/api/postservice/uploadfile/uploadimage';
+  url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/uploadfile/uploadimage';
   httpOption = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
