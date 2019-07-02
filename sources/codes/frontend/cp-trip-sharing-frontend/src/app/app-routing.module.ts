@@ -16,6 +16,7 @@ import { ListPostComponent } from './shared/components/list-post/list-post.compo
 import { InitialUserInformationPageComponent } from './pages/initial-user-information-page/initial-user-information-page.component';
 import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
 import { ListBookmarksComponent } from './shared/components/list-bookmarks/list-bookmarks.component';
+import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
 
 
@@ -51,7 +52,8 @@ const routes: Routes = [
       { path: 'reset-password/:token', component: ResetPasswordPageComponent },
       { path: 'change-password', component: ChangepasswordPageComponent },
       { path: 'post-detail', component: DetailpostPageComponent },
-      { path: 'initial', component: InitialUserInformationPageComponent}
+      { path: 'initial', component: InitialUserInformationPageComponent },
+      { path: 'chat', component: ChatPageComponent }
     ]
   },
 ];

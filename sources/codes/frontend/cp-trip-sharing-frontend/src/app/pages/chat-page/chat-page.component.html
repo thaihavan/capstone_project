@@ -1,0 +1,135 @@
+<mat-card class="mat-card">
+  <mat-sidenav-container class="mat-drawer-container">
+    <mat-sidenav #drawer class="mat-drawer mat-sidenav mat-drawer-side" mode="side" opened="true" position="start">
+      <div class="mat-drawer-inner-container">
+        <mat-toolbar class="mat-toolbar-single-row">
+          <div>
+            <span>
+              <img class="img-circle"
+                src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg">
+              <span>Luke Thomson</span>
+            </span>
+          </div>
+        </mat-toolbar>
+        <mat-nav-list>
+          <div *ngFor="let conv of listConversations">
+            <mat-list-item class="chat-user-item">
+              <img class="mat-list-avatar"
+                src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg">
+              <div class="mat-list-text">
+                <h3 class="mat-line" matline="">Nirav Joshi</h3>
+                <p class="text text-muted mat-line" matline="">Hey, how are you?</p>
+              </div>
+            </mat-list-item>
+          </div>
+        </mat-nav-list>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="mat-drawer-content">
+      <!-- chat-header -->
+      <mat-toolbar class="mat-toolbar-single-row">
+        <div>
+          <button class="mat-icon-button" (click)="drawer.toggle()">
+            <span class="mat-button-wrapper">
+              <mat-icon>short_text</mat-icon>
+            </span>
+          </button>
+          <span>
+            <img class="img-circle"
+              src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg">
+            Sunil Joshi
+          </span>
+          <button class="menu-icon mat-icon-button" mat-button [matMenuTriggerFor]="menu">
+            <span class="mat-button-wrapper">
+              <mat-icon>more_vert</mat-icon>
+            </span>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>flag</mat-icon>
+              <span>Báo cáo</span>
+            </button>
+            <button (click)="editPost()" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Chỉnh sửa</span>
+            </button>
+          </mat-menu>
+        </div>
+      </mat-toolbar>
+
+      <!-- chat-content -->
+      <mat-card-content class="chat-middle-box">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="chat-content-container" [style.height.px]="chatContentHeight">
+              <div class="chat-list odd">
+                <div class="chat-message">
+                  <div class="chat-block">
+                    <span>
+                      <img class="img-circle"
+                        src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg">
+                    </span>
+                    <span class="text text-message">How are you my friend?</span>
+                  </div>
+                  <span class="chat-date text-muted">Jan 5, 2016</span>
+                </div>
+              </div>
+              <div class="chat-list even">
+                <div class="chat-message">
+                  <div class="chat-block bg-light-info">
+                    <span class="text text-message">I am good and what about you?</span>
+                  </div>
+                  <span class="chat-date text-muted">Jan 5, 2016</span>
+                </div>
+              </div>
+            </div>
+            <!-- chat-footer -->
+            <mat-card-actions class="chat-footer">
+              <div>
+                <mat-form-field>
+                  <input matInput class="input-message" type="text" placeholder="Send message" autocomplete="off">
+                </mat-form-field>
+
+                <button color="primary" class="button-send mat-fab mat-primary">
+                  <span class="mat-button-wrapper">
+                    <mat-icon>send</mat-icon>
+                  </span>
+                </button>
+              </div>
+            </mat-card-actions>
+          </div>
+
+          <div class="col-lg-3 d-none d-lg-block d-xl-block chat-info-container">
+            <!-- avatar -->
+            <div class="avatar-section">
+              <div>
+                <img src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg" 
+                alt="" class="img-circle-lg">
+              </div>
+              <div>
+                <span class="user-display-name">Jonh Abc</span>
+              </div>
+            </div>
+            <div class="options-section">
+              <!-- Expansion panel -->
+              <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Thông tin
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>I'm visible because I am open</p>
+                  <p>I'm visible because I am open</p>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+
+
+      <!--  -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</mat-card>
