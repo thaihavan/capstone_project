@@ -14,7 +14,7 @@ namespace PostService.Repositories.Interfaces
 
         IEnumerable<Article> GetAllArticleInfo();
 
-        Article GetArticleInfoById(string id, string userId);
+        Article GetArticleInfoById(string id, string userId) ;
 
         IEnumerable<Article> GetAllArticleInfo(string userId);
 
