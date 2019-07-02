@@ -102,7 +102,9 @@ const Material = [
     IfChangesDirective,
     ReadMoreComponent,
     EditableTextComponent,
-    MessageComponent
+    ListUserBlockedComponent,
+    MessageComponent,
+    UserComponent
   ], entryComponents: [StepCreatePostComponent, CropImageComponent, LoadingScreenComponent]
 })
 export class SharedModule { }

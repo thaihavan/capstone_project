@@ -84,6 +84,10 @@ div {
     font-size: 16px !important;
 }
 
+.chat-user-item {
+    height: 64px !important;
+}
+
 /*mat-card-content*/
 .chat-middle-box {
     border-left: 1px solid rgba(120,130,140,.13);
@@ -162,6 +166,30 @@ mat-card-actions {
     right: 10px;
 }
 
+/* chat-info-container */
 .chat-info-container {
     border-left: 1px solid rgba(120,130,140,.13);
+    padding: 0 !important;
+}
+
+.img-circle-lg {
+    border-radius: 100%;
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100px;
+}
+
+.avatar-section {
+    text-align: center;
+}
+
+.avatar-section .user-display-name {
+    font-weight: 500;
+    font-size: 20px;
+    display: block;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(120,130,140,.13);
 }
