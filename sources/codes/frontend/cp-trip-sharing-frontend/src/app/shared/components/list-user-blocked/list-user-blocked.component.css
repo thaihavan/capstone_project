@@ -1,6 +1,7 @@
-.form-list-follow{
+.form-list-blocked{
     width: 100%;
-    height: 600px;
+    height: 650px;
+    margin-top: 92px;
 }
 
 .title{
@@ -16,11 +17,11 @@
     display: inline-block;
 }
 .form-control{
-    width: 70%;
+    width: 85%;
     margin: 0 auto;
     padding-right: 35px;
     float: left;
-    margin-left: 15%;
+    margin-left: 7%;
 }
 .icon-search{
     margin: 4px 0px -3px -32px;
@@ -30,10 +31,9 @@
     color: gainsboro;
 }
 
-.list-user-follow{
+.list-user-blocked{
     width: 95%;
-    height: 80%;
-    overflow: auto;
+    margin-bottom: 20px;
     margin: 0 auto;
 }
 

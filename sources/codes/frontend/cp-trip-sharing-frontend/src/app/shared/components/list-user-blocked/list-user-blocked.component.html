@@ -1,4 +1,4 @@
-<div class="form-list-follow">
+<div class="form-list-blocked">
   <div class="title">
     <h3>{{title}}</h3>
   </div>
@@ -6,9 +6,9 @@
     <input type="text" #searchUserName (keyup)="search(searchUserName.value)" class="form-control" id="usr">
     <i class="fa fa-search icon-search"></i>
   </div>
-  <div class="list-user-follow">
-    <div class="" *ngFor="let user of listUser2">
-      <app-user [user]="user" [checkBlocked]="false"></app-user>
+  <div class="list-user-blocked">
+    <div *ngFor="let user of listUser">
+      <app-user [user]="user" [checkBlocked]="true"></app-user>
     </div>
   </div>
 </div>

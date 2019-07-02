@@ -17,6 +17,7 @@ import { InitialUserInformationPageComponent } from './pages/initial-user-inform
 import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
 import { ListBookmarksComponent } from './shared/components/list-bookmarks/list-bookmarks.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
+import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,8 @@ const routes: Routes = [
         children: [
           { path: '', redirectTo: 'articles', pathMatch: 'full' },
           { path: 'bookmarks', component: ListBookmarksComponent },
+          { path: 'blocked', component: ListUserBlockedComponent },
+          {path: 'post-detail/:articleId', component: DetailpostPageComponent },
           { path: ':personal-nav', component: ListPostComponent }
         ]
       },

@@ -6,6 +6,7 @@ import { Account } from 'src/app/model/Account';
 import { User } from 'src/app/model/User';
 import { ChangePassword } from 'src/app/model/ChangePassword';
 import { HostGlobal } from 'src/app/core/global-variables';
+import { Bookmark } from 'src/app/model/Bookmark';
 
 const httpOption = {
   headers: new HttpHeaders({
@@ -73,13 +74,34 @@ export class UserService {
     return this.http.post<any>(this.apiUrl + 'verify', null, httpAuthen);
   }
 
-  // addBlock(blocked: string): Observable<any> {
-  //   return this.http.post<any>(this.apiUserService + 'user/addblock', blocked, httpOption);
-  // }
+  addBlock(userId: string, token: any): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.post<any>(this.apiUserService + 'block/addblock?blocked=' + userId, null, httpAuthen);
+  }
 
-  // unBlock(blocked: string): Observable<any> {
-  //   return this.http.delete<any>(this.apiUserService + 'user/unblock' + blocked);
-  // }
+  unBlock(userId: string, token: any): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      }),
+      body: null
+    };
+    return this.http.delete<any>(this.apiUserService + 'block/unblock?blocked=' + userId , httpAuthen);
+  }
+
+  getAllUserBlockedByUserId(token: any): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.get<any>(this.apiUserService + 'block/blocked', httpAuthen);
+  }
+
   getListPostIdBookmarks(token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({

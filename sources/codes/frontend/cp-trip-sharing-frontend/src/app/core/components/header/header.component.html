@@ -22,19 +22,28 @@
               <span>Chuyến đi</span>
             </div>
           </a>
-          <a routerLink="#" mat-button>
-            <div class="nav-icon-text">
+          <a mat-button>
+            <div class="nav-icon-text" [matMenuTriggerFor]="menu_notification" (click)="viewNotification()">
               <i class="fa fa-envelope"></i>
               <span>Tin nhắn</span>
+              <p *ngIf="checkNotification" class="badge">{{numberNotification}}</p>
             </div>
+            <mat-menu #menu_notification="matMenu" class="menu">
+              <div class="title-notification">Bạn có {{numberNotification}} tin nhắn chưa đọc</div>
+              <div class="item-menu">
+                <app-message></app-message>
+              </div>
+            </mat-menu>
           </a>
-          <button *ngIf="checkLogin" type="button" class="btn btn-primary" (click)="openDialogLoginForm()">Đăng nhập</button>
+          <button *ngIf="checkLogin" type="button" class="btn btn-primary" (click)="openDialogLoginForm()">Đăng
+            nhập</button>
           <div *ngIf="checkLogined" class="iconuser" [matMenuTriggerFor]="menu">
-            <img class="imgavatar" src="{{urlImgavatar}}"/>
+            <img class="imgavatar" src="{{urlImgavatar}}" />
           </div>
           <mat-menu #menu="matMenu">
             <button class="options" (click)="gotoPersonalPage()" mat-menu-item>Trang cá nhân</button>
             <button (click)="gotoBookmarkList()" mat-menu-item>Xem các bài đánh dấu</button>
+            <button (click)="gotoBlockedList()" mat-menu-item>Danh sách chặn</button>
             <button routerLink="/change-password" mat-menu-item>Đổi mật khẩu</button>
             <button (click)="signOut()" mat-menu-item>Đăng xuất</button>
           </mat-menu>

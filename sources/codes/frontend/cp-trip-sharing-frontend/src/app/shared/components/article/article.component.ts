@@ -179,15 +179,15 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   // if article is virtualtrip get imageurl for slideshow.
   setVirtualTripDisplay() {
     if (this.article.post.coverImage !== null && this.article.post.coverImage !== '') {
-      const url = { url: this.article.post.coverImage, caption: this.article.post.title, href: '#config'};
+      const url = { url: this.article.post.coverImage, caption: this.article.post.title, href: '#config' };
       this.imageSources.push(url);
     } else {
       // tslint:disable-next-line:max-line-length
-      const url = { url: 'https://1.bp.blogspot.com/-ZvShXfYhUGo/TsU-7srTr6I/AAAAAAAACkk/YAnQeyudiNo/s1600/Sapa_Vietnam.jpg', caption: this.article.post.title, href: '#config'};
+      const url = { url: 'https://1.bp.blogspot.com/-ZvShXfYhUGo/TsU-7srTr6I/AAAAAAAACkk/YAnQeyudiNo/s1600/Sapa_Vietnam.jpg', caption: this.article.post.title, href: '#config' };
       this.imageSources.push(url);
     }
-    this.article.items.forEach( art => {
-      const url = { url: art.image, caption: art.name, href: '#config'};
+    this.article.items.forEach(art => {
+      const url = { url: art.image, caption: art.name, href: '#config' };
       this.imageSources.push(url);
     });
 
@@ -202,5 +202,9 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     } else {
       window.location.href = this.globals.urllocal + '/update-article?id=' + this.article.id;
     }
+  }
+
+  gotoPersionalPage(authorId: any) {
+    window.location.href = '/personal/article?userId=' + authorId;
   }
 }
