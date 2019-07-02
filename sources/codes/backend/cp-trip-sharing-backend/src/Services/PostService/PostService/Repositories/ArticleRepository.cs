@@ -126,13 +126,14 @@ namespace PostService.Repositories
                 ((article, likes) => { article.Post.liked = likes.Count() > 0 ? true : false; return article; });
 
             var articles = _posts.AsQueryable()
-                .Join(_authors.AsQueryable(),
-                post => post.AuthorId,
-                author => author.Id,
-                SelectPostWithAuthor)
+                .Join(
+                    _authors.AsQueryable(),
+                    post => post.AuthorId,
+                    author => author.Id,
+                    SelectPostWithAuthor)
                 .Join(
                     _articles.AsQueryable(),
-                    pa => pa.Id,
+                    post => post.Id,
                     article => article.PostId,
                     SelectArticleWithPost)
                 .GroupJoin(_likes.AsQueryable().Where(x => x.UserId == userId && x.ObjectType == "post"),

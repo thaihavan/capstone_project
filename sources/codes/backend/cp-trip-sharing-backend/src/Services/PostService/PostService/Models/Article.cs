@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PostService.Models
 {
+    [BsonIgnoreExtraElements]
     public class Article : Model
     {
         [BsonId]
@@ -26,6 +27,7 @@ namespace PostService.Models
         public string PostId { get; set; }
 
         [BsonIgnore]
+        [BsonExtraElements]
         public Post Post { get; set; }       
     }
 }
