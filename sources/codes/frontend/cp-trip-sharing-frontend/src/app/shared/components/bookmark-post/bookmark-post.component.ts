@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Bookmark } from 'src/app/model/Bookmark';
+import { UserService } from 'src/app/core/services/user-service/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-bookmark-post',
@@ -8,11 +9,12 @@ import { Bookmark } from 'src/app/model/Bookmark';
 })
 export class BookmarkPostComponent implements OnInit {
   @Input() bookmark: any;
-  constructor() { }
+  listPostIdBookMark: string[] = [];
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     if (this.bookmark.title == null) {
-      this.bookmark.title = 'Không có title nên để tạm như thế này nhé';
+      this.bookmark.title = 'Không có title ';
     }
     if (this.bookmark.postType == null) {
       this.bookmark.postType = 'Không có postType';
@@ -20,7 +22,22 @@ export class BookmarkPostComponent implements OnInit {
     if (this.bookmark.coverImage == null) {
       this.bookmark.coverImage = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
     }
-    console.log(this.bookmark.title);
   }
 
+  removeBookmark(postId: any) {
+    this.listPostIdBookMark = JSON.parse(localStorage.getItem('listPostIdBookmark'));
+    const token = localStorage.getItem('Token');
+    if (this.listPostIdBookMark != null) {
+      this.userService.deleteBookMark(postId, token).subscribe((data: any) => {
+        const unbookmark = this.listPostIdBookMark.indexOf(postId);
+        this.listPostIdBookMark.splice(unbookmark, 1);
+        localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
+        window.location.href = '/personal/bookmarks';
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+
+    }
+
+  }
 }

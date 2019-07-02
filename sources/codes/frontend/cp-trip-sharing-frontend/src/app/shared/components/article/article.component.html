@@ -48,7 +48,7 @@
       <mat-card class="example-card">
         <mat-card-header class=" post-header">
           <img mat-card-avatar src="{{article.post.author.profileImage}}" />
-          <mat-card-title>{{article.post.author.displayName}}</mat-card-title>
+          <mat-card-title (click)="gotoPersionalPage(article.post.author.id)">{{article.post.author.displayName}}</mat-card-title>
           <mat-card-subtitle>{{article.post.pubDate}}</mat-card-subtitle>
           <div class="btn-interact">
             <div *ngIf="checkUser" [class]="follow ? 'icon-followed':'icon-unfollow'">
@@ -78,7 +78,7 @@
           </div>
         </mat-card-header>
         <mat-card-title>
-          <a class="card-link" href="/post-detail?postId={{article.post.id}}">
+          <a class="card-link" href="personal/post-detail/{{article.id}}">
             <h5 class="card-title">{{article.post.title}}</h5>
           </a>
         </mat-card-title>

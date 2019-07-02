@@ -1,59 +1,9 @@
-.detail-post{
-  width: 100%;
-  height: 100%;
-  line-height: 2;
-}
-.timeline-cover {
-  position: relative;
-}
-.cover-image {
-  max-height: 315px;
-  width: 100%;
-}
-.profile-infor {
-  position: absolute;
-  bottom: -47px;
-  margin-left: 10%;
-  z-index: 9999;
-}
-.avatar-img {
-  border-radius: 100%;
-  max-width: 160px;
-  border: 4px solid #fff;
-  margin-top: -18em;
-  margin-left: 54px;
-}
-
-.mat-raised-button{
-  background-color: #2196f3 !important;
-  height: 40px !important;
-  color: white;
-  margin: 0 auto;
-  padding: 0;
-  margin-top: 5px;
-}
-
-.a {
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: none;
-}
-.personal-name {
-  font-size: 24px;
-  font-weight: 500;
-  bottom: 0px;
-  margin-left: 22%;
-  text-transform: uppercase;
-  position: relative;
-  color: var(--txt-sub-color-blue-1);
-}
-
 .content-post-page{
-  width: 60% !important;
+  width: 100% !important;
   height: auto;
   margin: 0 auto;
   margin-bottom: 1em;
+  margin-top: 84px;
 }
 
 .title{
@@ -63,14 +13,6 @@ a:hover {
   font-size: 1.5em;
   font-weight: bold;
 }
-
-/* .image img {
-  overflow: hidden;
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  width: 100% !important;
-} */
 
 .text{
   color: #3d3d3d;
@@ -111,71 +53,24 @@ textarea{
 }
 
 .material-icons{
-  transition: line-height 0.4s;
-  width: 20px;
-}
-.mat-fab:hover{
-  box-shadow: 0px 3px 5px 4px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
-}
-.mat-fab:hover .material-icons{
-  line-height: 0;
-}
-.mat-button {
-  padding: 0px 0px !important;
-}
-button:focus {
-  outline: none;
-  outline: none !important;
-}
-.mat-icon {
-  background-repeat: no-repeat;
-  display: inline-block;
-  fill: currentColor;
-  height: 25px;
-  width: 25px;
+  width: 30px;
+  height: 30px;
 }
 
-.like-post {
-  position: fixed;
-  bottom: 50%;
-  left: 70px;
-}
-
-.book-mark {
+.icon-action{
   position: fixed;
   bottom: 40%;
-  left: 70px;
+  right: 12%;
+  opacity: 0.75;
+  display: inline-grid;
+  width: 54px;
+  height: 160px;
 }
 
-.commet-material{
-  position: fixed;
-  bottom: 30%;
-  left: 70px;
+.iconLike{
+  color: #2196f3;
 }
 
-.top-infor{
-  padding: 0;
-  margin: 0;
-  width: 60%;
-  margin: 0 auto;
-  clear: both;
-  border-bottom: 2px solid gray;
-  height: 52px;
-}
-
-.like-number, .follow-number{
-  padding: 0;
-  margin: 0;
-  color: black;
-  text-align: center;
-}
-
-.number-like-follow{
-  padding-top: 8px;
-  font-weight: 500;
-}
-
-.mat-fab{
-  width: 50px;
-  height: 50px;
+.iconUnLike{
+  color:rgba(0, 0, 0, 0.87);
 }

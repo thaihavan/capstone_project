@@ -1,70 +1,36 @@
-<div class="detail-post">
-  <div class="timeline-cover">
-    <div>
-      <img class="cover-image" src="{{coverImage}}">
-    </div>
-    <div class="profile-infor">
-      <div class="avatar-display">
-        <a href="#"><img src="{{avatar}}" class="avatar-img"></a>
+<div class="content-post-page">
+  <div class="title">
+    <span>{{post.title}}</span>
+  </div>
+  <div class="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred" role="textbox"
+    aria-label="Rich Text Editor, main" [innerHTML]="post.content">
+  </div>
+  <div class="comment text">
+    <h3>Bình luận</h3>
+    <div class="iconuser-textarea">
+
+      <div class="form-group">
+        <textarea class="form-control" rows="5" id="comment" name="text" [(ngModel)]="commentContent"></textarea>
       </div>
-    </div>
-    <div class=" row top-infor">
-      <a href="#" class="col-md-4"><span class="personal-name">Phong Nguyễn</span></a>
-      <a href="#" class="col-md-3 number-like-follow"><span class="like-number"><i class="fa fa-sticky-note"></i>15 bài
-          review</span></a>
-      <a href="#" class="col-md-3 number-like-follow"><span class="follow-number"><i class="fa fa-user-plus"></i>500
-          người follow</span></a>
-      <button *ngIf="follow" (click)="followPerson(post.author.id)" class="col-md-2" mat-raised-button color="primary">
-        <i style="color: white" class="fa fa-user-plus"></i>Theo dõi
-      </button>
-      <button *ngIf="followed" (click)="followPerson(post.author.id)" class="col-md-2" mat-raised-button color="primary">
-        <i style="color: white" class="fa fa-user-plus"></i>Đã Theo dõi
-      </button>
-    </div>
+      <button type="submit" class="btn btn-primary" (click)="submitComment()">Bình luận</button>
 
+      <!-- Comment container include all comments -->
+      <app-comment-container [comments]="comments"></app-comment-container>
+
+    </div>
   </div>
-
-  <div class="content-post-page">
-    <div class="title">
-      <span>{{post.title}}</span>
-    </div>
-    <div class="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred"
-      role="textbox" aria-label="Rich Text Editor, main" [innerHTML]="post.content">
-    </div>
-    <div class="comment text">
-      <h3>Bình luận</h3>
-      <div class="iconuser-textarea">
-
-        <div class="form-group">
-          <textarea class="form-control" rows="5" id="comment" name="text" [(ngModel)]="commentContent"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary" (click)="submitComment()">Bình luận</button>
-
-        <!-- Comment container include all comments -->
-        <app-comment-container [comments]="comments"></app-comment-container>
-
-      </div>
-    </div>
-    <div class="button-showcomment">
-      <button type="button" class="btn btn-primary">Tải thêm bình luận</button>
-    </div>
-
+  <div class="button-showcomment">
+    <button type="button" class="btn btn-primary">Tải thêm bình luận</button>
   </div>
-  <div class="like-post">
-    <button mat-fab color="primary">
-      <mat-icon>thumb_up</mat-icon>
-    </button>
-  </div>
-
-  <div class="book-mark">
-    <button mat-fab color="primary">
-      <mat-icon>bookmark</mat-icon>
-    </button>
-  </div>
-
-  <div class="commet-material">
-    <button mat-fab color="primary">
-      <mat-icon>comment</mat-icon>
-    </button>
-  </div>
+</div>
+<div *ngIf="isScrollTopShow" class="icon-action">
+  <button [class]="post.liked ? 'iconLike':'iconUnLike'" (click)="likePost(article.post.liked)">
+    <mat-icon>thumb_up</mat-icon>
+  </button>
+  <button (click)="bookmarkPost(post.id,post.title,post.coverImage,post.postType)">
+    <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
+  </button>
+  <button (click)="commentPost()">
+    <mat-icon>comment</mat-icon>
+  </button>
 </div>

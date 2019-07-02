@@ -45,6 +45,7 @@
 
 .nav-icon-text{
   padding: 0.3em .5em;
+  position: relative;
 }
 
 /* .nav-icon-text, .nav-icon-text1{
@@ -118,4 +119,30 @@
 }
 a:hover{
   color: white !important;
+}
+.nav-icon-text .badge {
+  position: absolute;
+  top: 5px;
+  right: 16px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+
+.title-notification, .title-message-notification{
+  padding: 10px;
+  line-height: 15px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.item-menu{
+  width: 280px;
+  height: 80px;
+  border-top: 1px solid gainsboro;
+}
+
+.item-menu:hover{
+  background-color: gainsboro;
 }

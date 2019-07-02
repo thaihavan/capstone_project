@@ -89,3 +89,10 @@ button:focus {
 .mat-fab:hover .material-icons{
   line-height: 0;
 }
+.icon-block{
+  margin-top: -36px;
+  z-index: 9999;
+  margin-left: 75%;
+  color: black;
+  position: absolute;
+}

@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
+import { HostGlobal } from '../../global-variables';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VirtualTripService {
-  baseUrl = 'https://localhost:44352/api/postservice/virtualtrip';
+  baseUrl = HostGlobal.HOST_POST_SERVICE + '/api/postservice/virtualtrip';
   httpOption = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
