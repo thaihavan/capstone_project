@@ -34,7 +34,7 @@ namespace IdentityProvider.Services
             _settings = settings;
         }
 
-        public AccountService(IAccountRepository accountRepository, 
+        public AccountService(IAccountRepository accountRepository,
             IOptions<AppSettings> settings,
             IPublishToTopic publishToTopic)
         {
@@ -50,7 +50,7 @@ namespace IdentityProvider.Services
             {
                 var isValid = Hash.HashPassword(password, account.PasswordSalt) == account.Password;
                 if (isValid)
-                {                
+                {
                     account.Token = JwtToken.Generate(_settings.Value.Secret, account);
                 }
                 // Set important fields to null
@@ -77,14 +77,14 @@ namespace IdentityProvider.Services
                 PasswordSalt = salt,
                 Role = "unverified",
                 UserId = ObjectId.GenerateNewId().ToString(),
-                Id= ObjectId.GenerateNewId().ToString()
+                Id = ObjectId.GenerateNewId().ToString()
             };
             var result = _accountRepository.Add(encryptedAccount);
 
             // Generate token
             result.Token = JwtToken.Generate(_settings.Value.Secret, encryptedAccount);
 
-            if(result != null)
+            if (result != null)
             {
                 Mail mail = new Mail()
                 {
@@ -164,7 +164,7 @@ namespace IdentityProvider.Services
         }
 
         public GoogleUser GetGoogleUserInformation(string accessToken)
-        {           
+        {
             GoogleUser userInfo = null;
             string url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken + "";
             try
@@ -182,16 +182,17 @@ namespace IdentityProvider.Services
                         }
                     }
                 }
-            }catch(WebException ex)
+            }
+            catch (WebException ex)
             {
                 var response = ex.Response as HttpWebResponse;
-                if(response!=null&& response.StatusCode==HttpStatusCode.BadRequest)
-                return null;
-            }          
-            return userInfo;            
+                if (response != null && response.StatusCode == HttpStatusCode.BadRequest)
+                    return null;
+            }
+            return userInfo;
         }
 
-        public string GoogleAuthenticate (string accessToken)
+        public Account GoogleAuthenticate(string accessToken)
         {
             var userInfo = GetGoogleUserInformation(accessToken);
             if (userInfo == null)
@@ -201,10 +202,14 @@ namespace IdentityProvider.Services
             var user = _accountRepository.GetByEmail(userInfo.Email);
             if (user != null)
             {
-                return JwtToken.Generate(_settings.Value.Secret, user);
-            }else
-            {   
-                var newAccount= new Account()
+                user.Token = JwtToken.Generate(_settings.Value.Secret, user);
+                user.Password = null;
+                user.PasswordSalt = null;
+                return user;
+            }
+            else
+            {
+                var newAccount = new Account()
                 {
                     Email = userInfo.Email,
                     Password = null,
@@ -213,10 +218,9 @@ namespace IdentityProvider.Services
                     UserId = ObjectId.GenerateNewId().ToString()
                 };
                 _accountRepository.Add(newAccount);
-                return JwtToken.Generate(_settings.Value.Secret, newAccount);
-            }           
+                newAccount.Token = JwtToken.Generate(_settings.Value.Secret, newAccount);
+                return newAccount;
+            }
         }
-       
-        
     }
 }

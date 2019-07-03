@@ -18,6 +18,7 @@ namespace ChatService.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string FromUserId { get; set; }
 
+        [BsonElement("conversation_id")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string ConversationId { get; set; }
 

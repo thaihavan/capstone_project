@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IdentityProvider.Models
 {
-    public class GoogleUser:Model
+    public class GoogleUser : Model
     {
         public string Id { get; set; }
         public string Email { get; set; }      

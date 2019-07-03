@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChatService.Helpers;
 using ChatService.HubConfig;
+using ChatService.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -83,7 +84,8 @@ namespace ChatService
                     }
                 };
             });
-            
+            // Configure DI for application services
+            services.AddScoped<IChatService, Services.ChatService>();
             services.AddSignalR();
         }
 
