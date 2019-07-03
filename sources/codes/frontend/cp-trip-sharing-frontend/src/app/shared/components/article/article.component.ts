@@ -47,7 +47,6 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   userId: string;
   listUserIdFollowing: string[] = [];
   listPostIdBookMark: string[] = [];
-  name = 'PhongNV';
 
   // if article is virtual trip variable for virtual trip
   @ViewChild('slideShow') slideShow: any;

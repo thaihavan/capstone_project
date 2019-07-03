@@ -1,9 +1,48 @@
+.timeline-cover {
+  position: relative;
+}
+
+.cover-image {
+  max-height: 315px;
+  width: 100%;
+}
+.profile-infor {
+  position: absolute;
+  bottom: -47px;
+  margin-left: 10%;
+  z-index: 9999;
+}
+.avatar-img {
+  border-radius: 100%;
+  max-width: 160px;
+  border: 4px solid #fff;
+}
+
+.personal-name {
+  color: white;
+  padding-left: 30px;
+  font-size: 24px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 500;
+  position: absolute;
+  z-index: 999;
+  bottom: 0px;
+  margin-left: 22%;
+}
+
+.icon-block{
+  margin-top: -36px;
+  z-index: 9999;
+  margin-left: 75%;
+  color: black;
+  position: absolute;
+}
+
 .content-post-page{
-  width: 100% !important;
+  width: 50% !important;
   height: auto;
   margin: 0 auto;
   margin-bottom: 1em;
-  margin-top: 84px;
 }
 
 .title{
@@ -81,4 +120,8 @@ textarea{
 .icon-action button{
   border: none;
   background-color: snow;
+}
+
+.icon-action .mat-icon :hover{
+  color: red !important;
 }

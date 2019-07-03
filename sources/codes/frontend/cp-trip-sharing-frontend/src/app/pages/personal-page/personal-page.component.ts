@@ -49,7 +49,7 @@ export class PersonalPageComponent implements OnInit {
       }
     ];
     this.user = new User();
-    this.userId = this.route.snapshot.queryParamMap.get('userId');
+    this.userId = this.route.snapshot.paramMap.get('userId');
     if (this.userId != null) {
       this.getInforUser(this.userId);
     } else {
