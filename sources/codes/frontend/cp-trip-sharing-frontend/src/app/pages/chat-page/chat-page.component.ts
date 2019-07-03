@@ -3,6 +3,7 @@ import { ChatService } from 'src/app/core/services/chat-service/chat.service';
 import { Account } from 'src/app/model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Conversation } from 'src/app/model/Conversation';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chat-page',
@@ -16,7 +17,9 @@ export class ChatPageComponent implements OnInit {
 
   listConversations: Conversation[];
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService, private titleService: Title) {
+    this.titleService.setTitle('Tin nhắn');
+  }
 
   ngOnInit() {
     this.setHeight();
