@@ -16,7 +16,9 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./detailpost-page.component.css']
 })
 export class DetailpostPageComponent implements OnInit {
-  post: Post;
+  post: Post = new Post();
+  displayName = '';
+  coverImg = '';
   article: Article;
   articleId: string;
   like: Like = new Like();
@@ -24,13 +26,14 @@ export class DetailpostPageComponent implements OnInit {
   coverImage = '../../../assets/coverimg.jpg';
   avatar = '../../../assets/img_avatar.png';
   token: string;
-  postId: string;
+  authorId: string;
   bookmark = false;
   commentContent = '';
   comments: Comment[];
   follow = false;
   followed = false;
   listPostIdBookMark: string[] = [];
+  listUserIdFollowing: string [] = [];
   isScrollTopShow = false;
   topPosToStartShowing = 300;
   @HostListener('window:scroll') checkScroll() {
@@ -47,7 +50,6 @@ export class DetailpostPageComponent implements OnInit {
   }
   constructor(private postService: PostService, private route: ActivatedRoute,
               private userService: UserService, private titleService: Title) {
-    this.post = new Post();
     this.comments = [];
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     this.loadArticleByarticleId(this.articleId);
@@ -73,23 +75,25 @@ export class DetailpostPageComponent implements OnInit {
     this.postService.getArticleById(articleId).subscribe((data: any) => {
       this.article = data;
       this.post = data.post;
-      console.log(this.article);
+      this.authorId = this.post.author.id;
+      this.coverImg = this.post.author.profileImage;
+      this.displayName = this.post.author.displayName;
       this.getCommentByPostId(this.post.id);
       this.checkBookMark(this.post.id);
-      // this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
-      // if (this.listUserIdFollowing != null) {
-      //   // tslint:disable-next-line:prefer-for-of
-      //   for (let i = 0; i < this.listUserIdFollowing.length; i++) {
-      //     if (data.authorId === this.listUserIdFollowing[i]) {
-      //       this.followed = true;
-      //       this.follow = false;
-      //       break;
-      //     } else {
-      //       this.followed = false;
-      //       this.follow = true;
-      //     }
-      //   }
-      // }
+      this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
+      if (this.listUserIdFollowing != null) {
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.listUserIdFollowing.length; i++) {
+          if (this.authorId === this.listUserIdFollowing[i]) {
+            this.followed = true;
+            this.follow = false;
+            break;
+          } else {
+            this.followed = false;
+            this.follow = true;
+          }
+        }
+      }
     });
   }
 
@@ -119,28 +123,28 @@ export class DetailpostPageComponent implements OnInit {
     });
   }
 
-  // followPerson(userId: any) {
-  //   if (this.followed === false && this.follow === true) {
-  //     this.userService.addFollow(userId, this.token).subscribe((data: any) => {
-  //       this.followed = true;
-  //       this.follow = false;
-  //       this.listUserIdFollowing.push(userId);
-  //       localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-  //     }, (err: HttpErrorResponse) => {
-  //       console.log(err);
-  //     });
-  //   } else {
-  //     this.userService.unFollow(userId, this.token).subscribe((data: any) => {
-  //       this.followed = false;
-  //       this.follow = true;
-  //       const unfollow = this.listUserIdFollowing.indexOf(userId);
-  //       this.listUserIdFollowing.splice(unfollow, 1);
-  //       localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-  //     }, (err: HttpErrorResponse) => {
-  //       console.log(err);
-  //     });
-  //   }
-  // }
+  followPerson(userId: any) {
+    if (this.followed === false && this.follow === true) {
+      this.userService.addFollow(userId, this.token).subscribe((data: any) => {
+        this.followed = true;
+        this.follow = false;
+        this.listUserIdFollowing.push(userId);
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    } else {
+      this.userService.unFollow(userId, this.token).subscribe((data: any) => {
+        this.followed = false;
+        this.follow = true;
+        const unfollow = this.listUserIdFollowing.indexOf(userId);
+        this.listUserIdFollowing.splice(unfollow, 1);
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    }
+  }
 
   likePost(like: any) {
     this.like.ObjectId = this.article.post.id;

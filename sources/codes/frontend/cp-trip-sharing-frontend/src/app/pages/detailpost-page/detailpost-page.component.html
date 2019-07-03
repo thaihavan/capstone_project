@@ -3,11 +3,8 @@
     <img class="cover-image" src="{{coverImage}}">
   </div>
   <div class="profile-infor">
-    <div class="avatar-display">
-      <a href="#"><img src="{{avatar}}" class="avatar-img"></a>
-    </div>
+      <a href="#"><img src="{{coverImg}}" class="avatar-img"></a>
   </div>
-  <a href="#"><span class="personal-name">Trần Văn Phong</span></a>
   <div class="icon-block">
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
       <mat-icon>more_horiz</mat-icon>
@@ -18,6 +15,19 @@
         <span>Chặn người dùng</span>
       </button>
     </mat-menu>
+  </div>
+  <div class="infor-author">
+    <div class="personal-name" ><span>{{displayName}}</span></div>
+    <div class="time">{{post.pubDate}}</div>
+    <button (click)="followPerson(post.author.id)" *ngIf="follow" class="btn-follow">
+      <i class="fa fa-user-plus"></i> Theo dõi
+    </button>
+    <button (click)="followPerson(post.author.id)" *ngIf="followed" class="btn-follow">
+      <i class="fa fa-user-plus"></i> Đã theo dõi
+    </button>
+    <div class="send-message"><i class="fa fa-envelope"></i><span> Send</span></div>
+    <div class="like"><i class="fa fa-thumbs-up"></i><span> Thích {{post.likeCount}}</span></div>
+    <div class="share"><i class="fa fa-share"></i> <span> Chia sẻ</span></div>
   </div>
 </div>
 <div class="content-post-page">
