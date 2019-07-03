@@ -45,5 +45,17 @@ namespace ChatService.DbContext
                 return null;
             }
         }
+
+        public IMongoCollection<MessageDetail> Messages
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<MessageDetail>("Messages");
+                }
+                return null;
+            }
+        }
     }
 }

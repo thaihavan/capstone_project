@@ -21,5 +21,8 @@ namespace ChatService.Models
         [BsonElement("receiver_list")]
         public List<string> Receivers { get; set; }
 
+        [BsonIgnore]
+        public List<string> Messages { get; set; }
+
     }
 }
