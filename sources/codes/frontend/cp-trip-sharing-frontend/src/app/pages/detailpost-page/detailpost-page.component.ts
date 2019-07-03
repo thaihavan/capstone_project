@@ -8,6 +8,7 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Article } from 'src/app/model/Article';
 import { Like } from 'src/app/model/Like';
 import { Bookmark } from 'src/app/model/Bookmark';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -44,12 +45,14 @@ export class DetailpostPageComponent implements OnInit {
       this.isScrollTopShow = false;
     }
   }
-  constructor(private postService: PostService, private route: ActivatedRoute, private userService: UserService) {
+  constructor(private postService: PostService, private route: ActivatedRoute,
+              private userService: UserService, private titleService: Title) {
     this.post = new Post();
     this.comments = [];
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     this.loadArticleByarticleId(this.articleId);
     this.token = localStorage.getItem('Token');
+    this.titleService.setTitle(this.post.title);
   }
 
   ngOnInit() { }

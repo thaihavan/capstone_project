@@ -6,6 +6,7 @@ import { Globals } from 'src/globals/globalvalues';
 import { MatDialog } from '@angular/material';
 import { ResetPasswordModel } from 'src/app/model/ResetPasswordModel';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -18,7 +19,9 @@ export class ResetPasswordPageComponent implements OnInit {
   renewpassword: string = null;
   message: string = null;
   resetPasswordModel: ResetPasswordModel;
-  constructor(private route: ActivatedRoute, private dialog: MatDialog, private userService: UserService, public globals: Globals) {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog, private userService: UserService,
+              public globals: Globals, private titleService: Title) {
+    this.titleService.setTitle('Đặt lại mật khẩu');
     this.resetPasswordModel = new ResetPasswordModel();
   }
 

@@ -4,6 +4,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-initial-user-information-page',
@@ -17,7 +18,8 @@ export class InitialUserInformationPageComponent implements OnInit {
   user: User;
   isRegister: boolean;
   selectedTopic: string[] = [];
-  constructor(private formBuilder: FormBuilder, private userService: UserService) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private titleService: Title) {
+    this.titleService.setTitle('Khởi tạo');
     this.user = new User();
     this.user.UserName = '';
     this.user.DisplayName = '';

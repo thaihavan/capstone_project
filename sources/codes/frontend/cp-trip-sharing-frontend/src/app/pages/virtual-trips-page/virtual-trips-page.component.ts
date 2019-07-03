@@ -16,6 +16,7 @@ import { LoadingScreenComponent } from 'src/app/shared/components/loading-screen
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-virtual-trips-page',
@@ -43,8 +44,11 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private tripService: VirtualTripService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private titleService: Title
+  ) {
+    this.titleService.setTitle('Chuyến đi');
+  }
 
   ngOnInit() {
     this.virtualTrip = new VirtualTrip();

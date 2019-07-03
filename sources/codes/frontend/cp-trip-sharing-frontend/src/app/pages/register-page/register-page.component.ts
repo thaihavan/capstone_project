@@ -5,6 +5,7 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Account } from 'src/app/model/Account';
 import { Globals } from 'src/globals/globalvalues';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register-page',
@@ -17,7 +18,9 @@ export class RegisterPageComponent implements OnInit {
   repass = '';
   account: Account;
   message: string;
-  constructor(private dialog: MatDialog, private userService: UserService,public globals: Globals) {
+  constructor(private dialog: MatDialog, private userService: UserService,
+              public globals: Globals, private titleService: Title) {
+    this.titleService.setTitle('Đăng ký');
     this.account = new Account();
   }
 

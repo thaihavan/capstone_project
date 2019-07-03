@@ -5,6 +5,7 @@ import { Globals } from 'src/globals/globalvalues';
 import { MatDialog } from '@angular/material';
 import { Account } from 'src/app/model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-forgotpassword-page',
@@ -15,8 +16,10 @@ export class ForgotpasswordPageComponent implements OnInit {
   email: string;
   acount: Account;
   message: string;
-  constructor(private dialog: MatDialog, private userService: UserService, public globals: Globals) {
+  constructor(private dialog: MatDialog, private userService: UserService,
+              public globals: Globals, private titleService: Title) {
     this.acount = new Account();
+    this.titleService.setTitle('Quên mật khẩu');
   }
 
   ngOnInit() {

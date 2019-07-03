@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Globals } from 'src/globals/globalvalues';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-email-confirm-page',
@@ -19,11 +20,13 @@ export class EmailConfirmPageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private userService: UserService,
               private dialog: MatDialog,
-              public globals: Globals
-  ) { }
+              public globals: Globals,
+              private titleService: Title
+  ) {
+    this.titleService.setTitle('Xác nhận email');
+  }
 
   ngOnInit() {
-    debugger;
     this.token = this.route.snapshot.paramMap.get('token');
     this.userService.verifyEmail(this.token).subscribe((data: any) => {
       this.message = 'Xác nhận email thành công';

@@ -15,6 +15,7 @@ import { Author } from 'src/app/model/Author';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-post-page',
@@ -71,8 +72,11 @@ export class CreatePostPageComponent implements OnInit {
     private postService: PostService,
     private datePipe: DatePipe,
     private imageService: UploadImageService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private titleService: Title
+  ) {
+    this.titleService.setTitle('Tạo bài viết');
+  }
 
   ngOnInit() {
     this.articlereturn = new Article();
@@ -93,8 +97,8 @@ export class CreatePostPageComponent implements OnInit {
           this.content = res.post.content;
           this.articlereturn = res;
         },
-        error => {},
-        () => {}
+        error => { },
+        () => { }
       );
     }
   }
@@ -161,7 +165,7 @@ export class CreatePostPageComponent implements OnInit {
           this.articlereturn.topics = res.topics;
           this.articlereturn.destinations = res.destinations;
           this.postService.updateArticle(this.articlereturn).subscribe(
-            data => {},
+            data => { },
             error => {
               console.log(error);
             },
@@ -206,7 +210,7 @@ export class CreatePostPageComponent implements OnInit {
       );
     } else {
       if (this.myEditor && this.myEditor.editorInstance) {
-      this.openDialog([], []);
+        this.openDialog([], []);
       }
     }
   }

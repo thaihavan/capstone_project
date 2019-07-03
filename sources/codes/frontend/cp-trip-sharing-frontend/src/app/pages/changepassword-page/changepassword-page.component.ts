@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangePassword } from 'src/app/model/ChangePassword';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-changepassword-page',
@@ -15,8 +16,9 @@ export class ChangepasswordPageComponent implements OnInit {
   message: string;
   changePasswordObject: ChangePassword;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private titleService: Title) {
     this.changePasswordObject = new ChangePassword();
+    this.titleService.setTitle('Đổi mật khẩu');
   }
 
   ngOnInit() {

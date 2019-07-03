@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ListFollowComponent } from 'src/app/shared/components/list-follow/list-follow.component';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-personal-page',
@@ -27,7 +28,9 @@ export class PersonalPageComponent implements OnInit {
 
   isDisplayNav = true;
 
-  constructor(private router: Router, private userService: UserService, public dialog: MatDialog, private route: ActivatedRoute) {
+  constructor(private router: Router, private userService: UserService, public dialog: MatDialog,
+              private route: ActivatedRoute, private titleService: Title) {
+    this.titleService.setTitle('Người dùng');
     this.navLinks = [
       {
         label: 'Bài viết',

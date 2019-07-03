@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/core/services/user-service/user.service';
-import { Globals } from 'src/globals/globalvalues';
+import { Title } from '@angular/platform-browser';
 import { Account } from 'src/app/model/Account';
 
 @Component({
@@ -17,7 +17,8 @@ export class LoginPageComponent implements OnInit {
   message: string;
   listUserIdFollowing: string[] = [];
   listPostIdBookMark: string[] = [];
-  constructor(private globals: Globals, private dialogRef: MatDialogRef<LoginPageComponent>, private userService: UserService) {
+  constructor(private titleService: Title, private dialogRef: MatDialogRef<LoginPageComponent>, private userService: UserService) {
+    this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }
 
