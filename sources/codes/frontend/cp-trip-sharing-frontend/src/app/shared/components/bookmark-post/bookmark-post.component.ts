@@ -32,7 +32,7 @@ export class BookmarkPostComponent implements OnInit {
         const unbookmark = this.listPostIdBookMark.indexOf(postId);
         this.listPostIdBookMark.splice(unbookmark, 1);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-        window.location.href = '/personal/bookmarks';
+        window.location.href = '/user';
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });

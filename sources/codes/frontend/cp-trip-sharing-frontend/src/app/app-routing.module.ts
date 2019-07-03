@@ -21,39 +21,37 @@ import { ListUserBlockedComponent } from './shared/components/list-user-blocked/
 
 
 const routes: Routes = [
-  { path: 'email-confirm/:token', component: EmailConfirmPageComponent },
+  { path: 'xac-nhan-email/:token', component: EmailConfirmPageComponent },
   {
     path: '', component: HeaderComponent,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
       {
-        path: 'home', component: HomePageComponent,
+        path: 'trang-chu', component: HomePageComponent,
         children: [
-          { path: '', redirectTo: 'for-you', pathMatch: 'full' },
+          { path: '', redirectTo: 'de-xuat', pathMatch: 'full' },
           { path: ':home-nav', component: ListPostComponent }
         ]
       },
       {
-        path: 'personal', component: PersonalPageComponent,
+        path: 'user/:userId', component: PersonalPageComponent,
         children: [
-          { path: '', redirectTo: 'articles', pathMatch: 'full' },
-          { path: 'bookmarks', component: ListBookmarksComponent },
-          { path: 'blocked', component: ListUserBlockedComponent },
-          {path: 'post-detail/:articleId', component: DetailpostPageComponent },
+          { path: '', redirectTo: 'bai-viet', pathMatch: 'full' },
+          { path: 'da-danh-dau', component: ListBookmarksComponent },
+          { path: 'danh-sach-chan', component: ListUserBlockedComponent },
           { path: ':personal-nav', component: ListPostComponent }
         ]
       },
-      { path: 'register', component: RegisterPageComponent },
-      { path: 'virtual-trips', component: VirtualTripsPageComponent },
-      { path: 'forgot-password', component: ForgotpasswordPageComponent },
-      { path: 'create-article', component: CreatePostPageComponent },
-      { path: 'update-article', component: CreatePostPageComponent },
-      { path: 'change-password', component: ChangepasswordPageComponent },
-      { path: 'reset-password/:token', component: ResetPasswordPageComponent },
-      { path: 'change-password', component: ChangepasswordPageComponent },
-      { path: 'post-detail', component: DetailpostPageComponent },
-      { path: 'initial', component: InitialUserInformationPageComponent },
-      { path: 'chat', component: ChatPageComponent }
+      { path: 'dang-ky', component: RegisterPageComponent },
+      { path: 'chuyen-di', component: VirtualTripsPageComponent },
+      { path: 'quen-mat-khau', component: ForgotpasswordPageComponent },
+      { path: 'tao-bai-viet', component: CreatePostPageComponent },
+      { path: 'chinh-sua-bai-viet/:articleId', component: CreatePostPageComponent },
+      { path: 'doi-mat-khau', component: ChangepasswordPageComponent },
+      { path: 'dat-lai-mat-khau/:token', component: ResetPasswordPageComponent },
+      { path: 'bai-viet/:articleId', component: DetailpostPageComponent },
+      { path: 'khoi-tao', component: InitialUserInformationPageComponent },
+      { path: 'tin-nhan', component: ChatPageComponent }
     ]
   },
 ];

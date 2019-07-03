@@ -232,7 +232,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
-    instance.message.url = '/virtual-trips?tripId=' + data;
+    instance.message.url = '/chuyen-di?tripId=' + data;
   }
 
   // send update request to server

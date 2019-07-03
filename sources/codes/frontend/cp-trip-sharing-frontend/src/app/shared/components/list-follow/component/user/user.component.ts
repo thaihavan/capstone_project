@@ -46,7 +46,7 @@ export class UserComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Đã bỏ chặn người dùng thành công!';
-    instance.message.url = '/personal/blocked';
+    instance.message.url = '/user/' + this.user.Id + '/danh-sach-chan';
   }
 
 }

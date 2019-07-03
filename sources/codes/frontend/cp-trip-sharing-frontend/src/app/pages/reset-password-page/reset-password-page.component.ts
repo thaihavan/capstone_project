@@ -37,7 +37,7 @@ export class ResetPasswordPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Đổi mật khẩu thành công bạn có thể đăng nhập lại!';
-    instance.message.url = '/home';
+    instance.message.url = '/trang-chu';
   }
 
   resetPassword() {

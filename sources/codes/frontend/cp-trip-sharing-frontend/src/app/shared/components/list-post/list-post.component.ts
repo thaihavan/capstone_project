@@ -18,16 +18,15 @@ import { ArticleDisplay } from 'src/app/model/ArticleDisplay';
 export class ListPostComponent implements OnInit {
 
   VALID_PERSONAL_NAVS: string[] = [
-    'articles',
-    'virtual-trips',
-    'companion-posts'
+    'bai-viet',
+    'chuyen-di',
+    'tim-ban-dong-hanh'
   ];
   VALID_HOME_NAVS: string[] = [
-    'for-you',
-    'popular',
-    'newest',
-    'follower',
-    'topic'
+    'de-xuat',
+    'pho-bien',
+    'moi-nhat',
+    'theo-doi'
   ];
 
   articleDisplay = new ArticleDisplay();
@@ -104,12 +103,12 @@ export class ListPostComponent implements OnInit {
 
       // If home-nav is not valid
       if (this.homeNav && this.VALID_HOME_NAVS.indexOf(this.homeNav) === -1) {
-        this.homeNav = 'for-you';
+        this.homeNav = 'de-xuat';
       }
 
       // If personal-nav is not valid
       if (this.personalNav && this.VALID_PERSONAL_NAVS.indexOf(this.personalNav) === -1) {
-        this.personalNav = 'articles';
+        this.personalNav = 'bai-viet';
       }
 
       // Init post filter
@@ -150,13 +149,13 @@ export class ListPostComponent implements OnInit {
       postFilter.topics = [];
     }
 
-    if (this.homeNav || this.personalNav === 'articles') {
+    if (this.homeNav || this.personalNav === 'bai-viet') {
       this.resetListPost();
       this.getArticles(postFilter);
-    } else if (this.personalNav === 'virtual-trips') {
+    } else if (this.personalNav === 'chuyen-di') {
       this.resetListPost();
       this.getArticles(postFilter);
-    } else if (this.personalNav === 'companion-posts') {
+    } else if (this.personalNav === 'tim-ban-dong-hanh') {
       this.resetListPost();
     }
   }
@@ -175,7 +174,7 @@ export class ListPostComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
-    } else if (this.personalNav === 'articles') {
+    } else if (this.personalNav === 'bai-viet') {
       // Call api
       const account = JSON.parse(localStorage.getItem('Account'));
       this.postService.getAllArticlesByUserId(account.userId, postFilter).subscribe((data: any) => {
@@ -189,7 +188,7 @@ export class ListPostComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
-    } else if (this.personalNav === 'virtual-trips') {
+    } else if (this.personalNav === 'chuyen-di') {
         this.tripService.getVirtualTrips().subscribe(data => {
         this.resetListPost();
         this.articleDisplay.typeArticle = 'virtual-trips';

@@ -40,6 +40,6 @@ export class ForgotpasswordPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Kiểm tra Email! Mật khẩu mới đã được gửi về email của bạn.';
-    instance.message.url = '/home';
+    instance.message.url = '/trang-chu';
   }
 }

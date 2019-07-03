@@ -48,6 +48,6 @@ export class RegisterPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Đăng kí thành công, vui lòng kiểm tra lại email!';
-    instance.message.url = '/home';
+    instance.message.url = '/trang-chu';
   }
 }

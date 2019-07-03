@@ -64,17 +64,17 @@ export class InitialUserInformationPageComponent implements OnInit {
   registerUser() {
     this.userService.registerUser(this.user).subscribe((result: any) => {
       localStorage.setItem('User', JSON.stringify(result));
-      window.location.href = '/home';
+      window.location.href = '/trang-chu';
     }, (err: HttpErrorResponse) => {
-      window.location.href = '/initial';
+      window.location.href = '/khoi-tao';
     });
   }
 
   updateUser() {
     this.userService.updateUser(this.user).subscribe((result: any) => {
-      window.location.href = '/personal/article?userId=' + this.user.UserId;
+      window.location.href = '/user/' + this.user.UserId;
     }, (err: HttpErrorResponse) => {
-      window.location.href = '/personal/article?userId=' + this.user.UserId;
+      window.location.href = '/user/' + this.user.UserId;
     });
   }
 }

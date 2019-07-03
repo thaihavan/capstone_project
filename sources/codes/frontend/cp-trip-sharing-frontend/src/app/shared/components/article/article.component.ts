@@ -198,13 +198,13 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   editPost() {
     if (this.typeArticle === 'virtual-trips') {
-      window.location.href = this.globals.urllocal + '/virtual-trips?tripId=' + this.article.id;
+      window.location.href = this.globals.urllocal + '/chuyen-di?tripId=' + this.article.id;
     } else {
-      window.location.href = this.globals.urllocal + '/update-article?id=' + this.article.id;
+      window.location.href = this.globals.urllocal + '/chinh-sua-bai-viet/' + this.article.id;
     }
   }
 
   gotoPersionalPage(authorId: any) {
-    window.location.href = '/personal/article?userId=' + authorId;
+    window.location.href = '/user/' + authorId;
   }
 }

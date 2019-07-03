@@ -51,6 +51,6 @@ export class EmailConfirmPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
-    instance.message.url = '/home';
+    instance.message.url = '/trang-chu';
   }
 }

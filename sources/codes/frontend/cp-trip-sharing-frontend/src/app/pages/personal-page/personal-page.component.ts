@@ -31,17 +31,17 @@ export class PersonalPageComponent implements OnInit {
     this.navLinks = [
       {
         label: 'Bài viết',
-        link: './articles',
+        link: './bai-viet',
         index: 0
       },
       {
         label: 'Chuyến đi',
-        link: './virtual-trips',
+        link: './chuyen-di',
         index: 1
       },
       {
         label: 'Tìm bạn đồng hành',
-        link: './companion-posts',
+        link: './tim-ban-dong-hanh',
         index: 2
       }
     ];
@@ -57,15 +57,11 @@ export class PersonalPageComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    if (this.router.url.indexOf('bookmarks') !== -1) {
+    if (this.router.url.indexOf('da-danh-dau') !== -1) {
       this.isDisplayNav = false;
     }
 
-    if (this.router.url.indexOf('blocked') !== -1) {
-      this.isDisplayNav = false;
-    }
-
-    if (this.router.url.indexOf('post-detail') !== -1) {
+    if (this.router.url.indexOf('danh-sach-chan') !== -1) {
       this.isDisplayNav = false;
     }
 
@@ -180,6 +176,6 @@ export class PersonalPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Chặn người dùng thành công!';
-    instance.message.url = '/personal/blocked';
+    instance.message.url = '/user/' + this.userId + '/danh-sach-chan';
   }
 }

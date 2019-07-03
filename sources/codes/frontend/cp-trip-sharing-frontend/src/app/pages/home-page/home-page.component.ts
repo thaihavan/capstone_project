@@ -16,22 +16,22 @@ export class HomePageComponent implements OnInit {
     this.navLinks = [
       {
         label: 'Đề xuất',
-        link: './for-you',
+        link: './de-xuat',
         index: 0
       },
       {
         label: 'Phổ biến',
-        link: './popular',
+        link: './pho-bien',
         index: 1
       },
       {
         label: 'Mới nhất',
-        link: './newest',
+        link: './moi-nhat',
         index: 2
       },
       {
         label: 'Theo dõi',
-        link: './follower',
+        link: './theo-doi',
         index: 3
       }
     ];

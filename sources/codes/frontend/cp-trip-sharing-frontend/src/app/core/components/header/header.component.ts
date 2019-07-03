@@ -43,15 +43,19 @@ export class HeaderComponent implements OnInit {
   gotoPersonalPage() {
     const account = JSON.parse(localStorage.getItem('Account'));
     this.userId = account.userId;
-    window.location.href = '/personal/article?userId=' + this.userId;
+    window.location.href = '/user/' + this.userId;
   }
 
   gotoBookmarkList() {
-    window.location.href = '/personal/bookmarks';
+    const account = JSON.parse(localStorage.getItem('Account'));
+    this.userId = account.userId;
+    window.location.href = '/user/' + this.userId + '/da-danh-dau';
   }
 
   gotoBlockedList() {
-    window.location.href = '/personal/blocked';
+    const account = JSON.parse(localStorage.getItem('Account'));
+    this.userId = account.userId;
+    window.location.href = '/user/' + this.userId + '/danh-sach-chan';
   }
 
   viewNotification() {

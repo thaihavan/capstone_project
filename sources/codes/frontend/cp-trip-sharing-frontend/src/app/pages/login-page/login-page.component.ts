@@ -40,12 +40,12 @@ export class LoginPageComponent implements OnInit {
       // Call http request to userservice để lấy thông tin user
       this.userService.getUserById(acc.userId).subscribe((user: any) => {
         if (user == null) {
-          window.location.href = '/initial';
+          window.location.href = '/khoi-tao';
         } else {
           localStorage.setItem('User', JSON.stringify(user));
           this.getFollowings();
           this.getListPostIdBookmark();
-          window.location.href = '/home';
+          window.location.href = '/trang-chu';
         }
       });
     },

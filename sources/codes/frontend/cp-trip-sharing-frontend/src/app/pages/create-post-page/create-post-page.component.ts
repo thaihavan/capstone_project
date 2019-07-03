@@ -196,7 +196,7 @@ export class CreatePostPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
-    instance.message.url = '/post-detail?postId=' + this.articlereturn.post.id;
+    instance.message.url = '/bai-viet/' + this.articlereturn.post.id;
   }
   createPost() {
     if (this.isUpdate) {

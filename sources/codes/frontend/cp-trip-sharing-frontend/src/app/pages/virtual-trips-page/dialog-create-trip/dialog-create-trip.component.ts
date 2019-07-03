@@ -54,7 +54,7 @@ export class DialogCreateTripComponent implements OnInit {
   onClose() {
     this.dialogRef.close();
     if (!this.data.edit) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/trang-chu']);
     }
   }
 }
