@@ -33,7 +33,7 @@ export class DetailpostPageComponent implements OnInit {
   follow = false;
   followed = false;
   listPostIdBookMark: string[] = [];
-  listUserIdFollowing: string [] = [];
+  listUserIdFollowing: string[] = [];
   isScrollTopShow = false;
   topPosToStartShowing = 300;
   @HostListener('window:scroll') checkScroll() {
@@ -53,8 +53,6 @@ export class DetailpostPageComponent implements OnInit {
     this.comments = [];
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     this.loadArticleByarticleId(this.articleId);
-    this.token = localStorage.getItem('Token');
-    this.titleService.setTitle(this.post.title);
   }
 
   ngOnInit() { }
@@ -72,6 +70,7 @@ export class DetailpostPageComponent implements OnInit {
     }
   }
   loadArticleByarticleId(articleId: string) {
+    this.token = localStorage.getItem('Token');
     this.postService.getArticleById(articleId).subscribe((data: any) => {
       this.article = data;
       this.post = data.post;
@@ -94,6 +93,7 @@ export class DetailpostPageComponent implements OnInit {
           }
         }
       }
+      this.titleService.setTitle(this.post.title);
     });
   }
 
