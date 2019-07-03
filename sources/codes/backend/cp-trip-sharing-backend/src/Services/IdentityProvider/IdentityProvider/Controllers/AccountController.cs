@@ -104,15 +104,15 @@ namespace IdentityProvider.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("authenticate/google")]
-        public IActionResult GoogleAuthenticate([FromBody] string accessToken)
+        [HttpGet("authenticate/google")]
+        public IActionResult GoogleAuthenticate([FromQuery] string token)
         {
-            var result = _accountService.GoogleAuthenticate(accessToken);
-            if (result == null)
+            var user = _accountService.GoogleAuthenticate(token);
+            if (user == null)
             {
                 return BadRequest(new ErrorMessage() { Message = "Google access token is not valid" });
             }          
-            return Ok(new { Token=result});
+            return Ok(user);
         }
 
         [Authorize(Roles = "member,admin,unverified")]

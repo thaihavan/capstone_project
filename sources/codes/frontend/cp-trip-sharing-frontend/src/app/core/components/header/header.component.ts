@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
 
   signOut() {
     localStorage.clear();
-    window.location.href = window.location.href = this.globals.urllocal;
+    window.location.href = '/';
   }
 
   gotoPersonalPage() {

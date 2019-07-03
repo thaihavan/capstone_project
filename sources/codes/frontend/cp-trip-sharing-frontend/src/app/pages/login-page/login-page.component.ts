@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Title } from '@angular/platform-browser';
 import { Account } from 'src/app/model/Account';
+import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 
 @Component({
   selector: 'app-login-page',
@@ -17,13 +18,43 @@ export class LoginPageComponent implements OnInit {
   message: string;
   listUserIdFollowing: string[] = [];
   listPostIdBookMark: string[] = [];
-  constructor(private titleService: Title, private dialogRef: MatDialogRef<LoginPageComponent>, private userService: UserService) {
+  constructor(private titleService: Title,
+    private dialogRef: MatDialogRef<LoginPageComponent>,
+    private userService: UserService,
+    private authService: AuthService) {
     this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }
 
   ngOnInit() {
   }
+
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((gUser) => {
+      console.log(gUser);
+      this.userService.loginWithgoogle(gUser.authToken).subscribe((account: any) => {
+        localStorage.setItem('Account', JSON.stringify(account));
+        localStorage.setItem('Token', account.token);
+        // Call http request to userservice để lấy thông tin user
+        this.userService.getUserById(account.userId).subscribe((user: any) => {
+          if (user == null) {
+            window.location.href = '/khoi-tao';
+          } else {
+            localStorage.setItem('User', JSON.stringify(user));
+            this.getFollowings();
+            this.getListPostIdBookmark();
+            window.location.href = '/trang-chu';
+          }
+        });
+      }, (error: HttpErrorResponse) => {
+        this.message = 'Đăng nhập bằng Google thất bại!';
+        console.log(error);
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   callRegisterPage(): void {
     this.dialogRef.close();
   }
@@ -49,11 +80,10 @@ export class LoginPageComponent implements OnInit {
           window.location.href = '/trang-chu';
         }
       });
-    },
-      (err: HttpErrorResponse) => {
-        this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
-        console.log(err);
-      });
+    }, (err: HttpErrorResponse) => {
+      this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
+      console.log(err);
+    });
   }
 
   getFollowings() {

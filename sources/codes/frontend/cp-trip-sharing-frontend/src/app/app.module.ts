@@ -36,6 +36,8 @@ import { ListFollowComponent } from './shared/components/list-follow/list-follow
 import { DestinationTripComponent } from './pages/virtual-trips-page/destination-trip/destination-trip.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { MatInputModule, MatExpansionModule } from '@angular/material';
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { provideSocialLoginConfig } from './social-login-config';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +72,7 @@ import { MatInputModule, MatExpansionModule } from '@angular/material';
     ReactiveFormsModule,
     MatInputModule,
     MatExpansionModule,
+    SocialLoginModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDIPTZ7dpn5_hralWGDP4glqkqAaac6qeA',
       libraries: ['places']
@@ -81,7 +84,13 @@ import { MatInputModule, MatExpansionModule } from '@angular/material';
     // ),
     CKEditorModule,
   ],
-  providers: [Globals],
+  providers: [
+    Globals,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideSocialLoginConfig
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent, ListFollowComponent]
 

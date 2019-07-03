@@ -36,6 +36,10 @@ export class UserService {
     return this.http.post<Account>(this.apiUrl + 'authenticate', account, httpOption);
   }
 
+  loginWithgoogle(token: string): Observable<Account> {
+    return this.http.get<Account>(this.apiUrl + 'authenticate/google?token=' + token);
+  }
+
   registerAccount(account: Account): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'register', account, httpOption);
   }

@@ -30,6 +30,7 @@
     "@ckeditor/ckeditor5-image": "^13.1.0",
     "@types/googlemaps": "^3.36.3",
     "angular-in-memory-web-api": "^0.8.0",
+    "angularx-social-login": "^1.2.7",
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.8",
     "font-awesome": "^4.7.0",
