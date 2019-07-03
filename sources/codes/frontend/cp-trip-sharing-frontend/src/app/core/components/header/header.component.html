@@ -23,13 +23,26 @@
             </div>
           </a>
           <a mat-button>
-            <div class="nav-icon-text" [matMenuTriggerFor]="menu_notification" (click)="viewNotification()">
+            <div class="nav-icon-text" [matMenuTriggerFor]="menu_message_notification" (click)="viewMessageNotification()">
               <i class="fa fa-envelope"></i>
               <span>Tin nhắn</span>
-              <p *ngIf="checkNotification" class="badge">{{numberNotification}}</p>
+              <div *ngIf="checkMessageNotification" class="badge">{{numberNotification}}</div>
+            </div>
+            <mat-menu #menu_message_notification="matMenu" class="menu">
+              <div class="title-message-notification">Bạn có {{numberNotification}} tin nhắn chưa đọc</div>
+              <div class="item-menu">
+                <app-message></app-message>
+              </div>
+            </mat-menu>
+          </a>
+          <a mat-button>
+            <div class="nav-icon-text" [matMenuTriggerFor]="menu_notification" (click)="viewNotification()">
+              <i class="fa fa-bell"></i>
+              <span>Thông báo</span>
+              <div *ngIf="checkNotification" class="badge">{{numberNotification}}</div>
             </div>
             <mat-menu #menu_notification="matMenu" class="menu">
-              <div class="title-notification">Bạn có {{numberNotification}} tin nhắn chưa đọc</div>
+              <div class="title-notification">Bạn có thông báo mới</div>
               <div class="item-menu">
                 <app-message></app-message>
               </div>

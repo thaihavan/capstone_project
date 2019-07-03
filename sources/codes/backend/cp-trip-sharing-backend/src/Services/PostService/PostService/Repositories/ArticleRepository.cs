@@ -114,48 +114,33 @@ namespace PostService.Repositories
             return result;
         }
 
-        public Article GetArticleInfoById(string id)
+        public Article GetArticleInfoById(string id,string userId)
         {
-            var articles = _posts.AsQueryable().Join(
-                _authors.AsQueryable(),
-                post => post.AuthorId,
-                author => author.Id,
-                (post, author) => new
-                {
-                    Id = post.Id,
-                    Post = new Post
-                    {
-                        Id = post.Id,
-                        AuthorId = post.AuthorId,
-                        Content = post.Content,
-                        CommentCount = post.CommentCount,
-                        IsActive = post.IsActive,
-                        IsPublic = post.IsPublic,
-                        LikeCount = post.LikeCount,
-                        PostType = post.PostType,
-                        PubDate = post.PubDate,
-                        Title = post.Title,
-                        CoverImage = post.CoverImage,
-                        Author = new Author()
-                        {
-                            Id = author.Id,
-                            DisplayName = author.DisplayName,
-                            ProfileImage = author.ProfileImage
-                        }
-                    }
-                }).Join(
+            Func<Post,Author,Post> SelectPostWithAuthor =
+                ((post, author) => { post.Author = author;return post; });
+
+            Func<Post, Article, Article> SelectArticleWithPost =
+                ((post, article) => { article.Post = post;return article; });
+
+            Func<Article, IEnumerable<Like>, Article> UpdateLike =
+                ((article, likes) => { article.Post.liked = likes.Count() > 0 ? true : false; return article; });
+
+            var articles = _posts.AsQueryable()
+                .Join(
+                    _authors.AsQueryable(),
+                    post => post.AuthorId,
+                    author => author.Id,
+                    SelectPostWithAuthor)
+                .Join(
                     _articles.AsQueryable(),
-                    pa => pa.Id,
+                    post => post.Id,
                     article => article.PostId,
-                    (pa, article) => new Article()
-                    {
-                        Id = article.Id,
-                        Topics = article.Topics,
-                        Destinations = article.Destinations,
-                        PostId = article.PostId,
-                        Post = pa.Post
-                    }
-                ).Where(a => a.Id == id).Select(a => a);
+                    SelectArticleWithPost)
+                .GroupJoin(_likes.AsQueryable().Where(x => x.UserId == userId && x.ObjectType == "post"),
+                    article => article.PostId,
+                    like => like.ObjectId,
+                    UpdateLike)
+                    .Where(article => article.Id == id).Select(a => a);
             return articles.FirstOrDefault();
         }
 

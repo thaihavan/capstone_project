@@ -87,11 +87,21 @@ namespace PostService.Controllers
             return Ok(article);
         }
 
+        [AllowAnonymous]
         [HttpGet("full")]
         public IActionResult GetArticleInfoById([FromQuery] string id)
         {
-            var article = _articleService.GetArticleInfoById(id);
-
+            Article article = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                var identity = User.Identity as ClaimsIdentity;
+                var userId = identity.FindFirst("user_id").Value;
+                article = _articleService.GetArticleInfoById(id, userId);
+            }
+            else
+            {
+                article = _articleService.GetArticleInfoById(id, String.Empty);
+            }          
             return Ok(article);
         }
 

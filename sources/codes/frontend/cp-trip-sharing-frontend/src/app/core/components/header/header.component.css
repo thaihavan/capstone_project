@@ -129,7 +129,7 @@ a:hover{
   color: white;
 }
 
-.title-notification{
+.title-notification, .title-message-notification{
   padding: 10px;
   line-height: 15px;
   text-align: center;

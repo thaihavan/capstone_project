@@ -10,7 +10,7 @@ namespace PostService.Services.Interfaces
     {
         IEnumerable<Article> GetAllArticleInfo();
 
-        Article GetArticleInfoById(string id);
+        Article GetArticleInfoById(string id, string userId);
 
         IEnumerable<Article> GetAllArticleByUser(string userId);
 

@@ -40,9 +40,9 @@ namespace PostService.Services
             return _articleRepository.GetAllArticleInfo();
         }
 
-        public Article GetArticleInfoById(string id)
+        public Article GetArticleInfoById(string id, string userId)
         {
-            return _articleRepository.GetArticleInfoById(id);
+            return _articleRepository.GetArticleInfoById(id,userId);
         }
 
         public Article GetById(string id)
