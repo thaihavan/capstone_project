@@ -52,6 +52,9 @@ button:focus {
   font-size: 24px;
 }
 
+/* .article-short-description {
+} */
+
 .name-author, .card-title{
   letter-spacing: 0;
   font-style: normal;

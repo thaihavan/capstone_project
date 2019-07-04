@@ -1,12 +1,12 @@
 <div class="mb-5">
-  <ng-container [ngSwitch]="typeArticle">
-    <ng-container *ngSwitchCase="'virtual-trips'">
+  <ng-container [ngSwitch]="listType">
+    <ng-container *ngSwitchCase="'virtual-trip'">
       <div class="virtual-trips">
         <mat-card>
           <mat-card-header class="bg-header text-white">
-                <img class="ml-3" mat-card-avatar src="{{article.post.author.profileImage}}" />
-                <mat-card-title>{{article.post.author.displayName}}</mat-card-title>
-                <mat-card-subtitle class="text-white">{{article.post.pubDate | date }}</mat-card-subtitle>
+                <img class="ml-3" mat-card-avatar src="{{post.post.author.profileImage}}" />
+                <mat-card-title>{{post.post.author.displayName}}</mat-card-title>
+                <mat-card-subtitle class="text-white">{{post.post.pubDate | date }}</mat-card-subtitle>
                 <mat-card-subtitle class="text-white">6 mục</mat-card-subtitle>
             <div class="d-flex justify-content-between">
               <div class="btn-interact">
@@ -47,12 +47,12 @@
     <ng-container *ngSwitchDefault>
       <mat-card class="example-card">
         <mat-card-header class=" post-header">
-          <img mat-card-avatar src="{{article.post.author.profileImage}}" />
-          <mat-card-title (click)="gotoPersionalPage(article.post.author.id)">{{article.post.author.displayName}}</mat-card-title>
-          <mat-card-subtitle>{{article.post.pubDate}}</mat-card-subtitle>
+          <img mat-card-avatar src="{{post.post.author.profileImage}}" />
+          <mat-card-title (click)="gotoPersionalPage(post.post.author.id)">{{post.post.author.displayName}}</mat-card-title>
+          <mat-card-subtitle>{{post.post.pubDate}}</mat-card-subtitle>
           <div class="btn-interact">
             <div *ngIf="checkUser" [class]="follow ? 'icon-followed':'icon-unfollow'">
-              <button (click)="followPerson(article.post.author.id)" mat-icon-button>
+              <button (click)="followPerson(post.post.author.id)" mat-icon-button>
                 <mat-icon>person_add</mat-icon>
               </button>
             </div>
@@ -61,7 +61,7 @@
             </button>
             <mat-menu #menu="matMenu">
               <button
-                (click)="bookmarkPost(article.post.id,article.post.title,article.post.coverImage,article.post.postType)"
+                (click)="bookmarkPost(post.post.id, post.post.title, post.post.coverImage, post.post.postType)"
                 [class]="bookmark ? 'mat-menu-item icon-bookmark':'mat-menu-item icon-unbookmark'" mat-menu-item>
                 <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
                 <span>Lưu</span>
@@ -78,30 +78,31 @@
           </div>
         </mat-card-header>
         <mat-card-title>
-          <a class="card-link" href="bai-viet/{{article.id}}">
-            <h5 class="card-title">{{article.post.title}}</h5>
+          <a class="card-link" href="bai-viet/{{post.id}}">
+            <h5 class="card-title">{{post.post.title}}</h5>
           </a>
         </mat-card-title>
-        <div *ngIf="article.post.coverImage" class="card-body-image">
-          <img mat-card-image src="{{article.post.coverImage}}" alt="">
+        <div *ngIf="post.post.coverImage" class="card-body-image">
+          <img mat-card-image src="{{post.post.coverImage}}" alt="">
         </div>
         <mat-card-content>
-          <p>
-            {{article.post.content.substr(3,300)}}
-          </p>
+          <div class="article-short-description">
+            <p>{{getShortDescription(post.post.content)}}</p>
+          </div>
+          
         </mat-card-content>
         <div>
           <mat-chip-list>
-            <mat-chip *ngFor="let chip of article.destinations">{{chip}}</mat-chip>
+            <mat-chip *ngFor="let chip of post.destinations">{{chip}}</mat-chip>
           </mat-chip-list>
         </div>
         <div class="d-flex justify-content-between ">
-          <mat-card-subtitle>{{article.post.likeCount}} thích</mat-card-subtitle>
-          <mat-card-subtitle>{{article.post.commentCount}} bình luận</mat-card-subtitle>
+          <mat-card-subtitle>{{post.post.likeCount}} thích</mat-card-subtitle>
+          <mat-card-subtitle>{{post.post.commentCount}} bình luận</mat-card-subtitle>
         </div>
         <mat-card-actions>
           <div class="d-flex justify-content-between">
-            <div [class]="article.post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(article.post.liked)">
+            <div [class]="post.post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(post.post.liked)">
               <button mat-button>
                 <mat-icon>thumb_up_alt</mat-icon>
                 <span>Thích</span>
