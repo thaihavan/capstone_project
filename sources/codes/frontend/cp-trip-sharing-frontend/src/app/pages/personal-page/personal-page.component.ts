@@ -142,7 +142,6 @@ export class PersonalPageComponent implements OnInit {
 
   showFollowingUser() {
     this.userService.getAllFollowing(this.userId).subscribe((result: any) => {
-      console.log(result + 'abc');
       this.listUser = result;
       this.openDialogFollow('Danh sách những người đang theo dõi', this.listUser);
     }, (err: HttpErrorResponse) => {
@@ -152,7 +151,6 @@ export class PersonalPageComponent implements OnInit {
 
   showFolowerUser() {
     this.userService.getAllFollower(this.userId).subscribe((result: any) => {
-      console.log(result);
       this.listUser = result;
       this.openDialogFollow('Danh sách những người theo dõi', this.listUser);
     }, (err: HttpErrorResponse) => {
@@ -180,6 +178,7 @@ export class PersonalPageComponent implements OnInit {
   }
 
   openDialogMessageConfirm() {
+    const user = JSON.parse(localStorage.getItem('User'));
     const dialogRef = this.dialog.open(MessagePopupComponent, {
       width: '380px',
       height: '200px',
@@ -190,6 +189,6 @@ export class PersonalPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Chặn người dùng thành công!';
-    instance.message.url = '/user/' + this.userId + '/danh-sach-chan';
+    instance.message.url = '/user/' + user.id + '/danh-sach-chan';
   }
 }

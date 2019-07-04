@@ -11,6 +11,8 @@ export class ListFollowComponent implements OnInit {
   listUser: User[];
   listUser2: any[] = [];
   listUser3: any[] = [];
+  follow: boolean;
+  followed: boolean;
   searchUserName: any;
   constructor() { }
 

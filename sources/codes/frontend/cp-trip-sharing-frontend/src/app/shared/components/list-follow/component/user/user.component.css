@@ -5,11 +5,12 @@
     clear: both;
     border-bottom: 1px solid gainsboro;
     padding: 10px;
+    position: relative;
 }
 
 .avatar{
-    width: 63px;
-    height: 60px;
+    width: 59px;
+    height: 57px;
     border-radius: 100%;
     margin-top: 11px;
     margin-left: 5px;
@@ -60,8 +61,21 @@
 
 .icon-remove{
     position: absolute;
-    display: inherit;
-    left: 90%;
-    margin-top: -95px;
+    right: 0%;
+    margin-top: -86px;
 
 }
+
+.btn-follow{
+    position: absolute;
+    right: 0%;
+    margin-top: -80px;
+    font-size: 13px;
+    line-height: 1.6;
+    border: 1px solid gray;
+    background-color: white;
+    border-radius: 6px;
+    padding: 4px;
+    cursor: pointer;
+    width: 140px;
+  }
