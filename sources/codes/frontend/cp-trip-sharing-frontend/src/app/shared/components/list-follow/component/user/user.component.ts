@@ -14,13 +14,18 @@ export class UserComponent implements OnInit {
   @Input() user: any;
   @Input() checkBlocked: boolean;
   gender: string;
+  showAddress = true;
+  imgAvatar = '';
   constructor(private userService: UserService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    if (this.user.gender === true) {
-      this.gender = 'Nam';
+    if (this.user.avatar == null) {
+      this.imgAvatar = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
     } else {
-      this.gender = 'Nữ';
+      this.imgAvatar = this.user.avatar;
+    }
+    if (this.user.address === '') {
+      this.user.address = 'Việt Nam';
     }
   }
 
@@ -36,6 +41,7 @@ export class UserComponent implements OnInit {
   }
 
   openDialogMessageConfirm() {
+    const user = JSON.parse(localStorage.getItem('User'));
     const dialogRef = this.dialog.open(MessagePopupComponent, {
       width: '380px',
       height: '200px',
@@ -46,7 +52,10 @@ export class UserComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Đã bỏ chặn người dùng thành công!';
-    instance.message.url = '/user/' + this.user.Id + '/danh-sach-chan';
+    instance.message.url = '/user/' + user.id + '/danh-sach-chan';
   }
 
+  gotoPersionalPage(authorId: any) {
+    window.location.href = '/user/' + authorId;
+  }
 }

@@ -64,19 +64,19 @@
                 <span>Contribution point <i>{{user.ContributionPoint}}</i></span>
               </a>
             </div>
-            <div class="card-person-infor">
+            <div [hidden]="showDOB" class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
                 <span>Ngày sinh: <i>{{user.Dob | date: 'dd-MM-yyyy'}}</i></span>
               </a>
             </div>
-            <div class="card-person-infor">
+            <div [hidden]="showGender" class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
                 <span>Giới tính: <i>{{gender}}</i></span>
               </a>
             </div>
-            <div class="card-person-infor">
+            <div [hidden]="showAddress" class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
                 <span>Địa chỉ: <i>{{user.Address}}</i></span>
@@ -85,13 +85,13 @@
             <div class="card-person-infor">
               <a (click)="showFolowerUser()" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span><i>{{user.FollowerCount}}</i> người theo dõi</span>
+                <span><i>{{user.FollowerCount}}</i> người đang theo dõi bạn</span>
               </a>
             </div>
             <div class="card-person-infor">
               <a (click)="showFollowingUser()" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span><i>{{user.FollowingCount}}</i> người đang theo dõi</span>
+                <span><i>Bạn đang theo dõi {{user.FollowingCount}}</i> người</span>
               </a>
             </div>
             <div class="card-person-infor">

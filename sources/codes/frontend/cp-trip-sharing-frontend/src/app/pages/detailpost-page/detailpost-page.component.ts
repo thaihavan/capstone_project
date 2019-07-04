@@ -34,6 +34,7 @@ export class DetailpostPageComponent implements OnInit {
   followed = false;
   listPostIdBookMark: string[] = [];
   listUserIdFollowing: string[] = [];
+  listLocation: string[] = [];
   isScrollTopShow = false;
   topPosToStartShowing = 300;
   @HostListener('window:scroll') checkScroll() {
@@ -74,9 +75,16 @@ export class DetailpostPageComponent implements OnInit {
     this.postService.getArticleById(articleId).subscribe((data: any) => {
       this.article = data;
       this.post = data.post;
+      if (this.post.coverImage != null) {
+        this.coverImage = this.post.coverImage;
+      }
+      this.listLocation = data.destinations;
       this.authorId = this.post.author.id;
-      this.coverImg = this.post.author.profileImage;
+      if (this.post.author.profileImage != null) {
+        this.coverImg = this.post.author.profileImage;
+      }
       this.displayName = this.post.author.displayName;
+      console.log(this.article);
       this.getCommentByPostId(this.post.id);
       this.checkBookMark(this.post.id);
       this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));

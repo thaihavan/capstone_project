@@ -25,7 +25,9 @@ export class PersonalPageComponent implements OnInit {
   activeLinkIndex = 0;
   userId: string;
   listUser: User[] = [];
-
+  showDOB = false;
+  showGender = false;
+  showAddress = false;
   isDisplayNav = true;
 
   constructor(private router: Router, private userService: UserService, public dialog: MatDialog,
@@ -79,21 +81,33 @@ export class PersonalPageComponent implements OnInit {
     this.userService.getUserById(userId).subscribe((data: any) => {
       console.log(data);
       this.user.ContributionPoint = data.contributionPoint;
-      this.user.Dob = data.dob;
+      if (data.dob != null) {
+        this.user.Dob = data.dob;
+      } else {
+        this.showDOB = true;
+      }
       this.user.DisplayName = data.displayName;
       this.user.FirstName = data.firstName;
-      this.user.Gender = data.gender;
+      if (data.gender != null) {
+        this.user.Gender = data.gender;
+        if (this.user.Gender === true) {
+          this.gender = 'Nam';
+        } else {
+          this.gender = 'Nữ';
+        }
+      } else {
+        this.showGender = true;
+      }
       this.user.Interested = data.interested;
       this.user.LastName = data.lastName;
       this.user.UserName = data.userName;
-      this.user.Address = data.address;
+      if (data.address !== '') {
+        this.user.Address = data.address;
+      } else {
+        this.showAddress = true;
+      }
       this.user.FollowerCount = data.followerCount;
       this.user.FollowingCount = data.followingCount;
-      if (this.user.Gender === true) {
-        this.gender = 'Nam';
-      } else {
-        this.gender = 'Nữ';
-      }
       console.log(this.user);
     }, (err: HttpErrorResponse) => {
       console.log(err);
@@ -148,11 +162,8 @@ export class PersonalPageComponent implements OnInit {
 
   openDialogFollow(title: any, listUsers: any) {
     const dialogRef = this.dialog.open(ListFollowComponent, {
-      height: 'auto',
-      width: '60%',
-       position: {
-        top: '10px'
-      },
+      height: '450px',
+      width: '50%'
     });
     const instance = dialogRef.componentInstance;
     instance.listUser = listUsers;
