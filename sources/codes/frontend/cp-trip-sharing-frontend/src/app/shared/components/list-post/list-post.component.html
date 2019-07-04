@@ -29,9 +29,9 @@
   </div>
 </div>
 
-<div *ngIf="posts!=null">
-  <div *ngFor="let article of articleDisplay.items">
-    <app-article [typeArticle]='articleDisplay.typeArticle' [article]="article"></app-article>
+<div *ngIf="articleDisplay.items != null">
+  <div *ngFor="let post of articleDisplay.items">
+    <app-article [listType]='articleDisplay.typeArticle' [post]="post"></app-article>
   </div>
 </div>
 <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" (scrolled)="onScroll()"></div>

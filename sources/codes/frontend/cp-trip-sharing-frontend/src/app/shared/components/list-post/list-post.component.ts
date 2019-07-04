@@ -30,9 +30,6 @@ export class ListPostComponent implements OnInit {
   ];
 
   articleDisplay = new ArticleDisplay();
-  posts: Post[] = [];
-  articles: Article[] = [];
-  virtualTrips: VirtualTrip[] = [];
   topics: Topic[] = [];
   isCheckedDict = {};
   pageIndex: 1;
@@ -60,8 +57,8 @@ export class ListPostComponent implements OnInit {
   }
 
   constructor(private route: ActivatedRoute, private postService: PostService,
-              private userService: UserService,
-              private tripService: VirtualTripService) { }
+    private userService: UserService,
+    private tripService: VirtualTripService) { }
 
   ngOnInit() {
     this.getTopics();
@@ -125,12 +122,6 @@ export class ListPostComponent implements OnInit {
     this.postFilter.topics = [];
   }
 
-  resetListPost(): void {
-    this.posts = [];
-    this.articles = [];
-    this.virtualTrips = [];
-  }
-
   getTopics() {
     this.postService.getAllTopics().subscribe((res: any) => {
       this.topics = res;
@@ -143,6 +134,11 @@ export class ListPostComponent implements OnInit {
     });
   }
 
+  resetListPost() {
+    this.articleDisplay.items = [];
+    this.articleDisplay.typeArticle = null;
+  }
+
   getPosts(): void {
     const postFilter: PostFilter = JSON.parse(JSON.stringify(this.postFilter));
     if (this.postFilter.topics.length === this.topics.length) {
@@ -150,13 +146,10 @@ export class ListPostComponent implements OnInit {
     }
 
     if (this.homeNav || this.personalNav === 'bai-viet') {
-      this.resetListPost();
       this.getArticles(postFilter);
     } else if (this.personalNav === 'chuyen-di') {
-      this.resetListPost();
       this.getArticles(postFilter);
     } else if (this.personalNav === 'tim-ban-dong-hanh') {
-      this.resetListPost();
     }
   }
 
@@ -164,12 +157,9 @@ export class ListPostComponent implements OnInit {
     if (this.homeNav != null) {
       // Call api
       this.postService.getAllArticles(postFilter).subscribe((data: any) => {
+        this.resetListPost();
         this.articleDisplay.typeArticle = 'article';
         this.articleDisplay.items = data;
-        this.articleDisplay.items.forEach(post => {
-          this.posts.push(post.post);
-        });
-        console.log(this.posts);
         this.isLoading = false;
       }, (err: HttpErrorResponse) => {
         console.log(err);
@@ -181,21 +171,15 @@ export class ListPostComponent implements OnInit {
         this.resetListPost();
         this.articleDisplay.typeArticle = 'article';
         this.articleDisplay.items = data;
-        this.articleDisplay.items.forEach(post => {
-          this.posts.push(post.post);
-        });
         this.isLoading = false;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else if (this.personalNav === 'chuyen-di') {
-        this.tripService.getVirtualTrips().subscribe(data => {
+      this.tripService.getVirtualTrips().subscribe(data => {
         this.resetListPost();
-        this.articleDisplay.typeArticle = 'virtual-trips';
+        this.articleDisplay.typeArticle = 'virtual-trip';
         this.articleDisplay.items = data;
-        this.articleDisplay.items.forEach(post => {
-          this.posts.push(post.post);
-        });
         this.isLoading = false;
       });
     }
