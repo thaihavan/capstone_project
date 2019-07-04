@@ -25,7 +25,7 @@
 .icon-block{
   margin-top: -36px;
   z-index: 9999;
-  margin-left: 75%;
+  margin-left: 80%;
   color: white;
 }
 
@@ -38,7 +38,7 @@
 
 .title-location{
   position: absolute;
-  width: 50%;
+  width: 55%;
   bottom: 14%;
   margin: 0 0 0 23%;
 }
@@ -164,17 +164,17 @@ textarea{
 
 .infor-author .btn-follow{
   color: #2196f3;
-  font-size: 13px;
-  line-height: 1.6;
-  display: inline-block;
-  border: 1px solid gray;
-  background-color: white;
-  border-radius: 6px;
-  padding: 4px;
-  cursor: pointer;
-  width: 140px;
-  margin-left: 3%;
-  margin-bottom: 7px;
+    font-size: 13px;
+    line-height: 1.6;
+    display: inline-block;
+    border: 1px solid #2196f3;
+    background-color: white;
+    border-radius: 6px;
+    padding: 4px;
+    cursor: pointer;
+    width: 140px;
+    margin-left: 3%;
+    margin-bottom: 7px;
 }
 
 .btn-follow button{
