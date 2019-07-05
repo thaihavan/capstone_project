@@ -13,7 +13,7 @@ namespace ChatService.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
-        public string UserId { get; set; }
+        public string Id { get; set; }
 
         [BsonElement("display_name")]
         public string DisplayName { get; set; }

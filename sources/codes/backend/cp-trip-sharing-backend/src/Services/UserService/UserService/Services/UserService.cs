@@ -56,7 +56,20 @@ namespace UserServices.Services
 
         public User Update(User user)
         {
-            return _userRepository.Update(user);
+            var result = _userRepository.Update(user);
+            if (result != null)
+            {
+                var author = new Author()
+                {
+                    Id = user.Id.ToString(),
+                    DisplayName = user.DisplayName,
+                    ProfileImage = user.Avatar
+                };
+
+                // Comment it if run in local environment
+                _publishToTopic.PublishAuthor(author);
+            }
+            return result;
         }
     }
 }
