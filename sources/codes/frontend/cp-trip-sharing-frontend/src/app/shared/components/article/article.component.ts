@@ -57,8 +57,10 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('Account'));
-    if (this.user != null && this.user.userId === this.post.post.author.id) {
-      this.checkUser = false;
+    if (this.user == null) {
+      this.userId = 'chua dang nhap';
+    } else {
+      this.userId = this.user.userId;
     }
     this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
     if (this.listUserIdFollowing != null) {
@@ -222,5 +224,9 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   gotoPersionalPage(authorId: any) {
     window.location.href = '/user/' + authorId;
+  }
+
+  romovePost(articleId: any) {
+    console.log(articleId);
   }
 }
