@@ -125,7 +125,26 @@ namespace PostService.Repositories
             Func<Article, IEnumerable<Like>, Article> UpdateLike =
                 ((article, likes) => { article.Post.liked = likes.Count() > 0 ? true : false; return article; });
 
-            var articles = _posts.AsQueryable()
+            IEnumerable<Article> articles;
+
+            if (userId == string.Empty)
+            {
+                articles = _posts.AsQueryable()
+                .Join(
+                    _authors.AsQueryable(),
+                    post => post.AuthorId,
+                    author => author.Id,
+                    SelectPostWithAuthor)
+                .Join(
+                    _articles.AsQueryable(),
+                    post => post.Id,
+                    article => article.PostId,
+                    SelectArticleWithPost)
+                .Where(a => a.Id == id).Select(a => a);
+            }
+            else
+            {
+                articles = _posts.AsQueryable()
                 .Join(
                     _authors.AsQueryable(),
                     post => post.AuthorId,
@@ -141,6 +160,8 @@ namespace PostService.Repositories
                     like => like.ObjectId,
                     UpdateLike)
                     .Where(article => article.Id == id).Select(a => a);
+            }
+
             return articles.FirstOrDefault();
         }
 
