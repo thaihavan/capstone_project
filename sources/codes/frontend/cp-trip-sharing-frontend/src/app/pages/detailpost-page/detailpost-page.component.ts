@@ -232,4 +232,26 @@ export class DetailpostPageComponent implements OnInit {
     instance.message.messageText = 'Chặn người dùng thành công!';
     instance.message.url = '/user/' + user.id + '/danh-sach-chan';
   }
+
+  getShortDescription(htmlContent: any) {
+    // Convert html string to DOM object
+    const div = document.createElement('div');
+    div.innerHTML = htmlContent;
+
+    const pTags = div.getElementsByTagName('p');
+    let pContent = '';
+    for (let i = 0; i < pTags.length; i++) {
+      pContent += pTags.item(i).innerText + ' ';
+
+      if (pContent.length > 250) {
+        break;
+      }
+    }
+
+    if (pContent.length > 250) {
+      pContent = pContent.substr(0, 250) + '...';
+    }
+
+    return pContent;
+  }
 }
