@@ -98,7 +98,7 @@ export class ChatPageComponent implements OnInit {
     for (const c of this.listConversations) {
       if (c.type === 'private') {
         for (const u of c.users) {
-          if (u.userId !== this.user.id) {
+          if (u.id !== this.user.id) {
             c.avatar = u.profileImage;
             c.name = u.displayName;
             break;
@@ -119,7 +119,7 @@ export class ChatPageComponent implements OnInit {
   }
 
   getProfileImage(userId: string) {
-    const user =  this.selectedConversation.users.find(u => u.userId === userId);
+    const user =  this.selectedConversation.users.find(u => u.id === userId);
     if (user) {
       return user.profileImage;
     }

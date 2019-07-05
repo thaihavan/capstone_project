@@ -39,12 +39,30 @@ namespace ChatService.Repositories
 
         public User GetById(string id)
         {
-            return _users.AsQueryable().Where(u => u.UserId == id).FirstOrDefault();
+            return _users.AsQueryable().Where(u => u.Id == id).FirstOrDefault();
+        }
+
+        public User InsertOrUpdate(User user)
+        {
+            var updateDefinition = Builders<User>.Update
+                .Set("display_name", user.DisplayName)
+                .Set("profile_image", user.ProfileImage);
+
+            var result = _users.UpdateOne(
+                a => a.Id == user.Id,
+                updateDefinition,
+                new UpdateOptions { IsUpsert = true });
+
+            if (!result.IsAcknowledged)
+            {
+                return null;
+            }
+            return user;
         }
 
         public User Update(User param)
         {
-            _users.FindOneAndReplace(x => x.UserId.Equals(param.UserId), param);
+            _users.FindOneAndReplace(x => x.Id.Equals(param.Id), param);
             return param;
         }
     }

@@ -8,5 +8,6 @@ namespace ChatService.Repositories.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
+        User InsertOrUpdate(User user);
     }
 }

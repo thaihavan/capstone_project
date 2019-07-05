@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ChatService.Helpers;
 using ChatService.HubConfig;
 using ChatService.Services.Interfaces;
+using ChatService.Services.Processes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -84,6 +85,11 @@ namespace ChatService
                     }
                 };
             });
+
+            // Thread for pulling messages from pubsub
+            UserPullProcess userPullProcess = new UserPullProcess();
+            userPullProcess.Start();
+
             // Configure DI for application services
             services.AddScoped<IChatService, Services.ChatService>();
             services.AddSignalR();

@@ -83,10 +83,10 @@ namespace ChatService.Repositories
                 .Receivers.Join(
                     _users.AsQueryable(),
                     receiver => receiver,
-                    user => user.UserId,
+                    user => user.Id,
                     (receiver, user) => new User
                     {
-                        UserId = user.UserId,
+                        Id = user.Id,
                         DisplayName = user.DisplayName,
                         ProfileImage = user.ProfileImage,
                         Connections = user.Connections

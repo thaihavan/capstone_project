@@ -1,5 +1,5 @@
 export class ChatUser {
-    userId: string;
+    id: string;
     displayName: string;
     profileImage: string;
 }

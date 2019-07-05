@@ -48,7 +48,7 @@ namespace ChatService.HubConfig
             var users = _conversationRepository.GetAllUserInConversation(conversationId);
             foreach (var user in users)
             {
-                if (user.UserId != senderId)
+                if (user.Id != senderId)
                 {
                     Clients.Clients(user.Connections).SendAsync("clientMessageListener", conversationId, messageObject);
                 }
@@ -96,7 +96,7 @@ namespace ChatService.HubConfig
             {
                 _userRepository.Add(new User()
                 {
-                    UserId = userId,
+                    Id = userId,
                     Connections = new List<string>(new string[] { Context.ConnectionId })
                 });
             }

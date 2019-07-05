@@ -28,23 +28,23 @@ namespace ChatService.Utils
             return settings;
         }
 
-        //public static IOptions<PubsubSettings> ReadPubsubSettings()
-        //{
-        //    var configurationBuilder = new ConfigurationBuilder();
-        //    var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
-        //    configurationBuilder.AddJsonFile(path, false);
+        public static IOptions<PubsubSettings> ReadPubsubSettings()
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+            configurationBuilder.AddJsonFile(path, false);
 
-        //    var pubsubSettings = configurationBuilder.Build().GetSection("PubsubSettings");
+            var pubsubSettings = configurationBuilder.Build().GetSection("PubsubSettings");
 
-        //    var settings = Options.Create(new PubsubSettings()
-        //    {
-        //        ProjectId = pubsubSettings.GetSection("ProjectId").Value,
-        //        TopicId = pubsubSettings.GetSection("TopicId").Value,
-        //        SubscriptionId = pubsubSettings.GetSection("SubscriptionId").Value
-        //    });
+            var settings = Options.Create(new PubsubSettings()
+            {
+                ProjectId = pubsubSettings.GetSection("ProjectId").Value,
+                TopicId = pubsubSettings.GetSection("TopicId").Value,
+                SubscriptionId = pubsubSettings.GetSection("SubscriptionId").Value
+            });
 
-        //    return settings;
-        //}
+            return settings;
+        }
 
         //public static IOptions<CloudStorageSettings> ReadCloudStorageSettings()
         //{
