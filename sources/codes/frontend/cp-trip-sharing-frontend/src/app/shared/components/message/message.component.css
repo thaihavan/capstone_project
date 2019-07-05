@@ -29,19 +29,19 @@
 
 .username{
     font-weight: 400;
-    font-size: 17px;
+    font-size: 15px;
     font-family: inherit;
     line-height: 30px;
 }
 
 .content-message{
-    font-size: 13px;
+    font-size: 12px;
     font-family: inherit;
     line-height: 17px;
 }
 
 .time{
-    font-size: 13px;
+    font-size: 12px;
     margin-top: 3px;
     font-family: inherit;
     line-height: 17px;

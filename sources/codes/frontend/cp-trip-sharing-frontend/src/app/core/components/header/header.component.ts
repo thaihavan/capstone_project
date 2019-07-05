@@ -14,8 +14,8 @@ export class HeaderComponent implements OnInit {
   userId: string;
   urlImgavatar = 'https://qph.fs.quoracdn.net/main-qimg-573142324088396d86586adb93f4c8c2';
   numberNotification = 1;
-  checkMessageNotification = true;
-  checkNotification = true;
+  checkMessageNotification = false;
+  checkNotification = false;
   constructor(private globals: Globals, private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -59,10 +59,10 @@ export class HeaderComponent implements OnInit {
   }
 
   viewNotification() {
-    this.checkNotification = false;
+    this.checkNotification = true;
   }
 
   viewMessageNotification() {
-    this.checkMessageNotification = false;
+    this.checkMessageNotification = true;
   }
 }

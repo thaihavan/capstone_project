@@ -14,31 +14,47 @@
             <mat-icon>add_circle</mat-icon>
           </button>
           <mat-menu #menuCreatePost="matMenu">
-              <button class="options" mat-menu-item>
-                <a routerLink="/tao-bai-viet">
-                  <mat-icon color="accent">create</mat-icon>
-                  Tạo bài viết
-                </a> 
-              </button>
-              <button mat-menu-item>
-                <a routerLink="/chuyen-di">
-                  <mat-icon color="accent">place</mat-icon>
-                  Tạo một chuyến đi
-                </a> 
-              </button>
-              <button mat-menu-item>
-                <a routerLink="/tao-bai-tim-ban-dong-hanh">
-                  <mat-icon color="accent">group</mat-icon>
-                  Tìm bạn đồng hành
-                </a> 
-              </button>
+            <button class="options" mat-menu-item>
+              <a routerLink="/tao-bai-viet">
+                <mat-icon color="accent">create</mat-icon>
+                Tạo bài viết
+              </a>
+            </button>
+            <button mat-menu-item>
+              <a routerLink="/chuyen-di">
+                <mat-icon color="accent">place</mat-icon>
+                Tạo một chuyến đi
+              </a>
+            </button>
+            <button mat-menu-item>
+              <a routerLink="/tao-bai-tim-ban-dong-hanh">
+                <mat-icon color="accent">group</mat-icon>
+                Tìm bạn đồng hành
+              </a>
+            </button>
           </mat-menu>
-          <button mat-icon-button matTooltip="Tin nhắn">
-            <mat-icon>message</mat-icon>
+          <button (click)="viewMessageNotification()" mat-icon-button matTooltip="Tin nhắn"
+            [matMenuTriggerFor]="menu_message_notification">
+            <mat-icon matBadge="1" matBadgeHidden="{{checkMessageNotification}}" matBadgePosition="above after"
+              matBadgeColor="accent">message</mat-icon>
           </button>
-          <button mat-icon-button matTooltip="Thông báo">
-            <mat-icon>notifications</mat-icon>
+          <mat-menu #menu_message_notification="matMenu" class="menu">
+            <div class="title-message-notification">Bạn có {{numberNotification}} tin nhắn chưa đọc</div>
+            <div class="item-menu">
+              <app-message></app-message>
+            </div>
+          </mat-menu>
+          <button (click)="viewNotification()" mat-icon-button matTooltip="Thông báo"
+            [matMenuTriggerFor]="menu_new_notification">
+            <mat-icon matBadge="1" matBadgeHidden="{{checkNotification}}" matBadgePosition="above after"
+              matBadgeColor="accent">notifications</mat-icon>
           </button>
+          <mat-menu #menu_new_notification="matMenu" class="menu">
+            <div class="title-message-notification">Bạn có thông báo mới</div>
+            <div class="item-menu">
+              <app-message></app-message>
+            </div>
+          </mat-menu>
           <!-- <a routerLink="/create-article" mat-button>
             <div class="nav-icon-text">
               <i class="fa fa-plus-circle"></i>
@@ -73,7 +89,8 @@
           </a> -->
           <button *ngIf="checkLogin" type="button" class="btn btn-primary" (click)="openDialogLoginForm()">Đăng
             nhập</button>
-          <button *ngIf="checkLogined" class="avatar-image" aria-haspopup="true" class="m-r-5 mat-icon-button" mat-icon-button="" [matMenuTriggerFor]="menuProfile">
+          <button *ngIf="checkLogined" class="avatar-image" aria-haspopup="true" class="m-r-5 mat-icon-button"
+            mat-icon-button="" [matMenuTriggerFor]="menuProfile">
             <span class="mat-button-wrapper"><img alt="user" class="imgavatar" src="{{urlImgavatar}}"></span>
             <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
             <div class="mat-button-focus-overlay"></div>
@@ -90,13 +107,8 @@
           </mat-menu>
           <div class="inputsearch">
             <input type="text" class="form-control" placeholder="Search">
-            <mat-icon
-              class="iconserach"
-              color="success"
-              matBadge="2"
-              matBadgePosition="above after"
-              matBadgeColor="accent">
-                search
+            <mat-icon class="iconserach">
+              search
             </mat-icon>
             <!-- <i class="fa fa-search iconserach"></i> -->
           </div>

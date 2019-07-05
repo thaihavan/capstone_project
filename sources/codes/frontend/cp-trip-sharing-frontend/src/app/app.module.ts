@@ -37,6 +37,7 @@ import { MatInputModule, MatExpansionModule } from '@angular/material';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideSocialLoginConfig } from './social-login-config';
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
+import { MatBadgeModule } from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +74,7 @@ import { CreateFindingCompanionsPostComponent } from './pages/create-finding-com
     MatInputModule,
     MatExpansionModule,
     SocialLoginModule,
+    MatBadgeModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDIPTZ7dpn5_hralWGDP4glqkqAaac6qeA',
       libraries: ['places']

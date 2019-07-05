@@ -144,21 +144,22 @@ a:hover{
 }
 
 .title-notification, .title-message-notification{
-  padding: 10px;
+  padding: 5px;
   line-height: 15px;
   text-align: center;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 400;
 }
 
 .item-menu{
-  width: 280px;
-  height: 80px;
+  width: 250px;
+  height: 73px;
   border-top: 1px solid gainsboro;
 }
 
 .item-menu:hover{
-  background-color: gainsboro;
+  background-color: ghostwhite;
+  cursor: pointer;
 }
 .mat-icon-button:hover {
   background-color: rgba(0, 0, 0, 0.08);
