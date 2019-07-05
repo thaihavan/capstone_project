@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ListFollowComponent } from 'src/app/shared/components/list-follow/list-follow.component';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Title } from '@angular/platform-browser';
+import { SendMessagePopupComponent } from 'src/app/shared/components/send-message-popup/send-message-popup.component';
 
 @Component({
   selector: 'app-personal-page',
@@ -78,6 +79,7 @@ export class PersonalPageComponent implements OnInit {
   getInforUser(userId: string) {
     this.userService.getUserById(userId).subscribe((data: any) => {
       console.log(data);
+      this.user.UserId = data.id;
       this.user.ContributionPoint = data.contributionPoint;
       this.user.Dob = data.dob;
       this.user.DisplayName = data.displayName;
@@ -180,5 +182,18 @@ export class PersonalPageComponent implements OnInit {
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Chặn người dùng thành công!';
     instance.message.url = '/user/' + this.userId + '/danh-sach-chan';
+  }
+
+  openSendMessagePopup() {
+    const dialogRef = this.dialog.open(SendMessagePopupComponent, {
+      width: '40%',
+      height: 'auto',
+      position: {
+        top: '100px'
+      },
+      disableClose: false
+    });
+    const instance = dialogRef.componentInstance;
+    instance.receiver = this.user;
   }
 }

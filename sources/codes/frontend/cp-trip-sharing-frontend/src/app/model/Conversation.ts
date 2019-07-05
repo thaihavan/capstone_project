@@ -3,9 +3,12 @@ import { ChatMessage } from './ChatMessage';
 
 export class Conversation {
     id: string;
+    name: string;
     type: string;
     receivers: string[];
+    lastMessage: string;
 
-    listUsers: ChatUser[];
-    listMessages: ChatMessage[];
+    users: ChatUser[];
+    messages: ChatMessage[];
+    avatar: string;
 }

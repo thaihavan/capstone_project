@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChatService.Models
 {
-    public class MessageDetail
+    public class MessageDetail : Model
     {
         [BsonId]
         [BsonElement("_id")]

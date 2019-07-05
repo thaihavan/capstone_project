@@ -31,6 +31,7 @@ import { BookmarkPostComponent } from './components/bookmark-post/bookmark-post.
 import { ListBookmarksComponent } from './components/list-bookmarks/list-bookmarks.component';
 import { ListUserBlockedComponent } from './components/list-user-blocked/list-user-blocked.component';
 import { MessageComponent } from './components/message/message.component';
+import { SendMessagePopupComponent } from './components/send-message-popup/send-message-popup.component';
 
 const Material = [
   MatButtonModule,
@@ -74,7 +75,8 @@ const Material = [
     ListBookmarksComponent,
     BookmarkPostComponent,
     ListUserBlockedComponent,
-    MessageComponent
+    MessageComponent,
+    SendMessagePopupComponent
   ],
   imports: [
     CommonModule,
@@ -104,7 +106,14 @@ const Material = [
     EditableTextComponent,
     ListUserBlockedComponent,
     MessageComponent,
-    UserComponent
-  ], entryComponents: [StepCreatePostComponent, CropImageComponent, LoadingScreenComponent]
+    UserComponent,
+    SendMessagePopupComponent
+  ],
+  entryComponents: [
+    StepCreatePostComponent,
+    CropImageComponent,
+    LoadingScreenComponent,
+    SendMessagePopupComponent
+  ]
 })
 export class SharedModule { }

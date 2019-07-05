@@ -10,70 +10,91 @@ using MongoDB.Driver;
 using ChatService.DbContext;
 using Microsoft.Extensions.Options;
 using System.Linq;
+using MongoDB.Bson;
+using ChatService.Repositories.Interfaces;
+using ChatService.Repositories;
 
 namespace ChatService.HubConfig
 {
-    //[Authorize(Roles ="member,admin")]
+    //[Authorize(Roles = "member,admin")]
     public class ChatHub : Hub
     {
-        
-        
-        private readonly IMongoCollection<Conversation> _conversations = null;
-        private readonly IMongoCollection<User> _users = null;
+        private readonly IConversationRepository _conversationRepository = null;
+        private readonly IUserRepository _userRepository = null;
+        private readonly IMessageRepository _messageRepository = null;
 
         public ChatHub(IOptions<AppSettings> options)
         {
             var dbContext = new MongoDbContext(options);
-            _conversations = dbContext.Conversations;
-            _users = dbContext.Users;
+            _conversationRepository = new ConversationRepository(options);
+            _userRepository = new UserRepository(options);
+            _messageRepository = new MessageRepository(options);
         }
 
-        public void FindConversation(string fromUser, string toUser, string type)
+        public void SendToConversation(string senderId, string conversationId, string message)
         {
-            var conversation = _conversations.Find(x => x.Receivers.Contains(fromUser)
-            && x.Receivers.Contains(toUser)
-            && type.Equals("private")).FirstOrDefault();
-            Clients.Caller.SendAsync("getConversationId", conversation.Id);
-        }
+            var messageObject = new MessageDetail()
+            {
+                Id = ObjectId.GenerateNewId().ToString(),
+                SeenId = new List<string>(),
+                Content = message,
+                ConversationId = conversationId,
+                FromUserId = senderId,
+                Time = DateTime.Now
+            };
+            _messageRepository.Add(messageObject);
+            _conversationRepository.UpdateLastMessage(conversationId, message);
 
-        public void SendToConversation(string conversationId, string message)
-        {
-
-            var connections = _conversations.AsQueryable().Where(x => x.Id.Equals(conversationId)).FirstOrDefault().Receivers.Join(
-                _users.AsQueryable(),
-                receiver => receiver,
-                user => user.UserId,
-                (receiver, user) => new
+            var users = _conversationRepository.GetAllUserInConversation(conversationId);
+            foreach (var user in users)
+            {
+                if (user.UserId != senderId)
                 {
-                    user.Connections
+                    Clients.Clients(user.Connections).SendAsync("clientMessageListener", conversationId, messageObject);
                 }
-                ).ToList();
-            foreach(var c in connections)
-            {
-                Clients.Clients(c.Connections).SendAsync("sendToConversation", conversationId, message);
             }
-            
         }
 
-        public void AddNewConvesation(string type, List<string> receivers)
+        public void SendToReceiver(string senderId, string receiverId, string message)
         {
-            _conversations.InsertOne(new Conversation()
+            var conversation = new Conversation()
             {
-                Type = type,
-                Receivers = receivers
-            });
+                Id = ObjectId.GenerateNewId().ToString(),
+                Type = "private",
+                Receivers = new List<string>() { senderId, receiverId }
+            };
+
+            var messageObject = new MessageDetail()
+            {
+                Id = ObjectId.GenerateNewId().ToString(),
+                SeenId = new List<string>(),
+                Content = message,
+                ConversationId = conversation.Id,
+                FromUserId = senderId,
+                Time = DateTime.Now
+            };
+
+            // Add conversation to db
+            _conversationRepository.Add(conversation);
+            _messageRepository.Add(messageObject);
+
+            // Send to receiver
+            var receiver = _userRepository.GetById(receiverId);
+            Clients.Clients(receiver.Connections).SendAsync("clientMessageListener", conversation.Id, messageObject);
         }
 
         public override Task OnConnectedAsync()
         {
-
             //var identity = (ClaimsIdentity)Context.User.Identity;
             //var userId = identity.FindFirst("user_id").Value;
-            string userId = "5d0a56496d30b14fdc3be218";
-            User temp = _users.Find(x => x.UserId.Equals(userId)).FirstOrDefault();
-            if (temp == null)
+
+            var httpContext = Context.GetHttpContext();
+            var userId = httpContext.Request.Query["userId"];
+
+            User user = _userRepository.GetById(userId);
+            if (user == null)
             {
-                _users.InsertOne(new User()
+                _userRepository.Add(new User()
                 {
                     UserId = userId,
                     Connections = new List<string>(new string[] { Context.ConnectionId })
@@ -81,8 +102,8 @@ namespace ChatService.HubConfig
             }
             else
             {
-                temp.Connections.Add(Context.ConnectionId);
-                _users.FindOneAndReplace(x => x.UserId.Equals(temp.UserId), temp);
+                user.Connections.Add(Context.ConnectionId);
+                _userRepository.Update(user);
             }
             return base.OnConnectedAsync();
         }
@@ -91,12 +112,14 @@ namespace ChatService.HubConfig
         {
             //var identity = (ClaimsIdentity)Context.User.Identity;
             //var userId = identity.FindFirst("user_id").Value;
-            string userId = "5d0a56496d30b14fdc3be218";
-            User temp = _users.Find(x => x.UserId.Equals(userId)).FirstOrDefault();
-            temp.Connections.Remove(Context.ConnectionId);
-            _users.FindOneAndReplace(x => x.UserId.Equals(temp.UserId), temp);
+            var httpContext = Context.GetHttpContext();
+            var userId = httpContext.Request.Query["userId"];
+
+            User user = _userRepository.GetById(userId);
+            user.Connections.Remove(Context.ConnectionId);
+            _userRepository.Update(user);
+
             return base.OnDisconnectedAsync(exception);
         }
-
     }
 }
