@@ -5,6 +5,7 @@ import { MatChipsModule, MatInputModule, MatFormFieldModule, MatCardModule, MatB
 import { MatRadioModule } from '@angular/material/radio';
 import { AgmCoreModule } from '@agm/core';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { SingleCommentComponent } from './components/single-comment/single-comment.component';
 import { MessagePopupComponent } from './components/message-popup/message-popup.component';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -52,7 +53,8 @@ const Material = [
   MatInputModule,
   MatChipsModule,
   MatRadioModule,
-  MatGridListModule
+  MatGridListModule,
+  MatTooltipModule
 ];
 @NgModule({
   declarations: [

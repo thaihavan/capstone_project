@@ -8,9 +8,38 @@
         <span><img class="logo"
             src="https://static.tacdn.com/img2/langs/vi/branding/rebrand/TA_logo_primary_v2.svg"></span>
         <span class="menu-spacer"></span>
-        <div fxShow="true" fxHide.lt-md class="nav-top">
+        <div fxShow="true" fxHide.lt-md class="nav-top d-flex flex-row align-items-center">
           <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-          <a routerLink="/tao-bai-viet" mat-button>
+          <button mat-icon-button matTooltip="Tạo bài viết" [matMenuTriggerFor]="menuCreatePost">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+          <mat-menu #menuCreatePost="matMenu">
+              <button class="options" mat-menu-item>
+                <a routerLink="/tao-bai-viet">
+                  <mat-icon color="accent">create</mat-icon>
+                  Tạo bài viết
+                </a> 
+              </button>
+              <button mat-menu-item>
+                <a routerLink="/chuyen-di">
+                  <mat-icon color="accent">place</mat-icon>
+                  Tạo một chuyến đi
+                </a> 
+              </button>
+              <button mat-menu-item>
+                <a routerLink="/tao-bai-tim-ban-dong-hanh">
+                  <mat-icon color="accent">group</mat-icon>
+                  Tìm bạn đồng hành
+                </a> 
+              </button>
+          </mat-menu>
+          <button mat-icon-button matTooltip="Tin nhắn">
+            <mat-icon>message</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Thông báo">
+            <mat-icon>notifications</mat-icon>
+          </button>
+          <!-- <a routerLink="/create-article" mat-button>
             <div class="nav-icon-text">
               <i class="fa fa-plus-circle"></i>
               <span>Đăng</span>
@@ -41,19 +70,18 @@
               <span>Thông báo</span>
               <div *ngIf="checkNotification" class="badge">{{numberNotification}}</div>
             </div>
-            <mat-menu #menu_notification="matMenu" class="menu">
-              <div class="title-notification">Bạn có thông báo mới</div>
-              <div class="item-menu">
-                <app-message></app-message>
-              </div>
-            </mat-menu>
-          </a>
+          </a> -->
           <button *ngIf="checkLogin" type="button" class="btn btn-primary" (click)="openDialogLoginForm()">Đăng
             nhập</button>
-          <div *ngIf="checkLogined" class="iconuser" [matMenuTriggerFor]="menu">
+          <button *ngIf="checkLogined" class="avatar-image" aria-haspopup="true" class="m-r-5 mat-icon-button" mat-icon-button="" [matMenuTriggerFor]="menuProfile">
+            <span class="mat-button-wrapper"><img alt="user" class="imgavatar" src="{{urlImgavatar}}"></span>
+            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+            <div class="mat-button-focus-overlay"></div>
+          </button>
+          <!-- <div *ngIf="checkLogined" class="avatar-image" >
             <img class="imgavatar" src="{{urlImgavatar}}" />
-          </div>
-          <mat-menu #menu="matMenu">
+          </div> -->
+          <mat-menu #menuProfile="matMenu">
             <button class="options" (click)="gotoPersonalPage()" mat-menu-item>Trang cá nhân</button>
             <button (click)="gotoBookmarkList()" mat-menu-item>Xem các bài đánh dấu</button>
             <button (click)="gotoBlockedList()" mat-menu-item>Danh sách chặn</button>
@@ -61,7 +89,16 @@
             <button (click)="signOut()" mat-menu-item>Đăng xuất</button>
           </mat-menu>
           <div class="inputsearch">
-            <input type="text" class="form-control" placeholder="Search"><i class="fa fa-search iconserach"></i>
+            <input type="text" class="form-control" placeholder="Search">
+            <mat-icon
+              class="iconserach"
+              color="success"
+              matBadge="2"
+              matBadgePosition="above after"
+              matBadgeColor="accent">
+                search
+            </mat-icon>
+            <!-- <i class="fa fa-search iconserach"></i> -->
           </div>
         </div>
       </mat-toolbar-row>

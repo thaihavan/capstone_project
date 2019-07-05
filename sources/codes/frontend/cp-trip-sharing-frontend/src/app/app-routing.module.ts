@@ -18,6 +18,7 @@ import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-tr
 import { ListBookmarksComponent } from './shared/components/list-bookmarks/list-bookmarks.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
+import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 
 
 const routes: Routes = [
@@ -51,7 +52,8 @@ const routes: Routes = [
       { path: 'dat-lai-mat-khau/:token', component: ResetPasswordPageComponent },
       { path: 'bai-viet/:articleId', component: DetailpostPageComponent },
       { path: 'khoi-tao', component: InitialUserInformationPageComponent },
-      { path: 'tin-nhan', component: ChatPageComponent }
+      { path: 'tin-nhan', component: ChatPageComponent },
+      { path: 'tao-bai-tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
     ]
   },
 ];

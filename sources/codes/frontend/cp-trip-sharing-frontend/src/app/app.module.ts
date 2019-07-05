@@ -18,9 +18,7 @@ import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotp
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatMenuModule } from '@angular/material/menu';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { Globals } from 'src/globals/globalvalues';
-import { InMemoryService } from './core/services/fackeData-service/inMemory.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
@@ -38,6 +36,7 @@ import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { MatInputModule, MatExpansionModule } from '@angular/material';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideSocialLoginConfig } from './social-login-config';
+import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +57,8 @@ import { provideSocialLoginConfig } from './social-login-config';
     VirtualTripsPageComponent,
     DialogCreateTripComponent,
     DestinationTripComponent,
-    ChatPageComponent
+    ChatPageComponent,
+    CreateFindingCompanionsPostComponent
   ],
   imports: [
     MatMenuModule,

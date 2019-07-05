@@ -1,0 +1,121 @@
+.content-create{
+    position: relative;
+  }
+  .dialog-step {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: darkgray;
+    opacity: 0.4;
+  }
+  .cover-image {
+    height: 30vw;
+    background-size: cover;
+    position: relative;
+    background: linear-gradient(#f1f1f1, transparent),
+      linear-gradient(90deg, skyblue, transparent),
+      linear-gradient(-90deg, coral, transparent);
+    background-blend-mode: screen;
+  }
+  .editImage{
+    position: absolute;
+    top:20px;
+    margin-left: 10%;
+    z-index: 9999;
+    background: #3f51b5;
+    color: white;
+  }
+  button:focus {
+    outline: none;
+    outline: none !important;
+  }
+  .set-bg-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-size: cover;
+  }
+  .upload-image .mat-icon:hover {
+    cursor: pointer;
+    color: #3f51b5 !important;
+  }
+  .set-bg-image img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  .upload-image {
+    position: absolute;
+    width: 50%;
+    margin-top: 10%;
+    margin-left: 30%;
+  }
+  .upload-image button {
+    border: 0;
+    outline: 0;
+    width: 67px;
+    height: 67px;
+    float: left;
+    margin-right: 20px;
+    position: relative;
+  }
+  
+  input[type="file"] {
+    position: absolute;
+    /* top: 0;
+    right: 0; */
+    left: 0;
+    bottom: 0;
+    /* width: 100%; */
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .sub-upload-image {
+    margin-left: 8rem !important;
+  }
+  .title-input {
+    position: absolute;
+    bottom: 20px;
+    width: 80%;
+    margin-left: 10%;
+  }
+  .title-input input {
+    height: 55px !important;
+  }
+  .create-post-body {
+    width: 80%;
+    margin: auto;
+    margin-top: 30px;
+  }
+  .upload-image .mat-icon {
+    height: 30px !important;
+    width: 55px !important;
+    font-size: 55px !important;
+  }
+  .clear{
+    clear: both;
+  }
+  :host ::ng-deep .ck-editor__editable_inline {
+    min-height: 500px;
+    border: 1px solid var(--ck-color-toolbar-border);
+  }
+  .btnCreate{
+    margin-bottom: 30px;
+    float: right;
+    margin-right: 0px;
+    margin-top: 10px;
+  }
+  .clear{
+    clear: both;
+  }
