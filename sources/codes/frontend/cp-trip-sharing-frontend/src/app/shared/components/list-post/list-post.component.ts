@@ -57,8 +57,8 @@ export class ListPostComponent implements OnInit {
   }
 
   constructor(private route: ActivatedRoute, private postService: PostService,
-    private userService: UserService,
-    private tripService: VirtualTripService) { }
+              private userService: UserService,
+              private tripService: VirtualTripService) { }
 
   ngOnInit() {
     this.getTopics();
@@ -164,24 +164,26 @@ export class ListPostComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
-    } else if (this.personalNav === 'bai-viet') {
-      // Call api
-      const account = JSON.parse(localStorage.getItem('Account'));
-      this.postService.getAllArticlesByUserId(account.userId, postFilter).subscribe((data: any) => {
-        this.resetListPost();
-        this.articleDisplay.typeArticle = 'article';
-        this.articleDisplay.items = data;
-        this.isLoading = false;
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
-    } else if (this.personalNav === 'chuyen-di') {
-      this.tripService.getVirtualTrips().subscribe(data => {
-        this.resetListPost();
-        this.articleDisplay.typeArticle = 'virtual-trip';
-        this.articleDisplay.items = data;
-        this.isLoading = false;
-      });
+    } else if (this.personalNav != null) {
+      if (this.personalNav === 'bai-viet') {
+        // Call api
+        const userId = this.getUserIdFromUrl();
+        this.postService.getAllArticlesByUserId(userId, postFilter).subscribe((data: any) => {
+          this.resetListPost();
+          this.articleDisplay.typeArticle = 'article';
+          this.articleDisplay.items = data;
+          this.isLoading = false;
+        }, (err: HttpErrorResponse) => {
+          console.log(err);
+        });
+      } else if (this.personalNav === 'chuyen-di') {
+        this.tripService.getVirtualTrips().subscribe(data => {
+          this.resetListPost();
+          this.articleDisplay.typeArticle = 'virtual-trip';
+          this.articleDisplay.items = data;
+          this.isLoading = false;
+        });
+      }
     }
   }
 
@@ -196,5 +198,11 @@ export class ListPostComponent implements OnInit {
       left: 0,
       behavior: 'smooth'
     });
+  }
+
+  getUserIdFromUrl() {
+    const url = window.location.href;
+    const arr = url.split('/');
+    return arr.length > 5 ? arr[4] : '';
   }
 }
