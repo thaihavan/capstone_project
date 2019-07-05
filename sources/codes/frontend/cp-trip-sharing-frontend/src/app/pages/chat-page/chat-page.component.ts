@@ -4,6 +4,11 @@ import { Account } from 'src/app/model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Conversation } from 'src/app/model/Conversation';
 import { Title } from '@angular/platform-browser';
+import { User } from 'src/app/model/User';
+import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { HostGlobal } from 'src/app/core/global-variables';
+import { ChatMessage } from 'src/app/model/ChatMessage';
+import { ChatUser } from 'src/app/model/ChatUser';
 
 @Component({
   selector: 'app-chat-page',
@@ -11,11 +16,16 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./chat-page.component.css']
 })
 export class ChatPageComponent implements OnInit {
+  user: any;
+  hubConnection: HubConnection;
 
   screenHeight: number;
   chatContentHeight: number;
 
   listConversations: Conversation[];
+
+  selectedConversation: Conversation;
+  inputMessage = '';
 
   constructor(private chatService: ChatService, private titleService: Title) {
     this.titleService.setTitle('Tin nhắn');
@@ -23,6 +33,12 @@ export class ChatPageComponent implements OnInit {
 
   ngOnInit() {
     this.setHeight();
+
+    this.user = JSON.parse(localStorage.getItem('User'));
+    this.selectedConversation = new Conversation();
+
+    this.initChatConnection();
+
     this.getAllConversations();
   }
 
@@ -34,13 +50,104 @@ export class ChatPageComponent implements OnInit {
     this.chatContentHeight = this.screenHeight - 56 - 64 - 80 - 2;
   }
 
+  initChatConnection() {
+    // Init connection
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(
+        HostGlobal.HOST_CHAT_SERVICE + '/chat?userId=' + this.user.id,
+        {
+          accessTokenFactory: () => localStorage.getItem('Token')
+        }
+      )
+      .build();
+
+    this.hubConnection
+      .start()
+      .then(() => {
+        console.log('Connection started!');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // Listening
+    this.hubConnection.on('clientMessageListener', (convId: string, message: ChatMessage) => {
+      console.log(message);
+      const conversation = this.listConversations.find(c => c.id === convId);
+      if (conversation && conversation != null) {
+        conversation.messages.push(message);
+      }
+    });
+  }
+
   getAllConversations() {
-    const account: Account = JSON.parse(localStorage.getItem('Account'));
-    this.chatService.getAllConversations('account.id').subscribe((result: Conversation[]) => {
+    this.chatService.getAllConversations(this.user.id).subscribe((result: Conversation[]) => {
+      console.log(result);
       this.listConversations = result;
+      if (this.listConversations && this.listConversations.length > 0) {
+        this.selectedConversation = this.listConversations[0];
+        this.onClickUserItem(this.selectedConversation);
+      }
+      this.setConversationInfo();
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
   }
 
+  setConversationInfo() {
+    for (const c of this.listConversations) {
+      if (c.type === 'private') {
+        for (const u of c.users) {
+          if (u.userId !== this.user.id) {
+            c.avatar = u.profileImage;
+            c.name = u.displayName;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  onClickUserItem(conv: Conversation) {
+    this.selectedConversation = conv;
+    this.chatService.getAllMessages(conv.id).subscribe((res: ChatMessage[]) => {
+      console.log(res);
+      this.selectedConversation.messages = res;
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
+  }
+
+  getProfileImage(userId: string) {
+    const user =  this.selectedConversation.users.find(u => u.userId === userId);
+    if (user) {
+      return user.profileImage;
+    }
+    return '';
+  }
+
+  sendMessage() {
+    if (this.inputMessage.trim() !== '') {
+      this.hubConnection.invoke(
+        'SendToConversation',
+        this.user.id,
+        this.selectedConversation.id,
+        this.inputMessage)
+        .then(() => {
+          const messageObject = new ChatMessage();
+          messageObject.content = this.inputMessage;
+          messageObject.fromUserId = this.user.id;
+          messageObject.conversationId = this.selectedConversation.id;
+          messageObject.time = new Date();
+          if (!this.selectedConversation.messages || this.selectedConversation.messages == null) {
+            this.selectedConversation.messages = [];
+          }
+          this.selectedConversation.messages.push(messageObject);
+          this.selectedConversation.lastMessage = this.inputMessage;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
 }

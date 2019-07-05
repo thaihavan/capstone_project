@@ -88,6 +88,14 @@ div {
     height: 64px !important;
 }
 
+.chat-user-item:hover {
+    background-color: #2196f3 !important;
+}
+
+.user-item-selected {
+    background-color: #2196f3;
+}
+
 /*mat-card-content*/
 .chat-middle-box {
     border-left: 1px solid rgba(120,130,140,.13);
@@ -116,7 +124,7 @@ div {
     box-sizing: border-box;
     width: 100%;
     margin-bottom: 1rem;
-    padding: 0 2rem;
+    padding: 0 1rem;
     display: flex;
 }
 

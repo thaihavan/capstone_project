@@ -1,0 +1,19 @@
+<div class="send-message-popup">
+  <div class="title-section">
+    <div>
+      <h4>Gửi tin nhắn tới {{receiver.DisplayName}}</h4>
+    </div>
+  </div>
+  <div class="body-section">
+    <div>Nội dung:</div>
+    <div>
+      <textarea rows="4" [(ngModel)]="message"></textarea>
+    </div>
+    <div>
+      {{errorMessage}}
+    </div>
+    <div>
+        <button class="send-button" mat-button (click)="sendMessage()">Gửi</button>
+    </div>
+  </div>
+</div>

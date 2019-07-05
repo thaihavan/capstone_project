@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace ChatService.Models
 {
-    public class Conversation
+    public class Conversation : Model
     {
         [BsonId]
         [BsonElement("_id")]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
+
+        [BsonElement("name")]
+        public string Name { get; set; }
 
         [BsonElement("type")]
         [BsonRepresentation(MongoDB.Bson.BsonType.String)]
@@ -21,8 +24,14 @@ namespace ChatService.Models
         [BsonElement("receiver_list")]
         public List<string> Receivers { get; set; }
 
+        [BsonElement("last_message")]
+        public string LastMessage { get; set; }
+
         [BsonIgnore]
-        public List<string> Messages { get; set; }
+        public List<MessageDetail> Messages { get; set; }
+
+        [BsonIgnore]
+        public List<User> Users { get; set; }
 
     }
 }

@@ -1,0 +1,49 @@
+<div class="content-create">
+  <div class="cover-image">
+      <div *ngIf='isHasImg' class="editImage">
+          <mat-menu #appMenu="matMenu">
+              <button mat-menu-item (click)="removeImage()">
+                  <mat-icon>delete</mat-icon>Xoá ảnh
+              </button>
+              <button mat-menu-item (click)="fileClick()">
+                  <mat-icon>add_photo_alternate</mat-icon>Thay ảnh khác
+              </button>
+          </mat-menu>
+          <button mat-button [matMenuTriggerFor]="appMenu">
+              <mat-icon>settings_applications</mat-icon> Chỉnh sửa hình ảnh
+          </button>
+      </div>
+      <div *ngIf='isHasImg' class="set-bg-image">
+          <img [src]="imgUrl" alt="">
+      </div>
+      <div [hidden]='isHasImg' class="upload-image">
+          <button (click)="fileClick()" mat-icon-button class="">
+              <mat-icon>add_photo_alternate</mat-icon>
+              <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]="3.3/1" [resizeToWidth]="1350"
+                  #uploadImage></app-upload-image>
+          </button>
+          <div>
+              <h4>Thêm hình/video cover bài viết</h4>
+              <p class="sub-upload-image">( Hình ảnh tối ưu: 1350px x 480px. )</p>
+          </div>
+      </div>
+      <div class="clear"></div>
+      <div class="form-group title-input">
+          <label for=""></label>
+          <input  [(ngModel)]="title" type="text" class="form-control" name="" id="" aria-describedby="helpId"
+              placeholder="Nhập tiêu đề bài biết">
+          <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+      </div>
+  </div>
+  <div class="create-post-body">
+      <ckeditor #myEditor [editor]="Editor" [(ngModel)]="content" (ready)="onReady($event)">
+      </ckeditor>
+      <div class="row btnCreate">
+          <button mat-raised-button color="primary">Tạo bài viết</button>
+      </div>
+      <div class="clear"></div>
+  </div>
+  <div class="dialog-step">
+
+  </div>
+</div>

@@ -16,8 +16,9 @@ $cp-trip-sharing-frontend-primary: mat-palette($mat-blue, 500)
 ;
 $cp-trip-sharing-frontend-accent: mat-palette($mat-pink, A200, A100, A400);
 
+$cp-trip-sharing-frontend-success: mat-palette($mat-cyan, 400);
 // The warn palette is optional (defaults to red).
-$cp-trip-sharing-frontend-warn: mat-palette($mat-red);
+$cp-trip-sharing-frontend-warn: mat-palette($mat-cyan, 400);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $cp-trip-sharing-frontend-theme: mat-light-theme($cp-trip-sharing-frontend-primary, $cp-trip-sharing-frontend-accent, $cp-trip-sharing-frontend-warn);

@@ -3,33 +3,34 @@ import { Observable, of } from 'rxjs';
 import { Conversation } from 'src/app/model/Conversation';
 import { ChatMessage } from 'src/app/model/ChatMessage';
 import { HostGlobal } from '../../global-variables';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
 
-  baseUrl = HostGlobal.HOST_CHAT_SERVICE + 'sth';
+  baseUrl = HostGlobal.HOST_CHAT_SERVICE + '/api/chatservice/chat';
 
-  constructor() { }
+  constructor(private http: HttpClient) {
+  }
 
   getAllConversations(userId: string): Observable<Conversation[]> {
-    const fakeConversation1 = new Conversation();
-    fakeConversation1.id = 'id1';
-    fakeConversation1.type = 'non_group';
-    fakeConversation1.receivers = ['user1', 'user2'];
-
-    const fakeConversation2 = new Conversation();
-    fakeConversation2.id = 'id2';
-    fakeConversation2.type = 'non_group';
-    fakeConversation2.receivers = ['user1', 'user3'];
-
-    const fakeList = [fakeConversation1, fakeConversation2];
-
-    return of(fakeList);
+    return this.http.get<Conversation[]>(this.baseUrl + '/conversations?userId=' + userId);
   }
 
   getAllMessages(conversationId: string): Observable<ChatMessage[]> {
-    return null;
+    return this.http.get<ChatMessage[]>(this.baseUrl + '/messages?conversationId=' + conversationId);
+  }
+
+  sendMessage(receiverId: string, message: ChatMessage): Observable<ChatMessage> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.post<ChatMessage>(this.baseUrl + '/message?receiverId=' + receiverId, message, httpOption);
   }
 }

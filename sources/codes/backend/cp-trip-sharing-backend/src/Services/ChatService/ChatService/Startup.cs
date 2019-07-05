@@ -34,14 +34,14 @@ namespace ChatService
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("CorsPolicy",
+            //        builder => builder.WithOrigins("http://trip-sharing.net")
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader()
+            //        .AllowCredentials());
+            //});
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Configure strongly typed settings objects
@@ -101,12 +101,13 @@ namespace ChatService
             {
                 app.UseHsts();
             }
-            
 
-            //app.UseCors(x => x
-            //    .AllowAnyOrigin()
-            //    .AllowAnyMethod()
-            //    .AllowAnyHeader());
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatHub>("/chat");

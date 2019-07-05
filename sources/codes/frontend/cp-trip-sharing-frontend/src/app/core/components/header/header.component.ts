@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   checkLogin: boolean;
   checkLogined: boolean;
   userId: string;
-  urlImgavatar = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
+  urlImgavatar = 'https://qph.fs.quoracdn.net/main-qimg-573142324088396d86586adb93f4c8c2';
   numberNotification = 1;
   checkMessageNotification = true;
   checkNotification = true;

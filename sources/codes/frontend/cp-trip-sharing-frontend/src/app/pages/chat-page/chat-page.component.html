@@ -5,20 +5,20 @@
         <mat-toolbar class="mat-toolbar-single-row">
           <div>
             <span>
-              <img class="img-circle"
-                src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg">
-              <span>Luke Thomson</span>
+              <img class="img-circle" src="{{user.avatar}}">
+              <span>{{user.displayName}}</span>
             </span>
           </div>
         </mat-toolbar>
         <mat-nav-list>
           <div *ngFor="let conv of listConversations">
-            <mat-list-item class="chat-user-item">
-              <img class="mat-list-avatar"
-                src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg">
+            <mat-list-item
+              [ngClass]="{'chat-user-item': true, 'user-item-selected': conv.id == selectedConversation.id}"
+              (click)="onClickUserItem(conv)">
+              <img class="mat-list-avatar" src="{{conv.avatar}}">
               <div class="mat-list-text">
-                <h3 class="mat-line" matline="">Nirav Joshi</h3>
-                <p class="text text-muted mat-line" matline="">Hey, how are you?</p>
+                <h3 class="mat-line" matline="">{{conv.name}}</h3>
+                <p class="text text-muted mat-line" matline="">{{conv.lastMessage}}</p>
               </div>
             </mat-list-item>
           </div>
@@ -35,25 +35,9 @@
             </span>
           </button>
           <span>
-            <img class="img-circle"
-              src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg">
-            Sunil Joshi
+            <img class="img-circle" src="{{selectedConversation.avatar}}">
+            {{selectedConversation.name}}
           </span>
-          <button class="menu-icon mat-icon-button" mat-button [matMenuTriggerFor]="menu">
-            <span class="mat-button-wrapper">
-              <mat-icon>more_vert</mat-icon>
-            </span>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-              <mat-icon>flag</mat-icon>
-              <span>Báo cáo</span>
-            </button>
-            <button (click)="editPost()" mat-menu-item>
-              <mat-icon>edit</mat-icon>
-              <span>Chỉnh sửa</span>
-            </button>
-          </mat-menu>
         </div>
       </mat-toolbar>
 
@@ -62,35 +46,40 @@
         <div class="row">
           <div class="col-lg-9">
             <div class="chat-content-container" [style.height.px]="chatContentHeight">
-              <div class="chat-list odd">
-                <div class="chat-message">
-                  <div class="chat-block">
-                    <span>
-                      <img class="img-circle"
-                        src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg">
-                    </span>
-                    <span class="text text-message">How are you my friend?</span>
+              <div *ngFor="let message of this.selectedConversation.messages">
+                <div *ngIf="user.id != message.fromUserId" class="chat-list odd">
+                  <div class="chat-message">
+                    <div class="chat-block">
+                      <span>
+                        <img class="img-circle"
+                          src="{{getProfileImage(message.fromUserId)}}">
+                      </span>
+                      <span class="text text-message">{{message.content}}</span>
+                    </div>
+                    <span class="chat-date text-muted">{{message.time | date: 'd MMM, y H:mm'}}</span>
                   </div>
-                  <span class="chat-date text-muted">Jan 5, 2016</span>
+                </div>
+                <div *ngIf="user.id == message.fromUserId" class="chat-list even">
+                  <div class="chat-message">
+                    <div class="chat-block bg-light-info">
+                      <span class="text text-message">{{message.content}}</span>
+                    </div>
+                    <span class="chat-date text-muted">{{message.time | date: 'd MMM, y H:mm'}}</span>
+                  </div>
                 </div>
               </div>
-              <div class="chat-list even">
-                <div class="chat-message">
-                  <div class="chat-block bg-light-info">
-                    <span class="text text-message">I am good and what about you?</span>
-                  </div>
-                  <span class="chat-date text-muted">Jan 5, 2016</span>
-                </div>
-              </div>
+
             </div>
             <!-- chat-footer -->
             <mat-card-actions class="chat-footer">
               <div>
                 <mat-form-field>
-                  <input matInput class="input-message" type="text" placeholder="Send message" autocomplete="off">
+                  <input matInput class="input-message" type="text" placeholder="Nhập tin nhắn" 
+                  autocomplete="off" [(ngModel)]="inputMessage">
                 </mat-form-field>
 
-                <button color="primary" class="button-send mat-fab mat-primary">
+                <button color="primary" class="button-send mat-fab mat-primary"
+                (click)="sendMessage()">
                   <span class="mat-button-wrapper">
                     <mat-icon>send</mat-icon>
                   </span>
@@ -103,11 +92,12 @@
             <!-- avatar -->
             <div class="avatar-section">
               <div>
-                <img src="https://wrappixel.com/demos/angular-admin-templates/material-angular/material/assets/images/users/8.jpg" 
-                alt="" class="img-circle-lg">
+                <img
+                  src="{{selectedConversation.avatar}}"
+                  alt="" class="img-circle-lg">
               </div>
               <div>
-                <span class="user-display-name">Jonh Abc</span>
+                <span class="user-display-name">{{selectedConversation.name}}</span>
               </div>
             </div>
             <div class="options-section">
