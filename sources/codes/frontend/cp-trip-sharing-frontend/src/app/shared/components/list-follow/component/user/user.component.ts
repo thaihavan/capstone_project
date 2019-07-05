@@ -23,6 +23,7 @@ export class UserComponent implements OnInit {
   constructor(private userService: UserService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    console.log(this.user);
     const user = JSON.parse(localStorage.getItem('User'));
     if (this.listFollowed === true && user.id !== this.user.id ) {
       this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
