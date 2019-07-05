@@ -138,3 +138,9 @@ button:focus {
 .mat-card-title{
   cursor: pointer;
 }
+
+.icon-more-vert{
+  float: right;
+  right: 0;
+  position: absolute;
+}

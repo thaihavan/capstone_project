@@ -52,7 +52,7 @@ export class DetailpostPageComponent implements OnInit {
     }
   }
   constructor(private postService: PostService, private route: ActivatedRoute,
-              private userService: UserService, private titleService: Title, public dialog: MatDialog) {
+    private userService: UserService, private titleService: Title, public dialog: MatDialog) {
     this.comments = [];
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     this.loadArticleByarticleId(this.articleId);
@@ -89,17 +89,23 @@ export class DetailpostPageComponent implements OnInit {
       console.log(this.article);
       this.getCommentByPostId(this.post.id);
       this.checkBookMark(this.post.id);
-      this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
-      if (this.listUserIdFollowing != null) {
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.listUserIdFollowing.length; i++) {
-          if (this.authorId === this.listUserIdFollowing[i]) {
-            this.followed = true;
-            this.follow = false;
-            break;
-          } else {
-            this.followed = false;
-            this.follow = true;
+      const user = JSON.parse(localStorage.getItem('User'));
+      if (user.id === this.authorId) {
+        this.followed = false;
+        this.follow = false;
+      } else {
+        this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
+        if (this.listUserIdFollowing != null) {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.listUserIdFollowing.length; i++) {
+            if (this.authorId === this.listUserIdFollowing[i]) {
+              this.followed = true;
+              this.follow = false;
+              break;
+            } else {
+              this.followed = false;
+              this.follow = true;
+            }
           }
         }
       }
