@@ -1,8 +1,12 @@
-<mat-card class="example-card">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>{{user.displayName}}</mat-card-title>
-    <mat-card-subtitle>{{user.firstName}} {{user.lastName}}</mat-card-subtitle>
+<div class="user-follow">
+  <div class="avatar">
+    <img src="{{imgAvatar}}">
+  </div>
+  <div class="content">
+    <div (click)="gotoPersionalPage(user.id)" class="display-name">{{user.displayName}}</div>
+    <div class="username">@{{user.userName}}</div>
+    <div class="address"><i class="fa fa-tag"></i><span style="padding-left: 1px;">{{user.address}}</span></div>
+    <div class="number-follow"><span style="padding-right: 1px;">{{user.followingCount}}</span> lượt theo dõi</div>
     <div *ngIf="checkBlocked" class="icon-remove">
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
@@ -14,12 +18,11 @@
         </button>
       </mat-menu>
     </div>
-  </mat-card-header>
-  <mat-card-content>
-    <p>Điểm: {{user.contributionPoint}}</p>
-    <p>Giới tính: {{gender}}</p>
-    <p>Địa chỉ: {{user.address}}</p>
-    <p>{{user.followerCount}} người theo dõi</p>
-    <p>{{user.followingCount}} người đang theo dõi</p>
-  </mat-card-content>
-</mat-card>
+    <button (click)="followPerson(user.id)" *ngIf="follow" class="btn-follow">
+        <i class="fa fa-user-plus"></i> Theo dõi
+      </button>
+      <button (click)="followPerson(user.id)" *ngIf="followed" class="btn-follow">
+        <i class="fa fa-user-plus"></i> Đã theo dõi
+      </button>
+  </div>
+</div>

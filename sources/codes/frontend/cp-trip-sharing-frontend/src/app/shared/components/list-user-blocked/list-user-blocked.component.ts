@@ -24,6 +24,7 @@ export class ListUserBlockedComponent implements OnInit {
     const token = localStorage.getItem('Token');
     this.userService.getAllUserBlockedByUserId(token).subscribe((result: any) => {
       this.listUser = result;
+      this.listUser.forEach(user => console.log(user));
       this.listUser2 = this.listUser;
     }, (error: HttpErrorResponse) => {
       console.log(error);

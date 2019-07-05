@@ -25,6 +25,7 @@ export class BookmarkPostComponent implements OnInit {
   }
 
   removeBookmark(postId: any) {
+    const user = JSON.parse(localStorage.getItem('User'));
     this.listPostIdBookMark = JSON.parse(localStorage.getItem('listPostIdBookmark'));
     const token = localStorage.getItem('Token');
     if (this.listPostIdBookMark != null) {
@@ -32,7 +33,7 @@ export class BookmarkPostComponent implements OnInit {
         const unbookmark = this.listPostIdBookMark.indexOf(postId);
         this.listPostIdBookMark.splice(unbookmark, 1);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-        window.location.href = '/user';
+        window.location.href = '/user/' + user.id + '/da-danh-dau';
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });

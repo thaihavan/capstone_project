@@ -9,6 +9,8 @@ import { Article } from 'src/app/model/Article';
 import { Like } from 'src/app/model/Like';
 import { Bookmark } from 'src/app/model/Bookmark';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -34,6 +36,7 @@ export class DetailpostPageComponent implements OnInit {
   followed = false;
   listPostIdBookMark: string[] = [];
   listUserIdFollowing: string[] = [];
+  listLocation: string[] = [];
   isScrollTopShow = false;
   topPosToStartShowing = 300;
   @HostListener('window:scroll') checkScroll() {
@@ -49,7 +52,7 @@ export class DetailpostPageComponent implements OnInit {
     }
   }
   constructor(private postService: PostService, private route: ActivatedRoute,
-              private userService: UserService, private titleService: Title) {
+              private userService: UserService, private titleService: Title, public dialog: MatDialog) {
     this.comments = [];
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     this.loadArticleByarticleId(this.articleId);
@@ -74,9 +77,16 @@ export class DetailpostPageComponent implements OnInit {
     this.postService.getArticleById(articleId).subscribe((data: any) => {
       this.article = data;
       this.post = data.post;
+      if (this.post.coverImage != null) {
+        this.coverImage = this.post.coverImage;
+      }
+      this.listLocation = data.destinations;
       this.authorId = this.post.author.id;
-      this.coverImg = this.post.author.profileImage;
+      if (this.post.author.profileImage != null) {
+        this.coverImg = this.post.author.profileImage;
+      }
       this.displayName = this.post.author.displayName;
+      console.log(this.article);
       this.getCommentByPostId(this.post.id);
       this.checkBookMark(this.post.id);
       this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
@@ -197,5 +207,51 @@ export class DetailpostPageComponent implements OnInit {
 
   gotoTopPage(el: HTMLElement) {
     el.scrollIntoView();
+  }
+
+  blockUserById(userId: any) {
+    const token = localStorage.getItem('Token');
+    if (token != null) {
+      this.userService.addBlock(userId, token).subscribe((result: any) => {
+        this.openDialogMessageConfirm();
+      });
+    }
+  }
+
+  openDialogMessageConfirm() {
+    const user = JSON.parse(localStorage.getItem('User'));
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '380px',
+      height: '200px',
+      position: {
+        top: '10px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = 'Chặn người dùng thành công!';
+    instance.message.url = '/user/' + user.id + '/danh-sach-chan';
+  }
+
+  getShortDescription(htmlContent: any) {
+    // Convert html string to DOM object
+    const div = document.createElement('div');
+    div.innerHTML = htmlContent;
+
+    const pTags = div.getElementsByTagName('p');
+    let pContent = '';
+    for (let i = 0; i < pTags.length; i++) {
+      pContent += pTags.item(i).innerText + ' ';
+
+      if (pContent.length > 250) {
+        break;
+      }
+    }
+
+    if (pContent.length > 250) {
+      pContent = pContent.substr(0, 250) + '...';
+    }
+
+    return pContent;
   }
 }

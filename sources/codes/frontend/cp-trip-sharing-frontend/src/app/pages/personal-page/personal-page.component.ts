@@ -26,7 +26,9 @@ export class PersonalPageComponent implements OnInit {
   activeLinkIndex = 0;
   userId: string;
   listUser: User[] = [];
-
+  showDOB = false;
+  showGender = false;
+  showAddress = false;
   isDisplayNav = true;
 
   constructor(private router: Router, private userService: UserService, public dialog: MatDialog,
@@ -81,21 +83,33 @@ export class PersonalPageComponent implements OnInit {
       console.log(data);
       this.user.UserId = data.id;
       this.user.ContributionPoint = data.contributionPoint;
-      this.user.Dob = data.dob;
+      if (data.dob != null) {
+        this.user.Dob = data.dob;
+      } else {
+        this.showDOB = true;
+      }
       this.user.DisplayName = data.displayName;
       this.user.FirstName = data.firstName;
-      this.user.Gender = data.gender;
+      if (data.gender != null) {
+        this.user.Gender = data.gender;
+        if (this.user.Gender === true) {
+          this.gender = 'Nam';
+        } else {
+          this.gender = 'Nữ';
+        }
+      } else {
+        this.showGender = true;
+      }
       this.user.Interested = data.interested;
       this.user.LastName = data.lastName;
       this.user.UserName = data.userName;
-      this.user.Address = data.address;
+      if (data.address !== '') {
+        this.user.Address = data.address;
+      } else {
+        this.showAddress = true;
+      }
       this.user.FollowerCount = data.followerCount;
       this.user.FollowingCount = data.followingCount;
-      if (this.user.Gender === true) {
-        this.gender = 'Nam';
-      } else {
-        this.gender = 'Nữ';
-      }
       console.log(this.user);
     }, (err: HttpErrorResponse) => {
       console.log(err);
@@ -130,7 +144,6 @@ export class PersonalPageComponent implements OnInit {
 
   showFollowingUser() {
     this.userService.getAllFollowing(this.userId).subscribe((result: any) => {
-      console.log(result + 'abc');
       this.listUser = result;
       this.openDialogFollow('Danh sách những người đang theo dõi', this.listUser);
     }, (err: HttpErrorResponse) => {
@@ -140,7 +153,6 @@ export class PersonalPageComponent implements OnInit {
 
   showFolowerUser() {
     this.userService.getAllFollower(this.userId).subscribe((result: any) => {
-      console.log(result);
       this.listUser = result;
       this.openDialogFollow('Danh sách những người theo dõi', this.listUser);
     }, (err: HttpErrorResponse) => {
@@ -150,11 +162,8 @@ export class PersonalPageComponent implements OnInit {
 
   openDialogFollow(title: any, listUsers: any) {
     const dialogRef = this.dialog.open(ListFollowComponent, {
-      height: 'auto',
-      width: '60%',
-       position: {
-        top: '10px'
-      },
+      height: '450px',
+      width: '50%'
     });
     const instance = dialogRef.componentInstance;
     instance.listUser = listUsers;
@@ -171,6 +180,7 @@ export class PersonalPageComponent implements OnInit {
   }
 
   openDialogMessageConfirm() {
+    const user = JSON.parse(localStorage.getItem('User'));
     const dialogRef = this.dialog.open(MessagePopupComponent, {
       width: '380px',
       height: '200px',
@@ -181,7 +191,7 @@ export class PersonalPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = 'Chặn người dùng thành công!';
-    instance.message.url = '/user/' + this.userId + '/danh-sach-chan';
+    instance.message.url = '/user/' + user.id + '/danh-sach-chan';
   }
 
   openSendMessagePopup() {
