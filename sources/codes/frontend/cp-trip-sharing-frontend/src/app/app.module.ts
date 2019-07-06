@@ -38,6 +38,7 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideSocialLoginConfig } from './social-login-config';
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 import { MatBadgeModule } from '@angular/material';
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -8,28 +8,44 @@
   </a>
   <div class="line-email"></div>
   <div class="LoginbyEmailForm">
-    <input type="text" name="username" placeholder="Địa chỉ Email " [(ngModel)]="email" required>
-    <input type="password" name="password" placeholder="Nhập mật khẩu " [(ngModel)]="password" required>
-    <div class="row remember-forget">
-      <div class="checkbox col-md-6 col-sm-6">
-        <input type="checkbox" value="" /><span>Ghi nhớ đăng nhập</span>
+    <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+      <div class="form-group">
+        <input type="text" class="form-control" formControlName="email" placeholder="Nhập Email"
+          [ngClass]="{'is-invalid':form.get('email').touched && form.get('email').invalid}" />
+        <div *ngIf="form.get('email').touched && form.get('email').invalid" class="invalid-feedback">
+          <div *ngIf="form.get('email').errors.required">Kiểm tra lại Email của bạn</div>
+          <div *ngIf="form.get('email').errors.email">Kiểm tra lại Email của bạn</div>
+        </div>
       </div>
-      <div class="forget col-md-6 col-sm-6">
-        <a routerLink="/quen-mat-khau" (click)="forgotPassword()">Quên mật khẩu</a>
+      <div class="form-group">
+        <input type="password" class="form-control" formControlName="password" placeholder="Nhập mật khẩu"
+          [ngClass]="{'is-invalid':form.get('password').touched && form.get('password').invalid}" />
+        <div *ngIf="form.get('password').touched && form.get('password').invalid" class="invalid-feedback">
+          <div *ngIf="form.get('password').errors.required">Kiểm tra lại mật khẩu</div>
+          <div *ngIf="form.get('password').errors.minlength">Mật khẩu phải có ít nhất 6 kí tự</div>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-6 col-md-6">
-        <button type="submit" class="btn btn-primary" (click)="loginFunction()">
+      <div class="row remember-forget">
+        <div class="checkbox col-md-6 col-sm-6">
+          <input type="checkbox" value="" /><span>Ghi nhớ đăng nhập</span>
+        </div>
+        <div class="forget col-md-6 col-sm-6">
+          <a routerLink="/quen-mat-khau" (click)="forgotPassword()">Quên mật khẩu</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+          <button type="submit" class="btn btn-primary" (click)="loginFunction()" [disabled]="!form.valid">
             <i class="fa fa-sign-in iconlogin"></i>Đăng nhập
-        </button>
+          </button>
+        </div>
+        <div class="col-xs-6 col-md-6">
+          <button routerLink="/dang-ky" type="submit" class="btn btn-primary" (click)="callRegisterPage()">
+            <i class="fa fa-user-plus iconsignup"></i> Đăng Ký
+          </button>
+        </div>
       </div>
-      <div class="col-xs-6 col-md-6">
-        <button routerLink="/dang-ky" type="submit" class="btn btn-primary" (click)="callRegisterPage()">
-          <i class="fa fa-user-plus iconsignup"></i> Đăng Ký
-        </button>
-      </div>
-    </div>
+    </form>
   </div>
   <h5 class="messageLogin">{{message}}</h5>
 </div>

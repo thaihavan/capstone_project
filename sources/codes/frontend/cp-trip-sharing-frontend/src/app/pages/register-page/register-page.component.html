@@ -1,32 +1,45 @@
 <div class="registerform">
     <div class="form_wrapper">
-        <div class="form_container">
-            <div class="title_container">
-                <h2>Đăng ký</h2>
+        <h2>Đăng Ký</h2>
+        <span class="title">Vui lòng nhập đầy đủ thông tin của bạn vào biểu mẫu dưới đây</span>
+        <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+            <div class="form-group">
+                <label for="email">Email<span class="require"> (*)</span></label>
+                <input type="text" class="form-control" formControlName="email"
+                    [ngClass]="{'is-invalid':form.get('email').touched && form.get('email').invalid}" />
+                <div *ngIf="form.get('email').touched && form.get('email').invalid" class="invalid-feedback">
+                    <div *ngIf="form.get('email').errors.required">Kiểm tra lại Email của bạn</div>
+                    <div *ngIf="form.get('email').errors.email">Kiểm tra lại Email của bạn</div>
+                </div>
             </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
-                <input type="email" name="email" placeholder="Email" [(ngModel)]="email" required />
+            <div class="form-group">
+                <label for="password">Nhập mật khẩu <span class="require"> (*)</span></label>
+                <input type="password" class="form-control" formControlName="password"
+                    [ngClass]="{'is-invalid':form.get('password').touched && form.get('password').invalid}" />
+                <div *ngIf="form.get('password').touched && form.get('password').invalid" class="invalid-feedback">
+                    <div *ngIf="form.get('password').errors.required">Kiểm tra lại mật khẩu</div>
+                    <div *ngIf="form.get('password').errors.minlength">Mật khẩu phải có ít nhất 6 kí tự</div>
+                </div>
             </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-                <input type="password" name="password" placeholder="Nhập password" [(ngModel)]="password" required />
+            <div class="form-group">
+                <label for="password">Nhập lại mật khẩu<span class="require"> (*)</span></label>
+                <input type="password" class="form-control" formControlName="repassword"
+                    [ngClass]="{'is-invalid':form.get('repassword').touched && form.get('repassword').invalid}" />
+                <div *ngIf="form.get('repassword').touched && form.get('repassword').invalid" class="invalid-feedback">
+                    <div *ngIf="form.get('repassword').errors.required">Kiểm tra lại mật khẩu</div>
+                    <div *ngIf="form.get('repassword').errors.minlength">Mật khẩu phải có ít nhất 6 kí tự</div>
+                </div>
             </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-                <input type="password" name="password" placeholder="Nhập lại password" [(ngModel)]="repass" required />
+            <div class="form-check">
+                <input type="checkbox" value="true" class="form-check-input" id="exampleCheck1"
+                    formControlName="checkbox" required>
+                <label class="form-check-label" for="exampleCheck1">Tôi đồng ý với các điều khoản của <a
+                        href="#">TripSharing.com</a></label>
             </div>
-
-            <!-- <div class="input_field radio_option">
-                <input type="radio" name="radiogroup1" id="rd1">
-                <label for="rd1">Nam</label>
-                <input type="radio" name="radiogroup1" id="rd2">
-                <label for="rd2">Nữ</label>
-            </div> -->
-            <div class="input_field checkbox_option">
-                <input type="checkbox" id="cb1">
-                <label for="cb1">Tôi đồng ý quy định của <a href="#">Tripsharing.com.vn</a></label>
+            <div *ngIf="error" class="err-mess"><span>{{message}}</span></div>
+            <div class="form-group">
+                <button class="btn btn-primary" [disabled]="!form.valid">Đăng ký</button>
             </div>
-            <input class="button" type="submit" (click)="callInterestedtopicPage()" value="Register" />
-        </div>
-        <p class="credit">Bạn đã có tài khoản <span target="_blank" (click)="openDialogLoginForm()">Đăng nhập</span></p>
-        <span style="color: red;margin: 0 auto;">{{message}}</span>
+        </form>
     </div>
 </div>
