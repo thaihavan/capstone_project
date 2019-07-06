@@ -148,5 +148,17 @@ namespace PostService.Controllers
 
             return Ok(updatedArticle);
         }
+
+        [Authorize(Roles = "member")]
+        [HttpDelete("remove")]
+        public IActionResult RemoveArticle([FromQuery] string articleId)
+        {
+            _articleService.Delete(articleId);
+            if (_articleService.GetById(articleId) != null)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
     }
 }

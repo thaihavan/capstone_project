@@ -5,6 +5,7 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Title } from '@angular/platform-browser';
 import { Account } from 'src/app/model/Account';
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
@@ -18,10 +19,20 @@ export class LoginPageComponent implements OnInit {
   message: string;
   listUserIdFollowing: string[] = [];
   listPostIdBookMark: string[] = [];
+  form = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5)
+    ])
+  });
   constructor(private titleService: Title,
-    private dialogRef: MatDialogRef<LoginPageComponent>,
-    private userService: UserService,
-    private authService: AuthService) {
+              private dialogRef: MatDialogRef<LoginPageComponent>,
+              private userService: UserService,
+              private authService: AuthService) {
     this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }
@@ -64,8 +75,8 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginFunction() {
-    this.account.Email = this.email;
-    this.account.Password = this.password;
+    this.account.Email = this.form.value.email;
+    this.account.Password = this.form.value.password;
     this.userService.getAccount(this.account).subscribe((acc: any) => {
       localStorage.setItem('Account', JSON.stringify(acc));
       localStorage.setItem('Token', acc.token);
