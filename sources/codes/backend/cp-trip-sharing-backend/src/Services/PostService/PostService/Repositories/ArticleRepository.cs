@@ -37,8 +37,8 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            _articles.DeleteOne(a => a.Id == id);
-
+            var article = _articles.Find(a => a.Id == id).FirstOrDefault();
+            _posts.Find(p => p.Id.Equals(article.PostId)).FirstOrDefault().IsActive = false;
             return true;
         }
 
