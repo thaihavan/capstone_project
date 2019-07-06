@@ -15,6 +15,6 @@ export class MessagePopupComponent implements OnInit {
   }
 
   gotoHomePage() {
-    window.location.href = this.globals.urllocal + this.message.url;
+    window.location.href = this.message.url;
   }
 }

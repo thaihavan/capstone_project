@@ -19,13 +19,13 @@ namespace EmailService.Models
         [BsonElement("to")]
         public string To { get; set; }
 
-        [BsonElement("token")]
-        public string Token { get; set; }
-
         [BsonElement("email_type")]
         public string EmailType { get; set; }
 
         [BsonElement("date")]
         public BsonDateTime Date { get; set; }
+
+        [BsonIgnore]
+        public string Url { get; set; }
     }
 }

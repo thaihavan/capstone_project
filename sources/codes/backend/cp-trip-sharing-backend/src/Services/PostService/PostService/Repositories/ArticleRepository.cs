@@ -300,7 +300,8 @@ namespace PostService.Repositories
                         article => article.PostId,
                         like => like.ObjectId,
                         UpdateLike
-                ).Where(topicFilter.Compile()).Select(a => a);
+                ).Where(topicFilter.Compile()).Select(a => a)
+                .OrderByDescending(a => a.Post.PubDate);
             return articles.ToList();
         }
 
@@ -380,7 +381,8 @@ namespace PostService.Repositories
                         PostId = article.PostId,
                         Post = pa.Post
                     }
-                ).Where(topicFilter.Compile()).Select(a => a);
+                ).Where(topicFilter.Compile()).Select(a => a)
+                .OrderByDescending(a => a.Post.PubDate);
             return articles.ToList();
         }
 
