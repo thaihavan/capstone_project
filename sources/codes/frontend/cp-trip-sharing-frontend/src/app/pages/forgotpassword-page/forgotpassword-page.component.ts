@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
-import { Globals } from 'src/globals/globalvalues';
 import { MatDialog } from '@angular/material';
 import { Account } from 'src/app/model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -23,7 +22,7 @@ export class ForgotpasswordPageComponent implements OnInit {
     ])
   });
   constructor(private dialog: MatDialog, private userService: UserService,
-              public globals: Globals, private titleService: Title) {
+              private titleService: Title) {
     this.acount = new Account();
     this.titleService.setTitle('Quên mật khẩu');
   }

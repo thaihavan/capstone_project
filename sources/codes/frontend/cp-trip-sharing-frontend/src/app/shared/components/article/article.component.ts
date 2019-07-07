@@ -6,7 +6,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IImage } from 'ng-simple-slideshow';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { Bookmark } from 'src/app/model/Bookmark';
-import { Globals } from 'src/globals/globalvalues';
 
 
 @Component({
@@ -49,7 +48,7 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   desTitle = '';
   desNote = '';
   desFormat = '';
-  constructor(private postService: PostService, private userService: UserService, public globals: Globals) {
+  constructor(private postService: PostService, private userService: UserService) {
     this.like = new Like();
     this.bookmarkObject = new Bookmark();
     this.token = localStorage.getItem('Token');
@@ -194,9 +193,9 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   editPost() {
     if (this.listType === 'virtual-trip') {
-      window.location.href = this.globals.urllocal + '/chuyen-di?tripId=' + this.post.id;
+      window.location.href = '/chuyen-di?tripId=' + this.post.id;
     } else {
-      window.location.href = this.globals.urllocal + '/chinh-sua-bai-viet/' + this.post.id;
+      window.location.href = '/chinh-sua-bai-viet/' + this.post.id;
     }
   }
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
-import { Globals } from 'src/globals/globalvalues';
 import { MatDialog } from '@angular/material';
 import { ResetPasswordModel } from 'src/app/model/ResetPasswordModel';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -20,7 +19,7 @@ export class ResetPasswordPageComponent implements OnInit {
   message: string = null;
   resetPasswordModel: ResetPasswordModel;
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private userService: UserService,
-              public globals: Globals, private titleService: Title) {
+              private titleService: Title) {
     this.titleService.setTitle('Đặt lại mật khẩu');
     this.resetPasswordModel = new ResetPasswordModel();
   }
