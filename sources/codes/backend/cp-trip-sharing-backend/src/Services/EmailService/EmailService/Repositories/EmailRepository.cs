@@ -34,6 +34,11 @@ namespace EmailService.Repositories
 
         public Email Add(Email param)
         {
+            var result = _emails.Find(e => e.Id == param.Id).FirstOrDefault();
+            if (result != null)
+            {
+                return null;
+            }
             _emails.InsertOne(param);
             return param;
         }
@@ -51,7 +56,7 @@ namespace EmailService.Repositories
 
         public bool Delete(string id)
         {
-            var filter = Builders<Email>.Filter.Eq(a => a.Id, new BsonObjectId(new ObjectId(id)));
+            var filter = Builders<Email>.Filter.Eq(a => a.Id, id);
             return _emails.DeleteOne(filter).IsAcknowledged;
         }
     }

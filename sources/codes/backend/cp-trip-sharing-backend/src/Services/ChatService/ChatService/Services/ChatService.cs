@@ -46,6 +46,16 @@ namespace ChatService.Services
             return _messageRepository.Add(message);
         }
 
+        public bool AddUserToGroupChat(string conversationId, string userId)
+        {
+            return _conversationRepository.AddUserToGroupChat(conversationId, userId);
+        }
+
+        public Conversation CreateGroupChat(Conversation conversation)
+        {
+            return _conversationRepository.Add(conversation);
+        }
+
         public IEnumerable<MessageDetail> GetByConversationId(string id)
         {
             return _conversationRepository.GetMessageByConversationId(id);

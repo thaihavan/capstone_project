@@ -1,9 +1,12 @@
 ﻿using EmailService.Helpers;
 using EmailService.Models;
+using EmailService.Repositories;
+using EmailService.Repositories.Interfaces;
 using EmailService.Utils;
 using Google.Api;
 using Google.Cloud.PubSub.V1;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,12 +22,14 @@ namespace EmailService.Services.Processes
         private IOptions<PubsubSettings> _pubsubSettings = null;
         private IOptions<AppSettings> _appSettings = null;
         private readonly EmailService _emailService = null;
+        private readonly IEmailRepository _emailRepository = null;
 
         public PullMailProcess()
         {
             _pubsubSettings = ReadAppSettings.ReadPubsubSettings();
             _appSettings = ReadAppSettings.ReadMailSettings();
             _emailService = new EmailService(_appSettings);
+            _emailRepository = new EmailRepository(_appSettings);
         }
 
         public async void StartAsync()
@@ -46,7 +51,14 @@ namespace EmailService.Services.Processes
 
                     // Handle received message. 
                     Email email = JsonConvert.DeserializeObject<Email>(json);
-                    _emailService.SendEmail(email);
+                    email.Id = ObjectId.GenerateNewId().ToString();
+
+                    var result = _emailRepository.Add(email);
+
+                    if (result != null)
+                    {
+                        _emailService.SendEmail(email);
+                    }
                     
                     return acknowledge ? SubscriberClient.Reply.Ack : SubscriberClient.Reply.Nack;
                 });

@@ -9,6 +9,8 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { HostGlobal } from 'src/app/core/global-variables';
 import { ChatMessage } from 'src/app/model/ChatMessage';
 import { ChatUser } from 'src/app/model/ChatUser';
+import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
+import { ImageUpload } from 'src/app/model/ImageUpload';
 
 @Component({
   selector: 'app-chat-page',
@@ -27,7 +29,9 @@ export class ChatPageComponent implements OnInit {
   selectedConversation: Conversation;
   inputMessage = '';
 
-  constructor(private chatService: ChatService, private titleService: Title) {
+  constructor(private chatService: ChatService,
+    private titleService: Title,
+    private uploadImageService: UploadImageService) {
     this.titleService.setTitle('Tin nhắn');
   }
 
@@ -119,7 +123,7 @@ export class ChatPageComponent implements OnInit {
   }
 
   getProfileImage(userId: string) {
-    const user =  this.selectedConversation.users.find(u => u.id === userId);
+    const user = this.selectedConversation.users.find(u => u.id === userId);
     if (user) {
       return user.profileImage;
     }
@@ -149,5 +153,51 @@ export class ChatPageComponent implements OnInit {
           console.log(error);
         });
     }
+  }
+
+  sendImage(imgTag: string) {
+    this.hubConnection.invoke(
+      'SendToConversation',
+      this.user.id,
+      this.selectedConversation.id,
+      imgTag)
+      .then(() => {
+        const messageObject = new ChatMessage();
+        messageObject.content = imgTag;
+        messageObject.fromUserId = this.user.id;
+        messageObject.conversationId = this.selectedConversation.id;
+        messageObject.time = new Date();
+        if (!this.selectedConversation.messages || this.selectedConversation.messages == null) {
+          this.selectedConversation.messages = [];
+        }
+        this.selectedConversation.messages.push(messageObject);
+        this.selectedConversation.lastMessage = '';
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  processImage(imageInput: any) {
+    const imageUpload = new ImageUpload();
+
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      imageUpload.image = reader.result.toString().split(',')[1];
+      imageUpload.type = file.type;
+      console.log(imageUpload);
+
+      this.uploadImageService.uploadImage(imageUpload).subscribe((res: any) => {
+        this.sendImage(`<img src='${res.image}'>`);
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
+      });
+    };
+  }
+
+  isImage(imgTag: string): boolean {
+    return imgTag.startsWith('<img');
   }
 }
