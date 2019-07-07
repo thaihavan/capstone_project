@@ -30,7 +30,7 @@ export class CreatePostPageComponent implements OnInit {
   isHasImg = false;
   isPublic = true;
   title: string;
-  content = '<p>Hello world!</p>';
+  content = '';
   articlereturn: Article;
   articleId: string;
   isUpdate: boolean;

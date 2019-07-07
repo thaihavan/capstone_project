@@ -20,7 +20,7 @@ namespace PostService.Models
         public List<string> Topics { get; set; }
 
         [BsonElement("destinations")]
-        public List<string> Destinations { get; set; }
+        public List<ArticleDestinationItem> Destinations { get; set; }
 
         [BsonElement("post_id")]
         [BsonRepresentation(BsonType.ObjectId)]
