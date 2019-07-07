@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { Account } from 'src/app/model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgotpassword-page',
@@ -13,9 +14,14 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./forgotpassword-page.component.css']
 })
 export class ForgotpasswordPageComponent implements OnInit {
-  email: string;
   acount: Account;
   message: string;
+  form = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ])
+  });
   constructor(private dialog: MatDialog, private userService: UserService,
               public globals: Globals, private titleService: Title) {
     this.acount = new Account();
@@ -25,7 +31,7 @@ export class ForgotpasswordPageComponent implements OnInit {
   ngOnInit() {
   }
   forgotPassword() {
-    this.acount.Email = this.email;
+    this.acount.Email = this.form.value.email;
     this.userService.forgotPassword(this.acount).subscribe((data: any) => {
       this.openDialogMessageConfirm();
     }, (err: HttpErrorResponse) => {

@@ -227,6 +227,10 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   }
 
   romovePost(articleId: any) {
-    console.log(articleId);
+    this.postService.removeArticle(articleId).subscribe((data: any) => {
+      window.location.href = '/trang-chu/de-xuat';
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
   }
 }

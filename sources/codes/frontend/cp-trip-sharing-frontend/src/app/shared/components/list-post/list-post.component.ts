@@ -159,7 +159,11 @@ export class ListPostComponent implements OnInit {
       this.postService.getAllArticles(postFilter).subscribe((data: any) => {
         this.resetListPost();
         this.articleDisplay.typeArticle = 'article';
-        this.articleDisplay.items = data;
+        data.forEach((article: any) => {
+          if (article.post.isActive === true) {
+            this.articleDisplay.items.push(article);
+          }
+        });
         this.isLoading = false;
       }, (err: HttpErrorResponse) => {
         console.log(err);
@@ -171,7 +175,11 @@ export class ListPostComponent implements OnInit {
         this.postService.getAllArticlesByUserId(userId, postFilter).subscribe((data: any) => {
           this.resetListPost();
           this.articleDisplay.typeArticle = 'article';
-          this.articleDisplay.items = data;
+          data.forEach((article: any) => {
+            if (article.post.isActive === true) {
+              this.articleDisplay.items.push(article);
+            }
+          });
           this.isLoading = false;
         }, (err: HttpErrorResponse) => {
           console.log(err);

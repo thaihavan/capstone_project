@@ -8,7 +8,7 @@
   </a>
   <div class="line-email"></div>
   <div class="LoginbyEmailForm">
-    <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+    <form name="form" [formGroup]="form">
       <div class="form-group">
         <input type="text" class="form-control" formControlName="email" placeholder="Nhập Email"
           [ngClass]="{'is-invalid':form.get('email').touched && form.get('email').invalid}" />

@@ -27,11 +27,11 @@ export class RegisterPageComponent implements OnInit {
     ]),
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(6)
+      Validators.minLength(5)
     ]),
     repassword: new FormControl('', [
       Validators.required,
-      Validators.minLength(6)
+      Validators.minLength(5)
     ]),
     checkbox: new FormControl('', [
       Validators.required
