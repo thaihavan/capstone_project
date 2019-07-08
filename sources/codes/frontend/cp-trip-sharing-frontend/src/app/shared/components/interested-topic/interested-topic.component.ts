@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Globals } from 'src/globals/globalvalues';
 import { Topic } from 'src/app/model/Topic';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -17,7 +16,7 @@ export class InterestedTopicComponent implements OnInit {
   @Output() EventTopic: EventEmitter<string[]> = new EventEmitter();
   listselectedTopic: Array<Topic> = [];
 
-  constructor(private globals: Globals, private postService: PostService) { }
+  constructor(private postService: PostService) { }
 
   ngOnInit() {
     this.getAllTopics();
@@ -44,7 +43,7 @@ export class InterestedTopicComponent implements OnInit {
   }
 
   gotoHomepage() {
-    window.location.href = this.globals.urllocal;
+    window.location.href = '';
   }
 
   getAllTopics() {

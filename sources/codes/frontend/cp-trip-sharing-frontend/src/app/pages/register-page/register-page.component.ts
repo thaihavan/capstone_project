@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Account } from 'src/app/model/Account';
-import { Globals } from 'src/globals/globalvalues';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -27,18 +26,18 @@ export class RegisterPageComponent implements OnInit {
     ]),
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(6)
+      Validators.minLength(5)
     ]),
     repassword: new FormControl('', [
       Validators.required,
-      Validators.minLength(6)
+      Validators.minLength(5)
     ]),
     checkbox: new FormControl('', [
       Validators.required
     ])
   });
   constructor(private dialog: MatDialog, private userService: UserService,
-              public globals: Globals, private titleService: Title) {
+              private titleService: Title) {
     this.titleService.setTitle('Đăng ký');
     this.account = new Account();
   }
@@ -53,7 +52,7 @@ export class RegisterPageComponent implements OnInit {
       this.userService.registerAccount(this.account).subscribe((message: any) => {
         this.openDialogMessageConfirm();
         setTimeout(() => {
-          window.location.href = this.globals.urllocal;
+          window.location.href = '';
         }, 5000);
       }, (err: HttpErrorResponse) => {
         this.error = true;

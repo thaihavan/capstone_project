@@ -11,8 +11,8 @@
           <div class="selected-location">
             <mat-chip-list>
               <mat-chip selected color="primary" *ngFor="let location of selectedLocation" [selectable]="selectable"
-                [removable]="removable" (removed)="remove(location)">
-                {{location}}
+                [removable]="removable" (removed)="remove(location.id)">
+                {{location.name}}
                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
               </mat-chip>
             </mat-chip-list>

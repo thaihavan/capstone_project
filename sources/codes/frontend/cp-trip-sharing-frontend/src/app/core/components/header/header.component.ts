@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component';
-import { Globals } from 'src/globals/globalvalues';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +15,7 @@ export class HeaderComponent implements OnInit {
   numberNotification = 1;
   checkMessageNotification = false;
   checkNotification = false;
-  constructor(private globals: Globals, private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
     if (localStorage.getItem('Token') != null) {

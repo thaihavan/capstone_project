@@ -4,7 +4,6 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
-import { Globals } from 'src/globals/globalvalues';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -20,7 +19,6 @@ export class EmailConfirmPageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private userService: UserService,
               private dialog: MatDialog,
-              public globals: Globals,
               private titleService: Title
   ) {
     this.titleService.setTitle('Xác nhận email');
@@ -33,13 +31,13 @@ export class EmailConfirmPageComponent implements OnInit {
       this.openDialogMessageConfirm(this.message);
       setTimeout(() => {
         this.dialog.closeAll();
-        window.location.href = this.globals.urllocal;
+        window.location.href = '';
       }, 5000);
     }, (err: HttpErrorResponse) => {
       this.message = 'Xác nhận email thất bại';
       this.openDialogMessageConfirm(this.message);
       setTimeout(() => {
-        window.location.href = this.globals.urllocal;
+        window.location.href = '';
       }, 5000);
     });
   }

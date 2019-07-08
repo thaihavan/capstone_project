@@ -30,7 +30,7 @@ export class CreatePostPageComponent implements OnInit {
   isHasImg = false;
   isPublic = true;
   title: string;
-  content = '<p>Hello world!</p>';
+  content = '';
   articlereturn: Article;
   articleId: string;
   isUpdate: boolean;
@@ -165,7 +165,9 @@ export class CreatePostPageComponent implements OnInit {
           this.articlereturn.topics = res.topics;
           this.articlereturn.destinations = res.destinations;
           this.postService.updateArticle(this.articlereturn).subscribe(
-            data => { },
+            (data: Article) => {
+              this.articlereturn = data;
+            },
             error => {
               console.log(error);
             },
@@ -175,8 +177,8 @@ export class CreatePostPageComponent implements OnInit {
           );
         } else {
           this.postService.createPost(article).subscribe(
-            (data: any) => {
-              this.articlereturn.post = data.post;
+            (data: Article) => {
+              this.articlereturn = data;
               this.openDialogMessageConfirm('Bạn đã đăng bài thành công');
             },
             error => {
@@ -200,7 +202,7 @@ export class CreatePostPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
-    instance.message.url = '/bai-viet/' + this.articlereturn.post.id;
+    instance.message.url = '/bai-viet/' + this.articlereturn.id;
   }
   createPost() {
     if (this.isUpdate) {

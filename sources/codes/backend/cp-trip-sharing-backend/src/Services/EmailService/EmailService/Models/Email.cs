@@ -11,7 +11,8 @@ namespace EmailService.Models
     {
         [BsonId]
         [BsonElement("_id")]
-        public BsonObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         [BsonElement("subject")]
         public string Subject { get; set; }
@@ -19,13 +20,13 @@ namespace EmailService.Models
         [BsonElement("to")]
         public string To { get; set; }
 
-        [BsonElement("token")]
-        public string Token { get; set; }
-
         [BsonElement("email_type")]
         public string EmailType { get; set; }
 
         [BsonElement("date")]
         public BsonDateTime Date { get; set; }
+
+        [BsonIgnore]
+        public string Url { get; set; }
     }
 }

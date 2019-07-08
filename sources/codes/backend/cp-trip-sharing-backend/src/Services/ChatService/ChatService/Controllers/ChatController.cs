@@ -71,5 +71,36 @@ namespace ChatService.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost("create-group-chat")]
+        [Authorize(Roles = "member")]
+        public IActionResult CreateGroupChat([FromBody] Conversation conversation)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            conversation.LastMessage = "";
+            conversation.GroupAdmin = userId;
+            conversation.Receivers = new List<string>() { userId };
+            conversation.Type = "group";
+
+            var result = _chatService.CreateGroupChat(conversation);
+
+            return Ok(result);
+        }
+
+        [HttpPost("add-user-to-group-chat")]
+        [Authorize(Roles = "member")]
+        public IActionResult AddUserToGroupChat([FromQuery] string conversationId, [FromQuery] string userId)
+        {
+            var result = _chatService.AddUserToGroupChat(conversationId, userId);
+
+            if(!result)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NotificationService.Hub
+namespace NotificationService.Models
 {
-    public class NotificationHub
+    public class Model
     {
     }
 }

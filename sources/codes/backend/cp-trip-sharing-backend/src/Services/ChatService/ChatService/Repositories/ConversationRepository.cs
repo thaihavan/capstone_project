@@ -111,5 +111,14 @@ namespace ChatService.Repositories
 
             return result.IsAcknowledged;
         }
+
+        public bool AddUserToGroupChat(string conversationId, string userId)
+        {
+            var result = _conversations.UpdateOne(
+                Builders<Conversation>.Filter.Eq("_id", conversationId),
+                Builders<Conversation>.Update.Push<string>(c => c.Receivers, userId));
+
+            return result.IsAcknowledged;
+        }
     }
 }

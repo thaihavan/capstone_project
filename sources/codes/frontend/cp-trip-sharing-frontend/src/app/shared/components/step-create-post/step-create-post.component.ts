@@ -6,6 +6,7 @@ import { MatStepper } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreatePostPageComponent } from 'src/app/pages/create-post-page/create-post-page.component';
 import { Topic } from 'src/app/model/Topic';
+import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 @Component({
   selector: 'app-step-create-post',
   templateUrl: './step-create-post.component.html',
@@ -21,7 +22,7 @@ export class StepCreatePostComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isOptional = false;
-  selectedLocation: string[] = [];
+  selectedLocation: ArticleDestinationItem[] = [];
   selectedTopic: string[] = [];
   selectable = true;
   removable = true;
@@ -57,18 +58,11 @@ export class StepCreatePostComponent implements OnInit {
       let addr: object;
       addr = addrObj;
       addrKeys = Object.keys(addrObj);
-      const location: LocationMarker = {
-        longitude: addrObj.lng,
-        latitude: addrObj.lat,
-        formattedAddress: addrObj.formattedAddress,
-        locationId: addrObj.locationId,
-        icon: '',
-        image: '',
-        name: addrObj.name,
-        note: ''
-      };
-      const locaName = addrObj.name;
-      this.selectedLocation.push(locaName);
+
+      const articleDestinationItem = new ArticleDestinationItem();
+      articleDestinationItem.id = addrObj.locationId;
+      articleDestinationItem.name = addrObj.name;
+      this.selectedLocation.push(articleDestinationItem);
       this.fakeinput1 = 'abc';
     });
   }
@@ -83,8 +77,8 @@ export class StepCreatePostComponent implements OnInit {
       }
     });
   }
-  remove(location) {
-    this.selectedLocation = this.selectedLocation.filter(item => item !== location);
+  remove(locationId: string) {
+    this.selectedLocation = this.selectedLocation.filter(item => item.id !== locationId);
     if (this.selectedLocation.length === 0) {
       this.fakeinput1 = '';
     }

@@ -18,7 +18,6 @@ import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotp
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatMenuModule } from '@angular/material/menu';
-import { Globals } from 'src/globals/globalvalues';
 import { HttpClientModule } from '@angular/common/http';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
@@ -88,7 +87,6 @@ import { MatBadgeModule } from '@angular/material';
     CKEditorModule,
   ],
   providers: [
-    Globals,
     {
       provide: AuthServiceConfig,
       useFactory: provideSocialLoginConfig

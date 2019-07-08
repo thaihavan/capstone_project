@@ -94,6 +94,7 @@ namespace IdentityProvider.Services
                     EmailType = "EmailConfirm"
                 };
 
+                // Commment this if run in local
                 _publishToTopic.PublishEmail(mail);
             }
 
@@ -130,6 +131,7 @@ namespace IdentityProvider.Services
                 EmailType = "EmailResetPassword"
             };
 
+            // Commment this if run in local
             _publishToTopic.PublishEmail(mail);
 
             return token;

@@ -27,6 +27,9 @@ namespace ChatService.Models
         [BsonElement("last_message")]
         public string LastMessage { get; set; }
 
+        [BsonElement("group_admin")]
+        public string GroupAdmin { get; set; }
+
         [BsonIgnore]
         public List<MessageDetail> Messages { get; set; }
 
