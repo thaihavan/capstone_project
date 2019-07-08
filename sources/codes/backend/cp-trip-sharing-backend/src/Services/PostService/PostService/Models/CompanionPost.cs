@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace PostService.Models
 {
-    public class Companion : Model
+    public class CompanionPost : Model
     {
         [BsonId]
         [BsonElement("_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
         [BsonElement("post_id")]
@@ -30,7 +31,22 @@ namespace PostService.Models
         [BsonElement("estimated_cost")]
         public double EstimatedCost { get; set; }
 
+        [BsonElement("estimated_cost_items")]
+        public List<string> EstimatedCostItems { get; set; }
+
+        [BsonElement("max_members")]
+        public int MaxMembers { get; set; }
+
+        [BsonElement("min_members")]
+        public int MinMembers { get; set; }
+
+        [BsonElement("expired_date")]
+        public DateTime ExpiredDate { get; set; }
+
         [BsonElement("schedule")]
-        List<Schedule> Schedules { get; set; }
+        public List<ScheduleItem> ScheduleItems { get; set; }
+
+        [BsonIgnore]
+        public Post post { get; set; }
     }
 }

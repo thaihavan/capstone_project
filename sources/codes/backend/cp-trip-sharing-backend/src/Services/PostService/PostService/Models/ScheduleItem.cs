@@ -8,18 +8,15 @@ using System.Threading.Tasks;
 
 namespace PostService.Models
 {
-    public class Schedule
+    public class ScheduleItem
     {
         [BsonElement("day")]
-        public DateTime Day { get; set; }
+        public int Day { get; set; }
 
         [BsonElement("title")]
         public string Title { get; set; }
 
         [BsonElement("content")]
         public string Content { get; set; }
-
-        [BsonElement("destination")]
-        List<Destination> Destinations { get; set; }
     }
 }
