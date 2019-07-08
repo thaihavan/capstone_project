@@ -38,7 +38,8 @@ namespace PostService.Controllers
             {
                 var userId = identity.FindFirst("user_id").Value;
                 articles = _articleService.GetAllArticleInfo(userId);         
-            }else
+            }
+            else
             {
                 articles = _articleService.GetAllArticleInfo();
             }           

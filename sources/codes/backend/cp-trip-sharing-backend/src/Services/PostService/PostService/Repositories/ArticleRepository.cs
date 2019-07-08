@@ -44,7 +44,7 @@ namespace PostService.Repositories
 
         public IEnumerable<Article> GetAll()
         {
-            return _articles.Find(a => true).ToList();
+            return _articles.Find(a => a.Post.IsActive == true).ToList();
         }
 
         public Article GetById(string id)
