@@ -48,5 +48,8 @@ namespace PostService.Models
 
         [BsonIgnore]
         public Post post { get; set; }
+
+        [BsonIgnore]
+        public List<CompanionPostJoinRequest> JoinRequests { get; set; }
     }
 }
