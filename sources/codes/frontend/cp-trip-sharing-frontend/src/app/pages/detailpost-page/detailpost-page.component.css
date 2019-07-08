@@ -8,7 +8,7 @@
 }
 .profile-infor {
   position: absolute;
-  bottom: 0px;
+  bottom: 5px;
   right: 78%;
   z-index: 9999;
   width: 130px;
@@ -33,14 +33,14 @@
   width: 55% !important;
   height: auto;
   margin: 0 auto;
-  margin-top: 0px;
+  margin-top: 5px;
   margin-bottom: 1em;
 }
 
 .title-location{
   position: absolute;
   width: 55%;
-  bottom: 12%;
+  bottom: 15%;
   height: auto;
   margin: 0 0 0 23%;
 }
@@ -58,14 +58,13 @@
 }
 
 .location{
-  padding: 4px 10px 4px 7px;
+  padding: 4px 5px 4px 6px;
   border: 1px solid #fff;
-  border-radius: 3px;
   display: inline;
   font-size: 13px;
   color: white;
   text-transform: uppercase;
-  margin-left: 3px; 
+  margin-left: 3px;
 }
 
 .location :hover{
@@ -145,11 +144,16 @@ textarea{
   color: red !important;
 }
 
+.content-infor{
+  width: 100%;
+  border-bottom: 2px solid gainsboro;
+  padding: 5px 0px 5px 0px;
+}
+
 .infor-author{
   height: auto;
   width: 55%;
   margin: 0 auto;
-  text-align: center;
   padding-left: 10px;
 }
 
@@ -165,11 +169,11 @@ textarea{
 
 .infor-author .time{
   color: #2196f3;
-  font-size: 13px;
+  font-size: 15px;
   display: inline-block;
   margin-left: 3%;
   float: left;
-  margin-top: 9px;
+  margin-top: 8px;
 }
 
 .infor-author .btn-follow{
@@ -181,8 +185,8 @@ textarea{
     background-color: white;
     border-radius: 6px;
     padding: 4px;
+    margin-left: 3%;
     cursor: pointer;
-    float: right;
     width: 120px;
 }
 
@@ -193,25 +197,18 @@ textarea{
 }
 
 .share,.like{
-  margin-right: 4px;
+  margin-right: 10px;
   line-height: 1.6;
   font-size: 13px;
-  background-color: #2196f3;
+  background-color: #23527c;
   color: white;
   display: inline-block;
   float: right;
   border-radius: 5px;
   text-align: center;
-  padding: 5px 4px 4px 4px;
+  margin-top: 7px;
+  padding: 1px 4px 1px 4px;
   cursor: pointer;
-}
-
-.share{
-  width: 80px;
-}
-
-.like{
-  width: 90px;
 }
 
 .clearleft{

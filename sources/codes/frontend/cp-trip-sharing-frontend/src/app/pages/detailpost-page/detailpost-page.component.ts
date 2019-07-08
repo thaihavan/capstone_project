@@ -36,7 +36,7 @@ export class DetailpostPageComponent implements OnInit {
   followed = false;
   listPostIdBookMark: string[] = [];
   listUserIdFollowing: string[] = [];
-  listLocation: string[] = [];
+  listLocation: any[] = [];
   isScrollTopShow = false;
   topPosToStartShowing = 300;
   @HostListener('window:scroll') checkScroll() {

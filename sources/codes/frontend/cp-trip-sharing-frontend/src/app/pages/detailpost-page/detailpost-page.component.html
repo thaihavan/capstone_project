@@ -28,21 +28,23 @@
       <span>{{getShortDescription(post.content)}}</span>
     </div> -->
     <div class="location" *ngFor="let location of listLocation">
-      <i class="fa fa-tag"></i><span> {{location}}</span>
+      <i class="fa fa-tag"></i><span> {{location.name}}</span>
     </div>
   </div>
-  <div class="infor-author">
-    <div class="personal-name"><span>{{displayName}}</span></div>
-    <div class="time">Ngày đăng: {{post.pubDate| date: 'dd-MM-yyyy'}}</div>
-    <button (click)="followPerson(post.author.id)" *ngIf="follow" class="btn-follow">
-      <i class="fa fa-user-plus"></i> Theo dõi
-    </button>
-    <button (click)="followPerson(post.author.id)" *ngIf="followed" class="btn-follow">
-      <i class="fa fa-user-plus"></i> Đã theo dõi
-    </button>
-    <div class="share"><i class="fa fa-share"></i> <span> Chia sẻ </span></div>
-    <div class="like"><i class="fa fa-thumbs-up"></i><span> {{post.likeCount}} lượt thích </span></div>
-    <br class="clearleft" />
+  <div class="content-infor">
+    <div class="infor-author">
+      <div class="personal-name"><span>{{displayName}}</span></div>
+      <div class="time">Ngày đăng: {{post.pubDate| date: 'dd-MM-yyyy'}}</div>
+      <button (click)="followPerson(post.author.id)" *ngIf="follow" class="btn-follow">
+        <i class="fa fa-user-plus"></i> Theo dõi
+      </button>
+      <button (click)="followPerson(post.author.id)" *ngIf="followed" class="btn-follow">
+        <i class="fa fa-user-plus"></i> Đã theo dõi
+      </button>
+      <div class="share"><i class="fa fa-share"></i> <span> Chia sẻ </span></div>
+      <div class="like"><i class="fa fa-thumbs-up"></i><span> {{post.likeCount}} thích </span></div>
+      <br class="clearleft" />
+    </div>
   </div>
 </div>
 <div class="content-post-page">
