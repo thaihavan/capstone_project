@@ -28,7 +28,7 @@ import { Bookmark } from 'src/app/model/Bookmark';
   ],
 })
 export class ArticleComponent implements OnInit, AfterViewInit {
-
+  checkRemoved = false;
   like: Like;
   @Input() post: any;
   @Input() listType: string;
@@ -227,7 +227,7 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   romovePost(articleId: any) {
     this.postService.removeArticle(articleId).subscribe((data: any) => {
-      window.location.href = '/trang-chu/de-xuat';
+      this.checkRemoved = true;
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });

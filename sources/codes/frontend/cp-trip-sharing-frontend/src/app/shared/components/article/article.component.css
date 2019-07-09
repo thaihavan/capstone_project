@@ -144,3 +144,6 @@ button:focus {
   right: 0;
   position: absolute;
 }
+.articlekHidden{
+  position: absolute;
+}

@@ -1,4 +1,4 @@
-<div class="mb-5">
+<div [hidden]="checkRemoved" [class]=" checkRemoved?'articlekHidden':'mb-5'">
   <ng-container [ngSwitch]="listType">
     <ng-container *ngSwitchCase="'virtual-trip'">
       <div class="virtual-trips">
@@ -45,7 +45,7 @@
 
     </ng-container>
     <ng-container *ngSwitchDefault>
-      <mat-card class="example-card">
+      <mat-card [hidden]="checkRemoved" class="example-card">
         <mat-card-header class=" post-header">
           <img mat-card-avatar src="{{post.post.author.profileImage}}" />
           <mat-card-title (click)="gotoPersionalPage(post.post.author.id)">{{post.post.author.displayName}}</mat-card-title>

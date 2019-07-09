@@ -30,19 +30,19 @@
       <span>{{getShortDescription(post.content)}}</span>
     </div> -->
       <div class="location" *ngFor="let location of listLocation">
-        <i class="fa fa-tag"></i><span> {{location.name}}</span>
+        <span><i class="fa fa-tag"></i>{{location.name}}</span>
       </div>
     </div>
   </div>
   <div class="content-infor">
     <div class="infor-author">
-      <div class="personal-name"><span>{{displayName}}</span></div>
-      <div class="time">Ngày đăng: {{post.pubDate| date: 'dd-MM-yyyy'}}</div>
+      <div (click)="gotoPersonalPage(authorId)" class="personal-name"><span>{{displayName}}</span></div>
+      <div class="time">{{post.pubDate| date: 'dd-MM-yyyy'}}</div>
       <button (click)="followPerson(post.author.id)" *ngIf="follow" class="btn-follow">
-        <i class="fa fa-user-plus"></i> Theo dõi
+        <span><i class="fa fa-user-plus"></i>Theo dõi</span>
       </button>
       <button (click)="followPerson(post.author.id)" *ngIf="followed" class="btn-follow">
-        <i class="fa fa-user-plus"></i> Đã theo dõi
+        <span><i class="fa fa-user-plus"></i> Đã theo dõi</span>
       </button>
       <div class="share"><i class="fa fa-share"></i> <span> Chia sẻ </span></div>
       <div class="like"><i class="fa fa-thumbs-up"></i><span> {{post.likeCount}} thích </span></div>

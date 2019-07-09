@@ -260,4 +260,8 @@ export class DetailpostPageComponent implements OnInit {
 
     return pContent;
   }
+
+  gotoPersonalPage(authorId: any) {
+    window.location.href = '/user/' + authorId;
+  }
 }
