@@ -79,7 +79,7 @@ namespace PostService.Controllers
 
         [AllowAnonymous]
         [HttpGet("post/all")]
-        public IActionResult GetAllCompanionPost([FromQuery]string id)
+        public IActionResult GetAllCompanionPost()
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = User.Identity.IsAuthenticated ? identity.FindFirst("user_id").Value : null;
