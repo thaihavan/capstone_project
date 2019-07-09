@@ -6,7 +6,7 @@
           <mat-card-header class="bg-header text-white">
                 <img class="ml-3" mat-card-avatar src="{{post.post.author.profileImage}}" />
                 <mat-card-title>{{post.post.author.displayName}}</mat-card-title>
-                <mat-card-subtitle class="text-white">{{post.post.pubDate | date }}</mat-card-subtitle>
+                <mat-card-subtitle class="text-white">{{post.post.pubDate | customDate}}</mat-card-subtitle>
                 <mat-card-subtitle class="text-white">6 mục</mat-card-subtitle>
             <div class="d-flex justify-content-between">
               <div class="btn-interact">
@@ -49,7 +49,7 @@
         <mat-card-header class=" post-header">
           <img mat-card-avatar src="{{post.post.author.profileImage}}" />
           <mat-card-title (click)="gotoPersionalPage(post.post.author.id)">{{post.post.author.displayName}}</mat-card-title>
-          <mat-card-subtitle>{{post.post.pubDate}}</mat-card-subtitle>
+          <mat-card-subtitle>{{post.post.pubDate | customDate}}</mat-card-subtitle>
           <div class="btn-interact">
             <div [hidden]="userId === post.post.author.id ? true : false " [class]="follow ? 'icon-followed':'icon-unfollow'">
               <button (click)="followPerson(post.post.author.id)" mat-icon-button>
