@@ -36,7 +36,7 @@
           <button (click)="viewMessageNotification()" mat-icon-button matTooltip="Tin nhắn"
             [matMenuTriggerFor]="menu_message_notification">
             <mat-icon matBadge="1" matBadgeHidden="{{checkMessageNotification}}" matBadgePosition="above after"
-              matBadgeColor="accent">message</mat-icon>
+              matBadgeColor="accent">mail</mat-icon>
           </button>
           <mat-menu #menu_message_notification="matMenu" class="menu message-menu">
             <app-message [conversations]="conversations"></app-message>

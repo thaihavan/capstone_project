@@ -36,7 +36,7 @@ export class DetailpostPageComponent implements OnInit {
   followed = false;
   listPostIdBookMark: string[] = [];
   listUserIdFollowing: string[] = [];
-  listLocation: string[] = [];
+  listLocation: any[] = [];
   isScrollTopShow = false;
   topPosToStartShowing = 300;
   @HostListener('window:scroll') checkScroll() {
@@ -259,5 +259,9 @@ export class DetailpostPageComponent implements OnInit {
     }
 
     return pContent;
+  }
+
+  gotoPersonalPage(authorId: any) {
+    window.location.href = '/user/' + authorId;
   }
 }

@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class BookmarkPostComponent implements OnInit {
   @Input() bookmark: any;
   listPostIdBookMark: string[] = [];
+  checkRemoved = false;
   constructor(private userService: UserService) { }
 
   ngOnInit() {
@@ -33,11 +34,10 @@ export class BookmarkPostComponent implements OnInit {
         const unbookmark = this.listPostIdBookMark.indexOf(postId);
         this.listPostIdBookMark.splice(unbookmark, 1);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-        window.location.href = '/user/' + user.id + '/da-danh-dau';
+        this.checkRemoved = true;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
-
     }
 
   }

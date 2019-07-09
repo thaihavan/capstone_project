@@ -9,8 +9,8 @@
 }
 
 .avatar{
-    width: 59px;
-    height: 57px;
+    width: 70px;
+    height: 68px;
     border-radius: 100%;
     margin-top: 11px;
     margin-left: 5px;
@@ -18,9 +18,10 @@
 }
 
 .username{
-    color: gainsboro;
+    color: #767676;
     font-size: 13px;
     line-height: 0.5;
+    font-weight: normal;
 }
 
 .avatar img{
@@ -48,11 +49,13 @@
     font-size: 12px;
     line-height: 16px;
     margin-top: 15px;
+    font-weight: normal;
 }
 
 .number-follow{
     font-size: 12px;
     line-height: 16px;
+    font-weight: normal;
 }
 
 .number-follow span{
@@ -74,9 +77,9 @@
     border: 1px solid gray;
     background-color: white;
     border-radius: 6px;
-    padding: 3px;
     cursor: pointer;
-    width: 114px;
+    width: auto;
+    padding: 3px 5px 3px 5px;
   }
 
   .infor-user{
