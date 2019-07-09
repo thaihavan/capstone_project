@@ -33,6 +33,7 @@ import { ListBookmarksComponent } from './components/list-bookmarks/list-bookmar
 import { ListUserBlockedComponent } from './components/list-user-blocked/list-user-blocked.component';
 import { MessageComponent } from './components/message/message.component';
 import { SendMessagePopupComponent } from './components/send-message-popup/send-message-popup.component';
+import { ListNotificationComponent } from './components/list-notification/list-notification.component';
 
 const Material = [
   MatButtonModule,
@@ -78,7 +79,8 @@ const Material = [
     BookmarkPostComponent,
     ListUserBlockedComponent,
     MessageComponent,
-    SendMessagePopupComponent
+    SendMessagePopupComponent,
+    ListNotificationComponent
   ],
   imports: [
     CommonModule,
@@ -109,7 +111,8 @@ const Material = [
     ListUserBlockedComponent,
     MessageComponent,
     UserComponent,
-    SendMessagePopupComponent
+    SendMessagePopupComponent,
+    ListNotificationComponent
   ],
   entryComponents: [
     StepCreatePostComponent,

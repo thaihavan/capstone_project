@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NotificationService.Models
 {
-    public class User:Model
+    public class User : Model
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

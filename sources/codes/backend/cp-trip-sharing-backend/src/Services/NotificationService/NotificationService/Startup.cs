@@ -15,6 +15,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NotificationService.Helpers;
 using NotificationService.Hubs;
+using NotificationService.Services.Interfaces;
 
 namespace NotificationService
 {
@@ -30,14 +31,6 @@ namespace NotificationService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Configure strongly typed settings objects
@@ -85,13 +78,12 @@ namespace NotificationService
             services.AddSignalR();
 
             // Configure DI for application services
-            //services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<INotificationService, NotificationService.Services.NotificationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors("CorsPolicy");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -100,6 +92,14 @@ namespace NotificationService
             {
                 app.UseHsts();
             }
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
+            app.UseAuthentication();
             app.UseSignalR(routes =>
             {
                 routes.MapHub<NotificationHub>("/notification");

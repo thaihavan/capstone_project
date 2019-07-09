@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
 
 @Component({
   selector: 'app-home-page',
@@ -11,9 +12,10 @@ export class HomePageComponent implements OnInit {
   activeLinkIndex = 0;
 
   navLinks: any[];
-  coverImage = '../../../assets/coverimg.jpg';
+  coverImage = '../../../assets/cover-image.png';
 
-  constructor(private router: Router, private titleService: Title) {
+  constructor(private router: Router,
+              private titleService: Title) {
     this.titleService.setTitle('Trang chủ');
     this.navLinks = [
       {

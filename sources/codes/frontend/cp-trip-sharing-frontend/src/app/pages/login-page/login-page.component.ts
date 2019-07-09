@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { Account } from 'src/app/model/Account';
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
 
 @Component({
   selector: 'app-login-page',
@@ -32,7 +33,8 @@ export class LoginPageComponent implements OnInit {
   constructor(private titleService: Title,
               private dialogRef: MatDialogRef<LoginPageComponent>,
               private userService: UserService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private notifyService: NotifyService) {
     this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }

@@ -40,6 +40,7 @@ namespace ChatService.Repositories
         {
             var conversations = _conversations.AsQueryable()
                 .Where(x => x.Receivers.Contains(id))
+                .OrderByDescending(x => x.LastDate)
                 .ToList();
             conversations.ForEach(c =>
             {
@@ -103,11 +104,13 @@ namespace ChatService.Repositories
             return conversation;
         }
 
-        public bool UpdateLastMessage(string conversationId, string lastMessage)
+        public bool UpdateLastMessage(string conversationId, MessageDetail lastMessage)
         {
             var result = _conversations.UpdateOne(
-                Builders<Conversation>.Filter.Eq("_id", conversationId),
-                Builders<Conversation>.Update.Set("last_message", lastMessage));
+                c => c.Id == conversationId,
+                Builders<Conversation>.Update
+                .Set("last_message", lastMessage.Content)
+                .Set("last_date", lastMessage.Time));
 
             return result.IsAcknowledged;
         }
@@ -115,7 +118,7 @@ namespace ChatService.Repositories
         public bool AddUserToGroupChat(string conversationId, string userId)
         {
             var result = _conversations.UpdateOne(
-                Builders<Conversation>.Filter.Eq("_id", conversationId),
+                c => c.Id == conversationId,
                 Builders<Conversation>.Update.Push<string>(c => c.Receivers, userId));
 
             return result.IsAcknowledged;

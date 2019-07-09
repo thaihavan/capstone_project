@@ -1,15 +1,15 @@
-﻿using ChatService.DbContext;
-using ChatService.Helpers;
-using ChatService.Models;
-using ChatService.Repositories.Interfaces;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using NotificationService.Helpers;
+using NotificationService.Models;
+using NotificationService.Repositories.DbContext;
+using NotificationService.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChatService.Repositories
+namespace NotificationService.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -39,25 +39,7 @@ namespace ChatService.Repositories
 
         public User GetById(string id)
         {
-            return _users.AsQueryable().Where(u => u.Id == id).FirstOrDefault();
-        }
-
-        public User InsertOrUpdate(User user)
-        {
-            var updateDefinition = Builders<User>.Update
-                .Set("display_name", user.DisplayName)
-                .Set("profile_image", user.ProfileImage);
-
-            var result = _users.UpdateOne(
-                a => a.Id == user.Id,
-                updateDefinition,
-                new UpdateOptions { IsUpsert = true });
-
-            if (!result.IsAcknowledged)
-            {
-                return null;
-            }
-            return user;
+            return _users.Find(x => x.Id == id).FirstOrDefault();
         }
 
         public User Update(User param)

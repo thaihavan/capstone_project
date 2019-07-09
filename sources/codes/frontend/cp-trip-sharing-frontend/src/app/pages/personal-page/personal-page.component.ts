@@ -19,7 +19,7 @@ import { SendMessagePopupComponent } from 'src/app/shared/components/send-messag
 export class PersonalPageComponent implements OnInit {
   user: User;
   gender = '';
-  coverImage = '../../../assets/coverimg.jpg';
+  coverImage = '../../../assets/cover-image.png';
   avatar = '../../../assets/img_avatar.png';
   title = 'angular-material-tab-router';
   navLinks: any[];

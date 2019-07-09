@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using NotificationService.Helpers;
 using NotificationService.Models;
+using NotificationService.Repositories;
 using NotificationService.Repositories.DbContext;
+using NotificationService.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,36 +17,40 @@ namespace NotificationService.Hubs
 {
     public class NotificationHub : Hub
     {
-        MongoDbContext _dbContext = null;
-        private readonly IMongoCollection<User> _users = null;
-
+        private readonly IUserRepository _userRepository = null;
+        private readonly INotificationRepository _notificationRepository = null;
 
         public NotificationHub(IOptions<AppSettings> settings)
         {
-            _dbContext = new MongoDbContext(settings);
-            _users = _dbContext.Users;
-
+            _userRepository = new UserRepository(settings);
+            _notificationRepository = new NotificationRepository(settings);
         }
 
-        public void SendNotification(string to, string message)
+        public void SendNotify(Notification notification)
         {
-            
-        }
+            notification.Id = ObjectId.GenerateNewId().ToString();
+            notification.Seen = new List<string>();
+            notification.Date = DateTime.Now;
 
-        public void SendToAll(string toUser, string message)
-        {
-            Clients.All.SendAsync("sendToAll", toUser, message);
+            _notificationRepository.Add(notification);
+
+            var users = _notificationRepository.GetAllReceivers(notification.Id);
+            foreach (var user in users)
+            {
+                Clients.Clients(user.Connections).SendAsync("clientNotificationListener");
+            }
         }
 
         public override Task OnConnectedAsync()
         {
-            var identity = Context.User.Identity as ClaimsIdentity;
-            var userId = identity.FindFirst("user_id").Value;
-            var user = _users.Find(x => x.Id == userId).FirstOrDefault();
+            var httpContext = Context.GetHttpContext();
+            var userId = httpContext.Request.Query["userId"];
+
+            var user = _userRepository.GetById(userId);
 
             if (user == null)
             {
-                _users.InsertOne(new User()
+                _userRepository.Add(new User()
                 {
                     Id = userId,
                     Connections = new List<string>(new string[] { Context.ConnectionId })
@@ -52,7 +59,7 @@ namespace NotificationService.Hubs
             else
             {
                 user.Connections.Add(Context.ConnectionId);
-                _users.FindOneAndReplace(x => x.Id.Equals(user.Id), user);
+                _userRepository.Update(user);
             }
 
             return base.OnConnectedAsync();
@@ -60,13 +67,13 @@ namespace NotificationService.Hubs
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            var identity = Context.User.Identity as ClaimsIdentity;
-            var userId = identity.FindFirst("user_id").Value;
+            var httpContext = Context.GetHttpContext();
+            var userId = httpContext.Request.Query["userId"];
 
-            var user = _users.Find(x => x.Id == userId).FirstOrDefault();
+            var user = _userRepository.GetById(userId);
             user.Connections.Remove(Context.ConnectionId);
 
-            _users.FindOneAndReplace(x => x.Id.Equals(user.Id), user);
+            _userRepository.Update(user);
             return base.OnDisconnectedAsync(exception);
         }
     }

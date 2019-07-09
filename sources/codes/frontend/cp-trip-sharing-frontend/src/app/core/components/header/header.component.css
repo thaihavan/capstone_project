@@ -143,24 +143,6 @@ a:hover{
   color: white;
 }
 
-.title-notification, .title-message-notification{
-  padding: 5px;
-  line-height: 15px;
-  text-align: center;
-  font-size: 15px;
-  font-weight: 400;
-}
-
-.item-menu{
-  width: 250px;
-  height: 73px;
-  border-top: 1px solid gainsboro;
-}
-
-.item-menu:hover{
-  background-color: ghostwhite;
-  cursor: pointer;
-}
 .mat-icon-button:hover {
   background-color: rgba(0, 0, 0, 0.08);
 }
@@ -182,4 +164,16 @@ a:hover {
 }
 a {
   color: black;
+}
+
+::ng-deep .notification-menu {
+  max-width: 480px !important;
+  width: 480px;
+  max-height: calc(100vh - 80px) !important;
+}
+
+::ng-deep .message-menu {
+  max-width: 480px !important;
+  width: 480px;
+  max-height: calc(100vh - 80px) !important;
 }
