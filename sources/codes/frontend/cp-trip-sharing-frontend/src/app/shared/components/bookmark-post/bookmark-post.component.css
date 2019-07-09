@@ -6,6 +6,11 @@
     border-bottom: 1px solid grey;
     padding: 5px;
     display: inline-block;
+    position: relative;
+}
+
+.bookmarkHidden{
+    position: absolute; 
 }
 
 .image-cover{
@@ -31,12 +36,9 @@
     color: gray;
     font-weight: 400;
     font-size: 12px;
+    display: inline-block;
 }
 
-.title-icon-remove {
-   display: inline-block;
-   width: 100%;
-}
 
 .title{
     float: left;
@@ -48,11 +50,8 @@
 }
 
 .icon-remove{
-    float: right;
     padding: 0;
-    margin-top: -3px;
-    width: 9%;
     right: 0px;
-    margin-top: -8px;
+    margin-top: -9px;
     position: absolute;
 }

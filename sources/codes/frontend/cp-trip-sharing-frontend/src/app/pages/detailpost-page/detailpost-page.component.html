@@ -20,15 +20,18 @@
       </button>
     </mat-menu>
   </div>
-  <div class="title-location">
-    <div class="title">
-      <span>{{post.title}}</span>
-    </div>
-    <!-- <div class="short-content">
+  <div class="opacity"></div>
+  <div class="title-top">
+    <div class="title-location">
+      <div class="title">
+        <span>{{post.title}}</span>
+      </div>
+      <!-- <div class="short-content">
       <span>{{getShortDescription(post.content)}}</span>
     </div> -->
-    <div class="location" *ngFor="let location of listLocation">
-      <i class="fa fa-tag"></i><span> {{location.name}}</span>
+      <div class="location" *ngFor="let location of listLocation">
+        <i class="fa fa-tag"></i><span> {{location.name}}</span>
+      </div>
     </div>
   </div>
   <div class="content-infor">

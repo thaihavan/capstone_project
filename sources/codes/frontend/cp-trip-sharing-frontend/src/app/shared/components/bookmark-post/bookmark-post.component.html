@@ -1,22 +1,20 @@
-<div class="bookmark-item">
+<div [hidden]="checkRemoved" [class]=" checkRemoved?'bookmarkHidden':'bookmark-item'">
   <div class="image-cover">
     <img src="{{bookmark.coverImage}}" />
   </div>
   <div class="content">
-    <div class="title-icon-remove">
-      <div class="title"><span>{{bookmark.title}}</span></div>
-      <div class="icon-remove">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-          <mat-icon>more_vert</mat-icon>
+    <div class="title"><span>{{bookmark.title}}</span></div>
+    <div class="icon-remove">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="removeBookmark(bookmark.postId)">
+          <mat-icon>remove</mat-icon>
+          <span>Xóa</span>
         </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="removeBookmark(bookmark.postId)">
-            <mat-icon>remove</mat-icon>
-            <span>Xóa</span>
-          </button>
-        </mat-menu>
-      </div>
+      </mat-menu>
     </div>
-    <span class="category-post">Thể loại: {{bookmark.postType}}</span>
+    <div class="category-post"><span>Thể loại: {{bookmark.postType}}</span></div>
   </div>
 </div>
