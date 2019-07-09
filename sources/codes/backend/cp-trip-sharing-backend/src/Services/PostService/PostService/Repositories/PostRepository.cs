@@ -16,11 +16,13 @@ namespace PostService.Repositories
     {
 
         private readonly IMongoCollection<Post> _posts = null;
+        private readonly IMongoCollection<Comment> _comments = null;
 
         public PostRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
             _posts = dbContext.Posts;
+            _comments = dbContext.Comments;
         }
 
         public Post Add(Post param)
@@ -30,10 +32,13 @@ namespace PostService.Repositories
         }
 
         public bool DecreaseCommentCount(string id)
-        {       
+        {
+            var commentCount =(int) _comments.Count(
+                Builders<Comment>.Filter.Eq(x => x.PostId, id)
+                );
             _posts.FindOneAndUpdate(
-                p => p.Id == id,
-                Builders<Post>.Update.Inc("comment_count",-1)
+                Builders<Post>.Filter.Eq(x => x.Id, id),
+                Builders<Post>.Update.Set(x => x.CommentCount, commentCount)
                 );
             return true;
         }
@@ -68,13 +73,13 @@ namespace PostService.Repositories
         {            
             _posts.FindOneAndUpdate(
                 p => p.Id == id,
-                Builders<Post>.Update.Inc("like_count",1)
+                Builders<Post>.Update.Inc("comment_count",1)
                 );
             return true;
         }
 
         public bool IncreaseLikeCount(string id)
-        {           
+        {
             _posts.FindOneAndUpdate(
                 p => p.Id == id,
                 Builders<Post>.Update.Inc("like_count", 1)

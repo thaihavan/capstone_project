@@ -15,11 +15,13 @@ namespace PostService.Services
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository = null;
+        private readonly IPostRepository _postRepository = null;
         private readonly IOptions<AppSettings> _settings = null;
 
-        public CommentService(ICommentRepository commentRepository, IOptions<AppSettings> settings)
+        public CommentService(ICommentRepository commentRepository, IPostRepository postRepository, IOptions<AppSettings> settings)
         {
             _commentRepository = commentRepository;
+            _postRepository = postRepository;
             _settings = settings;
 
         }
@@ -27,17 +29,21 @@ namespace PostService.Services
         public CommentService(IOptions<AppSettings> settings)
         {
             _commentRepository = new CommentRepository(settings);
+            _postRepository = new PostRepository(settings);
         }
 
         public Comment Add(Comment param)
         {
+            _postRepository.IncreaseCommentCount(param.PostId);
             return _commentRepository.Add(param);
         }
 
-
         public bool Delete(string id)
         {
-            return _commentRepository.Delete(id);
+            var postId=_commentRepository.GetById(id).PostId;
+            _commentRepository.Delete(id);
+            _postRepository.DecreaseCommentCount(postId);
+            return true;
         }
 
         public IEnumerable<Comment> GetCommentByPost(string id)
