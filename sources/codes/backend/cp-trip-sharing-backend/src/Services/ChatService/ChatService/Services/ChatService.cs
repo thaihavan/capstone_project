@@ -32,7 +32,8 @@ namespace ChatService.Services
                     Id = ObjectId.GenerateNewId().ToString(),
                     Type = "private",
                     Receivers = new List<string>() { message.FromUserId, receiverId },
-                    LastMessage = message.Content
+                    LastMessage = message.Content,
+                    LastDate = DateTime.Now
                 };
                 conversation = _conversationRepository.Add(conversation);
                 message.ConversationId = conversation.Id;

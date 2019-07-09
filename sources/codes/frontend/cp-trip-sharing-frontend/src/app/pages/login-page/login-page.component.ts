@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { Account } from 'src/app/model/Account';
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
 
 @Component({
   selector: 'app-login-page',
@@ -32,7 +33,8 @@ export class LoginPageComponent implements OnInit {
   constructor(private titleService: Title,
               private dialogRef: MatDialogRef<LoginPageComponent>,
               private userService: UserService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private notifyService: NotifyService) {
     this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }
@@ -52,9 +54,8 @@ export class LoginPageComponent implements OnInit {
             window.location.href = '/khoi-tao';
           } else {
             localStorage.setItem('User', JSON.stringify(user));
-            this.getFollowings();
-            this.getListPostIdBookmark();
-            window.location.href = '/trang-chu';
+            this.getFollowings(undefined);
+            this.getListPostIdBookmark(this.redirectHomePage);
           }
         });
       }, (error: HttpErrorResponse) => {
@@ -86,9 +87,8 @@ export class LoginPageComponent implements OnInit {
           window.location.href = '/khoi-tao';
         } else {
           localStorage.setItem('User', JSON.stringify(user));
-          this.getFollowings();
-          this.getListPostIdBookmark();
-          window.location.href = '/trang-chu';
+          this.getFollowings(undefined);
+          this.getListPostIdBookmark(this.redirectHomePage);
         }
       });
     }, (err: HttpErrorResponse) => {
@@ -97,27 +97,37 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  getFollowings() {
+  getFollowings(callback: any) {
     const token = localStorage.getItem('Token');
     if (token != null) {
       this.userService.getAllFollowingId(token).subscribe((result: any) => {
         this.listUserIdFollowing = result;
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+        if (callback) {
+          callback();
+        }
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     }
   }
 
-  getListPostIdBookmark() {
+  getListPostIdBookmark(callback: any) {
     const token = localStorage.getItem('Token');
     if (token != null) {
       this.userService.getListPostIdBookmarks(token).subscribe((result: any) => {
         this.listPostIdBookMark = result;
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
+        if (callback) {
+          callback();
+        }
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     }
+  }
+
+  redirectHomePage() {
+    window.location.href = '';
   }
 }

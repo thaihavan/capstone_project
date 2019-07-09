@@ -43,7 +43,7 @@ namespace ChatService.HubConfig
                 Time = DateTime.Now
             };
             _messageRepository.Add(messageObject);
-            _conversationRepository.UpdateLastMessage(conversationId, message);
+            _conversationRepository.UpdateLastMessage(conversationId, messageObject);
 
             var users = _conversationRepository.GetAllUserInConversation(conversationId);
             foreach (var user in users)

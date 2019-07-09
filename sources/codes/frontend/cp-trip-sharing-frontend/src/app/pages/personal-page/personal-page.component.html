@@ -65,37 +65,37 @@
             <div class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span>Contribution point <i>{{user.ContributionPoint}}</i></span>
+                <span>Điểm tích lũy <b>{{user.ContributionPoint}}</b></span>
               </a>
             </div>
             <div [hidden]="showDOB" class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span>Ngày sinh: <i>{{user.Dob | date: 'dd-MM-yyyy'}}</i></span>
+                <span>Ngày sinh: {{user.Dob | date: 'dd-MM-yyyy'}}</span>
               </a>
             </div>
             <div [hidden]="showGender" class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span>Giới tính: <i>{{gender}}</i></span>
+                <span>Giới tính: {{gender}}</span>
               </a>
             </div>
             <div [hidden]="showAddress" class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span>Địa chỉ: <i>{{user.Address}}</i></span>
+                <span>Địa chỉ: {{user.Address}}</span>
               </a>
             </div>
             <div class="card-person-infor">
               <a (click)="showFolowerUser()" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span><i>{{user.FollowerCount}}</i> người đang theo dõi bạn</span>
+                <span><b>{{user.FollowerCount}}</b> người đang theo dõi bạn</span>
               </a>
             </div>
             <div class="card-person-infor">
               <a (click)="showFollowingUser()" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span><i>Bạn đang theo dõi {{user.FollowingCount}}</i> người</span>
+                <span>Bạn đang theo dõi <b>{{user.FollowingCount}}</b> người</span>
               </a>
             </div>
             <div class="card-person-infor">

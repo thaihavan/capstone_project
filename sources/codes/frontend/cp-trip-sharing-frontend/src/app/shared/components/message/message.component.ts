@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Conversation } from 'src/app/model/Conversation';
 
 @Component({
   selector: 'app-message',
@@ -6,10 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit {
-  urlImage = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
-  username = 'Tran Van Phong';
-  subContent = 'Xin chào! Chuyến đi vui vẻ chứ!';
-  time = '9:30';
+  @Input() conversations: Conversation[] = [];
   constructor() { }
 
   ngOnInit() {

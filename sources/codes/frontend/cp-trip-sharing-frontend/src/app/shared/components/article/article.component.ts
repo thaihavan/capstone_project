@@ -6,6 +6,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IImage } from 'ng-simple-slideshow';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { Bookmark } from 'src/app/model/Bookmark';
+import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
+import { Notification } from 'src/app/model/Notification';
+import { NotificationTemplates } from 'src/app/core/globals/NotificationTemplates';
+import { HostGlobal } from 'src/app/core/global-variables';
 
 
 @Component({
@@ -28,7 +32,7 @@ import { Bookmark } from 'src/app/model/Bookmark';
   ],
 })
 export class ArticleComponent implements OnInit, AfterViewInit {
-
+  checkRemoved = false;
   like: Like;
   @Input() post: any;
   @Input() listType: string;
@@ -48,7 +52,9 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   desTitle = '';
   desNote = '';
   desFormat = '';
-  constructor(private postService: PostService, private userService: UserService) {
+  constructor(private postService: PostService,
+              private userService: UserService,
+              private notifyService: NotifyService) {
     this.like = new Like();
     this.bookmarkObject = new Bookmark();
     this.token = localStorage.getItem('Token');
@@ -111,6 +117,9 @@ export class ArticleComponent implements OnInit, AfterViewInit {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         this.post.post.liked = true;
         this.post.post.likeCount += 1;
+
+        // Notify
+        this.sendNotification();
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
@@ -227,9 +236,22 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   romovePost(articleId: any) {
     this.postService.removeArticle(articleId).subscribe((data: any) => {
-      window.location.href = '/trang-chu/de-xuat';
+      this.checkRemoved = true;
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
+  }
+
+  sendNotification() {
+    const user = JSON.parse(localStorage.getItem('User'));
+
+    const notification = new Notification();
+    notification.content = new NotificationTemplates()
+      .getLikePostNotiTemplate(user.displayName, this.post.post.title);
+    notification.displayImage = user.profileImage;
+    notification.receivers = [this.post.post.authorId];
+    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.post.id;
+
+    this.notifyService.sendNotification(notification);
   }
 }

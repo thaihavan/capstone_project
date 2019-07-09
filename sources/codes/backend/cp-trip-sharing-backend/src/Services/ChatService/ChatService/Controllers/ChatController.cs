@@ -38,7 +38,7 @@ namespace ChatService.Controllers
         }
 
         [HttpGet("conversations")]
-        public IActionResult GetAllConversation([FromQuery] string userId)
+        public IActionResult GetAllConversations([FromQuery] string userId)
         {
             var conversations = _chatService.GetByUserId(userId);
             if (conversations != null)

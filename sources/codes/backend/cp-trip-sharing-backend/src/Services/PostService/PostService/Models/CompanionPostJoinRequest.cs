@@ -19,7 +19,7 @@ namespace PostService.Models
         public string UserId { get; set; }
 
         [BsonElement("companion_post_id")]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.ObjectId)] 
         public string CompanionPostId { get; set; }
 
         [BsonElement("date")]

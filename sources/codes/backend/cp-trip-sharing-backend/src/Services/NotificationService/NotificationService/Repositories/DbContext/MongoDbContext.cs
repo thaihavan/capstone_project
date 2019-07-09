@@ -34,6 +34,19 @@ namespace NotificationService.Repositories.DbContext
                 return null;
             }
         }
+
+        // Get Notifications collection
+        public IMongoCollection<Notification> Notifications
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<Notification>("Notifications");
+                }
+                return null;
+            }
+        }
     }
 
 }

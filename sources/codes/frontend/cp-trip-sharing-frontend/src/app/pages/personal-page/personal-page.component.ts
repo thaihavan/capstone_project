@@ -19,7 +19,7 @@ import { SendMessagePopupComponent } from 'src/app/shared/components/send-messag
 export class PersonalPageComponent implements OnInit {
   user: User;
   gender = '';
-  coverImage = '../../../assets/coverimg.jpg';
+  coverImage = '../../../assets/cover-image.png';
   avatar = '../../../assets/img_avatar.png';
   title = 'angular-material-tab-router';
   navLinks: any[];
@@ -145,7 +145,7 @@ export class PersonalPageComponent implements OnInit {
   showFollowingUser() {
     this.userService.getAllFollowing(this.userId).subscribe((result: any) => {
       this.listUser = result;
-      this.openDialogFollow('Danh sách những người bạn đang theo dõi', this.listUser);
+      this.openDialogFollow(this.user.FollowingCount + ' người bạn đang theo dõi', this.listUser);
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
@@ -154,7 +154,7 @@ export class PersonalPageComponent implements OnInit {
   showFolowerUser() {
     this.userService.getAllFollower(this.userId).subscribe((result: any) => {
       this.listUser = result;
-      this.openDialogFollow('Danh sách những người đang theo dõi bạn', this.listUser);
+      this.openDialogFollow(this.user.FollowerCount + ' người đang theo dõi bạn', this.listUser);
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });

@@ -7,6 +7,7 @@ export class Conversation {
     type: string;
     receivers: string[];
     lastMessage: string;
+    lastDate: Date;
 
     users: ChatUser[];
     messages: ChatMessage[];

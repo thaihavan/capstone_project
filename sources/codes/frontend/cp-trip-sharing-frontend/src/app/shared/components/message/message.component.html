@@ -1,10 +1,16 @@
-<div class="message">
-  <div class="avatar">
-    <img src="{{urlImage}}">
+<div class="title-message-notification">Tin nhắn</div>
+<div>
+  <div *ngIf="conversations.length == 0">
+    <div class="item-menu no-conversation">Bạn không có tin nhắn nào gần đây</div>
   </div>
-  <div class="content">
-    <div class="username">{{username}}</div>
-    <div class="content-message">{{subContent}}</div>
-    <div class="time">{{time}}</div>
+  <div class="item-menu" *ngFor="let item of conversations">
+    <div class="avatar">
+      <img src="{{item.avatar}}">
+    </div>
+    <div class="content">
+      <div class="username">{{item.name}}</div>
+      <div class="content-message" [innerHtml]="item.lastMessage"></div>
+      <div class="time">{{item.lastDate}}</div>
+    </div>
   </div>
 </div>

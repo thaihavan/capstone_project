@@ -30,8 +30,8 @@ export class ChatPageComponent implements OnInit {
   inputMessage = '';
 
   constructor(private chatService: ChatService,
-    private titleService: Title,
-    private uploadImageService: UploadImageService) {
+              private titleService: Title,
+              private uploadImageService: UploadImageService) {
     this.titleService.setTitle('Tin nhắn');
   }
 

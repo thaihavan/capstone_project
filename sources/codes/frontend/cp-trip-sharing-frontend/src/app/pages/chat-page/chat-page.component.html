@@ -56,7 +56,7 @@
                       <span [ngClass]="{'text': true, 'text-message': true, 'no-padding': isImage(message.content)}" 
                       [innerHtml]="message.content"></span>
                     </div>
-                    <span class="chat-date text-muted">{{message.time | date: 'd MMM, y H:mm'}}</span>
+                    <span class="chat-date text-muted">{{message.time | customDate}}</span>
                   </div>
                 </div>
                 <div *ngIf="user.id == message.fromUserId" class="chat-list even">
@@ -65,7 +65,7 @@
                         <span [ngClass]="{'text': true, 'text-message': true, 'no-padding': isImage(message.content)}" 
                         [innerHtml]="message.content"></span>
                     </div>
-                    <span class="chat-date text-muted">{{message.time | date: 'd MMM, y H:mm'}}</span>
+                    <span class="chat-date text-muted">{{message.time | customDate}}</span>
                   </div>
                 </div>
               </div>

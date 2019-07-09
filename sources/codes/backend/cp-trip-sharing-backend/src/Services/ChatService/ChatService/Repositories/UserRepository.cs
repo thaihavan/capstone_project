@@ -62,8 +62,8 @@ namespace ChatService.Repositories
 
         public User Update(User param)
         {
-            _users.FindOneAndReplace(x => x.Id.Equals(param.Id), param);
-            return param;
+            var user = _users.FindOneAndReplace(x => x.Id.Equals(param.Id), param);
+            return user;
         }
     }
 }
