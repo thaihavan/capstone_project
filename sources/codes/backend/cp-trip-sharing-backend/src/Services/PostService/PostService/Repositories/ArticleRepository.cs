@@ -39,7 +39,7 @@ namespace PostService.Repositories
         {
             var article = _articles.Find(a => a.Id == id).FirstOrDefault();
             _posts.FindOneAndUpdate(
-                Builders<Post>.Filter.Eq(x=>x.Id,id),
+                Builders<Post>.Filter.Eq(x=>x.Id,article.PostId),
                 Builders<Post>.Update.Set(x=>x.IsActive,false)
                 );
             return true;
