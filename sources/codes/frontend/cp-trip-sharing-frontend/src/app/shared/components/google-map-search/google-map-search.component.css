@@ -1,28 +1,46 @@
-.form-group{
-    display: flex;
+.form-group {
+  display: flex;
+  border-radius: 6px;
 }
 .form-group .form-control {
-    padding-right: 2.375rem;
-    border-radius: 7px !important;
+  padding-right: 2.375rem;
+  border-radius: 5px !important;
 }
-.form-control{
-    height: 40px;
+.form-control {
+  height: 40px;
 }
 
 .form-group .form-control-icon {
-    position: relative;
-    z-index: 2;
-    display: block;
-    width: 2.375rem;
-    height: 2.375rem;
-    line-height: 40px;
-    text-align: center;
-    pointer-events: none;
-    color: #e74c3c;
-    float: right;
-    right: 45px;
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 40px;
+  text-align: center;
+  pointer-events: none;
+  color: #80bdff;
+  float: right;
+  right: 45px;
 }
-.form-control:focus{
-    border-color: #e74c3c !important;
-    box-shadow: 0 0 0 0.2rem #ffcfcf;
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.full-size {
+  width: 100%;
+  display: -webkit-inline-box;
+}
+.mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}
+.full-input {
+  width: 100%;
+}
+.full-input .mat-form-field {
+  display: block;
+}
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important;
 }

@@ -1,6 +1,5 @@
 export class Schedule {
-    scheduleTitle: string;
-    scheduleNote: string;
-    scheduleDate: Date;
-    destinations: [];
+    title: string;
+    content: string;
+    day: Date;
 }

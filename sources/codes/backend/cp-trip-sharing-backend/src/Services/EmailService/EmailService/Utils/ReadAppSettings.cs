@@ -22,7 +22,10 @@ namespace EmailService.Utils
             var settings = Options.Create(new AppSettings()
             {
                 ApiKey = appSettings.GetSection("ApiKey").Value,
-                TripSharingEmail = appSettings.GetSection("TripSharingEmail").Value 
+                TripSharingEmail = appSettings.GetSection("TripSharingEmail").Value ,
+                ConnectionString= appSettings.GetSection("ConnectionString").Value,
+                DatabaseName= appSettings.GetSection("DatabaseName").Value,
+                Secret= appSettings.GetSection("Secret").Value
             });
 
             return settings;

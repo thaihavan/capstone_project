@@ -1,0 +1,39 @@
+<div class="post-container">
+  <mat-card class="post-card">
+    <div class="bookmark-icon" *ngIf="userId !== post.post.author.id">
+      <mat-icon *ngIf="bookmark" (click)="bookmarkPost()">bookmark</mat-icon>
+      <mat-icon *ngIf="!bookmark" (click)="bookmarkPost()">bookmark_border</mat-icon>
+    </div>
+
+    <ng-container [ngSwitch]="postType">
+      <!-- Article -->
+      <ng-container *ngSwitchCase="'article'">
+        <app-article-small [article]="post"></app-article-small>
+      </ng-container>
+
+      <!-- Virtual-trip -->
+      <ng-container *ngSwitchCase="'virtual-trip'">
+        <app-virtual-trip-small [virtualTrip]="post"></app-virtual-trip-small>
+      </ng-container>
+
+      <!-- Companion-post -->
+      <ng-container *ngSwitchCase="'companion-post'">
+        <!-- <app-companion-post-small [companionPost]="post"></app-companion-post-small> -->
+      </ng-container>
+    </ng-container>
+
+    <mat-card-header class="post-footer">
+      <img mat-card-avatar src="{{post.post.author.profileImage}}" />
+      <mat-card-title class="author-name" (click)="gotoPersionalPage(post.post.author.id)">
+        {{post.post.author.displayName}}
+      </mat-card-title>
+      <mat-card-subtitle class="pub-date">{{post.post.pubDate | customDate}}</mat-card-subtitle>
+      <div>
+        <button class="follow-button" *ngIf="(userId !== post.post.author.id && !follow) ? true : false"
+          (click)="followPerson(post.post.author.id)" mat-icon-button>
+          <mat-icon>rss_feed</mat-icon> Theo dõi
+        </button>
+      </div>
+    </mat-card-header>
+  </mat-card>
+</div>

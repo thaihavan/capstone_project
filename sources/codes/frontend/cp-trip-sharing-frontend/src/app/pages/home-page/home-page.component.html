@@ -5,25 +5,55 @@
     </div>
   </div>
 
-  <nav class="container">
-    <div class="row">
-      <div class="col-md-2">
+  <div class="container">
 
+    <!-- Articles -->
+    <div class="section-container">
+      <div>
+        <h2 class="section-container-title">Blogs</h2>
+        <div class="section-container-sub-title">Những bài viết độc đáo của mọi người</div>
+        <div class="title-border-bottom"></div>
       </div>
-      <div class="col-md-8">
-        <div class="nav-links">
-          <nav mat-tab-nav-bar mat-align-tabs="left">
-            <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive
-              #rla="routerLinkActive" [active]="rla.isActive">
-              {{link.label}}
-            </a>
-          </nav>
+      <div class="section recommend-section">
+        <div>
+          <h3 class="section-title">Đề xuất</h3>
         </div>
-        <router-outlet></router-outlet>
+        <app-list-post-horizontal [listType]="'article'" [posts]="newestArticles" [rowSize]="3">
+        </app-list-post-horizontal>
       </div>
-      <div class="col-md-2">
 
+      <div class="section popular-section">
+        <div>
+          <h3 class="section-title">Phổ biến</h3>
+        </div>
+        <app-list-post-horizontal [listType]="'article'" [posts]="newestArticles" [rowSize]="3">
+        </app-list-post-horizontal>
+      </div>
+
+      <div class="section newest-section">
+        <div>
+          <h3 class="section-title">Mới nhất</h3>
+        </div>
+        <app-list-post-horizontal [listType]="'article'" [posts]="newestArticles" [rowSize]="3">
+        </app-list-post-horizontal>
       </div>
     </div>
-  </nav>
+
+    <!-- Virtual-trips -->
+    <div class="section-container">
+        <div>
+          <h2 class="section-container-title">Chuyến đi</h2>
+          <div class="section-container-sub-title">Những chuyến đi độc đáo của mọi người</div>
+          <div class="title-border-bottom"></div>
+        </div>
+        <div class="section newest-section">
+          <!-- <div>
+            <h3 class="section-title">Mới nhất</h3>
+          </div> -->
+          <app-list-post-horizontal [listType]="'virtual-trip'" [posts]="virtualTrips" [rowSize]="3">
+          </app-list-post-horizontal>
+        </div>
+      </div>
+
+  </div>
 </div>

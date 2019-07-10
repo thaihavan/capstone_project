@@ -1,0 +1,50 @@
+mat-card-title {
+  padding: 0;
+  margin: 4px 0px;
+  line-height: 1.1 !important;
+}
+
+.post-card {
+  padding: 0;
+}
+
+.author-name, .pub-date {
+  margin-bottom: 6px !important;
+}
+
+.card-footer-content:hover {
+  cursor: pointer;
+}
+
+.author-name{
+  font-size: 18px;
+  font-weight: 400 !important;
+  fill: rgba(0,0,0,.54);
+}
+
+.post-footer{
+  position: relative;
+  padding: 0px 10px;
+}
+.follow-button {
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  padding: 0 !important;
+  right: 10px;
+  border: solid 2px #2196f3;
+  border-radius: 4px;
+  line-height: 1.0 !important;
+  color: #2196f3;
+}
+
+.bookmark-icon {
+  display: inline-block;
+  width: 20px;
+  position: absolute;
+  color: #fff;
+  top: 10px;
+  right: 10px;
+  z-index: 99;
+  cursor: pointer;
+}

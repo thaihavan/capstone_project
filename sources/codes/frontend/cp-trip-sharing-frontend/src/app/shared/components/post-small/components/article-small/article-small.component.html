@@ -1,0 +1,34 @@
+<div class="article-small">
+  <div *ngIf="article.post.coverImage" class="card-image">
+    <div class="image-mask"></div>
+    <img mat-card-image src="{{article.post.coverImage}}" alt="">
+
+    <div class="like-comment-info">
+      <span>
+        <mat-icon>favorite_border</mat-icon>{{article.post.likeCount}}
+      </span>
+      &nbsp;&nbsp;
+      <span>
+        <mat-icon>chat_bubble_outline</mat-icon>{{article.post.commentCount}}
+      </span>
+    </div>
+
+    <div class="location-container">
+      <div class="location" *ngFor="let location of article.destinations">
+        <span><i class="fa fa-tag"></i> {{location.name}}</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-body">
+    <mat-card-title>
+      <a class="card-link" href="bai-viet/{{article.id}}">
+        <div class="card-title">{{article.post.title}}</div>
+      </a>
+    </mat-card-title>
+
+    <mat-card-content class="article-short-description">
+      <div>{{getShortDescription(article.post.content)}}</div>
+    </mat-card-content>
+  </div>
+</div>

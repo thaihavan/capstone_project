@@ -30,7 +30,6 @@ const routes: Routes = [
       {
         path: 'trang-chu', component: HomePageComponent,
         children: [
-          { path: '', redirectTo: 'de-xuat', pathMatch: 'full' },
           { path: ':home-nav', component: ListPostComponent }
         ]
       },
@@ -44,7 +43,7 @@ const routes: Routes = [
         ]
       },
       { path: 'dang-ky', component: RegisterPageComponent },
-      { path: 'chuyen-di', component: VirtualTripsPageComponent },
+      { path: 'chuyen-di/:tripId', component: VirtualTripsPageComponent },
       { path: 'quen-mat-khau', component: ForgotpasswordPageComponent },
       { path: 'tao-bai-viet', component: CreatePostPageComponent },
       { path: 'chinh-sua-bai-viet/:articleId', component: CreatePostPageComponent },

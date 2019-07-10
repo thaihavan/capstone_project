@@ -53,7 +53,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.virtualTrip = new VirtualTrip();
     // check is view detail?
-    this.virtualTripId = this.route.snapshot.queryParamMap.get('tripId');
+    this.virtualTripId = this.route.snapshot.paramMap.get('tripId');
     if (
       this.virtualTripId !== undefined &&
       this.virtualTripId !== null &&

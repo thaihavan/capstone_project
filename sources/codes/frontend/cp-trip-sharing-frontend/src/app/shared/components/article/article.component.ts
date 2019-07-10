@@ -218,13 +218,13 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < pTags.length; i++) {
       pContent += pTags.item(i).innerText.trim() + ' ';
 
-      if (pContent.length > 250) {
+      if (pContent.length > 80) {
         break;
       }
     }
 
-    if (pContent.length > 250) {
-      pContent = pContent.substr(0, 250) + '...';
+    if (pContent.length > 80) {
+      pContent = pContent.substr(0, 80) + '...';
     }
 
     return pContent;
