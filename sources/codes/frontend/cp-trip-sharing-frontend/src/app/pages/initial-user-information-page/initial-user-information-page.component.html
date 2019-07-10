@@ -1,9 +1,9 @@
 <div class="initial-user">
-  <mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Thông tin</ng-template>
-        <div class="form_wrapper">
+        <!-- <div class="form_wrapper">
           <div class="form_container">
             <div class="title_container">
               <h4>Cập nhật thông tin</h4>
@@ -42,6 +42,53 @@
               value="Tiếp tục" />
           </div>
           <span style="color: red;margin: 0 auto;">{{message}}</span>
+        </div> -->
+        <div *ngIf="user" class="form_wrapper">
+          <h2>Cập nhật thông tin</h2>
+          <form name="form" [formGroup]="form">
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="username" placeholder="@username"
+                [ngClass]="{'is-invalid':form.get('username').touched && form.get('username').invalid}" />
+              <div *ngIf="form.get('username').touched && form.get('username').invalid" class="invalid-feedback">
+                <div *ngIf="form.get('username').errors.required">Bạn không được bỏ trống</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="displayName" placeholder="Tên hiển thị"
+                [ngClass]="{'is-invalid':form.get('displayName').touched && form.get('displayName').invalid}" />
+              <div *ngIf="form.get('displayName').touched && form.get('displayName').invalid" class="invalid-feedback">
+                <div *ngIf="form.get('displayName').errors.required">Bạn không được bỏ trống</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="firstname" placeholder="Họ"
+                [ngClass]="{'is-invalid':form.get('firstname').touched && form.get('firstname').invalid}" />
+              <div *ngIf="form.get('firstname').touched && form.get('firstname').invalid" class="invalid-feedback">
+                <div *ngIf="form.get('firstname').errors.required">Bạn không được bỏ trống</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="lastname" placeholder="Tên"
+                [ngClass]="{'is-invalid':form.get('lastname').touched && form.get('lastname').invalid}" />
+              <div *ngIf="form.get('lastname').touched && form.get('lastname').invalid" class="invalid-feedback">
+                <div *ngIf="form.get('lastname').errors.required">Bạn không được bỏ trống</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="date" class="form-control" placeholder="Ngày sinh" [ngModel] ="user.Dob | date:'yyyy-MM-dd'" (ngModelChange)="user.Dob = $event"  [ngModelOptions]="{standalone: true}"/>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="address" placeholder="Địa chỉ"/>
+            </div>
+            <div class="input_field radio_option">
+              <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.Gender"  [ngModelOptions]="{standalone: true}">
+              <label for="rd1" style="padding-left: 5px;">Nam</label>
+              <input type="radio" name="gender" id="rd2" [value]="false" class="input-gender" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
+              <label for="rd2" style="padding-left: 5px;">Nữ</label>
+            </div>
+            <input [disabled]="!form.valid" class="btn" (click)="callInterestedtopicPage(stepper)" value="Tiếp tục" />
+          </form>
         </div>
       </form>
     </mat-step>
@@ -52,7 +99,8 @@
           <div class="interested-topic-title">
             <h4>Chọn ít nhất 3 chủ đề bạn quan tâm</h4>
           </div>
-          <app-interested-topic [listTopicIdSelected]="user.Interested" (EventTopic)="selectedTopics($event)"></app-interested-topic>
+          <app-interested-topic [listTopicIdSelected]="user.Interested" (EventTopic)="selectedTopics($event)">
+          </app-interested-topic>
           <button *ngIf="isRegister" type="button" class="btn btn-primary" (click)="registerUser()">Tiếp tục</button>
           <button *ngIf="!isRegister" type="button" class="btn btn-primary" (click)="updateUser()">Cập nhật</button>
         </div>

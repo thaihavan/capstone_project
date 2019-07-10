@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PostService.Models
 {
+    [BsonIgnoreExtraElements]
     public class CompanionPost : Model
     {
         [BsonId]
@@ -46,10 +47,15 @@ namespace PostService.Models
         [BsonElement("schedule")]
         public List<ScheduleItem> ScheduleItems { get; set; }
 
-        [BsonIgnore]
-        public Post post { get; set; }
+        [BsonElement("destinations")]
+        public List<ArticleDestinationItem> Destinations { get; set; }
 
         [BsonIgnore]
+        [BsonExtraElements]
+        public Post Post { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
         public List<CompanionPostJoinRequest> JoinRequests { get; set; }
     }
 }

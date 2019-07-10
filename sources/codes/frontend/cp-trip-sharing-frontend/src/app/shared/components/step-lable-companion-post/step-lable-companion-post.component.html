@@ -1,0 +1,17 @@
+<div class="d-flex flex-row justify-content-between">
+  <div>
+    {{item.title}}
+  </div>
+  <div *ngIf="isDisplayMore">
+    <mat-icon matTooltip="Chỉnh sửa" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+    <mat-menu #menu="matMenu">
+        <button (click)="isUpdate()" mat-menu-item>
+          <mat-icon>edit</mat-icon>chỉnh sửa
+        </button>
+        <button (click)="isDelete()" mat-menu-item>
+          <mat-icon>delete</mat-icon>xoá
+        </button>
+      </mat-menu>
+  </div>
+  
+</div>

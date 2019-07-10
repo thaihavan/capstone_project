@@ -1,5 +1,23 @@
-
-<div class="form-group" [style.width.px]="width">
-  <input #searchmap [(ngModel)]="textInput" type="text" class="form-control" [style.height.px]="height" placeholder="Search">
-  <span class="fa fa-search form-control-icon" [style.line-height.px]="height"></span>
-</div> 
+<ng-container *ngIf="width; else elseTemplate">
+  <div class="form-group " [style.width.px]="width">
+    <!-- <input #searchmap [(ngModel)]="textInput" type="text" class="form-control" [style.height.px]="height"
+      placeholder="Search"> -->
+      <div class="full-input">
+          <mat-form-field appearance="outline">
+              <mat-label>Nhập địa điểm bạn muốn đến</mat-label>
+              <input #searchmap [(ngModel)]="textInput" class="example-right-align" matInput placeholder="Nhập địa điểm bạn muốn đến">
+              <button mat-icon-button matSuffix>
+                  <mat-icon>search</mat-icon>
+              </button>
+          </mat-form-field>
+      </div>
+    <!-- <span class="fa fa-search form-control-icon" [style.line-height.px]="height"></span> -->
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+    <div class="form-group full-size">
+        <input #searchmap [(ngModel)]="textInput" type="text" class="form-control" [style.height.px]="height"
+          placeholder="Search">
+        <span class="fa fa-search form-control-icon" [style.line-height.px]="height"></span>
+      </div>
+</ng-template>

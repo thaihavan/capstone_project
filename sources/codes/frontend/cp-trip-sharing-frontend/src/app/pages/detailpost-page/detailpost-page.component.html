@@ -37,7 +37,7 @@
   <div class="content-infor">
     <div class="infor-author">
       <div (click)="gotoPersonalPage(authorId)" class="personal-name"><span>{{displayName}}</span></div>
-      <div class="time">{{post.pubDate| date: 'dd-MM-yyyy'}}</div>
+      <div class="time">{{post.pubDate | customDate}}</div>
       <button (click)="followPerson(post.author.id)" *ngIf="follow" class="btn-follow">
         <span><i class="fa fa-user-plus"></i>Theo dõi</span>
       </button>

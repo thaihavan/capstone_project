@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/core/services/user-service/user.service';
@@ -12,12 +12,27 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./initial-user-information-page.component.css']
 })
 export class InitialUserInformationPageComponent implements OnInit {
-  isLinear = false;
+  isLinear = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   user: User;
   isRegister: boolean;
   selectedTopic: string[] = [];
+  form = new FormGroup({
+    username: new FormControl('', [
+      Validators.required
+    ]),
+    displayName: new FormControl('', [
+      Validators.required
+    ]),
+    firstname: new FormControl('', [
+      Validators.required
+    ]),
+    lastname: new FormControl('', [
+      Validators.required
+    ]),
+    address: new FormControl()
+  });
   constructor(private formBuilder: FormBuilder, private userService: UserService, private titleService: Title) {
     this.titleService.setTitle('Khởi tạo');
     this.user = new User();
@@ -43,15 +58,22 @@ export class InitialUserInformationPageComponent implements OnInit {
       this.isRegister = true;
     } else {
       this.isRegister = false;
+      console.log(this.user);
+      this.form.setValue({
+        username: this.user.UserName,
+        displayName: this.user.DisplayName,
+        firstname: this.user.FirstName,
+        lastname: this.user.LastName,
+        address: this.user.Address
+      });
+
+      this.form.patchValue({ dob: this.user.Dob });
     }
   }
 
   callInterestedtopicPage(stepper: MatStepper) {
-    if (this.user.UserName != null && this.user.FirstName != null && this.user.LastName != null && this.user.DisplayName != null) {
-      console.log(this.user);
-      stepper.next();
-    }
-
+    this.isLinear = false;
+    stepper.next();
   }
 
   selectedTopics(topics: any) {
@@ -64,6 +86,7 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   registerUser() {
+    this.getValueFromFormGroup();
     this.userService.registerUser(this.user).subscribe((result: any) => {
       localStorage.setItem('User', JSON.stringify(result));
       window.location.href = '/trang-chu';
@@ -73,10 +96,19 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   updateUser() {
+    this.getValueFromFormGroup();
     this.userService.updateUser(this.user).subscribe((result: any) => {
       window.location.href = '/user/' + this.user.UserId;
     }, (err: HttpErrorResponse) => {
       window.location.href = '/user/' + this.user.UserId;
     });
+  }
+
+  getValueFromFormGroup() {
+    this.user.UserName = this.form.value.username;
+    this.user.DisplayName = this.form.value.displayName;
+    this.user.FirstName = this.form.value.firstname;
+    this.user.LastName = this.form.value.lastname;
+    this.user.Address =  this.form.value.address;
   }
 }

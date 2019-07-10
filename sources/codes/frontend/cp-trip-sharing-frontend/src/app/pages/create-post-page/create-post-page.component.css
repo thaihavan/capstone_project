@@ -1,3 +1,16 @@
+.content-create{
+  position: relative;
+}
+.dialog-step {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: darkgray;
+  opacity: 0.4;
+}
 .cover-image {
   height: 30vw;
   background-size: cover;
@@ -102,4 +115,7 @@ input[type="file"] {
   float: right;
   margin-right: 0px;
   margin-top: 10px;
+}
+.clear{
+  clear: both;
 }

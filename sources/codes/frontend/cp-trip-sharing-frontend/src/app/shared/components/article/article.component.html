@@ -1,8 +1,6 @@
 <div [hidden]="checkRemoved" [class]=" checkRemoved?'articlekHidden':'mb-5'">
   <ng-container [ngSwitch]="listType">
     <ng-container *ngSwitchCase="'virtual-trip'">
-
-
       <div class="virtual-trips">
         <mat-card>
           <mat-card-header class="bg-header text-white">
@@ -41,21 +39,18 @@
           </mat-card-content>
         </mat-card>
       </div>
-
-
-      
     </ng-container>
 
     <ng-container *ngSwitchCase="2">
 
     </ng-container>
     <ng-container *ngSwitchDefault>
-      <mat-card [hidden]="checkRemoved" class="post-card">
+      <mat-card [hidden]="checkRemoved" class="example-card">
         <mat-card-header class=" post-header">
           <img mat-card-avatar src="{{post.post.author.profileImage}}" />
-          <mat-card-title class="author-name" (click)="gotoPersionalPage(post.post.author.id)">{{post.post.author.displayName}}
+          <mat-card-title (click)="gotoPersionalPage(post.post.author.id)">{{post.post.author.displayName}}
+            <span class="time">{{post.post.pubDate | customDate}}</span>
           </mat-card-title>
-          <mat-card-subtitle class="pub-date">{{post.post.pubDate | customDate}}</mat-card-subtitle>
           <div class="btn-interact">
             <div [hidden]="userId === post.post.author.id ? true : false "
               [class]="follow ? 'icon-followed':'icon-unfollow'">
@@ -89,29 +84,33 @@
             </mat-menu>
           </div>
         </mat-card-header>
-        <div *ngIf="post.post.coverImage" class="card-body-image">
-          <img mat-card-image src="{{post.post.coverImage}}" alt="">
-        </div>
         <mat-card-title>
           <a class="card-link" href="bai-viet/{{post.id}}">
             <h5 class="card-title">{{post.post.title}}</h5>
           </a>
         </mat-card-title>
+        <div *ngIf="post.post.coverImage" class="card-body-image">
+          <img mat-card-image src="{{post.post.coverImage}}" alt="">
+        </div>
         <mat-card-content>
           <div class="article-short-description">
             <p>{{getShortDescription(post.post.content)}}</p>
           </div>
+
         </mat-card-content>
         <div>
-          <mat-chip-list>
-            <mat-chip *ngFor="let destination of post.destinations">{{destination.name}}</mat-chip>
-          </mat-chip-list>
+          <div class="location" *ngFor="let destination of post.destinations">
+            <span><i class="fa fa-tag"></i>{{destination.name}}</span>
+          </div>
+          <!-- <mat-chip-list>
+            <mat-chip *ngFor="let destination of post.destinations"></mat-chip>
+          </mat-chip-list> -->
         </div>
         <div class="d-flex justify-content-between ">
           <mat-card-subtitle>{{post.post.likeCount}} thích</mat-card-subtitle>
           <mat-card-subtitle>{{post.post.commentCount}} bình luận</mat-card-subtitle>
         </div>
-        <!-- <mat-card-actions>
+        <mat-card-actions>
           <div class="d-flex justify-content-between">
             <div [class]="post.post.liked ? 'likeClass':'unlikeClass'" (click)="likePost(post.post.liked)">
               <button mat-button>
@@ -126,7 +125,7 @@
               </button>
             </div>
           </div>
-        </mat-card-actions> -->
+        </mat-card-actions>
       </mat-card>
     </ng-container>
   </ng-container>

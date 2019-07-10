@@ -227,10 +227,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   // open dialog confirm
   openDialogMessageConfirm(message: string, data) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '400px',
-      height: '200px',
+      width: '320px',
+      height: 'auto',
       position: {
-        top: '10px'
+        top: '20px'
       },
       disableClose: true
     });

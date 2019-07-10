@@ -108,5 +108,29 @@ namespace PostService.Repositories.DbContext
                 return null;
             }
         }
+
+        public IMongoCollection<CompanionPost> CompanionPosts
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<CompanionPost>("CompanionPosts");
+                }
+                return null;
+            }
+        }
+
+        public IMongoCollection<CompanionPostJoinRequest> CompanionPostJoinRequests
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<CompanionPostJoinRequest>("CompanionPostJoinRequests");
+                }
+                return null;
+            }
+        }
     }
 }

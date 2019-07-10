@@ -1,0 +1,37 @@
+.create-companion-popup {
+  position: relative;
+  margin: -24px;
+}
+.btn-close{
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    color: white;
+}
+.close-button-icon {
+  float: right;
+}
+.panel-popup{
+    display: flex;
+    flex-direction: row;
+}
+.content-popup {
+    margin: 20px 50px;
+}
+.sub-title-input {
+}
+.clear {
+  clear: both;
+}
+.input-form {
+  display: block;
+}
+.row{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.btn-create{
+    display: flex;
+    flex-flow: row-reverse;
+    margin-bottom: 15px;
+}

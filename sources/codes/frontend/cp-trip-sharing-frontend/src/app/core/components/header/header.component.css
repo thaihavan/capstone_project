@@ -21,15 +21,6 @@
   float: left;
 }
 
-.mat-button span{
-  display: block;
-  margin-top: -0.4em;
-  min-width: 52px;
-  line-height: normal;
-  font-size: 12px;
-  text-align: center;
-}
-
 .btn{
   font-weight: normal;
   margin-left: 1em;
@@ -41,11 +32,6 @@
   background-color: #3f51b5 !important;
 }
 
-
-.nav-icon-text{
-  padding: 0.3em .5em;
-  position: relative;
-}
 
 /* .nav-icon-text, .nav-icon-text1{
   border-right: 1px solid gray;
@@ -131,9 +117,9 @@
 .mat-menu-item{
   width: 200px !important;
 }
-a:hover{
+/* a:hover{
   color: white !important;
-}
+} */
 .nav-icon-text .badge {
   position: absolute;
   top: 5px;
@@ -158,13 +144,13 @@ a:hover{
   height: 45px;
   border-radius: 100%;
 }
-a:hover {
+/* a:hover {
   color: black !important ;
   text-decoration: none;
 }
 a {
   color: black;
-}
+} */
 
 ::ng-deep .notification-menu {
   max-width: 480px !important;
@@ -176,4 +162,19 @@ a {
   max-width: 480px !important;
   width: 480px;
   max-height: calc(100vh - 80px) !important;
+}
+
+.nav-icon-text{
+  margin-top: -5px;
+}
+
+.nav-icon-text span{
+  padding: 0px 10px 0px 10px;
+  border-right: 1px solid cadetblue;
+  line-height: normal;
+  font-size: 14px;
+  text-align: center;
+  color: white;
+  font-weight: 500;
+  display: inline-block;
 }
