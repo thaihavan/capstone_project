@@ -19,6 +19,7 @@ import { MessagePopupComponent } from 'src/app/shared/components/message-popup/m
 })
 export class DetailpostPageComponent implements OnInit {
   post: Post = new Post();
+  user: any;
   displayName = '';
   coverImg = '';
   article: Article;
@@ -52,10 +53,11 @@ export class DetailpostPageComponent implements OnInit {
     }
   }
   constructor(private postService: PostService, private route: ActivatedRoute,
-    private userService: UserService, private titleService: Title, public dialog: MatDialog) {
+              private userService: UserService, private titleService: Title, public dialog: MatDialog) {
     this.comments = [];
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     this.loadArticleByarticleId(this.articleId);
+    this.user = JSON.parse(localStorage.getItem('User'));
   }
 
   ngOnInit() { }
@@ -219,24 +221,9 @@ export class DetailpostPageComponent implements OnInit {
     const token = localStorage.getItem('Token');
     if (token != null) {
       this.userService.addBlock(userId, token).subscribe((result: any) => {
-        this.openDialogMessageConfirm();
+        this.openDialogMessageConfirm('Bạn đã chặn người dùng thành công!', '/danh-sach-chan');
       });
     }
-  }
-
-  openDialogMessageConfirm() {
-    const user = JSON.parse(localStorage.getItem('User'));
-    const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '380px',
-      height: '200px',
-      position: {
-        top: '10px'
-      },
-      disableClose: true
-    });
-    const instance = dialogRef.componentInstance;
-    instance.message.messageText = 'Chặn người dùng thành công!';
-    instance.message.url = '/user/' + user.id + '/danh-sach-chan';
   }
 
   getShortDescription(htmlContent: any) {
@@ -263,5 +250,31 @@ export class DetailpostPageComponent implements OnInit {
 
   gotoPersonalPage(authorId: any) {
     window.location.href = '/user/' + authorId;
+  }
+
+  editpost() {
+    window.location.href = '/chinh-sua-bai-viet/' + this.articleId;
+  }
+
+  removePost() {
+    this.postService.removeArticle(this.articleId).subscribe((data: any) => {
+      this.openDialogMessageConfirm('Bạn đã xóa bài viết thành công!', '');
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  openDialogMessageConfirm(message: string, url: string) {
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '320px',
+      height: 'auto',
+      position: {
+        top: '20px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = message;
+    instance.message.url = '/user/' + this.user.id + url;
   }
 }

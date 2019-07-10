@@ -164,6 +164,7 @@ textarea{
   border-bottom: 2px solid gainsboro;
   padding-bottom: 13px;
   padding-top: 13px;
+  position: relative;
 }
 
 .infor-author{
@@ -241,4 +242,16 @@ textarea{
   background-color: white;
   color: #2196f3;
   padding: 1px 9px 1px 9px;
+}
+
+.icon-action-user{
+  position: absolute;
+  top: 18%;
+  right: 20%;
+  color: #4267b2;
+}
+
+.mat-icon-button {
+  width: 30px !important;
+  height: 30px !important;
 }

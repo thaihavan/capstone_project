@@ -39,13 +39,28 @@
       <div (click)="gotoPersonalPage(authorId)" class="personal-name"><span>{{displayName}}</span></div>
       <div class="time">{{post.pubDate | customDate}}</div>
       <button (click)="followPerson(post.author.id)" *ngIf="follow" class="btn-follow">
-        <span><i class="fa fa-user-plus"></i>Theo dõi</span>
+        <span><i class="fa fa-rss"></i>Theo dõi</span>
       </button>
       <button (click)="followPerson(post.author.id)" *ngIf="followed" class="btn-follow">
-        <span><i class="fa fa-user-plus"></i> Đã theo dõi</span>
+        <span><i class="fa fa-rss"></i> Đã theo dõi</span>
       </button>
       <div class="share"><i class="fa fa-share"></i> <span> Chia sẻ </span></div>
       <div class="like"><i class="fa fa-thumbs-up"></i><span> {{post.likeCount}} thích </span></div>
+      <div *ngIf="user.id === authorId" class="icon-action-user">
+        <button mat-icon-button [matMenuTriggerFor]="menu_action" aria-label="Example icon-button with a menu">
+          <mat-icon>border_color</mat-icon>
+        </button>
+        <mat-menu #menu_action="matMenu">
+          <button mat-menu-item (click)="editpost()">
+            <mat-icon>edit</mat-icon>
+            <span>Chỉnh sửa</span>
+          </button>
+          <button mat-menu-item (click)="removePost()">
+            <mat-icon>remove</mat-icon>
+            <span>Xóa</span>
+          </button>
+        </mat-menu>
+      </div>
       <br class="clearleft" />
     </div>
   </div>

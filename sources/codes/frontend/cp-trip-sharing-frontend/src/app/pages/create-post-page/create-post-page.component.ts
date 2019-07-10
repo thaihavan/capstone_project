@@ -80,7 +80,7 @@ export class CreatePostPageComponent implements OnInit {
 
   ngOnInit() {
     this.articlereturn = new Article();
-    this.articleId = this.route.snapshot.queryParamMap.get('id');
+    this.articleId = this.route.snapshot.paramMap.get('articleId');
     if (
       this.articleId !== undefined &&
       this.articleId !== null &&
