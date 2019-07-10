@@ -1,0 +1,30 @@
+.list-post-container {
+    margin: 0% -1%;
+}
+
+.list-post-container::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.post-container {
+    float: left;
+    margin: 20px 1%;
+}
+
+.post-container-1 {
+    width: 98%;
+}
+
+.post-container-3 {
+    width: 48%;
+}
+
+.post-container-3 {
+    width: 31.33%;
+}
+
+.post-container-4 {
+    width: 23%;
+}

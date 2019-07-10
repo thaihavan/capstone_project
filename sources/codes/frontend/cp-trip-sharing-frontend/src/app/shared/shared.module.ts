@@ -35,6 +35,11 @@ import { MessageComponent } from './components/message/message.component';
 import { SendMessagePopupComponent } from './components/send-message-popup/send-message-popup.component';
 import { ListNotificationComponent } from './components/list-notification/list-notification.component';
 import { CustomDatePipe } from './pipes/custom-date-pipe/custom-date.pipe';
+import { ListPostHorizontalComponent } from './components/list-post-horizontal/list-post-horizontal.component';
+import { PostSmallComponent } from './components/post-small/post-small.component';
+import { ArticleSmallComponent } from './components/post-small/components/article-small/article-small.component';
+import { VirtualTripSmallComponent } from './components/post-small/components/virtual-trip-small/virtual-trip-small.component';
+import { CompanionPostSmallComponent } from './components/post-small/components/companion-post-small/companion-post-small.component';
 
 const Material = [
   MatButtonModule,
@@ -82,7 +87,12 @@ const Material = [
     MessageComponent,
     SendMessagePopupComponent,
     ListNotificationComponent,
-    CustomDatePipe
+    CustomDatePipe,
+    ListPostHorizontalComponent,
+    PostSmallComponent,
+    ArticleSmallComponent,
+    VirtualTripSmallComponent,
+    CompanionPostSmallComponent
   ],
   imports: [
     CommonModule,
@@ -115,7 +125,12 @@ const Material = [
     UserComponent,
     SendMessagePopupComponent,
     ListNotificationComponent,
-    CustomDatePipe
+    CustomDatePipe,
+    ListPostHorizontalComponent,
+    PostSmallComponent,
+    ArticleSmallComponent,
+    VirtualTripSmallComponent,
+    CompanionPostSmallComponent
   ],
   entryComponents: [
     StepCreatePostComponent,

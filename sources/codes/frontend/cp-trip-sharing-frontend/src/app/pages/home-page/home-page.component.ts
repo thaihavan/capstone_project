@@ -1,7 +1,12 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
+import { Article } from 'src/app/model/Article';
+import { PostService } from 'src/app/core/services/post-service/post.service';
+import { PostFilter } from 'src/app/model/PostFilter';
+import { HttpErrorResponse } from '@angular/common/http';
+import { VirtualTrip } from 'src/app/model/VirtualTrip';
+import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
 
 @Component({
   selector: 'app-home-page',
@@ -9,43 +14,49 @@ import { NotifyService } from 'src/app/core/services/notify-service/notify.servi
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  activeLinkIndex = 0;
-
-  navLinks: any[];
   coverImage = '../../../assets/cover-image.png';
 
-  constructor(private router: Router,
-              private titleService: Title) {
+  recommendedArticles: Article[] = [];
+  popularArticles: Article[] = [];
+  newestArticles: Article[] = [];
+
+  virtualTrips: VirtualTrip[] = [];
+
+  constructor(private titleService: Title,
+              private postService: PostService,
+              private virtualTripService: VirtualTripService) {
     this.titleService.setTitle('Trang chủ');
-    this.navLinks = [
-      {
-        label: 'Đề xuất',
-        link: './de-xuat',
-        index: 0
-      },
-      {
-        label: 'Phổ biến',
-        link: './pho-bien',
-        index: 1
-      },
-      {
-        label: 'Mới nhất',
-        link: './moi-nhat',
-        index: 2
-      },
-      {
-        label: 'Theo dõi',
-        link: './theo-doi',
-        index: 3
-      }
-    ];
   }
 
   ngOnInit() {
-    this.router.events.subscribe(res => {
-      this.activeLinkIndex = this.navLinks.indexOf(
-        this.navLinks.find(tab => tab.link === '.' + this.router.url)
-      );
+    this.getArticles(undefined);
+    this.getVirtualTrips(undefined);
+  }
+
+  getArticles(postFilter: PostFilter): void {
+    if (!postFilter) {
+      postFilter = new PostFilter();
+      postFilter.topics = [];
+      postFilter.timePeriod = 'all_time';
+    }
+    this.postService.getAllArticles(postFilter).subscribe((data: Article[]) => {
+      this.newestArticles = data;
+      if (this.newestArticles != null && this.newestArticles.length > 6) {
+        this.newestArticles = this.newestArticles.slice(0, 6);
+      }
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  getVirtualTrips(postFilter: PostFilter): void {
+    this.virtualTripService.getVirtualTrips().subscribe(data => {
+      this.virtualTrips = data;
+      if (this.virtualTrips != null && this.virtualTrips.length > 6) {
+        this.virtualTrips = this.virtualTrips.slice(0, 6);
+      }
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
     });
   }
 

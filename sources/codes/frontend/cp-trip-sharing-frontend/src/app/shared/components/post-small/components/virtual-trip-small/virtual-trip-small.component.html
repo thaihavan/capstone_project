@@ -1,0 +1,35 @@
+<div class="virtual-trip-small">
+  <div *ngIf="virtualTrip.post.coverImage" class="card-image">
+    <!-- <div class="image-mask"></div>
+      <img mat-card-image src="{{virtualTrip.post.coverImage}}" alt=""> -->
+
+    <!-- <div class="location-container">
+        <div class="location" *ngFor="let location of article.destinations">
+          <span><i class="fa fa-tag"></i> {{location.name}}</span>
+        </div>
+      </div> -->
+
+    <slideshow #slideShow [height]="'200px'" [showCaptions]="true" [autoPlay]="false" [showArrows]="true"
+      [showDots]="true" stopAutoPlayOnSlide="true" [imageUrls]="imageSources" [lazyLoad]="imageSources?.length > 1"
+      [autoPlayWaitForLazyLoad]="true">
+    </slideshow>
+
+    <mat-card-content>
+      <div *ifChanges='desTitle' [@myTrigger]>
+        <h5>{{desTitle}}</h5>
+      </div>
+    </mat-card-content>
+
+  </div>
+  <div class="card-body">
+    <mat-card-title>
+      <a class="card-link" href="chuyen-di/{{virtualTrip.id}}">
+        <div class="card-title">{{virtualTrip.post.title}}</div>
+      </a>
+    </mat-card-title>
+
+    <mat-card-content class="article-short-description">
+      <div>{{virtualTrip.post.content}}</div>
+    </mat-card-content>
+  </div>
+</div>
