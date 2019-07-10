@@ -23,3 +23,33 @@
     bottom: 20px;
     right: 20px;
   }
+
+.section-container {
+    margin-top: 50px;
+}
+
+.section-container-title {
+    text-align: center;
+    color: #333;
+}
+
+.section-container-sub-title {
+    text-align: center;
+    color: #666;
+    font-size: 22px;
+}
+
+.title-border-bottom {
+    width: 100px;
+    margin: auto;
+    border-bottom: solid 3px #2196f3;
+}
+
+.section {
+    margin-top: 50px;
+}
+
+.section-title {
+    color: #333;
+
+}

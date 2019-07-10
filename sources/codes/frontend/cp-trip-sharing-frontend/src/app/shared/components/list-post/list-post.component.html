@@ -29,11 +29,13 @@
   </div>
 </div>
 
-<div *ngIf="articleDisplay.items != null">
-  <div *ngFor="let post of articleDisplay.items">
+<!-- <div class="list-post-container" *ngIf="articleDisplay.items != null">
+  <div class="post-container" *ngFor="let post of articleDisplay.items">
     <app-article [listType]='articleDisplay.typeArticle' [post]="post"></app-article>
   </div>
-</div>
+</div> -->
+<app-list-post-horizontal [listType]="articleDisplay.typeArticle" [posts]="articleDisplay.items" [rowSize]="1">
+</app-list-post-horizontal>
 <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" (scrolled)="onScroll()"></div>
 
 <div class="loading-dots">

@@ -48,7 +48,7 @@ namespace PostService.Models
         public List<ScheduleItem> ScheduleItems { get; set; }
 
         [BsonElement("destinations")]
-        public List<Destination> Destinations { get; set; }
+        public List<ArticleDestinationItem> Destinations { get; set; }
 
         [BsonIgnore]
         [BsonExtraElements]

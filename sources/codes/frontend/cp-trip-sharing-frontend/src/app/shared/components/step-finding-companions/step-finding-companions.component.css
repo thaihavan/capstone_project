@@ -1,0 +1,22 @@
+.step-icon {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+    
+}
+.step-content {
+    border: 1px solid rgb(196, 196, 196);
+    padding: 15px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 6px -3px;
+}
+::ng-deep .mat-chip-list-wrapper {
+    justify-content: left !important;
+}
+.step-content:hover {
+    border: 1px solid #2296f3;
+    box-shadow: 1px 1px 6px -3px #2296f3;
+}

@@ -25,8 +25,7 @@ export class ListPostComponent implements OnInit {
   VALID_HOME_NAVS: string[] = [
     'de-xuat',
     'pho-bien',
-    'moi-nhat',
-    'theo-doi'
+    'moi-nhat'
   ];
 
   articleDisplay = new ArticleDisplay();
