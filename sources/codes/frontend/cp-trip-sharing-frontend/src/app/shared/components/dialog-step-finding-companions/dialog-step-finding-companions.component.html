@@ -1,0 +1,94 @@
+<!-- <div class="select-location">
+  <div class="step-title">
+    <h3 color="primary">Chọn địa điểm cho bài viết</h3>
+  </div>
+  <div class="step-body">
+    <div class="mb-3">
+      <h5 class="mb-3">Chọn vị trí</h5>
+      <app-google-map-search width="" height="45" (onSelect)="setAddress($event)"></app-google-map-search>
+      <div class="selected-location">
+        <mat-chip-list>
+          <mat-chip selected color="primary" *ngFor="let location of selectedLocation" [selectable]="selectable"
+            [removable]="removable" (removed)="remove(location)">
+            {{location}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+    <div class="input-title">
+      <h5 class="mb-3">Tên chuyến đi</h5>
+      <div class="form-group">
+        <input [(ngModel)]="stepTitle" (ngModelChange)="onChange()" type="text" class="form-control title-input" id="title"
+          aria-describedby="helpId" placeholder="Nhập tên chuyến đi">
+        <small id="helpId" class="form-text text-muted text-right">50 kí tự</small>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <h5>Mô tả</h5>
+        <textarea class="form-control" (ngModelChange)="onChangeArea()" [(ngModel)]="stepNote" rows="5"></textarea>
+        <small id="helpId" class="form-text text-muted text-right">300 kí tự</small>
+      </div>
+    </div>
+  </div>
+  <div class="btn-step">
+    <button mat-raised-button (click)="onCreate()" color="primary">Tạo</button>
+  </div>
+  <form class="fake-input" [formGroup]="firstFormGroup">
+    <mat-form-field>
+      <input matInput [(ngModel)]="fakeinput1" placeholder="Last name, First name" formControlName="firstCtrl" required>
+    </mat-form-field>
+  </form>
+</div> -->
+<div class="create-companion-popup">
+  <div class="panel-popup p-2 primary-color">
+    <div class="pt-2 pl-3">
+      <mat-icon>directions_run</mat-icon>
+    </div>
+    <div class="pt-2 pl-1">
+      <span>{{ data.edit ? 'Chỉnh sửa lịch trình' : 'Thêm một lịch trình cho chuyến đi'}}</span>
+    </div>
+  </div>
+  <div class="btn-close">
+    <button mat-icon-button (click)="onClose()" class="close-button-icon">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="clear"></div>
+  <div class="content-popup">
+    <div class="input-title">
+      <h5 class="">Tiêu đề</h5>
+      <div class="d-flex flex-column">
+        <mat-form-field hintLabel="Không quá 100 kí tự" appearance="outline">
+          <mat-label>Nhập tiều đề của lịch trình</mat-label>
+          <input [(ngModel)]="scheduleTitle" matInput #input maxlength="100" placeholder="Nhập tiêu đề của lịch trình">
+          <mat-hint align="end">{{input.value?.length || 0}}/100</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+    <h5 class="mt-2">Thời gian</h5>
+    <div>
+      <mat-form-field hintLabel="Yêu cầu ngày trong lịch trình" appearance="outline">
+        <mat-label>Chọn ngày</mat-label>
+        <input matInput [(ngModel)]="scheduleDate" [matDatepicker]="picker" placeholder="Chọn ngày">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <h5 class="mt-2">Mô tả</h5>
+      <div class="d-flex flex-column">
+        <mat-form-field hintLabel="Không quá 500 kí tự" appearance="outline">
+          <mat-label>Nhập nội dung lịch trình</mat-label>
+          <textarea #txtarea [(ngModel)]="scheduleNote" rows="7" matInput maxlength="500"
+            placeholder="Nhập nội dung lịch trình"></textarea>
+          <mat-hint align="end">{{txtarea.value?.length || 0}}/500</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="btn-create mr-5">
+    <button (click)="onCreate()" mat-raised-button color="primary">{{data.edit ? 'Lưu' : 'Tạo' }}</button>
+  </div>
+</div>
