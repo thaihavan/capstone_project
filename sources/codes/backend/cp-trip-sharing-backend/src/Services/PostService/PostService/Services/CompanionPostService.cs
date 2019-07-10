@@ -71,5 +71,10 @@ namespace PostService.Services
         {
             return _companionPostRepository.Update(post);
         }
+
+        Post ICompanionPostService.GetById(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

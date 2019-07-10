@@ -1,49 +1,219 @@
 <div class="content-create">
-  <div class="cover-image">
-      <div *ngIf='isHasImg' class="editImage">
-          <mat-menu #appMenu="matMenu">
-              <button mat-menu-item (click)="removeImage()">
-                  <mat-icon>delete</mat-icon>Xoá ảnh
-              </button>
-              <button mat-menu-item (click)="fileClick()">
-                  <mat-icon>add_photo_alternate</mat-icon>Thay ảnh khác
-              </button>
-          </mat-menu>
-          <button mat-button [matMenuTriggerFor]="appMenu">
-              <mat-icon>settings_applications</mat-icon> Chỉnh sửa hình ảnh
-          </button>
-      </div>
-      <div *ngIf='isHasImg' class="set-bg-image">
-          <img [src]="imgUrl" alt="">
-      </div>
-      <div [hidden]='isHasImg' class="upload-image">
-          <button (click)="fileClick()" mat-icon-button class="">
-              <mat-icon>add_photo_alternate</mat-icon>
-              <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]="3.3/1" [resizeToWidth]="1350"
-                  #uploadImage></app-upload-image>
-          </button>
-          <div>
-              <h4>Thêm hình/video cover bài viết</h4>
-              <p class="sub-upload-image">( Hình ảnh tối ưu: 1350px x 480px. )</p>
-          </div>
-      </div>
-      <div class="clear"></div>
-      <div class="form-group title-input">
-          <label for=""></label>
-          <input  [(ngModel)]="title" type="text" class="form-control" name="" id="" aria-describedby="helpId"
-              placeholder="Nhập tiêu đề bài biết">
-          <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
-      </div>
-  </div>
-  <div class="create-post-body">
-      <ckeditor #myEditor [editor]="Editor" [(ngModel)]="content" (ready)="onReady($event)">
-      </ckeditor>
-      <div class="row btnCreate">
-          <button mat-raised-button color="primary">Tạo bài viết</button>
-      </div>
-      <div class="clear"></div>
-  </div>
-  <div class="dialog-step">
+    <div class="cover-image">
+        <div *ngIf='isHasImg' class="editImage">
+            <mat-menu #appMenu="matMenu">
+                <button mat-menu-item (click)="removeImage()">
+                    <mat-icon>delete</mat-icon>Xoá ảnh
+                </button>
+                <button mat-menu-item (click)="fileClick()">
+                    <mat-icon>add_photo_alternate</mat-icon>Thay ảnh khác
+                </button>
+            </mat-menu>
+            <button mat-button [matMenuTriggerFor]="appMenu">
+                <mat-icon>settings_applications</mat-icon> Chỉnh sửa hình ảnh
+            </button>
+        </div>
+        <div *ngIf='isHasImg' class="set-bg-image">
+            <img [src]="imgUrl" alt="">
+        </div>
+        <div [hidden]='isHasImg' class="upload-image">
+            <button (click)="fileClick()" mat-icon-button class="">
+                <mat-icon>add_photo_alternate</mat-icon>
+                <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]="3.3/1"
+                    [resizeToWidth]="1350" #uploadImage></app-upload-image>
+            </button>
+            <div>
+                <h4>Thêm hình/video cover bài viết</h4>
+                <p class="sub-upload-image">( Hình ảnh tối ưu: 1350px x 480px. )</p>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="form-group title-input">
+            <label for=""></label>
+            <input [(ngModel)]="title" type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                placeholder="Nhập tiêu đề bài biết">
+            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+        </div>
+    </div>
+    <div class="create-post-body">
+        <div>
+            <h5 class="mb-4 mb-accent">1. Địa điểm chuyến đi</h5>
+        </div>
+        <div class=row>
+            <div class="pl-3 pr-3">
+                <app-google-map-search width="275" height="40" (onSelect)="addDestination($event)"></app-google-map-search>
+            </div>
+            <div class="content-center">
+                <mat-chip-list>
+                    <mat-chip selected color="primary" *ngFor="let location of destinations; let i=index" [removable]="true"
+                        (removed)="removeDestination(i)">
+                        {{location.name}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+        </div>
+        <div>
+            <h5 class="mb-4 mb-accent">2. Chọn ngày cho chuyến đi</h5>
+        </div>
+        <div class="row">
+            <div class="start-date col-4">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Chọn ngày bắt đầu</mat-label>
+                    <input matInput [(ngModel)]="fromDate" (focus)="openStDateToggle()" [min]="minDate" [max]="maxDate"
+                        [matDatepicker]="startPicker" placeholder="Chọn ngày bắt đầu">
+                    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="end-date col-4">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Chọn ngày kết thúc</mat-label>
+                    <input matInput [(ngModel)]="toDate" [min]="minDate" [max]="maxDate" [matDatepicker]="endPicker"
+                        placeholder="Chọn ngày kết thúc">
+                    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="expried-date col-4">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Chọn ngày hết hạn đăng kí</mat-label>
+                    <input matInput [(ngModel)]="estimatedDate" [min]="minDate" [max]="maxDate" [matDatepicker]="expriedPicker"
+                        placeholder="Chọn ngày hết hạn đăng kí">
+                    <mat-datepicker-toggle matSuffix [for]="expriedPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #expriedPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="amount col-4">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Số tiền dự tính cho nguời lớn</mat-label>
+                    <input [(ngModel)]="estAdultAmount" class="example-right-align" matInput type="number"
+                        placeholder=" Số tiền dự tính cho nguời lớn" [formControl]="adultAmountFormControl">
+                    <!-- <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                        Vui lòng nhập số tiền dự tính
+                    </mat-error> -->
+                    <mat-error *ngIf="adultAmountFormControl.hasError('required')">
+                        Số tiền dự tính cho nguời lớn <strong>bắt buộc</strong>
+                    </mat-error>
+                    <button mat-icon-button matSuffix>
+                        <mat-icon>attach_money</mat-icon>
+                    </button>
 
-  </div>
+                </mat-form-field>
+            </div>
+            <div class="amount col-4">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Số tiền dự tính cho trẻ em</mat-label>
+                    <input [(ngModel)]="estChildAmount" class="example-right-align" matInput type="number" placeholder=" Số tiền dự tính cho  trẻ em"
+                        [formControl]="adultAmountFormControl">
+                    <!-- <mat-error *ngIf="adultAmountFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                        Vui lòng nhập số tiền dự tính
+                    </mat-error> -->
+                    <mat-error *ngIf="adultAmountFormControl.hasError('required')">
+                        Số tiền dự tính cho trẻ em <strong>bắt buộc</strong>
+                    </mat-error>
+                    <button mat-icon-button matSuffix>
+                        <mat-icon>attach_money</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Số lượng thành viên tối thiểu</mat-label>
+                    <input [(ngModel)]="maxMembers" class="example-right-align" type="number" matInput
+                        placeholder="Số lượng thành viên tối thiểu">
+                    <button mat-icon-button matSuffix>
+                        <mat-icon>group</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div class="col-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Số lượng thành viên tối đa</mat-label>
+                    <input [(ngModel)]="minMembers" class="example-right-align" type="number" matInput placeholder="Số lượng thành viên tối đa">
+                    <button mat-icon-button matSuffix>
+                        <mat-icon>group</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+        </div>
+        <h5 class="mb-4" color="accent">3. Viết bài cho chuyến đi</h5>
+        <ckeditor #myEditor [editor]="Editor" [(ngModel)]="content" (ready)="onReady($event)">
+        </ckeditor>
+        <div>
+            <h5 class="mb-4 mt-4 md-accent">4. Lịch trình chuyến đi</h5>
+        </div>
+        <div class="create-step mt-4">
+            <mat-vertical-stepper color="primary" #stepper>
+                <mat-step *ngFor="let item of listSchedules; let i = index" [completed]="false">
+                    <ng-template matStepLabel>
+                        <app-step-lable-companion-post (update)="updateStepper($event)" (delete)="deleteStepper($event)"
+                            [item]="item" [isDisplayMore]="true" [index]="i"></app-step-lable-companion-post>
+                    </ng-template>
+                    <div class="date-time pl-2">
+                        <mat-card-subtitle>
+                            {{item.day | date}}
+                        </mat-card-subtitle>
+                    </div>
+                    <div class="pl-2 pt-2">
+                        {{item.content}}
+                    </div>
+                </mat-step>
+                <mat-step state="add" [completed]="false" [editable]="false" (click)="createStep()">
+                    <ng-template matStepLabel>
+                        <button mat-flat-button (click)="createStep(null)" class="add_button">
+                            Thêm lịch trình cho chuyến đi
+                        </button>
+                    </ng-template>
+                </mat-step>
+                <ng-template matStepperIcon="edit" let-index="index">
+                    {{index + 1}}
+                </ng-template>
+                <ng-template matStepperIcon="done" let-index="index">
+                    {{index + 1}}
+                </ng-template>
+                <ng-template matStepperIcon="add">
+                    <mat-icon>add</mat-icon>
+                </ng-template>
+            </mat-vertical-stepper>
+        </div>
+        <h5 class="mb-4 mt-4 md-accent">5. Các chi phí đã bao gồm</h5>
+        <div style="margin-left: .8rem!important;">
+            <mat-list>
+                <mat-list-item *ngFor="let item of estimatedCostItems; let i = index">
+                    <mat-icon color="accent" matListIcon>check_circle</mat-icon>
+                    <h3 matLine> {{item}} </h3>
+                    <button (click)="removeEstimatedCostItem(i)" matTooltip="Xoá bỏ" mat-icon-button>
+                        <mat-icon class="item-delete">clear</mat-icon>
+                    </button>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <div class="mt-4 pl-4 d-flex flex-row">
+            <div class="mt-2">
+                <button (click)="addEstimatedCostItem()" mat-mini-fab>
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <div class=" ml-3 d-flex flex-column full-input">
+                <div>
+                    <mat-form-field hintLabel="Enter để tạo mới item">
+                        <input [(ngModel)]="estCostItem" class="example-right-align" matInput
+                            placeholder="Thêm mới chi phí bao gồm">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row btnCreate">
+            <button mat-raised-button color="primary" (click)="createPost()">Tạo bài viết</button>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!-- <div class="dialog-step">
+
+  </div> -->
 </div>

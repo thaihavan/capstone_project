@@ -6,6 +6,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { AgmCoreModule } from '@agm/core';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import { SingleCommentComponent } from './components/single-comment/single-comment.component';
 import { MessagePopupComponent } from './components/message-popup/message-popup.component';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -35,6 +37,9 @@ import { MessageComponent } from './components/message/message.component';
 import { SendMessagePopupComponent } from './components/send-message-popup/send-message-popup.component';
 import { ListNotificationComponent } from './components/list-notification/list-notification.component';
 import { CustomDatePipe } from './pipes/custom-date-pipe/custom-date.pipe';
+import { DialogStepFindingCompanionsComponent } from './components/dialog-step-finding-companions/dialog-step-finding-companions.component';
+import { StepFindingCompanionsComponent } from './components/step-finding-companions/step-finding-companions.component';
+import { StepLableCompanionPostComponent } from './components/step-lable-companion-post/step-lable-companion-post.component';
 
 const Material = [
   MatButtonModule,
@@ -56,7 +61,9 @@ const Material = [
   MatChipsModule,
   MatRadioModule,
   MatGridListModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 ];
 @NgModule({
   declarations: [
@@ -82,7 +89,10 @@ const Material = [
     MessageComponent,
     SendMessagePopupComponent,
     ListNotificationComponent,
-    CustomDatePipe
+    CustomDatePipe,
+    DialogStepFindingCompanionsComponent,
+    StepFindingCompanionsComponent,
+    StepLableCompanionPostComponent
   ],
   imports: [
     CommonModule,
@@ -115,13 +125,17 @@ const Material = [
     UserComponent,
     SendMessagePopupComponent,
     ListNotificationComponent,
-    CustomDatePipe
+    CustomDatePipe,
+    DialogStepFindingCompanionsComponent,
+    StepFindingCompanionsComponent,
+    StepLableCompanionPostComponent
   ],
   entryComponents: [
     StepCreatePostComponent,
     CropImageComponent,
     LoadingScreenComponent,
-    SendMessagePopupComponent
+    SendMessagePopupComponent,
+    DialogStepFindingCompanionsComponent
   ]
 })
 export class SharedModule { }
