@@ -147,3 +147,29 @@ button:focus {
 .articlekHidden{
   position: absolute;
 }
+
+.location{
+  padding: 5px 5px 5px 6px;
+  border: 1px solid grey;
+  display: inline;
+  font-size: 13px;
+  color: grey;
+  text-transform: uppercase;
+  margin-right: 3px;
+}
+
+.mat-card-actions, .mat-card-content, .mat-card-subtitle {
+  display: block;
+  margin-bottom: 0px !important; 
+  margin-top: 10px !important;
+}
+
+.time{
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.mat-card-avatar {
+  margin-top: 5px;
+}

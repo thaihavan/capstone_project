@@ -44,8 +44,8 @@ export class UserService {
     return this.http.post<any>(this.apiUrl + 'register', account, httpOption);
   }
 
-  forgotPassword(account: Account): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'forgotpassword', account, httpOption);
+  forgotPassword(email: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'forgotpassword?email=' + email, null, httpOption);
   }
 
   changePassword(changePasswordObject: ChangePassword): Observable<any> {

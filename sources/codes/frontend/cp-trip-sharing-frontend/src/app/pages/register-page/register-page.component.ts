@@ -68,10 +68,10 @@ export class RegisterPageComponent implements OnInit {
 
   openDialogMessageConfirm() {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '380px',
-      height: '200px',
+      width: '320px',
+      height: 'auto',
       position: {
-        top: '10px'
+        top: '20px'
       },
       disableClose: true
     });

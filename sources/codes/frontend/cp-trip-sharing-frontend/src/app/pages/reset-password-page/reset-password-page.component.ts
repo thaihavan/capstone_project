@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { ResetPasswordModel } from 'src/app/model/ResetPasswordModel';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reset-password-page',
@@ -14,10 +15,18 @@ import { Title } from '@angular/platform-browser';
 })
 export class ResetPasswordPageComponent implements OnInit {
   token: string = null;
-  newpassword: string = null;
-  renewpassword: string = null;
   message: string = null;
   resetPasswordModel: ResetPasswordModel;
+  form = new FormGroup({
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5)
+    ]),
+    repassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5)
+    ])
+  });
   constructor(private route: ActivatedRoute, private dialog: MatDialog, private userService: UserService,
               private titleService: Title) {
     this.titleService.setTitle('Đặt lại mật khẩu');
@@ -30,10 +39,10 @@ export class ResetPasswordPageComponent implements OnInit {
 
   openDialogMessageConfirm() {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '380px',
-      height: '200px',
+      width: '320px',
+      height: 'auto',
       position: {
-        top: '10px'
+        top: '20px'
       },
       disableClose: true
     });
@@ -43,14 +52,14 @@ export class ResetPasswordPageComponent implements OnInit {
   }
 
   resetPassword() {
-    if (this.newpassword !== this.renewpassword) {
+    if (this.form.value.password !== this.form.value.repassword) {
       this.message = 'Mật khẩu không trùng khớp';
     } else {
-      this.resetPasswordModel.NewPassword = this.renewpassword;
+      this.resetPasswordModel.NewPassword = this.form.value.repassword;
       this.userService.resetPassword(this.token, this.resetPasswordModel).subscribe((data: any) => {
         this.openDialogMessageConfirm();
       }, (err: HttpErrorResponse) => {
-        this.message = 'Đăng kí thất bại!';
+        this.message = 'Đặt lại mật khẩu thất bại!';
       });
     }
   }

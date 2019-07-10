@@ -10,6 +10,7 @@
     border-top: 1px solid gainsboro;
     padding: 10px;
     position: relative;
+    text-align: center
 }
 
 .item-menu:hover{

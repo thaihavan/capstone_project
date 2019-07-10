@@ -30,19 +30,19 @@ export class ForgotpasswordPageComponent implements OnInit {
   ngOnInit() {
   }
   forgotPassword() {
-    this.acount.Email = this.form.value.email;
-    this.userService.forgotPassword(this.acount).subscribe((data: any) => {
+    const email = this.form.value.email;
+    this.userService.forgotPassword(email).subscribe((data: any) => {
       this.openDialogMessageConfirm();
     }, (err: HttpErrorResponse) => {
-      this.message = 'Đăng kí thất bại!';
+      this.message = 'Lấy lại mật khẩu thất bại!';
     });
   }
   openDialogMessageConfirm() {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '380px',
-      height: '200px',
+      width: '320px',
+      height: 'auto',
       position: {
-        top: '10px'
+        top: '20px'
       },
       disableClose: true
     });
