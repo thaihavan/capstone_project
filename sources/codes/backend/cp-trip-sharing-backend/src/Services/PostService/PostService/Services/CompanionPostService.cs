@@ -69,7 +69,7 @@ namespace PostService.Services
 
         public CompanionPost Update(CompanionPost post)
         {
-            throw new NotImplementedException();
+            return _companionPostRepository.Update(post);
         }
     }
 }

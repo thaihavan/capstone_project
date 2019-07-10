@@ -86,5 +86,17 @@ namespace PostService.Controllers
             var result = _companionPostService.GetAll(userId);
             return Ok(result);
         }
+
+        [Authorize(Roles ="member")]
+        [HttpDelete("post")]
+        public IActionResult DeleteCompanionPost([FromQuery]string id)
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = User.Identity.IsAuthenticated ? identity.FindFirst("user_id").Value : null;
+            var post = _companionPostService.GetById(id);
+            if (!userId.Equals(post.Post.AuthorId)) return Unauthorized();
+            var result = _companionPostService.Delete(id);
+            return Ok(new { Message = "Success" });
+        }
     }
 }

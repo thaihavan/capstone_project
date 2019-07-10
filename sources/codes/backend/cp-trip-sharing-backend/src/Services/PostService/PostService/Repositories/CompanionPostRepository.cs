@@ -52,7 +52,24 @@ namespace PostService.Repositories
 
         public CompanionPost GetById(string id)
         {
-            throw new NotImplementedException();
+            Func<CompanionPost, Post, CompanionPost> SelectCompanionPostWithPost =
+                ((companionPost, post) => { companionPost.Post = post; return companionPost; });
+            Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
+                ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
+
+            var result = _companionPosts.AsQueryable().Where(x => x.Id.Equals(id))
+                    .Join(
+                        _posts.AsQueryable(),
+                        companionPost => companionPost.PostId,
+                        post => post.Id,
+                        SelectCompanionPostWithPost)
+                    .Join(
+                        _authors.AsQueryable(),
+                        companionPostWithPost => companionPostWithPost.Post.AuthorId,
+                        author => author.Id,
+                        SelectCompanionPostWithAuthor)
+                    .FirstOrDefault();
+            return result;
         }
 
         public CompanionPost Update(CompanionPost param)
@@ -110,6 +127,7 @@ namespace PostService.Repositories
                         UpdateLike)
                     .FirstOrDefault();
             }
+             
             return result;
         }
 
@@ -160,6 +178,26 @@ namespace PostService.Repositories
                     .ToList();
             }
             return result;
+        }
+
+        public IEnumerable<CompanionPostJoinRequest> GetAllJoinRequest(string companionPostId)
+        {
+            return _companionPostJoinRequests
+                .Find(Builders<CompanionPostJoinRequest>.Filter.Eq(x => x.CompanionPostId, companionPostId))
+                .ToList();
+        }
+
+        public CompanionPostJoinRequest AddNewRequest(CompanionPostJoinRequest param)
+        {
+            _companionPostJoinRequests.InsertOne(param);
+            return param;
+        }
+
+        public bool DeleteJoinRequest(string requestId)
+        {
+            _companionPostJoinRequests.FindOneAndDelete(
+                Builders<CompanionPostJoinRequest>.Filter.Eq(x => x.Id, requestId));
+            return true;
         }
     }
 }
