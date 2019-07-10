@@ -17,6 +17,7 @@ namespace PostService.Repositories
         private readonly IMongoCollection<Comment> _comments = null;
         private readonly IMongoCollection<Author> _authors = null;
         private readonly IMongoCollection<Like> _likes = null;
+        private readonly IMongoCollection<Post> _posts = null;
 
         public CommentRepository(IMongoCollection<Comment> comments, IMongoCollection<Author> authors)
         {
@@ -30,6 +31,7 @@ namespace PostService.Repositories
             _comments = dbContext.Comments;
             _authors = dbContext.Authors;
             _likes = dbContext.Likes;
+            _posts = dbContext.Posts;
         }
 
         public Comment Add(Comment param)
@@ -40,7 +42,27 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            return _comments.DeleteOne(temp => temp.Id.Equals(id)).IsAcknowledged;
+            List<Comment> comments = new List<Comment>();
+            var postId = comments.Find(x => x.Id.Equals(id)).PostId;
+            var allComment =_comments.Find(x=>x.Id.Equals(postId)).ToList();
+            var dict = allComment.ToDictionary(x => x.Id, x => x);
+            foreach (var x in dict)
+            {
+                if (x.Value.ParentId == null)
+                {
+                    comments.Add(x.Value);
+                }
+                else
+                {
+                    var parent = dict[x.Value.ParentId];
+                    parent.Childs.Add(x.Value);
+                }
+            }
+            var comment = dict[id];
+            var commentIds = new List<string>();
+            GetChild(comment, commentIds);
+
+            return _comments.DeleteMany(Builders<Comment>.Filter.In(x => x.Id, commentIds)).IsAcknowledged;           
         }
 
         public IEnumerable<Comment> GetAll()
@@ -144,6 +166,15 @@ namespace PostService.Repositories
                     UpdateLiked
                 );
             return comments.ToList();
+        }
+
+        void GetChild(Comment comment,List<string> commentIds)
+        {
+            foreach(Comment cmt in comment.Childs)
+            {
+                commentIds.Add(cmt.Id);
+                GetChild(cmt, commentIds);
+            }
         }
     }
 }

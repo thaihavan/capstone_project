@@ -24,5 +24,8 @@ namespace PostService.Models
 
         [BsonElement("date")]
         public DateTime Date { get; set; }
+
+        [BsonElement("status")]
+        public bool Status { get; set; }
     }
 }
