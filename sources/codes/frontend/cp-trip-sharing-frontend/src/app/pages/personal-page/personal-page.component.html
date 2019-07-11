@@ -12,9 +12,10 @@
       <a href="#"><span class="personal-name">{{user.UserName}}</span></a>
       <div class="opacity"></div>
       <div [hidden]="userId == usergetLocalStorage.id" class="follow-message-infor">
-          <button class="btn-follow" mat-button (click)="openSendMessagePopup()">
+          <button class="btn-follow" mat-button (click)="followPerson(userId)">
               <mat-icon>rss_feed</mat-icon>
-              <span>Theo dõi</span>
+              <span *ngIf="follow == false">Theo dõi</span>
+              <span *ngIf="follow == true">Đã Theo dõi</span>
             </button>
         <button class="btn-send-message" mat-button (click)="openSendMessagePopup()">
           <mat-icon>message</mat-icon>

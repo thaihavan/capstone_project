@@ -50,7 +50,7 @@ export class PostSmallComponent implements OnInit {
   getStates(): void {
     this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
     if (this.listUserIdFollowing != null) {
-      this.follow = this.listUserIdFollowing.indexOf(this.post.post.id) !== -1;
+      this.follow = this.listUserIdFollowing.indexOf(this.post.post.author.id) !== -1;
     }
     this.listPostIdBookMark = JSON.parse(localStorage.getItem('listPostIdBookmark'));
     if (this.listPostIdBookMark != null) {
