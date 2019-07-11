@@ -18,6 +18,7 @@ import { SendMessagePopupComponent } from 'src/app/shared/components/send-messag
 })
 export class PersonalPageComponent implements OnInit {
   user: User;
+  usergetLocalStorage: any;
   gender = '';
   coverImage = '../../../assets/cover-image.png';
   avatar = '../../../assets/img_avatar.png';
@@ -53,11 +54,11 @@ export class PersonalPageComponent implements OnInit {
     ];
     this.user = new User();
     this.userId = this.route.snapshot.paramMap.get('userId');
+    this.usergetLocalStorage = JSON.parse(localStorage.getItem('User'));
     if (this.userId != null) {
       this.getInforUser(this.userId);
     } else {
-      const user = JSON.parse(localStorage.getItem('User'));
-      this.userId = user.id;
+      this.userId = this.usergetLocalStorage.id;
       this.getInforUser(this.userId);
     }
 

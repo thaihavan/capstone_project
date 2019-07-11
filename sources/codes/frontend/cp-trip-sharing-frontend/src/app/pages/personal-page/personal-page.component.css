@@ -91,10 +91,50 @@ button:focus {
 .mat-fab:hover .material-icons{
   line-height: 0;
 }
-.icon-block{
-  margin-top: -36px;
-  z-index: 9999;
-  margin-left: 75%;
-  color: black;
+
+.follow-message-infor{
   position: absolute;
+  top: 86%;
+  right: 20%;
+  width: 45%;
+  color: white;
+  height: 40px;
+}
+
+.icon-block{
+  color: black;
+  display: inline-block;
+  position: absolute;
+  right: 0%;
+  color: white;
+}
+
+.btn-send-message{
+  width: 110px;
+  height: 30px;
+  position: absolute;
+  padding: 0 !important;
+  border: solid 1px white;
+  border-radius: 4px;
+  line-height: 1.0 !important;
+  color: white;
+  display: inline-block;
+  right: 10%;
+}
+
+.btn-follow{
+  width: 100px;
+  display: inline-block;
+  height: 30px;
+  position: absolute;
+  padding: 0 !important;
+  border: solid 1px white;
+  border-radius: 4px;
+  line-height: 1.0 !important;
+  color: white;
+  right: 35%;
+}
+
+.material-icons {
+  font-size: 22px;
 }
