@@ -25,7 +25,7 @@ namespace PostService.Repositories
             _virtualTrips = dbContext.VirtualTrips;
             _posts = dbContext.Posts;
             _authors = dbContext.Authors;
-            _likes= dbContext.Likes;
+            _likes = dbContext.Likes;
         }
 
         public VirtualTrip Add(VirtualTrip param)
@@ -57,99 +57,6 @@ namespace PostService.Repositories
                 return null;
             }
             return param;
-        }
-
-        public IEnumerable<VirtualTrip> GetAllVirtualTripWithPost()
-        {
-            var virtualTrips = _posts.AsQueryable().Join(
-                _authors.AsQueryable(),
-                post => post.AuthorId,
-                author => author.Id,
-                (post, author) => new
-                {
-                    Id = post.Id,
-                    Post = new Post
-                    {
-                        Id = post.Id,
-                        AuthorId = post.AuthorId,
-                        Content = post.Content,
-                        CommentCount = post.CommentCount,
-                        IsActive = post.IsActive,
-                        IsPublic = post.IsPublic,
-                        LikeCount = post.LikeCount,
-                        PostType = post.PostType,
-                        PubDate = post.PubDate,
-                        Title = post.Title,
-                        CoverImage = post.CoverImage,
-                        Author = new Author()
-                        {
-                            Id = author.Id,
-                            DisplayName = author.DisplayName,
-                            ProfileImage = author.ProfileImage
-                        }
-                    }
-                }).Join(
-                    _virtualTrips.AsQueryable(),
-                    pv => pv.Id,
-                    v => v.PostId,
-                    (pv, v) => new VirtualTrip()
-                    {
-                        Id = v.Id,
-                        Items = v.Items,
-                        PostId = v.PostId,
-                        Post = pv.Post
-                    });
-            return virtualTrips.ToList();
-        }
-
-        public IEnumerable<VirtualTrip> GetAllVirtualTripWithPost(string userId)
-        {
-            Func<VirtualTrip, IEnumerable<Like>, VirtualTrip> UpdateLiked =
-                ((virtualTrip, likes) => { virtualTrip.Post.liked = likes.Count() > 0 ? true : false; return virtualTrip; });
-            var virtualTrips = _posts.AsQueryable().Join(
-                _authors.AsQueryable(),
-                post => post.AuthorId,
-                author => author.Id,
-                (post, author) => new
-                {
-                    Id = post.Id,
-                    Post = new Post
-                    {
-                        Id = post.Id,
-                        AuthorId = post.AuthorId,
-                        Content = post.Content,
-                        CommentCount = post.CommentCount,
-                        IsActive = post.IsActive,
-                        IsPublic = post.IsPublic,
-                        LikeCount = post.LikeCount,
-                        PostType = post.PostType,
-                        PubDate = post.PubDate,
-                        Title = post.Title,
-                        CoverImage = post.CoverImage,
-                        Author = new Author()
-                        {
-                            Id = author.Id,
-                            DisplayName = author.DisplayName,
-                            ProfileImage = author.ProfileImage
-                        }
-                    }
-                }).Join(
-                    _virtualTrips.AsQueryable(),
-                    pv => pv.Id,
-                    v => v.PostId,
-                    (pv, v) => new VirtualTrip()
-                    {
-                        Id = v.Id,
-                        Items = v.Items,
-                        PostId = v.PostId,
-                        Post = pv.Post
-                    }).GroupJoin(
-                    _likes.AsQueryable().Where(x=>x.ObjectType=="post"&&x.UserId==userId),
-                    virtualTrip=>virtualTrip.PostId,
-                    like=>like.ObjectId,
-                    UpdateLiked
-                );
-            return virtualTrips.ToList();
         }
 
         public VirtualTrip GetVirtualTrip(string id)
@@ -194,6 +101,145 @@ namespace PostService.Repositories
                     }
                 ).Where(v => v.Id == id).Select(v => v);
             return virtualTrips.FirstOrDefault();
+        }
+
+        public IEnumerable<VirtualTrip> GetAllVirtualTrips(string userId, PostFilter postFilter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<VirtualTrip> GetAllVirtualTrips(PostFilter postFilter)
+        {
+            // Time period filter
+            var filterDate = new DateTime(0);
+            var now = DateTime.Now;
+            switch (postFilter.TimePeriod)
+            {
+                case "today":
+                    filterDate = now.AddDays(-1);
+                    break;
+                case "this_week":
+                    filterDate = now.AddDays(-7);
+                    break;
+                case "this_month":
+                    filterDate = now.AddDays(-30);
+                    break;
+                case "this_year":
+                    filterDate = now.AddDays(-365);
+                    break;
+                case "all_time":
+                    filterDate = new DateTime(0);
+                    break;
+            }
+
+            var virtualTrips = _posts.AsQueryable()
+                .Where(p => p.PubDate >= filterDate)
+                .Join(
+                _authors.AsQueryable(),
+                post => post.AuthorId,
+                author => author.Id,
+                (post, author) => new
+                {
+                    Id = post.Id,
+                    Post = new Post
+                    {
+                        Id = post.Id,
+                        AuthorId = post.AuthorId,
+                        Content = post.Content,
+                        CommentCount = post.CommentCount,
+                        IsActive = post.IsActive,
+                        IsPublic = post.IsPublic,
+                        LikeCount = post.LikeCount,
+                        PostType = post.PostType,
+                        PubDate = post.PubDate,
+                        Title = post.Title,
+                        CoverImage = post.CoverImage,
+                        Author = new Author()
+                        {
+                            Id = author.Id,
+                            DisplayName = author.DisplayName,
+                            ProfileImage = author.ProfileImage
+                        }
+                    }
+                }).Join(
+                    _virtualTrips.AsQueryable(),
+                    pv => pv.Id,
+                    v => v.PostId,
+                    (pv, v) => new VirtualTrip()
+                    {
+                        Id = v.Id,
+                        Items = v.Items,
+                        PostId = v.PostId,
+                        Post = pv.Post
+                    });
+            return virtualTrips.ToList();
+        }
+
+        public IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilter)
+        {
+            // Time period filter
+            var filterDate = new DateTime(0);
+            var now = DateTime.Now;
+            switch (postFilter.TimePeriod)
+            {
+                case "today":
+                    filterDate = now.AddDays(-1);
+                    break;
+                case "this_week":
+                    filterDate = now.AddDays(-7);
+                    break;
+                case "this_month":
+                    filterDate = now.AddDays(-30);
+                    break;
+                case "this_year":
+                    filterDate = now.AddDays(-365);
+                    break;
+                case "all_time":
+                    filterDate = new DateTime(0);
+                    break;
+            }
+
+            var virtualTrips = _posts.AsQueryable()
+                .Where(p => p.PubDate >= filterDate && p.AuthorId == userId)
+                .Join(
+                _authors.AsQueryable(),
+                post => post.AuthorId,
+                author => author.Id,
+                (post, author) => new
+                {
+                    Id = post.Id,
+                    Post = new Post
+                    {
+                        Id = post.Id,
+                        AuthorId = post.AuthorId,
+                        Content = post.Content,
+                        CommentCount = post.CommentCount,
+                        IsActive = post.IsActive,
+                        IsPublic = post.IsPublic,
+                        LikeCount = post.LikeCount,
+                        PostType = post.PostType,
+                        PubDate = post.PubDate,
+                        Title = post.Title,
+                        CoverImage = post.CoverImage,
+                        Author = new Author()
+                        {
+                            Id = author.Id,
+                            DisplayName = author.DisplayName,
+                            ProfileImage = author.ProfileImage
+                        }
+                    }
+                }).Join(
+                    _virtualTrips.AsQueryable(),
+                    pv => pv.Id,
+                    v => v.PostId,
+                    (pv, v) => new VirtualTrip()
+                    {
+                        Id = v.Id,
+                        Items = v.Items,
+                        PostId = v.PostId,
+                        Post = pv.Post
+                    });
+            return virtualTrips.ToList();
         }
     }
 }

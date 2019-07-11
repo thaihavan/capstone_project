@@ -8,15 +8,7 @@ namespace PostService.Services.Interfaces
 {
     public interface IArticleService
     {
-        IEnumerable<Article> GetAllArticleInfo();
-
-        Article GetArticleInfoById(string id, string userId);
-
-        IEnumerable<Article> GetAllArticleByUser(string userId);
-
-        IEnumerable<Article> GetAllArticleByUser(string userId, PostFilter postFilter);
-
-        Article GetById(string id);
+        Article GetArticleById(string id, string userId);
 
         Article Add(Article article);
 
@@ -24,10 +16,8 @@ namespace PostService.Services.Interfaces
 
         bool Delete(string id);
 
-        IEnumerable<Article> GetAllArticleInfo(string userId);
+        IEnumerable<Article> GetAllArticles(PostFilter postFilter);
 
-        IEnumerable<Article> GetAllArticleInfo(string userId, PostFilter postFilter);
-
-        IEnumerable<Article> GetAllArticleInfo(PostFilter postFilter);
+        IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter);
     }
 }

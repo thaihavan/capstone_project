@@ -17,7 +17,7 @@
       <div class="section recommend-section">
         <div>
           <h3 class="section-title">Đề xuất</h3>
-          <a href="#" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
+          <a href="trang-chu/de-xuat" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
         </div>
         <app-list-post-horizontal [listType]="'article'" [posts]="newestArticles" [rowSize]="3">
         </app-list-post-horizontal>
@@ -26,7 +26,7 @@
       <div class="section popular-section">
         <div>
           <h3 class="section-title">Phổ biến</h3>
-          <a href="#" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
+          <a href="trang-chu/pho-bien" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
         </div>
         <app-list-post-horizontal [listType]="'article'" [posts]="newestArticles" [rowSize]="3">
         </app-list-post-horizontal>
@@ -35,7 +35,7 @@
       <div class="section newest-section">
         <div>
           <h3 class="section-title">Mới nhất</h3>
-          <a href="#" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
+          <a href="trang-chu/moi-nhat" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
         </div>
         <app-list-post-horizontal [listType]="'article'" [posts]="newestArticles" [rowSize]="3">
         </app-list-post-horizontal>
@@ -50,11 +50,13 @@
           <div class="title-border-bottom"></div>
         </div>
         <div class="section newest-section">
-          <!-- <div>
-            <h3 class="section-title">Mới nhất</h3>
-          </div> -->
+          <div>
+            <!-- <h3 class="section-title">Mới nhất</h3> -->
+            <a href="trang-chu/chuyen-di" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
+          </div>
           <app-list-post-horizontal [listType]="'virtual-trip'" [posts]="virtualTrips" [rowSize]="3">
           </app-list-post-horizontal>
+          
         </div>
       </div>
 
