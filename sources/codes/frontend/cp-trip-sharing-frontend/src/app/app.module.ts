@@ -37,6 +37,7 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { provideSocialLoginConfig } from './social-login-config';
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 import { MatBadgeModule } from '@angular/material';
+import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { MatBadgeModule } from '@angular/material';
     DialogCreateTripComponent,
     DestinationTripComponent,
     ChatPageComponent,
-    CreateFindingCompanionsPostComponent
+    CreateFindingCompanionsPostComponent,
+    ListPostPageComponent
   ],
   imports: [
     MatMenuModule,

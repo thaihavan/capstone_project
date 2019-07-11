@@ -45,6 +45,7 @@ import { PostSmallComponent } from './components/post-small/post-small.component
 import { ArticleSmallComponent } from './components/post-small/components/article-small/article-small.component';
 import { VirtualTripSmallComponent } from './components/post-small/components/virtual-trip-small/virtual-trip-small.component';
 import { CompanionPostSmallComponent } from './components/post-small/components/companion-post-small/companion-post-small.component';
+import { PostFilterComponent } from './components/post-filter/post-filter.component';
 
 const Material = [
   MatButtonModule,
@@ -102,7 +103,8 @@ const Material = [
     PostSmallComponent,
     ArticleSmallComponent,
     VirtualTripSmallComponent,
-    CompanionPostSmallComponent
+    CompanionPostSmallComponent,
+    PostFilterComponent
   ],
   imports: [
     CommonModule,
@@ -143,7 +145,8 @@ const Material = [
     PostSmallComponent,
     ArticleSmallComponent,
     VirtualTripSmallComponent,
-    CompanionPostSmallComponent
+    CompanionPostSmallComponent,
+    PostFilterComponent
   ],
   entryComponents: [
     StepCreatePostComponent,

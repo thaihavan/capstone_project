@@ -1,0 +1,40 @@
+
+.button-filter-container {
+    min-height: 50px;
+}
+
+.filter-body {
+    line-height: 2.0;
+    padding: 0px 20px 10px 20px;
+    margin-bottom: 30px;
+    border-bottom: solid 1px #dcdcdc;
+}
+.button-filter {
+    width: 100px;
+}
+
+.filter-section {
+    margin: 20px 0px;
+}
+
+.filter-ok-button button {
+    border: solid 1px #dcdcdc;
+}
+
+mat-button-toggle-group {
+    height: 32px !important;
+}
+
+mat-button-toggle {
+    margin-top: -10px;
+}
+
+.topic-checbox-item {
+    width: 33.33%;
+    float: left;
+}
+.filter-section::after {
+    content: "";
+    clear: both;
+    display: block;
+}

@@ -19,6 +19,7 @@ import { ListBookmarksComponent } from './shared/components/list-bookmarks/list-
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
+import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 
 
 const routes: Routes = [
@@ -27,12 +28,8 @@ const routes: Routes = [
     path: '', component: HeaderComponent,
     children: [
       { path: '', redirectTo: 'trang-chu', pathMatch: 'full' },
-      {
-        path: 'trang-chu', component: HomePageComponent,
-        children: [
-          { path: ':home-nav', component: ListPostComponent }
-        ]
-      },
+      { path: 'trang-chu', component: HomePageComponent },
+      { path: 'trang-chu/:home-nav', component: ListPostPageComponent },
       {
         path: 'user/:userId', component: PersonalPageComponent,
         children: [
