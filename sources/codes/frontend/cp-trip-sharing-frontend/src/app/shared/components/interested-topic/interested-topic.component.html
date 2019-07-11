@@ -1,5 +1,3 @@
-<div class="allinterested">
-  <!-- <h5 id="title">Chọn tất cả các chủ đề mà bạn muốn đọc</h5> -->
   <div class="interestedtopic" >
     <div (click)="onSelectTopic(eachtopic.id)" [class]="IsChecked(eachtopic.id) ? 'topic topic-active':'topic topic-disable'"  
     *ngFor="let eachtopic of listTopics">
@@ -7,4 +5,3 @@
       <span class="name-topic">{{eachtopic.name}}</span>
     </div>
   </div>
-</div>

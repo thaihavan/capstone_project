@@ -32,7 +32,7 @@
     <mat-step [stepControl]="secondFormGroup">
       <ng-template matStepLabel>Chọn chủ đề</ng-template>
       <div class="step-title">
-        <h3>Chọn chủ đề cho bài viết</h3>
+        <span>Chọn chủ đề cho bài viết</span>
       </div>
       <div class="step-body">
         <app-interested-topic [listTopicIdSelected]="selectedTopic" (EventTopic)="selectedTopics($event)"></app-interested-topic>

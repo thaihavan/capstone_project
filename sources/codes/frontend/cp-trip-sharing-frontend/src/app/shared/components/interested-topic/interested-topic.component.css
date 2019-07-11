@@ -1,11 +1,6 @@
-.allinterested{
-    width: 100%;
-    border-radius: 3px;
-    margin: 0 auto;
-}
 .interestedtopic{
     width: 100%;
-    height: 450px;
+    height: 350px;
     margin: 0 auto;
     overflow: auto;
     text-align: center;
@@ -13,11 +8,13 @@
 
 .topic {
     border-radius: 5px;
+    border-radius: 5px;
     width: 25%;
     height: 100px;
     float: left;
-    padding: 5px 5px;
+    padding: 2px!important;
     box-sizing: border-box !important;
+    display: inline-block!important;
 }
 
 .topic-disable{

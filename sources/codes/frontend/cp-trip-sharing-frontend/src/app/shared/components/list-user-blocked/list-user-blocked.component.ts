@@ -10,8 +10,7 @@ import { User } from 'src/app/model/User';
 })
 export class ListUserBlockedComponent implements OnInit {
   listUser: any[];
-  listUser2: any[] = [];
-  listUser3: any[] = [];
+  listUserSave: any[];
   title = 'Danh sách người dùng bạn đã chặn';
   searchUserName: any;
   constructor(private userService: UserService) {
@@ -24,23 +23,22 @@ export class ListUserBlockedComponent implements OnInit {
     const token = localStorage.getItem('Token');
     this.userService.getAllUserBlockedByUserId(token).subscribe((result: any) => {
       this.listUser = result;
-      this.listUser.forEach(user => console.log(user));
-      this.listUser2 = this.listUser;
+      this.listUserSave = this.listUser;
     }, (error: HttpErrorResponse) => {
       console.log(error);
     });
   }
 
   search(searchUser: any) {
-    this.listUser = this.listUser2;
-    this.listUser3 = [];
+    this.listUser = this.listUserSave;
+    const listUserSearch: any[] = [];
     if (searchUser !== '') {
       this.listUser.forEach(user => {
         if (user.displayName.toLowerCase().indexOf(searchUser) > -1) {
-          this.listUser3.push(user);
+          listUserSearch.push(user);
         }
       });
-      this.listUser = this.listUser3;
+      this.listUser = listUserSearch;
     }
   }
 }
