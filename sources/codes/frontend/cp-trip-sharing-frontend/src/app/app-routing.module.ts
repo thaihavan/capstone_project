@@ -20,9 +20,11 @@ import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
+import { DashboardPageComponent } from './admin/pages/dashboard-page/dashboard-page.component';
 
 
 const routes: Routes = [
+  { path: 'dashboard', component: DashboardPageComponent },
   { path: 'xac-nhan-email/:token', component: EmailConfirmPageComponent },
   {
     path: '', component: HeaderComponent,
