@@ -1,9 +1,9 @@
 <div class="timeline-cover" #top>
   <div>
-    <img class="cover-image" src="{{coverImage}}">
+    <img class="cover-image" src="{{post.coverImage}}">
   </div>
   <div class="profile-infor">
-    <a href="#"><img src="{{coverImg}}" class="avatar-img"></a>
+    <a href="#"><img src="{{profileImage}}" class="avatar-img"></a>
   </div>
   <div class="icon-block">
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -26,9 +26,6 @@
       <div class="title">
         <span>{{post.title}}</span>
       </div>
-      <!-- <div class="short-content">
-      <span>{{getShortDescription(post.content)}}</span>
-    </div> -->
       <div class="location" *ngFor="let location of listLocation">
         <span><i class="fa fa-tag"></i>{{location.name}}</span>
       </div>
@@ -38,11 +35,9 @@
     <div class="infor-author">
       <div (click)="gotoPersonalPage(authorId)" class="personal-name"><span>{{displayName}}</span></div>
       <div class="time">{{post.pubDate | customDate}}</div>
-      <button (click)="followPerson(post.author.id)" *ngIf="follow" class="btn-follow">
-        <span><i class="fa fa-rss"></i>Theo dõi</span>
-      </button>
-      <button (click)="followPerson(post.author.id)" *ngIf="followed" class="btn-follow">
-        <span><i class="fa fa-rss"></i> Đã theo dõi</span>
+      <button (click)="followPerson(post.authorId)" *ngIf="user.id !== post.authorId" class="btn-follow">
+        <span *ngIf="follow == false"><i class="fa fa-rss"></i>Theo dõi</span>
+        <span *ngIf="follow == true"><i class="fa fa-rss"></i> Đã theo dõi</span>
       </button>
       <div class="share"><i class="fa fa-share"></i> <span> Chia sẻ </span></div>
       <div class="like"><i class="fa fa-thumbs-up"></i><span> {{post.likeCount}} thích </span></div>

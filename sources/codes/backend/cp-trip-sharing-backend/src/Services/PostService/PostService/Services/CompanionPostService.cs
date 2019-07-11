@@ -29,7 +29,7 @@ namespace PostService.Services
 
         public CompanionPostJoinRequest AddNewRequest(CompanionPostJoinRequest param)
         {
-            throw new NotImplementedException();
+            return _companionPostRepository.AddNewRequest(param);
         }
 
         public bool Delete(string id)
@@ -39,7 +39,7 @@ namespace PostService.Services
 
         public bool DeleteJoinRequest(string requestId)
         {
-            throw new NotImplementedException();
+            return _companionPostRepository.DeleteJoinRequest(requestId);
         }
 
         public IEnumerable<CompanionPost> GetAll()
@@ -54,7 +54,7 @@ namespace PostService.Services
 
         public IEnumerable<CompanionPostJoinRequest> GetAllJoinRequest(string companionPostId)
         {
-            throw new NotImplementedException();
+            return _companionPostRepository.GetAllJoinRequest(companionPostId);
         }
 
         public CompanionPost GetById(string id)
@@ -70,6 +70,6 @@ namespace PostService.Services
         public CompanionPost Update(CompanionPost post)
         {
             return _companionPostRepository.Update(post);
-        }
+        }       
     }
 }
