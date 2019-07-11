@@ -107,4 +107,8 @@ export class PostSmallComponent implements OnInit {
     }
   }
 
+  gotoPersionalPage(userId: string) {
+    window.location.href = `/user/${userId}`;
+  }
+
 }

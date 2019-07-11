@@ -22,11 +22,6 @@ export class ListPostComponent implements OnInit {
     'chuyen-di',
     'tim-ban-dong-hanh'
   ];
-  VALID_HOME_NAVS: string[] = [
-    'de-xuat',
-    'pho-bien',
-    'moi-nhat'
-  ];
 
   articleDisplay = new ArticleDisplay();
   topics: Topic[] = [];
@@ -35,7 +30,6 @@ export class ListPostComponent implements OnInit {
   isLoading = true;
   isDisplayFilter = false;
 
-  homeNav: string;
   personalNav: string;
   postFilter: PostFilter;
 
@@ -92,15 +86,7 @@ export class ListPostComponent implements OnInit {
   setNavParams() {
     this.route.params.forEach(param => {
       // Get parameter from url
-      this.homeNav = param['home-nav'];
       this.personalNav = param['personal-nav'];
-      // this.homeNav = this.route.snapshot.paramMap.get('home-nav');
-      // this.personalNav = this.route.snapshot.paramMap.get('personal-nav');
-
-      // If home-nav is not valid
-      if (this.homeNav && this.VALID_HOME_NAVS.indexOf(this.homeNav) === -1) {
-        this.homeNav = 'de-xuat';
-      }
 
       // If personal-nav is not valid
       if (this.personalNav && this.VALID_PERSONAL_NAVS.indexOf(this.personalNav) === -1) {
@@ -144,30 +130,7 @@ export class ListPostComponent implements OnInit {
       postFilter.topics = [];
     }
 
-    if (this.homeNav || this.personalNav === 'bai-viet') {
-      this.getArticles(postFilter);
-    } else if (this.personalNav === 'chuyen-di') {
-      this.getArticles(postFilter);
-    } else if (this.personalNav === 'tim-ban-dong-hanh') {
-    }
-  }
-
-  getArticles(postFilter: PostFilter): void {
-    if (this.homeNav != null) {
-      // Call api
-      this.postService.getAllArticles(postFilter).subscribe((data: any) => {
-        this.resetListPost();
-        this.articleDisplay.typeArticle = 'article';
-        data.forEach((article: any) => {
-          if (article.post.isActive === true) {
-            this.articleDisplay.items.push(article);
-          }
-        });
-        this.isLoading = false;
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
-    } else if (this.personalNav != null) {
+    if (this.personalNav != null) {
       if (this.personalNav === 'bai-viet') {
         // Call api
         const userId = this.getUserIdFromUrl();

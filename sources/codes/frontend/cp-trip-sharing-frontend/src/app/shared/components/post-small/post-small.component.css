@@ -20,6 +20,7 @@ mat-card-title {
   font-size: 18px;
   font-weight: 400 !important;
   fill: rgba(0,0,0,.54);
+  cursor: pointer;
 }
 
 .post-footer{
