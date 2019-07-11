@@ -51,4 +51,18 @@
 
 .section-title {
     color: #333;
+    display: inline-block;
 }
+
+.see-more{
+    color: #666;
+    font-size: 15px;
+    right: 0;
+    display: inline-block;
+    float: right;
+    position: relative;
+    padding-top: 8px;
+}
+
+
+
