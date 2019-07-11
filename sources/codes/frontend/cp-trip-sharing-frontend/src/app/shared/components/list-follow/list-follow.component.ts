@@ -9,27 +9,26 @@ import { User } from 'src/app/model/User';
 export class ListFollowComponent implements OnInit {
   title: string;
   listUser: User[];
-  listUser2: any[] = [];
-  listUser3: any[] = [];
+  listUserSave: any[] = [];
   follow: boolean;
   followed: boolean;
   searchUserName: any;
   constructor() { }
 
   ngOnInit() {
-    this.listUser2 = this.listUser;
+    this.listUserSave = this.listUser;
   }
 
   search(searchUser: any) {
-    this.listUser2 = this.listUser;
-    this.listUser3 = [];
+    this.listUser = this.listUserSave;
+    const listUserSearch: any[] = [];
     if (searchUser !== '') {
-      this.listUser2.forEach(user => {
+      this.listUserSave.forEach(user => {
         if (user.displayName.toLowerCase().indexOf(searchUser) > -1) {
-          this.listUser3.push(user);
+          listUserSearch.push(user);
         }
       });
-      this.listUser2 = this.listUser3;
+      this.listUser = listUserSearch;
     }
   }
 

@@ -1,5 +1,3 @@
-.step-create-post{
-}
 .fake-input{
     display: none;
 }
@@ -7,12 +5,9 @@
     margin-top: 10px;
 }
 .step-title{
-    text-align: center;
-    color: #4051b5;
-    margin-bottom: 30px;
+    font-size: 15px;
 }
 .step-body {
-    margin-top: 20px;
     text-align: -webkit-center;
 }
 .btn-step{
