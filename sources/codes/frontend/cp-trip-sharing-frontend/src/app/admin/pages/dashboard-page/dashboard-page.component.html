@@ -8,20 +8,20 @@
         </mat-toolbar>
         <mat-nav-list>
           <mat-list-item>
-            <span>Overview</span>
+            <mat-icon>dashboard</mat-icon><span>Overview</span>
           </mat-list-item>
           <mat-list-item>
-            <span>Topics</span>
+              <mat-icon>list_alt</mat-icon><span>Chủ đề</span>
           </mat-list-item>
           <mat-list-item>
-              <span>Users</span>
-            </mat-list-item>
+            <mat-icon>person</mat-icon><span>Người dùng</span>
+          </mat-list-item>
           <mat-list-item [matMenuTriggerFor]="reportMenu">
-            <span>Reports</span>
+              <mat-icon>report</mat-icon><span>Báo cáo</span>
             <mat-menu #reportMenu="matMenu">
-              <button mat-menu-item>Users</button>
-              <button mat-menu-item>Posts</button>
-              <button mat-menu-item>Comments</button>
+              <button mat-menu-item> <mat-icon>person</mat-icon>Người dùng</button>
+              <button mat-menu-item><mat-icon>list_alt</mat-icon>Bài đăng</button>
+              <button mat-menu-item><mat-icon>comment</mat-icon>Bình luận</button>
             </mat-menu>
           </mat-list-item>
         </mat-nav-list>

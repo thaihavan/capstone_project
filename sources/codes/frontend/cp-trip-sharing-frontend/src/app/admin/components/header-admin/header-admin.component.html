@@ -1,3 +1,32 @@
-<p>
-  header-admin works!
-</p>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <span><img class="logo" src="https://static.tacdn.com/img2/langs/vi/branding/rebrand/TA_logo_primary_v2.svg">
+      </span>
+    </li>
+    <!-- <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Disabled</a>
+    </li> -->
+  </ul>
+  <div class="avatar-image">
+    <span class="name-user">Hi! {{name}}</span>
+    <button aria-haspopup="true" class="m-r-5 mat-icon-button" mat-icon-button="" [matMenuTriggerFor]="menuProfile">
+      <span class="mat-button-wrapper"><img alt="user" class="imgavatar" src="{{urlImgavatar}}"></span>
+      <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+      <div class="mat-button-focus-overlay"></div>
+    </button>
+    <mat-menu #menuProfile="matMenu">
+      <button class="options" (click)="gotoPersonalPage()" mat-menu-item>Trang cá nhân</button>
+      <button (click)="gotoBookmarkList()" mat-menu-item>Xem các bài đánh dấu</button>
+      <button (click)="gotoBlockedList()" mat-menu-item>Danh sách chặn</button>
+      <button routerLink="/doi-mat-khau" mat-menu-item>Đổi mật khẩu</button>
+      <button (click)="signOut()" mat-menu-item>Đăng xuất</button>
+    </mat-menu>
+  </div>
+</nav>

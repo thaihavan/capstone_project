@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header-admin.component.css']
 })
 export class HeaderAdminComponent implements OnInit {
-
+  urlImgavatar = 'https://qph.fs.quoracdn.net/main-qimg-573142324088396d86586adb93f4c8c2';
+  name = 'Admin';
   constructor() { }
 
   ngOnInit() {
