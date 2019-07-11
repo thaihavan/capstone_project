@@ -1,0 +1,36 @@
+<app-header-admin></app-header-admin>
+<div class="container-fluid">
+  <mat-sidenav-container class="mat-drawer-container">
+    <mat-sidenav #drawer class="mat-drawer mat-sidenav mat-drawer-side" mode="side" opened="true" position="start">
+      <div class="mat-drawer-inner-container">
+        <mat-toolbar>
+          Dashboard
+        </mat-toolbar>
+        <mat-nav-list>
+          <mat-list-item>
+            <span>Overview</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span>Topics</span>
+          </mat-list-item>
+          <mat-list-item>
+              <span>Users</span>
+            </mat-list-item>
+          <mat-list-item [matMenuTriggerFor]="reportMenu">
+            <span>Reports</span>
+            <mat-menu #reportMenu="matMenu">
+              <button mat-menu-item>Users</button>
+              <button mat-menu-item>Posts</button>
+              <button mat-menu-item>Comments</button>
+            </mat-menu>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="mat-drawer-content">
+      content
+      content
+      content
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
