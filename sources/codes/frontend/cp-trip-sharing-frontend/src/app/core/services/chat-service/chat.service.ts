@@ -58,4 +58,14 @@ export class ChatService {
     };
     return this.http.post<ChatMessage>(this.baseUrl + '/message?receiverId=' + receiverId, message, httpOption);
   }
+
+  seen(conversationId: string): Observable<boolean> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.post<boolean>(this.baseUrl + '/seen?conversationId=' + conversationId, null, httpOption);
+  }
 }

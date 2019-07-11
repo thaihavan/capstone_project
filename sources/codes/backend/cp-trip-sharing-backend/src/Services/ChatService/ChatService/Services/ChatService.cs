@@ -32,19 +32,25 @@ namespace ChatService.Services
                     Id = ObjectId.GenerateNewId().ToString(),
                     Type = "private",
                     Receivers = new List<string>() { message.FromUserId, receiverId },
-                    LastMessage = message.Content,
-                    LastDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    SeenIds = new List<string>() { message.FromUserId }
                 };
                 conversation = _conversationRepository.Add(conversation);
-                message.ConversationId = conversation.Id;
             }
             else
             {
-                conversation.LastMessage = message.Content;
-                message.ConversationId = conversation.Id;
+                conversation.SeenIds = new List<string>() { message.FromUserId };
                 _conversationRepository.Update(conversation);
             }
+            
+            message.ConversationId = conversation.Id;
+
             return _messageRepository.Add(message);
+        }
+
+        public bool AddToSeenIds(string conversationId, string userId)
+        {
+            return _conversationRepository.AddToSeenIds(conversationId, userId);
         }
 
         public bool AddUserToGroupChat(string conversationId, string userId)
@@ -65,6 +71,11 @@ namespace ChatService.Services
         public IEnumerable<Conversation> GetByUserId(string id)
         {
             return _conversationRepository.GetByUserId(id);
+        }
+
+        public bool RemoveUserFromGroupChat(string conversationId, string userId)
+        {
+            return _conversationRepository.RemoveUserFromGroupChat(conversationId, userId);
         }
     }
 }

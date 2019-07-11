@@ -36,14 +36,13 @@ namespace ChatService.HubConfig
             var messageObject = new MessageDetail()
             {
                 Id = ObjectId.GenerateNewId().ToString(),
-                SeenId = new List<string>(),
                 Content = message,
                 ConversationId = conversationId,
                 FromUserId = senderId,
                 Time = DateTime.Now
             };
+            _conversationRepository.UpdateSeenIds(conversationId, new List<string>() { senderId });
             _messageRepository.Add(messageObject);
-            _conversationRepository.UpdateLastMessage(conversationId, messageObject);
 
             var users = _conversationRepository.GetAllUserInConversation(conversationId);
             foreach (var user in users)
@@ -67,7 +66,6 @@ namespace ChatService.HubConfig
             var messageObject = new MessageDetail()
             {
                 Id = ObjectId.GenerateNewId().ToString(),
-                SeenId = new List<string>(),
                 Content = message,
                 ConversationId = conversation.Id,
                 FromUserId = senderId,

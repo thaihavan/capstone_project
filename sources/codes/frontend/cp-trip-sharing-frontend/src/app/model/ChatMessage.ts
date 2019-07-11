@@ -4,5 +4,4 @@ export class ChatMessage {
     conversationId: string;
     content: string;
     time: Date;
-    seenId: string[];
 }

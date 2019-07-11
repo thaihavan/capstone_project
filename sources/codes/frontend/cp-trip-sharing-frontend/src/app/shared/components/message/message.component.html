@@ -3,14 +3,21 @@
   <div *ngIf="conversations.length == 0">
     <div class="item-menu no-conversation">Bạn không có tin nhắn nào gần đây</div>
   </div>
-  <div class="item-menu" *ngFor="let item of conversations">
-    <div class="avatar">
-      <img src="{{item.avatar}}">
+
+  <div *ngIf="conversations.length > 0">
+    <div class="item-menu" *ngFor="let item of conversations">
+      <div class="avatar">
+        <img src="{{item.avatar}}">
+      </div>
+      <div class="content">
+        <div class="username">{{item.name}}</div>
+        <div class="content-message" [innerHtml]="item.lastMessage.content"></div>
+        <div class="time">{{item.lastMessage.time | customDate}}</div>
+      </div>
     </div>
-    <div class="content">
-      <div class="username">{{item.name}}</div>
-      <div class="content-message" [innerHtml]="item.lastMessage"></div>
-      <div class="time">{{item.lastDate}}</div>
+    <div class="bottom-info">
+      <a href="tin-nhan">Xem tất cả</a>
     </div>
   </div>
+
 </div>

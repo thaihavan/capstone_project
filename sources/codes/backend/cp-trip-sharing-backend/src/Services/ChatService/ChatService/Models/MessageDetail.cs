@@ -27,9 +27,5 @@ namespace ChatService.Models
 
         [BsonElement("time")]
         public DateTime Time { get; set; }
-
-        [BsonElement("seen_id")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public List<string> SeenId { get; set; }
     }
 }

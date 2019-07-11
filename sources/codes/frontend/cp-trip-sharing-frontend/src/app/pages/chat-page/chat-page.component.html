@@ -18,7 +18,9 @@
               <img class="mat-list-avatar" src="{{conv.avatar}}">
               <div class="mat-list-text">
                 <h3 class="mat-line" matline="">{{conv.name}}</h3>
-                <p class="text text-muted mat-line" matline="">{{conv.lastMessage}}</p>
+                <p class="text text-muted mat-line" matline="">
+                  {{isImage(conv.lastMessage.content) ? '' : conv.lastMessage.content}}
+                </p>
               </div>
             </mat-list-item>
           </div>
@@ -45,7 +47,8 @@
       <mat-card-content class="chat-middle-box">
         <div class="row">
           <div class="col-lg-9">
-            <div class="chat-content-container" [style.height.px]="chatContentHeight">
+            <div #chatContainer [scrollTop]="chatContainer.scrollHeight" 
+            class="chat-content-container" [style.height.px]="chatContentHeight">
               <div *ngFor="let message of this.selectedConversation.messages">
                 <div *ngIf="user.id != message.fromUserId" class="chat-list odd">
                   <div class="chat-message">
@@ -82,8 +85,9 @@
               </div>
               <div class="chat-input-message">
                 <mat-form-field>
-                  <input matInput class="input-message" type="text" placeholder="Nhập tin nhắn" autocomplete="off"
-                    [(ngModel)]="inputMessage">
+                  <input matInput class="input-message" type="text" placeholder="Nhập tin nhắn" 
+                  autocomplete="off" [(ngModel)]="inputMessage" (keyup.enter)="sendMessage()"
+                  (focus)="seen()">
                 </mat-form-field>
                 <button color="primary" class="button-send mat-fab mat-primary" (click)="sendMessage()">
                   <span class="mat-button-wrapper">

@@ -45,16 +45,16 @@
           </mat-menu>
           <button (click)="viewMessageNotification()" mat-icon-button matTooltip="Tin nhắn"
             [matMenuTriggerFor]="menu_message_notification">
-            <mat-icon matBadge="1" matBadgeHidden="{{checkMessageNotification}}" matBadgePosition="above after"
-              matBadgeColor="accent">mail</mat-icon>
+            <mat-icon matBadge="{{numNewMessages}}" matBadgeHidden="{{numNewMessages == 0}}" matBadgePosition="above after"
+              matBadgeColor="warn">mail</mat-icon>
           </button>
           <mat-menu #menu_message_notification="matMenu" class="menu message-menu">
             <app-message [conversations]="conversations"></app-message>
           </mat-menu>
           <button (click)="viewNotification()" mat-icon-button matTooltip="Thông báo"
             [matMenuTriggerFor]="menu_new_notification">
-            <mat-icon matBadge="1" matBadgeHidden="{{checkNotification}}" matBadgePosition="above after"
-              matBadgeColor="accent">notifications</mat-icon>
+            <mat-icon matBadge="{{numNewNotifications}}" matBadgeHidden="{{numNewNotifications == 0}}" matBadgePosition="above after"
+              matBadgeColor="warn">notifications</mat-icon>
           </button>
           <mat-menu #menu_new_notification="matMenu" class="menu notification-menu">
             <app-list-notification [notifications]="notifications"></app-list-notification>

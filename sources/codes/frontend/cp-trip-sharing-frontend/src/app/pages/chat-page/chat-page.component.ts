@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { ChatService } from 'src/app/core/services/chat-service/chat.service';
 import { Account } from 'src/app/model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,6 +18,9 @@ import { ImageUpload } from 'src/app/model/ImageUpload';
   styleUrls: ['./chat-page.component.css']
 })
 export class ChatPageComponent implements OnInit {
+
+  @ViewChild('chatContainer') chatContainer: ElementRef;
+
   user: any;
   hubConnection: HubConnection;
 
@@ -44,6 +47,7 @@ export class ChatPageComponent implements OnInit {
     this.initChatConnection();
 
     this.getAllConversations();
+
   }
 
   setHeight() {
@@ -52,6 +56,11 @@ export class ChatPageComponent implements OnInit {
     // chatHeader: 64
     // chatFooter: 80
     this.chatContentHeight = this.screenHeight - 56 - 64 - 80 - 2;
+
+  }
+
+  goToBottom() {
+    this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
   }
 
   initChatConnection() {
@@ -68,7 +77,7 @@ export class ChatPageComponent implements OnInit {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('Connection started!');
+        // console.log('Connection started!');
       })
       .catch((error) => {
         console.log(error);
@@ -76,7 +85,6 @@ export class ChatPageComponent implements OnInit {
 
     // Listening
     this.hubConnection.on('clientMessageListener', (convId: string, message: ChatMessage) => {
-      console.log(message);
       const conversation = this.listConversations.find(c => c.id === convId);
       if (conversation && conversation != null) {
         conversation.messages.push(message);
@@ -86,7 +94,6 @@ export class ChatPageComponent implements OnInit {
 
   getAllConversations() {
     this.chatService.getAllConversations(this.user.id).subscribe((result: Conversation[]) => {
-      console.log(result);
       this.listConversations = result;
       if (this.listConversations && this.listConversations.length > 0) {
         this.selectedConversation = this.listConversations[0];
@@ -115,7 +122,6 @@ export class ChatPageComponent implements OnInit {
   onClickUserItem(conv: Conversation) {
     this.selectedConversation = conv;
     this.chatService.getAllMessages(conv.id).subscribe((res: ChatMessage[]) => {
-      console.log(res);
       this.selectedConversation.messages = res;
     }, (error: HttpErrorResponse) => {
       console.log(error);
@@ -146,13 +152,23 @@ export class ChatPageComponent implements OnInit {
           if (!this.selectedConversation.messages || this.selectedConversation.messages == null) {
             this.selectedConversation.messages = [];
           }
+
           this.selectedConversation.messages.push(messageObject);
-          this.selectedConversation.lastMessage = this.inputMessage;
+
+          this.selectedConversation.lastMessage = messageObject;
+          this.inputMessage = '';
         })
         .catch((error) => {
           console.log(error);
         });
     }
+  }
+
+  seen() {
+    this.chatService.seen(this.selectedConversation.id).subscribe((res: boolean) => {
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   sendImage(imgTag: string) {
@@ -171,7 +187,7 @@ export class ChatPageComponent implements OnInit {
           this.selectedConversation.messages = [];
         }
         this.selectedConversation.messages.push(messageObject);
-        this.selectedConversation.lastMessage = '';
+        this.selectedConversation.lastMessage = messageObject;
       })
       .catch((error) => {
         console.log(error);
@@ -187,7 +203,6 @@ export class ChatPageComponent implements OnInit {
     reader.onload = () => {
       imageUpload.image = reader.result.toString().split(',')[1];
       imageUpload.type = file.type;
-      console.log(imageUpload);
 
       this.uploadImageService.uploadImage(imageUpload).subscribe((res: any) => {
         this.sendImage(`<img src='${res.image}'>`);
