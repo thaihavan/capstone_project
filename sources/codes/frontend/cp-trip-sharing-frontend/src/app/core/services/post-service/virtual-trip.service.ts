@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { HostGlobal } from '../../global-variables';
+import { PostFilter } from 'src/app/model/PostFilter';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,20 @@ export class VirtualTripService {
   createVirtualTrip(virtualTrip: VirtualTrip): Observable<VirtualTrip> {
     return this.http.post<VirtualTrip>(this.baseUrl + '/create', virtualTrip, this.httpOption);
   }
+
   updateVirtualTrip(virtualTrip: VirtualTrip): Observable<VirtualTrip> {
     return this.http.post<VirtualTrip>(this.baseUrl + '/update', virtualTrip, this.httpOption);
   }
+
   getDetailVtrip(id: string): Observable<VirtualTrip> {
     return this.http.get<VirtualTrip>(this.baseUrl + '?id=' + id, this.httpOption);
   }
-  getVirtualTrips(): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/all', this.httpOption);
+
+  getVirtualTrips(postFilter: PostFilter): Observable<VirtualTrip[]> {
+    return this.http.post<VirtualTrip[]>(this.baseUrl + '/all', postFilter, this.httpOption);
+  }
+
+  getVirtualTripsByUser(userId: string, postFilter: PostFilter): Observable<VirtualTrip[]> {
+    return this.http.post<VirtualTrip[]>(this.baseUrl + '/user?userId=' + userId, postFilter, this.httpOption);
   }
 }

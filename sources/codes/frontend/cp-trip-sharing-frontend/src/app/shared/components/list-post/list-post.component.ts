@@ -131,9 +131,8 @@ export class ListPostComponent implements OnInit {
     }
 
     if (this.personalNav != null) {
+      const userId = this.getUserIdFromUrl();
       if (this.personalNav === 'bai-viet') {
-        // Call api
-        const userId = this.getUserIdFromUrl();
         this.postService.getAllArticlesByUserId(userId, postFilter).subscribe((data: any) => {
           this.resetListPost();
           this.articleDisplay.typeArticle = 'article';
@@ -147,7 +146,7 @@ export class ListPostComponent implements OnInit {
           console.log(err);
         });
       } else if (this.personalNav === 'chuyen-di') {
-        this.tripService.getVirtualTrips().subscribe(data => {
+        this.tripService.getVirtualTripsByUser(userId, postFilter).subscribe(data => {
           this.resetListPost();
           this.articleDisplay.typeArticle = 'virtual-trip';
           this.articleDisplay.items = data;

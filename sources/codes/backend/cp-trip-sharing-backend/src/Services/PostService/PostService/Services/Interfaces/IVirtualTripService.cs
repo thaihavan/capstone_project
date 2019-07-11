@@ -8,18 +8,18 @@ namespace PostService.Services.Interfaces
 {
     public interface IVirtualTripService
     {
-        IEnumerable<VirtualTrip> GetAllVirtualTripWithPost();
-
         VirtualTrip GetById(string id);
 
         VirtualTrip Add(VirtualTrip virtualTrip);
 
         VirtualTrip Update(VirtualTrip virtualTrip);
 
+        VirtualTrip GetVirtualTrip(string id);
+
         bool Delete(string id);
 
-        IEnumerable<VirtualTrip> GetAllVirtualTripWithPost(string userId);
+        IEnumerable<VirtualTrip> GetAllVirtualTrips(PostFilter postFilter);
 
-        VirtualTrip GetVirtualTrip(string id);
+        IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilter);
     }
 }

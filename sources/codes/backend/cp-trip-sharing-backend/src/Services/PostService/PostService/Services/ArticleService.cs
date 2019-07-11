@@ -35,19 +35,9 @@ namespace PostService.Services
             return _articleRepository.Delete(id);
         }
 
-        public IEnumerable<Article> GetAllArticleInfo()
+        public Article GetArticleById(string id, string userId)
         {
-            return _articleRepository.GetAllArticleInfo();
-        }
-
-        public Article GetArticleInfoById(string id, string userId)
-        {
-            return _articleRepository.GetArticleInfoById(id,userId);
-        }
-
-        public Article GetById(string id)
-        {
-            return _articleRepository.GetById(id);
+            return _articleRepository.GetArticleById(id, userId);
         }
 
         public Article Update(Article article)
@@ -55,29 +45,14 @@ namespace PostService.Services
             return _articleRepository.Update(article);
         }
 
-        public IEnumerable<Article> GetAllArticleByUser(string userId)
+        public IEnumerable<Article> GetAllArticles(PostFilter postFilter)
         {
-            return _articleRepository.GetAllArticleByUser(userId);
+            return _articleRepository.GetAllArticles(postFilter);
         }
 
-        public IEnumerable<Article> GetAllArticleInfo(string userId)
+        public IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter)
         {
-            return _articleRepository.GetAllArticleInfo(userId);
-        }
-
-        public IEnumerable<Article> GetAllArticleInfo(string userId, PostFilter postFilter)
-        {
-            return _articleRepository.GetAllArticleInfo(userId, postFilter);
-        }
-
-        public IEnumerable<Article> GetAllArticleInfo(PostFilter postFilter)
-        {
-            return _articleRepository.GetAllArticleInfo(postFilter);
-        }
-
-        public IEnumerable<Article> GetAllArticleByUser(string userId, PostFilter postFilter)
-        {
-            return _articleRepository.GetAllArticleByUser(userId, postFilter);
+            return _articleRepository.GetAllArticlesByUser(userId, postFilter);
         }
     }
 }

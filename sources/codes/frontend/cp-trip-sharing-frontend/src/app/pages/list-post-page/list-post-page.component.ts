@@ -136,7 +136,15 @@ export class ListPostPageComponent implements OnInit {
   }
 
   getVirtualTrips(postFilter: PostFilter): void {
-    this.virtualTripService.getVirtualTrips().subscribe(data => {
+    if (!postFilter) {
+      postFilter = new PostFilter();
+      postFilter.topics = [];
+      postFilter.timePeriod = 'all_time';
+
+      this.isLoading = true;
+    }
+
+    this.virtualTripService.getVirtualTrips(postFilter).subscribe(data => {
       this.posts = data;
     }, (err: HttpErrorResponse) => {
       console.log(err);
