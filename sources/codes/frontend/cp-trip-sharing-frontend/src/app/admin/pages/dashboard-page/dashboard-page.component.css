@@ -1,0 +1,15 @@
+.mat-drawer-content {
+    height: 100vh;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.mat-icon {
+    margin-right: 10px;
+}

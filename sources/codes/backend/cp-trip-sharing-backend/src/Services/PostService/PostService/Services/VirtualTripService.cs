@@ -40,16 +40,6 @@ namespace PostService.Services
             return _virtualTripRepository.GetVirtualTrip(id);
         }
 
-        public IEnumerable<VirtualTrip> GetAllVirtualTripWithPost()
-        {
-            return _virtualTripRepository.GetAllVirtualTripWithPost();
-        }
-
-        public IEnumerable<VirtualTrip> GetAllVirtualTripWithPost(string userId)
-        {
-            return _virtualTripRepository.GetAllVirtualTripWithPost(userId);
-        }
-
         public VirtualTrip GetById(string id)
         {
             return _virtualTripRepository.GetById(id);
@@ -58,6 +48,16 @@ namespace PostService.Services
         public VirtualTrip Update(VirtualTrip virtualTrip)
         {
             return _virtualTripRepository.Update(virtualTrip);
+        }
+
+        public IEnumerable<VirtualTrip> GetAllVirtualTrips(PostFilter postFilte)
+        {
+            return _virtualTripRepository.GetAllVirtualTrips(postFilte);
+        }
+
+        public IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilte)
+        {
+            return _virtualTripRepository.GetAllVirtualTripsByUser(userId, postFilte);
         }
     }
 }

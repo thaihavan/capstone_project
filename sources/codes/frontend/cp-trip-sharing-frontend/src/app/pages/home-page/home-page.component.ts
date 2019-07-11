@@ -50,7 +50,13 @@ export class HomePageComponent implements OnInit {
   }
 
   getVirtualTrips(postFilter: PostFilter): void {
-    this.virtualTripService.getVirtualTrips().subscribe(data => {
+    if (!postFilter) {
+      postFilter = new PostFilter();
+      postFilter.topics = [];
+      postFilter.timePeriod = 'all_time';
+    }
+
+    this.virtualTripService.getVirtualTrips(postFilter).subscribe(data => {
       this.virtualTrips = data;
       if (this.virtualTrips != null && this.virtualTrips.length > 6) {
         this.virtualTrips = this.virtualTrips.slice(0, 6);

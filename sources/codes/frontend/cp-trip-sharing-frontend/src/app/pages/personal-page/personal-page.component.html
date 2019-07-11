@@ -10,20 +10,28 @@
         </div>
       </div>
       <a href="#"><span class="personal-name">{{user.UserName}}</span></a>
-      <div class="icon-block">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-          <mat-icon>more_horiz</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="blockUserById(userId)">
-            <mat-icon>block</mat-icon>
-            <span>Chặn người dùng</span>
-          </button>
-          <button mat-menu-item (click)="openSendMessagePopup()">
-              <mat-icon>message</mat-icon>
-              <span>Gửi tin nhắn</span>
+      <div class="opacity"></div>
+      <div [hidden]="userId == usergetLocalStorage.id" class="follow-message-infor">
+          <button class="btn-follow" mat-button (click)="followPerson(userId)">
+              <mat-icon>rss_feed</mat-icon>
+              <span *ngIf="follow == false">Theo dõi</span>
+              <span *ngIf="follow == true">Đã Theo dõi</span>
             </button>
-        </mat-menu>
+        <button class="btn-send-message" mat-button (click)="openSendMessagePopup()">
+          <mat-icon>message</mat-icon>
+          <span>Gửi tin nhắn</span>
+        </button>
+        <div class="icon-block">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon class="icon-more">more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="blockUserById(userId)">
+              <mat-icon>block</mat-icon>
+              <span>Chặn người dùng</span>
+            </button>
+          </mat-menu>
+        </div>
       </div>
     </div>
 

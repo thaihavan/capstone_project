@@ -20,21 +20,17 @@ import { MessagePopupComponent } from 'src/app/shared/components/message-popup/m
 export class DetailpostPageComponent implements OnInit {
   post: Post = new Post();
   user: any;
-  displayName = '';
-  coverImg = '';
-  article: Article;
-  articleId: string;
+  article: Article = new Article();
   like: Like = new Like();
   bookmarkObject: Bookmark = new Bookmark();
-  coverImage = '../../../assets/coverimg.jpg';
-  avatar = '../../../assets/img_avatar.png';
+  articleId: string;
   token: string;
-  authorId: string;
   bookmark = false;
+  follow = false;
+  displayName = '';
+  profileImage = '';
   commentContent = '';
   comments: Comment[];
-  follow = false;
-  followed = false;
   listPostIdBookMark: string[] = [];
   listUserIdFollowing: string[] = [];
   listLocation: any[] = [];
@@ -55,64 +51,42 @@ export class DetailpostPageComponent implements OnInit {
   constructor(private postService: PostService, private route: ActivatedRoute,
               private userService: UserService, private titleService: Title, public dialog: MatDialog) {
     this.comments = [];
-    this.articleId = this.route.snapshot.paramMap.get('articleId');
-    this.loadArticleByarticleId(this.articleId);
     this.user = JSON.parse(localStorage.getItem('User'));
+    this.articleId = this.route.snapshot.paramMap.get('articleId');
+    this.token = localStorage.getItem('Token');
+    this.loadArticleByarticleId(this.articleId);
   }
 
   ngOnInit() { }
 
-  checkBookMark(postId: any) {
-    this.listPostIdBookMark = JSON.parse(localStorage.getItem('listPostIdBookmark'));
-    if (this.listPostIdBookMark != null) {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.listPostIdBookMark.length; i++) {
-        if (postId === this.listPostIdBookMark[i]) {
-          this.bookmark = true;
-          break;
-        }
-      }
-    }
-  }
   loadArticleByarticleId(articleId: string) {
-    this.token = localStorage.getItem('Token');
     this.postService.getArticleById(articleId).subscribe((data: any) => {
       this.article = data;
       this.post = data.post;
-      if (this.post.coverImage != null) {
-        this.coverImage = this.post.coverImage;
+      this.displayName = data.post.author.displayName;
+      this.profileImage = data.post.author.profileImage;
+      if (this.post.coverImage == null) {
+        this.post.coverImage = '../../../assets/coverimg.jpg';
       }
       this.listLocation = data.destinations;
-      this.authorId = this.post.author.id;
-      if (this.post.author.profileImage != null) {
-        this.coverImg = this.post.author.profileImage;
+      if (this.post.author.profileImage == null) {
+        this.post.author.profileImage = '../../../assets/img_avatar.png';
       }
-      this.displayName = this.post.author.displayName;
-      console.log(this.article);
+      this.getStates();
       this.getCommentByPostId(this.post.id);
-      this.checkBookMark(this.post.id);
-      const user = JSON.parse(localStorage.getItem('User'));
-      if (user.id === this.authorId) {
-        this.followed = false;
-        this.follow = false;
-      } else {
-        this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
-        if (this.listUserIdFollowing != null) {
-          // tslint:disable-next-line:prefer-for-of
-          for (let i = 0; i < this.listUserIdFollowing.length; i++) {
-            if (this.authorId === this.listUserIdFollowing[i]) {
-              this.followed = true;
-              this.follow = false;
-              break;
-            } else {
-              this.followed = false;
-              this.follow = true;
-            }
-          }
-        }
-      }
       this.titleService.setTitle(this.post.title);
     });
+  }
+
+  getStates(): void {
+    this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
+    if (this.listUserIdFollowing != null) {
+      this.follow = this.listUserIdFollowing.indexOf(this.post.author.id) !== -1;
+    }
+    this.listPostIdBookMark = JSON.parse(localStorage.getItem('listPostIdBookmark'));
+    if (this.listPostIdBookMark != null) {
+      this.bookmark = this.listPostIdBookMark.indexOf(this.post.id) !== -1;
+    }
   }
 
   getCommentByPostId(postId: string) {
@@ -141,21 +115,19 @@ export class DetailpostPageComponent implements OnInit {
     });
   }
 
-  followPerson(userId: any) {
-    if (this.followed === false && this.follow === true) {
-      this.userService.addFollow(userId, this.token).subscribe((data: any) => {
-        this.followed = true;
-        this.follow = false;
-        this.listUserIdFollowing.push(userId);
+  followPerson(authorId: any) {
+    if (this.follow === false) {
+      this.userService.addFollow(authorId, this.token).subscribe((data: any) => {
+        this.follow = true;
+        this.listUserIdFollowing.push(authorId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else {
-      this.userService.unFollow(userId, this.token).subscribe((data: any) => {
-        this.followed = false;
-        this.follow = true;
-        const unfollow = this.listUserIdFollowing.indexOf(userId);
+      this.userService.unFollow(authorId, this.token).subscribe((data: any) => {
+        this.follow = false;
+        const unfollow = this.listUserIdFollowing.indexOf(authorId);
         this.listUserIdFollowing.splice(unfollow, 1);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
       }, (err: HttpErrorResponse) => {
@@ -224,28 +196,6 @@ export class DetailpostPageComponent implements OnInit {
         this.openDialogMessageConfirm('Bạn đã chặn người dùng thành công!', '/danh-sach-chan');
       });
     }
-  }
-
-  getShortDescription(htmlContent: any) {
-    // Convert html string to DOM object
-    const div = document.createElement('div');
-    div.innerHTML = htmlContent;
-
-    const pTags = div.getElementsByTagName('p');
-    let pContent = '';
-    for (let i = 0; i < pTags.length; i++) {
-      pContent += pTags.item(i).innerText + ' ';
-
-      if (pContent.length > 250) {
-        break;
-      }
-    }
-
-    if (pContent.length > 250) {
-      pContent = pContent.substr(0, 250) + '...';
-    }
-
-    return pContent;
   }
 
   gotoPersonalPage(authorId: any) {

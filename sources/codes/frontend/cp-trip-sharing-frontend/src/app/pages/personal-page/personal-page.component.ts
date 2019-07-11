@@ -18,6 +18,7 @@ import { SendMessagePopupComponent } from 'src/app/shared/components/send-messag
 })
 export class PersonalPageComponent implements OnInit {
   user: User;
+  usergetLocalStorage: any;
   gender = '';
   coverImage = '../../../assets/cover-image.png';
   avatar = '../../../assets/img_avatar.png';
@@ -30,6 +31,9 @@ export class PersonalPageComponent implements OnInit {
   showGender = false;
   showAddress = false;
   isDisplayNav = true;
+  follow = false;
+  listUserIdFollowing: any[] = [];
+  token: any;
 
   constructor(private router: Router, private userService: UserService, public dialog: MatDialog,
               private route: ActivatedRoute, private titleService: Title) {
@@ -53,14 +57,15 @@ export class PersonalPageComponent implements OnInit {
     ];
     this.user = new User();
     this.userId = this.route.snapshot.paramMap.get('userId');
+    this.usergetLocalStorage = JSON.parse(localStorage.getItem('User'));
     if (this.userId != null) {
       this.getInforUser(this.userId);
     } else {
-      const user = JSON.parse(localStorage.getItem('User'));
-      this.userId = user.id;
+      this.userId = this.usergetLocalStorage.id;
       this.getInforUser(this.userId);
     }
-
+    this.token = localStorage.getItem('Token');
+    this.getStates();
   }
   ngOnInit(): void {
     if (this.router.url.indexOf('da-danh-dau') !== -1) {
@@ -76,6 +81,13 @@ export class PersonalPageComponent implements OnInit {
         this.navLinks.find(tab => tab.link === '.' + this.router.url)
       );
     });
+  }
+
+  getStates(): void {
+    this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
+    if (this.listUserIdFollowing != null) {
+      this.follow = this.listUserIdFollowing.indexOf(this.userId) !== -1;
+    }
   }
 
   getInforUser(userId: string) {
@@ -205,5 +217,26 @@ export class PersonalPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.receiver = this.user;
+  }
+
+  followPerson(userId: any) {
+    if (this.follow === false) {
+      this.userService.addFollow(userId, this.token).subscribe((data: any) => {
+        this.follow = true;
+        this.listUserIdFollowing.push(userId);
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    } else {
+      this.userService.unFollow(userId, this.token).subscribe((data: any) => {
+        this.follow = false;
+        const unfollow = this.listUserIdFollowing.indexOf(userId);
+        this.listUserIdFollowing.splice(unfollow, 1);
+        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
+    }
   }
 }

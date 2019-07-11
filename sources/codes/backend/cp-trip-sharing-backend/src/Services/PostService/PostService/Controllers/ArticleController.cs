@@ -29,79 +29,35 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("all")]
-        public IActionResult GetAllArticleInfo()
-        {
-            IEnumerable<object> articles = null;
-            var identity = (ClaimsIdentity)User.Identity;
-            if (User.Identity.IsAuthenticated)
-            {
-                var userId = identity.FindFirst("user_id").Value;
-                articles = _articleService.GetAllArticleInfo(userId);         
-            }
-            else
-            {
-                articles = _articleService.GetAllArticleInfo();
-            }           
-            return Ok(articles);
-        }
-
-        [AllowAnonymous]
         [HttpPost("all")]
         public IActionResult GetAllArticles(PostFilter postFilter)
         {
-            IEnumerable<object> articles = null;
-            var identity = (ClaimsIdentity)User.Identity;
-            if (User.Identity.IsAuthenticated)
-            {
-                var userId = identity.FindFirst("user_id").Value;
-                articles = _articleService.GetAllArticleInfo(userId, postFilter);
-            }
-            else
-            {
-                articles = _articleService.GetAllArticleInfo(postFilter);
-            }
+            IEnumerable<Article> articles = _articleService.GetAllArticles(postFilter);
             return Ok(articles);
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public IActionResult GetById([FromQuery] string id)
-        {
-            var article = _articleService.GetById(id);
-            return Ok(article);
         }
 
         [AllowAnonymous]
         [HttpPost("user")]
-        public IActionResult GetByUserId([FromQuery] string userId, [FromBody] PostFilter postFilter)
+        public IActionResult GetAllArticlesByUser([FromQuery] string userId, [FromBody] PostFilter postFilter)
         {
-            var article = _articleService.GetAllArticleByUser(userId, postFilter);
-            return Ok(article);
-        }
-
-        [AllowAnonymous]
-        [HttpGet("user")]
-        public IActionResult GetByUserId([FromQuery] string userId)
-        {
-            var article = _articleService.GetAllArticleByUser(userId);
+            var article = _articleService.GetAllArticlesByUser(userId, postFilter);
             return Ok(article);
         }
 
         [AllowAnonymous]
         [HttpGet("full")]
-        public IActionResult GetArticleInfoById([FromQuery] string id)
+        public IActionResult GetArticleById([FromQuery] string id)
         {
             Article article = null;
             if (User.Identity.IsAuthenticated)
             {
                 var identity = User.Identity as ClaimsIdentity;
                 var userId = identity.FindFirst("user_id").Value;
-                article = _articleService.GetArticleInfoById(id, userId);
+                article = _articleService.GetArticleById(id, userId);
             }
             else
             {
-                article = _articleService.GetArticleInfoById(id, String.Empty);
+                article = _articleService.GetArticleById(id, String.Empty);
             }          
             return Ok(article);
         }
@@ -155,12 +111,12 @@ namespace PostService.Controllers
         [HttpDelete("remove")]
         public IActionResult RemoveArticle([FromQuery] string articleId)
         {
-            _articleService.Delete(articleId);
-            if (_articleService.GetById(articleId) != null)
+            var result = _articleService.Delete(articleId);
+            if(!result)
             {
-                return Ok();
+                return BadRequest();
             }
-            return NotFound();
+            return Ok();
         }
     }
 }

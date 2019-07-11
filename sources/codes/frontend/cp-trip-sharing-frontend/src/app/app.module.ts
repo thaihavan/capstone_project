@@ -38,6 +38,7 @@ import { provideSocialLoginConfig } from './social-login-config';
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 import { MatBadgeModule } from '@angular/material';
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { ListPostPageComponent } from './pages/list-post-page/list-post-page.com
     MatExpansionModule,
     SocialLoginModule,
     MatBadgeModule,
+    AdminModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDIPTZ7dpn5_hralWGDP4glqkqAaac6qeA',
       libraries: ['places']

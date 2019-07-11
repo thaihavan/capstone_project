@@ -27,20 +27,20 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("all")]
-        public IActionResult GetAllVirtualTripWithPost()
+        [HttpPost("all")]
+        public IActionResult GetAllVirtualTrips([FromBody] PostFilter postFilter)
         {
-            IEnumerable<VirtualTrip> virtualTrips = null;
-            var identity = (ClaimsIdentity)User.Identity;
-            if (User.Identity.IsAuthenticated)
-            {
-                var userId = identity.FindFirst("user_id").Value;
-                virtualTrips = _virtualTripService.GetAllVirtualTripWithPost(userId);
-            }
-            else
-            {
-                virtualTrips = _virtualTripService.GetAllVirtualTripWithPost();
-            }
+            var virtualTrips = _virtualTripService.GetAllVirtualTrips(postFilter);
+            
+            return Ok(virtualTrips);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("user")]
+        public IActionResult GetAllVirtualTrips([FromQuery] string userId, [FromBody] PostFilter postFilter)
+        {
+            var virtualTrips = _virtualTripService.GetAllVirtualTripsByUser(userId, postFilter);
+
             return Ok(virtualTrips);
         }
 
@@ -96,7 +96,5 @@ namespace PostService.Controllers
             return Ok(updatedArticle);
         }
 
-        //[Authorize(Roles = "member")]
-        //[HttpDelete("")]
     }
 }
