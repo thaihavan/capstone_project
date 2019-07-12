@@ -8,6 +8,7 @@ using PostService.Models;
 using PostService.Repositories;
 using PostService.Repositories.Interfaces;
 using PostService.Services.Interfaces;
+using RestSharp;
 
 namespace PostService.Services
 {
@@ -70,6 +71,6 @@ namespace PostService.Services
         public CompanionPost Update(CompanionPost post)
         {
             return _companionPostRepository.Update(post);
-        }       
+        }
     }
 }
