@@ -23,22 +23,11 @@ export class UserComponent implements OnInit {
   constructor(private userService: UserService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    console.log(this.user);
     const user = JSON.parse(localStorage.getItem('User'));
-    if (this.listFollowed === true && user.id !== this.user.id ) {
+    if (this.listFollowed === true && user.id !== this.user.id) {
       this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
       if (this.listUserIdFollowing != null) {
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.listUserIdFollowing.length; i++) {
-          if (this.user.id === this.listUserIdFollowing[i]) {
-            this.followed = true;
-            this.follow = false;
-            break;
-          } else {
-            this.followed = false;
-            this.follow = true;
-          }
-        }
+        this.follow = this.listUserIdFollowing.indexOf(this.user.id) !== -1;
       }
     }
     if (this.user.avatar == null) {
@@ -83,9 +72,8 @@ export class UserComponent implements OnInit {
 
   followPerson(userId: any) {
     const token = localStorage.getItem('Token');
-    if (this.followed === false && this.follow === true) {
+    if (this.follow === false) {
       this.userService.addFollow(userId, token).subscribe((data: any) => {
-        this.followed = true;
         this.follow = false;
         this.listUserIdFollowing.push(userId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
@@ -94,8 +82,7 @@ export class UserComponent implements OnInit {
       });
     } else {
       this.userService.unFollow(userId, token).subscribe((data: any) => {
-        this.followed = false;
-        this.follow = true;
+        this.follow = false;
         const unfollow = this.listUserIdFollowing.indexOf(userId);
         this.listUserIdFollowing.splice(unfollow, 1);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));

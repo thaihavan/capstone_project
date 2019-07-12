@@ -6,6 +6,7 @@ import { HostGlobal } from 'src/app/core/global-variables';
 import { Comment } from 'src/app/model/Comment';
 import { Like } from 'src/app/model/Like';
 import { PostFilter } from 'src/app/model/PostFilter';
+import { Topic } from 'src/app/model/Topic';
 
 @Injectable({
   providedIn: 'root'
@@ -147,5 +148,14 @@ export class PostService {
     };
     // tslint:disable-next-line:max-line-length
     return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/article/remove?articleId=' + articleId, httpOptionRemoveArticle);
+  }
+
+  addTopic(topic: Topic): Observable<any> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/addtopic', topic, httpOption);
   }
 }

@@ -21,11 +21,9 @@
         </button>
       </mat-menu>
     </div>
-    <button (click)="followPerson(user.id)" *ngIf="follow" class="btn-follow">
-        <i class="fa fa-user-plus"></i> Theo dõi
-      </button>
-      <button (click)="followPerson(user.id)" *ngIf="followed" class="btn-follow">
-        <i class="fa fa-user-plus"></i> Đã theo dõi
+    <button (click)="followPerson(user.id)" class="btn-follow">
+        <span *ngIf="follow === false"><i class="fa fa-user-plus"></i> Theo dõi</span>
+        <span *ngIf="follow === true"><i class="fa fa-user-plus"></i> Đã theo dõi</span>
       </button>
   </div>
 </div>

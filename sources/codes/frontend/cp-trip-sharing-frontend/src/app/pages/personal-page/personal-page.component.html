@@ -76,19 +76,19 @@
                 <span>Điểm tích lũy <b>{{user.ContributionPoint}}</b></span>
               </a>
             </div>
-            <div [hidden]="showDOB" class="card-person-infor">
+            <div [hidden]="user.Dob == null" class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
                 <span>Ngày sinh: {{user.Dob | date: 'dd-MM-yyyy'}}</span>
               </a>
             </div>
-            <div [hidden]="showGender" class="card-person-infor">
+            <div [hidden]="gender == null" class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
                 <span>Giới tính: {{gender}}</span>
               </a>
             </div>
-            <div [hidden]="showAddress" class="card-person-infor">
+            <div [hidden]="user.Address == ''" class="card-person-infor">
               <a href="#" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
                 <span>Địa chỉ: {{user.Address}}</span>
