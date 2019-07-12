@@ -5,6 +5,7 @@ import { Observable, Observer } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Comment } from 'src/app/model/Comment';
 import { Like } from 'src/app/model/Like';
+import { CompanionPostRequest } from 'src/app/model/CompanionPostRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,26 @@ export class FindingCompanionService {
     } else {
       return this.http.get(url + '?id=' + postId);
     }
+  }
+
+  getAllRequests(postId: string): Observable<CompanionPostRequest[]> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.get<CompanionPostRequest[]>(this.baseUrl + '/post/requests?companionPostId=' + postId, httpOption);
+  }
+
+  sendRequestJoinGroup(companionPostRequest: CompanionPostRequest): Observable<any> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.post<any>(this.baseUrl + '/post/join', companionPostRequest, httpOption );
   }
 
   addComment(comment: Comment): Observable<any> {

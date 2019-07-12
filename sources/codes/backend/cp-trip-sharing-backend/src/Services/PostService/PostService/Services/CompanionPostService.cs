@@ -8,7 +8,6 @@ using PostService.Models;
 using PostService.Repositories;
 using PostService.Repositories.Interfaces;
 using PostService.Services.Interfaces;
-using RestSharp;
 
 namespace PostService.Services
 {
