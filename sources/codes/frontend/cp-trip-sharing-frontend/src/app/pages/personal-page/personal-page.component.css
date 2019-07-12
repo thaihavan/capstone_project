@@ -122,7 +122,7 @@ button:focus {
   line-height: 1.0 !important;
   color: white;
   display: inline-block;
-  right: 8%;
+  right: 46px;
 }
 
 .btn-follow{
@@ -135,7 +135,7 @@ button:focus {
   border-radius: 4px;
   line-height: 1.0 !important;
   color: white;
-  right: 28%;
+  right: 163px;
 }
 
 .material-icons {
