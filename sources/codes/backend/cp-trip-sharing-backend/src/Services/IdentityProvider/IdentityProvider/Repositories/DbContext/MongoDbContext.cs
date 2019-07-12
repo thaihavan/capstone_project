@@ -37,5 +37,18 @@ namespace IdentityProvider.Repositories.DbContext
             }
         }
 
+        // Get "accounts" collection
+        public IMongoCollection<BlacklistToken> BlackListTokens
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<BlacklistToken>("BlackListTokens");
+                }
+                return null;
+            }
+        }
+
     }
 }

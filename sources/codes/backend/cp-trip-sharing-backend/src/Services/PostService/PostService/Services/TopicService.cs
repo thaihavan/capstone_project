@@ -26,6 +26,11 @@ namespace PostService.Services
             return param;
         }
 
+        public bool Delete(string topicId)
+        {
+           return _topicRepository.Delete(topicId);
+        }
+
         public IEnumerable<Topic> GetAll()
         {
             return _topicRepository.GetAll();

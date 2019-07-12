@@ -7,5 +7,6 @@ namespace PostService.Services.Interfaces
     {
         Topic Add(Topic param);
         IEnumerable<Topic> GetAll();
+        bool Delete(string topicId);
     }
 }

@@ -29,7 +29,8 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            throw new NotImplementedException();
+            _topics.FindOneAndDelete(c=>c.Id.Equals(id));
+            return true;
         }
 
         public IEnumerable<Topic> GetAll()
