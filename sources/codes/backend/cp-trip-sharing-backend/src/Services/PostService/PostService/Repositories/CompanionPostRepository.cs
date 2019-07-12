@@ -182,9 +182,17 @@ namespace PostService.Repositories
 
         public IEnumerable<CompanionPostJoinRequest> GetAllJoinRequest(string companionPostId)
         {
-            return _companionPostJoinRequests
-                .Find(Builders<CompanionPostJoinRequest>.Filter.Eq(x => x.CompanionPostId, companionPostId))
-                .ToList();
+            Func<CompanionPostJoinRequest, Author, CompanionPostJoinRequest> SelectCompanionPostRequestWithUser =
+                ((post, user) => { post.User = user; return post; });
+
+            var result = _companionPostJoinRequests.AsQueryable().Where(x => x.CompanionPostId.Equals(companionPostId))
+                .Join(_authors.AsQueryable(),
+                post => post.UserId,
+                user => user.Id,
+                SelectCompanionPostRequestWithUser
+                ).OrderByDescending(x=>x.Date).ToList();
+            return result;
+            
         }
 
         public CompanionPostJoinRequest AddNewRequest(CompanionPostJoinRequest param)
