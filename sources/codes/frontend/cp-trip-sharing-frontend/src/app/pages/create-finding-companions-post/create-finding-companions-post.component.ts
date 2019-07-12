@@ -177,7 +177,7 @@ export class CreateFindingCompanionsPostComponent implements OnInit {
     this.companionPost.expiredDate = this.estimatedDate;
     this.companionPost.minMembers = this.minMembers;
     this.companionPost.maxMembers = this.maxMembers;
-    this.companionPost.schedule = this.listSchedules;
+    this.companionPost.scheduleItems = this.listSchedules;
     this.companionPost.estimatedCostItems = this.estimatedCostItems;
     this.companionPost.post.title = this.title;
     this.companionPost.post.content = this.content;
@@ -208,7 +208,7 @@ export class CreateFindingCompanionsPostComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
-    instance.message.url = '/chuyen-di?tripId=' + data;
+    instance.message.url = '/bai-viet-tim-ban-dong-hanh/' + data;
   }
 }
 export class MyErrorStateMatcher implements ErrorStateMatcher {

@@ -19,8 +19,9 @@ export class HeaderComponent implements OnInit {
   userId: string;
   urlImgavatar = 'https://qph.fs.quoracdn.net/main-qimg-573142324088396d86586adb93f4c8c2';
   numberNotification = 1;
-  checkMessageNotification = false;
-  checkNotification = false;
+
+  numNewMessages = 0;
+  numNewNotifications = 0;
 
   notifications: Notification[] = [];
   conversations: Conversation[] = [];
@@ -90,11 +91,11 @@ export class HeaderComponent implements OnInit {
   }
 
   viewNotification() {
-    this.checkNotification = true;
+    this.numNewNotifications = 0;
   }
 
   viewMessageNotification() {
-    this.checkMessageNotification = true;
+    this.numNewMessages = 0;
   }
 
   getNotifications() {
@@ -116,6 +117,7 @@ export class HeaderComponent implements OnInit {
       console.log(result);
       this.conversations = result;
       this.setConversationInfo(user);
+      this.calcNumNewMessage();
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
@@ -133,5 +135,15 @@ export class HeaderComponent implements OnInit {
         }
       }
     }
+  }
+
+  calcNumNewMessage(): void {
+    this.numNewMessages = 0;
+    const account = JSON.parse(localStorage.getItem('Account'));
+    this.conversations.forEach(c => {
+      if (c.seenIds.indexOf(account.userId) === -1) {
+        this.numNewMessages++;
+      }
+    });
   }
 }

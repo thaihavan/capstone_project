@@ -14,5 +14,9 @@ namespace ChatService.Services.Interfaces
         Conversation CreateGroupChat(Conversation conversation);
 
         bool AddUserToGroupChat(string conversationId, string userId);
+
+        bool RemoveUserFromGroupChat(string conversationId, string userId);
+
+        bool AddToSeenIds(string conversationId, string userId);
     }
 }

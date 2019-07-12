@@ -16,8 +16,12 @@ namespace ChatService.Repositories.Interfaces
 
         Conversation FindPrivateConversationByReceiverId(string receiverId);
 
-        bool UpdateLastMessage(string conversationId, MessageDetail lastMessage);
-
         bool AddUserToGroupChat(string conversationId, string userId);
+
+        bool RemoveUserFromGroupChat(string conversationId, string userId);
+
+        bool UpdateSeenIds(string conversationId, List<string> seenIds);
+
+        bool AddToSeenIds(string conversationId, string userId);
     }
 }

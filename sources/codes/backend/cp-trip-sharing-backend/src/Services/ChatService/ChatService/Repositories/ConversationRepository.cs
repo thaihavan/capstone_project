@@ -40,12 +40,29 @@ namespace ChatService.Repositories
         {
             var conversations = _conversations.AsQueryable()
                 .Where(x => x.Receivers.Contains(id))
-                .OrderByDescending(x => x.LastDate)
                 .ToList();
+            MessageDetail tempMessage = null;
             conversations.ForEach(c =>
             {
                 c.Users = GetAllUserInConversation(c.Id).ToList();
+                tempMessage = _messages.Find(m => m.ConversationId == c.Id)
+                                                .SortByDescending(m => m.Time)
+                                                .Limit(1)
+                                                .FirstOrDefault();
+                if (tempMessage == null)
+                {
+                    tempMessage = new MessageDetail()
+                    {
+                        Time = c.CreatedDate,
+                        Content = "",
+                        ConversationId = c.Id
+                    };
+                }
+                c.LastMessage = tempMessage;
             });
+
+            conversations.OrderByDescending(c => c.LastMessage.Time);
+
             return conversations;
         }
 
@@ -104,22 +121,38 @@ namespace ChatService.Repositories
             return conversation;
         }
 
-        public bool UpdateLastMessage(string conversationId, MessageDetail lastMessage)
-        {
-            var result = _conversations.UpdateOne(
-                c => c.Id == conversationId,
-                Builders<Conversation>.Update
-                .Set("last_message", lastMessage.Content)
-                .Set("last_date", lastMessage.Time));
-
-            return result.IsAcknowledged;
-        }
-
         public bool AddUserToGroupChat(string conversationId, string userId)
         {
             var result = _conversations.UpdateOne(
                 c => c.Id == conversationId,
                 Builders<Conversation>.Update.Push<string>(c => c.Receivers, userId));
+
+            return result.IsAcknowledged;
+        }
+
+        public bool RemoveUserFromGroupChat(string conversationId, string userId)
+        {
+            var result = _conversations.UpdateOne(
+                c => c.Id == conversationId,
+                Builders<Conversation>.Update.PullFilter<string>(c => c.Receivers, userId));
+
+            return result.IsAcknowledged;
+        }
+
+        public bool UpdateSeenIds(string conversationId, List<string> seenIds)
+        {
+            var result = _conversations.UpdateOne(
+                c => c.Id == conversationId,
+                Builders<Conversation>.Update.Set("seen_ids", seenIds));
+
+            return result.IsAcknowledged;
+        }
+
+        public bool AddToSeenIds(string conversationId, string userId)
+        {
+            var result = _conversations.UpdateOne(
+                c => c.Id == conversationId,
+                Builders<Conversation>.Update.Push<string>(c => c.SeenIds, userId));
 
             return result.IsAcknowledged;
         }

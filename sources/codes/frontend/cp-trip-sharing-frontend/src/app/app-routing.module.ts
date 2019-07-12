@@ -22,6 +22,7 @@ import { CreateFindingCompanionsPostComponent } from './pages/create-finding-com
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 import { DashboardPageComponent } from './admin/pages/dashboard-page/dashboard-page.component';
 import { InterestedTopicAdminsComponent } from './admin/pages/interested-topic-admins/interested-topic-admins.component';
+import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
 
 
 const routes: Routes = [
@@ -58,6 +59,7 @@ const routes: Routes = [
       { path: 'khoi-tao', component: InitialUserInformationPageComponent },
       { path: 'tin-nhan', component: ChatPageComponent },
       { path: 'tao-bai-tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
+      { path: 'bai-viet-tim-ban-dong-hanh/:companionId', component: DetailCompanionPostPageComponent}
     ]
   },
 ];

@@ -4,13 +4,16 @@
     font-weight: 500;
 }
 
+.no-conversation {
+    text-align: center;
+}
+
 .item-menu{
     width: 480px;
     height: 80px;
     border-top: 1px solid gainsboro;
     padding: 10px;
     position: relative;
-    text-align: center
 }
 
 .item-menu:hover{
@@ -50,4 +53,9 @@
     right: 10px;
     margin-top: -48px;
     color: #666;
+}
+
+.bottom-info {
+    padding: 0px 10px;
+    font-size: 14px;
 }

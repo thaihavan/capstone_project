@@ -6,8 +6,9 @@ export class Conversation {
     name: string;
     type: string;
     receivers: string[];
-    lastMessage: string;
-    lastDate: Date;
+    lastMessage: ChatMessage;
+    seenIds: string[];
+    createdDate: Date;
 
     users: ChatUser[];
     messages: ChatMessage[];

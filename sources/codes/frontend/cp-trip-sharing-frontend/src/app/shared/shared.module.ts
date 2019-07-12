@@ -46,6 +46,7 @@ import { ArticleSmallComponent } from './components/post-small/components/articl
 import { VirtualTripSmallComponent } from './components/post-small/components/virtual-trip-small/virtual-trip-small.component';
 import { CompanionPostSmallComponent } from './components/post-small/components/companion-post-small/companion-post-small.component';
 import { PostFilterComponent } from './components/post-filter/post-filter.component';
+import { CurrencyPipe } from './pipes/currency-pipe/currency.pipe';
 
 const Material = [
   MatButtonModule,
@@ -104,7 +105,8 @@ const Material = [
     ArticleSmallComponent,
     VirtualTripSmallComponent,
     CompanionPostSmallComponent,
-    PostFilterComponent
+    PostFilterComponent,
+    CurrencyPipe
   ],
   imports: [
     CommonModule,
@@ -146,7 +148,8 @@ const Material = [
     ArticleSmallComponent,
     VirtualTripSmallComponent,
     CompanionPostSmallComponent,
-    PostFilterComponent
+    PostFilterComponent,
+    CurrencyPipe
   ],
   entryComponents: [
     StepCreatePostComponent,

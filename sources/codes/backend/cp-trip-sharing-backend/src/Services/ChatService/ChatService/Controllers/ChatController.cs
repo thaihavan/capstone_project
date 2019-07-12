@@ -59,7 +59,6 @@ namespace ChatService.Controllers
             var userId = identity.FindFirst("user_id").Value;
 
             message.Id = ObjectId.GenerateNewId().ToString();
-            message.SeenId = new List<string>();
             message.Time = DateTime.Now;
             message.FromUserId = userId;
             var result = _chatService.AddMessage(receiverId, message);
@@ -79,17 +78,18 @@ namespace ChatService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            conversation.LastMessage = "";
             conversation.GroupAdmin = userId;
             conversation.Receivers = new List<string>() { userId };
             conversation.Type = "group";
+            conversation.SeenIds = new List<string>() { userId };
+
 
             var result = _chatService.CreateGroupChat(conversation);
 
             return Ok(result);
         }
 
-        [HttpPost("add-user-to-group-chat")]
+        [HttpPost("add-user")]
         [Authorize(Roles = "member")]
         public IActionResult AddUserToGroupChat([FromQuery] string conversationId, [FromQuery] string userId)
         {
@@ -101,6 +101,37 @@ namespace ChatService.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpPost("remove-user")]
+        [Authorize(Roles = "member")]
+        public IActionResult RemoveUserToGroupChat([FromQuery] string conversationId, [FromQuery] string userId)
+        {
+            var result = _chatService.RemoveUserFromGroupChat(conversationId, userId);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [HttpPost("seen")]
+        [Authorize(Roles = "member")]
+        public IActionResult AddToSeenIds([FromQuery] string conversationId)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            var result = _chatService.AddToSeenIds(conversationId, userId);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
+
+            return Ok(result);
         }
     }
 }
