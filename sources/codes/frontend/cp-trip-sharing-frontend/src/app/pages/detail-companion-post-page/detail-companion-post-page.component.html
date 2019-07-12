@@ -51,13 +51,13 @@
   </div>
 </div>
 <div class="content-post-page row">
-  <div [ngClass]="isAuthorPost ? 'col-1': 'col-2'">
+  <div [ngClass]="checkHasRequest() ? 'col-1': 'col-2'">
   </div>
-  <div [ngClass]="isAuthorPost ? 'col-7': 'col-8'">
+  <div [ngClass]="checkHasRequest() ? 'col-7': 'col-8'">
     <div class="line-height ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred"
       role="textbox" aria-label="Rich Text Editor, main" [innerHTML]="post.content">
     </div>
-    <h4 class="mt-2 mb-4">Lịch trình chuyến đi</h4>
+    <h4 class="mt-2 mb-4">Thông tin chuyến đi</h4>
     <div class="row">
       <div class="col-8">
         <table class="table table-bordered">
@@ -87,7 +87,7 @@
             Chi phí tham gia
           </div>
           <div class="text-price mt-4 mb-1">
-            {{420000000 | currency}} Đ
+            {{companionPost.estimatedCost | currency}} Đ
           </div>
           <div class="sub-price">
             một người
@@ -156,30 +156,17 @@
       <button type="button" class="btn btn-primary">Tải thêm bình luận</button>
     </div>
   </div>
-  <div class="" [class.right-content]='isAuthorPost' [class.col-3]='isAuthorPost' [class.col-2]='!isAuthorPost'>
-    <ng-container *ngIf="isAuthorPost; else elseTemplate">
+  <div class="" [class.right-content]='checkHasRequest()' [class.col-3]='checkHasRequest()' [class.col-2]='!checkHasRequest()'>
+    <ng-container *ngIf="checkHasRequest()">
       <div class="header-request ">
         Danh sách yêu cầu tham gia
       </div>
       <mat-nav-list class="mat-nav-list mat-list-base" role="navigation">
-        <mat-list-item>
-          <img matListAvatar src="https://picsum.photos/200/150/?random" alt="">
-          <h3 matLine>Nirav Joshi</h3>
+        <mat-list-item *ngFor="let item of userListRequests">
+          <img matListAvatar src="{{item.user.profileImage}}" alt="">
+          <h3 matLine>{{item.user.displayName}}</h3>
           <p matLine>
-            <span class="text-muted">Hey, how are you? </span>
-          </p>
-          <button color="primary" matTooltip="Chấp nhận" mat-icon-button>
-            <mat-icon class="item-delete">done</mat-icon>
-          </button>
-          <button color="warn" matTooltip="Xoá bỏ" mat-icon-button>
-            <mat-icon class="item-delete">clear</mat-icon>
-          </button>
-        </mat-list-item>
-        <mat-list-item>
-          <img matListAvatar src="https://picsum.photos/200/150/?random" alt="">
-          <h3 matLine>Nirav Joshi</h3>
-          <p matLine>
-            <span class="text-muted">Hey, how are you? </span>
+            <span class="text-muted">{{item.date | date:'dd-MM-yyyy'}}</span>
           </p>
           <button color="primary" matTooltip="Chấp nhận" mat-icon-button>
             <mat-icon class="item-delete">done</mat-icon>
@@ -190,14 +177,14 @@
         </mat-list-item>
       </mat-nav-list>
     </ng-container>
-    <ng-template #elseTemplate>
-        <div [ngClass]="isScrollTopShow ? 'fix-join-button' : 'mt-3'">
-            <div
-              [ngClass]="statustRequest.type === 'request' ? 'btn-join' : statustRequest.type === 'waiting' ? 'btn-join-waiting' : 'btn-join-joined'">
-              <span (click)='sendRequest()' class="text-join">{{statustRequest.text}}</span>
-            </div>
-          </div>
-    </ng-template>
+    <ng-container *ngIf="!isAuthorPost">
+      <div [ngClass]="isScrollTopShow ? 'fix-join-button' : 'mt-3'">
+        <div
+          [ngClass]="statustRequest.type === 'request' ? 'btn-join' : statustRequest.type === 'waiting' ? 'btn-join-waiting' : 'btn-join-joined'">
+          <span (click)='sendRequest()' class="text-join">{{statustRequest.text}}</span>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>
 <ng-container *ngIf="!isAuthorPost">

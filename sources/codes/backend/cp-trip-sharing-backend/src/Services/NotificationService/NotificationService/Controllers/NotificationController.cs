@@ -40,7 +40,7 @@ namespace NotificationService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            notification.Seen = new List<string>();
+            notification.SeenIds = new List<string>();
             notification.Date = DateTime.Now;
 
             var result = _notificationService.Add(notification);

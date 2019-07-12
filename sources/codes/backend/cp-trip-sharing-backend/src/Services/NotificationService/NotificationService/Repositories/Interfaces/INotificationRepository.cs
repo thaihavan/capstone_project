@@ -11,5 +11,7 @@ namespace NotificationService.Repositories.Interfaces
         IEnumerable<User> GetAllReceivers(string notificationId);
 
         IEnumerable<Notification> GetNotifications(string userId);
+
+        bool AddToSeenIds(string notificationId, string userId);
     }
 }

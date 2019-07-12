@@ -179,6 +179,7 @@ export class CreateFindingCompanionsPostComponent implements OnInit {
     this.companionPost.maxMembers = this.maxMembers;
     this.companionPost.scheduleItems = this.listSchedules;
     this.companionPost.estimatedCostItems = this.estimatedCostItems;
+    this.companionPost.post.pubDate = new Date().toDateString();
     this.companionPost.post.title = this.title;
     this.companionPost.post.content = this.content;
     this.companionPost.post.isPublic = this.isPublic;

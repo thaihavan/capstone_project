@@ -2,10 +2,9 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Post } from 'src/app/model/Post';
 import { Comment } from 'src/app/model/Comment';
 import { UserService } from 'src/app/core/services/user-service/user.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Like } from 'src/app/model/Like';
 import { CompanionPost } from 'src/app/model/CompanionPost';
 import { Bookmark } from 'src/app/model/Bookmark';
@@ -13,8 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { Title } from '@angular/platform-browser';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { Schedule } from 'src/app/model/Schedule';
-import { Observable, of } from 'rxjs';
+import { CompanionPostRequest } from 'src/app/model/CompanionPostRequest';
 
 @Component({
   selector: 'app-detail-companion-post-page',
@@ -48,6 +46,8 @@ export class DetailCompanionPostPageComponent implements OnInit {
   bookmark = false;
   topPosToStartShowing = 300;
   statustRequest: StatustRequest = new StatustRequest();
+  companionPostRequest: CompanionPostRequest;
+  userListRequests: CompanionPostRequest[] = [];
   @HostListener('window:scroll') checkScroll() {
     const scrollPosition =
       window.pageYOffset ||
@@ -61,7 +61,8 @@ export class DetailCompanionPostPageComponent implements OnInit {
     }
   }
   constructor(private postService: FindingCompanionService, private route: ActivatedRoute,
-              private userService: UserService,  public dialog: MatDialog, private titleService: Title) { }
+              private userService: UserService,  public dialog: MatDialog, private titleService: Title,
+              private snackBar: MatSnackBar) { }
   ngOnInit() {
     this.comments = [];
     this.companionPostId = this.route.snapshot.paramMap.get('companionId');
@@ -88,7 +89,6 @@ export class DetailCompanionPostPageComponent implements OnInit {
       }
       this.listLocation = data.destinations;
       this.authorId = this.post.author.id;
-      this.checkAuthorPost();
       if (this.post.author.profileImage != null) {
         this.coverImg = this.post.author.profileImage;
       }
@@ -116,6 +116,15 @@ export class DetailCompanionPostPageComponent implements OnInit {
         }
       }
       this.titleService.setTitle(this.post.title);
+    },
+    (err) => {
+      console.log('error load data companion post', err.message);
+    },
+    () => {
+      this.checkAuthorPost();
+      if (this.isAuthorPost) {
+        this.getAllRequests();
+      }
     });
   }
 
@@ -270,10 +279,45 @@ export class DetailCompanionPostPageComponent implements OnInit {
   gotoTopPage(el: HTMLElement) {
     el.scrollIntoView();
   }
+
+  // display for author check request from user accecpt or delete
+  getAllRequests() {
+    this.postService.getAllRequests(this.companionPostId).subscribe(
+      res => {
+        this.userListRequests = res;
+      }
+    );
+  }
+
+  // for author post check if has user request
+  checkHasRequest() {
+    if (this.userListRequests.length === 0) {
+      return false;
+    }
+    return true;
+  }
   // send request to join group companion
   sendRequest() {
     if (this.statustRequest.type === 'request') {
-      this.statustRequest.IsWaiting();
+      this.companionPostRequest = new CompanionPostRequest();
+      const user = JSON.parse(localStorage.getItem('User'));
+      this.companionPostRequest.userId = user.id;
+      this.companionPostRequest.date = new Date();
+      this.companionPostRequest.companionPostId = this.companionPostId;
+      this.postService.sendRequestJoinGroup(this.companionPostRequest).subscribe(
+        res => {
+          console.log(res);
+        },
+        (err) => {
+          console.log('request error ', err.message);
+        },
+        () => {
+          this.statustRequest.IsWaiting();
+          this.snackBar.open('Gửi yêu cầu thành công, xin vui lòng đợi chấp nhận!', 'ok', {
+            duration: 5000,
+          });
+        }
+      );
     } else {
       this.statustRequest.IsRequestJoin();
     }

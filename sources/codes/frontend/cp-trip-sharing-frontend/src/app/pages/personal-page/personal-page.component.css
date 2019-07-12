@@ -82,17 +82,18 @@ button:focus {
   outline: none;
   outline: none !important;
 }
-.material-icons{
+.material-icons {
   transition: line-height 0.4s;
 }
-.mat-fab:hover{
-  box-shadow: 0px 3px 5px 4px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+.mat-fab:hover {
+  box-shadow: 0px 3px 5px 4px rgba(0, 0, 0, 0.2),
+    0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
 }
-.mat-fab:hover .material-icons{
+.mat-fab:hover .material-icons {
   line-height: 0;
 }
 
-.follow-message-infor{
+.follow-message-infor {
   position: absolute;
   top: 89%;
   right: 20%;
@@ -101,7 +102,7 @@ button:focus {
   height: 35px;
 }
 
-.icon-block{
+.icon-block {
   display: inline-block;
   position: absolute;
   right: 0%;
@@ -112,20 +113,20 @@ button:focus {
   border-radius: 4px;
 }
 
-.btn-send-message{
+.btn-send-message {
   width: 110px;
   height: 30px;
   position: absolute;
   padding: 0 !important;
   border: solid 1px white;
   border-radius: 4px;
-  line-height: 1.0 !important;
+  line-height: 1 !important;
   color: white;
   display: inline-block;
   right: 46px;
 }
 
-.btn-follow{
+.btn-follow {
   width: 110px;
   display: inline-block;
   height: 30px;
@@ -133,7 +134,7 @@ button:focus {
   padding: 0 !important;
   border: solid 1px white;
   border-radius: 4px;
-  line-height: 1.0 !important;
+  line-height: 1 !important;
   color: white;
   right: 163px;
 }
@@ -142,17 +143,69 @@ button:focus {
   font-size: 22px;
 }
 
-.icon-more{
+.icon-more {
   position: absolute;
   top: 3px;
   right: 10px;
 }
 
-.opacity{
+.opacity {
   width: 100%;
   height: 20%;
   bottom: 0%;
   position: absolute;
-  background: linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,.65) 12%,rgba(0,0,0,.65) 100%);
-  opacity: .5;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.65) 12%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  opacity: 0.5;
+}
+.avatar-display {
+  border-radius: 100%;
+  overflow: hidden;
+}
+.avatar-image {
+  position: relative;
+}
+.change-avatar {
+  position: absolute;
+  top: 90px;
+  width: 160px;
+  height: 80px;
+  overflow: hidden;
+  background-color: black;
+  z-index: 2;
+  opacity: 0.6;
+  cursor: pointer;
+}
+.change-avatar-icon {
+  text-align: center;
+  font-size: 25px;
+}
+.btn-change-avatar {
+  position: absolute;
+  top: 100px;
+  left: 67px;
+  z-index: 5;
+  color: rgb(234, 234, 234);
+  cursor: pointer;
+}
+.btn-text {
+  margin-left: -13px;
+  margin-top: -7px;
+  font-size: 13px;
+  color: rgb(234, 234, 234);
+  font-weight: 500;
+  cursor: pointer;
+}
+.profile-infor:hover .display-none {
+  display: block;
+}
+.display-none {
+  display: none;
+}
+.display-none:hover .change-avatar{
+  opacity: 0.8;
 }

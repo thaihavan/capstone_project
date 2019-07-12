@@ -3,6 +3,11 @@ import { Comment } from 'src/app/model/Comment';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Like } from 'src/app/model/Like';
+import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
+import { Notification } from 'src/app/model/Notification';
+import { NotificationTemplates } from 'src/app/core/globals/NotificationTemplates';
+import { HostGlobal } from 'src/app/core/global-variables';
+import { Post } from 'src/app/model/Post';
 
 @Component({
   selector: 'app-single-comment',
@@ -11,6 +16,8 @@ import { Like } from 'src/app/model/Like';
 })
 export class SingleCommentComponent implements OnInit {
   @Input() comment: Comment;
+  @Input() post: Post;
+
   commentContent = '';
   liked = false;
   showRep = false;
@@ -18,7 +25,7 @@ export class SingleCommentComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(private postService: PostService) {
+  constructor(private postService: PostService, private notifyService: NotifyService) {
     this.like = new Like();
   }
 
@@ -38,6 +45,8 @@ export class SingleCommentComponent implements OnInit {
     this.postService.addComment(comment).subscribe((res: Comment) => {
       this.comment.childs.push(res);
 
+      // Send notification
+      this.sendCommentNotification();
     }, (error: HttpErrorResponse) => {
       console.log(error);
     });
@@ -51,6 +60,9 @@ export class SingleCommentComponent implements OnInit {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         this.comment.likeCount += 1;
         this.comment.liked = true;
+
+        // Send notification
+        this.sendLikeCommentNotification();
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
@@ -62,5 +74,29 @@ export class SingleCommentComponent implements OnInit {
         console.log(err);
       });
     }
+  }
+
+  sendCommentNotification() {
+    const user = JSON.parse(localStorage.getItem('User'));
+    const notification = new Notification();
+    notification.content = new NotificationTemplates()
+      .getCommentedNotiTemplate(user.displayName, this.post.title);
+    notification.displayImage = user.profileImage;
+    notification.receivers = [this.post.author.id];
+    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.comment.postId;
+
+    this.notifyService.sendNotification(notification);
+  }
+
+  sendLikeCommentNotification() {
+    const user = JSON.parse(localStorage.getItem('User'));
+    const notification = new Notification();
+    notification.content = new NotificationTemplates()
+      .getLikeCommentNotiTemplate(user.displayName, this.post.title);
+    notification.displayImage = user.profileImage;
+    notification.receivers = [this.post.author.id];
+    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.comment.postId;
+
+    this.notifyService.sendNotification(notification);
   }
 }

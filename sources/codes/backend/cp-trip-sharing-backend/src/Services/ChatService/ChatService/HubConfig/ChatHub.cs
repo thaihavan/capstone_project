@@ -81,6 +81,11 @@ namespace ChatService.HubConfig
             Clients.Clients(receiver.Connections).SendAsync("clientMessageListener", conversation.Id, messageObject);
         }
 
+        public void SeenConversation(string conversationId, string userId)
+        {
+            _conversationRepository.AddToSeenIds(conversationId, userId);
+        }
+
         public override Task OnConnectedAsync()
         {
             //var identity = (ClaimsIdentity)Context.User.Identity;

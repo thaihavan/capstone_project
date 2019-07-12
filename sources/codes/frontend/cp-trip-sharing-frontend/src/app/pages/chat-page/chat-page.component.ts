@@ -164,6 +164,20 @@ export class ChatPageComponent implements OnInit {
     }
   }
 
+  seenConversation() {
+    if (this.inputMessage.trim() !== '') {
+      this.hubConnection.invoke(
+        'SeenConversation',
+        this.selectedConversation.id,
+        this.user.id)
+        .then(() => {
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
   seen() {
     this.chatService.seen(this.selectedConversation.id).subscribe((res: boolean) => {
     }, (error: HttpErrorResponse) => {

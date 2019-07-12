@@ -18,9 +18,9 @@ namespace NotificationService.Models
         [BsonElement("receivers")]
         public List<string> Receivers { get; set; }
 
-        [BsonElement("seen")]
+        [BsonElement("seen_ids")]
         [BsonRepresentation(BsonType.ObjectId)]
-        public List<string> Seen { get; set; }
+        public List<string> SeenIds { get; set; }
         
         [BsonElement("date")]
         public DateTime Date { get; set; }

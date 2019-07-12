@@ -41,7 +41,15 @@ export class NotifyService {
   }
 
   sendNotification(notification: Notification) {
-    this.hubConnection.invoke('SendNotify', notification)
+    this.hubConnection.invoke('SendNotification', notification)
+      .then(() => { })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  SeenNotification(notificationId: string) {
+    this.hubConnection.invoke('SeenNotification', notificationId)
       .then(() => { })
       .catch((error) => {
         console.log(error);

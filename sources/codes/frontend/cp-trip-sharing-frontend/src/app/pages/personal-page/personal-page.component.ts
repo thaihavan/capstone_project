@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { User } from 'src/app/model/User';
@@ -10,6 +10,8 @@ import { ListFollowComponent } from 'src/app/shared/components/list-follow/list-
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Title } from '@angular/platform-browser';
 import { SendMessagePopupComponent } from 'src/app/shared/components/send-message-popup/send-message-popup.component';
+import { Author } from 'src/app/model/Author';
+import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 
 @Component({
   selector: 'app-personal-page',
@@ -17,6 +19,7 @@ import { SendMessagePopupComponent } from 'src/app/shared/components/send-messag
   styleUrls: ['./personal-page.component.css']
 })
 export class PersonalPageComponent implements OnInit {
+  @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   user: User;
   usergetLocalStorage: any;
   gender = '';
@@ -31,6 +34,7 @@ export class PersonalPageComponent implements OnInit {
   follow = false;
   listUserIdFollowing: any[] = [];
   token: any;
+  myProfile: Author;
 
   constructor(private router: Router, private userService: UserService, public dialog: MatDialog,
               private route: ActivatedRoute, private titleService: Title) {
@@ -65,6 +69,7 @@ export class PersonalPageComponent implements OnInit {
     this.getStates();
   }
   ngOnInit(): void {
+    this.myProfile = new Author();
     if (this.router.url.indexOf('da-danh-dau') !== -1) {
       this.isDisplayNav = false;
     }
@@ -223,5 +228,14 @@ export class PersonalPageComponent implements OnInit {
         console.log(err);
       });
     }
+  }
+  // change avatar image
+  changeAvatar() {
+      this.uploadImage.file.nativeElement.click();
+  }
+  // Image crop
+  ImageCropted(image) {
+    this.myProfile.displayName = image;
+    this.avatar = image;
   }
 }
