@@ -65,7 +65,7 @@ namespace IdentityProvider
             services.AddTransient<TokenManagerMiddleware>();
             services.AddTransient<ITokenManager, Services.TokenManager>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddDistributedMemoryCache();
+            //services.AddDistributedMemoryCache();
 
             // Configure DI for application services
             services.AddScoped<IAccountService, AccountService>();
