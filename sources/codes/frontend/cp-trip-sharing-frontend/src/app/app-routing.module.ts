@@ -21,6 +21,7 @@ import { ListUserBlockedComponent } from './shared/components/list-user-blocked/
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 import { DashboardPageComponent } from './admin/pages/dashboard-page/dashboard-page.component';
+import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
 
 
 const routes: Routes = [
@@ -53,6 +54,7 @@ const routes: Routes = [
       { path: 'khoi-tao', component: InitialUserInformationPageComponent },
       { path: 'tin-nhan', component: ChatPageComponent },
       { path: 'tao-bai-tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
+      { path: 'bai-viet-tim-ban-dong-hanh/:companionId', component: DetailCompanionPostPageComponent}
     ]
   },
 ];

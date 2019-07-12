@@ -39,6 +39,7 @@ import { CreateFindingCompanionsPostComponent } from './pages/create-finding-com
 import { MatBadgeModule } from '@angular/material';
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 import { AdminModule } from './admin/admin.module';
+import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { AdminModule } from './admin/admin.module';
     DestinationTripComponent,
     ChatPageComponent,
     CreateFindingCompanionsPostComponent,
-    ListPostPageComponent
+    ListPostPageComponent,
+    DetailCompanionPostPageComponent
   ],
   imports: [
     MatMenuModule,
