@@ -26,10 +26,10 @@ namespace NotificationService.Hubs
             _notificationRepository = new NotificationRepository(settings);
         }
 
-        public void SendNotify(Notification notification)
+        public void SendNotification(Notification notification)
         {
             notification.Id = ObjectId.GenerateNewId().ToString();
-            notification.Seen = new List<string>();
+            notification.SeenIds = new List<string>();
             notification.Date = DateTime.Now;
 
             _notificationRepository.Add(notification);
@@ -39,6 +39,11 @@ namespace NotificationService.Hubs
             {
                 Clients.Clients(user.Connections).SendAsync("clientNotificationListener");
             }
+        }
+
+        public void SeenNotification(string notificationId, string userId)
+        {
+            _notificationRepository.AddToSeenIds(notificationId, userId);
         }
 
         public override Task OnConnectedAsync()

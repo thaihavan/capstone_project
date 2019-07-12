@@ -29,6 +29,15 @@ namespace NotificationService.Repositories
             return param;
         }
 
+        public bool AddToSeenIds(string notificationId, string userId)
+        {
+            var result = _notifications.UpdateOne(
+                c => c.Id == notificationId,
+                Builders<Notification>.Update.Push<string>(n => n.SeenIds, userId));
+
+            return result.IsAcknowledged;
+        }
+
         public bool Delete(string id)
         {
             throw new NotImplementedException();

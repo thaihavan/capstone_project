@@ -1,7 +1,7 @@
 export class Notification {
     id: string;
     receivers: string[];
-    seen: string[];
+    seenIds: string[];
     date: Date;
     content: string;
     url: string;

@@ -8,7 +8,11 @@ import { Conversation } from 'src/app/model/Conversation';
 })
 export class MessageComponent implements OnInit {
   @Input() conversations: Conversation[] = [];
-  constructor() { }
+
+  user: any;
+  constructor() {
+    this.user = JSON.parse(localStorage.getItem('User'));
+  }
 
   ngOnInit() {
   }

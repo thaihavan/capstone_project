@@ -87,7 +87,7 @@
                 <mat-form-field>
                   <input matInput class="input-message" type="text" placeholder="Nhập tin nhắn" 
                   autocomplete="off" [(ngModel)]="inputMessage" (keyup.enter)="sendMessage()"
-                  (focus)="seen()">
+                  (focus)="seenConversation()">
                 </mat-form-field>
                 <button color="primary" class="button-send mat-fab mat-primary" (click)="sendMessage()">
                   <span class="mat-button-wrapper">

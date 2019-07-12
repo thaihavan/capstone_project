@@ -11,6 +11,10 @@ import { Bookmark } from 'src/app/model/Bookmark';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
+import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
+import { Notification } from 'src/app/model/Notification';
+import { NotificationTemplates } from 'src/app/core/globals/NotificationTemplates';
+import { HostGlobal } from 'src/app/core/global-variables';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -49,7 +53,8 @@ export class DetailpostPageComponent implements OnInit {
     }
   }
   constructor(private postService: PostService, private route: ActivatedRoute,
-              private userService: UserService, private titleService: Title, public dialog: MatDialog) {
+              private userService: UserService, private titleService: Title,
+              public dialog: MatDialog, private notifyService: NotifyService) {
     this.comments = [];
     this.user = JSON.parse(localStorage.getItem('User'));
     this.articleId = this.route.snapshot.paramMap.get('articleId');
@@ -143,6 +148,8 @@ export class DetailpostPageComponent implements OnInit {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         this.article.post.liked = true;
         this.article.post.likeCount += 1;
+        // Send notitication
+        this.sendLikeNotification();
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
@@ -227,4 +234,16 @@ export class DetailpostPageComponent implements OnInit {
     instance.message.messageText = message;
     instance.message.url = '/user/' + this.user.id + url;
   }
+
+  sendLikeNotification() {
+    const notification = new Notification();
+    notification.content = new NotificationTemplates()
+      .getLikePostNotiTemplate(this.user.displayName, this.article.post.title);
+    notification.displayImage = this.user.profileImage;
+    notification.receivers = [this.article.post.author.id];
+    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.article.id;
+
+    this.notifyService.sendNotification(notification);
+  }
+
 }

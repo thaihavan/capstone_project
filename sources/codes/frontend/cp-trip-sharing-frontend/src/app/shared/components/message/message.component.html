@@ -11,7 +11,8 @@
       </div>
       <div class="content">
         <div class="username">{{item.name}}</div>
-        <div class="content-message" [innerHtml]="item.lastMessage.content"></div>
+        <div [ngClass]="{'content-message': true, 'bold': item.seenIds.indexOf(user.id) === -1}"
+        [innerHtml]="item.lastMessage.content"></div>
         <div class="time">{{item.lastMessage.time | customDate}}</div>
       </div>
     </div>

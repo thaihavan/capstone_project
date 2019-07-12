@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
   checkLogined: boolean;
   userId: string;
   urlImgavatar = 'https://qph.fs.quoracdn.net/main-qimg-573142324088396d86586adb93f4c8c2';
-  numberNotification = 1;
 
   numNewMessages = 0;
   numNewNotifications = 0;
@@ -92,6 +91,9 @@ export class HeaderComponent implements OnInit {
 
   viewNotification() {
     this.numNewNotifications = 0;
+    if (this.notifications != null && this.notifications.length > 0) {
+      this.notifyService.SeenNotification(this.notifications[0].id);
+    }
   }
 
   viewMessageNotification() {
@@ -100,8 +102,8 @@ export class HeaderComponent implements OnInit {
 
   getNotifications() {
     this.notifyService.getNotifications().subscribe((res: Notification[]) => {
-      console.log(res);
       this.notifications = res;
+      this.calcNumNewNotification();
     }, (error: HttpErrorResponse) => {
       console.log(error);
     });
@@ -145,5 +147,17 @@ export class HeaderComponent implements OnInit {
         this.numNewMessages++;
       }
     });
+  }
+
+  calcNumNewNotification(): void {
+    this.numNewNotifications = 0;
+    const account = JSON.parse(localStorage.getItem('Account'));
+    for (const n of this.notifications) {
+      if (n.seenIds.indexOf(account.userId) === -1) {
+        this.numNewNotifications++;
+      } else {
+        break;
+      }
+    }
   }
 }
