@@ -35,7 +35,7 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("addtopic")]
+        [HttpPost("create")]
         public IActionResult AddTopic([FromBody] Topic param)
         {
             var temp = _topicService.Add(param);
@@ -44,6 +44,13 @@ namespace PostService.Controllers
                 return Ok(param);
             }
             return NoContent();
+        }
+
+        [Authorize(Roles ="admin")]
+        [HttpDelete()]
+        public IActionResult DeleteTopic([FromQuery] string id)
+        {
+            return Ok(_topicService.Delete(id));
         }
 
     }

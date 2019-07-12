@@ -124,7 +124,7 @@
             <div class="col-4">
                 <mat-form-field appearance="outline">
                     <mat-label>Số lượng thành viên tối thiểu</mat-label>
-                    <input [(ngModel)]="maxMembers" class="example-right-align" type="number" matInput
+                    <input [(ngModel)]="minMembers" class="example-right-align" type="number" matInput
                         placeholder="Số lượng thành viên tối thiểu">
                     <button mat-icon-button matSuffix>
                         <mat-icon>group</mat-icon>
@@ -134,7 +134,7 @@
             <div class="col-4">
                 <mat-form-field appearance="outline">
                     <mat-label>Số lượng thành viên tối đa</mat-label>
-                    <input [(ngModel)]="minMembers" class="example-right-align" type="number" matInput placeholder="Số lượng thành viên tối đa">
+                    <input [(ngModel)]="maxMembers" class="example-right-align" type="number" matInput placeholder="Số lượng thành viên tối đa">
                     <button mat-icon-button matSuffix>
                         <mat-icon>group</mat-icon>
                     </button>

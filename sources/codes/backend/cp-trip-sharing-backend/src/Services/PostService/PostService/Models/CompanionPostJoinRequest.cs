@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PostService.Models
 {
+    [BsonIgnoreExtraElements]
     public class CompanionPostJoinRequest : Model
     {
         [BsonId]
@@ -24,5 +25,9 @@ namespace PostService.Models
 
         [BsonElement("date")]
         public DateTime Date { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
+        public Author User { get; set; }
     }
 }

@@ -8,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SingleCommentComponent } from './components/single-comment/single-comment.component';
 import { MessagePopupComponent } from './components/message-popup/message-popup.component';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -46,6 +47,8 @@ import { ArticleSmallComponent } from './components/post-small/components/articl
 import { VirtualTripSmallComponent } from './components/post-small/components/virtual-trip-small/virtual-trip-small.component';
 import { CompanionPostSmallComponent } from './components/post-small/components/companion-post-small/companion-post-small.component';
 import { PostFilterComponent } from './components/post-filter/post-filter.component';
+import { CurrencyPipe } from './pipes/currency-pipe/currency.pipe';
+import { NotifyMessageTooltipComponent } from './components/notify-message-tooltip/notify-message-tooltip.component';
 
 const Material = [
   MatButtonModule,
@@ -69,7 +72,8 @@ const Material = [
   MatGridListModule,
   MatTooltipModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatSnackBarModule
 ];
 @NgModule({
   declarations: [
@@ -104,7 +108,9 @@ const Material = [
     ArticleSmallComponent,
     VirtualTripSmallComponent,
     CompanionPostSmallComponent,
-    PostFilterComponent
+    PostFilterComponent,
+    CurrencyPipe,
+    NotifyMessageTooltipComponent
   ],
   imports: [
     CommonModule,
@@ -146,7 +152,9 @@ const Material = [
     ArticleSmallComponent,
     VirtualTripSmallComponent,
     CompanionPostSmallComponent,
-    PostFilterComponent
+    PostFilterComponent,
+    CurrencyPipe,
+    NotifyMessageTooltipComponent
   ],
   entryComponents: [
     StepCreatePostComponent,

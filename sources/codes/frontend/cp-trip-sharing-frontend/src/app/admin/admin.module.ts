@@ -9,9 +9,11 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
+import { InterestedTopicAdminsComponent } from './pages/interested-topic-admins/interested-topic-admins.component';
+import { FormAddTopicsComponent } from './pages/interested-topic-admins/form-add-topics/form-add-topics.component';
 
 @NgModule({
-  declarations: [DashboardPageComponent, HeaderAdminComponent],
+  declarations: [DashboardPageComponent, HeaderAdminComponent, InterestedTopicAdminsComponent,FormAddTopicsComponent],
   imports: [
     CommonModule,
     MatMenuModule,

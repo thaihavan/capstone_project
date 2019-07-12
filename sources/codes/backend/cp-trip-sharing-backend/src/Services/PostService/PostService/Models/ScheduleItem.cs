@@ -11,7 +11,7 @@ namespace PostService.Models
     public class ScheduleItem
     {
         [BsonElement("day")]
-        public int Day { get; set; }
+        public DateTime Day { get; set; }
 
         [BsonElement("title")]
         public string Title { get; set; }

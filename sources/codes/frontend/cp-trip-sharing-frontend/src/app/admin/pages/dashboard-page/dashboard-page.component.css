@@ -13,3 +13,11 @@
 .mat-icon {
     margin-right: 10px;
 }
+
+.mat-menu-panel {
+    margin-left: 150px !important;
+    margin-top: -48px !important;
+}
+.mat-drawer {
+    width: 190px !important;
+}

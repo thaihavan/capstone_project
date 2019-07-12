@@ -1,0 +1,205 @@
+<div class="timeline-cover" #top>
+  <div>
+    <img class="cover-image" src="{{coverImage}}">
+  </div>
+  <div class="profile-infor">
+    <a href="#"><img src="{{coverImg}}" class="avatar-img"></a>
+  </div>
+  <div class="icon-block">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="blockUserById(authorId)">
+        <mat-icon>block</mat-icon>
+        <span>Chặn người dùng</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>mail_outline</mat-icon>
+        <span>Gửi tin nhắn</span>
+      </button>
+    </mat-menu>
+  </div>
+  <div class="opacity"></div>
+  <div class="title-top">
+    <div class="title-location">
+      <div class="title">
+        <span>{{post.title}}</span>
+      </div>
+      <!-- <div class="short-content">
+        <span>{{getShortDescription(post.content)}}</span>
+      </div> -->
+      <div class="location" *ngFor="let location of listLocation">
+        <span><i class="fa fa-tag"></i>{{location.name}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="content-infor">
+    <div class="infor-author">
+      <div (click)="gotoPersonalPage(authorId)" class="personal-name"><span>{{displayName}}</span></div>
+      <div class="time">{{post.pubDate | customDate}}</div>
+      <button (click)="followPerson(post.author.id)" *ngIf="follow" class="btn-follow">
+        <span><i class="fa fa-user-plus"></i>Theo dõi</span>
+      </button>
+      <button (click)="followPerson(post.author.id)" *ngIf="followed" class="btn-follow">
+        <span><i class="fa fa-user-plus"></i> Đã theo dõi</span>
+      </button>
+      <div class="share"><i class="fa fa-share"></i> <span> Chia sẻ </span></div>
+      <div class="like"><i class="fa fa-thumbs-up"></i><span> {{post.likeCount}} thích </span></div>
+      <br class="clearleft" />
+    </div>
+  </div>
+</div>
+<div class="content-post-page row">
+  <div [ngClass]="checkHasRequest() ? 'col-1': 'col-2'">
+  </div>
+  <div [ngClass]="checkHasRequest() ? 'col-7': 'col-8'">
+    <div class="line-height ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred"
+      role="textbox" aria-label="Rich Text Editor, main" [innerHTML]="post.content">
+    </div>
+    <h4 class="mt-2 mb-4">Thông tin chuyến đi</h4>
+    <div class="row">
+      <div class="col-8">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Ngày khởi hành</th>
+              <td>{{companionPost.from | date:'dd-MM-yyyy'}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Ngày kết thúc</th>
+              <td>{{companionPost.to | date:'dd-MM-yyyy'}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Ngày hết hạn đăng ký</th>
+              <td>{{companionPost.expiredDate | date:'dd-MM-yyyy'}} (có thể Chốt sớm hơn nếu đủ thành viên)</td>
+            </tr>
+            <tr>
+              <th scope="row">Số lượng thành viên</th>
+              <td>{{companionPost.minMembers}} - {{companionPost.maxMembers}} người</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-4">
+        <div class="content-center price pb-3">
+          <div class="header-price">
+            Chi phí tham gia
+          </div>
+          <div class="text-price mt-4 mb-1">
+            {{companionPost.estimatedCost | currency}} Đ
+          </div>
+          <div class="sub-price">
+            một người
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <h4 class="mb-4 mt-4 md-accent">Lịch trình chuyến đi</h4>
+      </div>
+      <div class="create-step mt-4">
+        <mat-vertical-stepper color="primary" #stepper>
+          <mat-step *ngFor="let item of companionPost.scheduleItems; let i = index " [completed]="false">
+            <ng-template matStepLabel>
+              <app-step-lable-companion-post [item]="item" [isDisplayMore]="false"></app-step-lable-companion-post>
+            </ng-template>
+            <div class="date-time pl-2">
+              <mat-card-subtitle>
+                {{item.day | date}}
+              </mat-card-subtitle>
+            </div>
+            <div class="pl-2 pt-2">
+              {{item.content}}
+            </div>
+          </mat-step>
+          <ng-template matStepperIcon="edit" let-index="index">
+            {{index + 1}}
+          </ng-template>
+          <ng-template matStepperIcon="done" let-index="index">
+            {{index + 1}}
+          </ng-template>
+          <ng-template matStepperIcon="add">
+            <mat-icon>add</mat-icon>
+          </ng-template>
+        </mat-vertical-stepper>
+      </div>
+    </div>
+    <!-- những chi phí bao gồm -->
+    <div class="">
+      <h4 class="mb-4 mt-4 md-accent">Những chi phí bao gồm</h4>
+      <div style="margin-left: .8rem!important;">
+        <mat-list>
+          <mat-list-item *ngFor="let item of companionPost.estimatedCostItems ; let i = index">
+            <mat-icon color="accent" matListIcon>check_circle</mat-icon>
+            <h3 matLine> {{item}} </h3>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+    <div class="comment text">
+      <h3>Bình luận</h3>
+      <div class="iconuser-textarea" #target>
+
+        <div class="form-group">
+          <textarea class="form-control" rows="5" id="comment" name="text" [(ngModel)]="commentContent"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="submitComment()">Bình luận</button>
+
+        <!-- Comment container include all comments -->
+        <app-comment-container [comments]="comments"></app-comment-container>
+
+      </div>
+    </div>
+    <div class="button-showcomment">
+      <button type="button" class="btn btn-primary">Tải thêm bình luận</button>
+    </div>
+  </div>
+  <div class="" [class.right-content]='checkHasRequest()' [class.col-3]='checkHasRequest()' [class.col-2]='!checkHasRequest()'>
+    <ng-container *ngIf="checkHasRequest()">
+      <div class="header-request ">
+        Danh sách yêu cầu tham gia
+      </div>
+      <mat-nav-list class="mat-nav-list mat-list-base" role="navigation">
+        <mat-list-item *ngFor="let item of userListRequests">
+          <img matListAvatar src="{{item.user.profileImage}}" alt="">
+          <h3 matLine>{{item.user.displayName}}</h3>
+          <p matLine>
+            <span class="text-muted">{{item.date | date:'dd-MM-yyyy'}}</span>
+          </p>
+          <button color="primary" matTooltip="Chấp nhận" mat-icon-button>
+            <mat-icon class="item-delete">done</mat-icon>
+          </button>
+          <button color="warn" matTooltip="Xoá bỏ" mat-icon-button>
+            <mat-icon class="item-delete">clear</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-nav-list>
+    </ng-container>
+    <ng-container *ngIf="!isAuthorPost">
+      <div [ngClass]="isScrollTopShow ? 'fix-join-button' : 'mt-3'">
+        <div
+          [ngClass]="statustRequest.type === 'request' ? 'btn-join' : statustRequest.type === 'waiting' ? 'btn-join-waiting' : 'btn-join-joined'">
+          <span (click)='sendRequest()' class="text-join">{{statustRequest.text}}</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<ng-container *ngIf="!isAuthorPost">
+  <div *ngIf="isScrollTopShow" class="icon-action">
+    <button [class]="post.liked ? 'iconLike':'iconUnLike'" (click)="likePost(companionPost.post.liked)">
+      <mat-icon>thumb_up</mat-icon>
+    </button>
+    <button (click)="bookmarkPost(post.id,post.title,post.coverImage,post.postType)">
+      <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
+    </button>
+    <button (click)="commentPost(target)">
+      <mat-icon>comment</mat-icon>
+    </button>
+    <button (click)="gotoTopPage(top)">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+  </div>
+</ng-container>

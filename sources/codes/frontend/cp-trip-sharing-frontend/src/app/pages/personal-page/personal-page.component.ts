@@ -27,9 +27,6 @@ export class PersonalPageComponent implements OnInit {
   activeLinkIndex = 0;
   userId: string;
   listUser: User[] = [];
-  showDOB = false;
-  showGender = false;
-  showAddress = false;
   isDisplayNav = true;
   follow = false;
   listUserIdFollowing: any[] = [];
@@ -95,31 +92,19 @@ export class PersonalPageComponent implements OnInit {
       console.log(data);
       this.user.UserId = data.id;
       this.user.ContributionPoint = data.contributionPoint;
-      if (data.dob != null) {
-        this.user.Dob = data.dob;
-      } else {
-        this.showDOB = true;
-      }
       this.user.DisplayName = data.displayName;
       this.user.FirstName = data.firstName;
-      if (data.gender != null) {
-        this.user.Gender = data.gender;
-        if (this.user.Gender === true) {
-          this.gender = 'Nam';
-        } else {
-          this.gender = 'Nữ';
-        }
+      this.user.Gender = data.gender;
+      this.user.Dob = data.dob;
+      if (this.user.Gender === true) {
+        this.gender = 'Nam';
       } else {
-        this.showGender = true;
+        this.gender = 'Nữ';
       }
       this.user.Interested = data.interested;
       this.user.LastName = data.lastName;
       this.user.UserName = data.userName;
-      if (data.address !== '') {
-        this.user.Address = data.address;
-      } else {
-        this.showAddress = true;
-      }
+      this.user.Address = data.address;
       this.user.FollowerCount = data.followerCount;
       this.user.FollowingCount = data.followingCount;
       console.log(this.user);

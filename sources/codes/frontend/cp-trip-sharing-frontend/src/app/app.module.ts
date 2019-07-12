@@ -39,6 +39,8 @@ import { CreateFindingCompanionsPostComponent } from './pages/create-finding-com
 import { MatBadgeModule } from '@angular/material';
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 import { AdminModule } from './admin/admin.module';
+import { FormAddTopicsComponent } from './admin/pages/interested-topic-admins/form-add-topics/form-add-topics.component';
+import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import { AdminModule } from './admin/admin.module';
     DestinationTripComponent,
     ChatPageComponent,
     CreateFindingCompanionsPostComponent,
-    ListPostPageComponent
+    ListPostPageComponent,
+    DetailCompanionPostPageComponent
   ],
   imports: [
     MatMenuModule,
@@ -97,7 +100,7 @@ import { AdminModule } from './admin/admin.module';
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent, ListFollowComponent]
+  entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent, ListFollowComponent, FormAddTopicsComponent]
 
 })
 export class AppModule { }

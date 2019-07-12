@@ -70,6 +70,7 @@ namespace PostService.Services
         public CompanionPost Update(CompanionPost post)
         {
             return _companionPostRepository.Update(post);
-        }       
+        }
     }
 }
+ 

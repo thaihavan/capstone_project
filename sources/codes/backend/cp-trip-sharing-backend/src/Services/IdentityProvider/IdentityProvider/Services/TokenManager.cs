@@ -8,23 +8,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityProvider.Repositories.Interfaces;
+using IdentityProvider.Repositories.DbContext;
+using IdentityProvider.Repositories;
 
 namespace IdentityProvider.Services
 {
     public class TokenManager : ITokenManager
-    {
-        private readonly IDistributedCache _cache;
+    {     
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IOptions<AppSettings> _jwtOptions;
+        private readonly IOptions<AppSettings> _settings;
+        private readonly IBlacklistTokenRepository _blacklistTokenRepository = null;
 
-        public TokenManager(IDistributedCache cache,
+        public TokenManager(
                 IHttpContextAccessor httpContextAccessor,
-                IOptions<AppSettings> jwtOptions
+                IOptions<AppSettings> setting
             )
         {
-            _cache = cache;
             _httpContextAccessor = httpContextAccessor;
-            _jwtOptions = jwtOptions;
+            _settings = setting;
+            _blacklistTokenRepository = new BlacklistTokenRepository(setting);
         }
 
         public async Task<bool> IsCurrentActiveToken()
@@ -34,15 +37,10 @@ namespace IdentityProvider.Services
             => await DeactivateAsync(GetCurrentAsync());
 
         public async Task<bool> IsActiveAsync(string token)
-            => await _cache.GetStringAsync(GetKey(token)) == null;
+            => await _blacklistTokenRepository.GetTokenAsync(token) == null;
 
         public async Task DeactivateAsync(string token)
-            => await _cache.SetStringAsync(GetKey(token),
-                " ", new DistributedCacheEntryOptions
-                {
-                    AbsoluteExpirationRelativeToNow =
-                        TimeSpan.FromMinutes(360)
-                });
+            => await _blacklistTokenRepository.AddAsync(token);
 
         private string GetCurrentAsync()
         {
@@ -52,9 +50,6 @@ namespace IdentityProvider.Services
             return authorizationHeader == StringValues.Empty
                 ? string.Empty
                 : authorizationHeader.Single().Split(" ").Last();
-        }
-
-        private static string GetKey(string token)
-            => $"tokens:{token}:deactivated";
+        }  
     }
 }

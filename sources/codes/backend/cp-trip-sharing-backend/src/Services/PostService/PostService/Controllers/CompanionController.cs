@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -97,6 +98,55 @@ namespace PostService.Controllers
             if (!userId.Equals(post.Post.AuthorId)) return Unauthorized();
             var result = _companionPostService.Delete(id);
             return Ok(new { Message = "Success" });
+        }
+
+        [Authorize(Roles = "member")]
+        [HttpPost("post/join")]
+        public IActionResult JoinCompanion([FromBody]CompanionPostJoinRequest request)
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+            request.UserId = userId;
+            var result=_companionPostService.AddNewRequest(request);
+            
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "member")]
+        [HttpGet("post/requests")]
+        public IActionResult GetAllRequest([FromQuery]string companionPostId)
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            var companionPost = _companionPostService.GetById(companionPostId);
+            if (!companionPost.Post.AuthorId.Equals(userId))
+            {
+                return Unauthorized();
+            }else
+            {
+                return Ok(_companionPostService.GetAllJoinRequest(companionPostId));
+            }           
+        }
+
+        [Authorize(Roles = "member")]
+        [HttpDelete("post/request")]
+        public  IActionResult DeleteRequest([FromBody]CompanionPostJoinRequest request)
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            var companionPost = _companionPostService.GetById(request.CompanionPostId);
+
+            if (!companionPost.Post.AuthorId.Equals(userId))
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                _companionPostService.DeleteJoinRequest(request.Id);
+                return Ok();
+            }
         }
     }
 }

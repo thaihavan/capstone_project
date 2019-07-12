@@ -5,6 +5,8 @@ import { ArticleDestinationItem } from './ArticleDestinationItem';
 export class CompanionPost {
     constructor() {
         this.post = new Post();
+        this.scheduleItems = [];
+        this.destinations = [];
     }
     postId: string;
     from: Date;
@@ -15,7 +17,7 @@ export class CompanionPost {
     maxMembers: number;
     minMembers: number;
     expiredDate: Date;
-    schedule: Schedule[];
+    scheduleItems: Schedule[];
     destinations: ArticleDestinationItem[];
     post: Post;
 }
