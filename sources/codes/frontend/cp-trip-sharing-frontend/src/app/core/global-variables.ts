@@ -9,6 +9,6 @@ export class HostGlobal {
     public static HOST_POST_SERVICE = 'http://35.244.136.34';
     public static HOST_CHAT_SERVICE = 'https://localhost:44360';
     public static HOST_NOTIFY_SERVICE = 'https://localhost:44335';
-
+    public static HOST_POST_SERVICE_LC = 'https://localhost:44352';
     public static HOST_FRONTEND = 'http://trip-sharing.net';
 }
