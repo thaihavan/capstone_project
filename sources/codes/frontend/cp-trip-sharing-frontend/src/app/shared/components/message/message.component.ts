@@ -17,4 +17,8 @@ export class MessageComponent implements OnInit {
   ngOnInit() {
   }
 
+  isImage(imgTag: string): boolean {
+    return imgTag.startsWith('<img');
+  }
+
 }

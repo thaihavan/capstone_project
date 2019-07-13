@@ -12,7 +12,7 @@ import { CompanionPostRequest } from 'src/app/model/CompanionPostRequest';
 })
 export class FindingCompanionService {
   user: any;
-  baseUrl = HostGlobal.HOST_POST_SERVICE_LC + '/api/postservice/companion';
+  baseUrl = HostGlobal.HOST_POST_SERVICE + '/api/postservice/companion';
   constructor(private http: HttpClient) {
     this.user = JSON.parse(localStorage.getItem('User'));
   }

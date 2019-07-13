@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { ChatService } from 'src/app/core/services/chat-service/chat.service';
 import { Account } from 'src/app/model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -165,7 +165,7 @@ export class ChatPageComponent implements OnInit {
   }
 
   seenConversation() {
-    if (this.inputMessage.trim() !== '') {
+    if (this.inputMessage.trim() === '') {
       this.hubConnection.invoke(
         'SeenConversation',
         this.selectedConversation.id,
@@ -219,7 +219,7 @@ export class ChatPageComponent implements OnInit {
       imageUpload.type = file.type;
 
       this.uploadImageService.uploadImage(imageUpload).subscribe((res: any) => {
-        this.sendImage(`<img src='${res.image}'>`);
+        this.sendImage(`<img width="100%" src='${res.image}'>`);
       }, (error: HttpErrorResponse) => {
         console.log(error);
       });
