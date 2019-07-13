@@ -8,6 +8,8 @@ import { Notification } from 'src/app/model/Notification';
 import { NotificationTemplates } from 'src/app/core/globals/NotificationTemplates';
 import { HostGlobal } from 'src/app/core/global-variables';
 import { Post } from 'src/app/model/Post';
+import { MatDialog } from '@angular/material';
+import { ReportPopupComponent } from '../report-popup/report-popup.component';
 
 @Component({
   selector: 'app-single-comment',
@@ -25,7 +27,7 @@ export class SingleCommentComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(private postService: PostService, private notifyService: NotifyService) {
+  constructor(private postService: PostService, private notifyService: NotifyService, private dialog: MatDialog) {
     this.like = new Like();
   }
 
@@ -98,5 +100,22 @@ export class SingleCommentComponent implements OnInit {
     notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.comment.postId;
 
     this.notifyService.sendNotification(notification);
+  }
+
+  reportComment() {
+    this.openDialogMessageConfirm('Báo cáo bình luận');
+  }
+
+  openDialogMessageConfirm(title: string) {
+    const dialogRef = this.dialog.open(ReportPopupComponent, {
+      width: '400px',
+      height: 'auto',
+      position: {
+        top: '10px'
+      },
+      disableClose: false
+    });
+    const instance = dialogRef.componentInstance;
+    instance.title = title;
   }
 }

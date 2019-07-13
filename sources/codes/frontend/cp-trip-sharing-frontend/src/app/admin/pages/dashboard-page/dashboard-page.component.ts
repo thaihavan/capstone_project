@@ -11,5 +11,7 @@ export class DashboardPageComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  gotoTopicManagement() {
+    window.location.href = 'dashboard/chu-de';
+  }
 }

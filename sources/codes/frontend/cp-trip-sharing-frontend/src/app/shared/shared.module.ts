@@ -49,6 +49,7 @@ import { CompanionPostSmallComponent } from './components/post-small/components/
 import { PostFilterComponent } from './components/post-filter/post-filter.component';
 import { CurrencyPipe } from './pipes/currency-pipe/currency.pipe';
 import { NotifyMessageTooltipComponent } from './components/notify-message-tooltip/notify-message-tooltip.component';
+import { ReportPopupComponent } from './components/report-popup/report-popup.component';
 
 const Material = [
   MatButtonModule,
@@ -110,7 +111,8 @@ const Material = [
     CompanionPostSmallComponent,
     PostFilterComponent,
     CurrencyPipe,
-    NotifyMessageTooltipComponent
+    NotifyMessageTooltipComponent,
+    ReportPopupComponent
   ],
   imports: [
     CommonModule,

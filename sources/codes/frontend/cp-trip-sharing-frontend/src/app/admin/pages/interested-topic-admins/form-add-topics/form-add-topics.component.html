@@ -1,4 +1,7 @@
 <div class="form-add-topic">
+  <div class="title">
+    <span>Thêm chủ đề bài viết</span>
+  </div>
   <div class="custom-file mb-3">
     <input #file type="file" class="custom-file-input" id="customFile" name="filename" accept='image/*'
       (change)="preview(file.files)">
@@ -8,5 +11,5 @@
   <mat-form-field class="example-form-field">
     <input matInput type="text" placeholder="Tên chủ đề" [(ngModel)]="topic.name">
   </mat-form-field>
-  <button mat-button color="primary" (click)="addTopic()" [hidden]="topic.name == null">Thêm chủ đề</button>
+  <button mat-button color="primary" (click)="addTopic()">Thêm chủ đề</button>
 </div>
