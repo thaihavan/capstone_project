@@ -3,92 +3,73 @@
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Thông tin</ng-template>
-        <!-- <div class="form_wrapper">
-          <div class="form_container">
-            <div class="title_container">
-              <h4>Cập nhật thông tin</h4>
-            </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input matInput type="text" placeholder="@username" [(ngModel)]="user.UserName"
-               [ngModelOptions]="{standalone: true}" required />
-            </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input matInput type="text" placeholder="Tên hiển thị" [(ngModel)]="user.DisplayName"
-               [ngModelOptions]="{standalone: true}" required />
-            </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input matInput type="text" placeholder="Họ" [(ngModel)]="user.FirstName"
-              [ngModelOptions]="{standalone: true}" required />
-            </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input matInput type="text" placeholder="Tên" [(ngModel)]="user.LastName"
-              [ngModelOptions]="{standalone: true}" required />
-            </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input type="date" [ngModelOptions]="{standalone: true}" [ngModel] ="user.Dob | date:'yyyy-MM-dd'" (ngModelChange)="user.Dob = $event" placeholder="Ngày sinh" />
-
-            </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-              <input type="text" [(ngModel)]="user.Address" [ngModelOptions]="{standalone: true}"
-                placeholder="Địa chỉ" />
-            </div>
-            <div class="input_field radio_option">
-              <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
-              <label for="rd1">Nam</label>
-              <input type="radio" name="gender" id="rd2" [value]="false" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
-              <label for="rd2">Nữ</label>
-            </div>
-            <input matStepperNext class="button" type="submit" (click)="callInterestedtopicPage(stepper)"
-              value="Tiếp tục" />
+        <div class="form-update-infor">
+          <div class="title">
+            <span>Cập nhật thông tin người dùng</span>
           </div>
-          <span style="color: red;margin: 0 auto;">{{message}}</span>
-        </div> -->
-        <div *ngIf="user" class="form_wrapper">
-          <h2>Cập nhật thông tin</h2>
-          <form name="form" [formGroup]="form">
-            <div class="form-group">
-              <input type="text" class="form-control" formControlName="username" placeholder="@username"
-                [ngClass]="{'is-invalid':form.get('username').touched && form.get('username').invalid}" />
-              <div *ngIf="form.get('username').touched && form.get('username').invalid" class="invalid-feedback">
-                <div *ngIf="form.get('username').errors.required">Bạn không được bỏ trống</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" formControlName="displayName" placeholder="Tên hiển thị"
-                [ngClass]="{'is-invalid':form.get('displayName').touched && form.get('displayName').invalid}" />
-              <div *ngIf="form.get('displayName').touched && form.get('displayName').invalid" class="invalid-feedback">
-                <div *ngIf="form.get('displayName').errors.required">Bạn không được bỏ trống</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" formControlName="firstname" placeholder="Họ"
-                [ngClass]="{'is-invalid':form.get('firstname').touched && form.get('firstname').invalid}" />
-              <div *ngIf="form.get('firstname').touched && form.get('firstname').invalid" class="invalid-feedback">
-                <div *ngIf="form.get('firstname').errors.required">Bạn không được bỏ trống</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" formControlName="lastname" placeholder="Tên"
-                [ngClass]="{'is-invalid':form.get('lastname').touched && form.get('lastname').invalid}" />
-              <div *ngIf="form.get('lastname').touched && form.get('lastname').invalid" class="invalid-feedback">
-                <div *ngIf="form.get('lastname').errors.required">Bạn không được bỏ trống</div>
+          <div class="row form-conent">
+            <div class="col-4">
+              <div class="user-details-container">
+                <img class="user-image" src="https://randomuser.me/api/portraits/lego/3.jpg" />
               </div>
             </div>
 
-            <div class="form-group">
-              <input type="date" class="form-control" placeholder="Ngày sinh" [ngModel] ="user.Dob | date:'yyyy-MM-dd'" (ngModelChange)="user.Dob = $event"  [ngModelOptions]="{standalone: true}"/>
+            <div class="col-8 form-input">
+                  <div class="row">
+                      <mat-form-field class="col-6 full-width">
+                        <input matInput placeholder="@Username" [formControl]="username" required>
+                        <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
+                        <!-- <mat-error *ngFor="let validation of validation_messages.username">
+                          <mat-error class="error-message" *ngIf="form.get('username').hasError(validation.type) && (form.get('username').dirty || form.get('username').touched)">{{validation.message}}</mat-error>
+                        </mat-error> -->
+                      </mat-form-field>
+                      <mat-form-field class="col-6 full-width">
+                        <input matInput placeholder="Tên hiển thị" [formControl]="displayname" required>
+                        <mat-error *ngIf="displayname.invalid">{{getErrorMessage()}}</mat-error>
+                        <!-- <mat-error *ngFor="let validation of validation_messages.displayname">
+                            <mat-error class="error-message" *ngIf="form.get('displayname').hasError(validation.type) && (form.get('displayname').dirty || form.get('displayname').touched)">{{validation.message}}</mat-error>
+                          </mat-error> -->
+                      </mat-form-field>
+                    </div>
+                <div class="row">
+                  <mat-form-field class="col-6 full-width">
+                    <input matInput placeholder="Họ" [formControl]="firstname" required>
+                    <mat-error *ngIf="firstname.invalid">{{getErrorMessage()}}</mat-error>
+                    <!-- <mat-error *ngFor="let validation of validation_messages.firstname">
+                      <mat-error class="error-message" *ngIf="form.get('firstname').hasError(validation.type) && (form.get('firstname').dirty || form.get('firstname').touched)">{{validation.message}}</mat-error>
+                    </mat-error> -->
+                  </mat-form-field>
+                  <mat-form-field class="col-6 full-width">
+                    <input matInput placeholder="Tên" [formControl]="lastname" required>
+                    <mat-error *ngIf="lastname.invalid">{{getErrorMessage()}}</mat-error>
+                    <!-- <mat-error *ngFor="let validation of validation_messages.lastname">
+                        <mat-error class="error-message" *ngIf="form.get('lastname').hasError(validation.type) && (form.get('lastname').dirty || form.get('lastname').touched)">{{validation.message}}</mat-error>
+                      </mat-error> -->
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field class="col-6 full-width">
+                    <input matInput [matDatepicker]="picker" placeholder="Ngày Sinh" [formControl]="birthday">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>            
+                  </mat-form-field>
+
+                  <mat-form-field class="col-6 full-width">
+                    <input matInput placeholder="Địa chỉ" [formControl]="address">    
+                  </mat-form-field>
+                  
+                </div>
+                <div class="input_field radio_option">
+                    <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.Gender"  [ngModelOptions]="{standalone: true}">
+                    <label for="rd1" style="padding-left: 5px;">Nam</label>
+                    <input type="radio" name="gender" id="rd2" [value]="false" class="input-gender" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
+                    <label for="rd2" style="padding-left: 5px;">Nữ</label>
+                  </div>
+                <button class="submit-btn" color="primary" (click)="callInterestedtopicPage(stepper)" [disabled]="getErrorMessage()===true?'false':'true'" mat-raised-button type="submit">
+                  Tiếp tục
+                </button>
             </div>
-            <div class="form-group">
-              <input type="text" class="form-control" formControlName="address" placeholder="Địa chỉ"/>
-            </div>
-            <div class="input_field radio_option">
-              <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.Gender"  [ngModelOptions]="{standalone: true}">
-              <label for="rd1" style="padding-left: 5px;">Nam</label>
-              <input type="radio" name="gender" id="rd2" [value]="false" class="input-gender" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
-              <label for="rd2" style="padding-left: 5px;">Nữ</label>
-            </div>
-            <input [disabled]="!form.valid" class="btn" (click)="callInterestedtopicPage(stepper)" value="Tiếp tục" />
-          </form>
+          </div>
         </div>
       </form>
     </mat-step>

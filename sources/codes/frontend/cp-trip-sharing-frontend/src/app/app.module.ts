@@ -102,7 +102,7 @@ import { ReportPopupComponent } from './shared/components/report-popup/report-po
   ],
   bootstrap: [AppComponent],
   entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent,
-                    ListFollowComponent, FormAddTopicsComponent, ReportPopupComponent]
+                    ListFollowComponent, FormAddTopicsComponent, ReportPopupComponent, InitialUserInformationPageComponent]
 
 })
 export class AppModule { }

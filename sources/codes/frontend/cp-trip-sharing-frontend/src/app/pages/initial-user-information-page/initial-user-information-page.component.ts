@@ -12,27 +12,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./initial-user-information-page.component.css']
 })
 export class InitialUserInformationPageComponent implements OnInit {
-  isLinear = true;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  user: User;
-  isRegister: boolean;
-  selectedTopic: string[] = [];
-  form = new FormGroup({
-    username: new FormControl('', [
-      Validators.required
-    ]),
-    displayName: new FormControl('', [
-      Validators.required
-    ]),
-    firstname: new FormControl('', [
-      Validators.required
-    ]),
-    lastname: new FormControl('', [
-      Validators.required
-    ]),
-    address: new FormControl()
-  });
+
   constructor(private formBuilder: FormBuilder, private userService: UserService, private titleService: Title) {
     this.titleService.setTitle('Khởi tạo');
     this.user = new User();
@@ -45,11 +25,20 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.user.Address = '';
     this.user.Interested = [];
   }
-
+  isLinear = true;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  user: User;
+  isRegister: boolean;
+  selectedTopic: string[] = [];
+  username = new FormControl('', [Validators.required]);
+  displayname = new FormControl('', [Validators.required]);
+  firstname = new FormControl('', [Validators.required]);
+  lastname = new FormControl('', [Validators.required]);
+  address = new FormControl();
+  birthday = new FormControl();
   ngOnInit() {
-    this.firstFormGroup = this.formBuilder.group({
-
-    });
+    this.firstFormGroup = this.formBuilder.group({});
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
@@ -58,19 +47,26 @@ export class InitialUserInformationPageComponent implements OnInit {
       this.isRegister = true;
     } else {
       this.isRegister = false;
-      console.log(this.user);
-      this.form.setValue({
-        username: this.user.UserName,
-        displayName: this.user.DisplayName,
-        firstname: this.user.FirstName,
-        lastname: this.user.LastName,
-        address: this.user.Address
-      });
-
-      this.form.patchValue({ dob: this.user.Dob });
+      this.setValueForTextField();
     }
   }
 
+  setValueForTextField() {
+    this.username.setValue(this.user.UserName);
+    this.displayname.setValue(this.user.DisplayName);
+    this.firstname.setValue(this.user.FirstName);
+    this.lastname.setValue(this.user.LastName);
+    this.address.setValue(this.user.Address);
+    this.birthday.setValue(this.user.Dob);
+  }
+  getErrorMessage() {
+    if (this.username.hasError('required') || this.firstname.hasError('required') ||
+      this.lastname.hasError('required') || this.address.hasError('required')) {
+      return 'Bạn phải nhập thông tin này';
+    } else {
+      return true;
+    }
+  }
   callInterestedtopicPage(stepper: MatStepper) {
     this.isLinear = false;
     stepper.next();
@@ -78,7 +74,6 @@ export class InitialUserInformationPageComponent implements OnInit {
 
   selectedTopics(topics: any) {
     this.user.Interested = topics;
-    console.log(this.user.Interested);
   }
 
   onGenderChange(value: any) {
@@ -100,15 +95,16 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.userService.updateUser(this.user).subscribe((result: any) => {
       window.location.href = '/user/' + this.user.UserId;
     }, (err: HttpErrorResponse) => {
-      window.location.href = '/user/' + this.user.UserId;
+      console.log(err);
     });
   }
 
   getValueFromFormGroup() {
-    this.user.UserName = this.form.value.username;
-    this.user.DisplayName = this.form.value.displayName;
-    this.user.FirstName = this.form.value.firstname;
-    this.user.LastName = this.form.value.lastname;
-    this.user.Address =  this.form.value.address;
+    this.user.UserName = this.username.value;
+    this.user.DisplayName = this.displayname.value;
+    this.user.FirstName = this.firstname.value;
+    this.user.LastName = this.lastname.value;
+    this.user.Address = this.address.value;
+    this.user.Dob = this.birthday.value;
   }
 }
