@@ -156,6 +156,16 @@ export class PostService {
         'Content-Type': 'application/json',
       })
     };
-    return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/addtopic', topic, httpOption);
+    return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/create', topic, httpOption);
+  }
+
+  removeTopic(topicId: any): Observable<any> {
+    const httpOptionRemoveTopic = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic?id=' + topicId, httpOptionRemoveTopic);
   }
 }

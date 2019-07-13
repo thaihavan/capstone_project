@@ -17,7 +17,7 @@ export class FormAddTopicsComponent implements OnInit {
   imgURL: any;
   message: string;
   topic: Topic = new Topic();
-  constructor(private postService: PostService,  public dialog: MatDialog,  private imageService: UploadImageService) { }
+  constructor(private postService: PostService, public dialog: MatDialog, private imageService: UploadImageService) { }
 
   ngOnInit() {
   }
@@ -43,28 +43,22 @@ export class FormAddTopicsComponent implements OnInit {
   }
 
   addTopic() {
+    const imageBase64 = this.imgURL.split(',');
     const imageUpload: ImageUpload = new ImageUpload();
-    this.dialog.closeAll();
-    this.openDialogMessageConfirm();
-    const image = this.imagePath[0].name.split('.');
-    imageUpload.type = image[1];
-    imageUpload.image = this.imgURL;
+    imageUpload.type = this.imagePath[0].type;
+    imageUpload.image = imageBase64[1];
     this.imageService.uploadImage(imageUpload).subscribe((res: any) => {
-        this.imgURL = res.image;
-        console.log('fuck' + this.imgURL);
+      this.topic.imgUrl = res.image;
+      this.postService.addTopic(this.topic).subscribe((result: any) => {
+        this.dialog.closeAll();
+        this.openDialogMessageConfirm();
       }, (err: HttpErrorResponse) => {
         console.log(err);
-      }
+      });
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    }
     );
-
-    // console.log(this.imgURL);
-    // this.topic.imgUrl = this.imgURL;
-    // this.postService.addTopic(this.topic).subscribe((result: any) => {
-    //  this.dialog.closeAll();
-    //  this.openDialogMessageConfirm();
-    // }, (err: HttpErrorResponse) => {
-    //   console.log(err);
-    // });
   }
 
   openDialogMessageConfirm() {

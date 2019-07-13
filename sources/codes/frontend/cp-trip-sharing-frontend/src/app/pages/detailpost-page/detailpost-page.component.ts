@@ -24,6 +24,7 @@ import { HostGlobal } from 'src/app/core/global-variables';
 export class DetailpostPageComponent implements OnInit {
   post: Post = new Post();
   user: any;
+  authorId = '';
   article: Article = new Article();
   like: Like = new Like();
   bookmarkObject: Bookmark = new Bookmark();
@@ -70,6 +71,7 @@ export class DetailpostPageComponent implements OnInit {
       this.post = data.post;
       this.displayName = data.post.author.displayName;
       this.profileImage = data.post.author.profileImage;
+      this.authorId = data.post.author.id;
       if (this.post.coverImage == null) {
         this.post.coverImage = '../../../assets/coverimg.jpg';
       }

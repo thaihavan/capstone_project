@@ -6,17 +6,29 @@
       </div>
       <div class="profile-infor">
         <div class="avatar-display">
-          <a href="#"><img src="{{avatar}}" class="avatar-img"></a>
+          <div class="avatar-image">
+            <img src="{{this.myProfile.profileImage ? this.myProfile.profileImage : avatar }}" class="avatar-img">
+            <div class="display-none" (click)="changeAvatar()">
+              <div class="change-avatar">
+              </div>
+              <div class="btn-change-avatar">
+                <mat-icon class="change-avatar-icon ">add_a_photo</mat-icon>
+                <p class="btn-text">Cập nhập</p>
+              </div>
+              <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]="1/1"
+                [resizeToWidth]="1350" #uploadImage></app-upload-image>
+            </div>
+          </div>
         </div>
       </div>
       <a href="#"><span class="personal-name">{{user.UserName}}</span></a>
       <div class="opacity"></div>
       <div [hidden]="userId == usergetLocalStorage.id" class="follow-message-infor">
-          <button class="btn-follow" mat-button (click)="followPerson(userId)">
-              <mat-icon>rss_feed</mat-icon>
-              <span *ngIf="follow == false">Theo dõi</span>
-              <span *ngIf="follow == true">Đã Theo dõi</span>
-            </button>
+        <button class="btn-follow" mat-button (click)="followPerson(userId)">
+          <mat-icon>rss_feed</mat-icon>
+          <span *ngIf="follow == false">Theo dõi</span>
+          <span *ngIf="follow == true">Đã Theo dõi</span>
+        </button>
         <button class="btn-send-message" mat-button (click)="openSendMessagePopup()">
           <mat-icon>message</mat-icon>
           <span>Gửi tin nhắn</span>
