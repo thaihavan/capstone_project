@@ -64,7 +64,7 @@
                 </div>
                 <div *ngIf="user.id == message.fromUserId" class="chat-list even">
                   <div class="chat-message">
-                    <div class="chat-block bg-light-info">
+                    <div class="chat-block">
                         <span [ngClass]="{'text': true, 'text-message': true, 'no-padding': isImage(message.content)}" 
                         [innerHtml]="message.content"></span>
                     </div>

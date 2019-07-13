@@ -63,6 +63,7 @@ div {
 .img-circle {
     border-radius: 100%;
     width: 40px;
+    margin-right: 8px;
 }
 
 .mat-list-text {
@@ -149,22 +150,29 @@ div {
     word-break: break-all;
 }
 
-.img-circle {
-    margin-right: 8px;
+.text-message {
+    display: block;
+    padding: 12px 8px;
+    border-radius: 8px;
 }
 
-.text-message {
-    display: inline-block;
-    padding: 16px 8px;
-    border-radius: 8px;
+.text-message img {
+    width: 100%;
+    height: auto;
 }
 
 .no-padding {
     padding: 0 !important;
 }
 
+.odd .chat-date {
+    margin-left: 50px;
+}
+
 .odd .text-message {
     background-color: #e3f3fd;
+    margin-left: 50px;
+    margin-top: -40px;
 }
 
 .even .text-message {

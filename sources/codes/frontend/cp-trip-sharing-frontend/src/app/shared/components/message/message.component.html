@@ -12,7 +12,7 @@
       <div class="content">
         <div class="username">{{item.name}}</div>
         <div [ngClass]="{'content-message': true, 'bold': item.seenIds.indexOf(user.id) === -1}"
-        [innerHtml]="item.lastMessage.content"></div>
+        [innerHtml]="isImage(item.lastMessage.content) ? '' : item.lastMessage.content"></div>
         <div class="time">{{item.lastMessage.time | customDate}}</div>
       </div>
     </div>
