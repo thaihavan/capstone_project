@@ -113,7 +113,7 @@ export class PersonalPageComponent implements OnInit {
       this.user.Address = data.address;
       this.user.FollowerCount = data.followerCount;
       this.user.FollowingCount = data.followingCount;
-      console.log(this.user);
+      this.user.Avatar = data.avatar;
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
@@ -234,10 +234,22 @@ export class PersonalPageComponent implements OnInit {
   changeAvatar() {
     this.uploadImage.file.nativeElement.click();
   }
-  // Image crop
+  // Image crop upload avatar
   ImageCropted(image) {
-    this.myProfile.displayName = image;
-    this.avatar = image;
+    this.user.Avatar = image;
+    const user = JSON.parse(localStorage.getItem('User'));
+    user.avatar = image;
+    this.userService.updateUser(user).subscribe(
+      res => {
+
+      },
+      (err) => {
+        console.log('update avatar image error', err.message);
+      },
+      () => {
+        localStorage.setItem('User', JSON.stringify(user));
+      }
+    );
   }
 
   reportUser(userId: any) {

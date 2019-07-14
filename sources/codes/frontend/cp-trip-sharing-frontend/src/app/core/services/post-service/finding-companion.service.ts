@@ -51,6 +51,7 @@ export class FindingCompanionService {
     }
   }
 
+  // get all request from members
   getAllRequests(postId: string): Observable<CompanionPostRequest[]> {
     const httpOption = {
       headers: new HttpHeaders({
@@ -61,6 +62,19 @@ export class FindingCompanionService {
     return this.http.get<CompanionPostRequest[]>(this.baseUrl + '/post/requests?companionPostId=' + postId, httpOption);
   }
 
+  // delete request from member
+  deleteRequest(request: CompanionPostRequest): Observable<any> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      }),
+      body: request
+    };
+    return this.http.delete(this.baseUrl + '/post/request', httpOption );
+  }
+
+  // member send request to join gruop
   sendRequestJoinGroup(companionPostRequest: CompanionPostRequest): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({

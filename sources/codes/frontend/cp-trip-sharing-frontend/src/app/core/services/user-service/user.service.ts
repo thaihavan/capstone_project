@@ -201,7 +201,7 @@ export class UserService {
     return this.http.post<any>(this.apiUserService + 'user/register', user, httpOptionAuthen);
   }
 
-  updateUser(user: User): Observable<any> {
+  updateUser(user): Observable<any> {
     return this.http.post<any>(this.apiUserService + 'user/update', user, httpOptionAuthen);
   }
 
