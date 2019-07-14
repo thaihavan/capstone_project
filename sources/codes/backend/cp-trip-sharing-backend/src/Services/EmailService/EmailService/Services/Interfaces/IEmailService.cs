@@ -10,6 +10,6 @@ namespace EmailService.Services.Interfaces
 {
     public interface IEmailService
     {
-        HttpResponseMessage SendEmail(Email param);
+        Task<HttpResponseMessage> SendEmailAsync(Email param);
     }
 }

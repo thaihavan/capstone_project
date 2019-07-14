@@ -15,15 +15,14 @@ using IdentityProvider.Repositories;
 namespace IdentityProvider.Services
 {
     public class TokenManager : ITokenManager
-    {     
+    {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IOptions<AppSettings> _settings;
         private readonly IBlacklistTokenRepository _blacklistTokenRepository = null;
 
         public TokenManager(
                 IHttpContextAccessor httpContextAccessor,
-                IOptions<AppSettings> setting
-            )
+                IOptions<AppSettings> setting)
         {
             _httpContextAccessor = httpContextAccessor;
             _settings = setting;
@@ -50,6 +49,6 @@ namespace IdentityProvider.Services
             return authorizationHeader == StringValues.Empty
                 ? string.Empty
                 : authorizationHeader.Single().Split(" ").Last();
-        }  
+        }
     }
 }

@@ -57,7 +57,7 @@ namespace UserServices
                     ValidateIssuer = true,
                     ValidIssuer = "auth.tripsharing.com",
                     ValidateAudience = false,
-                    RequireExpirationTime = true
+                    RequireExpirationTime = false
                 };
             });
             
@@ -85,7 +85,8 @@ namespace UserServices
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseAuthentication();
             app.UseHttpsRedirection();

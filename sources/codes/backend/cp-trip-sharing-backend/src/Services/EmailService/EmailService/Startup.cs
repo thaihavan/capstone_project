@@ -59,7 +59,8 @@ namespace EmailService
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseHttpsRedirection();
             app.UseMvc();

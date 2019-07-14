@@ -56,7 +56,7 @@ namespace NotificationService
                     ValidateIssuer = true,
                     ValidIssuer = "auth.tripsharing.com",
                     ValidateAudience = false,
-                    RequireExpirationTime = true
+                    RequireExpirationTime = false
                 };
                 x.Events = new JwtBearerEvents
                 {

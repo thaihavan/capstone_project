@@ -18,13 +18,14 @@ namespace EmailService.Services
     public class EmailService : IEmailService
     {
         private readonly string _apiKey;
-        private readonly IOptions<AppSettings> _settings = null;     
+        private readonly IOptions<AppSettings> _settings = null;
 
-        public EmailService(IOptions<AppSettings> settings){
+        public EmailService(IOptions<AppSettings> settings)
+        {
             _settings = settings;
             _apiKey = _settings.Value.ApiKey;
         }
-        public HttpResponseMessage SendEmail(Email param)
+        public Task<HttpResponseMessage> SendEmailAsync(Email param)
         {
             string emailTemplate = null;
             if (param.EmailType.Equals("EmailConfirm"))
@@ -35,9 +36,9 @@ namespace EmailService.Services
             {
                 emailTemplate = GetTemplate("EmailService.EmailTemplate.ResetPasswordEmailTemplate.html");
             }
-            
+
             var emailContent = WriteToTemplate(emailTemplate, param.Url);
-            
+
 
             var request = new
             {
@@ -64,13 +65,14 @@ namespace EmailService.Services
 
             HttpClient sendgrid3 = new HttpClient();
             sendgrid3.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue(
-                    "Bearer", _apiKey);
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _apiKey);
+
             string jsonRequest = JsonConvert.SerializeObject(request);
-            var result = sendgrid3.PostAsync("https://api.sendgrid.com/v3/mail/send",
+
+            return sendgrid3.PostAsync(
+                "https://api.sendgrid.com/v3/mail/send",
                 new StringContent(jsonRequest, System.Text.Encoding.UTF8,
-                "application/json")).Result;
-            return result;
+                "application/json"));
         }
 
         public string GetTemplate(string fileName)

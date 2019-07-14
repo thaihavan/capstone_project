@@ -22,14 +22,12 @@ namespace EmailService.Services.Processes
         private IOptions<PubsubSettings> _pubsubSettings = null;
         private IOptions<AppSettings> _appSettings = null;
         private readonly EmailService _emailService = null;
-        private readonly IEmailRepository _emailRepository = null;
 
         public PullMailProcess()
         {
             _pubsubSettings = ReadAppSettings.ReadPubsubSettings();
             _appSettings = ReadAppSettings.ReadMailSettings();
             _emailService = new EmailService(_appSettings);
-            _emailRepository = new EmailRepository(_appSettings);
         }
 
         public async void StartAsync()
@@ -47,18 +45,15 @@ namespace EmailService.Services.Processes
                 {
                     string json = Encoding.UTF8.GetString(message.Data.ToArray());
 
-                    await Console.Out.WriteLineAsync($"Message {message.MessageId}: {json}");
-
                     // Handle received message. 
                     Email email = JsonConvert.DeserializeObject<Email>(json);
-                    email.Id = ObjectId.GenerateNewId().ToString();
 
-                    var result = _emailRepository.Add(email);
+                    // Run async
+                    // Write log
+                    Console.Out.WriteLineAsync($"Message {message.MessageId}: {json}");
 
-                    if (result != null)
-                    {
-                        _emailService.SendEmail(email);
-                    }
+                    // Send mail
+                    _emailService.SendEmailAsync(email);
                     
                     return acknowledge ? SubscriberClient.Reply.Ack : SubscriberClient.Reply.Nack;
                 });
