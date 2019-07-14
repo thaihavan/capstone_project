@@ -10,64 +10,77 @@
           <div class="row form-conent">
             <div class="col-4">
               <div class="user-details-container">
-                <img class="user-image" src="https://randomuser.me/api/portraits/lego/3.jpg" />
+                <img class="user-image" src="{{avatar}}" />
+                <div class="display-none" (click)="changeAvatar()">
+                  <div class="change-avatar">
+                  </div>
+                  <div class="btn-change-avatar">
+                    <mat-icon class="change-avatar-icon ">add_a_photo</mat-icon>
+                    <p class="btn-text">Cập nhập</p>
+                  </div>
+                  <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]="1/1"
+                    [resizeToWidth]="1350" #uploadImage></app-upload-image>
+                </div>
               </div>
             </div>
 
             <div class="col-8 form-input">
-                  <div class="row">
-                      <mat-form-field class="col-6 full-width">
-                        <input matInput placeholder="@Username" [formControl]="username" required>
-                        <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
-                        <!-- <mat-error *ngFor="let validation of validation_messages.username">
+              <div class="row">
+                <mat-form-field class="col-6 full-width">
+                  <input matInput placeholder="@Username" [formControl]="username" required>
+                  <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
+                  <!-- <mat-error *ngFor="let validation of validation_messages.username">
                           <mat-error class="error-message" *ngIf="form.get('username').hasError(validation.type) && (form.get('username').dirty || form.get('username').touched)">{{validation.message}}</mat-error>
                         </mat-error> -->
-                      </mat-form-field>
-                      <mat-form-field class="col-6 full-width">
-                        <input matInput placeholder="Tên hiển thị" [formControl]="displayname" required>
-                        <mat-error *ngIf="displayname.invalid">{{getErrorMessage()}}</mat-error>
-                        <!-- <mat-error *ngFor="let validation of validation_messages.displayname">
+                </mat-form-field>
+                <mat-form-field class="col-6 full-width">
+                  <input matInput placeholder="Tên hiển thị" [formControl]="displayname" required>
+                  <mat-error *ngIf="displayname.invalid">{{getErrorMessage()}}</mat-error>
+                  <!-- <mat-error *ngFor="let validation of validation_messages.displayname">
                             <mat-error class="error-message" *ngIf="form.get('displayname').hasError(validation.type) && (form.get('displayname').dirty || form.get('displayname').touched)">{{validation.message}}</mat-error>
                           </mat-error> -->
-                      </mat-form-field>
-                    </div>
-                <div class="row">
-                  <mat-form-field class="col-6 full-width">
-                    <input matInput placeholder="Họ" [formControl]="firstname" required>
-                    <mat-error *ngIf="firstname.invalid">{{getErrorMessage()}}</mat-error>
-                    <!-- <mat-error *ngFor="let validation of validation_messages.firstname">
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-6 full-width">
+                  <input matInput placeholder="Họ" [formControl]="firstname" required>
+                  <mat-error *ngIf="firstname.invalid">{{getErrorMessage()}}</mat-error>
+                  <!-- <mat-error *ngFor="let validation of validation_messages.firstname">
                       <mat-error class="error-message" *ngIf="form.get('firstname').hasError(validation.type) && (form.get('firstname').dirty || form.get('firstname').touched)">{{validation.message}}</mat-error>
                     </mat-error> -->
-                  </mat-form-field>
-                  <mat-form-field class="col-6 full-width">
-                    <input matInput placeholder="Tên" [formControl]="lastname" required>
-                    <mat-error *ngIf="lastname.invalid">{{getErrorMessage()}}</mat-error>
-                    <!-- <mat-error *ngFor="let validation of validation_messages.lastname">
+                </mat-form-field>
+                <mat-form-field class="col-6 full-width">
+                  <input matInput placeholder="Tên" [formControl]="lastname" required>
+                  <mat-error *ngIf="lastname.invalid">{{getErrorMessage()}}</mat-error>
+                  <!-- <mat-error *ngFor="let validation of validation_messages.lastname">
                         <mat-error class="error-message" *ngIf="form.get('lastname').hasError(validation.type) && (form.get('lastname').dirty || form.get('lastname').touched)">{{validation.message}}</mat-error>
                       </mat-error> -->
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field class="col-6 full-width">
-                    <input matInput [matDatepicker]="picker" placeholder="Ngày Sinh" [formControl]="birthday">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>            
-                  </mat-form-field>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-6 full-width">
+                  <input matInput [matDatepicker]="picker" placeholder="Ngày Sinh" [formControl]="birthday">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
 
-                  <mat-form-field class="col-6 full-width">
-                    <input matInput placeholder="Địa chỉ" [formControl]="address">    
-                  </mat-form-field>
-                  
-                </div>
-                <div class="input_field radio_option">
-                    <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.Gender"  [ngModelOptions]="{standalone: true}">
-                    <label for="rd1" style="padding-left: 5px;">Nam</label>
-                    <input type="radio" name="gender" id="rd2" [value]="false" class="input-gender" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
-                    <label for="rd2" style="padding-left: 5px;">Nữ</label>
-                  </div>
-                <button class="submit-btn" color="primary" (click)="callInterestedtopicPage(stepper)" [disabled]="getErrorMessage()===true?'false':'true'" mat-raised-button type="submit">
-                  Tiếp tục
-                </button>
+                <mat-form-field class="col-6 full-width">
+                  <input matInput placeholder="Địa chỉ" [formControl]="address">
+                </mat-form-field>
+
+              </div>
+              <div class="input_field radio_option">
+                <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.Gender"
+                  [ngModelOptions]="{standalone: true}">
+                <label for="rd1" style="padding-left: 5px;">Nam</label>
+                <input type="radio" name="gender" id="rd2" [value]="false" class="input-gender"
+                  [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
+                <label for="rd2" style="padding-left: 5px;">Nữ</label>
+              </div>
+              <button class="submit-btn" color="primary" (click)="callInterestedtopicPage(stepper)"
+                [disabled]="getErrorMessage()===true?'false':'true'" mat-raised-button type="submit">
+                Tiếp tục
+              </button>
             </div>
           </div>
         </div>

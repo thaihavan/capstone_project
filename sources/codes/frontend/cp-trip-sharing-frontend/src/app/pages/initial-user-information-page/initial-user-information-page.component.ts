@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 
 @Component({
   selector: 'app-initial-user-information-page',
@@ -12,7 +13,8 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./initial-user-information-page.component.css']
 })
 export class InitialUserInformationPageComponent implements OnInit {
-
+  @ViewChild('uploadImage') uploadImage: UploadImageComponent;
+  avatar = 'https://oto.com.vn/diendan/images/noavatar.jpg';
   constructor(private formBuilder: FormBuilder, private userService: UserService, private titleService: Title) {
     this.titleService.setTitle('Khởi tạo');
     this.user = new User();
@@ -107,4 +109,13 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.user.Address = this.address.value;
     this.user.Dob = this.birthday.value;
   }
+
+    // change avatar image
+    changeAvatar() {
+      this.uploadImage.file.nativeElement.click();
+    }
+    // Image crop
+    ImageCropted(image) {
+      this.avatar = image;
+    }
 }

@@ -168,4 +168,26 @@ export class PostService {
     };
     return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic?id=' + topicId, httpOptionRemoveTopic);
   }
+
+  updateComment(comment: Comment): Observable<any> {
+    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/update';
+    const httpOptionUpdateComment = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.put(url, comment, httpOptionUpdateComment);
+  }
+
+  removeComment(commentId: string, authorId: string): Observable<any> {
+    const httpOptionRemoveComment = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/delete?id=' + commentId
+      + '&&authorId=' + authorId, httpOptionRemoveComment);
+  }
 }
