@@ -125,13 +125,23 @@ namespace PostService.Repositories
         public IEnumerable<Article> GetAllArticles(PostFilter postFilter)
         {
             // Search filter
+
+            // Text search
             if (postFilter.Search == null)
             {
                 postFilter.Search = "";
             }
             postFilter.Search = postFilter.Search.Trim();
+
+            // LocationId search
+            if(postFilter.LocationId == null)
+            {
+                postFilter.LocationId = "";
+            }
+
             Expression<Func<Article, bool>> searchFilter;
-            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0;
+            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0
+                                && a.Destinations.Any(d => postFilter.LocationId == "" || d.Id == postFilter.LocationId);
 
             // Time period filter
             var filterDate = new DateTime(0);
@@ -219,13 +229,23 @@ namespace PostService.Repositories
         public IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter)
         {
             // Search filter
-            if(postFilter.Search == null)
+
+            // Text search
+            if (postFilter.Search == null)
             {
                 postFilter.Search = "";
             }
             postFilter.Search = postFilter.Search.Trim();
+
+            // LocationId search
+            if (postFilter.LocationId == null)
+            {
+                postFilter.LocationId = "";
+            }
+
             Expression<Func<Article, bool>> searchFilter;
-            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0;
+            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0
+                                && a.Destinations.Any(d => postFilter.LocationId == "" || d.Id == postFilter.LocationId);
 
             // Time period filter
             var filterDate = new DateTime(0);

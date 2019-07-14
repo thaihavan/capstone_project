@@ -83,8 +83,9 @@
             <button (click)="signOut()" mat-menu-item>Đăng xuất</button>
           </mat-menu>
           <div class="inputsearch">
-            <input type="text" class="form-control" placeholder="Search">
-            <mat-icon class="iconserach">search</mat-icon>
+            <input type="text" class="form-control" placeholder="Search"
+            [(ngModel)]="search" (keyup.enter)="onSearchBtnClick()">
+            <mat-icon class="iconserach" (click)="onSearchBtnClick()">search</mat-icon>
             <!-- <i class="fa fa-search iconserach"></i> -->
           </div>
         </div>

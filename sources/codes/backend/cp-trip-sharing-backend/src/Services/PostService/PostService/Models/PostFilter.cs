@@ -9,6 +9,8 @@ namespace PostService.Models
     {
         public string Search { get; set; }
 
+        public string LocationId { get; set; }
+
         public string TimePeriod { get; set; }
 
         public List<string> Topics { get; set; }

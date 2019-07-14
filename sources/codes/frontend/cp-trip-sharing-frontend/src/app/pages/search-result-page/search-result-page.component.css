@@ -14,12 +14,13 @@ div {
 
 .search-section input {
     padding: 20px 40px;
+    height: 48px;
 }
 
 .search-section .search-icon {
     position: absolute;
     color: #2196f3;
-    margin: 10px;
+    margin: 12px;
 }
 
 .search-section input:focus {
@@ -30,8 +31,9 @@ div {
 .search-button {
     background-color: #2196f3;
     color: #fff;
+    height: 48px;
     font-weight: 500;
-    padding: 8px 40px;
+    padding: 12px 40px;
 }
 
 .search-button:focus {

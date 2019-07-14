@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit {
   notifications: Notification[] = [];
   conversations: Conversation[] = [];
 
+  search = '';
+
   constructor(private dialog: MatDialog,
               private notifyService: NotifyService,
               private chatService: ChatService) {
@@ -166,5 +168,11 @@ export class HeaderComponent implements OnInit {
   getAvatar() {
     const user = JSON.parse(localStorage.getItem('User'));
     this.urlImgavatar = user.avatar ? user.avatar : '../../../../assets/avatar.png';
+  }
+
+  onSearchBtnClick() {
+    if (this.search && this.search.trim() !== '') {
+      window.location.href = 'search/moi-nguoi/' + this.search;
+    }
   }
 }

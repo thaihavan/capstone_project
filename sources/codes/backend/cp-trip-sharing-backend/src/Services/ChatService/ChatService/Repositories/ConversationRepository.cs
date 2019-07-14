@@ -156,14 +156,5 @@ namespace ChatService.Repositories
 
             return result.IsAcknowledged;
         }
-
-        public IEnumerable<User> GetAllMember(string conversationId)
-        {
-            var conversation = GetById(conversationId);
-            var result = _users.Find(Builders<User>.Filter.In(x => x.Id, conversation.Receivers))
-                .ToList()
-                .Select(x=> { x.Connections = null;return x; });   
-            return result;
-        }
     }
 }
