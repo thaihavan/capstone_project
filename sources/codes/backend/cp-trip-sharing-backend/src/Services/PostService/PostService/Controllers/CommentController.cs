@@ -73,7 +73,7 @@ namespace PostService.Controllers
                 return Unauthorized();
             }
             _commentService.Delete(id);
-            return Ok(id);
+            return Ok();
         }
 
         [Authorize(Roles = "member")]

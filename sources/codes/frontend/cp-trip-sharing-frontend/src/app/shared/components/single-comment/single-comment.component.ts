@@ -143,6 +143,7 @@ export class SingleCommentComponent implements OnInit {
 
   removeComment() {
     this.postService.removeComment(this.comment.id, this.comment.authorId).subscribe((result: any) => {
+      debugger;
       this.checkRemoveComment = true;
     });
   }

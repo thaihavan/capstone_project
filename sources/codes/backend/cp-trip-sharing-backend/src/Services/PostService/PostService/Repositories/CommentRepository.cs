@@ -43,8 +43,8 @@ namespace PostService.Repositories
         public bool Delete(string id)
         {
             List<Comment> comments = new List<Comment>();
-            var postId = comments.Find(x => x.Id.Equals(id)).PostId;
-            var allComment =_comments.Find(x=>x.Id.Equals(postId)).ToList();
+            var postId = _comments.Find(x => x.Id.Equals(id)).FirstOrDefault().PostId;
+            var allComment =_comments.Find(x=>x.PostId.Equals(postId)).ToList();
             var dict = allComment.ToDictionary(x => x.Id, x => x);
             foreach (var x in dict)
             {
@@ -88,7 +88,7 @@ namespace PostService.Repositories
 
         public IEnumerable<Comment> GetCommentByPost(string postId)
         {
-            var comments = _comments.AsQueryable()
+            var comments = _comments.AsQueryable().Where(x=>x.Active==true)
                 .Where(c => c.PostId == postId)
                 .Join(
                    _authors.AsQueryable(),
@@ -170,9 +170,9 @@ namespace PostService.Repositories
 
         void GetChild(Comment comment,List<string> commentIds)
         {
-            foreach(Comment cmt in comment.Childs)
-            {
-                commentIds.Add(cmt.Id);
+            commentIds.Add(comment.Id);
+            foreach (Comment cmt in comment.Childs)
+            {               
                 GetChild(cmt, commentIds);
             }
         }

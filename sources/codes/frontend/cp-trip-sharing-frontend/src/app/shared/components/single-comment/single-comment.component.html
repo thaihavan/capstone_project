@@ -24,15 +24,15 @@
             <mat-icon>more_horiz</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="reportComment()">
+            <button *ngIf="userId != comment.authorId" mat-menu-item (click)="reportComment()">
               <mat-icon>flag</mat-icon>
               <span>Báo cáo</span>
             </button>
-            <button mat-menu-item (click)="editComment()">
+            <button *ngIf="userId === comment.authorId" mat-menu-item (click)="editComment()">
               <mat-icon>edit</mat-icon>
               <span>Chỉnh sửa</span>
             </button>
-            <button mat-menu-item (click)="removeComment()">
+            <button *ngIf="userId === comment.authorId" mat-menu-item (click)="removeComment()">
               <mat-icon>remove</mat-icon>
               <span>Xóa</span>
             </button>
