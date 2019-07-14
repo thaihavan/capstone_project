@@ -7,6 +7,8 @@ namespace PostService.Models
 {
     public class PostFilter
     {
+        public string Search { get; set; }
+
         public string TimePeriod { get; set; }
 
         public List<string> Topics { get; set; }

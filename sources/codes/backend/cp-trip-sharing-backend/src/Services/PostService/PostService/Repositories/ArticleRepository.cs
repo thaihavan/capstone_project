@@ -7,6 +7,7 @@ using PostService.Repositories.DbContext;
 using PostService.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -123,6 +124,15 @@ namespace PostService.Repositories
 
         public IEnumerable<Article> GetAllArticles(PostFilter postFilter)
         {
+            // Search filter
+            if (postFilter.Search == null)
+            {
+                postFilter.Search = "";
+            }
+            postFilter.Search = postFilter.Search.Trim();
+            Expression<Func<Article, bool>> searchFilter;
+            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0;
+
             // Time period filter
             var filterDate = new DateTime(0);
             var now = DateTime.Now;
@@ -185,7 +195,8 @@ namespace PostService.Repositories
                                 ProfileImage = author.ProfileImage
                             }
                         }
-                }).Join(
+                })
+                .Join(
                     _articles.AsQueryable(),
                     pa => pa.Id,
                     article => article.PostId,
@@ -197,13 +208,25 @@ namespace PostService.Repositories
                         PostId = article.PostId,
                         Post = pa.Post
                     }
-                ).Where(topicFilter.Compile()).Select(a => a)
+                )
+                .Where(searchFilter.Compile())
+                .Where(topicFilter.Compile())
+                .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate);
             return articles.ToList();
         }
 
         public IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter)
         {
+            // Search filter
+            if(postFilter.Search == null)
+            {
+                postFilter.Search = "";
+            }
+            postFilter.Search = postFilter.Search.Trim();
+            Expression<Func<Article, bool>> searchFilter;
+            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0;
+
             // Time period filter
             var filterDate = new DateTime(0);
             var now = DateTime.Now;
@@ -238,7 +261,9 @@ namespace PostService.Repositories
             }
 
             var articles = _posts.AsQueryable()
-                .Where(p => p.PubDate >= filterDate && p.AuthorId == userId)
+                .Where(p => 
+                    p.PubDate >= filterDate && 
+                    p.AuthorId == userId)
                 .Join(
                     _authors.AsQueryable(),
                     post => post.AuthorId,
@@ -278,7 +303,10 @@ namespace PostService.Repositories
                         PostId = article.PostId,
                         Post = pa.Post
                     }
-                ).Where(topicFilter.Compile()).Select(a => a)
+                )
+                .Where(searchFilter.Compile())
+                .Where(topicFilter.Compile())
+                .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate);
             return articles.ToList();
         }

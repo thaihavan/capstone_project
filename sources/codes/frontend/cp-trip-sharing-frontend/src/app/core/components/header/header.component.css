@@ -44,16 +44,6 @@
   background-color: transparent !important;
 }
 
-.mat-toolbar {
-  /* height: 56px !important; */
-}
-.mat-toolbar-row{
-  /* height: 56px !important; */
-}
-.mat-toolbar-multiple-rows {
-  /* min-height: 56px !important; */
-}
-
 .fa{
   font-size: 18px;
 }

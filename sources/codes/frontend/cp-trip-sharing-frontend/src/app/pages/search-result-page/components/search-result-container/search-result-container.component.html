@@ -1,0 +1,22 @@
+<div>
+  <div>
+    <app-post-filter [showTimePeriod]="showTimePeriod" [showTopic]="showTopic" (filtered)="submitFilter($event)">
+    </app-post-filter>
+  </div>
+
+  <!-- Inifity scroll -->
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" (scrolled)="onScroll()"></div>
+
+  <div *ngIf="isLoading" class="loading-dots">
+    <h1 class="dot one">.</h1>
+    <h1 class="dot two">.</h1>
+    <h1 class="dot three">.</h1>
+  </div>
+
+
+  <div *ngIf="isScrollTopShow" class="scroll-top">
+    <button (click)="gotoTop()" mat-fab color="primary">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+  </div>
+</div>

@@ -16,7 +16,7 @@ import { Post } from 'src/app/model/Post';
 })
 export class SingleCommentComponent implements OnInit {
   @Input() comment: Comment;
-  @Input() post: Post;
+  @Input() post: any;
 
   commentContent = '';
   liked = false;
@@ -80,9 +80,9 @@ export class SingleCommentComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem('User'));
     const notification = new Notification();
     notification.content = new NotificationTemplates()
-      .getCommentedNotiTemplate(user.displayName, this.post.title);
+      .getCommentedNotiTemplate(user.displayName, this.post.post.title);
     notification.displayImage = user.profileImage;
-    notification.receivers = [this.post.author.id];
+    notification.receivers = [this.post.post.author.id];
     notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.comment.postId;
 
     this.notifyService.sendNotification(notification);
@@ -92,10 +92,10 @@ export class SingleCommentComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem('User'));
     const notification = new Notification();
     notification.content = new NotificationTemplates()
-      .getLikeCommentNotiTemplate(user.displayName, this.post.title);
+      .getLikeCommentNotiTemplate(user.displayName, this.post.post.title);
     notification.displayImage = user.profileImage;
-    notification.receivers = [this.post.author.id];
-    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.comment.postId;
+    notification.receivers = [this.post.post.author.id];
+    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.post.id;
 
     this.notifyService.sendNotification(notification);
   }

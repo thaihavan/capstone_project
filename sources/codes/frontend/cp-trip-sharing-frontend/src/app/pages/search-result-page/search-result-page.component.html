@@ -1,0 +1,31 @@
+<div class="header">
+  <div class="container">
+    <div class="search-section row">
+      <div class="col-md-8">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" class="form-control" placeholder="Tìm kiếm">
+      </div>
+      <div class="col-md-4">
+        <button class="btn search-button">Tìm kiếm</button>
+      </div>
+
+    </div>
+    <div class="nav-section">
+        <nav mat-tab-nav-bar>
+            <a mat-tab-link
+               *ngFor="let link of navLinks"
+               [routerLink]="link.path"
+               routerLinkActive #rla="routerLinkActive"
+               [active]="rla.isActive">
+              {{link.label}}
+            </a>
+          </nav>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+  <div class="container">
+      <router-outlet></router-outlet>
+  </div>
+</div>

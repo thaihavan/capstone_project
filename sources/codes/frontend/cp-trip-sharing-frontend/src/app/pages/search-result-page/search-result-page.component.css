@@ -1,0 +1,65 @@
+/* common */
+div {
+    box-sizing: border-box;
+}
+/* header */
+.header {
+    background-color: #fff;
+    padding-top: 20px;
+}
+
+.search-section {
+    margin-bottom: 20px;
+}
+
+.search-section input {
+    padding: 20px 40px;
+}
+
+.search-section .search-icon {
+    position: absolute;
+    color: #2196f3;
+    margin: 10px;
+}
+
+.search-section input:focus {
+    border: 2px solid #2196f3 !important;
+    box-shadow: none !important;
+}
+
+.search-button {
+    background-color: #2196f3;
+    color: #fff;
+    font-weight: 500;
+    padding: 8px 40px;
+}
+
+.search-button:focus {
+    box-shadow: none;
+}
+
+.nav-section nav {
+    border-bottom: none;
+}
+
+.nav-section a {
+    text-decoration: none;
+    padding-top: 12px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+::ng-deep .nav-section .mat-ink-bar {
+    background-color: solid 4px #2196f3;
+    height: 4px;
+}
+
+/* body */
+.body {
+    min-height: 100vh;
+}
+
+.body .container {
+    margin-top: 20px;
+    background-color: #fff;
+}

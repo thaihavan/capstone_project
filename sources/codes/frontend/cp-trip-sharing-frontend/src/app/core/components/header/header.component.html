@@ -64,38 +64,6 @@
           <mat-menu #menu_new_notification="matMenu" class="menu notification-menu">
             <app-list-notification [notifications]="notifications"></app-list-notification>
           </mat-menu>
-          <!-- <a routerLink="/create-article" mat-button>
-            <div class="nav-icon-text">
-              <i class="fa fa-plus-circle"></i>
-              <span>Đăng</span>
-            </div>
-          </a>
-          <a href="/chuyen-di" mat-button>
-            <div class="nav-icon-text">
-              <i class="fa fa-suitcase"></i>
-              <span>Chuyến đi</span>
-            </div>
-          </a>
-          <a mat-button>
-            <div class="nav-icon-text" [matMenuTriggerFor]="menu_message_notification" (click)="viewMessageNotification()">
-              <i class="fa fa-envelope"></i>
-              <span>Tin nhắn</span>
-              <div *ngIf="checkMessageNotification" class="badge">{{numberNotification}}</div>
-            </div>
-            <mat-menu #menu_message_notification="matMenu" class="menu">
-              <div class="title-message-notification">Bạn có {{numberNotification}} tin nhắn chưa đọc</div>
-              <div class="item-menu">
-                <app-message></app-message>
-              </div>
-            </mat-menu>
-          </a>
-          <a mat-button>
-            <div class="nav-icon-text" [matMenuTriggerFor]="menu_notification" (click)="viewNotification()">
-              <i class="fa fa-bell"></i>
-              <span>Thông báo</span>
-              <div *ngIf="checkNotification" class="badge">{{numberNotification}}</div>
-            </div>
-          </a> -->
           <button *ngIf="checkLogin" type="button" class="btn btn-primary" (click)="openDialogLoginForm()">Đăng
             nhập</button>
           <button *ngIf="checkLogined" class="avatar-image" aria-haspopup="true" class="m-r-5 mat-icon-button"
@@ -109,16 +77,14 @@
           </div> -->
           <mat-menu #menuProfile="matMenu">
             <button class="options" (click)="gotoPersonalPage()" mat-menu-item>Trang cá nhân</button>
-            <button (click)="gotoBookmarkList()" mat-menu-item>Xem các bài đánh dấu</button>
+            <button (click)="gotoBookmarkList()" mat-menu-item>Bài viết đã lưu</button>
             <button (click)="gotoBlockedList()" mat-menu-item>Danh sách chặn</button>
             <button routerLink="/doi-mat-khau" mat-menu-item>Đổi mật khẩu</button>
             <button (click)="signOut()" mat-menu-item>Đăng xuất</button>
           </mat-menu>
           <div class="inputsearch">
             <input type="text" class="form-control" placeholder="Search">
-            <mat-icon class="iconserach">
-              search
-            </mat-icon>
+            <mat-icon class="iconserach">search</mat-icon>
             <!-- <i class="fa fa-search iconserach"></i> -->
           </div>
         </div>

@@ -10,7 +10,7 @@ import { Post } from 'src/app/model/Post';
 export class CommentContainerComponent implements OnInit {
 
   @Input() comments: Comment[];
-  @Input() post: Post;
+  @Input() post: any;
 
   constructor() { }
 
