@@ -51,10 +51,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'search/:query', component: SearchResultPageComponent,
+        path: 'search', component: SearchResultPageComponent,
         children: [
           { path: '', redirectTo: 'moi-nguoi', pathMatch: 'full' },
-          { path: ':tab', component: SearchResultContainerComponent}
+          { path: ':tab', component: SearchResultContainerComponent},
+          { path: ':tab/:search', component: SearchResultContainerComponent}
         ]
       },
       { path: 'dang-ky', component: RegisterPageComponent },

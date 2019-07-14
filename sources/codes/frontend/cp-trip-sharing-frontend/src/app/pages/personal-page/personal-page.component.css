@@ -7,9 +7,10 @@
 }
 .profile-infor {
   position: absolute;
-  bottom: -47px;
+  bottom: -62px;
   margin-left: 10%;
   z-index: 9999;
+  transition: bottom 0.4s;
 }
 .avatar-img {
   border-radius: 100%;
@@ -41,15 +42,14 @@ a:hover {
   top: 0px;
 }
 .card-personal {
-  margin-top: 6.4em;
+  margin-top: 4.9em;
 }
 .card-title {
   color: #4051b5 !important;
   text-align: center;
 }
 .personal-content {
-  width: 90%;
-  margin: auto;
+  padding: 0 5%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -72,7 +72,7 @@ a:hover {
   padding: 0px 0px !important;
 }
 .navlinks {
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 .scroll-top {
   position: fixed;
@@ -207,6 +207,61 @@ button:focus {
 .display-none {
   display: none;
 }
-.display-none:hover .change-avatar{
+.display-none:hover .change-avatar {
   opacity: 0.8;
+}
+.menu-nav {
+  padding: 0 5%;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  height: 50px;
+}
+.mat-tab-link {
+  /* padding-top: 9px; */
+  height: 50px;
+  font-size: 16px;
+}
+.sub-avatar {
+  position: absolute;
+  margin-left: 10px;
+  transition: top 0.4s;
+  top: 32px;
+}
+.fix-sub-avatar {
+  transition: top 0.4s;
+  top: -20px;
+}
+.sub-avatar img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.sub-avatar span {
+  margin-left: 5px;
+}
+.fix-menu {
+  position: fixed;
+  top: 64px;
+  width: 100%;
+  z-index: 999;
+  background-color: #fff;
+}
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.fix-profile-avatar {
+  transition: bottom 0.4s;
+  bottom: 0px;
+}
+.menu-sub-avatar {
+  position: relative;
+}
+.card {
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border: none;
+}
+.card-header {
+  background-color: #fff;
 }

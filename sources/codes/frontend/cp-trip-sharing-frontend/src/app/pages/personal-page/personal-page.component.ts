@@ -36,6 +36,7 @@ export class PersonalPageComponent implements OnInit {
   listUserIdFollowing: any[] = [];
   token: any;
   myProfile: Author;
+  isFixMenuBar: boolean;
 
   constructor(private router: Router, private userService: UserService, public dialog: MatDialog,
               private route: ActivatedRoute, private titleService: Title) {
@@ -84,6 +85,20 @@ export class PersonalPageComponent implements OnInit {
         this.navLinks.find(tab => tab.link === '.' + this.router.url)
       );
     });
+  }
+
+  // check scroll fix menu nav
+  @HostListener('window:scroll') checkScroll() {
+    const scrollPosition =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+    if (scrollPosition >= 315) {
+      this.isFixMenuBar = true;
+    } else {
+      this.isFixMenuBar = false;
+    }
   }
 
   getStates(): void {
