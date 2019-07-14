@@ -23,5 +23,7 @@ namespace ChatService.Repositories.Interfaces
         bool UpdateSeenIds(string conversationId, List<string> seenIds);
 
         bool AddToSeenIds(string conversationId, string userId);
+
+        IEnumerable<User> GetAllMember(string conversationId);
     }
 }

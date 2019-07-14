@@ -23,6 +23,9 @@ import { ListPostPageComponent } from './pages/list-post-page/list-post-page.com
 import { DashboardPageComponent } from './admin/pages/dashboard-page/dashboard-page.component';
 import { InterestedTopicAdminsComponent } from './admin/pages/interested-topic-admins/interested-topic-admins.component';
 import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
+import { SearchResultPageComponent } from './pages/search-result-page/search-result-page.component';
+import { ListPostHorizontalComponent } from './shared/components/list-post-horizontal/list-post-horizontal.component';
+import { SearchResultContainerComponent } from './pages/search-result-page/components/search-result-container/search-result-container.component';
 
 
 const routes: Routes = [
@@ -45,6 +48,13 @@ const routes: Routes = [
           { path: 'da-danh-dau', component: ListBookmarksComponent },
           { path: 'danh-sach-chan', component: ListUserBlockedComponent },
           { path: ':personal-nav', component: ListPostComponent }
+        ]
+      },
+      {
+        path: 'search/:query', component: SearchResultPageComponent,
+        children: [
+          { path: '', redirectTo: 'moi-nguoi', pathMatch: 'full' },
+          { path: ':tab', component: SearchResultContainerComponent}
         ]
       },
       { path: 'dang-ky', component: RegisterPageComponent },

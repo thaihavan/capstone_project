@@ -63,9 +63,18 @@ namespace ChatService.Services
             return _conversationRepository.Add(conversation);
         }
 
+        public IEnumerable<User> GetAllMember(string conversationId)
+        {
+            return _conversationRepository.GetAllMember(conversationId);
+        }
         public IEnumerable<MessageDetail> GetByConversationId(string id)
         {
             return _conversationRepository.GetMessageByConversationId(id);
+        }
+
+        public Conversation GetById(string id)
+        {
+            return _conversationRepository.GetById(id);
         }
 
         public IEnumerable<Conversation> GetByUserId(string id)

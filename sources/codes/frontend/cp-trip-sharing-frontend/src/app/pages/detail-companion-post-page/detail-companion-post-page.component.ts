@@ -296,7 +296,23 @@ export class DetailCompanionPostPageComponent implements OnInit {
     }
     return true;
   }
-  // send request to join group companion
+
+  // for author delete request soecify member
+  deleteRequest(index) {
+    this.postService.deleteRequest(this.userListRequests[index]).subscribe(
+      res => {},
+      (err) => {
+        alert(err.message);
+      },
+      () => {
+        this.snackBar.open('Xoá yêu cầu thành công!');
+        this.userListRequests.splice(index, 1);
+      }
+    );
+  }
+
+
+  // for member send request to join group companion
   sendRequest() {
     if (this.statustRequest.type === 'request') {
       this.companionPostRequest = new CompanionPostRequest();

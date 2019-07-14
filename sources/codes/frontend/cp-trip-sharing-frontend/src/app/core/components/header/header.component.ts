@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   checkLogin: boolean;
   checkLogined: boolean;
   userId: string;
-  urlImgavatar = 'https://qph.fs.quoracdn.net/main-qimg-573142324088396d86586adb93f4c8c2';
+  urlImgavatar = '';
 
   numNewMessages = 0;
   numNewNotifications = 0;
@@ -57,6 +57,7 @@ export class HeaderComponent implements OnInit {
         this.getAllConversations();
       });
     }
+    this.getAvatar();
   }
 
   openDialogLoginForm() {
@@ -159,5 +160,11 @@ export class HeaderComponent implements OnInit {
         break;
       }
     }
+  }
+
+  // get image avatar
+  getAvatar() {
+    const user = JSON.parse(localStorage.getItem('User'));
+    this.urlImgavatar = user.avatar ? user.avatar : '../../../../assets/avatar.png';
   }
 }
