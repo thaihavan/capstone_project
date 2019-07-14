@@ -19,16 +19,21 @@ import { ReportPopupComponent } from '../report-popup/report-popup.component';
 export class SingleCommentComponent implements OnInit {
   @Input() comment: Comment;
   @Input() post: any;
-
+  user: any;
+  userId: string;
+  editComments = true;
   commentContent = '';
   liked = false;
   showRep = false;
   like: Like;
+  checkRemoveComment = false;
   ngOnInit(): void {
   }
 
   constructor(private postService: PostService, private notifyService: NotifyService, private dialog: MatDialog) {
     this.like = new Like();
+    this.user = JSON.parse(localStorage.getItem('User'));
+    this.userId = this.user.id;
   }
 
   showRepComment() {
@@ -117,5 +122,28 @@ export class SingleCommentComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.title = title;
+  }
+
+  editComment() {
+    this.editComments = false;
+  }
+
+  cancelEdit() {
+    this.editComments = true;
+  }
+
+  updateComment() {
+    this.editComments = true;
+    this.postService.updateComment(this.comment).subscribe((result: any) => {
+      this.editComments = true;
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  removeComment() {
+    this.postService.removeComment(this.comment.id, this.comment.authorId).subscribe((result: any) => {
+      this.checkRemoveComment = true;
+    });
   }
 }
