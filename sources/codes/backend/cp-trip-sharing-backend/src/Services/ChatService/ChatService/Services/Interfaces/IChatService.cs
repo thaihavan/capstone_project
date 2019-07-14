@@ -18,5 +18,9 @@ namespace ChatService.Services.Interfaces
         bool RemoveUserFromGroupChat(string conversationId, string userId);
 
         bool AddToSeenIds(string conversationId, string userId);
+
+        Conversation GetById(string id);
+
+        IEnumerable<User> GetAllMember(string conversationId);
     }
 }

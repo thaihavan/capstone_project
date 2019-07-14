@@ -11,4 +11,5 @@ export class User {
     public ContributionPoint: number;
     public FollowerCount: number;
     public FollowingCount: number;
+    Avatar: string;
 }

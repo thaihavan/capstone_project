@@ -43,6 +43,7 @@ import { FormAddTopicsComponent } from './admin/pages/interested-topic-admins/fo
 import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
 import { SearchResultPageComponent } from './pages/search-result-page/search-result-page.component';
 import { SearchResultContainerComponent } from './pages/search-result-page/components/search-result-container/search-result-container.component';
+import { ReportPopupComponent } from './shared/components/report-popup/report-popup.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { SearchResultContainerComponent } from './pages/search-result-page/compo
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent, ListFollowComponent, FormAddTopicsComponent]
+  entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent,
+                    ListFollowComponent, FormAddTopicsComponent, ReportPopupComponent, InitialUserInformationPageComponent]
 
 })
 export class AppModule { }

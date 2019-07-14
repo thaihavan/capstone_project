@@ -51,51 +51,13 @@
   </div>
 </div>
 <div class="content-post-page row">
-  <div [ngClass]="checkHasRequest() ? 'col-1': 'col-2'">
-  </div>
-  <div [ngClass]="checkHasRequest() ? 'col-7': 'col-8'">
-    <div class="line-height ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred"
+  <!-- <div [ngClass]="checkHasRequest() ? 'col-1': 'col-2'">
+  </div> -->
+  <div class="col-9 left-content">
+    <div class="item-shadow line-height ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred"
       role="textbox" aria-label="Rich Text Editor, main" [innerHTML]="post.content">
     </div>
-    <h4 class="mt-2 mb-4">Thông tin chuyến đi</h4>
-    <div class="row">
-      <div class="col-8">
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <th scope="row">Ngày khởi hành</th>
-              <td>{{companionPost.from | date:'dd-MM-yyyy'}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Ngày kết thúc</th>
-              <td>{{companionPost.to | date:'dd-MM-yyyy'}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Ngày hết hạn đăng ký</th>
-              <td>{{companionPost.expiredDate | date:'dd-MM-yyyy'}} (có thể Chốt sớm hơn nếu đủ thành viên)</td>
-            </tr>
-            <tr>
-              <th scope="row">Số lượng thành viên</th>
-              <td>{{companionPost.minMembers}} - {{companionPost.maxMembers}} người</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col-4">
-        <div class="content-center price pb-3">
-          <div class="header-price">
-            Chi phí tham gia
-          </div>
-          <div class="text-price mt-4 mb-1">
-            {{companionPost.estimatedCost | currency}} Đ
-          </div>
-          <div class="sub-price">
-            một người
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
+    <div class="item-shadow">
       <div>
         <h4 class="mb-4 mt-4 md-accent">Lịch trình chuyến đi</h4>
       </div>
@@ -127,7 +89,7 @@
       </div>
     </div>
     <!-- những chi phí bao gồm -->
-    <div class="">
+    <div class="item-shadow">
       <h4 class="mb-4 mt-4 md-accent">Những chi phí bao gồm</h4>
       <div style="margin-left: .8rem!important;">
         <mat-list>
@@ -156,35 +118,130 @@
       <button type="button" class="btn btn-primary">Tải thêm bình luận</button>
     </div>
   </div>
-  <div class="" [class.right-content]='checkHasRequest()' [class.col-3]='checkHasRequest()' [class.col-2]='!checkHasRequest()'>
+  <div class="right-content col-3">
     <ng-container *ngIf="checkHasRequest()">
-      <div class="header-request ">
-        Danh sách yêu cầu tham gia
-      </div>
-      <mat-nav-list class="mat-nav-list mat-list-base" role="navigation">
-        <mat-list-item *ngFor="let item of userListRequests">
-          <img matListAvatar src="{{item.user.profileImage}}" alt="">
-          <h3 matLine>{{item.user.displayName}}</h3>
-          <p matLine>
-            <span class="text-muted">{{item.date | date:'dd-MM-yyyy'}}</span>
-          </p>
-          <button color="primary" matTooltip="Chấp nhận" mat-icon-button>
-            <mat-icon class="item-delete">done</mat-icon>
-          </button>
-          <button color="warn" matTooltip="Xoá bỏ" mat-icon-button>
-            <mat-icon class="item-delete">clear</mat-icon>
-          </button>
-        </mat-list-item>
-      </mat-nav-list>
+      <div class="information">
+          <div class="header-request ">
+            Danh sách yêu cầu tham gia
+          </div>
+          <div  *ngFor="let item of userListRequests; let i=index" class="">
+            <div class="d-flex flex-row justify-content-between member-request-item">
+              <div class="d-flex flex-row">
+                <a class="member-avatar" aria-haspopup="true" mat-icon-button>
+                  <span class="mat-button-wrapper">
+                    <img alt="user" class="imgavatar" src="{{item.user.profileImage}}">
+                  </span>
+                  <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+                  <div class="mat-button-focus-overlay"></div>
+                </a>
+                <div class="">
+                  <h6>{{item.user.displayName}}</h6>
+                  <p class="infor-text-item ">
+                    <span class="text-muted">{{item.date | date:'dd-MM-yyyy'}}</span>
+                  </p>
+                </div>
+              </div>
+              <div class="align-self-center btn-request-control">
+                <button color="primary"  matTooltip="Chấp nhận" mat-icon-button>
+                  <mat-icon class="item-delete">done</mat-icon>
+                </button>
+                <button color="warn" (click)="deleteRequest(i)" matTooltip="Xoá bỏ" mat-icon-button>
+                  <mat-icon class="item-delete">clear</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
     </ng-container>
-    <ng-container *ngIf="!isAuthorPost">
-      <div [ngClass]="isScrollTopShow ? 'fix-join-button' : 'mt-3'">
-        <div
-          [ngClass]="statustRequest.type === 'request' ? 'btn-join' : statustRequest.type === 'waiting' ? 'btn-join-waiting' : 'btn-join-joined'">
-          <span (click)='sendRequest()' class="text-join">{{statustRequest.text}}</span>
+     
+      <div class="information">
+        <div class="infor-price">
+          <h3>{{companionPost.estimatedCost | currency}} VNĐ</h3>
+        </div>
+        <div class="join-request">
+          <button (click)='sendRequest()' mat-flat-button color="{{statustRequest.type === 'waiting' ? 'warn' : 'primary'}}">
+              {{statustRequest.text}}
+          </button>
+        </div>
+        <div class="infor-item d-flex flex-row">
+          <div>
+            <mat-icon>alarm_on</mat-icon>
+          </div>
+          <div class="infor-item-left">
+            <h6>Thời gian bắt đầu</h6>
+            <p class="infor-text-item">{{companionPost.from | date:'dd-MM-yyyy'}}</p>
+          </div>
+        </div>
+        <div class="infor-item d-flex flex-row">
+          <div>
+            <mat-icon>alarm</mat-icon>
+          </div>
+          <div class="infor-item-left">
+            <h6>Thời gian kết thúc</h6>
+            <p class="infor-text-item">{{companionPost.to | date:'dd-MM-yyyy'}}</p>
+          </div>
+        </div>
+        <div class="infor-item d-flex flex-row">
+          <div>
+            <mat-icon>alarm_off</mat-icon>
+          </div>
+          <div class="infor-item-left">
+            <h6>Hạn kết thúc đăng kí</h6>
+            <p class="infor-text-item">{{companionPost.expiredDate | date: 'dd-MM-yyyy'}}</p>
+          </div>
+        </div>
+        <div class="infor-item d-flex flex-row">
+          <div>
+            <mat-icon>group</mat-icon>
+          </div>
+          <div class="infor-item-left">
+            <h6>Số lượng thành viên</h6>
+            <p class="infor-text-item">Từ {{companionPost.minMembers}} đến {{companionPost.maxMembers}} người</p>
+          </div>
         </div>
       </div>
-    </ng-container>
+      <div class="information">
+        <div class="num-member">
+          <span class="num-member-text">10</span> đã tham gia
+        </div>
+        <div class="d-flex flex-wrap">
+          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
+            <span class="mat-button-wrapper">
+              <img alt="user" class="imgavatar" src="{{avatar}}">
+            </span>
+            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+            <div class="mat-button-focus-overlay"></div>
+          </a>
+          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
+            <span class="mat-button-wrapper">
+              <img alt="user" class="imgavatar" src="{{avatar}}">
+            </span>
+            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+            <div class="mat-button-focus-overlay"></div>
+          </a>
+          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
+            <span class="mat-button-wrapper">
+              <img alt="user" class="imgavatar" src="{{avatar}}">
+            </span>
+            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+            <div class="mat-button-focus-overlay"></div>
+          </a>
+          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
+            <span class="mat-button-wrapper">
+              <img alt="user" class="imgavatar" src="{{avatar}}">
+            </span>
+            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+            <div class="mat-button-focus-overlay"></div>
+          </a>
+          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
+            <span class="mat-button-wrapper">
+              <img alt="user" class="imgavatar" src="{{avatar}}">
+            </span>
+            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
+            <div class="mat-button-focus-overlay"></div>
+          </a>
+        </div>
+      </div>
   </div>
 </div>
 <ng-container *ngIf="!isAuthorPost">

@@ -133,5 +133,19 @@ namespace ChatService.Controllers
 
             return Ok(result);
         }
+
+        [AllowAnonymous]
+        [HttpGet("members")]
+        public IActionResult GetConversation([FromQuery] string conversationId)
+        {
+            var result = _chatService.GetAllMember(conversationId);
+
+            if (result==null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(result);
+        }
     }
 }

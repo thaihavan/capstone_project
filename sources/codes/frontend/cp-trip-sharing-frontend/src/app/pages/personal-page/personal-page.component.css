@@ -45,6 +45,7 @@ a:hover {
 }
 .card-title {
   color: #4051b5 !important;
+  text-align: center;
 }
 .personal-content {
   width: 90%;

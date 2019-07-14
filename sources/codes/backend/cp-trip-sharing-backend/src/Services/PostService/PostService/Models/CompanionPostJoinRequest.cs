@@ -29,5 +29,7 @@ namespace PostService.Models
         [BsonIgnore]
         [BsonExtraElements]
         public Author User { get; set; }
+
+        
     }
 }

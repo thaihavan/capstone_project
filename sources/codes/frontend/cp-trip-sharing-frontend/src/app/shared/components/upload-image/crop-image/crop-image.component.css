@@ -1,5 +1,6 @@
 .cropreview img{
-    width: 100%;
+   max-height: 20vh;
+   max-width: 100%;
 }
 .cropreview{
     padding: 5px;
@@ -12,4 +13,11 @@
 }
 .cancle{
     background-color: red !important;
+}
+.dialog-content {
+   max-height: 80vh;
+}
+.image-crop-display {
+    max-height: 60vh ;
+    overflow: auto;
 }

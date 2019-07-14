@@ -1,0 +1,31 @@
+<div class="report-form">
+  <div class="title">
+    <span>{{title}}</span>
+  </div>
+  <div class="sub-title">
+    <span>
+      <mat-icon>assignment_late</mat-icon> Bạn có thể báo cáo nội dung sau khi chọn vấn đề.
+    </span>
+  </div>
+  <div class="list-reason">
+    <button [class]="checkActiveReason(reason) ? 'mat-stroked-button activeButton':'mat-stroked-button'" *ngFor="let reason of listReasonString" (click)="getReason(reason)">{{reason}}</button>
+    <div *ngIf="showReasonOthers" class="comment-textarea-container">
+      <span>Lý do báo cáo khác:</span>
+      <textarea rows="3" (keydown.enter)="submitComment()" [(ngModel)]="commentContent"></textarea>
+    </div>
+  </div>
+  <div class="warning">
+    <div class="icom-warn">
+      <!-- <i class="fa fa-exclamation-circle"></i> -->
+      <mat-icon>info</mat-icon>
+    </div>
+    <div class="centent-warning">
+      <span>
+        Nếu bạn nhận thấy ai đó đang gặp nguy hiểm, đừng chần chừ mà hãy báo ngay cho dịch vụ cấp cứu tại địa phương.
+      </span>
+    </div>
+  </div>
+  <div class="btn-send">
+    <button mat-raised-button color="primary">Gửi</button>
+  </div>
+</div>

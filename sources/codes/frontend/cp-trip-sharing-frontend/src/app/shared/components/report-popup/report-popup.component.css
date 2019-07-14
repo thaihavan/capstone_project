@@ -1,0 +1,117 @@
+.report-form{
+    margin: -24px;
+}
+
+.title{
+    font-size: 16px;
+    border-bottom: 1px solid gainsboro;
+    height: 45px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.sub-title, .centent-warning{
+    font-size: 14px;
+    color: gray;
+    padding: 10px 0px 10px 10px;
+    position: relative;
+}
+
+.sub-title .mat-icon{
+    position: relative;
+    top: 8px;
+    color: gold;
+}
+
+.list-reason{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.list-reason .mat-stroked-button{
+    display: inline-block;
+    margin-left: 5px;
+    margin-top: 5px;
+    border-radius: 10px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+.list-reason .mat-stroked-button :focus{
+    background-color: white;
+}
+
+.mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 60%;
+}
+
+.btn-send{
+    height: 45px;
+    position: relative;
+}
+
+.btn-send button{
+    position: absolute;
+    right: 10px;
+}
+
+.comment-textarea-container{
+    display: block;
+    padding: 10px 10px 0px 10px;
+
+}
+
+.comment-textarea-container span{
+    font-size: 14px;
+}
+
+.comment-textarea-container textarea{
+    height: 40px;
+    font-size: 13px;
+    resize: none;
+    width: 100%;
+    border-radius: 6px;
+    line-height: 2;
+    height: auto;
+    outline: none !important;
+    font-size: 15px;
+    padding: 0px 10px;
+}
+
+.comment-textarea-container textarea:focus {
+    outline: none !important;
+}
+
+.warning{
+    display: inline-block;
+    position: relative;
+    border-top: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+    height: auto;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.icom-warn{
+    width: 10%;
+    display: inline-block;
+    position: relative;
+    top: -20px;
+    left: 16px;
+    font-size: 22px;
+    color: gray;
+}
+
+.centent-warning{
+    display: inline-block;
+    width: 90%;
+}
+
+.activeButton{
+    background-color: #2196f3;
+}

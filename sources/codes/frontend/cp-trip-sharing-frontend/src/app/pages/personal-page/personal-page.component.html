@@ -7,7 +7,7 @@
       <div class="profile-infor">
         <div class="avatar-display">
           <div class="avatar-image">
-            <img src="{{this.myProfile.profileImage ? this.myProfile.profileImage : avatar }}" class="avatar-img">
+            <img src="{{user.Avatar ? user.Avatar : avatar }}" class="avatar-img">
             <div class="display-none" (click)="changeAvatar()">
               <div class="change-avatar">
               </div>
@@ -42,6 +42,10 @@
               <mat-icon>block</mat-icon>
               <span>Chặn người dùng</span>
             </button>
+            <button mat-menu-item (click)="reportUser(userId)">
+                <mat-icon>report</mat-icon>
+                <span>Báo cáo người dùng</span>
+              </button>
           </mat-menu>
         </div>
       </div>

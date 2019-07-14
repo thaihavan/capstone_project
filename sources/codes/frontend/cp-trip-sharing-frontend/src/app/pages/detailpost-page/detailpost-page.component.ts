@@ -76,8 +76,8 @@ export class DetailpostPageComponent implements OnInit {
         this.post.coverImage = '../../../assets/coverimg.jpg';
       }
       this.listLocation = data.destinations;
-      if (this.post.author.profileImage == null) {
-        this.post.author.profileImage = '../../../assets/img_avatar.png';
+      if (this.profileImage == null) {
+        this.profileImage = '../../../assets/img_avatar.png';
       }
       this.getStates();
       this.getCommentByPostId(this.post.id);

@@ -1,8 +1,10 @@
-<div>
-  <image-cropper [imageChangedEvent]="data.imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="data.aspectRatio"
-  [resizeToWidth]="data.resizeToWidth" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-  (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
-</image-cropper>
+<div class="dialog-content">
+  <div class="image-crop-display align-items-center">
+      <image-cropper [imageChangedEvent]="data.imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="data.aspectRatio"
+      [resizeToWidth]="data.resizeToWidth" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+    </image-cropper>
+  </div>
 <div class="cropreview row align-items-center">
   <div class="col-6">
       <img [src]="croppedImage" />

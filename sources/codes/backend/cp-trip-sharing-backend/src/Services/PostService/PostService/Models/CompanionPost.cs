@@ -57,5 +57,9 @@ namespace PostService.Models
         [BsonIgnore]
         [BsonExtraElements]
         public List<CompanionPostJoinRequest> JoinRequests { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
+        public bool Requested { get; set; }
     }
 }

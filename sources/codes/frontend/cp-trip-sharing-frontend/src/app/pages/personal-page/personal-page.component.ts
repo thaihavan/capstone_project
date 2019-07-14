@@ -12,6 +12,7 @@ import { Title } from '@angular/platform-browser';
 import { SendMessagePopupComponent } from 'src/app/shared/components/send-message-popup/send-message-popup.component';
 import { Author } from 'src/app/model/Author';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
+import { ReportPopupComponent } from 'src/app/shared/components/report-popup/report-popup.component';
 
 @Component({
   selector: 'app-personal-page',
@@ -112,7 +113,7 @@ export class PersonalPageComponent implements OnInit {
       this.user.Address = data.address;
       this.user.FollowerCount = data.followerCount;
       this.user.FollowingCount = data.followingCount;
-      console.log(this.user);
+      this.user.Avatar = data.avatar;
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
@@ -231,11 +232,40 @@ export class PersonalPageComponent implements OnInit {
   }
   // change avatar image
   changeAvatar() {
-      this.uploadImage.file.nativeElement.click();
+    this.uploadImage.file.nativeElement.click();
   }
-  // Image crop
+  // Image crop upload avatar
   ImageCropted(image) {
-    this.myProfile.displayName = image;
-    this.avatar = image;
+    this.user.Avatar = image;
+    const user = JSON.parse(localStorage.getItem('User'));
+    user.avatar = image;
+    this.userService.updateUser(user).subscribe(
+      res => {
+
+      },
+      (err) => {
+        console.log('update avatar image error', err.message);
+      },
+      () => {
+        localStorage.setItem('User', JSON.stringify(user));
+      }
+    );
+  }
+
+  reportUser(userId: any) {
+    this.openDialogRepoetUser('Báo cáo người dùng');
+  }
+
+  openDialogRepoetUser(title: string) {
+    const dialogRef = this.dialog.open(ReportPopupComponent, {
+      width: '400px',
+      height: 'auto',
+      position: {
+        top: '10px'
+      },
+      disableClose: false
+    });
+    const instance = dialogRef.componentInstance;
+    instance.title = title;
   }
 }
