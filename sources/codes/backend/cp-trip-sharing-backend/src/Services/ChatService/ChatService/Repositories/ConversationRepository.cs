@@ -73,7 +73,7 @@ namespace ChatService.Repositories
 
         public Conversation GetById(string id)
         {
-            throw new NotImplementedException();
+            return _conversations.Find(x=>x.Id.Equals(id)).FirstOrDefault();
         }
 
         public Conversation Add(Conversation param)
@@ -155,6 +155,15 @@ namespace ChatService.Repositories
                 Builders<Conversation>.Update.Push<string>(c => c.SeenIds, userId));
 
             return result.IsAcknowledged;
+        }
+
+        public IEnumerable<User> GetAllMember(string conversationId)
+        {
+            var conversation = GetById(conversationId);
+            var result = _users.Find(Builders<User>.Filter.In(x => x.Id, conversation.Receivers))
+                .ToList()
+                .Select(x=> { x.Connections = null;return x; });   
+            return result;
         }
     }
 }

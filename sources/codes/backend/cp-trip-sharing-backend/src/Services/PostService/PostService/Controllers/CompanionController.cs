@@ -106,6 +106,7 @@ namespace PostService.Controllers
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = identity.FindFirst("user_id").Value;
+
             request.UserId = userId;
             var result=_companionPostService.AddNewRequest(request);
             
@@ -139,6 +140,24 @@ namespace PostService.Controllers
             var companionPost = _companionPostService.GetById(request.CompanionPostId);
 
             if (!companionPost.Post.AuthorId.Equals(userId))
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                _companionPostService.DeleteJoinRequest(request.Id);
+                return Ok();
+            }
+        }
+
+        [Authorize(Roles = "member")]
+        [HttpDelete("post/request/cancel")]
+        public IActionResult CancelRequest([FromBody]CompanionPostJoinRequest request)
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;           
+
+            if (!request.UserId.Equals(userId))
             {
                 return Unauthorized();
             }

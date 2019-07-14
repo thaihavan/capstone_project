@@ -89,6 +89,8 @@ namespace PostService.Repositories
                 ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
             Func<CompanionPost,IEnumerable<Like>,CompanionPost> UpdateLike=
                 ((CompanionPost, likes) => { CompanionPost.Post.liked = likes.Count() > 0 ? true : false; return CompanionPost; });
+            Func<CompanionPost,IEnumerable<CompanionPostJoinRequest>,CompanionPost>UpdateRequested=
+                ((CompanionPost, requests) => { CompanionPost.Requested = requests.Count() > 0 ? true : false; return CompanionPost; });
 
             CompanionPost result;
 
@@ -120,6 +122,11 @@ namespace PostService.Repositories
                         companionPostWithPost => companionPostWithPost.Post.AuthorId,
                         author => author.Id,
                         SelectCompanionPostWithAuthor)
+                    .GroupJoin(
+                        _companionPostJoinRequests.AsQueryable().Where(x=>x.UserId.Equals(userId)),
+                        companionPost=>companionPost.Id,
+                        request=>request.CompanionPostId,
+                        UpdateRequested      )
                     .GroupJoin(
                         _likes.AsQueryable().Where(x=>x.UserId.Equals(userId)&&x.ObjectType.Equals("post")),
                         companionPost=>companionPost.PostId,
