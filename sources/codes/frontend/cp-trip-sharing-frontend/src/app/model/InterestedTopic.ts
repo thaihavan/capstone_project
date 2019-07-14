@@ -1,4 +1,4 @@
 export interface InterestedTopic {
-    TopicName: string;
-    UrlImage: string;
+    topicName: string;
+    urlImage: string;
 }

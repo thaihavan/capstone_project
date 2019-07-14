@@ -111,8 +111,8 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   }
 
   likePost(like: any) {
-    this.like.ObjectId = this.post.post.id;
-    this.like.ObjectType = 'post';
+    this.like.objectId = this.post.post.id;
+    this.like.objectType = 'post';
     if (like === false) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         this.post.post.liked = true;
@@ -157,10 +157,10 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   bookmarkPost(postId: any, title: any, imgCover: any, postType: any) {
     if (this.bookmark === false) {
-      this.bookmarkObject.CoverImage = imgCover;
-      this.bookmarkObject.PostId = postId;
-      this.bookmarkObject.PostType = postType;
-      this.bookmarkObject.Title = title;
+      this.bookmarkObject.coverImage = imgCover;
+      this.bookmarkObject.postId = postId;
+      this.bookmarkObject.postType = postType;
+      this.bookmarkObject.title = title;
       this.userService.addBookMark(this.bookmarkObject, this.token).subscribe((data: any) => {
         this.bookmark = true;
         this.listPostIdBookMark.push(postId);

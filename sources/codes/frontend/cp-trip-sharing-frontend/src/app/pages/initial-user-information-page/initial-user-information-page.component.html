@@ -10,7 +10,7 @@
           <div class="row form-conent">
             <div class="col-4">
               <div class="user-details-container">
-                <img class="user-image" src="{{avatar}}" />
+                <img class="user-image" src="{{user.avatar}}" />
                 <div class="display-none" (click)="changeAvatar()">
                   <div class="change-avatar">
                   </div>
@@ -70,11 +70,11 @@
 
               </div>
               <div class="input_field radio_option">
-                <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.Gender"
+                <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.gender"
                   [ngModelOptions]="{standalone: true}">
                 <label for="rd1" style="padding-left: 5px;">Nam</label>
                 <input type="radio" name="gender" id="rd2" [value]="false" class="input-gender"
-                  [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}">
+                  [(ngModel)]="user.gender" [ngModelOptions]="{standalone: true}">
                 <label for="rd2" style="padding-left: 5px;">Nữ</label>
               </div>
               <button class="submit-btn" color="primary" (click)="callInterestedtopicPage(stepper)"

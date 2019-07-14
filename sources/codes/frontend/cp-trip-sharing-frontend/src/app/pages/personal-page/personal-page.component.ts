@@ -95,25 +95,12 @@ export class PersonalPageComponent implements OnInit {
 
   getInforUser(userId: string) {
     this.userService.getUserById(userId).subscribe((data: any) => {
-      console.log(data);
-      this.user.UserId = data.id;
-      this.user.ContributionPoint = data.contributionPoint;
-      this.user.DisplayName = data.displayName;
-      this.user.FirstName = data.firstName;
-      this.user.Gender = data.gender;
-      this.user.Dob = data.dob;
-      if (this.user.Gender === true) {
+      this.user = data;
+      if (this.user.gender === true) {
         this.gender = 'Nam';
       } else {
         this.gender = 'Nữ';
       }
-      this.user.Interested = data.interested;
-      this.user.LastName = data.lastName;
-      this.user.UserName = data.userName;
-      this.user.Address = data.address;
-      this.user.FollowerCount = data.followerCount;
-      this.user.FollowingCount = data.followingCount;
-      this.user.Avatar = data.avatar;
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
@@ -132,23 +119,13 @@ export class PersonalPageComponent implements OnInit {
       }
     });
     const instance = dialogRef.componentInstance;
-    instance.user.UserId = this.userId;
-    instance.user.UserName = this.user.UserName;
-    instance.user.DisplayName = this.user.DisplayName;
-    instance.user.FirstName = this.user.FirstName;
-    instance.user.Gender = this.user.Gender;
-    instance.user.Interested = this.user.Interested;
-    instance.user.LastName = this.user.LastName;
-    instance.user.UserName = this.user.UserName;
-    instance.user.Address = this.user.Address;
-    instance.user.Dob = this.user.Dob;
-    instance.user.Gender = this.user.Gender;
+    instance.user = this.user;
   }
 
   showFollowingUser() {
     this.userService.getAllFollowing(this.userId).subscribe((result: any) => {
       this.listUser = result;
-      this.openDialogFollow(this.user.FollowingCount + ' người bạn đang theo dõi', this.listUser);
+      this.openDialogFollow(this.user.followingCount + ' người bạn đang theo dõi', this.listUser);
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
@@ -157,7 +134,7 @@ export class PersonalPageComponent implements OnInit {
   showFolowerUser() {
     this.userService.getAllFollower(this.userId).subscribe((result: any) => {
       this.listUser = result;
-      this.openDialogFollow(this.user.FollowerCount + ' người đang theo dõi bạn', this.listUser);
+      this.openDialogFollow(this.user.followerCount + ' người đang theo dõi bạn', this.listUser);
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
@@ -236,7 +213,7 @@ export class PersonalPageComponent implements OnInit {
   }
   // Image crop upload avatar
   ImageCropted(image) {
-    this.user.Avatar = image;
+    this.user.avatar = image;
     const user = JSON.parse(localStorage.getItem('User'));
     user.avatar = image;
     this.userService.updateUser(user).subscribe(

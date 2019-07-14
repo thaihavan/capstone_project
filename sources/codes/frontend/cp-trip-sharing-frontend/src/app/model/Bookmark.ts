@@ -1,12 +1,12 @@
 export class Bookmark {
 
-    public UserId: string;
+    public userId: string;
 
-    public PostId: string;
+    public postId: string;
 
-    public Title: string;
+    public title: string;
 
-    public CoverImage: string;
+    public coverImage: string;
 
-    public PostType: string;
+    public postType: string;
 }

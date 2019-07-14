@@ -1,6 +1,6 @@
 export class Like {
-    ObjectId: string;
-    ObjectType: string;
-    DateTime: Date;
-    UserId: string;
+    objectId: string;
+    objectType: string;
+    dateTime: Date;
+    userId: string;
 }

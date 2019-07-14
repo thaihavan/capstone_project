@@ -83,10 +83,10 @@ export class PostSmallComponent implements OnInit {
   bookmarkPost() {
     if (this.bookmark === false) {
       const bookmarkObject = new Bookmark();
-      bookmarkObject.CoverImage = this.post.post.coverImage;
-      bookmarkObject.PostId = this.post.post.id;
-      bookmarkObject.PostType = this.postType;
-      bookmarkObject.Title = this.post.post.title;
+      bookmarkObject.coverImage = this.post.post.coverImage;
+      bookmarkObject.postId = this.post.post.id;
+      bookmarkObject.postType = this.postType;
+      bookmarkObject.title = this.post.post.title;
 
       this.userService.addBookMark(bookmarkObject, this.token).subscribe((data: any) => {
         this.bookmark = true;

@@ -61,8 +61,8 @@ export class SingleCommentComponent implements OnInit {
   }
 
   likeComment(liked: any, commetId: any) {
-    this.like.ObjectId = commetId;
-    this.like.ObjectType = 'comment';
+    this.like.objectId = commetId;
+    this.like.objectType = 'comment';
     if (liked === false) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         this.comment.likeCount += 1;
@@ -143,7 +143,6 @@ export class SingleCommentComponent implements OnInit {
 
   removeComment() {
     this.postService.removeComment(this.comment.id, this.comment.authorId).subscribe((result: any) => {
-      debugger;
       this.checkRemoveComment = true;
     });
   }

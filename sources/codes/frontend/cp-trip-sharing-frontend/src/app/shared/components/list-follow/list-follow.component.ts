@@ -9,7 +9,7 @@ import { User } from 'src/app/model/User';
 export class ListFollowComponent implements OnInit {
   title: string;
   listUser: User[];
-  listUserSave: any[] = [];
+  listUserSave: User[] = [];
   follow: boolean;
   followed: boolean;
   searchUserName: any;
@@ -21,7 +21,7 @@ export class ListFollowComponent implements OnInit {
 
   search(searchUser: any) {
     this.listUser = this.listUserSave;
-    const listUserSearch: any[] = [];
+    const listUserSearch: User[] = [];
     if (searchUser !== '') {
       this.listUserSave.forEach(user => {
         if (user.displayName.toLowerCase().indexOf(searchUser) > -1) {

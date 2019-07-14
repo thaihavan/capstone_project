@@ -17,7 +17,7 @@ export class SendMessagePopupComponent implements OnInit {
   errorMessage = '';
 
   constructor(
-    private chatService: ChatService, 
+    private chatService: ChatService,
     private dialogRef: MatDialogRef<SendMessagePopupComponent>) { }
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class SendMessagePopupComponent implements OnInit {
       this.errorMessage = '';
       const chatMessage = new ChatMessage();
       chatMessage.content = this.message;
-      this.chatService.sendMessage(this.receiver.UserId, chatMessage).subscribe((res) => {
+      this.chatService.sendMessage(this.receiver.id, chatMessage).subscribe((res) => {
         console.log(res);
         this.dialogRef.close();
       }, (error: HttpErrorResponse) => {

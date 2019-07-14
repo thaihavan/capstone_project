@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Bookmark } from 'src/app/model/Bookmark';
 
 @Component({
   selector: 'app-bookmark-post',
@@ -8,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./bookmark-post.component.css']
 })
 export class BookmarkPostComponent implements OnInit {
-  @Input() bookmark: any;
+  @Input() bookmark: Bookmark;
   listPostIdBookMark: string[] = [];
   checkRemoved = false;
   constructor(private userService: UserService) { }

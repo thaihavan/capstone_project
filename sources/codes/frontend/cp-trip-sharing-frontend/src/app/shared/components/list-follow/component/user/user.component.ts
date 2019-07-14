@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  @Input() user: any;
+  @Input() user: User;
   @Input() checkBlocked: boolean;
   @Input() listFollowed = false;
   gender: string;

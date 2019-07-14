@@ -15,22 +15,10 @@ import { UploadImageComponent } from 'src/app/shared/components/upload-image/upl
 export class InitialUserInformationPageComponent implements OnInit {
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   avatar = 'https://oto.com.vn/diendan/images/noavatar.jpg';
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private titleService: Title) {
-    this.titleService.setTitle('Khởi tạo');
-    this.user = new User();
-    this.user.UserName = '';
-    this.user.DisplayName = '';
-    this.user.FirstName = '';
-    this.user.LastName = '';
-    this.user.Dob = null;
-    this.user.Gender = true;
-    this.user.Address = '';
-    this.user.Interested = [];
-  }
   isLinear = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  user: User;
+  user: User = new User();
   isRegister: boolean;
   selectedTopic: string[] = [];
   username = new FormControl('', [Validators.required]);
@@ -39,13 +27,17 @@ export class InitialUserInformationPageComponent implements OnInit {
   lastname = new FormControl('', [Validators.required]);
   address = new FormControl();
   birthday = new FormControl();
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private titleService: Title) {
+    this.titleService.setTitle('Khởi tạo');
+  }
   ngOnInit() {
+    console.log(this.user);
     this.firstFormGroup = this.formBuilder.group({});
     this.secondFormGroup = this.formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
 
-    if (!this.user || !this.user.UserId || this.user.UserId == null) {
+    if (!this.user || !this.user.id || this.user.id == null) {
       this.isRegister = true;
     } else {
       this.isRegister = false;
@@ -54,12 +46,12 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   setValueForTextField() {
-    this.username.setValue(this.user.UserName);
-    this.displayname.setValue(this.user.DisplayName);
-    this.firstname.setValue(this.user.FirstName);
-    this.lastname.setValue(this.user.LastName);
-    this.address.setValue(this.user.Address);
-    this.birthday.setValue(this.user.Dob);
+    this.username.setValue(this.user.userName);
+    this.displayname.setValue(this.user.displayName);
+    this.firstname.setValue(this.user.firstName);
+    this.lastname.setValue(this.user.lastName);
+    this.address.setValue(this.user.address);
+    this.birthday.setValue(this.user.dob);
   }
   getErrorMessage() {
     if (this.username.hasError('required') || this.firstname.hasError('required') ||
@@ -75,11 +67,11 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   selectedTopics(topics: any) {
-    this.user.Interested = topics;
+    this.user.interested = topics;
   }
 
   onGenderChange(value: any) {
-    this.user.Gender = value;
+    this.user.gender = value;
   }
 
   registerUser() {
@@ -95,19 +87,19 @@ export class InitialUserInformationPageComponent implements OnInit {
   updateUser() {
     this.getValueFromFormGroup();
     this.userService.updateUser(this.user).subscribe((result: any) => {
-      window.location.href = '/user/' + this.user.UserId;
+      window.location.href = '/user/' + this.user.id;
     }, (err: HttpErrorResponse) => {
       console.log(err);
     });
   }
 
   getValueFromFormGroup() {
-    this.user.UserName = this.username.value;
-    this.user.DisplayName = this.displayname.value;
-    this.user.FirstName = this.firstname.value;
-    this.user.LastName = this.lastname.value;
-    this.user.Address = this.address.value;
-    this.user.Dob = this.birthday.value;
+    this.user.userName = this.username.value;
+    this.user.displayName = this.displayname.value;
+    this.user.firstName = this.firstname.value;
+    this.user.lastName = this.lastname.value;
+    this.user.address = this.address.value;
+    this.user.dob = this.birthday.value;
   }
 
     // change avatar image
