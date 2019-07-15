@@ -1,4 +1,4 @@
-<div class="initial-user">
+<div [class]="isRegister ? 'register-user':'update-infor-user'">
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
@@ -29,32 +29,20 @@
                 <mat-form-field class="col-6 full-width">
                   <input matInput placeholder="@Username" [formControl]="username" required>
                   <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
-                  <!-- <mat-error *ngFor="let validation of validation_messages.username">
-                          <mat-error class="error-message" *ngIf="form.get('username').hasError(validation.type) && (form.get('username').dirty || form.get('username').touched)">{{validation.message}}</mat-error>
-                        </mat-error> -->
                 </mat-form-field>
                 <mat-form-field class="col-6 full-width">
                   <input matInput placeholder="Tên hiển thị" [formControl]="displayname" required>
                   <mat-error *ngIf="displayname.invalid">{{getErrorMessage()}}</mat-error>
-                  <!-- <mat-error *ngFor="let validation of validation_messages.displayname">
-                            <mat-error class="error-message" *ngIf="form.get('displayname').hasError(validation.type) && (form.get('displayname').dirty || form.get('displayname').touched)">{{validation.message}}</mat-error>
-                          </mat-error> -->
                 </mat-form-field>
               </div>
               <div class="row">
                 <mat-form-field class="col-6 full-width">
                   <input matInput placeholder="Họ" [formControl]="firstname" required>
                   <mat-error *ngIf="firstname.invalid">{{getErrorMessage()}}</mat-error>
-                  <!-- <mat-error *ngFor="let validation of validation_messages.firstname">
-                      <mat-error class="error-message" *ngIf="form.get('firstname').hasError(validation.type) && (form.get('firstname').dirty || form.get('firstname').touched)">{{validation.message}}</mat-error>
-                    </mat-error> -->
                 </mat-form-field>
                 <mat-form-field class="col-6 full-width">
                   <input matInput placeholder="Tên" [formControl]="lastname" required>
                   <mat-error *ngIf="lastname.invalid">{{getErrorMessage()}}</mat-error>
-                  <!-- <mat-error *ngFor="let validation of validation_messages.lastname">
-                        <mat-error class="error-message" *ngIf="form.get('lastname').hasError(validation.type) && (form.get('lastname').dirty || form.get('lastname').touched)">{{validation.message}}</mat-error>
-                      </mat-error> -->
                 </mat-form-field>
               </div>
               <div class="row">
@@ -72,10 +60,10 @@
               <div class="input_field radio_option">
                 <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.gender"
                   [ngModelOptions]="{standalone: true}">
-                <label for="rd1" style="padding-left: 5px;">Nam</label>
+                <label for="rd1" style="padding-left: 5px;"><span class="label-gender">Nam</span></label>
                 <input type="radio" name="gender" id="rd2" [value]="false" class="input-gender"
                   [(ngModel)]="user.gender" [ngModelOptions]="{standalone: true}">
-                <label for="rd2" style="padding-left: 5px;">Nữ</label>
+                <label for="rd2" style="padding-left: 5px;"><span class="label-gender">Nữ</span></label>
               </div>
               <button class="submit-btn" color="primary" (click)="callInterestedtopicPage(stepper)"
                 [disabled]="getErrorMessage()===true?'false':'true'" mat-raised-button type="submit">

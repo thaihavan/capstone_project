@@ -42,7 +42,6 @@ export class InterestedTopicAdminsComponent implements OnInit {
   }
 
   removeTopic(topicId: any) {
-    debugger;
     this.postService.removeTopic(topicId).subscribe((result: any) => {
       this.openDialogMessageConfirm();
     }, (err: HttpErrorResponse) => {

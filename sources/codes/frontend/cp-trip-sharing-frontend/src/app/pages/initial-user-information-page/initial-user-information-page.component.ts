@@ -14,7 +14,6 @@ import { UploadImageComponent } from 'src/app/shared/components/upload-image/upl
 })
 export class InitialUserInformationPageComponent implements OnInit {
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
-  avatar = 'https://oto.com.vn/diendan/images/noavatar.jpg';
   isLinear = true;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -38,6 +37,7 @@ export class InitialUserInformationPageComponent implements OnInit {
     });
 
     if (!this.user || !this.user.id || this.user.id == null) {
+      this.user.avatar = 'https://storage.googleapis.com/trip-sharing-final-image-bucket/no_profile_image.png';
       this.isRegister = true;
     } else {
       this.isRegister = false;
@@ -108,6 +108,6 @@ export class InitialUserInformationPageComponent implements OnInit {
     }
     // Image crop
     ImageCropted(image) {
-      this.avatar = image;
+      this.user.avatar = image;
     }
 }

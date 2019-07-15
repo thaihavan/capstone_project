@@ -39,26 +39,29 @@ export class FormAddTopicsComponent implements OnInit {
     // tslint:disable-next-line:variable-name
     reader.onload = (_event) => {
       this.imgURL = reader.result;
+      const imageBase64 = this.imgURL.split(',');
+      const imageUpload: ImageUpload = new ImageUpload();
+      imageUpload.type = this.imagePath[0].type;
+      imageUpload.image = imageBase64[1];
+      this.imageService.uploadImage(imageUpload).subscribe((res: any) => {
+        this.topic.imgUrl = res.image;
+      }, (err: HttpErrorResponse) => {
+        console.log(err);
+      });
     };
   }
 
   addTopic() {
-    const imageBase64 = this.imgURL.split(',');
-    const imageUpload: ImageUpload = new ImageUpload();
-    imageUpload.type = this.imagePath[0].type;
-    imageUpload.image = imageBase64[1];
-    this.imageService.uploadImage(imageUpload).subscribe((res: any) => {
-      this.topic.imgUrl = res.image;
+    if (this.topic.imgUrl != null && this.topic.name != null) {
       this.postService.addTopic(this.topic).subscribe((result: any) => {
         this.dialog.closeAll();
         this.openDialogMessageConfirm();
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
+    } else {
+      this.message = 'Update Image Fail';
     }
-    );
   }
 
   openDialogMessageConfirm() {
