@@ -122,7 +122,7 @@ namespace PostService.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Article> GetAllArticles(PostFilter postFilter)
+        public IEnumerable<Article> GetAllArticles(PostFilter postFilter, int page)
         {
             // Search filter
 
@@ -222,11 +222,13 @@ namespace PostService.Repositories
                 .Where(searchFilter.Compile())
                 .Where(topicFilter.Compile())
                 .Select(a => a)
-                .OrderByDescending(a => a.Post.PubDate);
+                .OrderByDescending(a => a.Post.PubDate)
+                .Skip(12 * page)
+                .Take(12);
             return articles.ToList();
         }
 
-        public IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter)
+        public IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter, int page)
         {
             // Search filter
 
@@ -327,7 +329,9 @@ namespace PostService.Repositories
                 .Where(searchFilter.Compile())
                 .Where(topicFilter.Compile())
                 .Select(a => a)
-                .OrderByDescending(a => a.Post.PubDate);
+                .OrderByDescending(a => a.Post.PubDate)
+                .Skip(12 * page)
+                .Take(12);
             return articles.ToList();
         }
     }

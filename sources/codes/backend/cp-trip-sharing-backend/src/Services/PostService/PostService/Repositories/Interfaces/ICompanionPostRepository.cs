@@ -9,10 +9,12 @@ namespace PostService.Repositories.Interfaces
     interface ICompanionPostRepository:IRepository<CompanionPost>
     {
         CompanionPost GetById(string id, string userId);
-        IEnumerable<CompanionPost> GetAll(string userId);
+        IEnumerable<CompanionPost> GetAll(PostFilter filter,int page);
+        IEnumerable<CompanionPost> GetAllCompanionPostByUser(string userId, PostFilter filter, int page);
 
         IEnumerable<CompanionPostJoinRequest> GetAllJoinRequest(string companionPostId);
         CompanionPostJoinRequest AddNewRequest(CompanionPostJoinRequest param);
         bool DeleteJoinRequest(string requestId);
+        CompanionPostJoinRequest GetRequestById(string requestId);
     }
 }
