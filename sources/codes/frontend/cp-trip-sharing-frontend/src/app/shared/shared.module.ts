@@ -26,7 +26,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoadingScreenComponent } from './components/loading-screen/loading-screen.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ListFollowComponent } from './components/list-follow/list-follow.component';
-import { UserComponent } from './components/list-follow/component/user/user.component';
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { IfChangesDirective } from './directives/if-changes.directive';
 import { ReadMoreComponent } from './components/read-more/read-more.component';
@@ -50,6 +49,7 @@ import { PostFilterComponent } from './components/post-filter/post-filter.compon
 import { CurrencyPipe } from './pipes/currency-pipe/currency.pipe';
 import { NotifyMessageTooltipComponent } from './components/notify-message-tooltip/notify-message-tooltip.component';
 import { ReportPopupComponent } from './components/report-popup/report-popup.component';
+import { UserItemComponent } from './components/user-item/user-item.component';
 
 const Material = [
   MatButtonModule,
@@ -90,7 +90,6 @@ const Material = [
     CropImageComponent,
     LoadingScreenComponent,
     ListFollowComponent,
-    UserComponent,
     IfChangesDirective,
     ReadMoreComponent,
     EditableTextComponent,
@@ -112,7 +111,8 @@ const Material = [
     PostFilterComponent,
     CurrencyPipe,
     NotifyMessageTooltipComponent,
-    ReportPopupComponent
+    ReportPopupComponent,
+    UserItemComponent
   ],
   imports: [
     CommonModule,
@@ -142,7 +142,6 @@ const Material = [
     EditableTextComponent,
     ListUserBlockedComponent,
     MessageComponent,
-    UserComponent,
     SendMessagePopupComponent,
     ListNotificationComponent,
     CustomDatePipe,
@@ -156,7 +155,8 @@ const Material = [
     CompanionPostSmallComponent,
     PostFilterComponent,
     CurrencyPipe,
-    NotifyMessageTooltipComponent
+    NotifyMessageTooltipComponent,
+    UserItemComponent
   ],
   entryComponents: [
     StepCreatePostComponent,

@@ -1,13 +1,29 @@
 <div>
   <!-- Filter -->
-  <div>
+  <div *ngIf="showFilter">
     <app-post-filter [showTimePeriod]="showTimePeriod" [showTopic]="showTopic" (filtered)="submitFilter($event)">
     </app-post-filter>
   </div>
 
   <!-- List result -->
-  <app-list-post-horizontal [listType]="listType" [posts]="posts" [rowSize]="3">
-  </app-list-post-horizontal>
+  <ng-container [ngSwitch]="tab">
+
+    <!-- List users -->
+    <ng-container *ngSwitchCase="'moi-nguoi'">
+      <div>
+        <div *ngFor="let user of users">
+          <app-user-item [user]="user" [showBlocked]="false" [showFollowButton]="true"></app-user-item>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- List posts -->
+    <ng-container *ngSwitchDefault>
+      <app-list-post-horizontal [listType]="listType" [posts]="posts" [rowSize]="3">
+      </app-list-post-horizontal>
+    </ng-container>
+
+  </ng-container>
 
   <!-- Inifity scroll -->
   <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" (scrolled)="onScroll()"></div>

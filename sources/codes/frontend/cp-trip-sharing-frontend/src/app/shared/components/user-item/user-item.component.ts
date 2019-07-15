@@ -2,41 +2,40 @@ import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MessagePopupComponent } from '../../../message-popup/message-popup.component';
 import { MatDialog } from '@angular/material';
+import { MessagePopupComponent } from '../message-popup/message-popup.component';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-user-item',
+  templateUrl: './user-item.component.html',
+  styleUrls: ['./user-item.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserItemComponent implements OnInit {
+
   @Input() user: User;
-  @Input() checkBlocked: boolean;
-  @Input() listFollowed = false;
+  @Input() showBlocked: boolean;
+  @Input() showFollowButton = false;
+
+  isYou = false;
   gender: string;
   showAddress = true;
   imgAvatar = '';
-  follow = false;
-  followed = false;
+  isFollowed = false;
   listUserIdFollowing: string[] = [];
   constructor(private userService: UserService, public dialog: MatDialog) { }
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('User'));
-    if (this.listFollowed === true && user.id !== this.user.id) {
-      this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
-      if (this.listUserIdFollowing != null) {
-        this.follow = this.listUserIdFollowing.indexOf(this.user.id) !== -1;
+    if (user != null) {
+      this.isYou = user.id === this.user.id;
+
+      if (this.showFollowButton === true && user.id !== this.user.id) {
+        this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
+        if (this.listUserIdFollowing != null) {
+          this.isFollowed = this.listUserIdFollowing.indexOf(this.user.id) !== -1;
+        }
       }
-    }
-    if (this.user.avatar == null) {
-      this.imgAvatar = 'https://gody.vn/public/v3/images/bg/br-register.jpg';
-    } else {
       this.imgAvatar = this.user.avatar;
-    }
-    if (this.user.address === '') {
-      this.user.address = 'Việt Nam';
     }
   }
 
@@ -72,9 +71,9 @@ export class UserComponent implements OnInit {
 
   followPerson(userId: any) {
     const token = localStorage.getItem('Token');
-    if (this.follow === false) {
+    if (this.isFollowed === false) {
       this.userService.addFollow(userId, token).subscribe((data: any) => {
-        this.follow = false;
+        this.isFollowed = false;
         this.listUserIdFollowing.push(userId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
       }, (err: HttpErrorResponse) => {
@@ -82,7 +81,7 @@ export class UserComponent implements OnInit {
       });
     } else {
       this.userService.unFollow(userId, token).subscribe((data: any) => {
-        this.follow = false;
+        this.isFollowed = false;
         const unfollow = this.listUserIdFollowing.indexOf(userId);
         this.listUserIdFollowing.splice(unfollow, 1);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
@@ -91,4 +90,5 @@ export class UserComponent implements OnInit {
       });
     }
   }
+
 }

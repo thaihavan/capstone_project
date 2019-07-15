@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UserServices.Helpers;
 using UserServices.Models;
@@ -55,6 +56,23 @@ namespace UserServices.Reponsitories
             user.FollowerCount = followerCount;
             user.FollowingCount = followingCount;
             return user;
+        }
+
+        public IEnumerable<User> GetUsers(string search)
+        {
+            // Search filter
+            if (search == null || search.Trim() == "")
+            {
+                search = "";
+            }
+            Expression<Func<User, bool>> searchFilter;
+            searchFilter = u => u.UserName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0
+                                || u.DisplayName.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+
+            var users = _users.AsQueryable()
+                        .Where(searchFilter.Compile())
+                        .ToList();
+            return users;
         }
 
         public User Update(User user)

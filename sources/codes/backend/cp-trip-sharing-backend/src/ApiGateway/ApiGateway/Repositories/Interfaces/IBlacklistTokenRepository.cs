@@ -1,12 +1,12 @@
-﻿using IdentityProvider.Models;
+﻿using ApiGateway.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityProvider.Repositories.Interfaces
+namespace ApiGateway.Repositories.Interfaces
 {
-    public interface IBlacklistTokenRepository:IRepository<BlacklistToken>
+    public interface IBlacklistTokenRepository : IRepository<BlacklistToken>
     {
         Task<BlacklistToken> GetTokenAsync(string token);
 

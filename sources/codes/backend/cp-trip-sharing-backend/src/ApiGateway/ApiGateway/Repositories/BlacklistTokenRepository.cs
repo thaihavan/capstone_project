@@ -1,7 +1,7 @@
-﻿using IdentityProvider.Helpers;
-using IdentityProvider.Models;
-using IdentityProvider.Repositories.DbContext;
-using IdentityProvider.Repositories.Interfaces;
+﻿using ApiGateway.Helpers;
+using ApiGateway.Models;
+using ApiGateway.Repositories.DbContext;
+using ApiGateway.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityProvider.Repositories
+namespace ApiGateway.Repositories
 {
     public class BlacklistTokenRepository : IBlacklistTokenRepository
     {
@@ -28,7 +28,7 @@ namespace IdentityProvider.Repositories
 
         public async Task<BlacklistToken> AddAsync(string token)
         {
-            await _blacklistTokens.InsertOneAsync(new BlacklistToken() { Token=token});
+            await _blacklistTokens.InsertOneAsync(new BlacklistToken() { Token = token });
             return new BlacklistToken() { Token = token };
         }
 

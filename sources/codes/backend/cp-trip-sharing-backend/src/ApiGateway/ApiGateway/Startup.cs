@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApiGateway.Helpers;
+using ApiGateway.Services;
+using ApiGateway.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -62,9 +64,16 @@ namespace ApiGateway
                     ValidateIssuer = true,
                     ValidIssuer = "auth.tripsharing.com",
                     ValidateAudience = false,
-                    RequireExpirationTime = true
+                    RequireExpirationTime = false
                 };
             });
+
+            // Memmory cache for blacklist token
+            services.AddSession();
+            services.AddTransient<TokenManagerMiddleware>();
+            services.AddTransient<ITokenManager, TokenManager>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,10 +91,12 @@ namespace ApiGateway
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseMiddleware<TokenManagerMiddleware>();
             app.UseMvc();
             await app.UseOcelot();
         }

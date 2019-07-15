@@ -44,14 +44,14 @@ namespace UserServices.Services
             return result;
         }
 
-        public IEnumerable<User> GetAll()
-        {
-            return _userRepository.GetAll();
-        }
-
         public User GetUserById(string userId)
         {
             return _userRepository.GetById(userId);
+        }
+
+        public IEnumerable<User> GetUsers(string search)
+        {
+            return _userRepository.GetUsers(search);
         }
 
         public User Update(User user)

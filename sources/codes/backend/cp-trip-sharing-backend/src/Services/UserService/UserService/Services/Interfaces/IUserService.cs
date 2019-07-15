@@ -8,14 +8,12 @@ namespace UserServices.Services.Interfaces
 {
     public interface IUserService
     {
-        IEnumerable<User> GetAll();
+        IEnumerable<User> GetUsers(string search);
 
         User Add(User user);
 
         User GetUserById(string userId);
 
         User Update(User user);
-
-        
     }
 }
