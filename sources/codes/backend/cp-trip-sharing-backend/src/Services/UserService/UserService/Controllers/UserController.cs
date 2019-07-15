@@ -62,11 +62,11 @@ namespace UserServices.Controllers
             return Created("", result);
         }
 
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] string search)
         {
-            var result = _userService.GetAll();
+            var result = _userService.GetUsers(search);
             return Ok(result);
         }
 

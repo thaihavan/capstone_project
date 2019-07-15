@@ -36,6 +36,10 @@ export class UserService {
     return this.http.post<Account>(this.apiUrl + 'authenticate', account, httpOption);
   }
 
+  Logout(): Observable<any> {
+    return this.http.post(this.apiUrl + 'logout', null, httpOptionAuthen);
+  }
+
   loginWithgoogle(token: string): Observable<Account> {
     return this.http.get<Account>(this.apiUrl + 'authenticate/google?token=' + token);
   }
@@ -205,12 +209,11 @@ export class UserService {
     return this.http.post<any>(this.apiUserService + 'user/update', user, httpOptionAuthen);
   }
 
-  //   getAll(): Observable<any> {
-  //     const params: URLSearchParams = new URLSearchParams();
-  // �	return this.http.get<any>(this.apiUserService + 'All');
-  // �	}
-
   getUserById(userId: string): Observable<any> {
     return this.http.get<any>(this.apiUserService + 'user?userId=' + userId, httpOptionAuthen);
+  }
+
+  getUsers(search: string): Observable<any> {
+    return this.http.get<any>(this.apiUserService + 'user/all?search=' + search, httpOption);
   }
 }

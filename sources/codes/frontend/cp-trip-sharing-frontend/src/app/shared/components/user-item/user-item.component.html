@@ -1,0 +1,51 @@
+<div class="user-item" *ngIf="!isYou">
+
+  <!-- Avatar -->
+  <div class="avatar">
+    <img src="{{imgAvatar}}">
+  </div>
+
+  <!-- User information -->
+  <div class="content">
+
+    <div (click)="gotoPersionalPage(user.id)" class="display-name">{{user.displayName}}</div>
+    <div class="username">@{{user.userName}}</div>
+
+    <div class="user-extra-info">
+
+      <div class="address">
+        <mat-icon [hidden]="user.address.trim() === ''">location_on</mat-icon>
+        <span style="padding-left: 1px;">{{user.address}}</span>
+      </div>
+
+      <div class="number-follow">
+        <b>{{user.followingCount}}</b> lượt theo dõi
+        &nbsp;
+        <i class="fa fa-circle icon-circle"></i>
+        &nbsp;
+        <b>{{user.contributionPoint}}</b> điểm tích lũy
+      </div>
+
+    </div>
+
+    <!-- Remove blocked button -->
+    <div *ngIf="showBlocked" class="icon-remove">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="removeBlocked(user.id)">
+          <mat-icon>remove</mat-icon>
+          <span>Bỏ chặn</span>
+        </button>
+      </mat-menu>
+    </div>
+
+    <!-- Follow button -->
+    <button (click)="followPerson(user.id)" class="follow-button" mat-icon-button>
+      <mat-icon>rss_feed</mat-icon>
+      <span *ngIf="isFollowed === false">Theo dõi</span>
+      <span *ngIf="isFollowed === true">Đã theo dõi</span>
+    </button>
+  </div>
+</div>

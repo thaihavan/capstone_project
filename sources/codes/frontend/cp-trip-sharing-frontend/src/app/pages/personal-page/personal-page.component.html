@@ -131,13 +131,13 @@
             <div class="card-person-infor">
               <a (click)="showFolowerUser()" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span><b>{{user.followerCount}}</b> người đang theo dõi bạn</span>
+                <span><b>{{user.followerCount}}</b> người theo dõi</span>
               </a>
             </div>
             <div class="card-person-infor">
               <a (click)="showFollowingUser()" class="mat-button">
                 <i class="fa fa-product-hunt"></i>
-                <span>Bạn đang theo dõi <b>{{user.followingCount}}</b> người</span>
+                <span><b>{{user.followingCount}}</b> đang theo dõi</span>
               </a>
             </div>
             <div *ngIf="userId == usergetLocalStorage.id" class="card-person-infor">

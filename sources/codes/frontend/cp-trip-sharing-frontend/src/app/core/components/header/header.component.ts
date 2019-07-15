@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Conversation } from 'src/app/model/Conversation';
 import { ChatService } from '../../services/chat-service/chat.service';
 import { ChatMessage } from 'src/app/model/ChatMessage';
+import { UserService } from '../../services/user-service/user.service';
 
 @Component({
   selector: 'app-header',
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private notifyService: NotifyService,
+              private userService: UserService,
               private chatService: ChatService) {
 
   }
@@ -70,8 +72,12 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut() {
-    localStorage.clear();
-    window.location.href = '/';
+    this.userService.Logout().subscribe((res) => {
+      localStorage.clear();
+      window.location.href = '/';
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   gotoPersonalPage() {

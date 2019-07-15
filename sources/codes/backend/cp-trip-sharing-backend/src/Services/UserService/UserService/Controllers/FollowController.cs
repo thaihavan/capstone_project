@@ -34,14 +34,12 @@ namespace UserServices.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
             follow.Follower = userId;
-            if (_followService.AddFollows(follow) != null)
-            {
-                return Ok(follow);
-            }
-            else
+            if (userId == following || _followService.AddFollows(follow) == null)
             {
                 return BadRequest();
             }
+
+            return Ok(follow);
         }
 
         [Authorize(Roles = "member")]

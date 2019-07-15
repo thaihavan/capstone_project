@@ -15,7 +15,7 @@ namespace UserServices.Reponsitories.Interfaces
     {
         private readonly IMongoCollection<Follow> _follows = null;
         private readonly IMongoCollection<User> _user = null;
-        
+
         public FollowRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
@@ -25,7 +25,12 @@ namespace UserServices.Reponsitories.Interfaces
 
         public Follow Add(Follow follow)
         {
+            if (IsFollowed(follow.Follower, follow.Following))
+            {
+                return null;
+            }
             _follows.InsertOne(follow);
+
             return follow;
         }
 
@@ -55,15 +60,15 @@ namespace UserServices.Reponsitories.Interfaces
         {
             throw new NotImplementedException();
         }
-        
+
         public IEnumerable<User> GetAllFollower(string userId)
         {
             return _follows.AsQueryable().Where(x => x.Following.Equals(userId)).Join(
-                _user.AsQueryable(),               
+                _user.AsQueryable(),
                 follow => follow.Follower,
                 user => user.Id,
                 (follow, user) => user
-                ).ToList();    
+                ).ToList();
         }
 
         public IEnumerable<User> GetAllFollowing(string userId)
@@ -78,14 +83,14 @@ namespace UserServices.Reponsitories.Interfaces
 
         public bool IsFollowed(string follower, string following)
         {
-            return _follows.CountDocuments(x=> x.Follower.Equals(follower)&&x.Following.Equals(following)) > 0 ? true : false;
+            return _follows.CountDocuments(x => x.Follower.Equals(follower) && x.Following.Equals(following)) > 0 ? true : false;
         }
 
         public List<string> GetAllFollowingId(string userId)
         {
             return _follows.AsQueryable()
-                .Where(x=>x.Follower.Equals(userId))
-                .Select(x=> x.Following)
+                .Where(x => x.Follower.Equals(userId))
+                .Select(x => x.Following)
                 .ToList();
         }
 

@@ -8,6 +8,7 @@ import { FindingCompanionService } from 'src/app/core/services/post-service/find
 import { Article } from 'src/app/model/Article';
 import { HttpErrorResponse } from '@angular/common/http';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
+import { UserService } from 'src/app/core/services/user-service/user.service';
 
 @Component({
   selector: 'app-search-result-container',
@@ -25,6 +26,7 @@ export class SearchResultContainerComponent implements OnInit {
     'tim-ban-dong-hanh'
   ];
 
+  showFilter = true;
   showTimePeriod = true;
   showTopic = true;
 
@@ -54,7 +56,8 @@ export class SearchResultContainerComponent implements OnInit {
               private route: ActivatedRoute,
               private postService: PostService,
               private virtualTripService: VirtualTripService,
-              private companionPostService: FindingCompanionService) {
+              private companionPostService: FindingCompanionService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -79,24 +82,40 @@ export class SearchResultContainerComponent implements OnInit {
 
   getSearchResult(postFilter: PostFilter) {
     this.posts = [];
+    this.users = [];
     switch (this.tab) {
-      case '':
-        break;
       case 'moi-nguoi':
+        this.showFilter = false;
+        this.getUsers(this.search);
         break;
       case 'bai-viet':
+        this.showFilter = true;
         this.listType = 'article';
         this.getArticles(postFilter);
         break;
       case 'chuyen-di':
+        this.showFilter = true;
         this.listType = 'virtual-trip';
         this.getVirtualTrips(postFilter);
         break;
       case 'tim-ban-dong-hanh':
+        this.showFilter = true;
         this.listType = 'companion-post';
         this.getCompanionPosts(postFilter);
         break;
     }
+  }
+
+  getUsers(search: string) {
+    if (search === undefined || search == null) {
+      search = '';
+    }
+
+    this.userService.getUsers(search).subscribe((res: any) => {
+      this.users = res;
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   getArticles(postFilter: PostFilter) {
