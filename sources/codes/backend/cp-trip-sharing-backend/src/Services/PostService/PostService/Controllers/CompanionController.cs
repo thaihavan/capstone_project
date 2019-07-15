@@ -79,12 +79,12 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("post/all")]
-        public IActionResult GetAllCompanionPost()
+        [HttpPost("post/all")]
+        public IActionResult GetAllCompanionPost([FromBody]PostFilter filter,[FromQuery]int page)
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = User.Identity.IsAuthenticated ? identity.FindFirst("user_id").Value : null;
-            var result = _companionPostService.GetAll(userId);
+            var result = _companionPostService.GetAll(filter, page);
             return Ok(result);
         }
 
@@ -152,20 +152,26 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpDelete("post/request/cancel")]
-        public IActionResult CancelRequest([FromBody]CompanionPostJoinRequest request)
+        public IActionResult CancelRequest([FromBody]string requestId)
         {
             var identity = User.Identity as ClaimsIdentity;
-            var userId = identity.FindFirst("user_id").Value;           
+            var userId = identity.FindFirst("user_id").Value;
 
+            var request = _companionPostService.GetRequestById(requestId);
             if (!request.UserId.Equals(userId))
             {
                 return Unauthorized();
-            }
-            else
+            }else
             {
-                _companionPostService.DeleteJoinRequest(request.Id);
-                return Ok();
+                return Ok(_companionPostService.DeleteJoinRequest(requestId));
             }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("post/all")]
+        public IActionResult GetAllCompanionPostByUser([FromBody]PostFilter filter, [FromQuery]string userId, [FromQuery]int page)
+        {
+            return Ok(_companionPostService.GetAllCompanionPostByUser(userId, filter, page));
         }
     }
 }

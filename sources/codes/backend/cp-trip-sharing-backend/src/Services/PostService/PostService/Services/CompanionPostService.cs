@@ -11,7 +11,7 @@ using PostService.Services.Interfaces;
 
 namespace PostService.Services
 {
-    public class CompanionPostService:ICompanionPostService
+    public class CompanionPostService : ICompanionPostService
     {
         private readonly ICompanionPostRepository _companionPostRepository = null;
         private readonly IOptions<AppSettings> _settings = null;
@@ -42,14 +42,14 @@ namespace PostService.Services
             return _companionPostRepository.DeleteJoinRequest(requestId);
         }
 
-        public IEnumerable<CompanionPost> GetAll()
+        public IEnumerable<CompanionPost> GetAll(PostFilter filter, int page)
         {
-            throw new NotImplementedException();
+            return _companionPostRepository.GetAll(filter, page);
         }
 
-        public IEnumerable<CompanionPost> GetAll(string userId)
+        public IEnumerable<CompanionPost> GetAllCompanionPostByUser(string userId, PostFilter filter, int page)
         {
-            return _companionPostRepository.GetAll(userId);
+            return _companionPostRepository.GetAllCompanionPostByUser(userId, filter, page);
         }
 
         public IEnumerable<CompanionPostJoinRequest> GetAllJoinRequest(string companionPostId)
@@ -65,6 +65,11 @@ namespace PostService.Services
         public CompanionPost GetById(string id, string userId)
         {
             return _companionPostRepository.GetById(id, userId);
+        }
+
+        public CompanionPostJoinRequest GetRequestById(string requestId)
+        {
+            return _companionPostRepository.GetRequestById(requestId);
         }
 
         public CompanionPost Update(CompanionPost post)

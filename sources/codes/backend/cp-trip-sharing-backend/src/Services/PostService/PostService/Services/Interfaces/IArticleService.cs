@@ -16,8 +16,8 @@ namespace PostService.Services.Interfaces
 
         bool Delete(string id);
 
-        IEnumerable<Article> GetAllArticles(PostFilter postFilter);
+        IEnumerable<Article> GetAllArticles(PostFilter postFilter, int page);
 
-        IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter);
+        IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter, int page);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -138,8 +139,64 @@ namespace PostService.Repositories
             return result;
         }
 
-        public IEnumerable<CompanionPost> GetAll(string userId)
+        public IEnumerable<CompanionPost> GetAll(PostFilter filter, int page)
         {
+            // Search filter
+
+            // Text search
+            if (filter.Search == null)
+            {
+                filter.Search = "";
+            }
+            filter.Search = filter.Search.Trim();
+
+            // LocationId search
+            if (filter.LocationId == null)
+            {
+                filter.LocationId = "";
+            }
+
+            Expression<Func<CompanionPost, bool>> searchFilter;
+            searchFilter = a => a.Post.Title.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) >= 0
+                                && a.Destinations.Any(d => filter.LocationId == "" || d.Id == filter.LocationId);
+
+            // Time period filter
+            var filterDate = new DateTime(0);
+            var now = DateTime.Now;
+            switch (filter.TimePeriod)
+            {
+                case "today":
+                    filterDate = now.AddDays(-1);
+                    break;
+                case "this_week":
+                    filterDate = now.AddDays(-7);
+                    break;
+                case "this_month":
+                    filterDate = now.AddDays(-30);
+                    break;
+                case "this_year":
+                    filterDate = now.AddDays(-365);
+                    break;
+                case "all_time":
+                    filterDate = new DateTime(0);
+                    break;
+            }
+            Expression<Func<CompanionPost, bool>> dateFilter =
+                post => post.Post.PubDate >= filterDate;
+
+
+            // Topic filter
+            Expression<Func<CompanionPost, bool>> topicFilter;
+            if (filter.Topics.Count > 0)
+            {
+                topicFilter = a => a.Topics.Any(x => filter.Topics.Any(y => x == y));
+            }
+            else
+            {
+                topicFilter = a => true;
+            }
+
+
             Func<CompanionPost, Post, CompanionPost> SelectCompanionPostWithPost =
                 ((companionPost, post) => { companionPost.Post = post; return companionPost; });
             Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
@@ -147,43 +204,29 @@ namespace PostService.Repositories
             Func<CompanionPost, IEnumerable<Like>, CompanionPost> UpdateLike =
                 ((CompanionPost, likes) => { CompanionPost.Post.liked = likes.Count() > 0 ? true : false; return CompanionPost; });
 
-            IEnumerable< CompanionPost> result;
+            IEnumerable<CompanionPost> result;
 
-            if (string.IsNullOrEmpty(userId))
-            {
-                result = _companionPosts.AsQueryable()
-                    .Join(
-                        _posts.AsQueryable(),
-                        companionPost => companionPost.PostId,
-                        post => post.Id,
-                        SelectCompanionPostWithPost)
-                    .Join(
-                        _authors.AsQueryable(),
-                        companionPostWithPost => companionPostWithPost.Post.AuthorId,
-                        author => author.Id,
-                        SelectCompanionPostWithAuthor)
-                    .ToList();
-            }
-            else
-            {
-                result = _companionPosts.AsQueryable()
-                    .Join(
-                        _posts.AsQueryable(),
-                        companionPost => companionPost.PostId,
-                        post => post.Id,
-                        SelectCompanionPostWithPost)
-                    .Join(
-                        _authors.AsQueryable(),
-                        companionPostWithPost => companionPostWithPost.Post.AuthorId,
-                        author => author.Id,
-                        SelectCompanionPostWithAuthor)
-                    .GroupJoin(
-                        _likes.AsQueryable().Where(x => x.UserId.Equals(userId) && x.ObjectType.Equals("post")),
-                        companionPost => companionPost.PostId,
-                        like => like.ObjectId,
-                        UpdateLike)
-                    .ToList();
-            }
+
+            result = _companionPosts.AsQueryable()
+                .Join(
+                    _posts.AsQueryable(),
+                    companionPost => companionPost.PostId,
+                    post => post.Id,
+                    SelectCompanionPostWithPost)
+                .Join(
+                    _authors.AsQueryable(),
+                    companionPostWithPost => companionPostWithPost.Post.AuthorId,
+                    author => author.Id,
+                    SelectCompanionPostWithAuthor)
+                .Where(searchFilter.Compile())
+                .Where(topicFilter.Compile()) 
+                .Where(dateFilter.Compile())
+                .Select(a => a)
+                .OrderByDescending(a => a.Post.PubDate)
+                .Skip(12 * page)
+                .Take(12)
+                .ToList();
+
             return result;
         }
 
@@ -213,6 +256,102 @@ namespace PostService.Repositories
             _companionPostJoinRequests.FindOneAndDelete(
                 Builders<CompanionPostJoinRequest>.Filter.Eq(x => x.Id, requestId));
             return true;
+        }
+
+        public IEnumerable<CompanionPost> GetAllCompanionPostByUser(string userId, PostFilter filter, int page)
+        {
+            // Search filter
+
+            // Text search
+            if (filter.Search == null)
+            {
+                filter.Search = "";
+            }
+            filter.Search = filter.Search.Trim();
+
+            // LocationId search
+            if (filter.LocationId == null)
+            {
+                filter.LocationId = "";
+            }
+
+            Expression<Func<CompanionPost, bool>> searchFilter;
+            searchFilter = a => a.Post.Title.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) >= 0
+                                && a.Destinations.Any(d => filter.LocationId == "" || d.Id == filter.LocationId);
+
+            // Time period filter
+            var filterDate = new DateTime(0);
+            var now = DateTime.Now;
+            switch (filter.TimePeriod)
+            {
+                case "today":
+                    filterDate = now.AddDays(-1);
+                    break;
+                case "this_week":
+                    filterDate = now.AddDays(-7);
+                    break;
+                case "this_month":
+                    filterDate = now.AddDays(-30);
+                    break;
+                case "this_year":
+                    filterDate = now.AddDays(-365);
+                    break;
+                case "all_time":
+                    filterDate = new DateTime(0);
+                    break;
+            }
+            Expression<Func<CompanionPost, bool>> dateFilter =
+                post => post.Post.PubDate >= filterDate;
+
+
+            // Topic filter
+            Expression<Func<CompanionPost, bool>> topicFilter;
+            if (filter.Topics.Count > 0)
+            {
+                topicFilter = a => a.Topics.Any(x => filter.Topics.Any(y => x == y));
+            }
+            else
+            {
+                topicFilter = a => true;
+            }
+
+
+            Func<CompanionPost, Post, CompanionPost> SelectCompanionPostWithPost =
+                ((companionPost, post) => { companionPost.Post = post; return companionPost; });
+            Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
+                ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
+            Func<CompanionPost, IEnumerable<Like>, CompanionPost> UpdateLike =
+                ((CompanionPost, likes) => { CompanionPost.Post.liked = likes.Count() > 0 ? true : false; return CompanionPost; });
+
+            IEnumerable<CompanionPost> result;
+
+
+            result = _companionPosts.AsQueryable()
+                .Join(
+                    _posts.AsQueryable(),
+                    companionPost => companionPost.PostId,
+                    post => post.Id,
+                    SelectCompanionPostWithPost)
+                .Join(
+                    _authors.AsQueryable(),
+                    companionPostWithPost => companionPostWithPost.Post.AuthorId,
+                    author => author.Id,
+                    SelectCompanionPostWithAuthor)
+                .Where(searchFilter.Compile())
+                .Where(topicFilter.Compile())
+                .Where(a=>a.Post.AuthorId.Equals(userId,StringComparison.Ordinal))  
+                .Where(dateFilter.Compile())
+                .Select(a => a)
+                .OrderByDescending(a => a.Post.PubDate)
+                .Skip(12 * page)
+                .Take(12)
+                .ToList();
+            return result;
+        }
+
+        public CompanionPostJoinRequest GetRequestById(string requestId)
+        {
+            return _companionPostJoinRequests.Find(x => x.Id.Equals(requestId)).FirstOrDefault();
         }
     }
 }

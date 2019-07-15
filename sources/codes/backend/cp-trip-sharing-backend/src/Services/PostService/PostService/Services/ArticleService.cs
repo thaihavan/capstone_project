@@ -45,14 +45,14 @@ namespace PostService.Services
             return _articleRepository.Update(article);
         }
 
-        public IEnumerable<Article> GetAllArticles(PostFilter postFilter)
+        public IEnumerable<Article> GetAllArticles(PostFilter postFilter, int page)
         {
-            return _articleRepository.GetAllArticles(postFilter);
+            return _articleRepository.GetAllArticles(postFilter, page);
         }
 
-        public IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter)
+        public IEnumerable<Article> GetAllArticlesByUser(string userId, PostFilter postFilter, int page)
         {
-            return _articleRepository.GetAllArticlesByUser(userId, postFilter);
+            return _articleRepository.GetAllArticlesByUser(userId, postFilter, page);
         }
     }
 }

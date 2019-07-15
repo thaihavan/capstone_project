@@ -30,17 +30,17 @@ namespace PostService.Controllers
 
         [AllowAnonymous]
         [HttpPost("all")]
-        public IActionResult GetAllArticles(PostFilter postFilter)
+        public IActionResult GetAllArticles([FromBody]PostFilter postFilter, [FromQuery]int page)
         {
-            IEnumerable<Article> articles = _articleService.GetAllArticles(postFilter);
+            IEnumerable<Article> articles = _articleService.GetAllArticles(postFilter, page);
             return Ok(articles);
         }
 
         [AllowAnonymous]
         [HttpPost("user")]
-        public IActionResult GetAllArticlesByUser([FromQuery] string userId, [FromBody] PostFilter postFilter)
+        public IActionResult GetAllArticlesByUser([FromQuery] string userId, [FromBody] PostFilter postFilter, [FromQuery] int page)
         {
-            var article = _articleService.GetAllArticlesByUser(userId, postFilter);
+            var article = _articleService.GetAllArticlesByUser(userId, postFilter, page);
             return Ok(article);
         }
 
