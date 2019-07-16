@@ -54,7 +54,7 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpPost("create")]
-        public IActionResult CreateArticle([FromBody] VirtualTrip virtualTrip)
+        public IActionResult CreateVirtualTrip([FromBody] VirtualTrip virtualTrip)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
@@ -75,7 +75,7 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpPost("update")]
-        public IActionResult UpdateArticle([FromBody] VirtualTrip virtualTrip)
+        public IActionResult UpdateVirtualTrip([FromBody] VirtualTrip virtualTrip)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
