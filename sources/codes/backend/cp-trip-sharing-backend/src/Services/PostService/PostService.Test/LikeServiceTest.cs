@@ -30,21 +30,21 @@ namespace PostService.Test
             mockLikeService = new Mock<ILikeRepository>();
         }
 
-        [TestCase]
-        public void TestAdd()
-        {
-            Like like = new Like()
-            {
-                ObjectId = "5d027ea59b358d247cd21a55",
-                ObjectType = "post",
-                UserId = "5d027ea59b358d247cd21a54",
-                Date = DateTime.Now
-            };
-            mockLikeService.Setup(x => x.Add(It.IsAny<Like>())).Returns(like);
-            var testService = new LikeService(Options.Create(_settings));
-            Like result = testService.Add(like);
-            Assert.AreEqual(like, result);
-        }
+        //[TestCase]
+        //public void TestAdd()
+        //{
+        //    Like like = new Like()
+        //    {
+        //        ObjectId = "5d027ea59b358d247cd21a55",
+        //        ObjectType = "post",
+        //        UserId = "5d027ea59b358d247cd21a54",
+        //        Date = DateTime.Now
+        //    };
+        //    mockLikeService.Setup(x => x.Add(It.IsAny<Like>())).Returns(like);
+        //    var testService = new LikeService(Options.Create(_settings));
+        //    Like result = testService.Add(like);
+        //    Assert.AreEqual(like, result);
+        //}
 
         //[TestCase]
         //public void TestDelete()
