@@ -123,6 +123,14 @@ namespace ChatService.Repositories
 
         public bool AddUserToGroupChat(string conversationId, string userId)
         {
+            var user = _conversations.Find(c => c.Id == conversationId && c.Receivers.Any(u => u == userId))
+                .FirstOrDefault();
+
+            if (user != null)
+            {
+                return false;
+            }
+
             var result = _conversations.UpdateOne(
                 c => c.Id == conversationId,
                 Builders<Conversation>.Update.Push<string>(c => c.Receivers, userId));

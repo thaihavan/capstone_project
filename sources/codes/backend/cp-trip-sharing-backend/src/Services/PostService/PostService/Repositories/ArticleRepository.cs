@@ -117,11 +117,6 @@ namespace PostService.Repositories
             return articles.FirstOrDefault();
         }
 
-        public IEnumerable<Article> GetAllArticles(string userId, PostFilter postFilter)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Article> GetAllArticles(PostFilter postFilter, int page)
         {
             // Search filter
@@ -176,48 +171,22 @@ namespace PostService.Repositories
                 topicFilter = a => true;
             }
 
-            var articles = _posts.AsQueryable()
-                .Where(p => p.PubDate >= filterDate)
+            Func<Article, Post, Article> SelectArticleWithPost =
+                ((article, post) => { article.Post = post; return article; });
+            Func<Article, Author, Article> SelectArticleWithAuthor =
+                ((article, author) => { article.Post.Author = author; return article; });
+
+            var articles = _articles.AsQueryable()
                 .Join(
-                    _authors.AsQueryable(),
-                    post => post.AuthorId,
-                    author => author.Id,
-                    (post, author) => new
-                    {
-                        Id = post.Id,
-                        Post = new Post
-                        {
-                            Id = post.Id,
-                            AuthorId = post.AuthorId,
-                            Content = post.Content,
-                            CommentCount = post.CommentCount,
-                            IsActive = post.IsActive,
-                            IsPublic = post.IsPublic,
-                            LikeCount = post.LikeCount,
-                            PostType = post.PostType,
-                            PubDate = post.PubDate,
-                            Title = post.Title,
-                            CoverImage = post.CoverImage,
-                            Author = new Author()
-                            {
-                                Id = author.Id,
-                                DisplayName = author.DisplayName,
-                                ProfileImage = author.ProfileImage
-                            }
-                        }
-                })
-                .Join(
-                    _articles.AsQueryable(),
-                    pa => pa.Id,
+                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate),
                     article => article.PostId,
-                    (pa, article) => new Article()
-                    {
-                        Id = article.Id,
-                        Topics = article.Topics,
-                        Destinations = article.Destinations,
-                        PostId = article.PostId,
-                        Post = pa.Post
-                    }
+                    post => post.Id,
+                    SelectArticleWithPost
+                ).Join(
+                    _authors.AsQueryable(),
+                    article => article.Post.AuthorId,
+                    author => author.Id,
+                    SelectArticleWithAuthor
                 )
                 .Where(searchFilter.Compile())
                 .Where(topicFilter.Compile())
@@ -282,54 +251,112 @@ namespace PostService.Repositories
                 topicFilter = a => true;
             }
 
-            var articles = _posts.AsQueryable()
-                .Where(p => 
-                    p.PubDate >= filterDate && 
-                    p.AuthorId == userId)
+            Func<Article, Post, Article> SelectArticleWithPost =
+                ((article, post) => { article.Post = post; return article; });
+            Func<Article, Author, Article> SelectArticleWithAuthor =
+                ((article, author) => { article.Post.Author = author; return article; });
+
+            var articles = _articles.AsQueryable()
                 .Join(
-                    _authors.AsQueryable(),
-                    post => post.AuthorId,
-                    author => author.Id,
-                    (post, author) => new
-                    {
-                        Id = post.Id,
-                        Post = new Post
-                        {
-                            Id = post.Id,
-                            AuthorId = post.AuthorId,
-                            Content = post.Content,
-                            CommentCount = post.CommentCount,
-                            IsActive = post.IsActive,
-                            IsPublic = post.IsPublic,
-                            LikeCount = post.LikeCount,
-                            PostType = post.PostType,
-                            PubDate = post.PubDate,
-                            Title = post.Title,
-                            CoverImage = post.CoverImage,
-                            Author = new Author()
-                            {
-                                Id = author.Id,
-                                DisplayName = author.DisplayName,
-                                ProfileImage = author.ProfileImage
-                            }
-                        }
-                    }).Join(
-                    _articles.AsQueryable(),
-                    pa => pa.Id,
+                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate && p.AuthorId == userId),
                     article => article.PostId,
-                    (pa, article) => new Article()
-                    {
-                        Id = article.Id,
-                        Topics = article.Topics,
-                        Destinations = article.Destinations,
-                        PostId = article.PostId,
-                        Post = pa.Post
-                    }
+                    post => post.Id,
+                    SelectArticleWithPost
+                ).Join(
+                    _authors.AsQueryable(),
+                    article => article.Post.AuthorId,
+                    author => author.Id,
+                    SelectArticleWithAuthor
                 )
                 .Where(searchFilter.Compile())
                 .Where(topicFilter.Compile())
                 .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate)
+                .Skip(12 * page)
+                .Take(12);
+            return articles.ToList();
+        }
+
+        public IEnumerable<Article> GetRecommendArticles(PostFilter postFilter, UserInfo userInfo, int page)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Article> GetPopularArticles(PostFilter postFilter, int page)
+        {
+            // Search filter
+
+            // Text search
+            if (postFilter.Search == null)
+            {
+                postFilter.Search = "";
+            }
+            postFilter.Search = postFilter.Search.Trim();
+
+            // LocationId search
+            if (postFilter.LocationId == null)
+            {
+                postFilter.LocationId = "";
+            }
+
+            Expression<Func<Article, bool>> searchFilter;
+            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0
+                                && a.Destinations.Any(d => postFilter.LocationId == "" || d.Id == postFilter.LocationId);
+
+            // Time period filter
+            var filterDate = new DateTime(0);
+            var now = DateTime.Now;
+            switch (postFilter.TimePeriod)
+            {
+                case "today":
+                    filterDate = now.AddDays(-1);
+                    break;
+                case "this_week":
+                    filterDate = now.AddDays(-7);
+                    break;
+                case "this_month":
+                    filterDate = now.AddDays(-30);
+                    break;
+                case "this_year":
+                    filterDate = now.AddDays(-365);
+                    break;
+                case "all_time":
+                    filterDate = new DateTime(0);
+                    break;
+            }
+
+            // Topic filter
+            Expression<Func<Article, bool>> topicFilter;
+            if (postFilter.Topics.Count > 0)
+            {
+                topicFilter = a => a.Topics.Any(x => postFilter.Topics.Any(y => x == y));
+            }
+            else
+            {
+                topicFilter = a => true;
+            }
+
+            Func<Article, Post, Article> SelectArticleWithPost =
+                ((article, post) => { article.Post = post; return article; });
+            Func<Article, Author, Article> SelectArticleWithAuthor =
+                ((article, author) => { article.Post.Author = author; return article; });
+
+            var articles = _articles.AsQueryable()
+                .Join(
+                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate),
+                    article => article.PostId,
+                    post => post.Id,
+                    SelectArticleWithPost
+                ).Join(
+                    _authors.AsQueryable(),
+                    article => article.Post.AuthorId,
+                    author => author.Id,
+                    SelectArticleWithAuthor
+                )
+                .Where(searchFilter.Compile())
+                .Where(topicFilter.Compile())
+                .Select(a => a)
+                .OrderByDescending(a => a.Post.LikeCount)
                 .Skip(12 * page)
                 .Take(12);
             return articles.ToList();

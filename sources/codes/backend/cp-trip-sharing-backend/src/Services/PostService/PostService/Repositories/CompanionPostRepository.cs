@@ -189,11 +189,8 @@ namespace PostService.Repositories
                 ((companionPost, post) => { companionPost.Post = post; return companionPost; });
             Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
                 ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
-            Func<CompanionPost, IEnumerable<Like>, CompanionPost> UpdateLike =
-                ((CompanionPost, likes) => { CompanionPost.Post.liked = likes.Count() > 0 ? true : false; return CompanionPost; });
 
             IEnumerable<CompanionPost> result;
-
 
             result = _companionPosts.AsQueryable()
                 .Join(
@@ -295,11 +292,8 @@ namespace PostService.Repositories
                 ((companionPost, post) => { companionPost.Post = post; return companionPost; });
             Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
                 ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
-            Func<CompanionPost, IEnumerable<Like>, CompanionPost> UpdateLike =
-                ((CompanionPost, likes) => { CompanionPost.Post.liked = likes.Count() > 0 ? true : false; return CompanionPost; });
-
+            
             IEnumerable<CompanionPost> result;
-
 
             result = _companionPosts.AsQueryable()
                 .Join(
