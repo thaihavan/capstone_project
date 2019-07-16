@@ -28,7 +28,7 @@ namespace PostService.Controllers
 
         [AllowAnonymous]
         [HttpPost("all")]
-        public IActionResult GetAllVirtualTrips([FromBody] PostFilter postFilter)
+        public IActionResult GetAllVirtualTrips([FromBody] PostFilter postFilter,[FromQuery]int page)
         {
             var virtualTrips = _virtualTripService.GetAllVirtualTrips(postFilter);
             
@@ -37,7 +37,7 @@ namespace PostService.Controllers
 
         [AllowAnonymous]
         [HttpPost("user")]
-        public IActionResult GetAllVirtualTrips([FromQuery] string userId, [FromBody] PostFilter postFilter)
+        public IActionResult GetAllVirtualTrips([FromQuery] string userId, [FromBody] PostFilter postFilter,[FromQuery]int page)
         {
             var virtualTrips = _virtualTripService.GetAllVirtualTripsByUser(userId, postFilter);
 

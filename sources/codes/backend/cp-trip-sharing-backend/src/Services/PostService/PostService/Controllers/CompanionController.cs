@@ -152,19 +152,12 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpDelete("post/request/cancel")]
-        public IActionResult CancelRequest([FromBody]string requestId)
+        public IActionResult CancelRequest([FromBody]string postId)
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = identity.FindFirst("user_id").Value;
 
-            var request = _companionPostService.GetRequestById(requestId);
-            if (!request.UserId.Equals(userId))
-            {
-                return Unauthorized();
-            }else
-            {
-                return Ok(_companionPostService.DeleteJoinRequest(requestId));
-            }
+            return Ok(_companionPostService.CancelRequest(userId, postId));
         }
 
         [AllowAnonymous]

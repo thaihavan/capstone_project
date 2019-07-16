@@ -353,5 +353,10 @@ namespace PostService.Repositories
         {
             return _companionPostJoinRequests.Find(x => x.Id.Equals(requestId)).FirstOrDefault();
         }
+
+        public CompanionPostJoinRequest GetRequestByUserIdAndPostId(string userId, string postId)
+        {
+            return _companionPostJoinRequests.Find(x => x.UserId.Equals(userId) && x.CompanionPostId.Equals(postId)).FirstOrDefault();
+        }
     }
 }

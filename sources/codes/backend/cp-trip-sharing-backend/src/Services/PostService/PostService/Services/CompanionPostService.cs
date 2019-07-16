@@ -32,6 +32,12 @@ namespace PostService.Services
             return _companionPostRepository.AddNewRequest(param);
         }
 
+        public bool CancelRequest(string userId, string postId)
+        {
+            var request = _companionPostRepository.GetRequestByUserIdAndPostId(userId, postId);
+            return _companionPostRepository.DeleteJoinRequest(request.Id);
+        }
+
         public bool Delete(string id)
         {
             return _companionPostRepository.Delete(id);

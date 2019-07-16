@@ -106,8 +106,7 @@ namespace ChatService.Repositories
                     {
                         Id = user.Id,
                         DisplayName = user.DisplayName,
-                        ProfileImage = user.ProfileImage,
-                        Connections = user.Connections
+                        ProfileImage = user.ProfileImage
                     }
                  ).ToList();
             return users;
@@ -126,7 +125,6 @@ namespace ChatService.Repositories
             var result = _conversations.UpdateOne(
                 c => c.Id == conversationId,
                 Builders<Conversation>.Update.Push<string>(c => c.Receivers, userId));
-
             return result.IsAcknowledged;
         }
 

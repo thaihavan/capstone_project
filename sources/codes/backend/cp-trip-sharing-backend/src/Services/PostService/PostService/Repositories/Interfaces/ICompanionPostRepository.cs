@@ -16,5 +16,6 @@ namespace PostService.Repositories.Interfaces
         CompanionPostJoinRequest AddNewRequest(CompanionPostJoinRequest param);
         bool DeleteJoinRequest(string requestId);
         CompanionPostJoinRequest GetRequestById(string requestId);
+        CompanionPostJoinRequest GetRequestByUserIdAndPostId(string userId, string postId);
     }
 }

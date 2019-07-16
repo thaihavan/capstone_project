@@ -20,5 +20,6 @@ namespace PostService.Services.Interfaces
         CompanionPostJoinRequest AddNewRequest(CompanionPostJoinRequest param);
         bool DeleteJoinRequest(string requestId);
         CompanionPostJoinRequest GetRequestById(string requestId);
+        bool CancelRequest(string userId, string postId);
     }
 }
