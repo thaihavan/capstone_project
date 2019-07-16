@@ -82,8 +82,6 @@ namespace PostService.Controllers
         [HttpPost("post/all")]
         public IActionResult GetAllCompanionPost([FromBody]PostFilter filter,[FromQuery]int page)
         {
-            var identity = User.Identity as ClaimsIdentity;
-            var userId = User.Identity.IsAuthenticated ? identity.FindFirst("user_id").Value : null;
             var result = _companionPostService.GetAll(filter, page);
             return Ok(result);
         }
@@ -168,7 +166,7 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("post/all")]
+        [HttpPost("post/user")]
         public IActionResult GetAllCompanionPostByUser([FromBody]PostFilter filter, [FromQuery]string userId, [FromQuery]int page)
         {
             return Ok(_companionPostService.GetAllCompanionPostByUser(userId, filter, page));

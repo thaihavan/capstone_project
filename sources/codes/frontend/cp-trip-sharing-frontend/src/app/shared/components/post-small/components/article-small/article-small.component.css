@@ -44,6 +44,9 @@
 
 .article-short-description {
     margin-top: -6px;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .like-comment-info {

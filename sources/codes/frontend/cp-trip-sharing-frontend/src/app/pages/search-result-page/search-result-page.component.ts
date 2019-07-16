@@ -14,7 +14,7 @@ export class SearchResultPageComponent implements OnInit {
   navLinks: any;
   routerLinkActive: string;
 
-  selectedLink: any;
+  selectedPath: string;
 
   constructor(private route: ActivatedRoute) {
     this.search = this.getSearchParam();
@@ -37,10 +37,7 @@ export class SearchResultPageComponent implements OnInit {
       }
     ];
     this.routerLinkActive = `moi-nguoi`;
-    this.selectedLink = {
-      path: `moi-nguoi`,
-      label: 'Mọi người'
-    };
+    this.selectedPath = this.getTabParam();
    }
 
   ngOnInit() {
@@ -56,13 +53,23 @@ export class SearchResultPageComponent implements OnInit {
     return decodeURI(urlSplit[5]);
   }
 
+  getTabParam() {
+    const urlSplit = window.location.href.split('/');
+
+    if (urlSplit.length < 5) {
+      return '';
+    }
+
+    return decodeURI(urlSplit[4]);
+  }
+
   changeSelectedLink(link: any) {
-    this.selectedLink = link;
+    this.selectedPath = link.path;
   }
 
   onSearchBtnClick() {
     if (this.search && this.search.trim() !== '') {
-      window.location.href = '/search/' + this.selectedLink.path + '/' + this.search;
+      window.location.href = '/search/' + this.selectedPath + '/' + this.search;
     }
   }
 

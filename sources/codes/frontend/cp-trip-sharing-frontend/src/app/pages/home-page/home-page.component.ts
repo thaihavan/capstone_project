@@ -7,6 +7,8 @@ import { PostFilter } from 'src/app/model/PostFilter';
 import { HttpErrorResponse } from '@angular/common/http';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
+import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
+import { CompanionPost } from 'src/app/model/CompanionPost';
 
 @Component({
   selector: 'app-home-page',
@@ -21,16 +23,19 @@ export class HomePageComponent implements OnInit {
   newestArticles: Article[] = [];
 
   virtualTrips: VirtualTrip[] = [];
+  companionPosts: CompanionPost[] = [];
 
   constructor(private titleService: Title,
               private postService: PostService,
-              private virtualTripService: VirtualTripService) {
+              private virtualTripService: VirtualTripService,
+              private companionPostService: FindingCompanionService) {
     this.titleService.setTitle('Trang chủ');
   }
 
   ngOnInit() {
     this.getArticles(undefined);
     this.getVirtualTrips(undefined);
+    this.getCompanionPosts(undefined);
   }
 
   getArticles(postFilter: PostFilter): void {
@@ -60,6 +65,23 @@ export class HomePageComponent implements OnInit {
       this.virtualTrips = data;
       if (this.virtualTrips != null && this.virtualTrips.length > 6) {
         this.virtualTrips = this.virtualTrips.slice(0, 6);
+      }
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  getCompanionPosts(postFilter: PostFilter): void {
+    if (!postFilter) {
+      postFilter = new PostFilter();
+      postFilter.topics = [];
+      postFilter.timePeriod = 'all_time';
+    }
+
+    this.companionPostService.getCompanionPosts(postFilter).subscribe(data => {
+      this.companionPosts = data;
+      if (this.companionPosts != null && this.companionPosts.length > 6) {
+        this.companionPosts = this.companionPosts.slice(0, 6);
       }
     }, (err: HttpErrorResponse) => {
       console.log(err);
