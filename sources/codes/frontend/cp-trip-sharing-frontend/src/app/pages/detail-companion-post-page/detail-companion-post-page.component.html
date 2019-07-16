@@ -145,7 +145,7 @@
                 <button color="primary"  matTooltip="Chấp nhận" mat-icon-button>
                   <mat-icon class="item-delete" (click)="accessRequestJoin(item.userId,i)">done</mat-icon>
                 </button>
-                <button color="warn" (click)="deleteRequest(i)" matTooltip="Xoá bỏ" mat-icon-button>
+                <button color="warn" (click)="deleteRequest(i,false)" matTooltip="Xoá bỏ" mat-icon-button>
                   <mat-icon class="item-delete">clear</mat-icon>
                 </button>
               </div>
@@ -156,12 +156,27 @@
      
       <div class="information">
         <div class="infor-price">
-          <h3>{{companionPost.estimatedCost | strCurrency}} VNĐ</h3>
+          <ng-container *ngIf="companionPost.estimatedCost ; else hasPrice">
+          <h3>{{companionPost.estimatedCost | strCurrency}} VNĐ</h3>            
+          </ng-container>
+          <ng-template #hasPrice>
+            <h3>Miễn Phí</h3>
+          </ng-template>
+          
         </div>
         <div class="join-request">
-          <button (click)='sendRequest()' mat-flat-button color="{{statustRequest.type === 'waiting' ? 'warn' : 'primary'}}">
-              {{statustRequest.text}}
-          </button>
+          <ng-container *ngIf="statustRequest.type === 'joined'; else handelRequest">
+              <button  mat-flat-button color="primary">
+                {{statustRequest.text}}
+              </button>
+          </ng-container>
+          <ng-template #handelRequest>
+              <button (click)='sendRequest()' mat-flat-button color="{{statustRequest.type === 'waiting' ? 'warn' : 'primary'}}">
+                  {{statustRequest.text}}
+              </button>
+          </ng-template>
+          
+          
         </div>
         <div class="infor-item d-flex flex-row">
           <div>

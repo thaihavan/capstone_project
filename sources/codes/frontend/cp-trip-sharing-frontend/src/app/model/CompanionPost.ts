@@ -8,6 +8,7 @@ export class CompanionPost {
         this.scheduleItems = [];
         this.destinations = [];
     }
+    id: string;
     postId: string;
     from: Date;
     to: Date;

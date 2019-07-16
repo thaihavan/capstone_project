@@ -31,7 +31,7 @@
         <div class="form-group title-input">
             <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Nhập tiêu đề bài viết</mat-label>
-                <input [(ngModel)]="title" class="example-right-align" matInput type="number"
+                <input [(ngModel)]="title" class="example-right-align" matInput type="text"
                     placeholder="Nhập tiêu đề bài viết">
             </mat-form-field>
         </div>
@@ -103,7 +103,7 @@
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Số tiền dự tính</mat-label>
                         <input [ngModel]="estAdultAmount | currency:'VND':true" formControlName='estAdultAmount'
-                        (ngModelChange)="estAdultAmount=currencyInputChanged($event)" class="example-right-align" matInput type="text"
+                         class="example-right-align" matInput type="text"
                             placeholder=" Số tiền dự tính cho nguời lớn">
                         <button mat-icon-button matSuffix>
                             <mat-icon>attach_money</mat-icon>
@@ -214,7 +214,7 @@
             </div>
         </div>
         <div class="row btnCreate">
-            <button mat-raised-button color="primary" (click)="createGroupChat()">Tạo bài viết</button>
+            <button mat-raised-button color="primary" (click)="createPost()">Tạo bài viết</button>
         </div>
         <div class="clear"></div>
     </div>

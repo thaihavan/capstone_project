@@ -42,6 +42,7 @@ import { AdminModule } from './admin/admin.module';
 import { FormAddTopicsComponent } from './admin/pages/interested-topic-admins/form-add-topics/form-add-topics.component';
 import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
 import { SearchResultPageComponent } from './pages/search-result-page/search-result-page.component';
+// tslint:disable-next-line:max-line-length
 import { SearchResultContainerComponent } from './pages/search-result-page/components/search-result-container/search-result-container.component';
 import { ReportPopupComponent } from './shared/components/report-popup/report-popup.component';
 

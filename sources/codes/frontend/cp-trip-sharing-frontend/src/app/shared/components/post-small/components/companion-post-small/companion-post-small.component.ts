@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CompanionPost } from 'src/app/model/CompanionPost';
-
 @Component({
   selector: 'app-companion-post-small',
   templateUrl: './companion-post-small.component.html',
@@ -10,7 +9,7 @@ export class CompanionPostSmallComponent implements OnInit {
 
   @Input() companionPost: CompanionPost;
   constructor() { }
-
+  coverImage = '../../../../../../assets/coverimg.jpg';
   ngOnInit() {
   }
 

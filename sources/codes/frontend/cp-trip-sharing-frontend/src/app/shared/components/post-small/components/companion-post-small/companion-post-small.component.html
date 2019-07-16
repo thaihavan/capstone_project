@@ -1,11 +1,11 @@
 <div class="companion-post-small">
-  <div *ngIf="companionPost.post.coverImage" class="card-image">
+  <div class="card-image">
     <div class="image-mask"></div>
-    <img mat-card-image src="{{companionPost.post.coverImage}}" alt="">
+    <img mat-card-image src="{{companionPost.post.coverImage ? companionPost.post.coverImage : coverImage}}" alt="">
 
     <div class="companion-post-extra-info">
       <span class="days-info">{{getDays()}} Ngày</span><br/>
-      <span class="cost-info">{{companionPost.estimatedCost | currency}} VND</span>
+      <span class="cost-info">{{companionPost.estimatedCost | strCurrency}} VND</span>
     </div>
 
     <div class="like-comment-info">

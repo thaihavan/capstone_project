@@ -15,6 +15,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CompanionPostRequest } from 'src/app/model/CompanionPostRequest';
 import { ChatUser } from 'src/app/model/ChatUser';
 import { ChatService } from 'src/app/core/services/chat-service/chat.service';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-detail-companion-post-page',
@@ -73,7 +74,8 @@ export class DetailCompanionPostPageComponent implements OnInit {
     public dialog: MatDialog,
     private titleService: Title,
     private snackBar: MatSnackBar,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private alertify: AlertifyService
   ) {}
   ngOnInit() {
     this.comments = [];
@@ -139,11 +141,7 @@ export class DetailCompanionPostPageComponent implements OnInit {
         if (this.isAuthorPost) {
           this.getAllRequests();
         }
-        if (this.companionPost.requested) {
-          this.statustRequest.IsWaiting();
-        } else {
-          this.geGroupChatMembers();
-        }
+        this.geGroupChatMembers();
       }
     );
   }
@@ -165,6 +163,9 @@ export class DetailCompanionPostPageComponent implements OnInit {
         } else {
           this.statustRequest.IsRequestJoin();
         }
+        if (this.companionPost.requested) {
+          this.statustRequest.IsWaiting();
+        }
       }
     );
   }
@@ -172,7 +173,7 @@ export class DetailCompanionPostPageComponent implements OnInit {
   // form author access a request join to group
   // tslint:disable-next-line:variable-name
   accessRequestJoin(user_id, index) {
-    this.deleteRequest(index);
+    this.deleteRequest(index, true);
     const user = {conversationId: this.companionPost.conversationId,
                       userId: user_id};
     this.chatService.addUser(user).subscribe(
@@ -181,9 +182,10 @@ export class DetailCompanionPostPageComponent implements OnInit {
       },
       (err) => {
         console.log('add user to group chat error ', err.message);
+        this.alertify.error('Thêm thành viên lỗi');
       },
       () => {
-        alert('user added');
+        this.alertify.success('Đã thêm mới một thành viên');
       }
     );
   }
@@ -204,14 +206,16 @@ export class DetailCompanionPostPageComponent implements OnInit {
   }
 
   // for author delete request soecify member
-  deleteRequest(index) {
+  deleteRequest(index, join) {
     this.postService.deleteRequest(this.userListRequests[index]).subscribe(
       res => {},
       err => {
         alert(err.message);
       },
       () => {
-        this.snackBar.open('Xoá yêu cầu thành công!');
+        if (!join) {
+          this.alertify.warning('Đã xoá yêu cầu');
+        }
         this.userListRequests.splice(index, 1);
       }
     );
@@ -234,16 +238,11 @@ export class DetailCompanionPostPageComponent implements OnInit {
           },
           err => {
             console.log('request error ', err.message);
+            this.alertify.error('Gửi yêu cầu lỗi!');
           },
           () => {
             this.statustRequest.IsWaiting();
-            this.snackBar.open(
-              'Gửi yêu cầu thành công, xin vui lòng đợi chấp nhận!',
-              'ok',
-              {
-                duration: 5000
-              }
-            );
+            this.alertify.success('Gửi yêu câu thành công!');
           }
         );
     } else {
@@ -251,8 +250,11 @@ export class DetailCompanionPostPageComponent implements OnInit {
         res => {},
         err => {
           console.log('cancle request error ', err.message);
+          this.alertify.error('Huỷ yêu cầu lỗi!');
         },
-        () => {}
+        () => {
+          this.alertify.success('Huỷ yêu cầu thành công!');
+        }
       );
       this.statustRequest.IsRequestJoin();
     }

@@ -220,11 +220,10 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
   }
 
   // create finding companions post
-  createPost(conversatioId) {
+  createPost() {
     let isRequire: boolean;
     let message: string;
     this.companionPost = new CompanionPost();
-    this.companionPost.conversationId = conversatioId;
     this.companionPost.from = this.fromDate;
     this.companionPost.to = this.toDate;
     this.companionPost.expiredDate = this.estimatedDate;
@@ -258,21 +257,7 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
       );
     }
   }
-  createGroupChat() {
-    const user = JSON.parse(localStorage.getItem('User'));
-    this.chatService.createGroupChat(user.id).subscribe(
-      result => {
-        // tslint:disable-next-line:no-debugger
-        debugger;
-        this.createPost(result.id);
-      },
-      err => {
-        console.log('create group chat error!', err.message);
-      },
-      () => {
-      }
-    );
-  }
+
   // on submit form
   onSubmit() {}
 
