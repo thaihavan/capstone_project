@@ -63,7 +63,7 @@ export class PersonalPageComponent implements OnInit {
     this.usergetLocalStorage = JSON.parse(localStorage.getItem('User'));
     if (this.userId != null) {
       this.getInforUser(this.userId);
-    } else {
+    } else if (this.usergetLocalStorage != null) {
       this.userId = this.usergetLocalStorage.id;
       this.getInforUser(this.userId);
     }

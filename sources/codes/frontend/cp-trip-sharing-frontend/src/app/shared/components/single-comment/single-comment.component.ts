@@ -20,7 +20,6 @@ export class SingleCommentComponent implements OnInit {
   @Input() comment: Comment;
   @Input() post: any;
   user: any;
-  userId: string;
   editComments = true;
   commentContent = '';
   liked = false;
@@ -33,7 +32,6 @@ export class SingleCommentComponent implements OnInit {
   constructor(private postService: PostService, private notifyService: NotifyService, private dialog: MatDialog) {
     this.like = new Like();
     this.user = JSON.parse(localStorage.getItem('User'));
-    this.userId = this.user.id;
   }
 
   showRepComment() {

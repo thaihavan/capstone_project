@@ -23,7 +23,7 @@
       </div>
       <a href="#"><span class="personal-name">{{user.userName}}</span></a>
       <div class="opacity"></div>
-      <div [hidden]="userId == usergetLocalStorage.id" class="follow-message-infor">
+      <div [hidden]="usergetLocalStorage == null || userId == usergetLocalStorage.id" class="follow-message-infor">
         <button class="btn-follow" mat-button (click)="followPerson(userId)">
           <mat-icon>rss_feed</mat-icon>
           <span *ngIf="follow == false">Theo dõi</span>
@@ -53,8 +53,8 @@
     <div [class.fix-menu]="isFixMenuBar" class="row menu-nav">
       <div class="col-3 align-self-center menu-sub-avatar">
       <div [class.fix-sub-avatar]="isFixMenuBar" class="sub-avatar">
-          <img src="{{user.Avatar ? user.Avatar : avatar }}" alt="">
-          <span>{{user.UserName}}</span>
+          <img src="{{user.avatar ? user.avatar : avatar }}" alt="">
+          <span>{{user.userName}}</span>
       </div>
       </div>
       <div>
@@ -140,7 +140,7 @@
                 <span><b>{{user.followingCount}}</b> đang theo dõi</span>
               </a>
             </div>
-            <div *ngIf="userId == usergetLocalStorage.id" class="card-person-infor">
+            <div *ngIf="usergetLocalStorage == null || userId == usergetLocalStorage.id" class="card-person-infor">
               <a class="mat-button">
                 <i class="fa fa-envelope"></i>
                 <span (click)="callUpdateProfile()">Chỉnh sửa trang cá nhân</span>
