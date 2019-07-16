@@ -97,6 +97,18 @@ export class FindingCompanionService {
     return this.http.post<any>(this.baseUrl + '/post/join', companionPostRequest, httpOption );
   }
 
+  // member cancle a request has been sent
+  cancleRequest(reqId): Observable<any> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      }),
+      body: {requestId: reqId}
+    };
+    return this.http.delete(this.baseUrl + '/post/request/cancle', httpOption);
+  }
+
   addComment(comment: Comment): Observable<any> {
     const httpOptionAuth = {
       headers: new HttpHeaders({

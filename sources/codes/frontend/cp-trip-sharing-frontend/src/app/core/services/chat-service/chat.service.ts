@@ -6,6 +6,7 @@ import { HostGlobal } from '../../global-variables';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { ChatUser } from 'src/app/model/ChatUser';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,9 @@ export class ChatService {
   initChatConnection() {
     // Init connection
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(
-        HostGlobal.HOST_CHAT_SERVICE + '/chat?userId=' + this.user.id,
-        {
-          accessTokenFactory: () => localStorage.getItem('Token')
-        }
-      )
+      .withUrl(HostGlobal.HOST_CHAT_SERVICE + '/chat?userId=' + this.user.id, {
+        accessTokenFactory: () => localStorage.getItem('Token')
+      })
       .build();
 
     this.hubConnection
@@ -36,27 +34,38 @@ export class ChatService {
       .then(() => {
         console.log('Connection started!');
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }
 
   getAllConversations(userId: string): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(this.baseUrl + '/conversations?userId=' + userId);
+    return this.http.get<Conversation[]>(
+      this.baseUrl + '/conversations?userId=' + userId
+    );
   }
 
   getAllMessages(conversationId: string): Observable<ChatMessage[]> {
-    return this.http.get<ChatMessage[]>(this.baseUrl + '/messages?conversationId=' + conversationId);
+    return this.http.get<ChatMessage[]>(
+      this.baseUrl + '/messages?conversationId=' + conversationId
+    );
   }
 
-  sendMessage(receiverId: string, message: ChatMessage): Observable<ChatMessage> {
+  sendMessage(
+    receiverId: string,
+    message: ChatMessage
+  ): Observable<ChatMessage> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post<ChatMessage>(this.baseUrl + '/message?receiverId=' + receiverId, message, httpOption);
+    return this.http.post<ChatMessage>(
+      this.baseUrl + '/message?receiverId=' + receiverId,
+      message,
+      httpOption
+    );
   }
 
   seen(conversationId: string): Observable<boolean> {
@@ -66,6 +75,53 @@ export class ChatService {
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post<boolean>(this.baseUrl + '/seen?conversationId=' + conversationId, null, httpOption);
+    return this.http.post<boolean>(
+      this.baseUrl + '/seen?conversationId=' + conversationId,
+      null,
+      httpOption
+    );
+  }
+
+  // get all members
+  getMembers(conversationId): Observable<ChatUser[]> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.get<ChatUser[]>(this.baseUrl + '/members?conversationId=' + conversationId, httpOption);
+  }
+
+  // add an user to group chat
+  addUser(user): Observable<any> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    // tslint:disable-next-line:max-line-length
+    return this.http.post<any>(this.baseUrl + '/add-user?conversationId=' + user.conversationId + '&userId=' + user.userId, user, httpOption);
+  }
+
+  // create group chat
+  createGroupChat(userId): Observable<any> {
+    // tslint:disable-next-line:prefer-const
+    let conversation = {
+      GroupAdmin: userId,
+      Receivers: [userId],
+      Type: 'group',
+      SeenIds: [userId],
+      name: '',
+      date: new Date()
+    };
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.post(this.baseUrl + '/create-group-chat' , conversation, httpOption);
   }
 }

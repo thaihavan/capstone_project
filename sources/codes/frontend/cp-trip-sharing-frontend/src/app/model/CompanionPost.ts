@@ -11,7 +11,7 @@ export class CompanionPost {
     postId: string;
     from: Date;
     to: Date;
-    coversationId: string;
+    conversationId: string;
     estimatedCost: number;
     estimatedCostItems: string[];
     maxMembers: number;
@@ -20,4 +20,5 @@ export class CompanionPost {
     scheduleItems: Schedule[];
     destinations: ArticleDestinationItem[];
     post: Post;
+    requested: boolean;
 }
