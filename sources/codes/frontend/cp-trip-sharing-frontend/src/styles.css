@@ -13,4 +13,6 @@ button:focus {
   .bg-white {
     background-color: #ffff;
   }
-  
+  .alertify-notifier {
+    color: white !important;
+}
