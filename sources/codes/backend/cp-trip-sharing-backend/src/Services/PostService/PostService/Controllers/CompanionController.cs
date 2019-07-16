@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 using PostService.Models;
 using PostService.Services.Interfaces;
 
@@ -28,23 +33,49 @@ namespace PostService.Controllers
 
         [Authorize(Roles ="member")]
         [HttpPost("post/create")]
-        public IActionResult Create([FromBody]CompanionPost param )
+        public async Task<IActionResult> CreateAsync([FromBody]CompanionPost param )
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = identity.FindFirst("user_id").Value;
 
-            //generate new postid and new conversationid 
-            var postId = ObjectId.GenerateNewId().ToString();
-            var conversationId = ObjectId.GenerateNewId().ToString();
+            var token = Request.Headers["Authorization"].ToString();
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    httpClient.BaseAddress = new Uri("https://localhost:44360/");
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Split(' ')[1]);
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var conversation = new
+                    {
+                        name = param.Post.Title
+                    };
+                    var convJson = JsonConvert.SerializeObject(conversation);
+                    var response = await httpClient.PostAsync(
+                        "api/chatservice/chat/create-group-chat", 
+                        new StringContent(convJson, UnicodeEncoding.UTF8, "application/json")
+                        );
+                    var conversationId = await response.Content.ReadAsStringAsync();
+                    conversationId = conversationId.Replace("\"", "");
 
-            param.Post.AuthorId = userId;
-            param.Post.Id = postId;
-            param.PostId = postId;
-            param.ConversationId = conversationId;
+                    //generate new postid and new conversationid 
+                    var postId = ObjectId.GenerateNewId().ToString();
 
-            _postService.Add(param.Post);
-            var result = _companionPostService.Add(param);
-            return Ok(result);
+                    param.Post.AuthorId = userId;
+                    param.Post.Id = postId;
+                    param.PostId = postId;
+                    param.Post.PubDate = DateTime.Now;
+                    param.ConversationId = conversationId;
+
+                    _postService.Add(param.Post);
+                    var result = _companionPostService.Add(param);
+                    return Ok(result);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest();
+                }
+            }
         }
 
         [Authorize(Roles = "member")]
@@ -82,8 +113,6 @@ namespace PostService.Controllers
         [HttpPost("post/all")]
         public IActionResult GetAllCompanionPost([FromBody]PostFilter filter,[FromQuery]int page)
         {
-            var identity = User.Identity as ClaimsIdentity;
-            var userId = User.Identity.IsAuthenticated ? identity.FindFirst("user_id").Value : null;
             var result = _companionPostService.GetAll(filter, page);
             return Ok(result);
         }
@@ -161,7 +190,7 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("post/all")]
+        [HttpPost("post/user")]
         public IActionResult GetAllCompanionPostByUser([FromBody]PostFilter filter, [FromQuery]string userId, [FromQuery]int page)
         {
             return Ok(_companionPostService.GetAllCompanionPostByUser(userId, filter, page));

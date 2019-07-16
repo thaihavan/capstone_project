@@ -143,9 +143,9 @@
               </div>
               <div class="align-self-center btn-request-control">
                 <button color="primary"  matTooltip="Chấp nhận" mat-icon-button>
-                  <mat-icon class="item-delete">done</mat-icon>
+                  <mat-icon class="item-delete" (click)="accessRequestJoin(item.userId,i)">done</mat-icon>
                 </button>
-                <button color="warn" (click)="deleteRequest(i)" matTooltip="Xoá bỏ" mat-icon-button>
+                <button color="warn" (click)="deleteRequest(i,false)" matTooltip="Xoá bỏ" mat-icon-button>
                   <mat-icon class="item-delete">clear</mat-icon>
                 </button>
               </div>
@@ -156,12 +156,27 @@
      
       <div class="information">
         <div class="infor-price">
-          <h3>{{companionPost.estimatedCost | currency}} VNĐ</h3>
+          <ng-container *ngIf="companionPost.estimatedCost ; else hasPrice">
+          <h3>{{companionPost.estimatedCost | strCurrency}} VNĐ</h3>            
+          </ng-container>
+          <ng-template #hasPrice>
+            <h3>Miễn Phí</h3>
+          </ng-template>
+          
         </div>
         <div class="join-request">
-          <button (click)='sendRequest()' mat-flat-button color="{{statustRequest.type === 'waiting' ? 'warn' : 'primary'}}">
-              {{statustRequest.text}}
-          </button>
+          <ng-container *ngIf="statustRequest.type === 'joined'; else handelRequest">
+              <button  mat-flat-button color="primary">
+                {{statustRequest.text}}
+              </button>
+          </ng-container>
+          <ng-template #handelRequest>
+              <button (click)='sendRequest()' mat-flat-button color="{{statustRequest.type === 'waiting' ? 'warn' : 'primary'}}">
+                  {{statustRequest.text}}
+              </button>
+          </ng-template>
+          
+          
         </div>
         <div class="infor-item d-flex flex-row">
           <div>
@@ -202,40 +217,12 @@
       </div>
       <div class="information">
         <div class="num-member">
-          <span class="num-member-text">10</span> đã tham gia
+          <span class="num-member-text">{{userListGroup.length}}</span> đã tham gia
         </div>
         <div class="d-flex flex-wrap">
-          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
+          <a *ngFor="let item of userListGroup" class="member-avatar" aria-haspopup="true" mat-icon-button>
             <span class="mat-button-wrapper">
-              <img alt="user" class="imgavatar" src="{{avatar}}">
-            </span>
-            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
-            <div class="mat-button-focus-overlay"></div>
-          </a>
-          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
-            <span class="mat-button-wrapper">
-              <img alt="user" class="imgavatar" src="{{avatar}}">
-            </span>
-            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
-            <div class="mat-button-focus-overlay"></div>
-          </a>
-          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
-            <span class="mat-button-wrapper">
-              <img alt="user" class="imgavatar" src="{{avatar}}">
-            </span>
-            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
-            <div class="mat-button-focus-overlay"></div>
-          </a>
-          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
-            <span class="mat-button-wrapper">
-              <img alt="user" class="imgavatar" src="{{avatar}}">
-            </span>
-            <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
-            <div class="mat-button-focus-overlay"></div>
-          </a>
-          <a class="member-avatar" aria-haspopup="true" mat-icon-button>
-            <span class="mat-button-wrapper">
-              <img alt="user" class="imgavatar" src="{{avatar}}">
+              <img matTooltip="{{item.displayName}}" alt="user" class="imgavatar" src="{{item.profileImage}}">
             </span>
             <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
             <div class="mat-button-focus-overlay"></div>

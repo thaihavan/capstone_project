@@ -51,9 +51,9 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'search', component: SearchResultPageComponent,
+        path: 'search/:searchType', component: SearchResultPageComponent,
         children: [
-          { path: '', redirectTo: 'moi-nguoi', pathMatch: 'full' },
+          { path: '', redirectTo: 'bai-viet', pathMatch: 'full' },
           { path: ':tab', component: SearchResultContainerComponent},
           { path: ':tab/:search', component: SearchResultContainerComponent}
         ]
@@ -69,8 +69,8 @@ const routes: Routes = [
       { path: 'bai-viet/:articleId', component: DetailpostPageComponent },
       { path: 'khoi-tao', component: InitialUserInformationPageComponent },
       { path: 'tin-nhan', component: ChatPageComponent },
-      { path: 'tao-bai-tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
-      { path: 'bai-viet-tim-ban-dong-hanh/:companionId', component: DetailCompanionPostPageComponent}
+      { path: 'tao-bai-viet/tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
+      { path: 'tim-ban-dong-hanh/:companionId', component: DetailCompanionPostPageComponent}
     ]
   },
 ];

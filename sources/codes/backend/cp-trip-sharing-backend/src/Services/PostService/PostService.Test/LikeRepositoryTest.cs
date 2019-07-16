@@ -30,26 +30,26 @@ namespace PostService.Test
             _likeRepository = new LikeRepository(Options.Create(_settings));
         }
 
-        [TestCase]
-        public void TestAddLike()
-        {
-            Like like = new Like()
-            {
-                ObjectId = "5d027ea59b358d247cd21a55",
-                ObjectType = "comment",
-                UserId = "5d04cc646c9cec228cf9bb09",
-                Date = DateTime.Now
-            };
-            Like testLike = _likeRepository.Add(like);
-            Assert.AreEqual(testLike, like);
-        }
+        //[TestCase]
+        //public void TestAddLike()
+        //{
+        //    Like like = new Like()
+        //    {
+        //        ObjectId = "5d027ea59b358d247cd21a55",
+        //        ObjectType = "comment",
+        //        UserId = "5d04cc646c9cec228cf9bb09",
+        //        Date = DateTime.Now
+        //    };
+        //    Like testLike = _likeRepository.Add(like);
+        //    Assert.AreEqual(testLike, like);
+        //}
 
-        [TestCase]
-        public void TestDelete()
-        {
-            string postId = "5d027ea59b358d247cd21a55";
-            bool like = _likeRepository.Delete(postId);
-            Assert.AreEqual(true, like);
-        }
+        //[TestCase]
+        //public void TestDelete()
+        //{
+        //    string postId = "5d027ea59b358d247cd21a55";
+        //    bool like = _likeRepository.Delete(postId);
+        //    Assert.AreEqual(true, like);
+        //}
     }
 }

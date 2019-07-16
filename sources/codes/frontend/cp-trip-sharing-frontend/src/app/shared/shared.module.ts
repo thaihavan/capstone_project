@@ -46,10 +46,10 @@ import { ArticleSmallComponent } from './components/post-small/components/articl
 import { VirtualTripSmallComponent } from './components/post-small/components/virtual-trip-small/virtual-trip-small.component';
 import { CompanionPostSmallComponent } from './components/post-small/components/companion-post-small/companion-post-small.component';
 import { PostFilterComponent } from './components/post-filter/post-filter.component';
-import { CurrencyPipe } from './pipes/currency-pipe/currency.pipe';
 import { NotifyMessageTooltipComponent } from './components/notify-message-tooltip/notify-message-tooltip.component';
 import { ReportPopupComponent } from './components/report-popup/report-popup.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
+import { StrCurrencyPipe } from './pipes/currency-pipe/strCurrency.pipe';
 
 const Material = [
   MatButtonModule,
@@ -109,7 +109,7 @@ const Material = [
     VirtualTripSmallComponent,
     CompanionPostSmallComponent,
     PostFilterComponent,
-    CurrencyPipe,
+    StrCurrencyPipe,
     NotifyMessageTooltipComponent,
     ReportPopupComponent,
     UserItemComponent
@@ -154,7 +154,7 @@ const Material = [
     VirtualTripSmallComponent,
     CompanionPostSmallComponent,
     PostFilterComponent,
-    CurrencyPipe,
+    StrCurrencyPipe,
     NotifyMessageTooltipComponent,
     UserItemComponent
   ],

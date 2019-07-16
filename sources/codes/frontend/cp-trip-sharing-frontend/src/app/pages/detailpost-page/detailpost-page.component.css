@@ -30,13 +30,19 @@
   position: absolute;
 }
 
-.content-post-page{
+.content-post-page {
   width: 55% !important;
   height: auto;
   margin: 0 auto;
   margin-top: 5px;
   margin-bottom: 1em;
 }
+
+.content-post-page .ck-content {
+  font-size: 18px;
+  line-height: 2.0;
+}
+
 .opacity{
   width: 100%;
   height: 50%;

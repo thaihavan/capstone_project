@@ -29,6 +29,7 @@
     "@ckeditor/ckeditor5-build-decoupled-document": "^12.2.0",
     "@ckeditor/ckeditor5-image": "^13.1.0",
     "@types/googlemaps": "^3.36.3",
+    "alertifyjs": "^1.11.4",
     "angular-in-memory-web-api": "^0.8.0",
     "angularx-social-login": "^1.2.7",
     "bootstrap": "^4.3.1",

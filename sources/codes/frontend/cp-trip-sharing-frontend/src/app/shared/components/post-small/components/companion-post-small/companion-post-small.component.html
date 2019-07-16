@@ -1,3 +1,39 @@
-<p>
-  companion-post-small works!
-</p>
+<div class="companion-post-small">
+  <div class="card-image">
+    <div class="image-mask"></div>
+    <img mat-card-image src="{{companionPost.post.coverImage ? companionPost.post.coverImage : coverImage}}" alt="">
+
+    <div class="companion-post-extra-info">
+      <span class="days-info">{{getDays()}} Ngày</span><br/>
+      <span class="cost-info">{{companionPost.estimatedCost | strCurrency}} VND</span>
+    </div>
+
+    <div class="like-comment-info">
+      <span>
+        <mat-icon>favorite_border</mat-icon>{{companionPost.post.likeCount}}
+      </span>
+      &nbsp;&nbsp;
+      <span>
+        <mat-icon>chat_bubble_outline</mat-icon>{{companionPost.post.commentCount}}
+      </span>
+    </div>
+
+    <div class="location-container">
+      <div class="location" *ngFor="let location of companionPost.destinations">
+        <span><i class="fa fa-tag"></i> {{location.name}}</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="card-body">
+    <mat-card-title>
+      <a class="card-link" href="tim-ban-dong-hanh/{{companionPost.id}}">
+        <div class="card-title">{{companionPost.post.title}}</div>
+      </a>
+    </mat-card-title>
+
+    <mat-card-content class="companion-post-short-description">
+      <div>{{getShortDescription(companionPost.post.content)}}</div>
+    </mat-card-content>
+  </div>
+</div>

@@ -6,7 +6,7 @@
           <mat-icon>menu</mat-icon>
         </button>
         <span><img class="logo"
-            src="https://static.tacdn.com/img2/langs/vi/branding/rebrand/TA_logo_primary_v2.svg"></span>
+            src="../../../../assets/trip share logo-01.png"></span>
         <span class="menu-spacer"></span>
         <div fxShow="true" fxHide.lt-md class="nav-top d-flex flex-row align-items-center">
           <!-- The following menu items will be hidden on both SM and XS screen sizes -->
@@ -42,7 +42,7 @@
               </a>
             </button>
             <button mat-menu-item>
-              <a routerLink="/tao-bai-tim-ban-dong-hanh">
+              <a routerLink="/tao-bai-viet/tim-ban-dong-hanh">
                 <mat-icon color="accent">group</mat-icon>
                 Tìm bạn đồng hành
               </a>
@@ -76,15 +76,25 @@
             <img class="imgavatar" src="{{urlImgavatar}}" />
           </div> -->
           <mat-menu #menuProfile="matMenu">
-            <button class="options" (click)="gotoPersonalPage()" mat-menu-item>Trang cá nhân</button>
-            <button (click)="gotoBookmarkList()" mat-menu-item>Bài viết đã lưu</button>
-            <button (click)="gotoBlockedList()" mat-menu-item>Danh sách chặn</button>
-            <button routerLink="/doi-mat-khau" mat-menu-item>Đổi mật khẩu</button>
-            <button (click)="signOut()" mat-menu-item>Đăng xuất</button>
+            <button class="options" (click)="gotoPersonalPage()" mat-menu-item>
+              <mat-icon>perm_identity</mat-icon> Trang cá nhân
+            </button>
+            <button (click)="gotoBookmarkList()" mat-menu-item>
+              <mat-icon>bookmark</mat-icon>Bài viết đã lưu
+            </button>
+            <button (click)="gotoBlockedList()" mat-menu-item>
+              <mat-icon>block</mat-icon>Danh sách chặn
+            </button>
+            <button routerLink="/doi-mat-khau" mat-menu-item>
+              <mat-icon>swap_horiz</mat-icon> Đổi mật khẩu
+            </button>
+            <button (click)="signOut()" mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>Đăng xuất
+            </button>
           </mat-menu>
           <div class="inputsearch">
-            <input type="text" class="form-control" placeholder="Search"
-            [(ngModel)]="search" (keyup.enter)="onSearchBtnClick()">
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="search"
+              (keyup.enter)="onSearchBtnClick()">
             <mat-icon class="iconserach" (click)="onSearchBtnClick()">search</mat-icon>
             <!-- <i class="fa fa-search iconserach"></i> -->
           </div>

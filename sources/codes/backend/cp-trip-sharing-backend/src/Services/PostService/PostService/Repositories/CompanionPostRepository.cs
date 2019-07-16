@@ -185,27 +185,12 @@ namespace PostService.Repositories
                 post => post.Post.PubDate >= filterDate;
 
 
-            // Topic filter
-            Expression<Func<CompanionPost, bool>> topicFilter;
-            if (filter.Topics.Count > 0)
-            {
-                topicFilter = a => a.Topics.Any(x => filter.Topics.Any(y => x == y));
-            }
-            else
-            {
-                topicFilter = a => true;
-            }
-
-
             Func<CompanionPost, Post, CompanionPost> SelectCompanionPostWithPost =
                 ((companionPost, post) => { companionPost.Post = post; return companionPost; });
             Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
                 ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
-            Func<CompanionPost, IEnumerable<Like>, CompanionPost> UpdateLike =
-                ((CompanionPost, likes) => { CompanionPost.Post.liked = likes.Count() > 0 ? true : false; return CompanionPost; });
 
             IEnumerable<CompanionPost> result;
-
 
             result = _companionPosts.AsQueryable()
                 .Join(
@@ -219,7 +204,6 @@ namespace PostService.Repositories
                     author => author.Id,
                     SelectCompanionPostWithAuthor)
                 .Where(searchFilter.Compile())
-                .Where(topicFilter.Compile()) 
                 .Where(dateFilter.Compile())
                 .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate)
@@ -304,27 +288,12 @@ namespace PostService.Repositories
                 post => post.Post.PubDate >= filterDate;
 
 
-            // Topic filter
-            Expression<Func<CompanionPost, bool>> topicFilter;
-            if (filter.Topics.Count > 0)
-            {
-                topicFilter = a => a.Topics.Any(x => filter.Topics.Any(y => x == y));
-            }
-            else
-            {
-                topicFilter = a => true;
-            }
-
-
             Func<CompanionPost, Post, CompanionPost> SelectCompanionPostWithPost =
                 ((companionPost, post) => { companionPost.Post = post; return companionPost; });
             Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
                 ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
-            Func<CompanionPost, IEnumerable<Like>, CompanionPost> UpdateLike =
-                ((CompanionPost, likes) => { CompanionPost.Post.liked = likes.Count() > 0 ? true : false; return CompanionPost; });
-
+            
             IEnumerable<CompanionPost> result;
-
 
             result = _companionPosts.AsQueryable()
                 .Join(
@@ -338,7 +307,6 @@ namespace PostService.Repositories
                     author => author.Id,
                     SelectCompanionPostWithAuthor)
                 .Where(searchFilter.Compile())
-                .Where(topicFilter.Compile())
                 .Where(a=>a.Post.AuthorId.Equals(userId,StringComparison.Ordinal))  
                 .Where(dateFilter.Compile())
                 .Select(a => a)

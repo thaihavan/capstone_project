@@ -3,6 +3,9 @@
     <div>
       <img class="cover-image" src="{{coverImage}}">
     </div>
+    <div class="search-address">
+      <app-google-map-search height="50" (onSelect)="setAddress($event)"></app-google-map-search>
+    </div>
   </div>
 
   <div class="container">
@@ -49,9 +52,9 @@
           <div class="section-container-sub-title">Những chuyến đi độc đáo của mọi người</div>
           <div class="title-border-bottom"></div>
         </div>
-        <div class="section newest-section">
+        <div class="section">
           <div>
-            <!-- <h3 class="section-title">Mới nhất</h3> -->
+            <h3 class="section-title">&nbsp;</h3>
             <a href="trang-chu/chuyen-di" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
           </div>
           <app-list-post-horizontal [listType]="'virtual-trip'" [posts]="virtualTrips" [rowSize]="3">
@@ -59,6 +62,24 @@
           
         </div>
       </div>
+
+      <!-- Companion-posts -->
+    <div class="section-container">
+      <div>
+        <h2 class="section-container-title">Tìm bạn đồng hành</h2>
+        <div class="section-container-sub-title">Rủ rê đi du lịch cùng nhau</div>
+        <div class="title-border-bottom"></div>
+      </div>
+      <div class="section">
+        <div>
+          <h3 class="section-title">&nbsp;</h3>
+          <a href="trang-chu/tim-ban-dong-hanh" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
+        </div>
+        <app-list-post-horizontal [listType]="'companion-post'" [posts]="companionPosts" [rowSize]="3">
+        </app-list-post-horizontal>
+        
+      </div>
+    </div>
 
   </div>
 </div>

@@ -14,9 +14,22 @@ namespace PostService.Test
     class CommentRepositoryTest
     {
         CommentRepository _commentRepository = null;
+        Comment cmt;
+
         [SetUp]
         public void Config()
         {
+            cmt = new Comment()
+            {
+                Id = "5d027ea59b358d247cd219a0",
+                AuthorId = "5d027ea59b358d247cd219a1",
+                PostId = "5d027ea59b358d247cd219a2",
+                Content = "day la test commentservice",
+                Date = DateTime.Now,
+                Active = true,
+                Liked = false,
+                LikeCount = 0
+            };
             var _setting = new AppSettings()
             {
                 Secret = "VGhpcyBpcyB0aGUgc2VjcmV0IGtleQ==",
@@ -28,31 +41,17 @@ namespace PostService.Test
 
         [TestCase]
         public void TestAddTrue()
-        {
-            Comment cmt = new Comment()
-            {
-                PostId = "5d027ea59b358d247cd21a55",
-                Content = "jkdsfjsfdfdskjfdskjnfdsnkjfdsknj",
-                Date = DateTime.Parse("2019-04-05"),
-                Active = true
-            };
+        {            
             Comment testAddDb = _commentRepository.Add(cmt);
             Assert.AreEqual(testAddDb, cmt);
         }
 
-        [TestCase]
-        public void TestGetTrue()
-        {
-            Comment comment = _commentRepository.GetById("5d07084a1c9d4400006ef556");
-            Assert.IsNotNull(comment);
-        }
-
-        [TestCase]
-        public void TestGetFalse()
-        {
-            Comment comment = _commentRepository.GetById("5d027ea59b358d247cd21a54");
-            Assert.IsNull(comment);
-        }
+        //[TestCase]
+        //public void TestDelete()
+        //{
+        //    bool checkdeleted = _commentRepository.Delete("5d027ea59b358d247cd219a0");
+        //    Assert.IsTrue(checkdeleted);
+        //}
 
         [TestCase]
         public void TestGetAll()
@@ -62,18 +61,46 @@ namespace PostService.Test
         }
 
         [TestCase]
-        public void TestUpdate()
+        public void TestGetByIdTrue()
         {
-            Comment cmt = new Comment()
-            {
-                PostId = "5d027ea59b358d247cd21a55",
-                Content = "jkdsfjsfdfdskjffdsknj",
-                Date = DateTime.Parse("2019-04-05"),
-                Active = true
-            };
-            Assert.IsNotNull(_commentRepository.Update(cmt));
+            Comment comment = _commentRepository.GetById("5d027ea59b358d247cd219a0");
+            Assert.IsNotNull(comment);
         }
 
-        
+        [TestCase]
+        public void TestGetByIdFalse()
+        {
+            Comment comment = _commentRepository.GetById("5d027ea59b358d247cd219a1");
+            Assert.IsNull(comment);
+        }
+
+        [TestCase]
+        public void TestUpdate()
+        {
+            cmt.Content = "Content Edit";
+            Comment comment = _commentRepository.Update(cmt);
+            Assert.IsNotNull(comment);
+        }
+
+        [TestCase]
+        public void TestGetCommentByPost()
+        {
+            IEnumerable<Comment> comments = _commentRepository.GetCommentByPost("5d027ea59b358d247cd219a2");
+            Assert.IsNotNull(comments);
+        }
+
+        [TestCase]
+        public void TestIncreaseLikeCount()
+        {
+            bool checkIncreaseLikeCount = _commentRepository.IncreaseLikeCount("5d027ea59b358d247cd219a0");
+            Assert.IsTrue(checkIncreaseLikeCount);
+        }
+
+        [TestCase]
+        public void TestDecreaseLikeCount()
+        {
+            bool checkDecreaseLikeCount = _commentRepository.DecreaseLikeCount("5d027ea59b358d247cd219a0");
+            Assert.IsTrue(checkDecreaseLikeCount);
+        }
     }
 }

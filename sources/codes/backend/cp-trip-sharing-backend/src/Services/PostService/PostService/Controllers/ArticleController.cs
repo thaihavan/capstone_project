@@ -45,6 +45,22 @@ namespace PostService.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("recommend")]
+        public IActionResult GetRecommendArticles([FromBody]PostFilter postFilter, [FromQuery]int page)
+        {
+            IEnumerable<Article> articles = _articleService.GetRecommendArticles(postFilter, null, page);
+            return Ok(articles);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("popular")]
+        public IActionResult GetPopularArticles([FromBody]PostFilter postFilter, [FromQuery]int page)
+        {
+            IEnumerable<Article> articles = _articleService.GetPopularArticles(postFilter, page);
+            return Ok(articles);
+        }
+
+        [AllowAnonymous]
         [HttpGet("full")]
         public IActionResult GetArticleById([FromQuery] string id)
         {

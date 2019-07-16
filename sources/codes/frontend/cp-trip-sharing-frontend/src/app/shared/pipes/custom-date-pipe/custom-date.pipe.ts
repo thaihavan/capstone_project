@@ -15,7 +15,7 @@ export class CustomDatePipe implements PipeTransform {
     const hours = Math.floor(mins / 60);
     const days = Math.floor(hours / 24);
 
-    let result = `${date.getDate()}/${date.getMonth}/${date.getFullYear()}`;
+    let result = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 
     if (secs < 60) {
       result = `${secs} giây trước`;

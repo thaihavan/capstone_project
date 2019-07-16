@@ -9,6 +9,7 @@ import { Article } from 'src/app/model/Article';
 import { HttpErrorResponse } from '@angular/common/http';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { UserService } from 'src/app/core/services/user-service/user.service';
+import { CompanionPost } from 'src/app/model/CompanionPost';
 
 @Component({
   selector: 'app-search-result-container',
@@ -17,6 +18,7 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 })
 export class SearchResultContainerComponent implements OnInit {
 
+  searchType: string;
   search: string;
   tab: string;
   VALID_TABS = [
@@ -61,21 +63,36 @@ export class SearchResultContainerComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.searchType = this.getSearchTypeParam();
+
     this.route.params.forEach(param => {
       this.search = decodeURI(param.search ? param.search : '');
       this.tab = param.tab;
       if (this.VALID_TABS.indexOf(this.tab) === -1) {
-        this.tab = 'moi-nguoi';
+        this.tab = 'bai-viet';
       }
+
       this.getSearchResult(this.initPostFilter());
-      });
+
+    });
   }
 
   initPostFilter(): PostFilter {
     const postFilter = new PostFilter();
     postFilter.topics = [];
     postFilter.timePeriod = 'all_time';
-    postFilter.search = this.search;
+    postFilter.search = '';
+    postFilter.locationId = '';
+
+    switch (this.searchType) {
+      case 'text':
+        postFilter.search = this.search;
+        break;
+      case 'location':
+        postFilter.locationId = this.search;
+        break;
+    }
 
     return postFilter;
   }
@@ -135,7 +152,11 @@ export class SearchResultContainerComponent implements OnInit {
   }
 
   getCompanionPosts(postFilter: PostFilter) {
-
+    this.companionPostService.getCompanionPosts(postFilter).subscribe((res: CompanionPost[]) => {
+      this.posts = res;
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   submitFilter(postFilter: PostFilter) {
@@ -149,6 +170,16 @@ export class SearchResultContainerComponent implements OnInit {
       case 'tim-ban-dong-hanh':
         break;
     }
+  }
+
+  getSearchTypeParam() {
+    const urlSplit = window.location.href.split('/');
+
+    if (urlSplit.length < 5) {
+      return '';
+    }
+
+    return decodeURI(urlSplit[4]);
   }
 
   onScroll() {
