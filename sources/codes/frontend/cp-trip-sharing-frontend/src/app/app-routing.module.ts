@@ -51,9 +51,9 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'search', component: SearchResultPageComponent,
+        path: 'search/:searchType', component: SearchResultPageComponent,
         children: [
-          { path: '', redirectTo: 'moi-nguoi', pathMatch: 'full' },
+          { path: '', redirectTo: 'bai-viet', pathMatch: 'full' },
           { path: ':tab', component: SearchResultContainerComponent},
           { path: ':tab/:search', component: SearchResultContainerComponent}
         ]

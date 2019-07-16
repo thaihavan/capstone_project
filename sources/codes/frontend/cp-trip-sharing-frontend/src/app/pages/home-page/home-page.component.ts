@@ -96,5 +96,7 @@ export class HomePageComponent implements OnInit {
     const searchDestination = new  ArticleDestinationItem();
     searchDestination.id = addrObj.locationId;
     searchDestination.name = addrObj.name;
+
+    window.location.href = `/search/location/${addrObj.locationId}`;
   }
 }

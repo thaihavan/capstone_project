@@ -178,7 +178,7 @@ export class HeaderComponent implements OnInit {
 
   onSearchBtnClick() {
     if (this.search && this.search.trim() !== '') {
-      window.location.href = 'search/moi-nguoi/' + this.search;
+      window.location.href = 'search/text/bai-viet/' + this.search;
     }
   }
 }

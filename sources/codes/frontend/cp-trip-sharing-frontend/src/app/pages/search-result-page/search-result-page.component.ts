@@ -11,18 +11,30 @@ export class SearchResultPageComponent implements OnInit {
 
   search = '';
 
+  // 'text' or 'location'
+  searchType: string;
+
   navLinks: any;
   routerLinkActive: string;
 
   selectedPath: string;
 
   constructor(private route: ActivatedRoute) {
+    this.searchType = this.route.snapshot.paramMap.get('searchType');
     this.search = this.getSearchParam();
+
+    this.initNavLinks();
+
+    this.routerLinkActive = `bai-viet`;
+    this.selectedPath = this.getTabParam();
+    console.log(this.selectedPath);
+   }
+
+  ngOnInit() {
+  }
+
+  initNavLinks() {
     this.navLinks = [
-      {
-        path: `moi-nguoi`,
-        label: 'Mọi người'
-      },
       {
         path: `bai-viet`,
         label: 'Blogs'
@@ -36,14 +48,27 @@ export class SearchResultPageComponent implements OnInit {
         label: 'Tìm bạn đồng hành'
       }
     ];
-    this.routerLinkActive = `moi-nguoi`;
-    this.selectedPath = this.getTabParam();
-   }
 
-  ngOnInit() {
+    if (this.searchType === 'text') {
+      this.navLinks.push(
+        {
+          path: `moi-nguoi`,
+          label: 'Mọi người'
+        });
+    }
   }
 
   getSearchParam() {
+    const urlSplit = window.location.href.split('/');
+
+    if (urlSplit.length < 7) {
+      return '';
+    }
+
+    return decodeURI(urlSplit[6]);
+  }
+
+  getTabParam() {
     const urlSplit = window.location.href.split('/');
 
     if (urlSplit.length < 6) {
@@ -53,24 +78,18 @@ export class SearchResultPageComponent implements OnInit {
     return decodeURI(urlSplit[5]);
   }
 
-  getTabParam() {
-    const urlSplit = window.location.href.split('/');
-
-    if (urlSplit.length < 5) {
-      return '';
-    }
-
-    return decodeURI(urlSplit[4]);
-  }
-
   changeSelectedLink(link: any) {
     this.selectedPath = link.path;
   }
 
-  onSearchBtnClick() {
+  searchByText() {
     if (this.search && this.search.trim() !== '') {
-      window.location.href = '/search/' + this.selectedPath + '/' + this.search;
+      window.location.href = '/search/text/' + this.selectedPath + '/' + this.search;
     }
+  }
+
+  searchByLocation(addressObject: any) {
+    window.location.href = '/search/location/' + this.selectedPath + '/' + addressObject.locationId;
   }
 
 }
