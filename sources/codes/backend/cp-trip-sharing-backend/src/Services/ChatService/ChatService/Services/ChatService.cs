@@ -53,7 +53,7 @@ namespace ChatService.Services
             return _conversationRepository.AddToSeenIds(conversationId, userId);
         }
 
-        public bool AddUserToGroupChat(string conversationId, string userId)
+        public User AddUserToGroupChat(string conversationId, string userId)
         {
             return _conversationRepository.AddUserToGroupChat(conversationId, userId);
         }

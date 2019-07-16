@@ -95,13 +95,11 @@ namespace ChatService.Controllers
         public IActionResult AddUserToGroupChat([FromQuery] string conversationId, [FromQuery] string userId)
         {
             var result = _chatService.AddUserToGroupChat(conversationId, userId);
-
-            if(!result)
+            if (result == null)
             {
-                return BadRequest();
+                return BadRequest(new { Message = "User already in conversation" });
             }
-
-            return Ok();
+            return Ok(result);
         }
 
         [HttpPost("remove-user")]

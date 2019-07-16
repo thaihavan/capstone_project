@@ -16,7 +16,7 @@ namespace ChatService.Repositories.Interfaces
 
         Conversation FindPrivateConversationByReceiverId(string receiverId);
 
-        bool AddUserToGroupChat(string conversationId, string userId);
+        User AddUserToGroupChat(string conversationId, string userId);
 
         bool RemoveUserFromGroupChat(string conversationId, string userId);
 

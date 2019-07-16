@@ -120,20 +120,20 @@ namespace ChatService.Repositories
             return conversation;
         }
 
-        public bool AddUserToGroupChat(string conversationId, string userId)
+        public User AddUserToGroupChat(string conversationId, string userId)
         {
             var user = _conversations.Find(c => c.Id == conversationId && c.Receivers.Any(u => u == userId))
                 .FirstOrDefault();
 
             if (user != null)
             {
-                return false;
+                return null;
             }
 
             var result = _conversations.UpdateOne(
                 c => c.Id == conversationId,
                 Builders<Conversation>.Update.Push<string>(c => c.Receivers, userId));
-            return result.IsAcknowledged;
+            return _users.Find(x=>x.Id.Equals(userId)).FirstOrDefault();
         }
 
         public bool RemoveUserFromGroupChat(string conversationId, string userId)
