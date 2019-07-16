@@ -9,6 +9,7 @@ import { Article } from 'src/app/model/Article';
 import { HttpErrorResponse } from '@angular/common/http';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { UserService } from 'src/app/core/services/user-service/user.service';
+import { CompanionPost } from 'src/app/model/CompanionPost';
 
 @Component({
   selector: 'app-search-result-container',
@@ -135,7 +136,11 @@ export class SearchResultContainerComponent implements OnInit {
   }
 
   getCompanionPosts(postFilter: PostFilter) {
-
+    this.companionPostService.getCompanionPosts(postFilter).subscribe((res: CompanionPost[]) => {
+      this.posts = res;
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   submitFilter(postFilter: PostFilter) {

@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Comment } from 'src/app/model/Comment';
 import { Like } from 'src/app/model/Like';
 import { CompanionPostRequest } from 'src/app/model/CompanionPostRequest';
+import { PostFilter } from 'src/app/model/PostFilter';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,20 @@ import { CompanionPostRequest } from 'src/app/model/CompanionPostRequest';
 export class FindingCompanionService {
   user: any;
   baseUrl = HostGlobal.HOST_POST_SERVICE + '/api/postservice/companion';
+
   constructor(private http: HttpClient) {
     this.user = JSON.parse(localStorage.getItem('User'));
   }
+
+  getCompanionPosts(postFilter: PostFilter): Observable<CompanionPost[]> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post<CompanionPost[]>(this.baseUrl + '/post/all', postFilter, httpOption);
+  }
+
   createPost(companionPost: CompanionPost): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({

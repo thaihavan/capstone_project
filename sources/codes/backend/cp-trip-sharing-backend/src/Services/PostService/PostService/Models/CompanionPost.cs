@@ -50,10 +50,6 @@ namespace PostService.Models
         [BsonElement("destinations")]
         public List<ArticleDestinationItem> Destinations { get; set; }
 
-        [BsonElement("topics")]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public List<string> Topics { get; set; }
-
         [BsonIgnore]
         [BsonExtraElements]
         public Post Post { get; set; }

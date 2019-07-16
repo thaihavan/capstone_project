@@ -69,8 +69,8 @@ const routes: Routes = [
       { path: 'bai-viet/:articleId', component: DetailpostPageComponent },
       { path: 'khoi-tao', component: InitialUserInformationPageComponent },
       { path: 'tin-nhan', component: ChatPageComponent },
-      { path: 'tao-bai-tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
-      { path: 'bai-viet-tim-ban-dong-hanh/:companionId', component: DetailCompanionPostPageComponent}
+      { path: 'tao-bai-viet/tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
+      { path: 'tim-ban-dong-hanh/:companionId', component: DetailCompanionPostPageComponent}
     ]
   },
 ];

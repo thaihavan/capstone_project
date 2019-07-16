@@ -78,6 +78,7 @@ namespace ChatService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
+            conversation.Id = ObjectId.GenerateNewId().ToString();
             conversation.GroupAdmin = userId;
             conversation.Receivers = new List<string>() { userId };
             conversation.Type = "group";
@@ -86,7 +87,7 @@ namespace ChatService.Controllers
 
             var result = _chatService.CreateGroupChat(conversation);
 
-            return Ok(result);
+            return Ok(result.Id);
         }
 
         [HttpPost("add-user")]
@@ -136,7 +137,7 @@ namespace ChatService.Controllers
 
         [AllowAnonymous]
         [HttpGet("members")]
-        public IActionResult GetConversation([FromQuery] string conversationId)
+        public IActionResult GetMembers([FromQuery] string conversationId)
         {
             var result = _chatService.GetAllMember(conversationId);
 

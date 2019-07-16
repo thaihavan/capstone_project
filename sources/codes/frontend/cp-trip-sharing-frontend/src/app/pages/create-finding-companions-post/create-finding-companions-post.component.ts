@@ -209,7 +209,7 @@ export class CreateFindingCompanionsPostComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
-    instance.message.url = '/bai-viet-tim-ban-dong-hanh/' + data;
+    instance.message.url = '/tim-ban-dong-hanh/' + data;
   }
 }
 export class MyErrorStateMatcher implements ErrorStateMatcher {
