@@ -32,9 +32,17 @@ namespace IdentityProvider.Test
         [TestCase]
         public void TestAddTrue()
         {
-            Account acc = new Account() { Email = "phongtv@gmail.com", Password = "123456789" };
-            Account checkAddDB = _accountRepository.Add(acc);
-            Assert.IsNotNull(checkAddDB);
+            Account acc = new Account() {
+                Email = "phongtv@gmail.com",
+                Password = "123456789",
+                Id = "5d111299f3b75e0001f4ed73",
+                PasswordSalt = "passwordtest",
+                Role = "memeber",
+                UserId = "5d111299f3b75e0001f4ed74",
+                Token = "TokenTest" 
+            };
+            Account account = _accountRepository.Add(acc);
+            Assert.IsNotNull(account);
         }
 
         [TestCase]
@@ -47,7 +55,7 @@ namespace IdentityProvider.Test
         [TestCase]
         public void TestGetTrue()
         {
-            Account account = _accountRepository.Get("5d027f10de896f17a87b1045");
+            Account account = _accountRepository.Get("5d111299f3b75e0001f4ed73");
             Assert.IsNotNull(account);
         }
 
@@ -68,14 +76,24 @@ namespace IdentityProvider.Test
         [TestCase]
         public void TestUpdate()
         {
-            Assert.AreEqual(3, 3);
+            Account acc = new Account() {
+                Id = "5d111299f3b75e0001f4ed73",
+                Email = "phongtv@gmail.com",
+                Password = "12345678910",
+                PasswordSalt = "PasswordSaltTest",
+                Role = "member",
+                Token = "TokenTest",
+                UserId = "5d111299f3b75e0001f4ed74"
+            };
+           Account account = _accountRepository.Update(acc);
+            Assert.IsNotNull(account);
         }
 
 
         [TestCase]
         public void TestGetByEmailTrue()
         {
-            Account acc = _accountRepository.GetByEmail("linhlp3@fpt.edu.vn");
+            Account acc = _accountRepository.GetByEmail("phongtv@gmail.com");
             Assert.IsNotNull(acc);
         }
 
