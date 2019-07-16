@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Article } from 'src/app/model/Article';
@@ -9,6 +9,8 @@ import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { CompanionPost } from 'src/app/model/CompanionPost';
+import { LocationMarker } from 'src/app/model/LocationMarker';
+import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 
 @Component({
   selector: 'app-home-page',
@@ -28,7 +30,8 @@ export class HomePageComponent implements OnInit {
   constructor(private titleService: Title,
               private postService: PostService,
               private virtualTripService: VirtualTripService,
-              private companionPostService: FindingCompanionService) {
+              private companionPostService: FindingCompanionService,
+              private zone: NgZone) {
     this.titleService.setTitle('Trang chủ');
   }
 
@@ -88,4 +91,10 @@ export class HomePageComponent implements OnInit {
     });
   }
 
+   // on google-map-search submit add address location.
+   setAddress(addrObj) {
+    const searchDestination = new  ArticleDestinationItem();
+    searchDestination.id = addrObj.locationId;
+    searchDestination.name = addrObj.name;
+  }
 }

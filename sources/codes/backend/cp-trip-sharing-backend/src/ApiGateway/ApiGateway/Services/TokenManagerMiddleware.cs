@@ -22,10 +22,11 @@ namespace ApiGateway.Services
             if (await _tokenManager.IsCurrentActiveToken())
             {
                 await next(context);
-
-                return;
             }
-            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            else
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            }
         }
     }
 }

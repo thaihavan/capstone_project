@@ -29,10 +29,11 @@
         </div>
         <div class="clear"></div>
         <div class="form-group title-input">
-            <label for=""></label>
-            <input [(ngModel)]="title" type="text" class="form-control" name="" id="" aria-describedby="helpId"
-                placeholder="Nhập tiêu đề bài biết">
-            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nhập tiêu đề bài viết</mat-label>
+                <input [(ngModel)]="title" class="example-right-align" matInput type="number"
+                    placeholder="Nhập tiêu đề bài viết">
+            </mat-form-field>
         </div>
     </div>
     <div class="create-post-body">
@@ -41,12 +42,13 @@
         </div>
         <div class=row>
             <div class="pl-3 pr-3">
-                <app-google-map-search width="275" height="40" (onSelect)="addDestination($event)"></app-google-map-search>
+                <app-google-map-search width="100" height="40" matFill="true" (onSelect)="addDestination($event)">
+                </app-google-map-search>
             </div>
             <div class="content-center">
                 <mat-chip-list>
-                    <mat-chip selected color="primary" *ngFor="let location of destinations; let i=index" [removable]="true"
-                        (removed)="removeDestination(i)">
+                    <mat-chip selected color="primary" *ngFor="let location of destinations; let i=index"
+                        [removable]="true" (removed)="removeDestination(i)">
                         {{location.name}}
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
@@ -56,91 +58,94 @@
         <div>
             <h5 class="mb-4 mb-accent">2. Chọn ngày cho chuyến đi</h5>
         </div>
-        <div class="row">
-            <div class="start-date col-4">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Chọn ngày bắt đầu</mat-label>
-                    <input matInput [(ngModel)]="fromDate" (focus)="openStDateToggle()" [min]="minDate" [max]="maxDate"
-                        [matDatepicker]="startPicker" placeholder="Chọn ngày bắt đầu">
-                    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #startPicker></mat-datepicker>
-                </mat-form-field>
+        <form [formGroup]="companionForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="start-date col-4">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Chọn ngày bắt đầu</mat-label>
+                        <input matInput  [(ngModel)]="fromDate" formControlName='fromDate' (click)="startPicker.open()"
+                            [min]="minDate" [max]="maxDate" [matDatepicker]="startPicker"
+                            placeholder="Chọn ngày bắt đầu">
+                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startPicker></mat-datepicker>
+                        <mat-error *ngIf="hasError('fromDate','required')">
+                            Ngày bắt đầu<strong> bắt buộc</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="end-date col-4">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Chọn ngày kết thúc</mat-label>
+                        <input matInput [(ngModel)]="toDate" formControlName='toDate' [min]="minDate" [max]="maxDate"
+                            [matDatepicker]="endPicker" placeholder="Chọn ngày kết thúc">
+                        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endPicker></mat-datepicker>
+                        <mat-error *ngIf="hasError('toDate','required')">
+                            Ngày kết thúc<strong> bắt buộc</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="expried-date col-4">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Chọn ngày hết hạn đăng kí</mat-label>
+                        <input matInput [(ngModel)]="estimatedDate" formControlName='estimatedDate' [min]="minDate"
+                            [max]="maxDate" [matDatepicker]="expriedPicker" placeholder="Chọn ngày hết hạn đăng kí">
+                        <mat-datepicker-toggle matSuffix [for]="expriedPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #expriedPicker></mat-datepicker>
+                        <mat-error *ngIf="hasError('estimatedDate','required')">
+                            Ngày hết hạn đăng kí<strong> bắt buộc</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="end-date col-4">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Chọn ngày kết thúc</mat-label>
-                    <input matInput [(ngModel)]="toDate" [min]="minDate" [max]="maxDate" [matDatepicker]="endPicker"
-                        placeholder="Chọn ngày kết thúc">
-                    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #endPicker></mat-datepicker>
-                </mat-form-field>
+            <div class="row">
+                <div class="amount col-4">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Số tiền dự tính</mat-label>
+                        <input [ngModel]="estAdultAmount | currency:'VND':true" formControlName='estAdultAmount'
+                        (ngModelChange)="estAdultAmount=currencyInputChanged($event)" class="example-right-align" matInput type="text"
+                            placeholder=" Số tiền dự tính cho nguời lớn">
+                        <button mat-icon-button matSuffix>
+                            <mat-icon>attach_money</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Số lượng thành viên tối thiểu</mat-label>
+                        <input [(ngModel)]="minMembers" formControlName='minMembers' class="example-right-align"
+                            type="number" matInput placeholder="Số lượng thành viên tối thiểu">
+                        <button mat-icon-button matSuffix>
+                            <mat-icon>group</mat-icon>
+                        </button>
+                        <mat-error *ngIf="hasError('minMembers','required')">
+                            Số lương thành viên bắt buộc<strong> bắt buộc</strong>
+                        </mat-error>
+                        <mat-error
+                            *ngIf="hasError('minMembers','MaxGreaterMinMember') || hasError('maxMembers','MaxGreaterMinMember')">
+                            Số lương thành viên tối đa phải lớn hơn tối thiểu
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Số lượng thành viên tối đa</mat-label>
+                        <input [(ngModel)]="maxMembers" formControlName='maxMembers' class="example-right-align"
+                            type="number" matInput placeholder="Số lượng thành viên tối đa">
+                        <button mat-icon-button matSuffix>
+                            <mat-icon>group</mat-icon>
+                        </button>
+                        <mat-error *ngIf="hasError('maxMembers','required')">
+                            Số lương thành viên bắt buộc<strong> bắt buộc</strong>
+                        </mat-error>
+                        <mat-error *ngIf="hasError('maxMembers','MaxGreaterMinMember')">
+                            Số lương thành viên tối đa phải lớn hơn tối thiểu
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="expried-date col-4">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Chọn ngày hết hạn đăng kí</mat-label>
-                    <input matInput [(ngModel)]="estimatedDate" [min]="minDate" [max]="maxDate" [matDatepicker]="expriedPicker"
-                        placeholder="Chọn ngày hết hạn đăng kí">
-                    <mat-datepicker-toggle matSuffix [for]="expriedPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #expriedPicker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="amount col-4">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Số tiền dự tính cho nguời lớn</mat-label>
-                    <input [(ngModel)]="estAdultAmount" class="example-right-align" matInput type="number"
-                        placeholder=" Số tiền dự tính cho nguời lớn" [formControl]="adultAmountFormControl">
-                    <!-- <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                        Vui lòng nhập số tiền dự tính
-                    </mat-error> -->
-                    <mat-error *ngIf="adultAmountFormControl.hasError('required')">
-                        Số tiền dự tính cho nguời lớn <strong>bắt buộc</strong>
-                    </mat-error>
-                    <button mat-icon-button matSuffix>
-                        <mat-icon>attach_money</mat-icon>
-                    </button>
+        </form>
 
-                </mat-form-field>
-            </div>
-            <div class="amount col-4">
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Số tiền dự tính cho trẻ em</mat-label>
-                    <input [(ngModel)]="estChildAmount" class="example-right-align" matInput type="number" placeholder=" Số tiền dự tính cho  trẻ em"
-                        [formControl]="adultAmountFormControl">
-                    <!-- <mat-error *ngIf="adultAmountFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                        Vui lòng nhập số tiền dự tính
-                    </mat-error> -->
-                    <mat-error *ngIf="adultAmountFormControl.hasError('required')">
-                        Số tiền dự tính cho trẻ em <strong>bắt buộc</strong>
-                    </mat-error>
-                    <button mat-icon-button matSuffix>
-                        <mat-icon>attach_money</mat-icon>
-                    </button>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
-                <mat-form-field appearance="outline">
-                    <mat-label>Số lượng thành viên tối thiểu</mat-label>
-                    <input [(ngModel)]="minMembers" class="example-right-align" type="number" matInput
-                        placeholder="Số lượng thành viên tối thiểu">
-                    <button mat-icon-button matSuffix>
-                        <mat-icon>group</mat-icon>
-                    </button>
-                </mat-form-field>
-            </div>
-            <div class="col-4">
-                <mat-form-field appearance="outline">
-                    <mat-label>Số lượng thành viên tối đa</mat-label>
-                    <input [(ngModel)]="maxMembers" class="example-right-align" type="number" matInput placeholder="Số lượng thành viên tối đa">
-                    <button mat-icon-button matSuffix>
-                        <mat-icon>group</mat-icon>
-                    </button>
-                </mat-form-field>
-            </div>
-        </div>
         <h5 class="mb-4" color="accent">3. Viết bài cho chuyến đi</h5>
         <ckeditor #myEditor [editor]="Editor" [(ngModel)]="content" (ready)="onReady($event)">
         </ckeditor>
@@ -156,7 +161,7 @@
                     </ng-template>
                     <div class="date-time pl-2">
                         <mat-card-subtitle>
-                            {{item.day | date}}
+                            {{item.day | date: 'dd-MM-yyyy'}}
                         </mat-card-subtitle>
                     </div>
                     <div class="pl-2 pt-2">
@@ -209,7 +214,7 @@
             </div>
         </div>
         <div class="row btnCreate">
-            <button mat-raised-button color="primary" (click)="createPost()">Tạo bài viết</button>
+            <button mat-raised-button color="primary" (click)="createGroupChat()">Tạo bài viết</button>
         </div>
         <div class="clear"></div>
     </div>

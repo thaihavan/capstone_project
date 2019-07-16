@@ -96,7 +96,7 @@ namespace ApiGateway
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseMiddleware<TokenManagerMiddleware>();
+            app.UseMiddleware<TokenManagerMiddleware>().UseAuthentication();
             app.UseMvc();
             await app.UseOcelot();
         }

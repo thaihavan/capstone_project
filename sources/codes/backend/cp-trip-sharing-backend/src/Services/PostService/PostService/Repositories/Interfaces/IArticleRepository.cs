@@ -12,8 +12,10 @@ namespace PostService.Repositories.Interfaces
 
         Article GetArticleById(string id, string userId) ;
 
-        IEnumerable<Article> GetAllArticles(string userId, PostFilter postFilter);
-
         IEnumerable<Article> GetAllArticles(PostFilter postFilter, int page);
+
+        IEnumerable<Article> GetRecommendArticles(PostFilter postFilter, UserInfo userInfo, int page);
+
+        IEnumerable<Article> GetPopularArticles(PostFilter postFilter, int page);
     }
 }

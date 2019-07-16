@@ -115,7 +115,7 @@ namespace IdentityProvider.Controllers
             return Ok(user);
         }
 
-        [Authorize(Roles = "member,admin,unverified")]
+        [Authorize(Roles = "member, admin, unverified")]
         [HttpPost("logout")]
         public async Task<ActionResult> Logout()
         {

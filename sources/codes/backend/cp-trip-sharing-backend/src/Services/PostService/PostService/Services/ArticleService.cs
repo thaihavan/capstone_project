@@ -54,5 +54,17 @@ namespace PostService.Services
         {
             return _articleRepository.GetAllArticlesByUser(userId, postFilter, page);
         }
+
+        public IEnumerable<Article> GetRecommendArticles(PostFilter postFilter, UserInfo userInfo, int page)
+        {
+            // TODO: Get UserInfo
+            // TODO: Query Db
+            return _articleRepository.GetRecommendArticles(postFilter, userInfo, page);
+        }
+
+        public IEnumerable<Article> GetPopularArticles(PostFilter postFilter, int page)
+        {
+            return _articleRepository.GetPopularArticles(postFilter, page);
+        }
     }
 }
