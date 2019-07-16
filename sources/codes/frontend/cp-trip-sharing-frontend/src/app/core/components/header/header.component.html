@@ -76,15 +76,25 @@
             <img class="imgavatar" src="{{urlImgavatar}}" />
           </div> -->
           <mat-menu #menuProfile="matMenu">
-            <button class="options" (click)="gotoPersonalPage()" mat-menu-item>Trang cá nhân</button>
-            <button (click)="gotoBookmarkList()" mat-menu-item>Bài viết đã lưu</button>
-            <button (click)="gotoBlockedList()" mat-menu-item>Danh sách chặn</button>
-            <button routerLink="/doi-mat-khau" mat-menu-item>Đổi mật khẩu</button>
-            <button (click)="signOut()" mat-menu-item>Đăng xuất</button>
+            <button class="options" (click)="gotoPersonalPage()" mat-menu-item>
+              <mat-icon>perm_identity</mat-icon> Trang cá nhân
+            </button>
+            <button (click)="gotoBookmarkList()" mat-menu-item>
+              <mat-icon>bookmark</mat-icon>Bài viết đã lưu
+            </button>
+            <button (click)="gotoBlockedList()" mat-menu-item>
+              <mat-icon>block</mat-icon>Danh sách chặn
+            </button>
+            <button routerLink="/doi-mat-khau" mat-menu-item>
+              <mat-icon>swap_horiz</mat-icon> Đổi mật khẩu
+            </button>
+            <button (click)="signOut()" mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>Đăng xuất
+            </button>
           </mat-menu>
           <div class="inputsearch">
-            <input type="text" class="form-control" placeholder="Search"
-            [(ngModel)]="search" (keyup.enter)="onSearchBtnClick()">
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="search"
+              (keyup.enter)="onSearchBtnClick()">
             <mat-icon class="iconserach" (click)="onSearchBtnClick()">search</mat-icon>
             <!-- <i class="fa fa-search iconserach"></i> -->
           </div>
