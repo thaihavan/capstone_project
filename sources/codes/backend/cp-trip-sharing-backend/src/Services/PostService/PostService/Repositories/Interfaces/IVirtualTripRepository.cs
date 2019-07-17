@@ -10,10 +10,10 @@ namespace PostService.Repositories.Interfaces
     {
         VirtualTrip GetVirtualTrip(string id);
 
-        IEnumerable<VirtualTrip> GetAllVirtualTrips(string userId, PostFilter postFilter);
+        IEnumerable<VirtualTrip> GetAllVirtualTrips(string userId, PostFilter postFilter, int page);
 
-        IEnumerable<VirtualTrip> GetAllVirtualTrips(PostFilter postFilter);
+        IEnumerable<VirtualTrip> GetAllVirtualTrips(PostFilter postFilter, int page);
 
-        IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilter);
+        IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilter, int page);
     }
 }

@@ -18,8 +18,8 @@ namespace PostService.Services.Interfaces
 
         bool Delete(string id);
 
-        IEnumerable<VirtualTrip> GetAllVirtualTrips(PostFilter postFilter);
+        IEnumerable<VirtualTrip> GetAllVirtualTrips(PostFilter postFilter, int page);
 
-        IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilter);
+        IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilter, int page);
     }
 }

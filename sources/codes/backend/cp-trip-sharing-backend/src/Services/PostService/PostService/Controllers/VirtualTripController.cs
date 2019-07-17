@@ -28,18 +28,18 @@ namespace PostService.Controllers
 
         [AllowAnonymous]
         [HttpPost("all")]
-        public IActionResult GetAllVirtualTrips([FromBody] PostFilter postFilter,[FromQuery]int page)
+        public IActionResult GetAllVirtualTrips([FromBody] PostFilter postFilter, [FromQuery]int page)
         {
-            var virtualTrips = _virtualTripService.GetAllVirtualTrips(postFilter);
-            
+            var virtualTrips = _virtualTripService.GetAllVirtualTrips(postFilter, page);
+
             return Ok(virtualTrips);
         }
 
         [AllowAnonymous]
         [HttpPost("user")]
-        public IActionResult GetAllVirtualTrips([FromQuery] string userId, [FromBody] PostFilter postFilter,[FromQuery]int page)
+        public IActionResult GetAllVirtualTrips([FromQuery] string userId, [FromBody] PostFilter postFilter, [FromQuery]int page)
         {
-            var virtualTrips = _virtualTripService.GetAllVirtualTripsByUser(userId, postFilter);
+            var virtualTrips = _virtualTripService.GetAllVirtualTripsByUser(userId, postFilter, page);
 
             return Ok(virtualTrips);
         }

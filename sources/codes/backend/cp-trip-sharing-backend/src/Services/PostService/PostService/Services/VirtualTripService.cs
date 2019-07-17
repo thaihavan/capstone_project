@@ -50,14 +50,14 @@ namespace PostService.Services
             return _virtualTripRepository.Update(virtualTrip);
         }
 
-        public IEnumerable<VirtualTrip> GetAllVirtualTrips(PostFilter postFilte)
+        public IEnumerable<VirtualTrip> GetAllVirtualTrips(PostFilter postFilte, int page)
         {
-            return _virtualTripRepository.GetAllVirtualTrips(postFilte);
+            return _virtualTripRepository.GetAllVirtualTrips(postFilte, page);
         }
 
-        public IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilte)
+        public IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilte, int page)
         {
-            return _virtualTripRepository.GetAllVirtualTripsByUser(userId, postFilte);
+            return _virtualTripRepository.GetAllVirtualTripsByUser(userId, postFilte, page);
         }
     }
 }
