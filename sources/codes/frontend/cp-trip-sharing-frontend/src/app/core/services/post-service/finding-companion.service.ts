@@ -98,15 +98,14 @@ export class FindingCompanionService {
   }
 
   // member cancle a request has been sent
-  cancleRequest(reqId): Observable<any> {
+  cancleRequest(pId: string): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       }),
-      body: {requestId: reqId}
     };
-    return this.http.delete(this.baseUrl + '/post/request/cancle', httpOption);
+    return this.http.delete(this.baseUrl + '/post/request/cancel?postId=' + pId, httpOption);
   }
 
   addComment(comment: Comment): Observable<any> {

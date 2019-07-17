@@ -61,7 +61,7 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
   fromDate: Date;
   toDate: Date;
   estimatedDate: Date;
-  estAdultAmount: any;
+  estAdultAmount: number;
   estChildAmount: number;
   maxMembers: any;
   minMembers: any;
@@ -231,6 +231,7 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
     this.companionPost.maxMembers = this.maxMembers;
     this.companionPost.scheduleItems = this.listSchedules;
     this.companionPost.estimatedCostItems = this.estimatedCostItems;
+    this.companionPost.estimatedCost = this.estAdultAmount;
     this.companionPost.post.pubDate = new Date().toDateString();
     this.companionPost.post.title = this.title;
     this.companionPost.post.content = this.content;

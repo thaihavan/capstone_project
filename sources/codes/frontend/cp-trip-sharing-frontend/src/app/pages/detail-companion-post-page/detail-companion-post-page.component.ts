@@ -178,7 +178,7 @@ export class DetailCompanionPostPageComponent implements OnInit {
                       userId: user_id};
     this.chatService.addUser(user).subscribe(
       res => {
-
+        this.userListGroup.push(res);
       },
       (err) => {
         console.log('add user to group chat error ', err.message);
@@ -246,7 +246,7 @@ export class DetailCompanionPostPageComponent implements OnInit {
           }
         );
     } else {
-      this.postService.cancleRequest(this.companionPostRequest.id).subscribe(
+      this.postService.cancleRequest(this.companionPost.id).subscribe(
         res => {},
         err => {
           console.log('cancle request error ', err.message);
@@ -254,9 +254,9 @@ export class DetailCompanionPostPageComponent implements OnInit {
         },
         () => {
           this.alertify.success('Huỷ yêu cầu thành công!');
+          this.statustRequest.IsRequestJoin();
         }
       );
-      this.statustRequest.IsRequestJoin();
     }
   }
   // check bookmark list
