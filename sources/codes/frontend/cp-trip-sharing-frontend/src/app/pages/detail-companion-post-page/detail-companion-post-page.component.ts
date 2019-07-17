@@ -214,7 +214,7 @@ export class DetailCompanionPostPageComponent implements OnInit {
       },
       () => {
         if (!join) {
-          this.alertify.warning('Đã xoá yêu cầu');
+          this.alertify.success('Đã xoá yêu cầu');
         }
         this.userListRequests.splice(index, 1);
       }
