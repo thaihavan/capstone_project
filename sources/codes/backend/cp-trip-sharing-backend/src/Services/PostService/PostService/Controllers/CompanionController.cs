@@ -181,7 +181,7 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpDelete("post/request/cancel")]
-        public IActionResult CancelRequest([FromBody]string postId)
+        public IActionResult CancelRequest([FromQuery]string postId)
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = identity.FindFirst("user_id").Value;
