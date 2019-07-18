@@ -1,7 +1,5 @@
 ﻿using EmailService.Helpers;
 using EmailService.Models;
-using EmailService.Repositories;
-using EmailService.Repositories.Interfaces;
 using EmailService.Utils;
 using Google.Api;
 using Google.Cloud.PubSub.V1;
@@ -48,13 +46,14 @@ namespace EmailService.Services.Processes
                     // Handle received message. 
                     Email email = JsonConvert.DeserializeObject<Email>(json);
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     // Run async
                     // Write log
                     Console.Out.WriteLineAsync($"Message {message.MessageId}: {json}");
-
                     // Send mail
                     _emailService.SendEmailAsync(email);
-                    
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+
                     return acknowledge ? SubscriberClient.Reply.Ack : SubscriberClient.Reply.Nack;
                 });
 
