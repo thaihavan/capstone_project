@@ -47,8 +47,8 @@
       <mat-card-content class="chat-middle-box">
         <div class="row">
           <div class="col-lg-9">
-            <div #chatContainer [scrollTop]="chatContainer.scrollHeight" 
-            class="chat-content-container" [style.height.px]="chatContentHeight">
+            <div #chatContainer [scrollTop]="chatContainer.scrollHeight" class="chat-content-container"
+              [style.height.px]="chatContentHeight">
               <div *ngFor="let message of this.selectedConversation.messages">
                 <div *ngIf="user.id != message.fromUserId" class="chat-list odd">
                   <div class="chat-message">
@@ -56,8 +56,8 @@
                       <span>
                         <img class="img-circle" src="{{getProfileImage(message.fromUserId)}}">
                       </span>
-                      <span [ngClass]="{'text': true, 'text-message': true, 'no-padding': isImage(message.content)}" 
-                      [innerHtml]="message.content"></span>
+                      <span [ngClass]="{'text': true, 'text-message': true, 'no-padding': isImage(message.content)}"
+                        [innerHtml]="message.content"></span>
                     </div>
                     <span class="chat-date text-muted">{{message.time | customDate}}</span>
                   </div>
@@ -65,7 +65,7 @@
                 <div *ngIf="user.id == message.fromUserId" class="chat-list even">
                   <div class="chat-message">
                     <div class="chat-block">
-                        <span [ngClass]="{'text': true, 'text-message': true, 'no-padding': isImage(message.content)}" 
+                      <span [ngClass]="{'text': true, 'text-message': true, 'no-padding': isImage(message.content)}"
                         [innerHtml]="message.content"></span>
                     </div>
                     <span class="chat-date text-muted">{{message.time | customDate}}</span>
@@ -79,15 +79,14 @@
               <div class="chat-input-icon">
                 <label>
                   <mat-icon>add_photo_alternate</mat-icon>
-                  <input #imageInput class="display-none" type="file" accept="image/*" 
-                  (change)="processImage(imageInput)">
+                  <input #imageInput class="display-none" type="file" accept="image/*"
+                    (change)="processImage(imageInput)">
                 </label>
               </div>
               <div class="chat-input-message">
                 <mat-form-field>
-                  <input matInput class="input-message" type="text" placeholder="Nhập tin nhắn" 
-                  autocomplete="off" [(ngModel)]="inputMessage" (keyup.enter)="sendMessage()"
-                  (focus)="seenConversation()">
+                  <input matInput class="input-message" type="text" placeholder="Nhập tin nhắn" autocomplete="off"
+                    [(ngModel)]="inputMessage" (keyup.enter)="sendMessage()" (focus)="seenConversation()">
                 </mat-form-field>
                 <button color="primary" class="button-send mat-fab mat-primary" (click)="sendMessage()">
                   <span class="mat-button-wrapper">
@@ -110,15 +109,67 @@
             </div>
             <div class="options-section">
               <!-- Expansion panel -->
-              <mat-accordion>
+
+              <!-- Thông tin -->
+              <mat-accordion *ngIf="selectedConversation.type=='private'">
                 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       Thông tin
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                  <p>I'm visible because I am open</p>
-                  <p>I'm visible because I am open</p>
+                  <p>
+                    <mat-icon>person</mat-icon>
+                    @{{selectedUser.userName}}
+                  </p>
+                  <p>
+                    <mat-icon>offline_bolt</mat-icon>
+                    <b>{{selectedUser.contributionPoint}}</b> điểm tích lũy
+                  </p>
+                  <p>
+                    <mat-icon>rss_feed</mat-icon>
+                    <b>{{selectedUser.followerCount}}</b> người theo dõi
+                  </p>
+                  <p *ngIf="selectedUser && selectedUser.address != ''">
+                    <mat-icon>location_on</mat-icon>
+                    {{selectedUser.address}}
+                  </p>
+                </mat-expansion-panel>
+              </mat-accordion>
+
+              <!-- Thao tác -->
+              <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Thao tác
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p class="action-item">
+                    <mat-icon>block</mat-icon>
+                    Chặn người dùng
+                  </p>
+                </mat-expansion-panel>
+              </mat-accordion>
+
+              <!-- Mọi người -->
+              <mat-accordion *ngIf="selectedConversation.type=='group'">
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Mọi người
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-nav-list>
+                    <div *ngFor="let user of selectedConversation.users">
+                      <mat-list-item class="chat-user-item">
+                        <img class="mat-list-avatar" src="{{user.profileImage}}">
+                        <div class="mat-list-text">
+                          <h3 class="mat-line" matline="">{{user.displayName}}</h3>
+                        </div>
+                      </mat-list-item>
+                    </div>
+                  </mat-nav-list>
                 </mat-expansion-panel>
               </mat-accordion>
             </div>

@@ -1,5 +1,6 @@
 import { ChatUser } from './ChatUser';
 import { ChatMessage } from './ChatMessage';
+import { User } from './User';
 
 export class Conversation {
     id: string;
@@ -9,8 +10,8 @@ export class Conversation {
     lastMessage: ChatMessage;
     seenIds: string[];
     createdDate: Date;
+    avatar: string;
 
     users: ChatUser[];
     messages: ChatMessage[];
-    avatar: string;
 }

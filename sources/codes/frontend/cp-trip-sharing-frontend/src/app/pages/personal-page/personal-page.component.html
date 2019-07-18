@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <a href="#"><span class="personal-name">{{user.userName}}</span></a>
+      <a href="#"><span class="personal-name">{{user.displayName}}</span></a>
       <div class="opacity"></div>
       <div [hidden]="usergetLocalStorage == null || userId == usergetLocalStorage.id" class="follow-message-infor">
         <button class="btn-follow" mat-button (click)="followPerson(userId)">
@@ -54,7 +54,7 @@
       <div class="col-3 align-self-center menu-sub-avatar">
       <div [class.fix-sub-avatar]="isFixMenuBar" class="sub-avatar">
           <img src="{{user.avatar ? user.avatar : avatar }}" alt="">
-          <span>{{user.userName}}</span>
+          <span>{{user.displayName}}</span>
       </div>
       </div>
       <div>
@@ -77,29 +77,13 @@
           <!-- Card content -->
           <div class="card-body card-header d-flex flex-row">
 
-            <!-- Avatar -->
-            <!-- <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg" class="rounded-circle mr-3" height="50px"
-              width="50px" alt="avatar"> -->
-
             <!-- Content -->
             <div>
               <!-- Title -->
               <h5 class="card-title font-weight-bold mb-2 ">{{user.displayName}}</h5>
-              <!-- Subtitle -->
-              <!-- <p class="card-text"><i class="fa fa-clock-o"></i> 07/24/2018</p> -->
-              <p class="card-sub-title">Cuộc đời là những chuyến đi!</p>
             </div>
 
           </div>
-
-          <!-- Card image -->
-          <!-- <div class="view overlay">
-            <img class="card-img-top rounded-0" src="https://mdbootstrap.com/img/Photos/Horizontal/Food/full page/2.jpg"
-              alt="Card image cap">
-            <a href="#!">
-              <div class="mask rgba-white-slight"></div>
-            </a>
-          </div> -->
 
           <!-- Card content -->
           <div class="card-body">

@@ -37,7 +37,7 @@ export class InitialUserInformationPageComponent implements OnInit {
     });
 
     if (!this.user || !this.user.id || this.user.id == null) {
-      this.user.avatar = 'https://storage.googleapis.com/trip-sharing-final-image-bucket/no_profile_image.png';
+      this.user.avatar = 'https://storage.googleapis.com/trip-sharing-final-image-bucket/image-default-user-avatar.png';
       this.isRegister = true;
     } else {
       this.isRegister = false;

@@ -1,5 +1,5 @@
 <div class="button-filter-container">
-  <div class="button-filter">
+  <div class="button-filter" *ngIf="articleDisplay.items && articleDisplay.items.length > 0">
     <button mat-menu-item (click)="toggleFilter()">
       <mat-icon>tune</mat-icon>
       <span><b>LỌC</b></span>
@@ -20,7 +20,8 @@
     <div class="filter-section">
       <div><b>CHỦ ĐỀ</b></div>
       <div class="topic-checbox-item" *ngFor="let topic of topics">
-        <mat-checkbox color="primary" [(ngModel)]="isCheckedDict[topic.id]" (click)="onCheckboxToggleChange(topic.id)">{{topic.name}}</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="isCheckedDict[topic.id]" (click)="onCheckboxToggleChange(topic.id)">
+          {{topic.name}}</mat-checkbox>
       </div>
     </div>
     <div class="filter-ok-button">
@@ -29,20 +30,18 @@
   </div>
 </div>
 
-<!-- <div class="list-post-container" *ngIf="articleDisplay.items != null">
-  <div class="post-container" *ngFor="let post of articleDisplay.items">
-    <app-article [listType]='articleDisplay.typeArticle' [post]="post"></app-article>
-  </div>
-</div> -->
 <app-list-post-horizontal [listType]="articleDisplay.typeArticle" [posts]="articleDisplay.items" [rowSize]="1">
 </app-list-post-horizontal>
 <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" (scrolled)="onScroll()"></div>
 
-<div class="loading-dots">
-  <h1 class="dot one">.</h1>
-  <h1 class="dot two">.</h1>
-  <h1 class="dot three">.</h1>
+<div *ngIf="isLoading && articleDisplay.items &&  articleDisplay.items.length > 0">
+  <div class="loading-dots">
+    <h1 class="dot one">.</h1>
+    <h1 class="dot two">.</h1>
+    <h1 class="dot three">.</h1>
+  </div>
 </div>
+
 
 <div *ngIf="isScrollTopShow" class="scroll-top">
   <button (click)="gotoTop()" mat-fab color="primary">

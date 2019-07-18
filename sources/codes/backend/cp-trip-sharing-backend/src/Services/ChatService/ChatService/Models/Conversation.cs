@@ -18,8 +18,10 @@ namespace ChatService.Models
         public string Name { get; set; }
 
         [BsonElement("type")]
-        [BsonRepresentation(BsonType.String)]
         public string Type { get; set; }
+
+        [BsonElement("avatar")]
+        public string Avatar { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("receiver_list")]

@@ -1,6 +1,6 @@
 <div>
   <!-- Filter -->
-  <div *ngIf="showFilter">
+  <div *ngIf="showFilter && posts && posts.length > 0">
     <app-post-filter [showTimePeriod]="showTimePeriod" [showTopic]="showTopic" (filtered)="submitFilter($event)">
     </app-post-filter>
   </div>
@@ -10,11 +10,17 @@
 
     <!-- List users -->
     <ng-container *ngSwitchCase="'moi-nguoi'">
-      <div>
+
+      <div *ngIf="users && users.length == 0">
+        <p class="no-result">Không tìm thấy kết quả nào</p>
+      </div>
+
+      <div *ngIf="users && users.length > 0">
         <div *ngFor="let user of users">
           <app-user-item [user]="user" [showBlocked]="false" [showFollowButton]="true"></app-user-item>
         </div>
       </div>
+
     </ng-container>
 
     <!-- List posts -->
@@ -28,12 +34,13 @@
   <!-- Inifity scroll -->
   <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" (scrolled)="onScroll()"></div>
 
-  <div *ngIf="isLoading" class="loading-dots">
-    <h1 class="dot one">.</h1>
-    <h1 class="dot two">.</h1>
-    <h1 class="dot three">.</h1>
+  <div *ngIf="(posts && posts.length > 0) || (users && users.length > 0)">
+    <div *ngIf="isLoading" class="loading-dots">
+      <h1 class="dot one">.</h1>
+      <h1 class="dot two">.</h1>
+      <h1 class="dot three">.</h1>
+    </div>
   </div>
-
 
   <div *ngIf="isScrollTopShow" class="scroll-top">
     <button (click)="gotoTop()" mat-fab color="primary">
