@@ -29,7 +29,7 @@
     </div>
 
     <!-- Remove blocked button -->
-    <div *ngIf="showBlocked" class="icon-remove">
+    <div *ngIf="showBlockedButton" class="icon-remove">
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -42,7 +42,7 @@
     </div>
 
     <!-- Follow button -->
-    <button (click)="followPerson(user.id)" class="follow-button" mat-icon-button>
+    <button *ngIf="showFollowButton" (click)="followPerson(user.id)" class="follow-button" mat-icon-button>
       <mat-icon>rss_feed</mat-icon>
       <span *ngIf="isFollowed === false">Theo dõi</span>
       <span *ngIf="isFollowed === true">Đã theo dõi</span>

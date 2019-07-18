@@ -13,7 +13,7 @@ import { MessagePopupComponent } from '../message-popup/message-popup.component'
 export class UserItemComponent implements OnInit {
 
   @Input() user: User;
-  @Input() showBlocked: boolean;
+  @Input() showBlockedButton = false;
   @Input() showFollowButton = false;
 
   isYou = false;
@@ -73,7 +73,7 @@ export class UserItemComponent implements OnInit {
     const token = localStorage.getItem('Token');
     if (this.isFollowed === false) {
       this.userService.addFollow(userId, token).subscribe((data: any) => {
-        this.isFollowed = false;
+        this.isFollowed = true;
         this.listUserIdFollowing.push(userId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
       }, (err: HttpErrorResponse) => {
