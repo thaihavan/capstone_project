@@ -15,5 +15,7 @@ namespace UserServices.Services.Interfaces
         User GetUserById(string userId);
 
         User Update(User user);
+
+        int GetNumberOfUser(string timePeriod);
     }
 }

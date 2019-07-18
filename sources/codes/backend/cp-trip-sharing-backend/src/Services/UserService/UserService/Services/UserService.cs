@@ -44,6 +44,11 @@ namespace UserServices.Services
             return result;
         }
 
+        public int GetNumberOfUser(string timePeriod)
+        {
+            return _userRepository.GetNumberOfUser(timePeriod);
+        }
+
         public User GetUserById(string userId)
         {
             return _userRepository.GetById(userId);

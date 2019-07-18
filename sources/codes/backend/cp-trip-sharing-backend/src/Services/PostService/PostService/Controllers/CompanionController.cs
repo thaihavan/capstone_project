@@ -181,7 +181,7 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpDelete("post/request/cancel")]
-        public IActionResult CancelRequest([FromQuery]string postId)
+        public IActionResult CancelRequest([FromBody]string postId)
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = identity.FindFirst("user_id").Value;
@@ -194,6 +194,14 @@ namespace PostService.Controllers
         public IActionResult GetAllCompanionPostByUser([FromBody]PostFilter filter, [FromQuery]string userId, [FromQuery]int page)
         {
             return Ok(_companionPostService.GetAllCompanionPostByUser(userId, filter, page));
+        }
+
+        [Authorize(Roles ="admin")]
+        [HttpPost("post/count")]
+        public IActionResult GetNumberOfCompanionPost([FromBody]PostFilter filter)
+        {
+            var result = _companionPostService.GetNumberOfCompanionPost(filter);
+            return Ok(new { CompanionPostCount = result });
         }
     }
 }

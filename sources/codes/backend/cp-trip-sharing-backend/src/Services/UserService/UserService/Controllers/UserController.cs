@@ -77,5 +77,13 @@ namespace UserServices.Controllers
             var result = _userService.GetUserById(userId);
             return Ok(result);
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost("count")]
+        public IActionResult GetNumberOfUser([FromQuery] string TimePeriod)
+        {
+            var result = _userService.GetNumberOfUser(TimePeriod);
+            return Ok(new { UserCount = result });
+        }
     }
 }

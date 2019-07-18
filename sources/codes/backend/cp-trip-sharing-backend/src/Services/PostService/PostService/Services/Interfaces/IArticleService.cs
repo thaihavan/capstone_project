@@ -23,5 +23,7 @@ namespace PostService.Services.Interfaces
         IEnumerable<Article> GetRecommendArticles(PostFilter postFilter, UserInfo userInfo, int page);
 
         IEnumerable<Article> GetPopularArticles(PostFilter postFilter, int page);
+
+        int GetNumberOfArticlePost(PostFilter postFilter);
     }
 }
