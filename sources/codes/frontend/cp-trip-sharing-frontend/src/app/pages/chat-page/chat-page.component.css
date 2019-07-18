@@ -7,6 +7,10 @@ div {
     display: none;
 }
 
+mat-panel-title {
+    font-weight: 500;
+}
+/*  */
 .mat-card {
     transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
     display: block;
@@ -228,6 +232,30 @@ mat-card-actions {
     margin-bottom: 16px;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(120,130,140,.13);
+}
+
+mat-expansion-panel {
+    color: #333;
+}
+
+mat-expansion-panel mat-icon {
+    font-size: 20px;
+    position: absolute;
+    margin-left: -32px;
+}
+
+mat-expansion-panel p {
+    padding-left: 36px;
+}
+
+.action-item {
+    border-bottom: solid 1px #d8d8d8;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.action-item:hover {
+    background-color: #efefef;
 }
 
 .chat-input-icon {

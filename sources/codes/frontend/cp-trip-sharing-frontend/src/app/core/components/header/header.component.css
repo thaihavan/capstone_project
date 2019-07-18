@@ -100,8 +100,10 @@
   border-radius: 100%;
   border: 1px solid white;
 }
-.options{
-  outline: none;
+
+::ng-deep.menu-create-post a{
+  color: #333;
+  font-weight: 500;
 }
 
 .mat-menu-item{

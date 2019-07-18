@@ -1,7 +1,6 @@
 <div class="registerform">
     <div class="form_wrapper">
         <h2>Đăng Ký</h2>
-        <span class="title">Vui lòng nhập đầy đủ thông tin của bạn vào biểu mẫu dưới đây</span>
         <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
             <div class="form-group">
                 <label for="email">Email<span class="require"> (*)</span></label>
@@ -34,7 +33,7 @@
                 <input type="checkbox" value="true" class="form-check-input" id="exampleCheck1"
                     formControlName="checkbox" required>
                 <label class="form-check-label" for="exampleCheck1">Tôi đồng ý với các điều khoản của <a
-                        href="#">TripSharing.com</a></label>
+                        href="#">TripSharing</a></label>
             </div>
             <div *ngIf="error" class="err-mess"><span>{{message}}</span></div>
             <div class="form-group">

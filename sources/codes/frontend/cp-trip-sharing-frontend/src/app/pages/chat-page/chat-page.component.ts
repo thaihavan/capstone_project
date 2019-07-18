@@ -11,6 +11,7 @@ import { ChatMessage } from 'src/app/model/ChatMessage';
 import { ChatUser } from 'src/app/model/ChatUser';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { ImageUpload } from 'src/app/model/ImageUpload';
+import { UserService } from 'src/app/core/services/user-service/user.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -21,7 +22,7 @@ export class ChatPageComponent implements OnInit {
 
   @ViewChild('chatContainer') chatContainer: ElementRef;
 
-  user: any;
+  user: User;
   hubConnection: HubConnection;
 
   screenHeight: number;
@@ -30,11 +31,13 @@ export class ChatPageComponent implements OnInit {
   listConversations: Conversation[];
 
   selectedConversation: Conversation;
+  selectedUser: User;
   inputMessage = '';
 
   constructor(private chatService: ChatService,
               private titleService: Title,
-              private uploadImageService: UploadImageService) {
+              private uploadImageService: UploadImageService,
+              private userService: UserService) {
     this.titleService.setTitle('Tin nhắn');
   }
 
@@ -123,6 +126,18 @@ export class ChatPageComponent implements OnInit {
     this.selectedConversation = conv;
     this.chatService.getAllMessages(conv.id).subscribe((res: ChatMessage[]) => {
       this.selectedConversation.messages = res;
+
+      if (conv.type === 'private') {
+        const chatUser = this.selectedConversation.users.find(u => u.id !== this.user.id);
+        this.userService.getUserById(chatUser.id).subscribe((user: User) => {
+          console.log('user....');
+          console.log(user);
+          this.selectedUser = user;
+        }, (error: HttpErrorResponse) => {
+          console.log(error);
+        });
+      }
+
     }, (error: HttpErrorResponse) => {
       console.log(error);
     });

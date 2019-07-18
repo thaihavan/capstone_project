@@ -173,7 +173,7 @@ export class HeaderComponent implements OnInit {
   // get image avatar
   getAvatar() {
     const user = JSON.parse(localStorage.getItem('User'));
-    this.urlImgavatar = user.avatar ? user.avatar : '../../../../assets/avatar.png';
+    this.urlImgavatar = (user != null && user.avatar) ? user.avatar : '../../../../assets/avatar.png';
   }
 
   onSearchBtnClick() {

@@ -28,22 +28,22 @@
           <button mat-icon-button matTooltip="Tạo bài viết" [matMenuTriggerFor]="menuCreatePost">
             <mat-icon>add_circle</mat-icon>
           </button>
-          <mat-menu #menuCreatePost="matMenu">
-            <button class="options" mat-menu-item>
+          <mat-menu class="menu-create-post" #menuCreatePost="matMenu">
+            <button mat-menu-item>
               <a routerLink="/tao-bai-viet">
-                <mat-icon color="accent">create</mat-icon>
+                <mat-icon color="primary">create</mat-icon>
                 Tạo bài viết
               </a>
             </button>
             <button mat-menu-item>
               <a routerLink="/chuyen-di">
-                <mat-icon color="accent">place</mat-icon>
+                <mat-icon color="primary">place</mat-icon>
                 Tạo một chuyến đi
               </a>
             </button>
             <button mat-menu-item>
               <a routerLink="/tao-bai-viet/tim-ban-dong-hanh">
-                <mat-icon color="accent">group</mat-icon>
+                <mat-icon color="primary">group</mat-icon>
                 Tìm bạn đồng hành
               </a>
             </button>
