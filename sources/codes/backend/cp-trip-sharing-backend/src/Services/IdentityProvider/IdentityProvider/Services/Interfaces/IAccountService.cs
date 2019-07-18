@@ -27,5 +27,7 @@ namespace IdentityProvider.Services.Interfaces
         GoogleUser GetGoogleUserInformation(string accessToken);
 
         Account GoogleAuthenticate(string accessToken);
+
+        Account FacebookAuthenticate(string accessToken);
     }
 }

@@ -211,18 +211,85 @@ namespace IdentityProvider.Services
             }
             else
             {
+                var salt = Salt.Generate();
                 var newAccount = new Account()
                 {
                     Email = userInfo.Email,
-                    Password = null,
-                    PasswordSalt = null,
+                    Password = Hash.HashPassword(GenerateRandomPassword(),salt),
+                    PasswordSalt = salt,
                     Role = "member",
                     UserId = ObjectId.GenerateNewId().ToString()
                 };
                 _accountRepository.Add(newAccount);
+                newAccount.Password = null;
+                newAccount.PasswordSalt = null;
                 newAccount.Token = JwtToken.Generate(_settings.Value.Secret, newAccount);
                 return newAccount;
             }
         }
+
+        public Account FacebookAuthenticate(string accessToken)
+        {
+            var userInfo = GetFacebookUserInformation(accessToken);
+            if (userInfo == null)
+            {
+                return null;
+            }
+            var user = _accountRepository.GetByEmail(userInfo.Email);
+            if (user != null)
+            {
+                user.Token = JwtToken.Generate(_settings.Value.Secret, user);
+                user.Password = null;
+                user.PasswordSalt = null;
+                return user;
+            }
+            else
+            {
+                var salt = Salt.Generate();
+                var newAccount = new Account()
+                {
+                    Email = userInfo.Email,
+                    Password = Hash.HashPassword(GenerateRandomPassword(), salt),
+                    PasswordSalt = salt,
+                    Role = "member",
+                    UserId = ObjectId.GenerateNewId().ToString()
+                };
+                _accountRepository.Add(newAccount);
+                newAccount.Password = null;
+                newAccount.PasswordSalt = null;
+                newAccount.Token = JwtToken.Generate(_settings.Value.Secret, newAccount);
+                return newAccount;
+            }
+        }
+
+        public FacebookUser GetFacebookUserInformation(string accessToken)
+        {
+            FacebookUser userInfo = null;           
+            string url = "https://graph.facebook.com/me?fields=name,email&&access_token=" + accessToken;
+            try
+            {
+                WebRequest request = WebRequest.Create(url);
+                request.Credentials = CredentialCache.DefaultCredentials;
+                using (var response = request.GetResponse())
+                {
+                    using (var stream = response.GetResponseStream())
+                    {
+                        using (var reader = new StreamReader(stream))
+                        {
+                            string result = reader.ReadToEnd();
+                            userInfo = JsonConvert.DeserializeObject<FacebookUser>(result);
+                        }
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                var response = ex.Response as HttpWebResponse;
+                if (response != null && response.StatusCode == HttpStatusCode.BadRequest)
+                    return null;
+            }
+            return userInfo; 
+        }
+
     }
 }

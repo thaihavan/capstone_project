@@ -115,6 +115,18 @@ namespace IdentityProvider.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
+        [HttpGet("authenticate/facebook")]
+        public IActionResult FacebookAuthenticate([FromQuery] string token)
+        {
+            var user = _accountService.FacebookAuthenticate(token);
+            if (user == null)
+            {
+                return BadRequest(new ErrorMessage() { Message = "Facebook access token is not valid" });
+            }
+            return Ok(user);
+        }
+
         [Authorize(Roles = "member, admin, unverified")]
         [HttpPost("logout")]
         public async Task<ActionResult> Logout()
