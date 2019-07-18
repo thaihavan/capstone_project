@@ -14,7 +14,6 @@ import { MessagePopupComponent } from './components/message-popup/message-popup.
 import { MatStepperModule } from '@angular/material/stepper';
 import { CommentContainerComponent } from './components/comment-container/comment-container.component';
 import { ListPostComponent } from './components/list-post/list-post.component';
-import { ArticleComponent } from './components/article/article.component';
 import { StepCreatePostComponent } from './components/step-create-post/step-create-post.component';
 import { GoogleMapSearchComponent } from './components/google-map-search/google-map-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,7 +37,6 @@ import { SendMessagePopupComponent } from './components/send-message-popup/send-
 import { ListNotificationComponent } from './components/list-notification/list-notification.component';
 import { CustomDatePipe } from './pipes/custom-date-pipe/custom-date.pipe';
 import { DialogStepFindingCompanionsComponent } from './components/dialog-step-finding-companions/dialog-step-finding-companions.component';
-import { StepFindingCompanionsComponent } from './components/step-finding-companions/step-finding-companions.component';
 import { StepLableCompanionPostComponent } from './components/step-lable-companion-post/step-lable-companion-post.component';
 import { ListPostHorizontalComponent } from './components/list-post-horizontal/list-post-horizontal.component';
 import { PostSmallComponent } from './components/post-small/post-small.component';
@@ -82,7 +80,6 @@ const Material = [
     CommentContainerComponent,
     SingleCommentComponent,
     ListPostComponent,
-    ArticleComponent,
     StepCreatePostComponent,
     GoogleMapSearchComponent,
     InterestedTopicComponent,
@@ -101,7 +98,6 @@ const Material = [
     ListNotificationComponent,
     CustomDatePipe,
     DialogStepFindingCompanionsComponent,
-    StepFindingCompanionsComponent,
     StepLableCompanionPostComponent,
     ListPostHorizontalComponent,
     PostSmallComponent,
@@ -129,7 +125,6 @@ const Material = [
     InfiniteScrollModule,
     SingleCommentComponent,
     CommentContainerComponent,
-    ArticleComponent,
     ListPostComponent,
     StepCreatePostComponent,
     GoogleMapSearchComponent,
@@ -146,7 +141,6 @@ const Material = [
     ListNotificationComponent,
     CustomDatePipe,
     DialogStepFindingCompanionsComponent,
-    StepFindingCompanionsComponent,
     StepLableCompanionPostComponent,
     ListPostHorizontalComponent,
     PostSmallComponent,

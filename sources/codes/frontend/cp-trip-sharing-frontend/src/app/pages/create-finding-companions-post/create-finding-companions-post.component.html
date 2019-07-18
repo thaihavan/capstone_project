@@ -168,7 +168,7 @@
                         {{item.content}}
                     </div>
                 </mat-step>
-                <mat-step state="add" [completed]="false" [editable]="false" (click)="createStep()">
+                <mat-step state="add" [completed]="false" [editable]="false" (click)="createStep(null)">
                     <ng-template matStepLabel>
                         <button mat-flat-button (click)="createStep(null)" class="add_button">
                             Thêm lịch trình cho chuyến đi

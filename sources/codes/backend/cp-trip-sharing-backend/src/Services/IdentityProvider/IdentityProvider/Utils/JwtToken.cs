@@ -25,7 +25,7 @@ namespace IdentityProvider.Utils
                     new Claim(ClaimTypes.Role, account.Role),
                     new Claim("user_id",account.UserId.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddHours(6),
+                Expires = DateTime.UtcNow.AddHours(24 * 90),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key), 
                     SecurityAlgorithms.HmacSha256Signature),

@@ -91,7 +91,7 @@ namespace IdentityProvider
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseMiddleware<TokenManagerMiddleware>().UseAuthentication();
+            //app.UseMiddleware<TokenManagerMiddleware>().UseAuthentication();
             app.UseMvc();
         }
     }
