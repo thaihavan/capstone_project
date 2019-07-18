@@ -211,3 +211,20 @@ input.example-right-align {
 .content-center{
   margin-top: 1em;
 }
+::ng-deep .title-input .mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: white;
+}
+.btn-amount {
+  top: -7px
+}
+.btn-amount img{
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+}
+.mat-icon-button[disabled][disabled] {
+  color: rgba(0, 0, 0, 0.5);
+}
+.amount-right-align {
+  text-align: right;
+}

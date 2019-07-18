@@ -58,6 +58,36 @@ namespace UserServices.Reponsitories
             return user;
         }
 
+        public int GetNumberOfUser(string timePeriod)
+        {
+            var filterDate = new DateTime(0);
+            var now = DateTime.Now;
+            switch (timePeriod)
+            {
+                case "today":
+                    filterDate = now.AddDays(-1);
+                    break;
+                case "this_week":
+                    filterDate = now.AddDays(-7);
+                    break;
+                case "this_month":
+                    filterDate = now.AddDays(-30);
+                    break;
+                case "this_year":
+                    filterDate = now.AddDays(-365);
+                    break;
+                case "all_time":
+                    filterDate = new DateTime(0);
+                    break;
+            }
+
+            Expression<Func<User, bool>> dateFilter =
+                user => user.CreatedDate >= filterDate;
+
+            var result = _users.AsQueryable().Where(dateFilter.Compile()).Select(x => x).Count();
+            return result;
+        }
+
         public IEnumerable<User> GetUsers(string search)
         {
             // Search filter

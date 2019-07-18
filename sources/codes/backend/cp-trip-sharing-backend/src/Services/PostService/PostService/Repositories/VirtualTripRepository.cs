@@ -249,5 +249,73 @@ namespace PostService.Repositories
                 .Take(12);
             return result.ToList();
         }
+
+        public int GetNumberOfVirtualTrip(PostFilter postFilter)
+        {
+            // Search filter
+
+            // Text search
+            if (postFilter.Search == null)
+            {
+                postFilter.Search = "";
+            }
+            postFilter.Search = postFilter.Search.Trim();
+
+            // LocationId search
+            if (postFilter.LocationId == null)
+            {
+                postFilter.LocationId = "";
+            }
+
+            Expression<Func<VirtualTrip, bool>> searchFilter;
+            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0
+                                && a.Items.Any(d => postFilter.LocationId == "" || d.LocationId == postFilter.LocationId);
+
+            // Time period filter
+            var filterDate = new DateTime(0);
+            var now = DateTime.Now;
+            switch (postFilter.TimePeriod)
+            {
+                case "today":
+                    filterDate = now.AddDays(-1);
+                    break;
+                case "this_week":
+                    filterDate = now.AddDays(-7);
+                    break;
+                case "this_month":
+                    filterDate = now.AddDays(-30);
+                    break;
+                case "this_year":
+                    filterDate = now.AddDays(-365);
+                    break;
+                case "all_time":
+                    filterDate = new DateTime(0);
+                    break;
+            }
+            Expression<Func<VirtualTrip, bool>> dateFilter =
+                post => post.Post.PubDate >= filterDate;
+
+            Func<VirtualTrip, Post, VirtualTrip> SelectVirtualTripWithPost =
+                ((virtualTrip, post) => { virtualTrip.Post = post; return virtualTrip; });
+            Func<VirtualTrip, Author, VirtualTrip> SelectVirtualTripWithAuthor =
+                ((virtualTrip, author) => { virtualTrip.Post.Author = author; return virtualTrip; });
+
+            var result = _virtualTrips.AsQueryable()
+                .Join(
+                    _posts.AsQueryable(),
+                    virtualTrip => virtualTrip.PostId,
+                    post => post.Id,
+                    SelectVirtualTripWithPost)
+                .Join(
+                    _authors.AsQueryable(),
+                    virtualTrip => virtualTrip.Post.AuthorId,
+                    author => author.Id,
+                    SelectVirtualTripWithAuthor)
+                .Where(searchFilter.Compile())
+                .Where(dateFilter.Compile())
+                .Select(a => a)
+                .OrderByDescending(a => a.Post.PubDate);
+            return result.Count();
+        }
     }
 }

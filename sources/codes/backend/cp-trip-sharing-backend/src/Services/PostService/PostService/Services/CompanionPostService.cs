@@ -38,6 +38,7 @@ namespace PostService.Services
         public bool CancelRequest(string userId, string postId)
         {
             var request = _companionPostRepository.GetRequestByUserIdAndPostId(userId, postId);
+            if (request == null) return false;
             return _companionPostRepository.DeleteJoinRequest(request.Id);
         }
 
@@ -74,6 +75,11 @@ namespace PostService.Services
         public CompanionPost GetById(string id, string userId)
         {
             return _companionPostRepository.GetById(id, userId);
+        }
+
+        public int GetNumberOfCompanionPost(PostFilter filter)
+        {
+            return _companionPostRepository.GetNumberOfCompanionPost(filter);
         }
 
         public CompanionPostJoinRequest GetRequestById(string requestId)

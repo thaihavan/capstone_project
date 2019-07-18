@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, NgZone, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  NgZone,
+  AfterViewInit
+} from '@angular/core';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { UploadAdapter } from 'src/app/model/UploadAdapter';
@@ -9,7 +15,7 @@ import {
   NgForm,
   Validators,
   FormGroup,
-  FormBuilder,
+  FormBuilder
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material';
@@ -22,7 +28,6 @@ import { CompanionPost } from 'src/app/model/CompanionPost';
 import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
-import { error } from 'util';
 import { ChatService } from 'src/app/core/services/chat-service/chat.service';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 @Component({
@@ -36,7 +41,8 @@ import { AlertifyService } from 'src/app/core/services/alertify-service/alertify
     }
   ]
 })
-export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewInit {
+export class CreateFindingCompanionsPostComponent
+  implements OnInit, AfterViewInit {
   constructor(
     private imageService: UploadImageService,
     public dialog: MatDialog,
@@ -61,28 +67,24 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
   fromDate: Date;
   toDate: Date;
   estimatedDate: Date;
-  estAdultAmount: number;
-  estChildAmount: number;
-  maxMembers: any;
-  minMembers: any;
+  estAdultAmount = '';
+  maxMembers: number;
+  minMembers: number;
+  isMemberValide = true;
   content = '<p>Hello world!</p>';
   public Editor = DecoupledEditor;
-  minDate = new Date(2000, 0, 1);
+  minDate = new Date();
   maxDate = new Date(2020, 0, 1);
   companionForm: FormGroup;
-  // adultAmountFormControl = new FormControl('adultAmountFormControl', [Validators.required]);
+  memfileMatcher = new CrossFieldErrorMatcher();
 
-  matcher = new MyErrorStateMatcher();
   listSchedules: Schedule[] = [];
   estimatedCostItems: string[] = [];
   estCostItem = '';
   destinations: ArticleDestinationItem[] = [];
   companionPost: CompanionPost;
-  ngOnInit() {
-
-  }
-  ngAfterViewInit(): void {
-  }
+  ngOnInit() {}
+  ngAfterViewInit(): void {}
   public onReady(editor) {
     editor.ui
       .getEditableElement()
@@ -99,37 +101,70 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
 
   // init validation form
   initForm() {
-    this.companionForm = this.fb.group({
-      fromDate: new FormControl('', [Validators.required]),
-      toDate: new FormControl('', [Validators.required]),
-      estimatedDate: new FormControl('', [Validators.required]),
-      minMembers: new FormControl('', [Validators.required]),
-      maxMembers: new FormControl('', [Validators.required]),
-      estimatedCost: new FormControl('', [Validators.required]),
-      estAdultAmount: new FormControl()
-    });
+    this.companionForm = this.fb.group(
+      {
+        fromDate: new FormControl('', [Validators.required]),
+        toDate: new FormControl('', [Validators.required]),
+        estimatedDate: new FormControl('', [Validators.required]),
+        minMembers: new FormControl('', [Validators.required]),
+        maxMembers: new FormControl('', [Validators.required]),
+        estAdultAmount: new FormControl()
+      },
+      {
+        validator: this.validateMember
+      }
+    );
   }
-  // form has errro
+
+  // form check has validation error
   public hasError = (controlName: string, errorName: string) => {
     return this.companionForm.controls[controlName].hasError(errorName);
   }
 
-  // validation minmembers and maxmembers
-  validaMember() {
-    let currMinMember;
-    let currMaxMember;
-    if (this.minMembers === undefined) {
-      currMinMember = 0;
-    } else {
-      currMinMember = this.minMembers;
+  // form check has validation error min max member
+  hasMemberError = (controlName: string) => {
+    const formHasError = this.companionForm.hasError('isNotValidateMember');
+    const dirty = this.companionForm.controls[controlName].dirty;
+    return formHasError && dirty;
+  }
+
+  // form validation amount number only
+  validationAmount(form: FormControl) {
+    let amount: string = form.value;
+    const arrAmout = amount.split(',');
+    amount = '';
+    arrAmout.forEach(element => {
+      amount += element;
+    });
+    const checkNum = Number(amount);
+    return checkNum ? null : { isNotANumber: true };
+  }
+  // form validation min max members
+  validateMember(form: FormGroup) {
+    const condition =
+      form.get('minMembers').value >= form.get('maxMembers').value;
+    return condition ? { isNotValidateMember: true } : null;
+  }
+
+  // on amount change
+  onAmountChange(str) {
+    let text: string = str.toString();
+    text = text.replace(/[^\d,]/g, '0');
+    const arrText = text.split(',');
+    text = '';
+    arrText.forEach(element => {
+      text += element;
+    });
+    let convertStr = '';
+    let strLength = 0;
+    for (let index = text.length - 1; index >= 0; index--) {
+      strLength += 1;
+      convertStr = text.charAt(index) + convertStr;
+      if (strLength % 3 === 0 && index !== text.length && index !== 0) {
+        convertStr = ',' + convertStr;
+      }
     }
-    if (this.maxMembers === undefined) {
-      currMaxMember = 0;
-    } else {
-      currMaxMember = this.maxMembers;
-    }
-    const condition = currMinMember < currMaxMember;
-    return condition ? { MaxGreaterMinMember: true } : null;
+    return convertStr;
   }
 
   fileClick() {
@@ -143,6 +178,7 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
     this.imgUrl = '';
     this.isHasImg = false;
   }
+
   // create step
   createStep(schedule: Schedule) {
     if (schedule === undefined || schedule === null) {
@@ -221,8 +257,14 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
 
   // create finding companions post
   createPost() {
-    let isRequire: boolean;
-    let message: string;
+    if (this.destinations.length < 1) {
+      this.alertifyService.error('Yêu cầu nhập địa điểm cho chuyến đi');
+      this.goToTop();
+      return;
+    }
+    if (this.companionForm.invalid) {
+      return;
+    }
     this.companionPost = new CompanionPost();
     this.companionPost.from = this.fromDate;
     this.companionPost.to = this.toDate;
@@ -231,37 +273,44 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
     this.companionPost.maxMembers = this.maxMembers;
     this.companionPost.scheduleItems = this.listSchedules;
     this.companionPost.estimatedCostItems = this.estimatedCostItems;
-    this.companionPost.estimatedCost = this.estAdultAmount;
+    this.companionPost.estimatedCost = Number(
+      this.estAdultAmount.replace(/\,/g, '')
+    );
     this.companionPost.post.pubDate = new Date().toDateString();
     this.companionPost.post.title = this.title;
     this.companionPost.post.content = this.content;
     this.companionPost.post.isPublic = this.isPublic;
     this.companionPost.post.coverImage = this.imgUrl;
     this.companionPost.destinations = this.destinations;
-    if (this.destinations.length < 1) {
-      isRequire = true;
-      message = 'Yêu cầu nhập địa điểm cho chuyến đi';
-    }
-    this.companionPost.estimatedCost = this.estAdultAmount;
-    if (isRequire) {
-      this.alertifyService.error(message);
-    } else {
-      this.companionService.createPost(this.companionPost).subscribe(
+    this.companionService.createPost(this.companionPost).subscribe(
         res => {
           this.openDialogMessageConfirm('Bàn đăng đã được tạo!', res.id);
         },
         err => {
           console.log(err);
         },
-        () => {
-        }
+        () => {}
       );
-    }
   }
 
   // on submit form
-  onSubmit() {}
+  onSubmit() {
+    // stop here if form is invalid
+    if (this.companionForm.invalid) {
+      this.alertifyService.error('Lỗi thông tin bài viết!');
+      this.goToTop();
+      return;
+  }
+  }
 
+  // scroll to top
+  goToTop() {
+    window.scroll({
+      top: 200,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
   // open dialog confirm
   openDialogMessageConfirm(message: string, data) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
@@ -277,25 +326,17 @@ export class CreateFindingCompanionsPostComponent implements OnInit, AfterViewIn
     instance.message.url = '/tim-ban-dong-hanh/' + data;
   }
 
-  // currency pipe
-  currencyInputChanged(value) {
-    let num;
-    if (value !== null) {
-       num = value.replace(/[đ,]/g, '');
-    }
-    return Number(num);
-  }
 }
-export class MyErrorStateMatcher implements ErrorStateMatcher {
+
+class CrossFieldErrorMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
     form: FormGroupDirective | NgForm | null
   ): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
+    return (
+      (control.dirty || control.touched || isSubmitted) &&
+      (form.hasError('isNotValidateMember') || control.invalid)
     );
   }
 }
