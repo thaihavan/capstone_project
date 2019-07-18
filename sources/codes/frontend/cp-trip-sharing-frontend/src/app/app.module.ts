@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { GoogleMapComponent } from './shared/components/google-map/google-map.component';
 import { AgmCoreModule } from '@agm/core';
-import { HeaderComponent } from 'src/app/core/components/header/header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
@@ -53,7 +52,6 @@ import { ReportPopupComponent } from './shared/components/report-popup/report-po
     OnlyForHomePageComponent,
     LoginPageComponent,
     GoogleMapComponent,
-    HeaderComponent,
     RegisterPageComponent,
     PersonalPageComponent,
     ForgotpasswordPageComponent,
