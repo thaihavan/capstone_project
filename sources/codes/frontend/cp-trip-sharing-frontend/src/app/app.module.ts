@@ -44,6 +44,7 @@ import { SearchResultPageComponent } from './pages/search-result-page/search-res
 // tslint:disable-next-line:max-line-length
 import { SearchResultContainerComponent } from './pages/search-result-page/components/search-result-container/search-result-container.component';
 import { ReportPopupComponent } from './shared/components/report-popup/report-popup.component';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { ReportPopupComponent } from './shared/components/report-popup/report-po
     SearchResultContainerComponent
   ],
   imports: [
+    CoreModule,
     MatMenuModule,
     BrowserModule,
     AppRoutingModule,

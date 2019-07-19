@@ -32,7 +32,8 @@ const routes: Routes = [
   {
     path: 'dashboard', component: DashboardPageComponent,
     children: [
-      { path: 'chu-de', component: InterestedTopicAdminsComponent }]
+      { path: 'chu-de', component: InterestedTopicAdminsComponent }
+    ]
   },
   { path: 'xac-nhan-email/:token', component: EmailConfirmPageComponent },
   {
