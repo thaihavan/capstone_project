@@ -59,6 +59,11 @@ namespace UserServices.Services
             return _userRepository.GetUsers(search);
         }
 
+        public void IncreaseContributionPoint(string userId, int point)
+        {
+            _userRepository.IncreaseContributionPoint(userId, point);
+        }
+
         public User Update(User user)
         {
             var result = _userRepository.Update(user);

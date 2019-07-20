@@ -105,6 +105,13 @@ namespace UserServices.Reponsitories
             return users;
         }
 
+        public void IncreaseContributionPoint(string userId, int point)
+        {
+            var result = _users.FindOneAndUpdateAsync(
+                u => u.Id == userId,
+                Builders<User>.Update.Inc("contribution_point", point));
+        }
+
         public User Update(User user)
         {
             var result = _users.ReplaceOne(u => u.Id.Equals(user.Id), user);

@@ -38,7 +38,6 @@ import { CreateFindingCompanionsPostComponent } from './pages/create-finding-com
 import { MatBadgeModule } from '@angular/material';
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 import { AdminModule } from './admin/admin.module';
-import { FormAddTopicsComponent } from './admin/pages/interested-topic-admins/form-add-topics/form-add-topics.component';
 import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
 import { SearchResultPageComponent } from './pages/search-result-page/search-result-page.component';
 // tslint:disable-next-line:max-line-length
@@ -107,7 +106,7 @@ import { CoreModule } from './core/core.module';
   ],
   bootstrap: [AppComponent],
   entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent,
-                    ListFollowComponent, FormAddTopicsComponent, ReportPopupComponent, InitialUserInformationPageComponent]
+                    ListFollowComponent, ReportPopupComponent, InitialUserInformationPageComponent]
 
 })
 export class AppModule { }

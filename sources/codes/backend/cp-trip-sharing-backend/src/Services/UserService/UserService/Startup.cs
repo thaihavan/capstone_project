@@ -16,6 +16,7 @@ using UserServices.Services;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using UserServices.Services.Processes;
 
 namespace UserServices
 {
@@ -60,7 +61,10 @@ namespace UserServices
                     RequireExpirationTime = false
                 };
             });
-            
+            // Pubsub process
+            PullIncreasingCPProcess pullIncreasingCPProcess = new PullIncreasingCPProcess();
+            pullIncreasingCPProcess.Start();
+
             // Configure DI for application services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBlockService, BlockService>();

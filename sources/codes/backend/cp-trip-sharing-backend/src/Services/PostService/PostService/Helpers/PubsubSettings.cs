@@ -10,5 +10,6 @@ namespace PostService.Helpers
         public string ProjectId { get; set; }
         public string TopicId { get; set; }
         public string SubscriptionId { get; set; }
+        public string TopicCP { get; set; }
     }
 }

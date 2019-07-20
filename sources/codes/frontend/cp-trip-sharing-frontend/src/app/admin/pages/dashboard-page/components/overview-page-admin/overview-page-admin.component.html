@@ -1,0 +1,33 @@
+<div class="overview-page-container">
+
+  <!-- Post chart -->
+  <div class="post-chart-container">
+    <div>
+      <h3>Post</h3>
+    </div>
+    <div class="char-container">
+      <ngx-charts-line-chart
+        [view]="chartAttributes.view"
+        [scheme]="chartAttributes.colorScheme"
+        [results]="userData"
+        [gradient]="chartAttributes.gradient"
+        [xAxis]="chartAttributes.showXAxis"
+        [yAxis]="chartAttributes.showYAxis"
+        [legend]="chartAttributes.showLegend"
+        [showXAxisLabel]="chartAttributes.showXAxisLabel"
+        [showYAxisLabel]="chartAttributes.showYAxisLabel"
+        [xAxisLabel]="chartAttributes.xAxisLabel"
+        [yAxisLabel]="chartAttributes.yAxisLabel"
+        [xAxisTicks]="chartAttributes.xAxisTicks"
+        [autoScale]="chartAttributes.autoScale"
+        [timeline]="chartAttributes.timeline"
+        (select)="onSelect($event)">
+      </ngx-charts-line-chart>
+    </div>
+  </div>
+
+  <!-- User chart -->
+  <div class="user-chart-container">
+
+  </div>
+</div>

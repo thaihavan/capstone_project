@@ -12,7 +12,8 @@
         <div>
           <mat-accordion>
             <mat-expansion-panel [disabled]="true">
-              <mat-expansion-panel-header>
+              <mat-expansion-panel-header (click)="gotoOverview()"
+              [ngClass]="{'active-tab': selectedTab=='tong-quan'}">
                 <mat-panel-title>
                   <mat-icon>insert_chart</mat-icon>
                   <span>Overview</span>
@@ -23,10 +24,11 @@
 
           <mat-accordion>
             <mat-expansion-panel [disabled]="true">
-              <mat-expansion-panel-header (click)="gotoTopicManagement()" [ngClass]="{'active-tab': selectedTab=='topic'}">
+              <mat-expansion-panel-header (click)="gotoPostManagement()"
+              [ngClass]="{'active-tab': selectedTab=='bai-viet'}">
                 <mat-panel-title>
-                  <mat-icon>list_alt</mat-icon>
-                  <span>Chủ đề</span>
+                  <mat-icon>description</mat-icon>
+                  <span>Bài viết</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
             </mat-expansion-panel>
@@ -34,7 +36,8 @@
 
           <mat-accordion>
             <mat-expansion-panel [disabled]="true">
-              <mat-expansion-panel-header>
+              <mat-expansion-panel-header (click)="gotoUserManagement()"
+              [ngClass]="{'active-tab': selectedTab=='nguoi-dung'}">
                 <mat-panel-title>
                   <mat-icon>group</mat-icon>
                   <span>Người dùng</span>
@@ -42,6 +45,18 @@
               </mat-expansion-panel-header>
             </mat-expansion-panel>
           </mat-accordion>
+
+          <mat-accordion>
+              <mat-expansion-panel [disabled]="true">
+                <mat-expansion-panel-header (click)="gotoTopicManagement()"
+                [ngClass]="{'active-tab': selectedTab=='chu-de'}">
+                  <mat-panel-title>
+                    <mat-icon>list_alt</mat-icon>
+                    <span>Chủ đề</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel>
+            </mat-accordion>
 
           <mat-accordion>
             <mat-expansion-panel>
@@ -67,7 +82,7 @@
     </mat-sidenav>
     <mat-sidenav-content class="mat-drawer-content">
       <div class="drawer-content-header">
-        <h2>Chủ đề</h2>
+        <h2>{{tabTitle}}</h2>
       </div>
       <div class="drawer-content-body">
         <router-outlet></router-outlet>

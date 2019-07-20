@@ -15,10 +15,12 @@ namespace PostService.Services
     {
 
         private readonly IPostRepository _postRepository = null;
+        private readonly IPublishToTopic _publishToTopic = null;
 
         public PostService(IOptions<AppSettings> settings)
         {
             _postRepository = new PostRepository(settings);
+            _publishToTopic = new PublishToTopic();
         }
 
         public PostService(IPostRepository postRepository)
@@ -28,6 +30,11 @@ namespace PostService.Services
 
         public Post Add(Post param)
         {
+            //_publishToTopic.PublishCP(new IncreasingCP()
+            //{
+            //    UserId = param.AuthorId,
+            //    Point = 1
+            //});
             return _postRepository.Add(param);
         }
 

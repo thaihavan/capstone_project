@@ -2,16 +2,16 @@
 using Google.Protobuf;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using PostService.Helpers;
+using PostService.Models;
+using PostService.Services.Interfaces;
+using PostService.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UserServices.Helpers;
-using UserServices.Models;
-using UserServices.Services.Interfaces;
-using UserServices.Utils;
 
-namespace UserServices.Services
+namespace PostService.Services
 {
     public class PublishToTopic : IPublishToTopic
     {
@@ -22,13 +22,13 @@ namespace UserServices.Services
             _pubsubSettings = ReadAppSettings.ReadPubsubSettings();
         }
 
-        public async void PublishAuthor(Author author)
+        public async void PublishCP(IncreasingCP increasingCP)
         {
-            var topicName = new TopicName(_pubsubSettings.Value.ProjectId, _pubsubSettings.Value.PushTopicId);
+            var topicName = new TopicName(_pubsubSettings.Value.ProjectId, _pubsubSettings.Value.TopicCP);
 
             PublisherClient publisher = await PublisherClient.CreateAsync(topicName);
 
-            var json = JsonConvert.SerializeObject(author);
+            var json = JsonConvert.SerializeObject(increasingCP);
             var message = new PubsubMessage()
             {
                 Data = ByteString.CopyFromUtf8(json)

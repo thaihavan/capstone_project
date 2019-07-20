@@ -1,0 +1,22 @@
+div {
+    box-sizing: border-box;
+}
+
+.post-chart-container, .user-chart-container {
+    background-color: #fff;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0px 0px 2px #ccc;
+    margin-bottom: 30px;
+    min-width: 1000px;
+}
+
+.char-container::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+
+ngx-charts-line-chart {
+    display: block;
+}

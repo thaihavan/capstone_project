@@ -11,6 +11,23 @@ namespace UserServices.Utils
 {
     public class ReadAppSettings
     {
+        public static IOptions<AppSettings> ReadDbSettings()
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+            configurationBuilder.AddJsonFile(path, false);
+
+            var appSettings = configurationBuilder.Build().GetSection("AppSettings");
+
+            var settings = Options.Create(new AppSettings()
+            {
+                ConnectionString = appSettings.GetSection("ConnectionString").Value,
+                DatabaseName = appSettings.GetSection("DatabaseName").Value
+            });
+
+            return settings;
+        }
+
         public static IOptions<PubsubSettings> ReadPubsubSettings()
         {
             var configurationBuilder = new ConfigurationBuilder();
@@ -22,7 +39,8 @@ namespace UserServices.Utils
             var settings = Options.Create(new PubsubSettings()
             {
                 ProjectId = pubsubSettings.GetSection("ProjectId").Value,
-                TopicId = pubsubSettings.GetSection("TopicId").Value
+                PushTopicId = pubsubSettings.GetSection("PushTopicId").Value,
+                SubcriptionId = pubsubSettings.GetSection("SubcriptionId").Value
             });
 
             return settings;

@@ -8,5 +8,7 @@ namespace UserServices.Reponsitories.Interfaces
         IEnumerable<User> GetUsers(string search);
 
         int GetNumberOfUser(string timePeriod);
+
+        void IncreaseContributionPoint(string userId, int point);
     }
 }

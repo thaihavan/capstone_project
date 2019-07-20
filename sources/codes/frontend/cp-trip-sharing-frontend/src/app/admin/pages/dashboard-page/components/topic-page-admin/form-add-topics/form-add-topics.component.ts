@@ -3,7 +3,6 @@ import { Topic } from 'src/app/model/Topic';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { ImageUpload } from 'src/app/model/ImageUpload';
 

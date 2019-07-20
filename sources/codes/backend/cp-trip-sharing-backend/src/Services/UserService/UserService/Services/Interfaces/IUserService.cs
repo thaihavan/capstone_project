@@ -17,5 +17,7 @@ namespace UserServices.Services.Interfaces
         User Update(User user);
 
         int GetNumberOfUser(string timePeriod);
+
+        void IncreaseContributionPoint(string userId, int point);
     }
 }

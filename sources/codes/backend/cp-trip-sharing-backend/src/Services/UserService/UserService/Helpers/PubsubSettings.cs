@@ -7,7 +7,10 @@ namespace UserServices.Helpers
 {
     public class PubsubSettings
     {
-        public string TopicId { get; set; }
+        public string PushTopicId { get; set; }
+
         public string ProjectId { get; set; }
+
+        public string SubcriptionId { get; set; }
     }
 }

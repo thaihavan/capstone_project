@@ -10,6 +10,7 @@ import { HostGlobal } from 'src/app/core/global-variables';
 import { Post } from 'src/app/model/Post';
 import { MatDialog } from '@angular/material';
 import { ReportPopupComponent } from '../report-popup/report-popup.component';
+import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'app-single-comment',
@@ -19,7 +20,8 @@ import { ReportPopupComponent } from '../report-popup/report-popup.component';
 export class SingleCommentComponent implements OnInit {
   @Input() comment: Comment;
   @Input() post: any;
-  user: any;
+
+  user: User;
   editComments = true;
   commentContent = '';
   liked = false;
@@ -82,11 +84,10 @@ export class SingleCommentComponent implements OnInit {
   }
 
   sendCommentNotification() {
-    const user = JSON.parse(localStorage.getItem('User'));
     const notification = new Notification();
     notification.content = new NotificationTemplates()
-      .getCommentedNotiTemplate(user.displayName, this.post.post.title);
-    notification.displayImage = user.profileImage;
+      .getCommentedNotiTemplate(this.user.displayName, this.post.post.title);
+    notification.displayImage = this.user.avatar;
     notification.receivers = [this.post.post.author.id];
     notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.comment.postId;
 
@@ -94,11 +95,10 @@ export class SingleCommentComponent implements OnInit {
   }
 
   sendLikeCommentNotification() {
-    const user = JSON.parse(localStorage.getItem('User'));
     const notification = new Notification();
     notification.content = new NotificationTemplates()
-      .getLikeCommentNotiTemplate(user.displayName, this.post.post.title);
-    notification.displayImage = user.profileImage;
+      .getLikeCommentNotiTemplate(this.user.displayName, this.post.post.title);
+    notification.displayImage = this.user.avatar;
     notification.receivers = [this.post.post.author.id];
     notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.post.id;
 

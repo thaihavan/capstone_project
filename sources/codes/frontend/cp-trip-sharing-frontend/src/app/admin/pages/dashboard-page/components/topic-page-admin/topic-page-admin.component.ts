@@ -3,16 +3,16 @@ import { PostService } from 'src/app/core/services/post-service/post.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { FormAddTopicsComponent } from './form-add-topics/form-add-topics.component';
-import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Topic } from 'src/app/model/Topic';
 import { DeleteConfirmPopupComponent } from 'src/app/shared/components/delete-confirm-popup/delete-confirm-popup.component';
 
+
 @Component({
-  selector: 'app-interested-topic-admins',
-  templateUrl: './interested-topic-admins.component.html',
-  styleUrls: ['./interested-topic-admins.component.css']
+  selector: 'app-topic-page-admin',
+  templateUrl: './topic-page-admin.component.html',
+  styleUrls: ['./topic-page-admin.component.css']
 })
-export class InterestedTopicAdminsComponent implements OnInit {
+export class TopicPageAdminComponent implements OnInit {
   listTopics: Topic[] = [];
   selectedTopics: string[] = [];
 
