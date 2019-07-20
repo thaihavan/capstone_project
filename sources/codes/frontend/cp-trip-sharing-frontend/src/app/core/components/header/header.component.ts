@@ -23,7 +23,6 @@ export class HeaderComponent implements OnInit {
   checkLogin: boolean;
   checkLogined: boolean;
   userId: string;
-  urlImgavatar = '';
 
   numNewMessages = 0;
   numNewNotifications = 0;
