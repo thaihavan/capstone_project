@@ -13,4 +13,12 @@ export class HeaderAdminComponent implements OnInit {
   ngOnInit() {
   }
 
+  gotoPersonalPage() {
+    
+  }
+
+  signOut() {
+
+  }
+
 }

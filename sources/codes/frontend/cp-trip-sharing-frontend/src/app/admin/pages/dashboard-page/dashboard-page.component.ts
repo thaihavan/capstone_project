@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -7,11 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardPageComponent implements OnInit {
 
-  constructor() { }
+  selectedTab = '';
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
   gotoTopicManagement() {
-    window.location.href = 'dashboard/chu-de';
+    this.selectedTab = 'topic';
+    this.router.navigate(['dashboard/chu-de']);
   }
 }

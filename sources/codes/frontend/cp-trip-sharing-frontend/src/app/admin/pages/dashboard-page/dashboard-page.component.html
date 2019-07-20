@@ -3,32 +3,75 @@
   <mat-sidenav-container class="mat-drawer-container">
     <mat-sidenav #drawer class="mat-drawer mat-sidenav mat-drawer-side" mode="side" opened="true" position="start">
       <div class="mat-drawer-inner-container">
+
         <mat-toolbar>
-          Dashboard
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
         </mat-toolbar>
-        <mat-nav-list>
-          <mat-list-item>
-            <mat-icon>dashboard</mat-icon><span>Overview</span>
-          </mat-list-item>
-          <mat-list-item (click)="gotoTopicManagement()">
-              <mat-icon>list_alt</mat-icon><span>Chủ đề</span>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon>person</mat-icon><span>Người dùng</span>
-          </mat-list-item>
-          <mat-list-item [matMenuTriggerFor]="reportMenu">
-              <mat-icon>report</mat-icon><span>Báo cáo</span>
-            <mat-menu #reportMenu="matMenu">
-              <button mat-menu-item> <mat-icon>person</mat-icon>Người dùng</button>
-              <button mat-menu-item><mat-icon>list_alt</mat-icon>Bài đăng</button>
-              <button mat-menu-item><mat-icon>comment</mat-icon>Bình luận</button>
-            </mat-menu>
-          </mat-list-item>
-        </mat-nav-list>
+
+        <div>
+          <mat-accordion>
+            <mat-expansion-panel [disabled]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <mat-icon>insert_chart</mat-icon>
+                  <span>Overview</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <mat-accordion>
+            <mat-expansion-panel [disabled]="true">
+              <mat-expansion-panel-header (click)="gotoTopicManagement()" [ngClass]="{'active-tab': selectedTab=='topic'}">
+                <mat-panel-title>
+                  <mat-icon>list_alt</mat-icon>
+                  <span>Chủ đề</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <mat-accordion>
+            <mat-expansion-panel [disabled]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <mat-icon>group</mat-icon>
+                  <span>Người dùng</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <mat-icon>report</mat-icon>
+                  <span>Báo cáo</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <button mat-menu-item>
+                <mat-icon>person</mat-icon><span>Người dùng</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>list_alt</mat-icon><span>Bài đăng</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>comment</mat-icon><span>Bình luận</span>
+              </button>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
       </div>
     </mat-sidenav>
     <mat-sidenav-content class="mat-drawer-content">
-     <router-outlet></router-outlet>
+      <div class="drawer-content-header">
+        <h2>Chủ đề</h2>
+      </div>
+      <div class="drawer-content-body">
+        <router-outlet></router-outlet>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

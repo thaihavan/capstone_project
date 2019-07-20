@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
 import { InterestedTopicAdminsComponent } from './pages/interested-topic-admins/interested-topic-admins.component';
 import { FormAddTopicsComponent } from './pages/interested-topic-admins/form-add-topics/form-add-topics.component';
+import { DeleteConfirmPopupComponent } from '../shared/components/delete-confirm-popup/delete-confirm-popup.component';
 
 @NgModule({
   declarations: [DashboardPageComponent, HeaderAdminComponent, InterestedTopicAdminsComponent,FormAddTopicsComponent],
@@ -30,6 +31,9 @@ import { FormAddTopicsComponent } from './pages/interested-topic-admins/form-add
   ],
   exports: [
     DashboardPageComponent
+  ],
+  entryComponents: [
+    DeleteConfirmPopupComponent
   ]
 })
 export class AdminModule { }

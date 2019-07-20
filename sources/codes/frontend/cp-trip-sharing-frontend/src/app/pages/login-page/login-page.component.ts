@@ -18,8 +18,6 @@ export class LoginPageComponent implements OnInit {
   password = '';
   account: Account;
   message: string;
-  listUserIdFollowing: string[] = [];
-  listPostIdBookMark: string[] = [];
   form = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -54,8 +52,7 @@ export class LoginPageComponent implements OnInit {
             window.location.href = '/khoi-tao';
           } else {
             localStorage.setItem('User', JSON.stringify(user));
-            this.getFollowings(undefined);
-            this.getListPostIdBookmark(this.redirectHomePage);
+            window.location.href = '/';
           }
         });
       }, (error: HttpErrorResponse) => {
@@ -76,8 +73,8 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginFunction() {
-    this.account.Email = this.form.value.email;
-    this.account.Password = this.form.value.password;
+    this.account.email = this.form.value.email;
+    this.account.password = this.form.value.password;
     this.userService.getAccount(this.account).subscribe((acc: any) => {
       localStorage.setItem('Account', JSON.stringify(acc));
       localStorage.setItem('Token', acc.token);
@@ -87,8 +84,7 @@ export class LoginPageComponent implements OnInit {
           window.location.href = '/khoi-tao';
         } else {
           localStorage.setItem('User', JSON.stringify(user));
-          this.getFollowings(undefined);
-          this.getListPostIdBookmark(this.redirectHomePage);
+          window.location.href = '/';
         }
       });
     }, (err: HttpErrorResponse) => {
@@ -97,37 +93,4 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  getFollowings(callback: any) {
-    const token = localStorage.getItem('Token');
-    if (token != null) {
-      this.userService.getAllFollowingId(token).subscribe((result: any) => {
-        this.listUserIdFollowing = result;
-        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-        if (callback) {
-          callback();
-        }
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
-    }
-  }
-
-  getListPostIdBookmark(callback: any) {
-    const token = localStorage.getItem('Token');
-    if (token != null) {
-      this.userService.getListPostIdBookmarks(token).subscribe((result: any) => {
-        this.listPostIdBookMark = result;
-        localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-        if (callback) {
-          callback();
-        }
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
-    }
-  }
-
-  redirectHomePage() {
-    window.location.href = '';
-  }
 }

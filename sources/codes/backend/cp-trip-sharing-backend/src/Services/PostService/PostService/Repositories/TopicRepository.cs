@@ -7,6 +7,7 @@ using PostService.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PostService.Repositories
@@ -31,6 +32,13 @@ namespace PostService.Repositories
         {
             _topics.FindOneAndDelete(c=>c.Id.Equals(id));
             return true;
+        }
+
+        public bool DeleteMany(List<string> topics)
+        {
+            var result = _topics.DeleteMany(Builders<Topic>.Filter.In(t => t.Id, topics));
+
+            return result.IsAcknowledged;
         }
 
         public IEnumerable<Topic> GetAll()

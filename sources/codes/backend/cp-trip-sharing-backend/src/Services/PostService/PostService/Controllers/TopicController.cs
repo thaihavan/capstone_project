@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using PostService.Models;
 using PostService.Services.Interfaces;
 
@@ -34,10 +35,11 @@ namespace PostService.Controllers
             return NoContent();
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
         [HttpPost("create")]
         public IActionResult AddTopic([FromBody] Topic param)
         {
+            param.Id = ObjectId.GenerateNewId().ToString();
             var temp = _topicService.Add(param);
             if (temp != null)
             {
@@ -50,7 +52,18 @@ namespace PostService.Controllers
         [HttpDelete()]
         public IActionResult DeleteTopic([FromQuery] string id)
         {
-            return Ok(_topicService.Delete(id));
+            var result = _topicService.Delete(id);
+
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost("delete")]
+        public IActionResult DeleteTopics([FromBody] List<string> topics)
+        {
+            var result = _topicService.DeleteMany(topics);
+
+            return Ok(result);
         }
 
     }

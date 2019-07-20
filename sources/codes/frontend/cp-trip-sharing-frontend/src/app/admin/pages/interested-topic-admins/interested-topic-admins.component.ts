@@ -4,6 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { FormAddTopicsComponent } from './form-add-topics/form-add-topics.component';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
+import { Topic } from 'src/app/model/Topic';
+import { DeleteConfirmPopupComponent } from 'src/app/shared/components/delete-confirm-popup/delete-confirm-popup.component';
 
 @Component({
   selector: 'app-interested-topic-admins',
@@ -11,7 +13,8 @@ import { MessagePopupComponent } from 'src/app/shared/components/message-popup/m
   styleUrls: ['./interested-topic-admins.component.css']
 })
 export class InterestedTopicAdminsComponent implements OnInit {
-  listTopics: any[] = [];
+  listTopics: Topic[] = [];
+  selectedTopics: string[] = [];
 
   constructor(private postService: PostService, public dialog: MatDialog) {
     this.getAllTopics();
@@ -19,6 +22,7 @@ export class InterestedTopicAdminsComponent implements OnInit {
 
   ngOnInit() {
   }
+
   getAllTopics() {
     this.postService.getAllTopics().subscribe((topics: any) => {
       this.listTopics = topics;
@@ -27,40 +31,62 @@ export class InterestedTopicAdminsComponent implements OnInit {
     });
   }
 
-  showPopupAddTopic() {
-    this.openDialog();
+  onClickTopic(topic: Topic) {
+    if (this.selectedTopics.indexOf(topic.id) === -1) {
+      this.selectedTopics.push(topic.id);
+    } else {
+      const unselected = this.selectedTopics.indexOf(topic.id);
+      this.selectedTopics.splice(unselected, 1);
+    }
   }
 
-  openDialog(): void {
+  addTopic() {
     const dialogRef = this.dialog.open(FormAddTopicsComponent, {
-      width: '500px',
+      width: '420px',
       data: {
         toppics: [],
         destinations: [],
       }
     });
-  }
 
-  removeTopic(topicId: any) {
-    this.postService.removeTopic(topicId).subscribe((result: any) => {
-      this.openDialogMessageConfirm();
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
+    dialogRef.afterClosed().subscribe((res: Topic) => {
+      if (res && res != null) {
+        this.listTopics.push(res);
+      }
     });
   }
 
-  openDialogMessageConfirm() {
-    const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
-      height: 'auto',
-      position: {
-        top: '20px'
-      },
-      disableClose: true
-    });
-    const instance = dialogRef.componentInstance;
-    instance.message.messageText = 'Bạn đã xóa chủ đề thành công!';
-    instance.message.url = '/dashboard/chu-de';
+  removeTopics() {
+
+    if (this.selectedTopics.length > 0) {
+      const dialogRef = this.dialog.open(DeleteConfirmPopupComponent, {
+        width: '320px',
+        height: 'auto',
+        position: {
+          top: '150px'
+        },
+        disableClose: true
+      });
+      const instance = dialogRef.componentInstance;
+      instance.message = `Bạn có chắc muốn xóa ${this.selectedTopics.length} chủ đề này không?`;
+
+      dialogRef.afterClosed().subscribe((res: string) => {
+        if (res === 'yes') {
+          if (this.selectedTopics.length > 0) {
+            this.postService.removeTopics(this.selectedTopics).subscribe((result: any) => {
+              this.listTopics = this.listTopics.filter(t => this.selectedTopics.find(x => x === t.id) == null);
+            }, (err: HttpErrorResponse) => {
+              console.log(err);
+            });
+          }
+        }
+      });
+    }
+
+  }
+
+  isSelected(topic: Topic) {
+    return topic && this.selectedTopics.indexOf(topic.id) !== -1;
   }
 
 }

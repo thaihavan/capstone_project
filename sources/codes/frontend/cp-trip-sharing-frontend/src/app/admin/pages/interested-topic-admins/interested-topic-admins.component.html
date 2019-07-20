@@ -1,21 +1,17 @@
-<div class="interested-topic-admin">
-  <div class="title">Danh sách tất cả các chủ đề bài viết</div>
-  <div class="interestedtopic">
-    <div class="topic" *ngFor="let eachtopic of listTopics">
-      <img class="imageInterested" src="{{eachtopic.imgUrl}}" />
-      <span class="name-topic">{{eachtopic.name}}</span>
-      <div class="icon-edit">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="removeTopic(eachtopic.id)">
-            <mat-icon>remove</mat-icon>
-            <span>Xóa</span>
-          </button>
-        </mat-menu>
-      </div>
+<div class="drawer-content-body-container">
+  <div class="action-section">
+    <button class="button-add" (click)= "addTopic()" mat-button color="primary">Thêm</button>
+    <button [ngClass]="{'button-delete': true, 'disable-button': selectedTopics.length == 0}" 
+    (click)= "removeTopics()" mat-button color="primary">Xóa</button>
+  </div>
+  
+  <div class="interested-topic">
+    <div *ngFor="let topic of listTopics" 
+    [ngClass]="{'topic': true, 'topic-selected': isSelected(topic)}" 
+    (click)="onClickTopic(topic)">
+      <img class="image-interested" src="{{topic.imgUrl}}" />
+      <span class="name-topic">{{topic.name}}</span>
     </div>
   </div>
-  <button (click)= "showPopupAddTopic()" mat-button color="primary">Thêm chủ đề</button>
+  
 </div>

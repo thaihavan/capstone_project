@@ -47,8 +47,8 @@ export class RegisterPageComponent implements OnInit {
 
   onSubmit() {
     if (this.form.value.password === this.form.value.repassword) {
-      this.account.Email = this.form.value.email;
-      this.account.Password = this.form.value.password;
+      this.account.email = this.form.value.email;
+      this.account.password = this.form.value.password;
       this.userService.registerAccount(this.account).subscribe((message: any) => {
         this.openDialogMessageConfirm();
         setTimeout(() => {

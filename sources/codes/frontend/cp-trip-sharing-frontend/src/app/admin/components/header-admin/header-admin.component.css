@@ -1,30 +1,47 @@
-.bg-dark {
-    background-color: #2196f3 !important;
-    position: relative;
+.navbar {
+  height: 64px;
 }
 
-.logo{
-    width: 180px;
-      vertical-align: middle;
-      height: 35px;
-  }
-  
-  .imgavatar{
-    width: 45px;
-    height: 45px;
-    border-radius: 100%;
-    border: 1px solid white;
-  }
+.bg-dark {
+  background-color: #2196f3 !important;
+  position: relative;
+}
 
-  .avatar-image {
-    position: absolute;
-    right: 2%;
-    top: 3px;
-  }
+.logo {
+  height: 64px;
+}
 
-  .name-user{
-    color: white;
-    margin-right: 10px;
-    font-size: 15px;
-    font-weight: 500;
-  }
+.logo img {
+  height: 100%;
+  width: auto;
+}
+
+.img-circle{
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 2px solid white;
+}
+
+.avatar-container {
+  position: absolute;
+  right: 80px;
+  top: 7px;
+}
+
+.name-user{
+  color: white;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.user-menu {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.user-menu .menu-icon {
+  color: #fff !important;
+}

@@ -8,6 +8,8 @@ import { Conversation } from 'src/app/model/Conversation';
 import { ChatService } from '../../services/chat-service/chat.service';
 import { ChatMessage } from 'src/app/model/ChatMessage';
 import { UserService } from '../../services/user-service/user.service';
+import { User } from 'src/app/model/User';
+import { Account } from 'src/app/model/Account';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +17,9 @@ import { UserService } from '../../services/user-service/user.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  user: User;
+  account: Account;
   checkLogin: boolean;
   checkLogined: boolean;
   userId: string;
@@ -36,32 +41,43 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('Token') != null) {
+    this.account = JSON.parse(localStorage.getItem('Account'));
+    this.user = JSON.parse(localStorage.getItem('User'));
+
+    if (this.account != null) {
       this.checkLogin = false;
       this.checkLogined = true;
+
+      if (this.account.role === 'member') {
+
+        this.getNotifications();
+        this.getAllConversations();
+        this.getFollowings();
+        this.getListPostIdBookmark();
+
+        this.initSocketConnection();
+      } else if (this.account.role === 'admin') {
+        window.location.href = '/dashboard';
+      }
     } else {
       this.checkLogin = true;
       this.checkLogined = false;
     }
+  }
 
-    this.getNotifications();
-    this.getAllConversations();
+  initSocketConnection() {
+    this.notifyService.initNotifyHubConnection();
+    this.chatService.initChatConnection();
 
-    if (localStorage.getItem('User') != null) {
-      this.notifyService.initNotifyHubConnection();
-      this.chatService.initChatConnection();
+    this.notifyService.hubConnection.on('clientNotificationListener', () => {
+      console.log('New notification received!');
+      this.getNotifications();
+    });
 
-      this.notifyService.hubConnection.on('clientNotificationListener', () => {
-        console.log('New notification received!');
-        this.getNotifications();
-      });
-
-      this.chatService.hubConnection.on('clientMessageListener', (convId: string, message: ChatMessage) => {
-        console.log('New message received');
-        this.getAllConversations();
-      });
-    }
-    this.getAvatar();
+    this.chatService.hubConnection.on('clientMessageListener', (convId: string, message: ChatMessage) => {
+      console.log('New message received');
+      this.getAllConversations();
+    });
   }
 
   openDialogLoginForm() {
@@ -72,10 +88,11 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut() {
+    localStorage.clear();
     this.userService.Logout().subscribe((res) => {
-      localStorage.clear();
       window.location.href = '/';
     }, (error: HttpErrorResponse) => {
+      window.location.href = '/';
       console.log(error);
     });
   }
@@ -170,15 +187,25 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  // get image avatar
-  getAvatar() {
-    const user = JSON.parse(localStorage.getItem('User'));
-    this.urlImgavatar = (user != null && user.avatar) ? user.avatar : '../../../../assets/avatar.png';
-  }
-
   onSearchBtnClick() {
     if (this.search && this.search.trim() !== '') {
       window.location.href = 'search/text/bai-viet/' + this.search;
     }
+  }
+
+  getFollowings() {
+    this.userService.getAllFollowingId(this.account.token).subscribe((result: any) => {
+      localStorage.setItem('listUserIdFollowing', JSON.stringify(result));
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  getListPostIdBookmark() {
+    this.userService.getListPostIdBookmarks(this.account.token).subscribe((result: any) => {
+      localStorage.setItem('listPostIdBookmark', JSON.stringify(result));
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
   }
 }

@@ -6,7 +6,11 @@ namespace PostService.Services.Interfaces
     public interface ITopicService
     {
         Topic Add(Topic param);
+
         IEnumerable<Topic> GetAll();
+
         bool Delete(string topicId);
+
+        bool DeleteMany(List<string> topics);
     }
 }
