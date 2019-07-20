@@ -2,9 +2,6 @@
   <div class="header">
     <mat-toolbar color="primary">
       <mat-toolbar-row>
-        <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
-          <mat-icon>menu</mat-icon>
-        </button>
         <span><img class="logo"
             src="../../../../assets/trip share logo-01.png"></span>
         <span class="menu-spacer"></span>
@@ -68,7 +65,7 @@
             nhập</button>
           <button *ngIf="checkLogined" class="avatar-image" aria-haspopup="true" class="m-r-5 mat-icon-button"
             mat-icon-button="" [matMenuTriggerFor]="menuProfile">
-            <span class="mat-button-wrapper"><img alt="user" class="imgavatar" src="{{urlImgavatar}}"></span>
+            <span class="mat-button-wrapper"><img alt="user" class="imgavatar" src="{{user.avatar}}"></span>
             <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
             <div class="mat-button-focus-overlay"></div>
           </button>
@@ -105,18 +102,6 @@
 
 
   <mat-sidenav-container fxFlexFill>
-    <mat-sidenav #sidenav>
-      <mat-nav-list>
-        <div class="nav-left">
-          <a href="#" mat-list-item><i class="fa fa-plus-circle fa-2x"></i><span>Đăng</span></a>
-          <a href="#" mat-list-item><i class="fa fa-suitcase fa-2x"></i><span>Chuyến đi</span></a>
-          <a href="#" mat-list-item><i class="fa fa-envelope fa-2x"></i><span>Hộp thư đến</span></a>
-          <a href="#" mat-list-item><i class="fa fa-user-circle fa-2x"></i><span>Hồ sơ</span></a>
-          <a mat-list-item (click)="openDialogLoginForm()"><i class="fa fa-sign-in fa-2x"></i><span>Đăng nhập</span></a>
-          <a href="#" mat-list-item><i class="fa fa-search fa-2x"></i><span>Tìm kiếm</span></a>
-        </div>
-      </mat-nav-list>
-    </mat-sidenav>
     <mat-sidenav-content fxFlexFill>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
