@@ -1,44 +1,95 @@
-<div class="registerform">
-    <div class="form_wrapper">
-        <h2>Đăng Ký</h2>
-        <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
-            <div class="form-group">
-                <label for="email">Email<span class="require"> (*)</span></label>
-                <input type="text" class="form-control" formControlName="email"
-                    [ngClass]="{'is-invalid':form.get('email').touched && form.get('email').invalid}" />
-                <div *ngIf="form.get('email').touched && form.get('email').invalid" class="invalid-feedback">
-                    <div *ngIf="form.get('email').errors.required">Kiểm tra lại Email của bạn</div>
-                    <div *ngIf="form.get('email').errors.email">Kiểm tra lại Email của bạn</div>
-                </div>
+<div class="register-form row justify-content-center pt-5 pb-5">
+    <div class="col-5">
+        <div class="card">
+            <div class="login-card-header">
+                <h5 class="card-header info-color white-text text-center py-4">
+                    <strong>Đăng Kí</strong>
+                </h5>
             </div>
-            <div class="form-group">
-                <label for="password">Nhập mật khẩu <span class="require"> (*)</span></label>
-                <input type="password" class="form-control" formControlName="password"
-                    [ngClass]="{'is-invalid':form.get('password').touched && form.get('password').invalid}" />
-                <div *ngIf="form.get('password').touched && form.get('password').invalid" class="invalid-feedback">
-                    <div *ngIf="form.get('password').errors.required">Kiểm tra lại mật khẩu</div>
-                    <div *ngIf="form.get('password').errors.minlength">Mật khẩu phải có ít nhất 6 kí tự</div>
-                </div>
+
+            <!--Card content-->
+            <div class="card-body">
+
+                <!-- Form -->
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" class="text-center mt-2">
+
+                    <!-- Email -->
+                    <mat-form-field>
+                        <mat-label>Nhập email</mat-label>
+                        <input [(ngModel)]="email" matInput placeholder="Placeholder" type="email"
+                            (onchange)="emailOnchage()" formControlName="email">
+                        <mat-error *ngIf="hasError('email','required')">Email bắt buộc</mat-error>
+                        <mat-error *ngIf="hasError('email','maxLength')">Email phải nỏ hơn 255 kí tự</mat-error>
+                        <mat-error *ngIf="hasError('email','email')">Email không hợp lệ</mat-error>
+                    </mat-form-field>
+
+                    <!-- Password -->
+                    <mat-form-field>
+                        <mat-label>Nhập mật khẩu</mat-label>
+                        <input [(ngModel)]="password" formControlName="password" matInput placeholder="Nhập mật khẩu"
+                            [type]="pasHide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="pasHide = !pasHide" type="button"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="pasHide">
+                            <mat-icon>{{pasHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="hasError('password','required')">Mật khẩu bắt buộc</mat-error>
+                        <mat-error *ngIf="hasError('password','minlength')">Mật khẩu phải lớn hơn 6 kí tự</mat-error>
+                        <mat-error *ngIf="hasError('password','maxlength')">Mật khẩu phải nhỏ hơn 255 kí tự</mat-error>
+                        <mat-error *ngIf="hasError('password','pattern')">Mật khẩu không hợp lệ</mat-error>
+                    </mat-form-field>
+
+                    <!-- Re Password -->
+                    <mat-form-field>
+                        <mat-label>Nhập mật lại khẩu</mat-label>
+                        <input [(ngModel)]="rePassword" formControlName="rePassword" matInput
+                            placeholder="Nhập lại mật khẩu" [type]="pasHide ? 'password' : 'text'"
+                            [errorStateMatcher]="matcher">
+                        <button mat-icon-button matSuffix (click)="pasHide = !pasHide" type="button"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="pasHide">
+                            <mat-icon>{{pasHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="hasError('rePassword','required')">Nhập lại mật khẩu bắt buộc</mat-error>
+                        <mat-error *ngIf="!hasError('rePassword','required') && form.hasError('isNotMatchPassword')">
+                            Không trùng với mật khẩu</mat-error>
+                    </mat-form-field>
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <div>
+                            <!-- Remember me -->
+                            <div class="form-check">
+                                <mat-checkbox class="color-gray" [(ngModel)]="agreePolicy" formControlName="checkbox">
+                                    Tôi đồng ý với các điều khoản của Trip Sharing
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sign in button -->
+                    <button class="btn-sign-in" [disabled]="form.invalid || !form.valid" mat-flat-button color="primary"
+                        type="submit">
+                        Đăng Kí
+                        <ng-container *ngIf="isLoading">
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </ng-container>
+                    </button>
+                    <mat-error *ngIf="errorRegister">
+                        {{message}}
+                    </mat-error>
+                    <!-- Social login -->
+                    <p class="color-gray">Hoặc đăng kí với:</p>
+                    <a mat-mini-fab class="mr-3" color="primary">
+                        <i class="fa fa-facebook-f"></i>
+                    </a>
+                    <a mat-mini-fab color="warn">
+                        <i class="fa fa-google"></i>
+                    </a>
+                </form>
+                <!-- Form -->
+
             </div>
-            <div class="form-group">
-                <label for="password">Nhập lại mật khẩu<span class="require"> (*)</span></label>
-                <input type="password" class="form-control" formControlName="repassword"
-                    [ngClass]="{'is-invalid':form.get('repassword').touched && form.get('repassword').invalid}" />
-                <div *ngIf="form.get('repassword').touched && form.get('repassword').invalid" class="invalid-feedback">
-                    <div *ngIf="form.get('repassword').errors.required">Kiểm tra lại mật khẩu</div>
-                    <div *ngIf="form.get('repassword').errors.minlength">Mật khẩu phải có ít nhất 6 kí tự</div>
-                </div>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" value="true" class="form-check-input" id="exampleCheck1"
-                    formControlName="checkbox" required>
-                <label class="form-check-label" for="exampleCheck1">Tôi đồng ý với các điều khoản của <a
-                        href="#">TripSharing</a></label>
-            </div>
-            <div *ngIf="error" class="err-mess"><span>{{message}}</span></div>
-            <div class="form-group">
-                <button class="btn btn-primary" [disabled]="!form.valid">Đăng ký</button>
-            </div>
-        </form>
+
+        </div>
     </div>
 </div>

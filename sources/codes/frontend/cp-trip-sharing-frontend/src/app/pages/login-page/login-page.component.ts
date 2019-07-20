@@ -7,6 +7,7 @@ import { Account } from 'src/app/model/Account';
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-login-page',
@@ -16,6 +17,8 @@ import { NotifyService } from 'src/app/core/services/notify-service/notify.servi
 export class LoginPageComponent implements OnInit {
   email = '';
   password = '';
+  pasHide = true;
+  isLoading = false;
   account: Account;
   message: string;
   form = new FormGroup({
@@ -32,7 +35,8 @@ export class LoginPageComponent implements OnInit {
               private dialogRef: MatDialogRef<LoginPageComponent>,
               private userService: UserService,
               private authService: AuthService,
-              private notifyService: NotifyService) {
+              private notifyService: NotifyService,
+              private alertifyService: AlertifyService) {
     this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }
@@ -73,6 +77,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginFunction() {
+    this.isLoading = true;
     this.account.email = this.form.value.email;
     this.account.password = this.form.value.password;
     this.userService.getAccount(this.account).subscribe((acc: any) => {
@@ -88,8 +93,7 @@ export class LoginPageComponent implements OnInit {
         }
       });
     }, (err: HttpErrorResponse) => {
-      this.message = 'Đăng nhập thất bại kiểm tra email hoặc password!';
-      console.log(err);
+      this.alertifyService.error('Lỗi đăng nhập!');
     });
   }
 

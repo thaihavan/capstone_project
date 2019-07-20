@@ -39,8 +39,18 @@ namespace IdentityProvider.Test
             Account acc = new Account() { UserId = "5d027f3e8254691f48a4ab7c", Email = "linhlp4@fpt.edu.vn", Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=", Role = "member", PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==", Token = "asvaanbfbsgnnsn", Id = "5d027f3e8254691f48a4ab7d" };
             moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
-            Account result = testService.Authenticate("abc@gmail..com", "new_password");
+            Account result = testService.Authenticate("abc@gmail.com", "new_password");
             Assert.IsNotNull(result);
+        }
+
+        [TestCase]
+        public void TestAuthenticateReturnNull()
+        {
+            Account acc = null;
+            moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
+            var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
+            Account result = testService.Authenticate("abc@gmail.com", "new_password");
+            Assert.IsNull(result);
         }
 
         [TestCase]
@@ -70,7 +80,7 @@ namespace IdentityProvider.Test
 
         [TestCase]
 
-        public void TestRegisterIfreturnNull()
+        public void TestRegisterReturnNull()
         {
             Account acc = new Account() { Email = "linhlppp@fpt.edu.vn", Password = "125436458569679" };
             Account account = new Account();
@@ -91,6 +101,18 @@ namespace IdentityProvider.Test
             var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
             bool changePassResult = testService.ChangePassword("abc@gmail.com", "new_password", "123456789");
             Assert.IsTrue(changePassResult);
+        }
+
+        [TestCase]
+
+        public void TestChangePasswordReturnFalse()
+        {
+            Account acc = new Account() { UserId = "5d027f3e8254691f48a4ab7c", Email = "linhlp4@fpt.edu.vn", Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=", Role = "member", PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==", Token = "asvaanbfbsgnnsn", Id = "5d027f3e8254691f48a4ab7d" };
+            moqIAccountRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(acc);
+            moqIAccountRepository.Setup(x => x.Update(It.IsAny<Account>())).Returns(acc);
+            var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
+            bool changePassResult = testService.ChangePassword("abc@gmail.com", "newpassword", "123456789");
+            Assert.IsFalse(changePassResult);
         }
 
         [TestCase]
@@ -195,6 +217,42 @@ namespace IdentityProvider.Test
             //moqaccountService.Setup(x => x.GetGoogleUserInformation(It.IsAny<string>())).Returns(googleUser);
             var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
             var account = testService.GoogleAuthenticate(token);
+            Assert.IsNull(account);
+        }
+
+        //[TestCase]
+        //public void TestGetFacebookUserInformation()
+        //{
+        //    AccountService accountService = new AccountService(Options.Create(_setting));
+        //    string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjVkMGExNzcwMWEwYTQyMDAwMTdkZTZjOCIsInJvbGUiOiJtZW1iZXIiLCJ1c2VyX2lkIjoiNWQwYTE3NzAxYTBhNDIwMDAxN2RlNmM3IiwibmJmIjoxNTYyOTA2NjI3LCJleHAiOjE1NjI5MjgyMjcsImlhdCI6MTU2MjkwNjYyNywiaXNzIjoiYXV0aC50cmlwc2hhcmluZy5jb20ifQ.ou0CVGErEDI7DNGSpHsm3Q6aT5g8u2tVekWM9jklvY0";
+        //    FacebookUser googleUser = accountService.GetFacebookUserInformation(token);
+        //    Assert.IsNull(googleUser);
+        //}
+
+        [TestCase]
+        public void TestFacebookAuthenticate()
+        {
+            //Mock<IAccountService> moqaccountService = new Mock<IAccountService>();
+            string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjVkMGExNzcwMWEwYTQyMDAwMTdkZTZjOCIsInJvbGUiOiJtZW1iZXIiLCJ1c2VyX2lkIjoiNWQwYTE3NzAxYTBhNDIwMDAxN2RlNmM3IiwibmJmIjoxNTYyOTA2NjI3LCJleHAiOjE1NjI5MjgyMjcsImlhdCI6MTU2MjkwNjYyNywiaXNzIjoiYXV0aC50cmlwc2hhcmluZy5jb20ifQ.ou0CVGErEDI7DNGSpHsm3Q6aT5g8u2tVekWM9jklvY0";
+            Account acc = new Account()
+            {
+                UserId = "5d027f10de896f17a87b1044",
+                Email = "linhlp2@fpt.edu.vn",
+                Password = "UUFLBkIWy9AeELxK3fi3smamVNdCmeJX4LWHPQM/3X4=",
+                Role = "member",
+                PasswordSalt = "LQ993XXKV5Eo6/IBmoytuQ==",
+                Token = "asvaanbfbsgnnsn",
+                Id = "5d027f10de896f17a87b1045"
+            };
+            FacebookUser googleUser = new FacebookUser()
+            {
+                Email = "phongtv@gmail.com"
+            };
+            moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
+            moqIAccountRepository.Setup(x => x.Add(It.IsAny<Account>())).Returns(acc);
+            //moqaccountService.Setup(x => x.GetGoogleUserInformation(It.IsAny<string>())).Returns(googleUser);
+            var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
+            var account = testService.FacebookAuthenticate(token);
             Assert.IsNull(account);
         }
     }
