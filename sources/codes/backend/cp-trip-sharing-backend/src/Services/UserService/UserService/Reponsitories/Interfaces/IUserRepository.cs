@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UserServices.Models;
 
 namespace UserServices.Reponsitories.Interfaces
@@ -7,6 +8,6 @@ namespace UserServices.Reponsitories.Interfaces
     {
         IEnumerable<User> GetUsers(string search);
 
-        int GetNumberOfUser(string timePeriod);
+        object GetUserStatistics(DateTime from, DateTime to);
     }
 }

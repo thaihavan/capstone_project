@@ -32,6 +32,5 @@ namespace PostService.Services.Interfaces
 
         bool CancelRequest(string userId, string postId);
 
-        int GetNumberOfCompanionPost(PostFilter filter);
     }
 }

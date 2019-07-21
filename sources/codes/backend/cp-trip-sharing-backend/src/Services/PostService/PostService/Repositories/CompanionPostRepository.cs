@@ -327,74 +327,39 @@ namespace PostService.Repositories
             return _companionPostJoinRequests.Find(x => x.UserId.Equals(userId) && x.CompanionPostId.Equals(postId)).FirstOrDefault();
         }
 
-        public int GetNumberOfCompanionPost(PostFilter filter)
+        public object GetCompanionPostStatistics(StatisticsFilter filter)
         {
-            // Search filter
-
-            // Text search
-            if (filter.Search == null)
-            {
-                filter.Search = "";
-            }
-            filter.Search = filter.Search.Trim();
-
-            // LocationId search
-            if (filter.LocationId == null)
-            {
-                filter.LocationId = "";
-            }
-
-            Expression<Func<CompanionPost, bool>> searchFilter;
-            searchFilter = a => a.Post.Title.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) >= 0
-                                && a.Destinations.Any(d => filter.LocationId == "" || d.Id == filter.LocationId);
-
-            // Time period filter
-            var filterDate = new DateTime(0);
-            var now = DateTime.Now;
-            switch (filter.TimePeriod)
-            {
-                case "today":
-                    filterDate = now.AddDays(-1);
-                    break;
-                case "this_week":
-                    filterDate = now.AddDays(-7);
-                    break;
-                case "this_month":
-                    filterDate = now.AddDays(-30);
-                    break;
-                case "this_year":
-                    filterDate = now.AddDays(-365);
-                    break;
-                case "all_time":
-                    filterDate = new DateTime(0);
-                    break;
-            }
+            //time filter 
             Expression<Func<CompanionPost, bool>> dateFilter =
-                post => post.Post.PubDate >= filterDate;
+                post => post.Post.PubDate >= filter.From && post.Post.PubDate <= filter.To;
+
             Func<CompanionPost, Post, CompanionPost> SelectCompanionPostWithPost =
                 ((companionPost, post) => { companionPost.Post = post; return companionPost; });
-            Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
-                ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
 
-            IEnumerable<CompanionPost> result;
-
-            result = _companionPosts.AsQueryable()
+            var companionPosts = _companionPosts.AsQueryable()
                 .Join(
                     _posts.AsQueryable(),
                     companionPost => companionPost.PostId,
                     post => post.Id,
                     SelectCompanionPostWithPost)
-                .Join(
-                    _authors.AsQueryable(),
-                    companionPostWithPost => companionPostWithPost.Post.AuthorId,
-                    author => author.Id,
-                    SelectCompanionPostWithAuthor)
-                .Where(searchFilter.Compile())
                 .Where(dateFilter.Compile())
-                .Select(a => a)
-                .OrderByDescending(a => a.Post.PubDate);
+                .OrderBy(x => x.Post.PubDate)
+                .Select(x => x)
+                .ToList();
 
-            return result.Count();
+            var result = companionPosts
+                .GroupBy(x => x.Post.PubDate.ToShortDateString())
+                .Select(x => new
+                {
+                    name = x.Key,
+                    value = x.Count()
+                });
+
+            return new
+            {
+                name = "CompanionPost",
+                series = result
+            };
         }
     }
 }

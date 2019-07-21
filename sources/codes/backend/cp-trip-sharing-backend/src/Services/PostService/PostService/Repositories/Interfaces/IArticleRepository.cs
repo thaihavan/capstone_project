@@ -18,6 +18,6 @@ namespace PostService.Repositories.Interfaces
 
         IEnumerable<Article> GetPopularArticles(PostFilter postFilter, int page);
 
-        int GetNumberOfArticlePost(PostFilter postFilter);
+        object GetArticleStatistics(StatisticsFilter filter);
     }
 }

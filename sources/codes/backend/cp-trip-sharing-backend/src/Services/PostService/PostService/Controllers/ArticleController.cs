@@ -133,14 +133,6 @@ namespace PostService.Controllers
                 return BadRequest();
             }
             return Ok();
-        }
-
-        [Authorize(Roles = "admin")]
-        [HttpPost("post/count")]
-        public IActionResult GetNumberOfCompanionPost([FromBody]PostFilter filter)
-        {
-            var result = _articleService.GetNumberOfArticlePost(filter);
-            return Ok(new { ArticlePostCount = result });
-        }
+        }        
     }
 }

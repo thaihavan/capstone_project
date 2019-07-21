@@ -24,6 +24,6 @@ namespace PostService.Repositories.Interfaces
 
         CompanionPostJoinRequest GetRequestByUserIdAndPostId(string userId, string postId);
 
-        int GetNumberOfCompanionPost(PostFilter postFilter);
+        object GetCompanionPostStatistics(StatisticsFilter filter);
     }
 }

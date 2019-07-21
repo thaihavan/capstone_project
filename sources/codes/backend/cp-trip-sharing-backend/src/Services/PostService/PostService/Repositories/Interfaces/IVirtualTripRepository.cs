@@ -16,6 +16,6 @@ namespace PostService.Repositories.Interfaces
 
         IEnumerable<VirtualTrip> GetAllVirtualTripsByUser(string userId, PostFilter postFilter, int page);
 
-        int GetNumberOfVirtualTrip(PostFilter filter);
+        object GetVirtualTripStatistics(StatisticsFilter filter);
     }
 }

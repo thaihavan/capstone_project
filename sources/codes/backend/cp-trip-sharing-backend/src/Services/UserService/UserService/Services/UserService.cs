@@ -44,11 +44,6 @@ namespace UserServices.Services
             return result;
         }
 
-        public int GetNumberOfUser(string timePeriod)
-        {
-            return _userRepository.GetNumberOfUser(timePeriod);
-        }
-
         public User GetUserById(string userId)
         {
             return _userRepository.GetById(userId);
@@ -57,6 +52,11 @@ namespace UserServices.Services
         public IEnumerable<User> GetUsers(string search)
         {
             return _userRepository.GetUsers(search);
+        }
+
+        public object GetUserStatistics(DateTime from, DateTime to)
+        {
+            return _userRepository.GetUserStatistics(from, to);
         }
 
         public User Update(User user)

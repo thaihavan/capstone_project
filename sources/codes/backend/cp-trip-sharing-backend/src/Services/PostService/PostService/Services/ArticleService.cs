@@ -66,10 +66,6 @@ namespace PostService.Services
         {
             return _articleRepository.GetPopularArticles(postFilter, page);
         }
-
-        public int GetNumberOfArticlePost(PostFilter postFilter)
-        {
-            return _articleRepository.GetNumberOfArticlePost(postFilter);
-        }
+    
     }
 }

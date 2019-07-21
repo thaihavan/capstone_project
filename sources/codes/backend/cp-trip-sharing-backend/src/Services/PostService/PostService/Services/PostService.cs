@@ -15,10 +15,16 @@ namespace PostService.Services
     {
 
         private readonly IPostRepository _postRepository = null;
+        private readonly IArticleRepository _articleRepository = null;
+        private readonly ICompanionPostRepository _companionPostRepository = null;
+        private readonly IVirtualTripRepository _virtualTripRepository = null;
 
         public PostService(IOptions<AppSettings> settings)
         {
             _postRepository = new PostRepository(settings);
+            _articleRepository = new ArticleRepository(settings);
+            _companionPostRepository = new CompanionPostRepository(settings);
+            _virtualTripRepository = new VirtualTripRepository(settings);
         }
 
         public PostService(IPostRepository postRepository)
@@ -49,6 +55,20 @@ namespace PostService.Services
         public bool Delete(string id)
         {
             return _postRepository.Delete(id);
+        }
+
+        public object GetAllPostStatistics(StatisticsFilter filter)
+        {
+            var articleStatistics = _articleRepository.GetArticleStatistics(filter);
+            var companionPostStatistics = _companionPostRepository.GetCompanionPostStatistics(filter);
+            var virtualTripStatistic = _virtualTripRepository.GetVirtualTripStatistics(filter);
+
+            var result = new List<object>();
+            result.Add(articleStatistics);
+            result.Add(companionPostStatistics);
+            result.Add(virtualTripStatistic);
+
+            return result;
         }
     }
 }

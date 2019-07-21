@@ -16,6 +16,6 @@ namespace UserServices.Services.Interfaces
 
         User Update(User user);
 
-        int GetNumberOfUser(string timePeriod);
+        object GetUserStatistics(DateTime from, DateTime to);
     }
 }

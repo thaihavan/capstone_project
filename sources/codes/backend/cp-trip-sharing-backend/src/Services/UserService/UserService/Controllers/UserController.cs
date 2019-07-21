@@ -78,12 +78,13 @@ namespace UserServices.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "admin")]
-        [HttpPost("count")]
-        public IActionResult GetNumberOfUser([FromQuery] string TimePeriod)
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
+        [HttpGet("statistics")]
+        public IActionResult GetUserStatistics([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
-            var result = _userService.GetNumberOfUser(TimePeriod);
-            return Ok(new { UserCount = result });
+            var result = _userService.GetUserStatistics(from, to);
+            return Ok(result);
         }
     }
 }
