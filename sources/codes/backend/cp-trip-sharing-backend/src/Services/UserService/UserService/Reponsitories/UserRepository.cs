@@ -61,22 +61,46 @@ namespace UserServices.Reponsitories
 
         public object GetUserStatistics(StatisticsFilter filter)
         {
+            DateTimeFormatInfo format = new DateTimeFormatInfo();
+            format.ShortDatePattern = "yyyy-MM-dd";
+            format.DateSeparator = "-";
+
             Expression<Func<User, bool>> dateFilter =
                 x => filter.From <= x.CreatedDate && x.CreatedDate <= filter.To;
-            var result = _users.AsQueryable()
+            var users = _users.AsQueryable()
                 .Where(dateFilter.Compile())
                 .OrderBy(x => x.CreatedDate)
                 .Select(x => x)
                 .ToList();
+
+            var data = users.GroupBy(x => x.CreatedDate.ToShortDateString())
+                    .Select(x => new
+                    {
+                        name = Convert.ToDateTime(x.Key, format),
+                        value = x.Count()
+                    });
+
+            var dummyData = Enumerable.Range(0, (filter.To - filter.From).Days)
+                .Select(i => new
+                {
+                    name = Convert.ToDateTime(filter.From.AddDays(i), format),
+                    value = 0
+                });
+
+            var exceptData = data.Select(x => new
+            {
+                name = x.name,
+                value = 0
+            });
+
+            var result = data.Union(
+                dummyData.Except(exceptData)
+                ).OrderBy(x => x.name);
+
             return new
             {
                 name = "User",
-                series = result.GroupBy(x => x.CreatedDate.ToShortDateString())
-                    .Select(x => new
-                    {
-                        name = x.Key,
-                        value = x.Count()
-                    })
+                series = result
             };
         }
 

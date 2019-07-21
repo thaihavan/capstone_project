@@ -56,7 +56,7 @@ namespace UserServices.Services
 
         public object GetUserStatistics(StatisticsFilter filter)
         {
-            return _userRepository.GetUserStatistics(from, to);
+            return _userRepository.GetUserStatistics(filter);
         } 
         public void IncreaseContributionPoint(string userId, int point)
         {
