@@ -15,6 +15,8 @@ namespace PostService.Test
     {
         Mock<IArticleRepository> mockArticleRepository;
         Article article;
+        PostFilter postFilter = null;
+
         [SetUp]
         public void Config()
         {
@@ -58,6 +60,15 @@ namespace PostService.Test
                 Post = post,
                 Topics = listTopics
             };
+
+            postFilter = new PostFilter()
+            {
+                LocationId = "5sd239asdd8fass7",
+                Search = "ha noi",
+                TimePeriod = "Tuan qua",
+                Topics = listTopics
+            };
+
             mockArticleRepository = new Mock<IArticleRepository>();
         }
 
@@ -84,7 +95,7 @@ namespace PostService.Test
         {
             mockArticleRepository.Setup(x => x.GetArticleById(It.IsAny<string>(), It.IsAny<string>())).Returns(article);
             var _articleService = new ArticleService(mockArticleRepository.Object);
-            Article articleReturn = _articleService.GetArticleById("articleId","userId");
+            Article articleReturn = _articleService.GetArticleById("articleId", "userId");
             Assert.IsNotNull(articleReturn);
         }
 
@@ -95,6 +106,71 @@ namespace PostService.Test
             var _articleService = new ArticleService(mockArticleRepository.Object);
             Article articleReturn = _articleService.Update(article);
             Assert.IsNotNull(articleReturn);
+        }
+
+        [TestCase]
+        public void TestGetAllArticles()
+        {
+            IEnumerable<Article> articles = new List<Article>()
+            {
+                article
+            };
+            mockArticleRepository.Setup(x => x.GetAllArticles(It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(articles);
+            var _articleService = new ArticleService(mockArticleRepository.Object);
+            IEnumerable<Article> list_articles = null;
+            list_articles = _articleService.GetAllArticles(postFilter, 6);
+            Assert.IsNotNull(list_articles);
+        }
+
+        [TestCase]
+        public void TestGetAllArticlesByUser()
+        {
+            IEnumerable<Article> articles = new List<Article>()
+            {
+                article
+            };
+            mockArticleRepository.Setup(x => x.GetAllArticlesByUser(It.IsAny<string>(), It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(articles);
+            var _articleService = new ArticleService(mockArticleRepository.Object);
+            IEnumerable<Article> list_articles = null;
+            list_articles = _articleService.GetAllArticlesByUser("7asf6asfsfs5fsf6af6safa", postFilter, 6);
+            Assert.IsNotNull(list_articles);
+        }
+
+        [TestCase]
+        public void TestGetRecommendArticles()
+        {
+            IEnumerable<Article> articles = new List<Article>()
+            {
+                article
+            };
+            mockArticleRepository.Setup(x => x.GetRecommendArticles(It.IsAny<PostFilter>(), It.IsAny<UserInfo>(), It.IsAny<int>())).Returns(articles);
+            var _articleService = new ArticleService(mockArticleRepository.Object);
+            IEnumerable<Article> list_articles = null;
+            list_articles = _articleService.GetRecommendArticles(postFilter, null, 6);
+            Assert.IsNotNull(list_articles);
+        }
+
+        [TestCase]
+        public void TestGetPopularArticles()
+        {
+            IEnumerable<Article> articles = new List<Article>()
+            {
+                article
+            };
+            mockArticleRepository.Setup(x => x.GetPopularArticles(It.IsAny<PostFilter>(),It.IsAny<int>())).Returns(articles);
+            var _articleService = new ArticleService(mockArticleRepository.Object);
+            IEnumerable<Article> list_articles = null;
+            list_articles = _articleService.GetPopularArticles(postFilter,6);
+            Assert.IsNotNull(list_articles);
+        }
+
+        [TestCase]
+        public void TestGetNumberOfArticlePost()
+        {            
+            mockArticleRepository.Setup(x => x.GetNumberOfArticlePost(It.IsAny<PostFilter>())).Returns(5);
+            var _articleService = new ArticleService(mockArticleRepository.Object);
+            int result = _articleService.GetNumberOfArticlePost(postFilter);
+            Assert.AreEqual(5, result);
         }
     }
 }

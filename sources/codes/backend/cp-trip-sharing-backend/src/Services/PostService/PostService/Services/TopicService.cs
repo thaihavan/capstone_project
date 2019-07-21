@@ -20,6 +20,11 @@ namespace PostService.Services
             _topicRepository = new TopicRepository(settings);
         }
 
+        public TopicService(ITopicRepository topicRepository)
+        {
+            _topicRepository = topicRepository;
+        }
+
         public Topic Add(Topic param)
         {
             _topicRepository.Add(param);

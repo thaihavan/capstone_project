@@ -13,6 +13,7 @@ namespace PostService.Test
     public class ArticleRepositoryTest
     {
         ArticleRepository _articleRepository = null;
+
         [SetUp]
         public void Config()
         {
@@ -86,12 +87,12 @@ namespace PostService.Test
         //    Assert.IsNotNull(articles);
         //}
 
-        [TestCase]
-        public void TestGetByIdTrue()
-        {
-            Article article = _articleRepository.GetById("5d25f51bee3f2f2490db3f40");
-            Assert.IsNotNull(article);
-        }
+        //[TestCase]
+        //public void TestGetByIdTrue()
+        //{
+        //    Article article = _articleRepository.GetById("5d25f51bee3f2f2490db3f40");
+        //    Assert.IsNotNull(article);
+        //}
 
         //[TestCase]
         //public void TestGetByIdFalse ()
@@ -100,60 +101,60 @@ namespace PostService.Test
         //    Assert.IsNull(article);
         //}
 
-        [TestCase]
-        public void TestUpdate()
-        {
-            List<ArticleDestinationItem> listArticleDestination = new List<ArticleDestinationItem>();
-            List<string> listTopics = new List<string>() { "5d247a04eff1030d7c5209a3" };
-            listArticleDestination.Add(new ArticleDestinationItem()
-            {
-                Id = "articleDestinationItemId",
-                Name = "articleDestinationItemName"
-            });
+        //[TestCase]
+        //public void TestUpdate()
+        //{
+        //    List<ArticleDestinationItem> listArticleDestination = new List<ArticleDestinationItem>();
+        //    List<string> listTopics = new List<string>() { "5d247a04eff1030d7c5209a3" };
+        //    listArticleDestination.Add(new ArticleDestinationItem()
+        //    {
+        //        Id = "articleDestinationItemId",
+        //        Name = "articleDestinationItemName"
+        //    });
 
-            Author author = new Author()
-            {
-                Id = "authorId",
-                DisplayName = "authorName",
-                ProfileImage = "profilrImage"
-            };
+        //    Author author = new Author()
+        //    {
+        //        Id = "authorId",
+        //        DisplayName = "authorName",
+        //        ProfileImage = "profilrImage"
+        //    };
 
-            Post post = new Post()
-            {
-                Id = "postid",
-                AuthorId = "authorId",
-                CommentCount = 0,
-                Content = "content",
-                IsActive = true,
-                IsPublic = true,
-                CoverImage = "coverImage",
-                LikeCount = 0,
-                PostType = "article",
-                Title = "title",
-                liked = false,
-                PubDate = DateTime.Parse("2019-04-05"),
-                Author = author
-            };
+        //    Post post = new Post()
+        //    {
+        //        Id = "postid",
+        //        AuthorId = "authorId",
+        //        CommentCount = 0,
+        //        Content = "content",
+        //        IsActive = true,
+        //        IsPublic = true,
+        //        CoverImage = "coverImage",
+        //        LikeCount = 0,
+        //        PostType = "article",
+        //        Title = "title",
+        //        liked = false,
+        //        PubDate = DateTime.Parse("2019-04-05"),
+        //        Author = author
+        //    };
 
-            Article article = new Article()
-            {
-                Id = "5d247a04eff1030d7c5209a0",
-                PostId = "5d247a04eff1030d7c5209a1",
-                Destinations = listArticleDestination,
-                Post = post,
-                Topics = listTopics
-            };
+        //    Article article = new Article()
+        //    {
+        //        Id = "5d247a04eff1030d7c5209a0",
+        //        PostId = "5d247a04eff1030d7c5209a1",
+        //        Destinations = listArticleDestination,
+        //        Post = post,
+        //        Topics = listTopics
+        //    };
 
-            Article articleUpdated = _articleRepository.Update(article);
-            Assert.IsNotNull(articleUpdated);
-        }
+        //    Article articleUpdated = _articleRepository.Update(article);
+        //    Assert.IsNotNull(articleUpdated);
+        //}
 
-        [TestCase]
-        public void TestGetArticleById()
-        {
-            Article article = _articleRepository.GetArticleById("5d25f51bee3f2f2490db3f40", "5d111299f3b75e0001f4ed78");
-            Assert.IsNotNull(article);
-        }
+        //[TestCase]
+        //public void TestGetArticleById()
+        //{
+        //    Article article = _articleRepository.GetArticleById("5d25f51bee3f2f2490db3f40", "5d111299f3b75e0001f4ed78");
+        //    Assert.IsNotNull(article);
+        //}
     }
     
 }
