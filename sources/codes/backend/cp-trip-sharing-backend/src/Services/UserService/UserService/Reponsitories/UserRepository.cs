@@ -59,10 +59,12 @@ namespace UserServices.Reponsitories
             return user;
         }
 
-        public object GetUserStatistics(DateTime from, DateTime to)
+        public object GetUserStatistics(StatisticsFilter filter)
         {
+            Expression<Func<User, bool>> dateFilter =
+                x => filter.From <= x.CreatedDate && x.CreatedDate <= filter.To;
             var result = _users.AsQueryable()
-                .Where(x => from <= x.CreatedDate && x.CreatedDate <= to)
+                .Where(dateFilter.Compile())
                 .OrderBy(x => x.CreatedDate)
                 .Select(x => x)
                 .ToList();
