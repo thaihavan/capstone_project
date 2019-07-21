@@ -77,11 +77,6 @@ namespace PostService.Services
             return _companionPostRepository.GetById(id, userId);
         }
 
-        public int GetNumberOfCompanionPost(PostFilter filter)
-        {
-            return _companionPostRepository.GetNumberOfCompanionPost(filter);
-        }
-
         public CompanionPostJoinRequest GetRequestById(string requestId)
         {
             return _companionPostRepository.GetRequestById(requestId);

@@ -44,11 +44,6 @@ namespace UserServices.Services
             return result;
         }
 
-        public int GetNumberOfUser(string timePeriod)
-        {
-            return _userRepository.GetNumberOfUser(timePeriod);
-        }
-
         public User GetUserById(string userId)
         {
             return _userRepository.GetById(userId);
@@ -59,6 +54,10 @@ namespace UserServices.Services
             return _userRepository.GetUsers(search);
         }
 
+        public object GetUserStatistics(DateTime from, DateTime to)
+        {
+            return _userRepository.GetUserStatistics(from, to);
+            
         public void IncreaseContributionPoint(string userId, int point)
         {
             _userRepository.IncreaseContributionPoint(userId, point);

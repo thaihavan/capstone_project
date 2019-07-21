@@ -59,10 +59,6 @@ namespace PostService.Services
         {
             return _virtualTripRepository.GetAllVirtualTripsByUser(userId, postFilte, page);
         }
-
-        public int GetNumberOfVirtualTrip(PostFilter filter)
-        {
-            return _virtualTripRepository.GetNumberOfVirtualTrip(filter);
-        }
+       
     }
 }

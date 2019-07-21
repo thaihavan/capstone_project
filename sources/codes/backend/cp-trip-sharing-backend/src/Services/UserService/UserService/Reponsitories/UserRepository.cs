@@ -3,6 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace UserServices.Reponsitories
             _users = dbContext.Users;
             _followRepository = new FollowRepository(settings);
         }
-        
+
         public User Add(User user)
         {
             _users.InsertOne(user);
@@ -58,34 +59,23 @@ namespace UserServices.Reponsitories
             return user;
         }
 
-        public int GetNumberOfUser(string timePeriod)
+        public object GetUserStatistics(DateTime from, DateTime to)
         {
-            var filterDate = new DateTime(0);
-            var now = DateTime.Now;
-            switch (timePeriod)
+            var result = _users.AsQueryable()
+                .Where(x => from <= x.CreatedDate && x.CreatedDate <= to)
+                .OrderBy(x => x.CreatedDate)
+                .Select(x => x)
+                .ToList();
+            return new
             {
-                case "today":
-                    filterDate = now.AddDays(-1);
-                    break;
-                case "this_week":
-                    filterDate = now.AddDays(-7);
-                    break;
-                case "this_month":
-                    filterDate = now.AddDays(-30);
-                    break;
-                case "this_year":
-                    filterDate = now.AddDays(-365);
-                    break;
-                case "all_time":
-                    filterDate = new DateTime(0);
-                    break;
-            }
-
-            Expression<Func<User, bool>> dateFilter =
-                user => user.CreatedDate >= filterDate;
-
-            var result = _users.AsQueryable().Where(dateFilter.Compile()).Select(x => x).Count();
-            return result;
+                name = "User",
+                series = result.GroupBy(x => x.CreatedDate.ToShortDateString())
+                    .Select(x => new
+                    {
+                        name = x.Key,
+                        value = x.Count()
+                    })
+            };
         }
 
         public IEnumerable<User> GetUsers(string search)

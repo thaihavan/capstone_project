@@ -24,6 +24,5 @@ namespace PostService.Services.Interfaces
 
         IEnumerable<Article> GetPopularArticles(PostFilter postFilter, int page);
 
-        int GetNumberOfArticlePost(PostFilter postFilter);
     }
 }

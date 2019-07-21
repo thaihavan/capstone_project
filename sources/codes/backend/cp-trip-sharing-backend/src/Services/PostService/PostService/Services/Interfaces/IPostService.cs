@@ -17,5 +17,7 @@ namespace PostService.Services.Interfaces
         Post Update(Post post);
 
         bool Delete(string id);
+
+        object GetAllPostStatistics(StatisticsFilter filter);
     }
 }

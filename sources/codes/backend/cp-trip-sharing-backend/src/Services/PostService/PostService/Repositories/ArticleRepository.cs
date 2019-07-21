@@ -40,8 +40,8 @@ namespace PostService.Repositories
         {
             var article = _articles.Find(a => a.Id == id).FirstOrDefault();
             _posts.FindOneAndUpdate(
-                Builders<Post>.Filter.Eq(x=>x.Id,article.PostId),
-                Builders<Post>.Update.Set(x=>x.IsActive,false)
+                Builders<Post>.Filter.Eq(x => x.Id, article.PostId),
+                Builders<Post>.Update.Set(x => x.IsActive, false)
                 );
             return true;
         }
@@ -58,7 +58,7 @@ namespace PostService.Repositories
 
         public Article Update(Article param)
         {
-            var result = _articles.ReplaceOne(a => a.Id == param.Id , param);
+            var result = _articles.ReplaceOne(a => a.Id == param.Id, param);
             if (!result.IsAcknowledged)
             {
                 return null;
@@ -66,13 +66,13 @@ namespace PostService.Repositories
             return param;
         }
 
-        public Article GetArticleById(string id,string userId)
+        public Article GetArticleById(string id, string userId)
         {
-            Func<Post,Author,Post> SelectPostWithAuthor =
-                ((post, author) => { post.Author = author;return post; });
+            Func<Post, Author, Post> SelectPostWithAuthor =
+                ((post, author) => { post.Author = author; return post; });
 
             Func<Post, Article, Article> SelectArticleWithPost =
-                ((post, article) => { article.Post = post;return article; });
+                ((post, article) => { article.Post = post; return article; });
 
             Func<Article, IEnumerable<Like>, Article> UpdateLike =
                 ((article, likes) => { article.Post.liked = likes.Count() > 0 ? true : false; return article; });
@@ -129,7 +129,7 @@ namespace PostService.Repositories
             postFilter.Search = postFilter.Search.Trim();
 
             // LocationId search
-            if(postFilter.LocationId == null)
+            if (postFilter.LocationId == null)
             {
                 postFilter.LocationId = "";
             }
@@ -364,85 +364,40 @@ namespace PostService.Repositories
             return articles.ToList();
         }
 
-        public int GetNumberOfArticlePost(PostFilter postFilter)
+        public object GetArticleStatistics(StatisticsFilter filter)
         {
-            // Search filter
-
-            // Text search
-            if (postFilter.Search == null)
-            {
-                postFilter.Search = "";
-            }
-            postFilter.Search = postFilter.Search.Trim();
-
-            // LocationId search
-            if (postFilter.LocationId == null)
-            {
-                postFilter.LocationId = "";
-            }
-
-            Expression<Func<Article, bool>> searchFilter;
-            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0
-                                && a.Destinations.Any(d => postFilter.LocationId == "" || d.Id == postFilter.LocationId);
-
-            // Time period filter
-            var filterDate = new DateTime(0);
-            var now = DateTime.Now;
-            switch (postFilter.TimePeriod)
-            {
-                case "today":
-                    filterDate = now.AddDays(-1);
-                    break;
-                case "this_week":
-                    filterDate = now.AddDays(-7);
-                    break;
-                case "this_month":
-                    filterDate = now.AddDays(-30);
-                    break;
-                case "this_year":
-                    filterDate = now.AddDays(-365);
-                    break;
-                case "all_time":
-                    filterDate = new DateTime(0);
-                    break;
-            }
+            //time filter 
             Expression<Func<Article, bool>> dateFilter =
-                post => post.Post.PubDate >= filterDate;
-
-            // Topic filter
-            Expression<Func<Article, bool>> topicFilter;
-            if (postFilter.Topics.Count > 0)
-            {
-                topicFilter = a => a.Topics.Any(x => postFilter.Topics.Any(y => x == y));
-            }
-            else
-            {
-                topicFilter = a => true;
-            }
+                article => article.Post.PubDate >= filter.From && article.Post.PubDate <= filter.To;
 
             Func<Article, Post, Article> SelectArticleWithPost =
                 ((article, post) => { article.Post = post; return article; });
-            Func<Article, Author, Article> SelectArticleWithAuthor =
-                ((article, author) => { article.Post.Author = author; return article; });
 
             var articles = _articles.AsQueryable()
                 .Join(
-                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate),
+                    _posts.AsQueryable(),
                     article => article.PostId,
                     post => post.Id,
                     SelectArticleWithPost
-                ).Join(
-                    _authors.AsQueryable(),
-                    article => article.Post.AuthorId,
-                    author => author.Id,
-                    SelectArticleWithAuthor
                 )
-                .Where(searchFilter.Compile())
-                .Where(topicFilter.Compile())
                 .Where(dateFilter.Compile())
-                .Select(a => a)
-                .OrderByDescending(a => a.Post.PubDate);
-            return articles.Count();
+                .OrderBy(x => x.Post.PubDate)
+                .Select(x => x)
+                .ToList();
+
+            var result = articles
+                .GroupBy(x => x.Post.PubDate.ToShortDateString())
+                .Select(x => new
+                {
+                    name = x.Key,
+                    value = x.Count()
+                });
+
+            return new
+            {
+                name = "Article",
+                series = result
+            };
         }
     }
 }
