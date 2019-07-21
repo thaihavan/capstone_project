@@ -161,14 +161,14 @@ namespace PostService.Test
             Assert.AreEqual(type.Name, "BadRequestResult");
         }
 
-        [TestCase]
-        public void TestGetNumberOfCompanionPost()
-        {
-            mockArticleService.Setup(x => x.GetNumberOfArticlePost(It.IsAny<PostFilter>())).Returns(3);
-            var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
-            IActionResult getArticleById = _articleController.GetNumberOfCompanionPost(postFilter);
-            var type = getArticleById.GetType();
-            Assert.AreEqual(type.Name, "OkObjectResult");
-        }
+        //[TestCase]
+        //public void TestGetNumberOfCompanionPost()
+        //{
+        //    mockArticleService.Setup(x => x.GetNumberOfArticlePost(It.IsAny<PostFilter>())).Returns(3);
+        //    var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
+        //    IActionResult getArticleById = _articleController.GetNumberOfCompanionPost(postFilter);
+        //    var type = getArticleById.GetType();
+        //    Assert.AreEqual(type.Name, "OkObjectResult");
+        //}
     }
 }

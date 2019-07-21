@@ -164,13 +164,13 @@ namespace PostService.Test
             Assert.IsNotNull(list_articles);
         }
 
-        [TestCase]
-        public void TestGetNumberOfArticlePost()
-        {            
-            mockArticleRepository.Setup(x => x.GetNumberOfArticlePost(It.IsAny<PostFilter>())).Returns(5);
-            var _articleService = new ArticleService(mockArticleRepository.Object);
-            int result = _articleService.GetNumberOfArticlePost(postFilter);
-            Assert.AreEqual(5, result);
-        }
+        //[TestCase]
+        //public void TestGetNumberOfArticlePost()
+        //{            
+        //    mockArticleRepository.Setup(x => x.GetNumberOfArticlePost(It.IsAny<PostFilter>())).Returns(5);
+        //    var _articleService = new ArticleService(mockArticleRepository.Object);
+        //    int result = _articleService.GetNumberOfArticlePost(postFilter);
+        //    Assert.AreEqual(5, result);
+        //}
     }
 }

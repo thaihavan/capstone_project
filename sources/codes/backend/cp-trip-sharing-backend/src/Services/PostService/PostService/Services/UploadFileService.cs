@@ -14,6 +14,7 @@ namespace PostService.Services
 {
     public class UploadFileService : IUploadFileService
     {
+        public UploadFileService(){}
         public string UploadImage(ImageParam imageParam)
         {
             var storageSettings = ReadAppSettings.ReadCloudStorageSettings().Value;
