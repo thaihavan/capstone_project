@@ -40,7 +40,8 @@ namespace PostService.Utils
             {
                 ProjectId = pubsubSettings.GetSection("ProjectId").Value,
                 TopicId = pubsubSettings.GetSection("TopicId").Value,
-                SubscriptionId = pubsubSettings.GetSection("SubscriptionId").Value
+                SubscriptionId = pubsubSettings.GetSection("SubscriptionId").Value,
+                TopicCP = pubsubSettings.GetSection("TopicCP").Value
             });
 
             return settings;

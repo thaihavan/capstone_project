@@ -48,6 +48,7 @@ import { NotifyMessageTooltipComponent } from './components/notify-message-toolt
 import { ReportPopupComponent } from './components/report-popup/report-popup.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { StrCurrencyPipe } from './pipes/currency-pipe/strCurrency.pipe';
+import { DeleteConfirmPopupComponent } from './components/delete-confirm-popup/delete-confirm-popup.component';
 
 const Material = [
   MatButtonModule,
@@ -108,7 +109,8 @@ const Material = [
     StrCurrencyPipe,
     NotifyMessageTooltipComponent,
     ReportPopupComponent,
-    UserItemComponent
+    UserItemComponent,
+    DeleteConfirmPopupComponent
   ],
   imports: [
     CommonModule,
@@ -150,7 +152,8 @@ const Material = [
     PostFilterComponent,
     StrCurrencyPipe,
     NotifyMessageTooltipComponent,
-    UserItemComponent
+    UserItemComponent,
+    DeleteConfirmPopupComponent
   ],
   entryComponents: [
     StepCreatePostComponent,

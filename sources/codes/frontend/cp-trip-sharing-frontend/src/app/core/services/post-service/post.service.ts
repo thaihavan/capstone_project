@@ -154,19 +154,20 @@ export class PostService {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
     return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/create', topic, httpOption);
   }
 
-  removeTopic(topicId: any): Observable<any> {
+  removeTopics(topicIds: string[]): Observable<any> {
     const httpOptionRemoveTopic = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic?id=' + topicId, httpOptionRemoveTopic);
+    return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/delete', topicIds, httpOptionRemoveTopic);
   }
 
   updateComment(comment: Comment): Observable<any> {

@@ -1,5 +1,5 @@
 .mat-drawer-content {
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .container-fluid {
@@ -18,6 +18,59 @@
     margin-left: 150px !important;
     margin-top: -48px !important;
 }
+
 .mat-drawer {
-    width: 190px !important;
+    width: 240px !important;
+    color: #fff;
+}
+
+.mat-drawer mat-toolbar {
+    border-bottom: solid 1px #444;
+}
+
+.mat-drawer mat-toolbar .mat-icon {
+    color: #fff !important;
+    font-size: 28px;
+    margin-top: -2px;
+}
+
+.mat-drawer mat-toolbar span {
+    color: #fff !important;
+    font-weight: 550;
+    font-size: 28px;
+}
+
+.mat-drawer, .mat-drawer mat-toolbar, .mat-drawer mat-expansion-panel {
+    background-color: #212121 !important;
+}
+
+::ng-deep .mat-expansion-indicator::after {
+    color: #bbbbbb;
+}
+
+.mat-drawer span, .mat-drawer mat-icon {
+    color: #bbbbbb;
+}
+
+.active-tab span, .active-tab mat-icon {
+    color: #fff !important;
+    font-weight: 500;
+}
+
+.mat-drawer mat-expansion-panel-header {
+    cursor: pointer;
+}
+
+.drawer-content-header {
+    background-color: #fff;
+    height: 64px;
+    box-shadow: 0px 2px 2px #999;
+    padding: 12px 30px;
+    position: relative;
+}
+
+.drawer-content-body {
+    background-color: #edf1f5;
+    min-height: 100vh;
+    padding: 30px;
 }

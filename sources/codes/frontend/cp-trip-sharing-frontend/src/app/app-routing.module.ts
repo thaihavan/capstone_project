@@ -21,18 +21,26 @@ import { ListUserBlockedComponent } from './shared/components/list-user-blocked/
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 import { DashboardPageComponent } from './admin/pages/dashboard-page/dashboard-page.component';
-import { InterestedTopicAdminsComponent } from './admin/pages/interested-topic-admins/interested-topic-admins.component';
 import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
 import { SearchResultPageComponent } from './pages/search-result-page/search-result-page.component';
 import { ListPostHorizontalComponent } from './shared/components/list-post-horizontal/list-post-horizontal.component';
 import { SearchResultContainerComponent } from './pages/search-result-page/components/search-result-container/search-result-container.component';
+import { TopicPageAdminComponent } from './admin/pages/dashboard-page/components/topic-page-admin/topic-page-admin.component';
+import { OverviewPageAdminComponent } from './admin/pages/dashboard-page/components/overview-page-admin/overview-page-admin.component';
+import { PostPageAdminComponent } from './admin/pages/dashboard-page/components/post-page-admin/post-page-admin.component';
+import { UserPageAdminComponent } from './admin/pages/dashboard-page/components/user-page-admin/user-page-admin.component';
 
 
 const routes: Routes = [
   {
     path: 'dashboard', component: DashboardPageComponent,
     children: [
-      { path: 'chu-de', component: InterestedTopicAdminsComponent }]
+      { path: '', redirectTo: 'tong-quan', pathMatch: 'full' },
+      { path: 'tong-quan', component: OverviewPageAdminComponent},
+      { path: 'bai-viet', component: PostPageAdminComponent},
+      { path: 'nguoi-dung', component: UserPageAdminComponent},
+      { path: 'chu-de', component: TopicPageAdminComponent }
+    ]
   },
   { path: 'xac-nhan-email/:token', component: EmailConfirmPageComponent },
   {

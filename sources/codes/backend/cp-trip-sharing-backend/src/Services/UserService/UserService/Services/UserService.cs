@@ -57,6 +57,10 @@ namespace UserServices.Services
         public object GetUserStatistics(DateTime from, DateTime to)
         {
             return _userRepository.GetUserStatistics(from, to);
+            
+        public void IncreaseContributionPoint(string userId, int point)
+        {
+            _userRepository.IncreaseContributionPoint(userId, point);
         }
 
         public User Update(User user)

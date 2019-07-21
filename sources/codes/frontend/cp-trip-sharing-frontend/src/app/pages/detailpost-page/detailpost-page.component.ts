@@ -117,6 +117,8 @@ export class DetailpostPageComponent implements OnInit {
     this.postService.addComment(comment).subscribe((res: Comment) => {
       console.log('add comment res: ' + res);
       this.comments.push(res);
+      // Send notification
+      this.sendCommentNotification();
     }, (error: HttpErrorResponse) => {
       console.log(error);
     });
@@ -241,7 +243,18 @@ export class DetailpostPageComponent implements OnInit {
     const notification = new Notification();
     notification.content = new NotificationTemplates()
       .getLikePostNotiTemplate(this.user.displayName, this.article.post.title);
-    notification.displayImage = this.user.profileImage;
+    notification.displayImage = this.user.avatar;
+    notification.receivers = [this.article.post.author.id];
+    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.article.id;
+
+    this.notifyService.sendNotification(notification);
+  }
+
+  sendCommentNotification() {
+    const notification = new Notification();
+    notification.content = new NotificationTemplates()
+      .getCommentedNotiTemplate(this.user.displayName, this.article.post.title);
+    notification.displayImage = this.user.avatar;
     notification.receivers = [this.article.post.author.id];
     notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.article.id;
 

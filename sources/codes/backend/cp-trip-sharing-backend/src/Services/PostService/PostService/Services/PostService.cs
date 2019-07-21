@@ -18,6 +18,7 @@ namespace PostService.Services
         private readonly IArticleRepository _articleRepository = null;
         private readonly ICompanionPostRepository _companionPostRepository = null;
         private readonly IVirtualTripRepository _virtualTripRepository = null;
+        private readonly IPublishToTopic _publishToTopic = null;
 
         public PostService(IOptions<AppSettings> settings)
         {
@@ -25,6 +26,7 @@ namespace PostService.Services
             _articleRepository = new ArticleRepository(settings);
             _companionPostRepository = new CompanionPostRepository(settings);
             _virtualTripRepository = new VirtualTripRepository(settings);
+            _publishToTopic = new PublishToTopic();
         }
 
         public PostService(IPostRepository postRepository)
@@ -34,6 +36,11 @@ namespace PostService.Services
 
         public Post Add(Post param)
         {
+            //_publishToTopic.PublishCP(new IncreasingCP()
+            //{
+            //    UserId = param.AuthorId,
+            //    Point = 1
+            //});
             return _postRepository.Add(param);
         }
 

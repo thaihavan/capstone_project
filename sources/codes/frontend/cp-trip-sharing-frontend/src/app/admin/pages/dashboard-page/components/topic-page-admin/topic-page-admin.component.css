@@ -1,0 +1,81 @@
+div {
+    box-sizing: border-box !important;
+}
+
+.drawer-content-body-container{
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0px 0px 2px #ccc;
+    position: relative;
+    min-height: calc(100vh - 60px);
+}
+
+.action-section {
+    margin-bottom: 30px;
+}
+
+.action-section .mat-button{
+    display: inline-block;
+    color: #fff !important;
+    margin-right: 2px;
+    margin-left: 1%;
+}
+
+.button-add {
+    background-color: #4caf50;
+}
+
+.button-delete {
+    background-color: #ed4035;
+}
+
+.interested-topic{
+    width: 100%;
+    height: 350px;
+    margin: 0 auto;
+    overflow: auto;
+    text-align: center;
+}
+
+.topic {
+    border-radius: 2px;
+    width: 23%;
+    margin: 1%;
+    height: 120px;
+    float: left;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+}
+
+.name-topic{
+    border: none !important;
+    z-index: 9999;
+    position: relative;
+    font-weight: bold;
+    color: white;
+    font-size: 1em;
+    top: -70px;
+}
+
+.image-interested{
+    border-radius: 5px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.topic-selected {
+    border: solid 4px #2196f3;
+}
+
+::ng-deep .mat-dialog-container {
+    padding: 0 !important;
+}
+
+.disable-button {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+ 

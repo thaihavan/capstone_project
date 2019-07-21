@@ -9,5 +9,6 @@ namespace UserServices.Reponsitories.Interfaces
         IEnumerable<User> GetUsers(string search);
 
         object GetUserStatistics(DateTime from, DateTime to);
+        void IncreaseContributionPoint(string userId, int point);
     }
 }

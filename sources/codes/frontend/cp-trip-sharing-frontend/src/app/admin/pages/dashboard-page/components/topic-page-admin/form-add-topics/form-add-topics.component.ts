@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Topic } from 'src/app/model/Topic';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatDialog } from '@angular/material';
-import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { ImageUpload } from 'src/app/model/ImageUpload';
 
@@ -17,7 +16,9 @@ export class FormAddTopicsComponent implements OnInit {
   imgURL: any;
   message: string;
   topic: Topic = new Topic();
-  constructor(private postService: PostService, public dialog: MatDialog, private imageService: UploadImageService) { }
+  constructor(private postService: PostService,
+              private imageService: UploadImageService,
+              private dialogRef: MatDialogRef<FormAddTopicsComponent>) { }
 
   ngOnInit() {
   }
@@ -54,27 +55,13 @@ export class FormAddTopicsComponent implements OnInit {
   addTopic() {
     if (this.topic.imgUrl != null && this.topic.name != null) {
       this.postService.addTopic(this.topic).subscribe((result: any) => {
-        this.dialog.closeAll();
-        this.openDialogMessageConfirm();
+        this.dialogRef.close(result);
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
     } else {
-      this.message = 'Update Image Fail';
+      this.message = 'Bạn phải điền đầy đủ thông tin';
     }
   }
 
-  openDialogMessageConfirm() {
-    const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
-      height: 'auto',
-      position: {
-        top: '20px'
-      },
-      disableClose: true
-    });
-    const instance = dialogRef.componentInstance;
-    instance.message.messageText = 'Bạn đã thêm chủ đề thành công!';
-    instance.message.url = '/dashboard/chu-de';
-  }
 }

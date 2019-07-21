@@ -9,11 +9,26 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
-import { InterestedTopicAdminsComponent } from './pages/interested-topic-admins/interested-topic-admins.component';
-import { FormAddTopicsComponent } from './pages/interested-topic-admins/form-add-topics/form-add-topics.component';
+import { DeleteConfirmPopupComponent } from '../shared/components/delete-confirm-popup/delete-confirm-popup.component';
+import { OverviewPageAdminComponent } from './pages/dashboard-page/components/overview-page-admin/overview-page-admin.component';
+import { PostPageAdminComponent } from './pages/dashboard-page/components/post-page-admin/post-page-admin.component';
+import { UserPageAdminComponent } from './pages/dashboard-page/components/user-page-admin/user-page-admin.component';
+import { TopicPageAdminComponent } from './pages/dashboard-page/components/topic-page-admin/topic-page-admin.component';
+import { ReportPageAdminComponent } from './pages/dashboard-page/components/report-page-admin/report-page-admin.component';
+import { FormAddTopicsComponent } from './pages/dashboard-page/components/topic-page-admin/form-add-topics/form-add-topics.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
-  declarations: [DashboardPageComponent, HeaderAdminComponent, InterestedTopicAdminsComponent,FormAddTopicsComponent],
+  declarations: [
+    DashboardPageComponent,
+    HeaderAdminComponent,
+    FormAddTopicsComponent,
+    OverviewPageAdminComponent,
+    PostPageAdminComponent,
+    UserPageAdminComponent,
+    TopicPageAdminComponent,
+    ReportPageAdminComponent
+  ],
   imports: [
     CommonModule,
     MatMenuModule,
@@ -27,9 +42,14 @@ import { FormAddTopicsComponent } from './pages/interested-topic-admins/form-add
     MatInputModule,
     MatExpansionModule,
     MatBadgeModule,
+    NgxChartsModule
   ],
   exports: [
     DashboardPageComponent
+  ],
+  entryComponents: [
+    DeleteConfirmPopupComponent,
+    FormAddTopicsComponent
   ]
 })
 export class AdminModule { }

@@ -5,7 +5,31 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Account } from 'src/app/model/Account';
 import { Title } from '@angular/platform-browser';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormGroupDirective,
+  NgForm,
+  FormBuilder
+} from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      (control.invalid || form.hasError('isNotMatchPassword')) &&
+      (control.dirty || control.touched || isSubmitted)
+    );
+  }
+}
 
 @Component({
   selector: 'app-register-page',
@@ -15,55 +39,110 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class RegisterPageComponent implements OnInit {
   email = '';
   password = '';
+  rePassword = '';
+  agreePolicy = true;
+  pasHide = true;
+  isLoading = false;
   repass = '';
+  errorEmailHasUse = false;
+  errorRegister = false;
   message: string;
   account: Account;
-  error: boolean;
-  form = new FormGroup({
-    email: new FormControl('', [
-      Validators.required,
-      Validators.email
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5)
-    ]),
-    repassword: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5)
-    ]),
-    checkbox: new FormControl('', [
-      Validators.required
-    ])
-  });
-  constructor(private dialog: MatDialog, private userService: UserService,
-              private titleService: Title) {
+  form: FormGroup;
+  matcher = new MyErrorStateMatcher();
+  constructor(
+    private dialog: MatDialog,
+    private userService: UserService,
+    private titleService: Title,
+    private fb: FormBuilder
+  ) {
     this.titleService.setTitle('Đăng ký');
     this.account = new Account();
+    this.initForm();
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  // initial form
+  initForm() {
+    this.form = this.fb.group(
+      {
+        email: new FormControl('', [
+          Validators.compose([
+            Validators.required,
+            Validators.email,
+            Validators.maxLength(255),
+          ])
+        ]),
+        password: new FormControl('', [
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(255),
+            Validators.pattern('^[_A-z0-9]*$')
+          ])
+        ]),
+        rePassword: new FormControl('', [
+          Validators.compose([Validators.required])
+        ]),
+        checkbox: new FormControl('', [this.isAgreePolicy])
+      },
+      {
+        validator: this.verifyPassword
+      }
+    );
+  }
+
+  // form check has validation error
+  public hasError = (controlName: string, errorName: string) => {
+    return this.form.controls[controlName].hasError(errorName);
+  }
+
+  // form password verify
+  verifyPassword(form: FormGroup) {
+    const condition =
+      form.get('password').value !== form.get('rePassword').value;
+    return condition ? { isNotMatchPassword: true } : null;
+  }
+
+  // form required agree policy
+  isAgreePolicy(form: FormControl) {
+    const condition =
+      form.value !== true;
+    return condition ? { isNotAgreePolicy: true } : null;
+  }
+
+  // on email change
+  emailOnchage() {
+    this.errorEmailHasUse = false;
   }
 
   onSubmit() {
-    if (this.form.value.password === this.form.value.repassword) {
-      this.account.Email = this.form.value.email;
-      this.account.Password = this.form.value.password;
-      this.userService.registerAccount(this.account).subscribe((message: any) => {
-        this.openDialogMessageConfirm();
-        setTimeout(() => {
-          window.location.href = '';
-        }, 5000);
-      }, (err: HttpErrorResponse) => {
-        this.error = true;
-        this.message = 'Đăng kí thất bại!';
-      });
-      this.error = false;
-    } else {
-      this.message = 'Mật khẩu không trùng khớp!';
-      this.error = true;
-    }
-
+      this.isLoading = true;
+      this.account.email = this.form.value.email;
+      this.account.password = this.form.value.password;
+      this.userService.registerAccount(this.account).subscribe(
+        (message: any) => {
+        },
+        (err: HttpErrorResponse) => {
+          this.errorRegister = true;
+          if (err.error.message === 'Email is in use') {
+            this.message = 'Email đã được sử dụng';
+          } else {
+            this.message = 'Đăng kí thất bại!';
+          }
+          console.log(err);
+          this.isLoading = false;
+        },
+        () => {
+          this.errorEmailHasUse = false;
+          this.errorRegister = false;
+          this.openDialogMessageConfirm();
+          setTimeout(() => {
+            window.location.href = '';
+          }, 5000);
+        }
+      );
   }
 
   openDialogMessageConfirm() {
@@ -76,7 +155,8 @@ export class RegisterPageComponent implements OnInit {
       disableClose: true
     });
     const instance = dialogRef.componentInstance;
-    instance.message.messageText = 'Đăng kí thành công, vui lòng kiểm tra lại email!';
+    instance.message.messageText =
+      'Đăng kí thành công, vui lòng kiểm tra lại email!';
     instance.message.url = '/trang-chu';
   }
 }

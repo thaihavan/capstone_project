@@ -8,14 +8,6 @@ namespace PostService.Repositories.Interfaces
 {
     public interface ITopicRepository : IRepository<Topic>
     {
-        IEnumerable<Topic> GetAll();
-
-        Topic GetById(string id);
-
-        Topic Add(Topic param);
-
-        bool Delete(string id);
-
-        Topic Update(Topic param);
+        bool DeleteMany(List<string> topics);
     }
 }
