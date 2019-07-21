@@ -254,7 +254,7 @@ namespace PostService.Repositories
         public object GetVirtualTripStatistics(StatisticsFilter filter)
         {
             DateTimeFormatInfo format = new DateTimeFormatInfo();
-            format.ShortDatePattern = "yyyy-MM-dd";
+            format.ShortDatePattern = "dd-MM-yyyy";
             format.DateSeparator = "-";
 
             // time filter
@@ -297,8 +297,14 @@ namespace PostService.Repositories
             });
 
             var result = data.Union(
-                dummyData.Except(exceptData)
-                ).OrderBy(x=>x.name);
+                    dummyData.Except(exceptData)
+                )
+                .OrderBy(x=>x.name)
+                .Select(x=> new
+                {
+                    name = x.name.ToString("dd-MM-yyyy"),
+                    value = x.value
+                });
 
             return new
             {

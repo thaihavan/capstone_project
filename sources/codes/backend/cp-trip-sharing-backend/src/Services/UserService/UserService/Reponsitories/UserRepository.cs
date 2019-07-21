@@ -94,8 +94,14 @@ namespace UserServices.Reponsitories
             });
 
             var result = data.Union(
-                dummyData.Except(exceptData)
-                ).OrderBy(x => x.name);
+                    dummyData.Except(exceptData)
+                )
+                .OrderBy(x => x.name)
+                .Select(x => new
+                {
+                    name = x.name.ToString("dd-MM-yyyy"),
+                    value = x.value
+                });
 
             return new
             {
