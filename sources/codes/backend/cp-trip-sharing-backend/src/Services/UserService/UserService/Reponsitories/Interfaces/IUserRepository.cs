@@ -8,7 +8,7 @@ namespace UserServices.Reponsitories.Interfaces
     {
         IEnumerable<User> GetUsers(string search);
 
-        object GetUserStatistics(DateTime from, DateTime to);
+        object GetUserStatistics(StatisticsFilter filter);
         void IncreaseContributionPoint(string userId, int point);
     }
 }

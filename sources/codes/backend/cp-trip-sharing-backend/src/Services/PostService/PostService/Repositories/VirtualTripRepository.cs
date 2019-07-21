@@ -7,6 +7,7 @@ using PostService.Repositories.DbContext;
 using PostService.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -252,6 +253,10 @@ namespace PostService.Repositories
 
         public object GetVirtualTripStatistics(StatisticsFilter filter)
         {
+            DateTimeFormatInfo format = new DateTimeFormatInfo();
+            format.ShortDatePattern = "dd-MM-yyyy";
+            format.DateSeparator = "-";
+
             // time filter
             Expression<Func<VirtualTrip, bool>> dateFilter =
                 post => post.Post.PubDate >= filter.From && post.Post.PubDate <= filter.To;
@@ -270,12 +275,35 @@ namespace PostService.Repositories
                 .Select(x => x)
                 .ToList();
 
-            var result = virtualTrips
+            var data = virtualTrips
                 .GroupBy(x => x.Post.PubDate.ToShortDateString())
                 .Select(x => new
                 {
-                    name = x.Key,
+                    name = Convert.ToDateTime(x.Key, format),
                     value = x.Count()
+                }).ToList();
+
+            var dummyData = Enumerable.Range(0, (filter.To - filter.From).Days)
+                .Select(i => new
+                {
+                    name = Convert.ToDateTime(filter.From.AddDays(i),format),
+                    value = 0
+                });
+
+            var exceptData = data.Select(x => new
+            {
+                name = x.name,
+                value = 0
+            });
+
+            var result = data.Union(
+                    dummyData.Except(exceptData)
+                )
+                .OrderBy(x=>x.name)
+                .Select(x=> new
+                {
+                    name = x.name.ToString("dd-MM-yyyy"),
+                    value = x.value
                 });
 
             return new

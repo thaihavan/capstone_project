@@ -54,10 +54,10 @@ namespace UserServices.Services
             return _userRepository.GetUsers(search);
         }
 
-        public object GetUserStatistics(DateTime from, DateTime to)
+        public object GetUserStatistics(StatisticsFilter filter)
         {
-            return _userRepository.GetUserStatistics(from, to);
-            
+            return _userRepository.GetUserStatistics(filter);
+        } 
         public void IncreaseContributionPoint(string userId, int point)
         {
             _userRepository.IncreaseContributionPoint(userId, point);

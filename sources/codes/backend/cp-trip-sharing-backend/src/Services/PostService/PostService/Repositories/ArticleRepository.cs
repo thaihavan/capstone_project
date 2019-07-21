@@ -366,6 +366,10 @@ namespace PostService.Repositories
 
         public object GetArticleStatistics(StatisticsFilter filter)
         {
+            DateTimeFormatInfo format = new DateTimeFormatInfo();
+            format.ShortDatePattern = "yyyy-MM-dd";
+            format.DateSeparator = "-";
+
             //time filter 
             Expression<Func<Article, bool>> dateFilter =
                 article => article.Post.PubDate >= filter.From && article.Post.PubDate <= filter.To;
@@ -385,13 +389,36 @@ namespace PostService.Repositories
                 .Select(x => x)
                 .ToList();
 
-            var result = articles
+            var data = articles
                 .GroupBy(x => x.Post.PubDate.ToShortDateString())
                 .Select(x => new
                 {
-                    name = x.Key,
+                    name = Convert.ToDateTime(x.Key, format),
                     value = x.Count()
+                }).ToList();
+
+            var dummyData = Enumerable.Range(0, (filter.To - filter.From).Days)
+                .Select(i => new
+                {
+                    name = Convert.ToDateTime(filter.From.AddDays(i), format),
+                    value = 0
                 });
+
+            var exceptData = data.Select(x => new
+            {
+                name = x.name,
+                value = 0
+            });
+
+            var result = data.Union(
+                    dummyData.Except(exceptData)
+                )
+                .OrderBy(x => x.name)
+                .Select(x => new
+                {
+                    name = x.name.ToString("dd-MM-yyyy"),
+                    value = x.value
+                }); 
 
             return new
             {

@@ -41,7 +41,7 @@ namespace PostService.Controllers
             return Ok(result);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles ="admin")]
         [HttpPost("statistics")]
         public IActionResult GetPostStatistics([FromBody] StatisticsFilter filter)
         {

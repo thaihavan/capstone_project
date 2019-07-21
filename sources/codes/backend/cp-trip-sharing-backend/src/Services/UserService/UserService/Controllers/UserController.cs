@@ -78,12 +78,11 @@ namespace UserServices.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
-        [HttpGet("statistics")]
-        public IActionResult GetUserStatistics([FromQuery] DateTime from, [FromQuery] DateTime to)
+        [Authorize(Roles = "admin")]       
+        [HttpPost("statistics")]
+        public IActionResult GetUserStatistics([FromBody] StatisticsFilter filter)
         {
-            var result = _userService.GetUserStatistics(from, to);
+            var result = _userService.GetUserStatistics(filter);
             return Ok(result);
         }
     }

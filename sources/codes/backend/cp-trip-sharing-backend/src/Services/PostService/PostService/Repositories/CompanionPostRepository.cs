@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -82,23 +83,23 @@ namespace PostService.Repositories
             return param;
         }
 
-        public CompanionPost GetById(string id,string userId)
+        public CompanionPost GetById(string id, string userId)
         {
             Func<CompanionPost, Post, CompanionPost> SelectCompanionPostWithPost =
-                ((companionPost, post) => { companionPost.Post = post;return companionPost; });
-            Func<CompanionPost,Author,CompanionPost> SelectCompanionPostWithAuthor=
+                ((companionPost, post) => { companionPost.Post = post; return companionPost; });
+            Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
                 ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
-            Func<CompanionPost,IEnumerable<Like>,CompanionPost> UpdateLike=
+            Func<CompanionPost, IEnumerable<Like>, CompanionPost> UpdateLike =
                 ((CompanionPost, likes) => { CompanionPost.Post.liked = likes.Count() > 0 ? true : false; return CompanionPost; });
-            Func<CompanionPost,IEnumerable<CompanionPostJoinRequest>,CompanionPost>UpdateRequested=
+            Func<CompanionPost, IEnumerable<CompanionPostJoinRequest>, CompanionPost> UpdateRequested =
                 ((CompanionPost, requests) => { CompanionPost.Requested = requests.Count() > 0 ? true : false; return CompanionPost; });
 
             CompanionPost result;
 
             if (string.IsNullOrEmpty(userId))
             {
-                result=_companionPosts.AsQueryable().Where(x => x.Id.Equals(id))
-                    .Join(  
+                result = _companionPosts.AsQueryable().Where(x => x.Id.Equals(id))
+                    .Join(
                         _posts.AsQueryable(),
                         companionPost => companionPost.PostId,
                         post => post.Id,
@@ -124,18 +125,18 @@ namespace PostService.Repositories
                         author => author.Id,
                         SelectCompanionPostWithAuthor)
                     .GroupJoin(
-                        _companionPostJoinRequests.AsQueryable().Where(x=>x.UserId.Equals(userId)),
-                        companionPost=>companionPost.Id,
-                        request=>request.CompanionPostId,
-                        UpdateRequested      )
+                        _companionPostJoinRequests.AsQueryable().Where(x => x.UserId.Equals(userId)),
+                        companionPost => companionPost.Id,
+                        request => request.CompanionPostId,
+                        UpdateRequested)
                     .GroupJoin(
-                        _likes.AsQueryable().Where(x=>x.UserId.Equals(userId)&&x.ObjectType.Equals("post")),
-                        companionPost=>companionPost.PostId,
-                        like=>like.ObjectId,
+                        _likes.AsQueryable().Where(x => x.UserId.Equals(userId) && x.ObjectType.Equals("post")),
+                        companionPost => companionPost.PostId,
+                        like => like.ObjectId,
                         UpdateLike)
                     .FirstOrDefault();
             }
-             
+
             return result;
         }
 
@@ -224,9 +225,9 @@ namespace PostService.Repositories
                 post => post.UserId,
                 user => user.Id,
                 SelectCompanionPostRequestWithUser
-                ).OrderByDescending(x=>x.Date).ToList();
+                ).OrderByDescending(x => x.Date).ToList();
             return result;
-            
+
         }
 
         public CompanionPostJoinRequest AddNewRequest(CompanionPostJoinRequest param)
@@ -292,7 +293,7 @@ namespace PostService.Repositories
                 ((companionPost, post) => { companionPost.Post = post; return companionPost; });
             Func<CompanionPost, Author, CompanionPost> SelectCompanionPostWithAuthor =
                 ((companionPost, author) => { companionPost.Post.Author = author; return companionPost; });
-            
+
             IEnumerable<CompanionPost> result;
 
             result = _companionPosts.AsQueryable()
@@ -307,7 +308,7 @@ namespace PostService.Repositories
                     author => author.Id,
                     SelectCompanionPostWithAuthor)
                 .Where(searchFilter.Compile())
-                .Where(a=>a.Post.AuthorId.Equals(userId,StringComparison.Ordinal))  
+                .Where(a => a.Post.AuthorId.Equals(userId, StringComparison.Ordinal))
                 .Where(dateFilter.Compile())
                 .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate)
@@ -329,6 +330,10 @@ namespace PostService.Repositories
 
         public object GetCompanionPostStatistics(StatisticsFilter filter)
         {
+            DateTimeFormatInfo format = new DateTimeFormatInfo();
+            format.ShortDatePattern = "yyyy-MM-dd";
+            format.DateSeparator = "-";
+
             //time filter 
             Expression<Func<CompanionPost, bool>> dateFilter =
                 post => post.Post.PubDate >= filter.From && post.Post.PubDate <= filter.To;
@@ -347,13 +352,36 @@ namespace PostService.Repositories
                 .Select(x => x)
                 .ToList();
 
-            var result = companionPosts
+            var data = companionPosts
                 .GroupBy(x => x.Post.PubDate.ToShortDateString())
                 .Select(x => new
                 {
-                    name = x.Key,
+                    name = Convert.ToDateTime(x.Key, format),
                     value = x.Count()
+                }).ToList();
+
+            var dummyData = Enumerable.Range(0, (filter.To - filter.From).Days)
+                .Select(i => new
+                {
+                    name = Convert.ToDateTime(filter.From.AddDays(i), format),
+                    value = 0
                 });
+
+            var exceptData = data.Select(x => new
+            {
+                name = x.name,
+                value = 0
+            });
+
+            var result = data.Union(
+                    dummyData.Except(exceptData)
+                )
+                .OrderBy(x => x.name)
+                .Select(x => new
+                {
+                    name = x.name.ToString("dd-MM-yyyy"),
+                    value = x.value
+                }); ;
 
             return new
             {
