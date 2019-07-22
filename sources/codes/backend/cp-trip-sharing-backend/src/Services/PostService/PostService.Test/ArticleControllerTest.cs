@@ -33,14 +33,14 @@ namespace PostService.Test
 
             Author author = new Author()
             {
-                Id = "authorId",
+                Id = "5d247a04eff1030d7c5209a1",
                 DisplayName = "authorName",
                 ProfileImage = "profileImage"
             };
 
             Post post = new Post()
             {
-                Id = "postid",
+                Id = "5d247a04eff1030d7c5209a1",
                 AuthorId = "authorId",
                 CommentCount = 0,
                 Content = "content",
@@ -129,17 +129,24 @@ namespace PostService.Test
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
-        /*Function co User.Identity chua test */
-
         [TestCase]
         public void TestGetArticleById()
         {
-            //Mock<ControllerContext> mockControllerContext = new Mock<ControllerContext>();
-            //mockControllerContext.Setup(p => p.HttpContext.User.Identity.IsAuthenticated).Returns(true);
-            //mockArticleService.Setup(x => x.GetArticleById(It.IsAny<string>(), It.IsAny<string>())).Returns(article);
-            //var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
-            //IActionResult getArticleById = _articleController.GetArticleById("asddadsdad90sdsd8");
-            //var type = getArticleById.GetType();
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","authorId")
+                });
+
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockArticleService.Setup(x => x.GetArticleById(It.IsAny<string>(), It.IsAny<string>())).Returns(article);
+            var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
+            _articleController.ControllerContext.HttpContext = contextMock.Object;
+            var getArticleById = _articleController.GetArticleById("asddadsdad90sdsd8");
+            Assert.IsNotNull(getArticleById);
         }
 
         [TestCase]
@@ -197,6 +204,63 @@ namespace PostService.Test
             var actual = controller.CreateArticle(article);
 
             Assert.IsNotNull(actual);
+        }
+
+        [TestCase]
+        public void TestUpdateArticleReturnBadRequest()
+        {
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","authorId")
+                });
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
+            _articleController.ControllerContext.HttpContext = contextMock.Object;
+            var checkUpdateArticle = _articleController.UpdateArticle(article);
+            var type = checkUpdateArticle.GetType();
+            Assert.AreEqual(type.Name, "BadRequestObjectResult");
+        }
+
+        [TestCase]
+        public void TestUpdateArticleReturnUnauthorized()
+        {
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","dasfafsf6sfasfasf")
+                });
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
+            _articleController.ControllerContext.HttpContext = contextMock.Object;
+            var checkUpdateArticle = _articleController.UpdateArticle(article);
+            var type = checkUpdateArticle.GetType();
+            Assert.AreEqual(type.Name, "UnauthorizedResult");
+        }
+
+        [TestCase]
+        public void TestUpdateArticleSuccess()
+        {
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","authorId")
+                });
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
+            _articleController.ControllerContext.HttpContext = contextMock.Object;
+            var checkUpdateArticle = _articleController.UpdateArticle(article);
+            var type = checkUpdateArticle.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
         }
     }
 }
