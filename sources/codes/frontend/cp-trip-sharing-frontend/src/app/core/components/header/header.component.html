@@ -86,9 +86,9 @@
           </mat-menu>
           <button *ngIf="checkLogin" type="button" class="btn btn-primary" (click)="openDialogLoginForm()">Đăng
             nhập</button>
-          <button *ngIf="checkLogined" class="avatar-image" aria-haspopup="true" class="m-r-5 mat-icon-button"
+          <button *ngIf="!checkLogin" class="avatar-image" aria-haspopup="true" class="m-r-5 mat-icon-button"
             mat-icon-button="" [matMenuTriggerFor]="menuProfile">
-            <span class="mat-button-wrapper"><img alt="user" class="imgavatar" src="{{user.avatar}}"></span>
+            <span class="mat-button-wrapper"><img alt="user" class="imgavatar" src="{{user ? user.avatar : ''}}"></span>
             <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
             <div class="mat-button-focus-overlay"></div>
           </button>
