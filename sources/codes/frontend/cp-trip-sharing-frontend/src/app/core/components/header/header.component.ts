@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
   user: User;
   account: Account;
   checkLogin: boolean;
-  checkLogined: boolean;
   userId: string;
 
   numNewMessages = 0;
@@ -45,7 +44,6 @@ export class HeaderComponent implements OnInit {
 
     if (this.account != null) {
       this.checkLogin = false;
-      this.checkLogined = true;
 
       if (this.account.role === 'member') {
 
@@ -60,7 +58,6 @@ export class HeaderComponent implements OnInit {
       }
     } else {
       this.checkLogin = true;
-      this.checkLogined = false;
     }
   }
 
