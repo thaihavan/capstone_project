@@ -1,6 +1,9 @@
 import { Author } from './Author';
 
 export class Post {
+    constructor() {
+        this.author = new Author();
+    }
     id: string;
     title: string;
     description: string;

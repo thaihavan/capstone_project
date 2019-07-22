@@ -21,9 +21,8 @@ import { ListUserBlockedComponent } from './shared/components/list-user-blocked/
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 import { DashboardPageComponent } from './admin/pages/dashboard-page/dashboard-page.component';
-import { DetailCompanionPostPageComponent } from './pages/detail-companion-post-page/detail-companion-post-page.component';
 import { SearchResultPageComponent } from './pages/search-result-page/search-result-page.component';
-import { ListPostHorizontalComponent } from './shared/components/list-post-horizontal/list-post-horizontal.component';
+// tslint:disable-next-line:max-line-length
 import { SearchResultContainerComponent } from './pages/search-result-page/components/search-result-container/search-result-container.component';
 import { TopicPageAdminComponent } from './admin/pages/dashboard-page/components/topic-page-admin/topic-page-admin.component';
 import { OverviewPageAdminComponent } from './admin/pages/dashboard-page/components/overview-page-admin/overview-page-admin.component';
@@ -78,7 +77,7 @@ const routes: Routes = [
       { path: 'khoi-tao', component: InitialUserInformationPageComponent },
       { path: 'tin-nhan', component: ChatPageComponent },
       { path: 'tao-bai-viet/tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
-      { path: 'tim-ban-dong-hanh/:companionId', component: DetailCompanionPostPageComponent}
+      { path: 'tim-ban-dong-hanh/:companionId', component: DetailpostPageComponent}
     ]
   },
 ];

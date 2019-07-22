@@ -80,10 +80,12 @@ export class HeaderComponent implements OnInit {
   }
 
   openDialogLoginForm() {
-    const dialogRef = this.dialog.open(LoginPageComponent, {
-      height: 'auto',
-      width: '400px'
-    });
+    if (this.checkLogin) {
+      const dialogRef = this.dialog.open(LoginPageComponent, {
+        height: 'auto',
+        width: '400px'
+      });
+    }
   }
 
   signOut() {

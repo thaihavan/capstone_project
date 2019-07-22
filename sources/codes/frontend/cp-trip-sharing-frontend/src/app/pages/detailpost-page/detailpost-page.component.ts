@@ -15,6 +15,8 @@ import { NotifyService } from 'src/app/core/services/notify-service/notify.servi
 import { Notification } from 'src/app/model/Notification';
 import { NotificationTemplates } from 'src/app/core/globals/NotificationTemplates';
 import { HostGlobal } from 'src/app/core/global-variables';
+import { User } from 'src/app/model/User';
+import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -23,22 +25,29 @@ import { HostGlobal } from 'src/app/core/global-variables';
 })
 export class DetailpostPageComponent implements OnInit {
   post: Post = new Post();
-  user: any;
-  authorId = '';
-  article: Article = new Article();
+  user = new User();
   like: Like = new Like();
   bookmarkObject: Bookmark = new Bookmark();
-  articleId: string;
+
+  detailPost: any;
+  postId: string;
+  companionPostId: string;
   token: string;
+
   bookmark = false;
   follow = false;
+
+  typePost = '';
+  authorId = '';
   displayName = '';
   profileImage = '';
   commentContent = '';
+
   comments: Comment[];
   listPostIdBookMark: string[] = [];
   listUserIdFollowing: string[] = [];
   listLocation: any[] = [];
+
   isScrollTopShow = false;
   topPosToStartShowing = 300;
   @HostListener('window:scroll') checkScroll() {
@@ -55,19 +64,30 @@ export class DetailpostPageComponent implements OnInit {
   }
   constructor(private postService: PostService, private route: ActivatedRoute,
               private userService: UserService, private titleService: Title,
-              public dialog: MatDialog, private notifyService: NotifyService) {
+              public dialog: MatDialog, private notifyService: NotifyService,
+              private postCopmanionService: FindingCompanionService) {
     this.comments = [];
-    this.user = JSON.parse(localStorage.getItem('User'));
-    this.articleId = this.route.snapshot.paramMap.get('articleId');
+    const articlePostId = this.route.snapshot.paramMap.get('articleId');
+    const companionPostId = this.route.snapshot.paramMap.get('companionId');
+    if (articlePostId !== null) {
+      this.typePost = 'article';
+      this.postId = articlePostId;
+      this.loadArticlePostById(this.postId);
+    } else {
+      this.postId = companionPostId;
+      this.loadCompanionPostById(this.postId);
+    }
     this.token = localStorage.getItem('Token');
-    this.loadArticleByarticleId(this.articleId);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('User'));
+   }
 
-  loadArticleByarticleId(articleId: string) {
+  // get article post
+  loadArticlePostById(articleId: string) {
     this.postService.getArticleById(articleId).subscribe((data: any) => {
-      this.article = data;
+      this.detailPost = data;
       this.post = data.post;
       this.displayName = data.post.author.displayName;
       this.profileImage = data.post.author.profileImage;
@@ -82,7 +102,38 @@ export class DetailpostPageComponent implements OnInit {
       this.getStates();
       this.getCommentByPostId(this.post.id);
       this.titleService.setTitle(this.post.title);
+    },
+    (err) => {
+      console.log(err);
     });
+  }
+
+  // get companionpost
+  loadCompanionPostById(articleId: string) {
+    this.token = localStorage.getItem('Token');
+    this.postCopmanionService.getPost(articleId).subscribe(
+      (data: any) => {
+        this.detailPost = data;
+        this.post = data.post;
+        this.displayName = data.post.author.displayName;
+        this.profileImage = data.post.author.profileImage;
+        this.listLocation = data.destinations;
+        this.authorId = this.post.author.id;
+        if (this.profileImage == null) {
+          this.profileImage = '../../../assets/img_avatar.png';
+        }
+        this.displayName = this.post.author.displayName;
+        this.getCommentByPostId(this.post.id);
+        this.getStates();
+        this.titleService.setTitle(this.post.title);
+      },
+      err => {
+        console.log('error load data companion post', err.message);
+      },
+      () => {
+        this.typePost = 'companion';
+      }
+    );
   }
 
   getStates(): void {
@@ -146,12 +197,12 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   likePost(like: any) {
-    this.like.objectId = this.article.post.id;
+    this.like.objectId = this.detailPost.post.id;
     this.like.objectType = 'post';
     if (like === false) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
-        this.article.post.liked = true;
-        this.article.post.likeCount += 1;
+        this.detailPost.post.liked = true;
+        this.detailPost.post.likeCount += 1;
         // Send notitication
         this.sendLikeNotification();
       }, (err: HttpErrorResponse) => {
@@ -159,8 +210,8 @@ export class DetailpostPageComponent implements OnInit {
       });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
-        this.article.post.liked = false;
-        this.article.post.likeCount -= 1;
+        this.detailPost.post.liked = false;
+        this.detailPost.post.likeCount -= 1;
       }, (err: HttpErrorResponse) => {
         console.log(err);
       });
@@ -214,11 +265,11 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   editpost() {
-    window.location.href = '/chinh-sua-bai-viet/' + this.articleId;
+    window.location.href = '/chinh-sua-bai-viet/' + this.postId;
   }
 
   removePost() {
-    this.postService.removeArticle(this.articleId).subscribe((data: any) => {
+    this.postService.removeArticle(this.postId).subscribe((data: any) => {
       this.openDialogMessageConfirm('Bạn đã xóa bài viết thành công!', '');
     }, (err: HttpErrorResponse) => {
       console.log(err);
@@ -242,22 +293,20 @@ export class DetailpostPageComponent implements OnInit {
   sendLikeNotification() {
     const notification = new Notification();
     notification.content = new NotificationTemplates()
-      .getLikePostNotiTemplate(this.user.displayName, this.article.post.title);
+    .getLikePostNotiTemplate(this.user.displayName, this.detailPost.post.title);
     notification.displayImage = this.user.avatar;
-    notification.receivers = [this.article.post.author.id];
-    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.article.id;
-
+    notification.receivers = [this.detailPost.post.author.id];
+    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.detailPost.id;
     this.notifyService.sendNotification(notification);
   }
 
   sendCommentNotification() {
     const notification = new Notification();
     notification.content = new NotificationTemplates()
-      .getCommentedNotiTemplate(this.user.displayName, this.article.post.title);
+      .getCommentedNotiTemplate(this.user.displayName, this.detailPost.post.title);
     notification.displayImage = this.user.avatar;
-    notification.receivers = [this.article.post.author.id];
-    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.article.id;
-
+    notification.receivers = [this.detailPost.post.author.id];
+    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.detailPost.id;
     this.notifyService.sendNotification(notification);
   }
 

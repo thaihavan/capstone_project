@@ -26,20 +26,24 @@
       <div class="title">
         <span>{{post.title}}</span>
       </div>
-      <div class="location" *ngFor="let location of listLocation">
+      <!-- <div class="location" *ngFor="let location of listLocation">
         <span><i class="fa fa-tag"></i>{{location.name}}</span>
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="content-infor">
     <div class="infor-author">
       <div (click)="gotoPersonalPage(authorId)" class="personal-name"><span>{{displayName}}</span></div>
       <div class="time">{{post.pubDate | customDate}}</div>
-      <button (click)="followPerson(post.author.id)" *ngIf="user != null && user.id !== post.author.id" class="btn-follow">
-        <span *ngIf="follow == false"><i class="fa fa-rss"></i>Theo dõi</span>
-        <span *ngIf="follow == true"><i class="fa fa-rss"></i> Đã theo dõi</span>
-      </button>
-      <div class="share"><i class="fa fa-share"></i> <span> Chia sẻ </span></div>
+      <ng-container *ngIf="post.author.id">
+          <button (click)="followPerson(post.author.id)" *ngIf="user !== null && user.id !== post.author.id"
+          class="btn-follow">
+          <span *ngIf="follow == false"><i class="fa fa-rss"></i>Theo dõi</span>
+          <span *ngIf="follow == true"><i class="fa fa-rss"></i> Đã theo dõi</span>
+        </button>
+      </ng-container>
+      
+      <div class="share"><i class="fa fa-share"></i> <span shareButton="facebook" > Chia sẻ </span></div>
       <div class="like"><i class="fa fa-thumbs-up"></i><span> {{post.likeCount}} thích </span></div>
       <div *ngIf="user != null && user.id === authorId" class="icon-action-user">
         <button mat-icon-button [matMenuTriggerFor]="menu_action" aria-label="Example icon-button with a menu">
@@ -60,30 +64,40 @@
     </div>
   </div>
 </div>
-<div class="content-post-page">
-  <div class="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred" role="textbox"
-    aria-label="Rich Text Editor, main" [innerHTML]="post.content">
-  </div>
+<ng-container [ngSwitch]="typePost">
+  <ng-container *ngSwitchCase="'article'">
+    <div class="content-post-page">
+      <div class="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred" role="textbox"
+        aria-label="Rich Text Editor, main" [innerHTML]="post.content">
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'companion'">
+    <app-detail-companion-post [companionPost]="detailPost" ></app-detail-companion-post>
+  </ng-container>
+</ng-container>
+
+
+<div class="content-post-page mt-5 mb-5">
   <div class="comment text">
     <h3>Bình luận</h3>
     <div class="iconuser-textarea" #target>
-
       <div class="form-group">
         <textarea class="form-control" rows="5" id="comment" name="text" [(ngModel)]="commentContent"></textarea>
       </div>
       <button type="submit" class="btn btn-primary" (click)="submitComment()">Bình luận</button>
 
       <!-- Comment container include all comments -->
-      <app-comment-container [comments]="comments" [post]="article"></app-comment-container>
-
+      <app-comment-container [comments]="comments" [post]="detailPost"></app-comment-container>
     </div>
   </div>
   <div class="button-showcomment">
     <button type="button" class="btn btn-primary">Tải thêm bình luận</button>
   </div>
 </div>
+
 <div *ngIf="isScrollTopShow" class="icon-action">
-  <button [class]="post.liked ? 'iconLike':'iconUnLike'" (click)="likePost(article.post.liked)">
+  <button [class]="post.liked ? 'iconLike':'iconUnLike'" (click)="likePost(detailPost.post.liked)">
     <mat-icon>thumb_up</mat-icon>
   </button>
   <button (click)="bookmarkPost(post.id,post.title,post.coverImage,post.postType)">

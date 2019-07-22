@@ -31,7 +31,7 @@
 }
 
 .content-post-page {
-  width: 55% !important;
+  width: 70% !important;
   height: auto;
   margin: 0 auto;
   margin-top: 5px;
@@ -137,7 +137,7 @@ textarea{
 .icon-action{
   position: fixed;
   bottom: 40%;
-  right: 12%;
+  left: 0%;
   opacity: 0.5;
   display: inline-grid;  
   height: 150px;
@@ -171,6 +171,7 @@ textarea{
   padding-bottom: 13px;
   padding-top: 13px;
   position: relative;
+  box-shadow: 0px -7px 19px -6px;
 }
 
 .infor-author{
@@ -260,4 +261,8 @@ textarea{
 .mat-icon-button {
   width: 30px !important;
   height: 30px !important;
+}
+.row{
+  margin-left: 0px;
+  margin-right: 0px;
 }

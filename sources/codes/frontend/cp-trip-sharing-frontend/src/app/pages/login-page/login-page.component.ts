@@ -77,24 +77,26 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginFunction() {
-    this.isLoading = true;
-    this.account.email = this.form.value.email;
-    this.account.password = this.form.value.password;
-    this.userService.getAccount(this.account).subscribe((acc: any) => {
-      localStorage.setItem('Account', JSON.stringify(acc));
-      localStorage.setItem('Token', acc.token);
-      // Call http request to userservice để lấy thông tin user
-      this.userService.getUserById(acc.userId).subscribe((user: any) => {
-        if (user == null) {
-          window.location.href = '/khoi-tao';
-        } else {
-          localStorage.setItem('User', JSON.stringify(user));
-          window.location.href = '/';
-        }
+    if (!this.form.invalid) {
+      this.isLoading = true;
+      this.account.email = this.form.value.email;
+      this.account.password = this.form.value.password;
+      this.userService.getAccount(this.account).subscribe((acc: any) => {
+        localStorage.setItem('Account', JSON.stringify(acc));
+        localStorage.setItem('Token', acc.token);
+        // Call http request to userservice để lấy thông tin user
+        this.userService.getUserById(acc.userId).subscribe((user: any) => {
+          if (user == null) {
+            window.location.href = '/khoi-tao';
+          } else {
+            localStorage.setItem('User', JSON.stringify(user));
+            window.location.href = '/';
+          }
+        });
+      }, (err: HttpErrorResponse) => {
+        this.alertifyService.error('Lỗi đăng nhập!');
       });
-    }, (err: HttpErrorResponse) => {
-      this.alertifyService.error('Lỗi đăng nhập!');
-    });
+    }
   }
 
 }

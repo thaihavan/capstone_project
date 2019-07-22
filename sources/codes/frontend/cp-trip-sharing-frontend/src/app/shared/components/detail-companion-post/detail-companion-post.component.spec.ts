@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { DetailCompanionPostPageComponent } from './detail-companion-post-page.component';
+import { DetailCompanionPostComponent } from './detail-companion-post.component';
 
-describe('DetailCompanionPostPageComponent', () => {
-  let component: DetailCompanionPostPageComponent;
-  let fixture: ComponentFixture<DetailCompanionPostPageComponent>;
+describe('DetailCompanionPostComponent', () => {
+  let component: DetailCompanionPostComponent;
+  let fixture: ComponentFixture<DetailCompanionPostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailCompanionPostPageComponent ]
+      declarations: [ DetailCompanionPostComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DetailCompanionPostPageComponent);
+    fixture = TestBed.createComponent(DetailCompanionPostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
