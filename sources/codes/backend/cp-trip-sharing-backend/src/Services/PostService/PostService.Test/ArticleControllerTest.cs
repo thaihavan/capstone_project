@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using PostService.Controllers;
@@ -6,6 +7,7 @@ using PostService.Models;
 using PostService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace PostService.Test
@@ -33,7 +35,7 @@ namespace PostService.Test
             {
                 Id = "authorId",
                 DisplayName = "authorName",
-                ProfileImage = "profilrImage"
+                ProfileImage = "profileImage"
             };
 
             Post post = new Post()
@@ -170,5 +172,31 @@ namespace PostService.Test
         //    var type = getArticleById.GetType();
         //    Assert.AreEqual(type.Name, "OkObjectResult");
         //}
+
+        [TestCase]
+        public void TestCreateArticle()
+        {
+            var controller = new ArticleController(mockArticleService.Object, mockPostService.Object);
+
+
+            var contextMock = new Mock<HttpContext>();            
+
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","authorId")
+                });
+
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockPostService.Setup(x => x.Add(It.IsAny<Post>())).Returns(article.Post);
+            mockArticleService.Setup(x => x.Add(It.IsAny<Article>())).Returns(article);
+         
+            controller.ControllerContext.HttpContext = contextMock.Object;
+
+            var actual = controller.CreateArticle(article);
+
+            Assert.IsNotNull(actual);
+        }
     }
 }
