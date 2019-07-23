@@ -1,11 +1,13 @@
 ﻿using IdentityProvider.Controllers;
 using IdentityProvider.Models;
 using IdentityProvider.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +19,9 @@ namespace IdentityProvider.Test
         Mock<IAccountService> mockAccountService;
         Mock<ITokenManager> _tokenManager = null;
         Account acc = null;
+        ChangePasswordModel changePasswordModel = null;
+        ClaimsIdentity claims = null;
+        ResetPasswordModel resetPasswordModel = null;
 
        [SetUp]
         public void Config()
@@ -29,6 +34,24 @@ namespace IdentityProvider.Test
                 Token = "asvaanbfbsgnnsn",
                 Id = "5d027f3e8254691f48a4ab7d"
             };
+            changePasswordModel = new ChangePasswordModel()
+            {
+                CurrentPassword = "old_Password",
+                NewPassword = "new_Password"
+            };
+
+            claims = new ClaimsIdentity(new Claim[]
+               {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","authorId")
+               });
+
+            resetPasswordModel = new ResetPasswordModel()
+            {
+                NewPassword = "new_password"
+            };
+
             mockAccountService = new Mock<IAccountService>();
             _tokenManager = new Mock<ITokenManager>();
         }
@@ -80,23 +103,27 @@ namespace IdentityProvider.Test
         [TestCase]
         public void TestChangePassword()
         {
-            ChangePasswordModel model = new ChangePasswordModel()
-            {
-                CurrentPassword = "old_password",
-                NewPassword = "new_password"
-            };
-            /*Chưa test*/
+            var contextMock = new Mock<HttpContext>();    
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockAccountService.Setup(x => x.ChangePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+            var _accountController = new AccountController(mockAccountService.Object, _tokenManager.Object);
+            _accountController.ControllerContext.HttpContext = contextMock.Object;
+            var changePasswordResult = _accountController.ChangePassword(changePasswordModel);
+            var type = changePasswordResult.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]
         public void TestChangePasswordReturnBadRequest()
         {
-            ChangePasswordModel model = new ChangePasswordModel()
-            {
-                CurrentPassword = "old_password",
-                NewPassword = "new_password"
-            };
-            /*Chưa test*/
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockAccountService.Setup(x => x.ChangePassword(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(false);
+            var _accountController = new AccountController(mockAccountService.Object, _tokenManager.Object);
+            _accountController.ControllerContext.HttpContext = contextMock.Object;
+            var changePasswordResult = _accountController.ChangePassword(changePasswordModel);
+            var type = changePasswordResult.GetType();
+            Assert.AreEqual(type.Name,"BadRequestObjectResult");
         }
 
         [TestCase]
@@ -112,25 +139,53 @@ namespace IdentityProvider.Test
         [TestCase]
         public void TestVerifyEmailAddress()
         {
-
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockAccountService.Setup(x => x.VerifyEmail(It.IsAny<string>())).Returns(true);
+            var _accountController = new AccountController(mockAccountService.Object, _tokenManager.Object);
+            _accountController.ControllerContext.HttpContext = contextMock.Object;
+            var verifyResult = _accountController.VerifyEmailAddress();
+            var type = verifyResult.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]
         public void TestVerifyEmailAddressReturnBadRequest()
         {
-
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockAccountService.Setup(x => x.VerifyEmail(It.IsAny<string>())).Returns(false);
+            var _accountController = new AccountController(mockAccountService.Object, _tokenManager.Object);
+            _accountController.ControllerContext.HttpContext = contextMock.Object;
+            var verifyResult = _accountController.VerifyEmailAddress();
+            var type = verifyResult.GetType();
+            Assert.AreEqual(type.Name, "BadRequestObjectResult");
         }
         
         [TestCase]
         public void TestResetPassword()
         {
-
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockAccountService.Setup(x => x.ResetPassword(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+            var _accountController = new AccountController(mockAccountService.Object, _tokenManager.Object);
+            _accountController.ControllerContext.HttpContext = contextMock.Object;
+            var verifyResult = _accountController.ResetPassword(resetPasswordModel);
+            var type = verifyResult.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]
         public void TestResetPasswordReturnBadRequest()
         {
-
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockAccountService.Setup(x => x.ResetPassword(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
+            var _accountController = new AccountController(mockAccountService.Object, _tokenManager.Object);
+            _accountController.ControllerContext.HttpContext = contextMock.Object;
+            var verifyResult = _accountController.ResetPassword(resetPasswordModel);
+            var type = verifyResult.GetType();
+            Assert.AreEqual(type.Name, "BadRequestObjectResult");
         }
 
         [TestCase]
@@ -179,10 +234,10 @@ namespace IdentityProvider.Test
         [TestCase]
         public void TestLogout()
         {
-            //var accountController = new AccountController(mockAccountService.Object, _tokenManager.Object);
-            //Task<ActionResult> actionResult = accountController.Logout();
-            //var type = actionResult.GetType();
-            //Assert.AreEqual(type.Name, "AsyncStateMachineBox`1");
+
+            var accountController = new AccountController(mockAccountService.Object, _tokenManager.Object);
+            var actionResult = accountController.Logout();
+            Assert.IsNotNull(actionResult);
         }
     }
 }
