@@ -4,6 +4,7 @@ using NotificationService.Helpers;
 using NotificationService.Hubs;
 using NotificationService.Models;
 using NotificationService.Repositories;
+using NotificationService.Repositories.Interfaces;
 using NotificationService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,15 @@ namespace NotificationService.Services
 {
     public class NotificationService : INotificationService
     {
-        private readonly NotificationRepository _notificationRepository = null;
-
+        private readonly INotificationRepository _notificationRepository = null;
         public NotificationService(IOptions<AppSettings> settings)
         {
             _notificationRepository = new NotificationRepository(settings);
+        }
+
+        public NotificationService(INotificationRepository notificationRepository)
+        {
+            _notificationRepository = notificationRepository;
         }
 
         public Notification Add(Notification notification)
