@@ -1,5 +1,5 @@
 .mat-drawer-content {
-    min-height: 100vh;
+    min-height: 100vh - 180px;
 }
 
 .container-fluid {

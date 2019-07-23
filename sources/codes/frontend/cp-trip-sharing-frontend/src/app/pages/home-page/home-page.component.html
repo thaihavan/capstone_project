@@ -17,7 +17,8 @@
         <div class="section-container-sub-title">Những bài viết độc đáo của mọi người</div>
         <div class="title-border-bottom"></div>
       </div>
-      <div class="section recommend-section">
+
+      <div *ngIf="user != null" class="section recommend-section">
         <div>
           <h3 class="section-title">Đề xuất</h3>
           <a href="trang-chu/de-xuat" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
@@ -31,7 +32,7 @@
           <h3 class="section-title">Phổ biến</h3>
           <a href="trang-chu/pho-bien" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
         </div>
-        <app-list-post-horizontal [listType]="'article'" [posts]="newestArticles" [rowSize]="3">
+        <app-list-post-horizontal [listType]="'article'" [posts]="popularArticles" [rowSize]="3">
         </app-list-post-horizontal>
       </div>
 

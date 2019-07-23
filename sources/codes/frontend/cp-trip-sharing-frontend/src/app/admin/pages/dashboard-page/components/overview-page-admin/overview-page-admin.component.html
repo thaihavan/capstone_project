@@ -1,33 +1,95 @@
 <div class="overview-page-container">
 
-  <!-- Post chart -->
+  <!-- Post -->
   <div class="post-chart-container">
     <div>
-      <h3>Post</h3>
+      <div>
+        <h3>Bài viết</h3>
+      </div>
+      <div>
+        <div class="date-filter">
+          <mat-form-field>
+              <mat-label>From</mat-label>
+              <input matInput (click)="postFromPicker.open()" [(ngModel)]="postFilter.from"
+              [max]="postFilter.to" [matDatepicker]="postFromPicker" placeholder="From">
+              <mat-datepicker-toggle matSuffix [for]="postFromPicker"></mat-datepicker-toggle>
+              <mat-datepicker #postFromPicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+              <mat-label>To</mat-label>
+              <input matInput (click)="postToPicker.open()" [(ngModel)]="postFilter.to"
+              [min]="postFilter.from" [max]="now" [matDatepicker]="postToPicker" placeholder="To">
+              <mat-datepicker-toggle matSuffix [for]="postToPicker"></mat-datepicker-toggle>
+              <mat-datepicker #postToPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
     <div class="char-container">
       <ngx-charts-line-chart
-        [view]="chartAttributes.view"
-        [scheme]="chartAttributes.colorScheme"
-        [results]="userData"
-        [gradient]="chartAttributes.gradient"
-        [xAxis]="chartAttributes.showXAxis"
-        [yAxis]="chartAttributes.showYAxis"
-        [legend]="chartAttributes.showLegend"
-        [showXAxisLabel]="chartAttributes.showXAxisLabel"
-        [showYAxisLabel]="chartAttributes.showYAxisLabel"
-        [xAxisLabel]="chartAttributes.xAxisLabel"
-        [yAxisLabel]="chartAttributes.yAxisLabel"
-        [xAxisTicks]="chartAttributes.xAxisTicks"
-        [autoScale]="chartAttributes.autoScale"
-        [timeline]="chartAttributes.timeline"
-        (select)="onSelect($event)">
+        [view]="postChartAttributes.view"
+        [scheme]="postChartAttributes.colorScheme"
+        [results]="postData"
+        [gradient]="postChartAttributes.gradient"
+        [xAxis]="postChartAttributes.showXAxis"
+        [yAxis]="postChartAttributes.showYAxis"
+        [legend]="postChartAttributes.showLegend"
+        [legendPosition]="postChartAttributes.legendPosition"
+        [showXAxisLabel]="postChartAttributes.showXAxisLabel"
+        [showYAxisLabel]="postChartAttributes.showYAxisLabel"
+        [xAxisLabel]="postChartAttributes.xAxisLabel"
+        [yAxisLabel]="postChartAttributes.yAxisLabel"
+        [autoScale]="postChartAttributes.autoScale"
+        [timeline]="postChartAttributes.timeline">
       </ngx-charts-line-chart>
     </div>
   </div>
 
-  <!-- User chart -->
+  <!-- User -->
   <div class="user-chart-container">
+    <div>
+      <div>
+        <h3>Người dùng</h3>
+      </div>
+      <div>
+        <div class="date-filter">
+          <mat-form-field>
+              <mat-label>From</mat-label>
+              <input matInput (click)="userFromPicker.open()" [(ngModel)]="userFilter.from"
+              [max]="userFilter.to" [matDatepicker]="userFromPicker" placeholder="From">
+              <mat-datepicker-toggle matSuffix [for]="userFromPicker"></mat-datepicker-toggle>
+              <mat-datepicker #userFromPicker></mat-datepicker>
+          </mat-form-field>
 
+          <mat-form-field>
+              <mat-label>To</mat-label>
+              <input matInput (click)="userToPicker.open()" [(ngModel)]="userFilter.to"
+              [min]="userFilter.from" [max]="now" [matDatepicker]="userToPicker" placeholder="To">
+              <mat-datepicker-toggle matSuffix [for]="userToPicker"></mat-datepicker-toggle>
+              <mat-datepicker #userToPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="char-container">
+      <ngx-charts-line-chart
+        [view]="userChartAttributes.view"
+        [scheme]="userChartAttributes.colorScheme"
+        [results]="userData"
+        [gradient]="userChartAttributes.gradient"
+        [xAxis]="userChartAttributes.showXAxis"
+        [yAxis]="userChartAttributes.showYAxis"
+        [legend]="userChartAttributes.showLegend"
+        [showXAxisLabel]="userChartAttributes.showXAxisLabel"
+        [showYAxisLabel]="userChartAttributes.showYAxisLabel"
+        [xAxisLabel]="userChartAttributes.xAxisLabel"
+        [yAxisLabel]="userChartAttributes.yAxisLabel"
+        [xAxisTicks]="userChartAttributes.xAxisTicks"
+        [autoScale]="userChartAttributes.autoScale"
+        [timeline]="userChartAttributes.timeline">
+      </ngx-charts-line-chart>
+    </div>
   </div>
+  
 </div>

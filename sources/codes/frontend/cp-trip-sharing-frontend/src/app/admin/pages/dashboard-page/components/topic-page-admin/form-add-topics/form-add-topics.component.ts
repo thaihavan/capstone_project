@@ -15,6 +15,7 @@ export class FormAddTopicsComponent implements OnInit {
   imagePath: any;
   imgURL: any;
   message: string;
+
   topic: Topic = new Topic();
   constructor(private postService: PostService,
               private imageService: UploadImageService,
@@ -52,9 +53,9 @@ export class FormAddTopicsComponent implements OnInit {
     };
   }
 
-  addTopic() {
+  addOrUpdateTopic() {
     if (this.topic.imgUrl != null && this.topic.name != null) {
-      this.postService.addTopic(this.topic).subscribe((result: any) => {
+      this.postService.addOrUpdateTopic(this.topic).subscribe((result: any) => {
         this.dialogRef.close(result);
       }, (err: HttpErrorResponse) => {
         console.log(err);

@@ -34,23 +34,30 @@ export class PostService {
   // }
 
   getAllArticles(postFilter: PostFilter): Observable<any> {
-    const token = localStorage.getItem('Token');
-    let httpOption = null;
-    if (token != null) {
-      httpOption = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token
-        })
-      };
-    } else {
-      httpOption = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        })
-      };
-    }
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
     return this.http.post<Article>(this.baseUrl + 'all', postFilter, httpOption);
+  }
+
+  getPopularArticles(postFilter: PostFilter): Observable<any> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this.http.post<Article>(this.baseUrl + 'popular', postFilter, httpOption);
+  }
+
+  getRecommendArticles(postFilter: PostFilter): Observable<any> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this.http.post<Article>(this.baseUrl + 'recommend', postFilter, httpOption);
   }
 
   getAllArticlesByUserId(userId: string, postFilter: PostFilter): Observable<any> {
@@ -150,14 +157,14 @@ export class PostService {
     return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/article/remove?articleId=' + articleId, httpOptionRemoveArticle);
   }
 
-  addTopic(topic: Topic): Observable<any> {
+  addOrUpdateTopic(topic: Topic): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/create', topic, httpOption);
+    return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/insert-or-update', topic, httpOption);
   }
 
   removeTopics(topicIds: string[]): Observable<any> {

@@ -7,10 +7,10 @@
       (change)="preview(file.files)">
     <label class="custom-file-label" for="customFile">Chọn ảnh</label>
   </div>
-  <img [src]="imgURL" *ngIf="imgURL">
+  <img [src]="topic.imgUrl" *ngIf="topic.imgUrl">
   <mat-form-field class="example-form-field">
     <input matInput type="text" placeholder="Tên chủ đề" [(ngModel)]="topic.name">
   </mat-form-field>
   <span class="message">{{message}}</span>
-  <button mat-button color="primary" (click)="addTopic()">Thêm chủ đề</button>
+  <button mat-button color="primary" (click)="addOrUpdateTopic()">Ok</button>
 </div>

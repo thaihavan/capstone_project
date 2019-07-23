@@ -51,6 +51,24 @@ namespace PostService.Repositories
             throw new NotImplementedException();
         }
 
+        public Topic InsertOrUpdate(Topic topic)
+        {
+            var updateDefinition = Builders<Topic>.Update
+                .Set("name", topic.Name)
+                .Set("img_url", topic.ImgUrl);
+
+            var result = _topics.UpdateOne(
+                a => a.Id == topic.Id,
+                updateDefinition,
+                new UpdateOptions { IsUpsert = true });
+
+            if (!result.IsAcknowledged)
+            {
+                return null;
+            }
+            return topic;
+        }
+
         public Topic Update(Topic param)
         {
             throw new NotImplementedException();
