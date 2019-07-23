@@ -1,6 +1,7 @@
 ﻿using ChatService.Helpers;
 using ChatService.Models;
 using ChatService.Repositories;
+using ChatService.Repositories.Interfaces;
 using ChatService.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
@@ -13,13 +14,18 @@ namespace ChatService.Services
 {
     public class ChatService : IChatService
     {
-        private readonly ConversationRepository _conversationRepository = null;
+        private readonly IConversationRepository _conversationRepository = null;
         private readonly MessageRepository _messageRepository = null;
 
         public ChatService(IOptions<AppSettings> settings)
         {
             _conversationRepository = new ConversationRepository(settings);
             _messageRepository = new MessageRepository(settings);
+        }
+
+        public ChatService(IConversationRepository conversationRepository)
+        {
+            _conversationRepository = conversationRepository;
         }
 
         public MessageDetail AddMessage(string receiverId, MessageDetail message)
