@@ -162,15 +162,6 @@ namespace PostService.Test
             IEnumerable<Article> list_articles = null;
             list_articles = _articleService.GetPopularArticles(postFilter,6);
             Assert.IsNotNull(list_articles);
-        }
-
-        //[TestCase]
-        //public void TestGetNumberOfArticlePost()
-        //{            
-        //    mockArticleRepository.Setup(x => x.GetNumberOfArticlePost(It.IsAny<PostFilter>())).Returns(5);
-        //    var _articleService = new ArticleService(mockArticleRepository.Object);
-        //    int result = _articleService.GetNumberOfArticlePost(postFilter);
-        //    Assert.AreEqual(5, result);
-        //}
+        }        
     }
 }

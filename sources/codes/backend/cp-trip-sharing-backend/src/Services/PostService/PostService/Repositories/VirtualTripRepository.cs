@@ -255,11 +255,11 @@ namespace PostService.Repositories
         {
             DateTimeFormatInfo format = new DateTimeFormatInfo();
             format.ShortDatePattern = "dd-MM-yyyy";
-            format.DateSeparator = "-";
+            format.DateSeparator = "-";           
 
             // time filter
             Expression<Func<VirtualTrip, bool>> dateFilter =
-                post => post.Post.PubDate >= filter.From && post.Post.PubDate <= filter.To;
+                post => post.Post.PubDate > filter.From && post.Post.PubDate <= filter.To;
 
             Func<VirtualTrip, Post, VirtualTrip> SelectVirtualTripWithPost =
                 ((virtualTrip, post) => { virtualTrip.Post = post; return virtualTrip; });
@@ -275,37 +275,31 @@ namespace PostService.Repositories
                 .Select(x => x)
                 .ToList();
 
-            var data = virtualTrips
-                .GroupBy(x => x.Post.PubDate.ToShortDateString())
-                .Select(x => new
-                {
-                    name = Convert.ToDateTime(x.Key, format),
-                    value = x.Count()
-                }).ToList();
+            var data = virtualTrips.GroupBy(x => x.Post.PubDate.ToString("dd-MM-yyy"))
+                    .Select(x => new
+                    {
+                        name = x.Key,
+                        value = x.Count()
+                    }).ToList();
 
             var dummyData = Enumerable.Range(0, (filter.To - filter.From).Days)
                 .Select(i => new
                 {
-                    name = Convert.ToDateTime(filter.From.AddDays(i),format),
+                    name = filter.From.AddDays(i).ToString("dd-MM-yyy"),
                     value = 0
-                });
+                }).ToList();
 
             var exceptData = data.Select(x => new
             {
                 name = x.name,
                 value = 0
-            });
+            }).ToList();
 
             var result = data.Union(
                     dummyData.Except(exceptData)
                 )
-                .OrderBy(x=>x.name)
-                .Select(x=> new
-                {
-                    name = x.name.ToString("dd-MM-yyyy"),
-                    value = x.value
-                });
-
+                .OrderBy(x => Convert.ToDateTime(x.name, format))
+                .Select(x => x);
             return new
             {
                 name = "VirtualTrip",

@@ -367,12 +367,12 @@ namespace PostService.Repositories
         public object GetArticleStatistics(StatisticsFilter filter)
         {
             DateTimeFormatInfo format = new DateTimeFormatInfo();
-            format.ShortDatePattern = "yyyy-MM-dd";
-            format.DateSeparator = "-";
+            format.ShortDatePattern = "dd-MM-yyyy";
+            format.DateSeparator = "-";            
 
             //time filter 
             Expression<Func<Article, bool>> dateFilter =
-                article => article.Post.PubDate >= filter.From && article.Post.PubDate <= filter.To;
+                article => article.Post.PubDate > filter.From && article.Post.PubDate <= filter.To;
 
             Func<Article, Post, Article> SelectArticleWithPost =
                 ((article, post) => { article.Post = post; return article; });
@@ -389,37 +389,31 @@ namespace PostService.Repositories
                 .Select(x => x)
                 .ToList();
 
-            var data = articles
-                .GroupBy(x => x.Post.PubDate.ToShortDateString())
-                .Select(x => new
-                {
-                    name = Convert.ToDateTime(x.Key, format),
-                    value = x.Count()
-                }).ToList();
+            var data = articles.GroupBy(x => x.Post.PubDate.ToString("dd-MM-yyy"))
+                    .Select(x => new
+                    {
+                        name = x.Key,
+                        value = x.Count()
+                    }).ToList();
 
             var dummyData = Enumerable.Range(0, (filter.To - filter.From).Days)
                 .Select(i => new
                 {
-                    name = Convert.ToDateTime(filter.From.AddDays(i), format),
+                    name = filter.From.AddDays(i).ToString("dd-MM-yyy"),
                     value = 0
-                });
+                }).ToList();
 
             var exceptData = data.Select(x => new
             {
                 name = x.name,
                 value = 0
-            });
+            }).ToList();
 
             var result = data.Union(
                     dummyData.Except(exceptData)
                 )
-                .OrderBy(x => x.name)
-                .Select(x => new
-                {
-                    name = x.name.ToString("dd-MM-yyyy"),
-                    value = x.value
-                }); 
-
+                .OrderBy(x => Convert.ToDateTime(x.name, format))
+                .Select(x => x);
             return new
             {
                 name = "Article",
