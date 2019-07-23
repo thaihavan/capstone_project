@@ -5,6 +5,7 @@ export class NgxChartInterface {
     showYAxis: boolean;
     gradient: boolean;
     showLegend: boolean;
+    legendPosition: string;
     showXAxisLabel: boolean;
     xAxisLabel: string;
     showYAxisLabel: boolean;
@@ -12,6 +13,8 @@ export class NgxChartInterface {
 
     xAxisTicks: any[];
     yAxisTicks: any[];
+    xAxisTickFormatting: any;
+    yAxisTickFormatting: any;
     timeline: boolean;
 
     colorScheme: any;
@@ -24,10 +27,11 @@ export class NgxChartInterface {
         this.showYAxis = true;
         this.gradient = false;
         this.showLegend = true;
-        this.showXAxisLabel = true;
-        this.xAxisLabel = 'Number';
-        this.showYAxisLabel = true;
-        this.yAxisLabel = 'Color Value';
+        this.legendPosition = 'below';
+        this.showXAxisLabel = false;
+        this.xAxisLabel = 'X Axis Label';
+        this.showYAxisLabel = false;
+        this.yAxisLabel = 'Y Axis Label';
         this.timeline = false;
 
         this.colorScheme = {

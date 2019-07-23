@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using PostService.Controllers;
@@ -6,6 +7,7 @@ using PostService.Models;
 using PostService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace PostService.Test
@@ -93,6 +95,91 @@ namespace PostService.Test
             var virtualTripControler = new VirtualTripController(mockVirtualTripService.Object, mockPostService.Object);
             IActionResult getAllVirtualTrips = virtualTripControler.GetVirtualTrip("assfa8a6fasfa5sffa6sf");
             var type = getAllVirtualTrips.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
+        }
+
+        [TestCase]
+        public void TestCreateVirtualTrip()
+        {
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","authorId")
+                });
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockPostService.Setup(x => x.Add(It.IsAny<Post>())).Returns(post);
+            mockVirtualTripService.Setup(x => x.Add(It.IsAny<VirtualTrip>())).Returns(virtualTrip);
+            var virtualTripControler = new VirtualTripController(mockVirtualTripService.Object, mockPostService.Object);
+            virtualTripControler.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult addedVirtualTrip = virtualTripControler.CreateVirtualTrip(virtualTrip);
+            var type = addedVirtualTrip.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
+        }
+
+        [TestCase]
+        public void TestUpdateVirtualTripReturnUnauthorized()
+        {
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","authorId")
+                });
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockPostService.Setup(x => x.Update(It.IsAny<Post>())).Returns(post);
+            mockVirtualTripService.Setup(x => x.Update(It.IsAny<VirtualTrip>())).Returns(virtualTrip);
+            var virtualTripControler = new VirtualTripController(mockVirtualTripService.Object, mockPostService.Object);
+            virtualTripControler.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult addedVirtualTrip = virtualTripControler.UpdateVirtualTrip(virtualTrip);
+            var type = addedVirtualTrip.GetType();
+            Assert.AreEqual(type.Name, "UnauthorizedResult");
+        }
+
+        [TestCase]
+        public void TestUpdateVirtualTripReturnBadRequest()
+        {
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d0b2b0b1c9d440000d8e9a1")
+                });
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockPostService.Setup(x => x.Update(It.IsAny<Post>())).Returns(post);
+            mockVirtualTripService.Setup(x => x.Update(It.IsAny<VirtualTrip>())).Returns(virtualTrip);
+            var virtualTripControler = new VirtualTripController(mockVirtualTripService.Object, mockPostService.Object);
+            virtualTripControler.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult addedVirtualTrip = virtualTripControler.UpdateVirtualTrip(virtualTrip);
+            var type = addedVirtualTrip.GetType();
+            Assert.AreEqual(type.Name, "BadRequestObjectResult");
+        }
+
+        [TestCase]
+        public void TestUpdateVirtualTripReturnSuccess()
+        {
+            virtualTrip.Post.Id = "asf7f6af9sfafaf7af0aaf";
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d0b2b0b1c9d440000d8e9a1")
+                });
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockPostService.Setup(x => x.Update(It.IsAny<Post>())).Returns(post);
+            mockVirtualTripService.Setup(x => x.Update(It.IsAny<VirtualTrip>())).Returns(virtualTrip);
+            var virtualTripControler = new VirtualTripController(mockVirtualTripService.Object, mockPostService.Object);
+            virtualTripControler.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult addedVirtualTrip = virtualTripControler.UpdateVirtualTrip(virtualTrip);
+            var type = addedVirtualTrip.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
     }

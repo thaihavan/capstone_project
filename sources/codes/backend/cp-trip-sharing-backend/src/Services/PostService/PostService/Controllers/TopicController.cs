@@ -48,6 +48,23 @@ namespace PostService.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "admin")]
+        [HttpPost("insert-or-update")]
+        public IActionResult InsertOrUpdate([FromBody] Topic param)
+        {
+            if (param.Id == null || param.Id == "")
+            {
+                param.Id = ObjectId.GenerateNewId().ToString();
+            }
+            
+            var temp = _topicService.InsertOrUpdate(param);
+            if (temp != null)
+            {
+                return Ok(param);
+            }
+            return NoContent();
+        }
+
         [Authorize(Roles ="admin")]
         [HttpDelete()]
         public IActionResult DeleteTopic([FromQuery] string id)

@@ -25,6 +25,10 @@ div {
     background-color: #4caf50;
 }
 
+.button-update {
+    background-color: #2196f3;
+}
+
 .button-delete {
     background-color: #ed4035;
 }

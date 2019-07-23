@@ -15,7 +15,7 @@
       <!-- Email -->
       <mat-form-field>
         <mat-label>Nhập email</mat-label>
-        <input [(ngModel)]="email" matInput placeholder="Placeholder" type="email" formControlName="email">
+        <input [(ngModel)]="email" matInput placeholder="Nhập email" type="email" formControlName="email">
       </mat-form-field>
 
       <!-- Password -->
@@ -29,19 +29,6 @@
         </button>
       </mat-form-field>
 
-      <div class="d-flex justify-content-around mt-3">
-        <div>
-          <!-- Remember me -->
-          <div class="form-check">
-            <mat-checkbox class="color-gray">Ghi nhớ đăng nhập</mat-checkbox>
-          </div>
-        </div>
-        <div>
-          <!-- Forgot password -->
-          <a class="font-size-15" href="">Quên mật khẩu?</a>
-        </div>
-      </div>
-
       <!-- Sign in button -->
       <button class="btn-sign-in" mat-flat-button color="primary" (click)="loginFunction()" type="submit">
         Đăng Nhập
@@ -52,6 +39,13 @@
         </ng-container>
       </button>
 
+      <div class="d-flex justify-content-around mt-3">
+        <div>
+          <!-- Forgot password -->
+          <a class="font-size-15" href="/quen-mat-khau">Quên mật khẩu?</a>
+        </div>
+      </div>
+
       <!-- Register -->
       <p class="color-gray">Không phải thành viên?
         <a routerLink="/dang-ky" (click)="callRegisterPage()" class="font-size-15" href="">Đăng kí</a>
@@ -59,7 +53,7 @@
 
       <!-- Social login -->
       <p class="color-gray">Hoặc đăng nhập với:</p>
-      <a mat-mini-fab class="mr-3" color="primary">
+      <a mat-mini-fab class="mr-3" color="primary" (click)="signInWithFb()">
         <i class="fa fa-facebook-f"></i>
       </a>
       <a mat-mini-fab color="warn" (click)="signInWithGoogle()">

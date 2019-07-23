@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
     this.account = JSON.parse(localStorage.getItem('Account'));
     this.user = JSON.parse(localStorage.getItem('User'));
 
-    if (this.account != null) {
+    if (this.account != null && this.user != null) {
       this.checkLogin = false;
 
       if (this.account.role === 'member') {

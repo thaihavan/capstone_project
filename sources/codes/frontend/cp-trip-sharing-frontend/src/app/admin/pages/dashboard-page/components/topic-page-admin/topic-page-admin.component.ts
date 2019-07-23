@@ -56,8 +56,30 @@ export class TopicPageAdminComponent implements OnInit {
     });
   }
 
-  removeTopics() {
+  UpdateTopic() {
+    if (this.selectedTopics.length === 1) {
+      const dialogRef = this.dialog.open(FormAddTopicsComponent, {
+        width: '420px',
+        data: {
+          toppics: [],
+          destinations: [],
+        },
+      });
 
+      let topic = this.listTopics.find(t => t.id === this.selectedTopics[0]);
+
+      const instance = dialogRef.componentInstance;
+      instance.topic = topic;
+
+      dialogRef.afterClosed().subscribe((res: Topic) => {
+        if (res && res != null) {
+          topic = res;
+        }
+      });
+    }
+  }
+
+  removeTopics() {
     if (this.selectedTopics.length > 0) {
       const dialogRef = this.dialog.open(DeleteConfirmPopupComponent, {
         width: '320px',
@@ -75,6 +97,7 @@ export class TopicPageAdminComponent implements OnInit {
           if (this.selectedTopics.length > 0) {
             this.postService.removeTopics(this.selectedTopics).subscribe((result: any) => {
               this.listTopics = this.listTopics.filter(t => this.selectedTopics.find(x => x === t.id) == null);
+              this.selectedTopics = [];
             }, (err: HttpErrorResponse) => {
               console.log(err);
             });

@@ -15,6 +15,7 @@ namespace PostService.Test
     {
         Mock<IPostService> mockPostService;
         Post post = null;
+        StatisticsFilter statisticsFilter = null;
 
         [SetUp]
         public void Config()
@@ -34,6 +35,12 @@ namespace PostService.Test
                 PubDate = DateTime.Now,
                 liked = false,
                 Title = "Post Test",
+            };
+
+            statisticsFilter = new StatisticsFilter()
+            {
+                To = DateTime.Now,
+                From = DateTime.Parse("22/06/2019")
             };
         }
 
@@ -64,5 +71,10 @@ namespace PostService.Test
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
+        [TestCase]
+        public void TestGetPostStatistics()
+        {
+           
+        }
     }
 }

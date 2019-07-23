@@ -12,5 +12,7 @@ namespace PostService.Services.Interfaces
         bool Delete(string topicId);
 
         bool DeleteMany(List<string> topics);
+
+        Topic InsertOrUpdate(Topic topic);
     }
 }
