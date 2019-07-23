@@ -11,6 +11,7 @@ import { FindingCompanionService } from 'src/app/core/services/post-service/find
 import { CompanionPost } from 'src/app/model/CompanionPost';
 import { LocationMarker } from 'src/app/model/LocationMarker';
 import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
+import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'app-home-page',
@@ -19,6 +20,7 @@ import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 })
 export class HomePageComponent implements OnInit {
   coverImage = '../../../assets/cover-image.png';
+  user: User;
 
   recommendedArticles: Article[] = [];
   popularArticles: Article[] = [];
@@ -33,15 +35,17 @@ export class HomePageComponent implements OnInit {
               private companionPostService: FindingCompanionService,
               private zone: NgZone) {
     this.titleService.setTitle('Trang chủ');
+    this.user = JSON.parse(localStorage.getItem('User'));
   }
 
   ngOnInit() {
-    this.getArticles(undefined);
+    this.getNewestArticles(undefined);
+    this.getPopularArticles(undefined);
     this.getVirtualTrips(undefined);
     this.getCompanionPosts(undefined);
   }
 
-  getArticles(postFilter: PostFilter): void {
+  getNewestArticles(postFilter: PostFilter): void {
     if (!postFilter) {
       postFilter = new PostFilter();
       postFilter.topics = [];
@@ -51,6 +55,22 @@ export class HomePageComponent implements OnInit {
       this.newestArticles = data;
       if (this.newestArticles != null && this.newestArticles.length > 6) {
         this.newestArticles = this.newestArticles.slice(0, 6);
+      }
+    }, (err: HttpErrorResponse) => {
+      console.log(err);
+    });
+  }
+
+  getPopularArticles(postFilter: PostFilter): void {
+    if (!postFilter) {
+      postFilter = new PostFilter();
+      postFilter.topics = [];
+      postFilter.timePeriod = 'this_year';
+    }
+    this.postService.getPopularArticles(postFilter).subscribe((data: Article[]) => {
+      this.popularArticles = data;
+      if (this.popularArticles != null && this.popularArticles.length > 6) {
+        this.popularArticles = this.popularArticles.slice(0, 6);
       }
     }, (err: HttpErrorResponse) => {
       console.log(err);

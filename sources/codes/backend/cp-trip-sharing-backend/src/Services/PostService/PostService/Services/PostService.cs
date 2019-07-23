@@ -66,6 +66,10 @@ namespace PostService.Services
 
         public object GetAllPostStatistics(StatisticsFilter filter)
         {
+
+            filter.From = filter.From.Date.AddHours(12);
+            filter.To = filter.To.Date.AddDays(1).AddHours(12);
+
             var articleStatistics = _articleRepository.GetArticleStatistics(filter);
             var companionPostStatistics = _companionPostRepository.GetCompanionPostStatistics(filter);
             var virtualTripStatistic = _virtualTripRepository.GetVirtualTripStatistics(filter);

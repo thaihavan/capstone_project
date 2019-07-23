@@ -62,47 +62,48 @@ namespace UserServices.Reponsitories
         public object GetUserStatistics(StatisticsFilter filter)
         {
             DateTimeFormatInfo format = new DateTimeFormatInfo();
-            format.ShortDatePattern = "yyyy-MM-dd";
+            format.ShortDatePattern = "dd-MM-yyy";
             format.DateSeparator = "-";
 
+            filter.From = filter.From.Date.AddHours(-12);
+            filter.To = filter.To.Date.AddDays(1).AddHours(-12);
+            filter.To = filter.To.Date.AddDays(1).AddHours(-12);
+
             Expression<Func<User, bool>> dateFilter =
-                x => filter.From <= x.CreatedDate && x.CreatedDate <= filter.To;
+                x => filter.From <= x.CreatedDate && x.CreatedDate < filter.To;
+
             var users = _users.AsQueryable()
                 .Where(dateFilter.Compile())
                 .OrderBy(x => x.CreatedDate)
                 .Select(x => x)
                 .ToList();
 
-            var data = users.GroupBy(x => x.CreatedDate.ToShortDateString())
+            var data = users.GroupBy(x => x.CreatedDate.ToString("dd-MM-yyy"))
                     .Select(x => new
                     {
-                        name = Convert.ToDateTime(x.Key, format),
+                        name = x.Key,
                         value = x.Count()
-                    });
+                    }).ToList();
 
             var dummyData = Enumerable.Range(0, (filter.To - filter.From).Days)
                 .Select(i => new
                 {
-                    name = Convert.ToDateTime(filter.From.AddDays(i), format),
+                    name = filter.From.AddDays(i).ToString("dd-MM-yyy"),
                     value = 0
-                });
+                }).ToList();
 
             var exceptData = data.Select(x => new
             {
                 name = x.name,
                 value = 0
-            });
+            }).ToList();
 
             var result = data.Union(
                     dummyData.Except(exceptData)
                 )
-                .OrderBy(x => x.name)
-                .Select(x => new
-                {
-                    name = x.name.ToString("dd-MM-yyyy"),
-                    value = x.value
-                });
-
+                .OrderBy(x => Convert.ToDateTime(x.name,format))
+                .Select(x =>x);
+            
             return new
             {
                 name = "User",

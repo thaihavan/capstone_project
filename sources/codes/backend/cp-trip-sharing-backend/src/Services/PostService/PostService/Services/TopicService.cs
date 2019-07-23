@@ -45,5 +45,10 @@ namespace PostService.Services
         {
             return _topicRepository.GetAll();
         }
+
+        public Topic InsertOrUpdate(Topic topic)
+        {
+            return _topicRepository.InsertOrUpdate(topic);
+        }
     }
 }
