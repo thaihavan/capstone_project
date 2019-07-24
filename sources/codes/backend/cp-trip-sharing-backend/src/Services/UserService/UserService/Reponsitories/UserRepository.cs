@@ -63,11 +63,7 @@ namespace UserServices.Reponsitories
         {
             DateTimeFormatInfo format = new DateTimeFormatInfo();
             format.ShortDatePattern = "dd-MM-yyy";
-            format.DateSeparator = "-";
-
-            filter.From = filter.From.Date.AddHours(-12);
-            filter.To = filter.To.Date.AddDays(1).AddHours(-12);
-            filter.To = filter.To.Date.AddDays(1).AddHours(-12);
+            format.DateSeparator = "-";           
 
             Expression<Func<User, bool>> dateFilter =
                 x => filter.From <= x.CreatedDate && x.CreatedDate < filter.To;

@@ -78,7 +78,8 @@ namespace UserServices.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "admin")]         
+        //[Authorize(Roles = "admin")]        
+        [AllowAnonymous]
         [HttpPost("statistics")]
         public IActionResult GetUserStatistics([FromBody] StatisticsFilter filter)
         {
