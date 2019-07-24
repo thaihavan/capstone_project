@@ -175,7 +175,7 @@ namespace PostService.Repositories
                 .Where(dateFilter.Compile())
                 .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate)
-                .Skip(12 * page)
+                .Skip(12 * (page - 1))
                 .Take(12);
             return result.ToList();
         }
@@ -246,7 +246,7 @@ namespace PostService.Repositories
                 .Where(dateFilter.Compile())                
                 .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate)
-                .Skip(12 * page)
+                .Skip(12 * (page - 1))
                 .Take(12);
             return result.ToList();
         }

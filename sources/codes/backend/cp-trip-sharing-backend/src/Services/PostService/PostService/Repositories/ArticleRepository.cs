@@ -194,7 +194,7 @@ namespace PostService.Repositories
                 .Where(dateFilter.Compile())
                 .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate)
-                .Skip(12 * page)
+                .Skip(12 * (page - 1))
                 .Take(12);
             return articles.ToList();
         }
@@ -274,14 +274,96 @@ namespace PostService.Repositories
                 .Where(topicFilter.Compile())
                 .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate)
-                .Skip(12 * page)
+                .Skip(12 * (page - 1))
                 .Take(12);
             return articles.ToList();
         }
 
         public IEnumerable<Article> GetRecommendArticles(PostFilter postFilter, UserInfo userInfo, int page)
         {
-            throw new NotImplementedException();
+            //UserInfo filter
+            Expression<Func<Article, bool>> userInfoFilter =
+                article => (userInfo.Follows.Any(x => x==article.Post.AuthorId))|| (article.Topics.Any(x => userInfo.Topics.Any(y => x == y)));
+            
+
+            // Text search
+            if (postFilter.Search == null)
+            {
+                postFilter.Search = "";
+            }
+            postFilter.Search = postFilter.Search.Trim();
+
+            // LocationId search
+            if (postFilter.LocationId == null)
+            {
+                postFilter.LocationId = "";
+            }
+
+            Expression<Func<Article, bool>> searchFilter;
+            searchFilter = a => a.Post.Title.IndexOf(postFilter.Search, StringComparison.OrdinalIgnoreCase) >= 0
+                                && a.Destinations.Any(d => postFilter.LocationId == "" || d.Id == postFilter.LocationId);
+
+            // Time period filter
+            var filterDate = new DateTime(0);
+            var now = DateTime.Now;
+            switch (postFilter.TimePeriod)
+            {
+                case "today":
+                    filterDate = now.AddDays(-1);
+                    break;
+                case "this_week":
+                    filterDate = now.AddDays(-7);
+                    break;
+                case "this_month":
+                    filterDate = now.AddDays(-30);
+                    break;
+                case "this_year":
+                    filterDate = now.AddDays(-365);
+                    break;
+                case "all_time":
+                    filterDate = new DateTime(0);
+                    break;
+            }
+            Expression<Func<Article, bool>> dateFilter =
+                post => post.Post.PubDate >= filterDate;
+            // Topic filter
+            Expression<Func<Article, bool>> topicFilter;
+            if (postFilter.Topics.Count > 0)
+            {
+                topicFilter = a => a.Topics.Any(x => postFilter.Topics.Any(y => x == y));
+            }
+            else
+            {
+                topicFilter = a => true;
+            }
+
+            Func<Article, Post, Article> SelectArticleWithPost =
+                ((article, post) => { article.Post = post; return article; });
+            Func<Article, Author, Article> SelectArticleWithAuthor =
+                ((article, author) => { article.Post.Author = author; return article; });
+
+            var articles = _articles.AsQueryable()
+                .Join(
+                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate),
+                    article => article.PostId,
+                    post => post.Id,
+                    SelectArticleWithPost
+                ).Join(
+                    _authors.AsQueryable(),
+                    article => article.Post.AuthorId,
+                    author => author.Id,
+                    SelectArticleWithAuthor
+                )
+                .Where(searchFilter.Compile())
+                .Where(topicFilter.Compile())
+                .Where(dateFilter.Compile())
+                .Where(userInfoFilter.Compile())
+                
+                .Select(a => a)
+                .OrderByDescending(a => a.Post.PubDate)
+                .Skip(12 * (page-1))
+                .Take(12);
+            return articles.ToList();
         }
 
         public IEnumerable<Article> GetPopularArticles(PostFilter postFilter, int page)
@@ -359,7 +441,7 @@ namespace PostService.Repositories
                 .Where(topicFilter.Compile())
                 .Select(a => a)
                 .OrderByDescending(a => a.Post.LikeCount)
-                .Skip(12 * page)
+                .Skip(12 * (page - 1))
                 .Take(12);
             return articles.ToList();
         }

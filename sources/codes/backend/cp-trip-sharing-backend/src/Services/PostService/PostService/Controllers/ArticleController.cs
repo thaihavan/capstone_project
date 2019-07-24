@@ -48,7 +48,11 @@ namespace PostService.Controllers
         [HttpPost("recommend")]
         public IActionResult GetRecommendArticles([FromBody]PostFilter postFilter, [FromQuery]int page)
         {
-            IEnumerable<Article> articles = _articleService.GetRecommendArticles(postFilter, null, page);
+            UserInfo userInfo = new UserInfo()
+            {
+                Id = "5d0b233b1a0a4200017de6c9"
+            };
+            IEnumerable<Article> articles = _articleService.GetRecommendArticles(postFilter, userInfo, page);
             return Ok(articles);
         }
 

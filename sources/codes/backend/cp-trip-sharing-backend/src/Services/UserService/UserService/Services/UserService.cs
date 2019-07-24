@@ -56,8 +56,11 @@ namespace UserServices.Services
 
         public object GetUserStatistics(StatisticsFilter filter)
         {
+            filter.From = filter.From.Date.AddHours(12);
+            filter.To = filter.To.Date.AddDays(1).AddHours(12);
             return _userRepository.GetUserStatistics(filter);
         } 
+
         public void IncreaseContributionPoint(string userId, int point)
         {
             _userRepository.IncreaseContributionPoint(userId, point);

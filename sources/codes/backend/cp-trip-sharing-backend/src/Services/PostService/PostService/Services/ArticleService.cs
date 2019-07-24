@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using PostService.Helpers;
 using PostService.Models;
 using PostService.Repositories;
@@ -6,7 +7,9 @@ using PostService.Repositories.Interfaces;
 using PostService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace PostService.Services
@@ -58,6 +61,9 @@ namespace PostService.Services
         public IEnumerable<Article> GetRecommendArticles(PostFilter postFilter, UserInfo userInfo, int page)
         {
             // TODO: Get UserInfo
+            GetUserTopics(userInfo);
+            GetFollowings(userInfo);
+
             // TODO: Query Db
             return _articleRepository.GetRecommendArticles(postFilter, userInfo, page);
         }
@@ -65,6 +71,62 @@ namespace PostService.Services
         public IEnumerable<Article> GetPopularArticles(PostFilter postFilter, int page)
         {
             return _articleRepository.GetPopularArticles(postFilter, page);
+        }
+
+        private void GetFollowings(UserInfo userInfo)
+        {
+            string baseUrl = "https://localhost:44351/api/userservice/follow/followingids?userId=";
+            // Create a request for the URL.   
+            WebRequest request = WebRequest.Create(baseUrl
+              + userInfo.Id);
+            // If required by the server, set the credentials.  
+            request.Credentials = CredentialCache.DefaultCredentials;
+
+            // Get the response.  
+            WebResponse response = request.GetResponse();
+            // Display the status.  
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            // Get the stream containing content returned by the server. 
+            // The using block ensures the stream is automatically closed. 
+            using (Stream dataStream = response.GetResponseStream())
+            {
+                // Open the stream using a StreamReader for easy access.  
+                using (StreamReader reader = new StreamReader(dataStream))
+                {
+                    var json = reader.ReadToEnd();
+                    var result = JsonConvert.DeserializeObject<List<string>>(json);
+                    userInfo.Follows = result;
+                }
+            }
+        }
+
+        private void GetUserTopics(UserInfo userInfo)
+        {
+            string baseUrl = "https://localhost:44351/api/userservice/user?userId=";           
+            // Create a request for the URL.   
+            WebRequest request = WebRequest.Create(baseUrl
+              + userInfo.Id);      
+            // If required by the server, set the credentials.  
+            request.Credentials = CredentialCache.DefaultCredentials;
+
+            // Get the response.  
+            WebResponse response = request.GetResponse();
+            // Display the status.  
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+
+            // Get the stream containing content returned by the server. 
+            // The using block ensures the stream is automatically closed. 
+            using (Stream dataStream = response.GetResponseStream())
+            {
+                // Open the stream using a StreamReader for easy access.  
+                using (StreamReader reader= new StreamReader(dataStream))
+                {
+                    var json = reader.ReadToEnd();
+                    var result = JsonConvert.DeserializeObject<UserInfo>(json);
+                    userInfo.Topics = result.Topics;
+                }
+            }
         }
     
     }
