@@ -48,12 +48,17 @@ namespace PostService.Controllers
         [HttpPost("recommend")]
         public IActionResult GetRecommendArticles([FromBody]PostFilter postFilter, [FromQuery]int page)
         {
-            UserInfo userInfo = new UserInfo()
+            
+            UserInfo userInfo = new UserInfo();
+            if (User.Identity.IsAuthenticated)
             {
-                Id = "5d0b233b1a0a4200017de6c9"
-            };
-            IEnumerable<Article> articles = _articleService.GetRecommendArticles(postFilter, userInfo, page);
-            return Ok(articles);
+                var identity = User.Identity as ClaimsIdentity;
+                var userId = identity.FindFirst("user_id").Value;
+                userInfo.Id = userId;
+                IEnumerable<Article> articles = _articleService.GetRecommendArticles(postFilter, userInfo, page);
+                return Ok(articles);
+            }
+            else return (Ok(_articleService.GetPopularArticles(postFilter, page)));
         }
 
         [AllowAnonymous]
