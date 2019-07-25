@@ -78,8 +78,8 @@
 </ng-container>
 
 
-<div class="content-post-page mt-5 mb-5">
-  <div class="comment text">
+<div [ngClass]="typePost === 'article' ? 'content-post-page' : 'col-9 comment-companiont'" class="">
+  <div class="comment text mt-5 mb-5">
     <h3>Bình luận</h3>
     <div class="iconuser-textarea" #target>
       <div class="form-group">

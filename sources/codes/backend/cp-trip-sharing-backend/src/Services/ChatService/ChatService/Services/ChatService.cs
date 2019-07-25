@@ -15,7 +15,7 @@ namespace ChatService.Services
     public class ChatService : IChatService
     {
         private readonly IConversationRepository _conversationRepository = null;
-        private readonly MessageRepository _messageRepository = null;
+        private readonly IMessageRepository _messageRepository = null;
 
         public ChatService(IOptions<AppSettings> settings)
         {
@@ -23,9 +23,10 @@ namespace ChatService.Services
             _messageRepository = new MessageRepository(settings);
         }
 
-        public ChatService(IConversationRepository conversationRepository)
+        public ChatService(IConversationRepository conversationRepository, IMessageRepository messageRepository)
         {
             _conversationRepository = conversationRepository;
+            _messageRepository = messageRepository;
         }
 
         public MessageDetail AddMessage(string receiverId, MessageDetail message)

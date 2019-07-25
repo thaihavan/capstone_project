@@ -21,6 +21,7 @@ export class LoginPageComponent implements OnInit {
   isLoading = false;
   account: Account;
   message: string;
+  isInvalEmailPass = false;
   form = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -118,7 +119,14 @@ export class LoginPageComponent implements OnInit {
           }
         });
       }, (err: HttpErrorResponse) => {
-        this.alertifyService.error('Lỗi đăng nhập!');
+        this.isLoading = false;
+        if (err.error.message === 'Email or password is incorrect') {
+          this.alertifyService.error('Tài khoản hoặc mật khẩu chưa đúng');
+          this.isInvalEmailPass = true;
+        }
+      },
+      () => {
+        this.isInvalEmailPass = false;
       });
     }
   }

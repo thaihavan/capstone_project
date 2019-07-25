@@ -51,6 +51,7 @@ import { StrCurrencyPipe } from './pipes/currency-pipe/strCurrency.pipe';
 import { DeleteConfirmPopupComponent } from './components/delete-confirm-popup/delete-confirm-popup.component';
 import { DetailCompanionPostComponent } from './components/detail-companion-post/detail-companion-post.component';
 import { ChatPopupComponent } from './components/chat-popup/chat-popup.component';
+import { HighlightDirective } from './directives/highlight.directive';
 
 const Material = [
   MatButtonModule,
@@ -114,7 +115,8 @@ const Material = [
     UserItemComponent,
     DeleteConfirmPopupComponent,
     DetailCompanionPostComponent,
-    ChatPopupComponent
+    ChatPopupComponent,
+	  HighlightDirective
   ],
   imports: [
     CommonModule,
@@ -159,7 +161,8 @@ const Material = [
     UserItemComponent,
     DeleteConfirmPopupComponent,
     DetailCompanionPostComponent,
-    ChatPopupComponent
+    ChatPopupComponent,
+	  HighlightDirective
   ],
   entryComponents: [
     StepCreatePostComponent,
