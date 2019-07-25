@@ -265,3 +265,10 @@ button:focus {
 .card-header {
   background-color: #fff;
 }
+.icon-size {
+  font-size: 19px;
+  margin-left: 4px;
+}
+.a-hover:hover {
+  color: #2196f3 !important;
+}

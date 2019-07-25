@@ -1,5 +1,5 @@
 <div [class]="isRegister ? 'register-user':'update-infor-user'">
-  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-horizontal-stepper class="stepper" [linear]="isLinear" #stepper>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Thông tin</ng-template>
@@ -27,46 +27,47 @@
             <div class="col-8 form-input">
               <div class="row">
                 <mat-form-field class="col-6 full-width">
-                  <input matInput placeholder="@Username" [formControl]="username" required>
-                  <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
+                  <input matInput placeholder="@Username" [(ngModel)]="username" formControlName="userName" required>
+                  <mat-error *ngIf="hasError('userName','required')">Yêu cầu nhập username</mat-error>
+                  <mat-hint>Username là duy nhất cho mỗi tài khoản</mat-hint>
                 </mat-form-field>
                 <mat-form-field class="col-6 full-width">
-                  <input matInput placeholder="Tên hiển thị" [formControl]="displayname" required>
-                  <mat-error *ngIf="displayname.invalid">{{getErrorMessage()}}</mat-error>
-                </mat-form-field>
-              </div>
-              <div class="row">
-                <mat-form-field class="col-6 full-width">
-                  <input matInput placeholder="Họ" [formControl]="firstname" required>
-                  <mat-error *ngIf="firstname.invalid">{{getErrorMessage()}}</mat-error>
-                </mat-form-field>
-                <mat-form-field class="col-6 full-width">
-                  <input matInput placeholder="Tên" [formControl]="lastname" required>
-                  <mat-error *ngIf="lastname.invalid">{{getErrorMessage()}}</mat-error>
+                  <input matInput placeholder="Tên hiển thị" [(ngModel)]="displayname" formControlName="displayName"
+                    required>
+                  <mat-error *ngIf="hasError('displayName','required')">Yêu cầu nhập tên hiển thị</mat-error>
                 </mat-form-field>
               </div>
               <div class="row">
                 <mat-form-field class="col-6 full-width">
-                  <input matInput [matDatepicker]="picker" placeholder="Ngày Sinh" [formControl]="birthday">
+                  <input matInput placeholder="Họ" [(ngModel)]="firstname" formControlName="firstName" required>
+                  <mat-error *ngIf="hasError('firstName', 'required')">Yêu cầu nhập họ tên</mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-6 full-width">
+                  <input matInput placeholder="Tên" [(ngModel)]="lastname" formControlName="lastName" required>
+                  <mat-error *ngIf="hasError('lastName','required')">Yêu cầu nhập họ tên</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-6 full-width">
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="birthday" placeholder="Ngày Sinh"
+                    formControlName="birthday" (click)="picker.open()">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
+                  <mat-error *ngIf="hasError('birthday','required')">Yêu cầu nhập ngày sinh</mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="col-6 full-width">
-                  <input matInput placeholder="Địa chỉ" [formControl]="address">
+                  <input matInput placeholder="Địa chỉ" [(ngModel)]="address" formControlName="address">
                 </mat-form-field>
 
               </div>
               <div class="input_field radio_option">
-                <input type="radio" name="gender" id="rd1" [value]="true" [(ngModel)]="user.gender"
-                  [ngModelOptions]="{standalone: true}">
-                <label for="rd1" style="padding-left: 5px;"><span class="label-gender">Nam</span></label>
-                <input type="radio" name="gender" id="rd2" [value]="false" class="input-gender"
-                  [(ngModel)]="user.gender" [ngModelOptions]="{standalone: true}">
-                <label for="rd2" style="padding-left: 5px;"><span class="label-gender">Nữ</span></label>
+                <mat-radio-group formControlName="gender" [(ngModel)]="gender" aria-label="Select an option">
+                  <mat-radio-button value="true">Nam</mat-radio-button>
+                  <mat-radio-button class="gender-female" value="false">Nữ</mat-radio-button>
+                </mat-radio-group>
               </div>
-              <button class="submit-btn" color="primary" (click)="callInterestedtopicPage(stepper)"
-                [disabled]="getErrorMessage()===true?'false':'true'" mat-raised-button type="submit">
+              <button class="submit-btn" color="primary" matStepperNext mat-raised-button type="submit">
                 Tiếp tục
               </button>
             </div>
@@ -83,8 +84,13 @@
           </div>
           <app-interested-topic [listTopicIdSelected]="user.interested" (EventTopic)="selectedTopics($event)">
           </app-interested-topic>
-          <button *ngIf="isRegister" type="button" class="btn btn-primary" (click)="registerUser()">Tiếp tục</button>
-          <button *ngIf="!isRegister" type="button" class="btn btn-primary" (click)="updateUser()">Cập nhật</button>
+          <mat-form-field *ngIf="isRegister" class="col-6 fake-input full-width">
+            <input matInput [(ngModel)]="fakeinput" formControlName="fakeinput" required>
+          </mat-form-field>
+          <div class="text-right">
+            <button mat-raised-button *ngIf="isRegister" color="primary"  [disabled]="user.interested.length < 3" (click)="registerUser()">Tiếp tục</button>
+            <button mat-raised-button *ngIf="!isRegister" color="primary"  (click)="updateUser()">Cập nhật</button>
+          </div>
         </div>
       </form>
     </mat-step>

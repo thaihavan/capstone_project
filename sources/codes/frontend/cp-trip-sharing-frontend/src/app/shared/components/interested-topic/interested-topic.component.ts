@@ -20,10 +20,6 @@ export class InterestedTopicComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTopics();
-    this.listTopicIdSelected.forEach(topicId => {
-      this.onSelectTopic(topicId);
-      this.IsChecked(topicId);
-    });
   }
 
   onSelectTopic(topicId: any): void {
@@ -51,6 +47,14 @@ export class InterestedTopicComponent implements OnInit {
       this.listTopics = topics;
     }, (err: HttpErrorResponse) => {
       console.log(err);
+    },
+    () => {
+      if (this.listTopicIdSelected !== undefined) {
+        this.listTopicIdSelected.forEach(topicId => {
+          this.onSelectTopic(topicId);
+          this.IsChecked(topicId);
+        });
+      }
     });
   }
 

@@ -5,7 +5,7 @@ export class User {
     public firstName: string;
     public lastName: string;
     public dob: Date;
-    public interested: string[];
+    public interested: string[] = [];
     public gender: boolean;
     public address: string;
     public contributionPoint: number;
