@@ -6,6 +6,8 @@ import { ChatService } from 'src/app/core/services/chat-service/chat.service';
 import { ChatUser } from 'src/app/model/ChatUser';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
+import { MatDialog } from '@angular/material';
+import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component';
 
 @Component({
   selector: 'app-detail-companion-post',
@@ -24,7 +26,8 @@ export class DetailCompanionPostComponent implements OnInit {
   constructor(
     private chatService: ChatService,
     private alertify: AlertifyService,
-    private postService: FindingCompanionService
+    private postService: FindingCompanionService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -38,6 +41,9 @@ export class DetailCompanionPostComponent implements OnInit {
   // check author
   checkAuthorPost() {
     const user = JSON.parse(localStorage.getItem('User'));
+    if (user === null) {
+      return;
+        }
     if (user.id === this.companionPost.post.author.id) {
       this.isAuthorPost = true;
     }
@@ -69,6 +75,10 @@ export class DetailCompanionPostComponent implements OnInit {
       },
       () => {
         const user = JSON.parse(localStorage.getItem('User'));
+        if (user === null) {
+          this.statustRequest.IsRequestJoin();
+          return;
+        }
         const isJoined = this.userListGroup.find(u => u.id === user.id);
         if (this.isAuthorPost || isJoined) {
           this.statustRequest.IsJoined();
@@ -125,6 +135,13 @@ export class DetailCompanionPostComponent implements OnInit {
     if (this.statustRequest.type === 'request') {
       this.companionPostRequest = new CompanionPostRequest();
       const user = JSON.parse(localStorage.getItem('User'));
+      if (user === null) {
+            const dialogRef = this.dialog.open(LoginPageComponent, {
+              height: 'auto',
+              width: '400px'
+            });
+            return;
+      }
       this.companionPostRequest.userId = user.id;
       this.companionPostRequest.date = new Date();
       this.companionPostRequest.companionPostId = this.companionPost.id;
@@ -164,7 +181,7 @@ class StatustRequest {
   text: string;
   public IsRequestJoin() {
     this.type = 'request';
-    this.text = 'Yêu cầu tham gia';
+    this.text = 'Tham gia';
   }
   public IsWaiting() {
     this.type = 'waiting';
