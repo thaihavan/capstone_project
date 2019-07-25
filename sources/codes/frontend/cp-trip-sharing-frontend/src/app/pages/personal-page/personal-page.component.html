@@ -43,31 +43,31 @@
               <span>Chặn người dùng</span>
             </button>
             <button mat-menu-item (click)="reportUser(userId)">
-                <mat-icon>report</mat-icon>
-                <span>Báo cáo người dùng</span>
-              </button>
+              <mat-icon>report</mat-icon>
+              <span>Báo cáo người dùng</span>
+            </button>
           </mat-menu>
         </div>
       </div>
     </div>
     <div [class.fix-menu]="isFixMenuBar" class="row menu-nav">
       <div class="col-3 align-self-center menu-sub-avatar">
-      <div [class.fix-sub-avatar]="isFixMenuBar" class="sub-avatar">
+        <div [class.fix-sub-avatar]="isFixMenuBar" class="sub-avatar">
           <img src="{{user.avatar ? user.avatar : avatar }}" alt="">
           <span>{{user.displayName}}</span>
-      </div>
+        </div>
       </div>
       <div>
-          <div class="navlinks" *ngIf="isDisplayNav">
-              <nav color="primary" mat-tab-nav-bar mat-align-tabs="left">
-                <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive
-                  #rla="routerLinkActive" [active]="rla.isActive">
-                  {{link.label}}
-                </a>
-              </nav>
-            </div>
+        <div class="navlinks" *ngIf="isDisplayNav">
+          <nav color="primary" mat-tab-nav-bar mat-align-tabs="left">
+            <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.link" routerLinkActive
+              #rla="routerLinkActive" [active]="rla.isActive">
+              {{link.label}}
+            </a>
+          </nav>
+        </div>
       </div>
-      
+
     </div>
     <div [style.margin-top.px]="isFixMenuBar ? '61' : '0'" class="row personal-content">
       <div class="col-md-3 card-personal">
@@ -75,73 +75,61 @@
         <div class="card promoting-card">
 
           <!-- Card content -->
-          <div class="card-body card-header d-flex flex-row">
-
-            <!-- Content -->
-            <div>
-              <!-- Title -->
-              <h5 class="card-title font-weight-bold mb-2 ">{{user.displayName}}</h5>
-            </div>
-
-          </div>
-
-          <!-- Card content -->
           <div class="card-body">
             <!-- Text -->
             <div class="card-person-infor">
-              <a href="#" class="mat-button">
-                <i class="fa fa-product-hunt"></i>
-                <span>Điểm tích lũy <b>{{user.contributionPoint}}</b></span>
+              <a class="mat-button a-hover">
+                <!-- <i class="fa fa-product-hunt"></i> -->
+                <mat-icon class="align-middle">local_parking</mat-icon>
+                <span class="align-middle">Điểm tích lũy</span>
+                <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'19px'" >{{user.contributionPoint}}</b></span>
               </a>
             </div>
             <div [hidden]="user.dob == null" class="card-person-infor">
-              <a href="#" class="mat-button">
-                <i class="fa fa-product-hunt"></i>
-                <span>Ngày sinh: {{user.dob | date: 'dd-MM-yyyy'}}</span>
+              <a class="mat-button ">
+                <!-- <i class="fa fa-product-hunt"></i> -->
+                <mat-icon class="align-middle">date_range</mat-icon>
+                <span class="align-middle">Ngày sinh: {{user.dob | date: 'dd-MM-yyyy'}}</span>
               </a>
             </div>
             <div [hidden]="gender == null" class="card-person-infor">
-              <a href="#" class="mat-button">
-                <i class="fa fa-product-hunt"></i>
+              <a class="mat-button">
+                <i class="fa fa-venus-mars icon-size"></i>
                 <span>Giới tính: {{gender}}</span>
               </a>
             </div>
             <div [hidden]="user.address == ''" class="card-person-infor">
-              <a href="#" class="mat-button">
-                <i class="fa fa-product-hunt"></i>
-                <span>Địa chỉ: {{user.address}}</span>
+              <a class="mat-button">
+                <mat-icon class="align-middle">person_pin</mat-icon>
+                <!-- <i class="fa fa-product-hunt"></i> -->
+                <span class="align-middle">Địa chỉ: {{user.address}}</span>
               </a>
             </div>
             <div class="card-person-infor">
-              <a (click)="showFolowerUser()" class="mat-button">
-                <i class="fa fa-product-hunt"></i>
-                <span><b>{{user.followerCount}}</b> người theo dõi</span>
+              <a (click)="showFolowerUser()" class="mat-button a-hover">
+                <mat-icon class="align-middle">rss_feed</mat-icon>
+                <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'15px'">{{user.followerCount}}</b> người theo dõi</span>
               </a>
             </div>
             <div class="card-person-infor">
-              <a (click)="showFollowingUser()" class="mat-button">
-                <i class="fa fa-product-hunt"></i>
-                <span><b>{{user.followingCount}}</b> đang theo dõi</span>
+              <a (click)="showFollowingUser()" class="mat-button a-hover">
+                <mat-icon class="align-middle">rss_feed</mat-icon>
+                <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'15px'">{{user.followingCount}}</b> đang theo dõi</span>
               </a>
             </div>
             <div *ngIf="usergetLocalStorage == null || userId == usergetLocalStorage.id" class="card-person-infor">
-              <a class="mat-button">
-                <i class="fa fa-envelope"></i>
-                <span (click)="callUpdateProfile()">Chỉnh sửa trang cá nhân</span>
+              <a class="mat-button a-hover">
+                  <i class="fa fa-edit icon-size align-middle"></i>
+                <span class="align-middle" (click)="callUpdateProfile()">Chỉnh sửa trang cá nhân</span>
               </a>
             </div>
-            <!-- Button -->
-            <i class="fa fa-share-alt text-muted float-right p-1 my-1" data-toggle="tooltip" data-placement="top"
-              title="Share this post"></i>
-            <i class="fa fa-heart text-muted float-right p-1 my-1 mr-3" data-toggle="tooltip" data-placement="top"
-              title="I like it"></i>
           </div>
 
         </div>
         <!-- Card -->
       </div>
       <div class="col-md-6">
-        
+
         <router-outlet></router-outlet>
       </div>
     </div>

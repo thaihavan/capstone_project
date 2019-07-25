@@ -20,20 +20,31 @@ export class InitialUserInformationPageComponent implements OnInit {
   user: User = new User();
   isRegister: boolean;
   selectedTopic: string[] = [];
-  username = new FormControl('', [Validators.required]);
-  displayname = new FormControl('', [Validators.required]);
-  firstname = new FormControl('', [Validators.required]);
-  lastname = new FormControl('', [Validators.required]);
-  address = new FormControl();
-  birthday = new FormControl();
+  username = '';
+  displayname = '';
+  firstname = '';
+  lastname = '';
+  address = '';
+  gender = 'true';
+  birthday: Date;
+  fakeinput = '';
   constructor(private formBuilder: FormBuilder, private userService: UserService, private titleService: Title) {
     this.titleService.setTitle('Khởi tạo');
   }
   ngOnInit() {
+    this.checkHasAccount();
     console.log(this.user);
-    this.firstFormGroup = this.formBuilder.group({});
+    this.firstFormGroup = this.formBuilder.group({
+      userName: ['', Validators.required],
+      displayName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      birthday: ['', Validators.required],
+      address: [''],
+      gender: ['true']
+    });
     this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
+      fakeinput: ['', Validators.required]
     });
 
     if (!this.user || !this.user.id || this.user.id == null) {
@@ -46,42 +57,38 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   setValueForTextField() {
-    this.username.setValue(this.user.userName);
-    this.displayname.setValue(this.user.displayName);
-    this.firstname.setValue(this.user.firstName);
-    this.lastname.setValue(this.user.lastName);
-    this.address.setValue(this.user.address);
-    this.birthday.setValue(this.user.dob);
+    this.username = this.user.userName;
+    this.displayname = this.user.displayName;
+    this.firstname = this.user.firstName;
+    this.lastname = this.user.lastName;
+    this.address = this.user.address;
+    this.birthday = this.user.dob;
+    this.gender = this.user.gender ? 'true' : 'false';
   }
-  getErrorMessage() {
-    if (this.username.hasError('required') || this.firstname.hasError('required') ||
-      this.lastname.hasError('required') || this.address.hasError('required')) {
-      return 'Bạn phải nhập thông tin này';
-    } else {
-      return true;
-    }
-  }
-  callInterestedtopicPage(stepper: MatStepper) {
-    this.isLinear = false;
-    stepper.next();
+   // form check has validation error
+   public hasError = (controlName: string, errorName: string) => {
+    return this.firstFormGroup.controls[controlName].hasError(errorName);
   }
 
   selectedTopics(topics: any) {
     this.user.interested = topics;
-  }
-
-  onGenderChange(value: any) {
-    this.user.gender = value;
+    if (this.user.interested.length !== 0) {
+      this.fakeinput = 'has topic';
+    } else {
+      this.fakeinput = '';
+    }
   }
 
   registerUser() {
-    this.getValueFromFormGroup();
-    this.userService.registerUser(this.user).subscribe((result: any) => {
-      localStorage.setItem('User', JSON.stringify(result));
-      window.location.href = '/trang-chu';
-    }, (err: HttpErrorResponse) => {
-      window.location.href = '/khoi-tao';
-    });
+    if (this.secondFormGroup.valid) {
+      this.getValueFromFormGroup();
+      this.userService.registerUser(this.user).subscribe((result: any) => {
+        localStorage.setItem('User', JSON.stringify(result));
+        window.location.href = '/trang-chu';
+      }, (err: HttpErrorResponse) => {
+        window.location.href = '/khoi-tao';
+      });
+    }
   }
 
   updateUser() {
@@ -94,12 +101,13 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   getValueFromFormGroup() {
-    this.user.userName = this.username.value;
-    this.user.displayName = this.displayname.value;
-    this.user.firstName = this.firstname.value;
-    this.user.lastName = this.lastname.value;
-    this.user.address = this.address.value;
-    this.user.dob = this.birthday.value;
+    this.user.userName = this.username;
+    this.user.displayName = this.displayname;
+    this.user.firstName = this.firstname;
+    this.user.lastName = this.lastname;
+    this.user.address = this.address;
+    this.user.dob = this.birthday;
+    this.user.gender = this.gender === 'true' ? true : false;
   }
 
     // change avatar image
@@ -109,5 +117,12 @@ export class InitialUserInformationPageComponent implements OnInit {
     // Image crop
     ImageCropted(image) {
       this.user.avatar = image;
+    }
+    // check has account?
+    checkHasAccount() {
+     const account = JSON.parse(localStorage.getItem('Account'));
+     if (account === null) {
+      window.location.href = '/trang-chu';
+     }
     }
 }
