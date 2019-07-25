@@ -104,10 +104,12 @@ namespace UserServices.Reponsitories
                 .OrderBy(x => Convert.ToDateTime(x.name,format))
                 .Select(x =>x);
             
-            return new
+            return new List<object>
             {
-                name = "User",
-                series = result
+                new {
+                    name = "User",
+                    series = result
+                }
             };
         }
 

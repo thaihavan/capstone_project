@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Conversation } from 'src/app/model/Conversation';
 
 @Component({
@@ -8,6 +8,7 @@ import { Conversation } from 'src/app/model/Conversation';
 })
 export class MessageComponent implements OnInit {
   @Input() conversations: Conversation[] = [];
+  @Output() selectConversation = new EventEmitter<Conversation>();
 
   user: any;
   constructor() {
@@ -19,6 +20,10 @@ export class MessageComponent implements OnInit {
 
   isImage(imgTag: string): boolean {
     return imgTag.startsWith('<img');
+  }
+
+  onClickConversation(conversation: Conversation) {
+    this.selectConversation.emit(conversation);
   }
 
 }

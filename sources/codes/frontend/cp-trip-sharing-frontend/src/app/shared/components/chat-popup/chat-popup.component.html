@@ -1,0 +1,57 @@
+<div class="chat-popup">
+  <div class="chat-header">
+    <div>{{conversation.name}}</div>
+    <span class="icon-close" (click)="closeChatPopup()"><mat-icon>close</mat-icon></span>
+  </div>
+
+  <!-- body -->
+  <div class="chat-body">
+      <div #chatContainer [scrollTop]="scrollTop" class="chat-content-container">
+      <div *ngFor="let message of conversation.messages">
+        <div *ngIf="user.id != message.fromUserId" class="chat-list odd">
+          <div class="chat-message">
+            <div class="chat-block">
+              <span>
+                <img class="img-circle" src="{{getProfileImage(message.fromUserId)}}">
+              </span>
+              <span [ngClass]="{'text': true, 'text-message': true, 'no-padding': isImage(message.content)}"
+                [innerHtml]="message.content"></span>
+            </div>
+            <span class="chat-date text-muted">{{message.time | customDate}}</span>
+          </div>
+        </div>
+        <div *ngIf="user.id == message.fromUserId" class="chat-list even">
+          <div class="chat-message">
+            <div class="chat-block">
+              <span [ngClass]="{'text': true, 'text-message': true, 'no-padding': isImage(message.content)}"
+                [innerHtml]="message.content"></span>
+            </div>
+            <span class="chat-date text-muted">{{message.time | customDate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="chat-footer">
+    <div class="chat-input-icon">
+      <label>
+        <mat-icon>add_photo_alternate</mat-icon>
+        <input #imageInput class="display-none" type="file" accept="image/*"
+          (change)="processImage(imageInput)">
+      </label>
+    </div>
+    <div class="chat-input-message">
+      <mat-form-field>
+        <input matInput class="input-message" type="text" placeholder="Nhập tin nhắn" autocomplete="off"
+          [(ngModel)]="inputMessage" (keyup.enter)="sendMessage(inputMessage)" (focus)="seenConversation()">
+      </mat-form-field>
+      <button class="button-send mat-fab mat-primary" (click)="sendMessage(inputMessage)">
+        <span class="mat-button-wrapper">
+          <mat-icon color="primary">send</mat-icon>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>

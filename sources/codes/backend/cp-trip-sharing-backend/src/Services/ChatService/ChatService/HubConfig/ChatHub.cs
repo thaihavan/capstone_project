@@ -47,7 +47,7 @@ namespace ChatService.HubConfig
             var users = _conversationRepository.GetAllUserInConversation(conversationId);
             foreach (var user in users)
             {
-                if (user.Id != senderId)
+                if (user.Connections != null)
                 {
                     Clients.Clients(user.Connections).SendAsync("clientMessageListener", conversationId, messageObject);
                 }
@@ -60,7 +60,9 @@ namespace ChatService.HubConfig
             {
                 Id = ObjectId.GenerateNewId().ToString(),
                 Type = "private",
-                Receivers = new List<string>() { senderId, receiverId }
+                Receivers = new List<string>() { senderId, receiverId },
+                SeenIds = new List<string>() { senderId },
+                CreatedDate = DateTime.Now
             };
 
             var messageObject = new MessageDetail()
@@ -76,9 +78,14 @@ namespace ChatService.HubConfig
             _conversationRepository.Add(conversation);
             _messageRepository.Add(messageObject);
 
-            // Send to receiver
-            var receiver = _userRepository.GetById(receiverId);
-            Clients.Clients(receiver.Connections).SendAsync("clientMessageListener", conversation.Id, messageObject);
+            var users = _conversationRepository.GetAllUserInConversation(conversation.Id);
+            foreach (var user in users)
+            {
+                if (user.Connections != null)
+                {
+                    Clients.Clients(user.Connections).SendAsync("clientMessageListener", conversation.Id, messageObject);
+                }
+            }
         }
 
         public void SeenConversation(string conversationId, string userId)

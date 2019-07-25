@@ -10,7 +10,7 @@
         <div class="date-filter">
           <mat-form-field>
               <mat-label>From</mat-label>
-              <input matInput (click)="postFromPicker.open()" [(ngModel)]="postFilter.from"
+              <input matInput (click)="postFromPicker.open()" [(ngModel)]="postFilter.from" (dateChange)="getPostStatistic()"
               [max]="postFilter.to" [matDatepicker]="postFromPicker" placeholder="From">
               <mat-datepicker-toggle matSuffix [for]="postFromPicker"></mat-datepicker-toggle>
               <mat-datepicker #postFromPicker></mat-datepicker>
@@ -18,7 +18,7 @@
 
           <mat-form-field>
               <mat-label>To</mat-label>
-              <input matInput (click)="postToPicker.open()" [(ngModel)]="postFilter.to"
+              <input matInput (click)="postToPicker.open()" [(ngModel)]="postFilter.to" (dateChange)="getPostStatistic()"
               [min]="postFilter.from" [max]="now" [matDatepicker]="postToPicker" placeholder="To">
               <mat-datepicker-toggle matSuffix [for]="postToPicker"></mat-datepicker-toggle>
               <mat-datepicker #postToPicker></mat-datepicker>
@@ -56,7 +56,7 @@
         <div class="date-filter">
           <mat-form-field>
               <mat-label>From</mat-label>
-              <input matInput (click)="userFromPicker.open()" [(ngModel)]="userFilter.from"
+              <input matInput (click)="userFromPicker.open()" [(ngModel)]="userFilter.from" (dateChange)="getUserStatistic()"
               [max]="userFilter.to" [matDatepicker]="userFromPicker" placeholder="From">
               <mat-datepicker-toggle matSuffix [for]="userFromPicker"></mat-datepicker-toggle>
               <mat-datepicker #userFromPicker></mat-datepicker>
@@ -64,7 +64,7 @@
 
           <mat-form-field>
               <mat-label>To</mat-label>
-              <input matInput (click)="userToPicker.open()" [(ngModel)]="userFilter.to"
+              <input matInput (click)="userToPicker.open()" [(ngModel)]="userFilter.to" (dateChange)="getUserStatistic()"
               [min]="userFilter.from" [max]="now" [matDatepicker]="userToPicker" placeholder="To">
               <mat-datepicker-toggle matSuffix [for]="userToPicker"></mat-datepicker-toggle>
               <mat-datepicker #userToPicker></mat-datepicker>
@@ -85,7 +85,6 @@
         [showYAxisLabel]="userChartAttributes.showYAxisLabel"
         [xAxisLabel]="userChartAttributes.xAxisLabel"
         [yAxisLabel]="userChartAttributes.yAxisLabel"
-        [xAxisTicks]="userChartAttributes.xAxisTicks"
         [autoScale]="userChartAttributes.autoScale"
         [timeline]="userChartAttributes.timeline">
       </ngx-charts-line-chart>

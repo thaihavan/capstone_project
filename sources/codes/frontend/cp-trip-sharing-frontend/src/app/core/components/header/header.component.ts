@@ -28,6 +28,8 @@ export class HeaderComponent implements OnInit {
 
   notifications: Notification[] = [];
   conversations: Conversation[] = [];
+  selectedConversation: Conversation;
+  showChatPopup = false;
 
   search = '';
 
@@ -161,6 +163,15 @@ export class HeaderComponent implements OnInit {
         }
       }
     }
+  }
+
+  selectConversation(conversation: Conversation) {
+    this.selectedConversation = conversation;
+    this.showChatPopup = true;
+  }
+
+  closeChatPopup() {
+    this.showChatPopup = false;
   }
 
   calcNumNewMessage(): void {

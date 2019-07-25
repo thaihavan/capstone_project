@@ -106,7 +106,8 @@ namespace ChatService.Repositories
                     {
                         Id = user.Id,
                         DisplayName = user.DisplayName,
-                        ProfileImage = user.ProfileImage
+                        ProfileImage = user.ProfileImage,
+                        Connections = user.Connections
                     }
                  ).ToList();
             return users;

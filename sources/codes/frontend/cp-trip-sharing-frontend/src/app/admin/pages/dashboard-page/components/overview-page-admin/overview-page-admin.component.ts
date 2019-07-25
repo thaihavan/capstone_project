@@ -25,8 +25,9 @@ export class OverviewPageAdminComponent implements OnInit {
 
   constructor(private adminService: AdminService) {
     this.initChartFilter();
-    this.getChartData();
     this.initChartAttributes();
+    this.getPostStatistic();
+    this.getUserStatistic();
   }
 
   ngOnInit() {
@@ -53,16 +54,18 @@ export class OverviewPageAdminComponent implements OnInit {
     this.userChartAttributes = new NgxChartInterface();
     this.userChartAttributes.view = [940, 360];
     this.userChartAttributes.showLegend = false;
-    this.userChartAttributes.xAxisTicks = [];
+    // this.userChartAttributes.xAxisTicks = [];
   }
 
-  getChartData() {
+  getPostStatistic() {
     this.adminService.getPostStatistic(this.postFilter).subscribe((res: ChartSingleModel[]) => {
       this.postData = res;
     }, (error: HttpErrorResponse) => {
       console.log(error);
     });
+  }
 
+  getUserStatistic() {
     this.adminService.getUserStatistic(this.userFilter).subscribe((res: ChartSingleModel[]) => {
       this.userData = res;
     }, (error: HttpErrorResponse) => {

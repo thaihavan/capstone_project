@@ -34,6 +34,8 @@ export class ChatPageComponent implements OnInit {
   selectedUser: User;
   inputMessage = '';
 
+  scrollTop: number;
+
   constructor(private chatService: ChatService,
               private titleService: Title,
               private uploadImageService: UploadImageService,
@@ -62,10 +64,6 @@ export class ChatPageComponent implements OnInit {
 
   }
 
-  goToBottom() {
-    this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
-  }
-
   initChatConnection() {
     // Init connection
     this.hubConnection = new HubConnectionBuilder()
@@ -90,7 +88,12 @@ export class ChatPageComponent implements OnInit {
     this.hubConnection.on('clientMessageListener', (convId: string, message: ChatMessage) => {
       const conversation = this.listConversations.find(c => c.id === convId);
       if (conversation && conversation != null) {
+        if (!conversation.messages || conversation.messages == null) {
+          conversation.messages = [];
+        }
         conversation.messages.push(message);
+        conversation.lastMessage = message;
+        this.scrollTop = this.chatContainer.nativeElement.scrollHeight;
       }
     });
   }
@@ -127,11 +130,12 @@ export class ChatPageComponent implements OnInit {
     this.chatService.getAllMessages(conv.id).subscribe((res: ChatMessage[]) => {
       this.selectedConversation.messages = res;
 
+      this.scrollTop = undefined;
+      setTimeout(() => { this.scrollTop = this.chatContainer.nativeElement.scrollHeight; }, 100);
+
       if (conv.type === 'private') {
         const chatUser = this.selectedConversation.users.find(u => u.id !== this.user.id);
         this.userService.getUserById(chatUser.id).subscribe((user: User) => {
-          console.log('user....');
-          console.log(user);
           this.selectedUser = user;
         }, (error: HttpErrorResponse) => {
           console.log(error);
@@ -151,26 +155,14 @@ export class ChatPageComponent implements OnInit {
     return '';
   }
 
-  sendMessage() {
-    if (this.inputMessage.trim() !== '') {
+  sendMessage(message: string) {
+    if (message.trim() !== '') {
       this.hubConnection.invoke(
         'SendToConversation',
         this.user.id,
         this.selectedConversation.id,
-        this.inputMessage)
+        message)
         .then(() => {
-          const messageObject = new ChatMessage();
-          messageObject.content = this.inputMessage;
-          messageObject.fromUserId = this.user.id;
-          messageObject.conversationId = this.selectedConversation.id;
-          messageObject.time = new Date();
-          if (!this.selectedConversation.messages || this.selectedConversation.messages == null) {
-            this.selectedConversation.messages = [];
-          }
-
-          this.selectedConversation.messages.push(messageObject);
-
-          this.selectedConversation.lastMessage = messageObject;
           this.inputMessage = '';
         })
         .catch((error) => {
@@ -200,29 +192,6 @@ export class ChatPageComponent implements OnInit {
     });
   }
 
-  sendImage(imgTag: string) {
-    this.hubConnection.invoke(
-      'SendToConversation',
-      this.user.id,
-      this.selectedConversation.id,
-      imgTag)
-      .then(() => {
-        const messageObject = new ChatMessage();
-        messageObject.content = imgTag;
-        messageObject.fromUserId = this.user.id;
-        messageObject.conversationId = this.selectedConversation.id;
-        messageObject.time = new Date();
-        if (!this.selectedConversation.messages || this.selectedConversation.messages == null) {
-          this.selectedConversation.messages = [];
-        }
-        this.selectedConversation.messages.push(messageObject);
-        this.selectedConversation.lastMessage = messageObject;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   processImage(imageInput: any) {
     const imageUpload = new ImageUpload();
 
@@ -234,7 +203,7 @@ export class ChatPageComponent implements OnInit {
       imageUpload.type = file.type;
 
       this.uploadImageService.uploadImage(imageUpload).subscribe((res: any) => {
-        this.sendImage(`<img width="100%" src='${res.image}'>`);
+        this.sendMessage(`<img width="100%" src='${res.image}'>`);
       }, (error: HttpErrorResponse) => {
         console.log(error);
       });

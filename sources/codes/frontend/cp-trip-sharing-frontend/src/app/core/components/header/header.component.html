@@ -74,7 +74,7 @@
               matBadgePosition="above after" matBadgeColor="warn">mail</mat-icon>
           </button>
           <mat-menu #menu_message_notification="matMenu" class="menu message-menu">
-            <app-message [conversations]="conversations"></app-message>
+            <app-message [conversations]="conversations" (selectConversation)="selectConversation($event)"></app-message>
           </mat-menu>
           <button (click)="viewNotification()" mat-icon-button matTooltip="Thông báo"
             [matMenuTriggerFor]="menu_new_notification">
@@ -139,4 +139,6 @@
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
+  <app-chat-popup *ngIf="selectedConversation && showChatPopup" (closed)="closeChatPopup()"
+  [conversation]="selectedConversation"></app-chat-popup>
 </div>
