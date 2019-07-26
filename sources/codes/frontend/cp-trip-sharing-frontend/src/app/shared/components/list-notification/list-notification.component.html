@@ -3,13 +3,13 @@
   <div *ngIf="notifications.length == 0">
     <div class="item-menu no-notification">Bạn không có thông báo nào</div>
   </div>
-  <div class="item-menu" *ngFor="let item of notifications">
+  <div *ngFor="let item of notifications" [ngClass]="{'item-menu': true, 'not-seen': isNotSeen(item.id)}">
     <div class="avatar">
       <img src="{{item.displayImage}}">
     </div>
     <div class="content">
       <div class="content-message" [innerHtml]="item.content"></div>
-      <div class="time">{{item.date}}</div>
+      <div class="time">{{item.date | customDate}}</div>
     </div>
   </div>
 </div>

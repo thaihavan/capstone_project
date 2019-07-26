@@ -28,9 +28,9 @@ namespace EmailService.Services.Processes
             _emailService = new EmailService(_appSettings);
         }
 
-        public async void StartAsync()
+        public void StartAsync()
         {
-            await PullMessagesAsync(_pubsubSettings.Value.ProjectId, _pubsubSettings.Value.SubscriptionId, true);
+            PullMessagesAsync(_pubsubSettings.Value.ProjectId, _pubsubSettings.Value.SubscriptionId, true);
         }
 
         private async Task<object> PullMessagesAsync(string projectId, string subscriptionId, bool acknowledge)
@@ -43,16 +43,13 @@ namespace EmailService.Services.Processes
                 {
                     string json = Encoding.UTF8.GetString(message.Data.ToArray());
 
+                    await Console.Out.WriteLineAsync($"Message {message.MessageId}: {json}");
+
                     // Handle received message. 
                     Email email = JsonConvert.DeserializeObject<Email>(json);
 
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    // Run async
-                    // Write log
-                    Console.Out.WriteLineAsync($"Message {message.MessageId}: {json}");
                     // Send mail
                     _emailService.SendEmailAsync(email);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
                     return acknowledge ? SubscriberClient.Reply.Ack : SubscriberClient.Reply.Nack;
                 });

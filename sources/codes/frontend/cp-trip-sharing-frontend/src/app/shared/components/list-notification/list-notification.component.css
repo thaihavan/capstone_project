@@ -34,6 +34,15 @@
     margin-left: 60px;
 }
 
+.content-message {
+    height: 44px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical
+}
+
 .time{
     font-size: 12px;
     margin-top: 3px;
@@ -42,4 +51,8 @@
 .no-notification {
     text-align: center;
     padding: 20px;
+}
+
+.not-seen {
+    background-color: #ebf0ff !important;
 }
