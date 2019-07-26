@@ -10,6 +10,7 @@ import { ActionDestination } from 'src/app/model/ActionDestination';
 })
 export class DestinationTripComponent implements OnInit {
   @Input() item: LocationMarker;
+  @Input() userRole;
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @Output() saveDestination = new EventEmitter();
   acDestination = new ActionDestination();

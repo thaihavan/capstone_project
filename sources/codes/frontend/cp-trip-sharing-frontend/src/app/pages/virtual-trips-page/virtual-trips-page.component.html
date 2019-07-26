@@ -4,47 +4,52 @@
       <div #leftContent class="row">
         <mat-card class="example-card">
           <div class="header-card">
-            <div class="image-header" [class.no-image]="!urlCoverImage">
+            <div class="image-header" [class.no-image]="!urlCoverImage&&userRole === 'author'">
               <ng-container *ngIf="urlCoverImage; else coverImage">
                 <img mat-card-image src="{{urlCoverImage}}" alt="Photo cover">
               </ng-container>
               <ng-template #coverImage>
-                <button (click)="fileClick()" mat-icon-button class="">
+                <button *ngIf="userRole === 'author'" (click)="fileClick()" mat-icon-button class="">
                   <mat-icon>add_photo_alternate</mat-icon>
-                  <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1'
-                    resizeToWidth="600" #uploadImage></app-upload-image>
                 </button>
+                <img *ngIf="userRole !== 'author'" mat-card-image src="https://montehorizonte.com/wp-content/themes/fortunato-pro/images/no-image-box.png" alt="Photo cover">
               </ng-template>
+              <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1'
+                resizeToWidth="600" #uploadImage></app-upload-image>
             </div>
             <figure class="profile">
-              <img src="https://picsum.photos/200/150/?random" class="profile-avatar" alt="">
+              <img src="{{author ? author.profileImage : ''}}" class="profile-avatar" alt="">
             </figure>
-            <figure class="profile-right">
+            <figure *ngIf="userRole === 'author'" class="profile-right">
               <button mat-icon-button (click)="setPolicy()">
                 <mat-icon>{{ isPublic ? 'lock_open' : 'lock'}}</mat-icon>
               </button>
             </figure>
-            <button class="edit" mat-icon-button [matMenuTriggerFor]="menu"
+            <button *ngIf="userRole === 'author'" class="edit" mat-icon-button [matMenuTriggerFor]="menu"
               aria-label="Example icon-button with a menu">
               <mat-icon>more_horiz</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
-                <mat-icon>delete</mat-icon>
+              <button *ngIf="virtualTripId" mat-menu-item>
+                <mat-icon >delete</mat-icon>
                 <span>Xoá</span>
               </button>
               <button (click)="editAble()" mat-menu-item>
                 <mat-icon>edit</mat-icon>
                 <span>Chỉnh sửa</span>
               </button>
+              <button  (click)="fileClick()" mat-menu-item>
+                  <mat-icon>add_photo_alternate</mat-icon>
+                  <span>Thay ảnh</span>
+                </button>
             </mat-menu>
           </div>
           <mat-card-content>
             <div class="parent-content mt-5">
               <h4>{{title == '' ? 'Tên chuyến đi' : title}}</h4>
-              <p><span class="sub-title">Bởi </span><a href="#"><span class="author-name">{{author.displayName}}</span></a></p>
+              <p><span class="sub-title">Bởi </span><a href="#"><span class="author-name">{{author? author.displayName : ''}}</span></a></p>
               <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
-              <a *ngIf="!note" href="#">+ Thêm ghi chú mới</a>
+              <a mat-button *ngIf="!note"  (click)="editAble()">+ Thêm mô tả chuyến đi</a>
               <p><span class="sub-title">0 mục cập nhập vào tháng 6 năm 2019</span></p>
             </div>
           </mat-card-content>
@@ -55,7 +60,7 @@
           </mat-card-actions>
           <div *ngIf="virtualTrip.items!=undefined">
             <ng-container *ngFor="let item of virtualTrip.items">
-              <app-destination-trip (saveDestination)="saveDestination($event)" [item]='item'></app-destination-trip>
+              <app-destination-trip (saveDestination)="saveDestination($event)" [userRole]='userRole' [item]='item'></app-destination-trip>
             </ng-container>
           </div>
         </mat-card>
@@ -72,7 +77,7 @@
     </div>
     <div class="col-12 right-content pl-0 pr-0 mt-0 ">
       <div class="fixed">
-        <app-google-map [heightMap]="screenHeight" [locationMarker]="virtualTrip.items" (addDestination)="addDestination($event)"></app-google-map>
+        <app-google-map [userRole]='userRole' [heightMap]="screenHeight" [locationMarker]="virtualTrip.items" (addDestination)="addDestination($event)"></app-google-map>
       </div>
     </div>
   </div>

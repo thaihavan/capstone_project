@@ -5,6 +5,7 @@
   .show-more {
     overflow: visible;
     height: auto;
+    padding-bottom: 18px;
   }
   button{
     border: none;

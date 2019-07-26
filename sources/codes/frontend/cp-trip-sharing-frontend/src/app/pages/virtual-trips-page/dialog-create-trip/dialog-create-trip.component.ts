@@ -21,6 +21,9 @@ export class DialogCreateTripComponent implements OnInit {
   ngOnInit() {
     this.title = this.data.title;
     this.note = this.data.note;
+    if (this.data.edit) {
+      this.isHasTitle = false;
+    }
   }
 
   // input title has value

@@ -183,3 +183,6 @@
   bottom: 25px;
   z-index: 9999;
 }
+.mat-card-image:first-child {
+      margin-top: 0px !important;
+    }

@@ -22,6 +22,7 @@ export class GoogleMapComponent implements OnInit, AfterViewInit, OnChanges {
   isFirstTime: boolean;
   public addrKeys: string[];
   public addr: object;
+  @Input() userRole;
   @Input() heightMap: any;
   @Input() locationMarker: LocationMarker[] = [];
   constructor(private zone: NgZone) {}
