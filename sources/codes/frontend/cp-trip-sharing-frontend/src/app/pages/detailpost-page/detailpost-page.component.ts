@@ -297,6 +297,7 @@ export class DetailpostPageComponent implements OnInit {
     notification.displayImage = this.user.avatar;
     notification.receivers = [this.detailPost.post.author.id];
     notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.detailPost.id;
+    notification.seenIds = [this.user.id];
     this.notifyService.sendNotification(notification);
   }
 
@@ -307,6 +308,7 @@ export class DetailpostPageComponent implements OnInit {
     notification.displayImage = this.user.avatar;
     notification.receivers = [this.detailPost.post.author.id];
     notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.detailPost.id;
+    notification.seenIds = [this.user.id];
     this.notifyService.sendNotification(notification);
   }
 

@@ -145,9 +145,14 @@
                       Thao tác
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                  <p class="action-item">
+                  <p *ngIf="selectedConversation.type=='private'" class="action-item">
                     <mat-icon>block</mat-icon>
                     Chặn người dùng
+                  </p>
+                  <p *ngIf="selectedConversation.type=='group' && selectedConversation.groupAdmin!=user.id" class="action-item"
+                  (click)="leaveGroupChat(selectedConversation.id, user.id)">
+                    <mat-icon>exit_to_app</mat-icon>
+                    Rời nhóm
                   </p>
                 </mat-expansion-panel>
               </mat-accordion>

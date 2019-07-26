@@ -4,12 +4,13 @@ import { HostGlobal } from '../../global-variables';
 import { Observable } from 'rxjs';
 import { Notification } from 'src/app/model/Notification';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { User } from 'src/app/model/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotifyService {
-  user: any;
+  user: User;
   hubConnection: HubConnection;
 
   baseUrl = HostGlobal.HOST_NOTIFY_SERVICE + '/api/notificationservice/notification';
@@ -49,7 +50,7 @@ export class NotifyService {
   }
 
   SeenNotification(notificationId: string) {
-    this.hubConnection.invoke('SeenNotification', notificationId)
+    this.hubConnection.invoke('SeenNotification', notificationId, this.user.id)
       .then(() => { })
       .catch((error) => {
         console.log(error);

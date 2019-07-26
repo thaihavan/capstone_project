@@ -76,6 +76,7 @@ export class CreateFindingCompanionsPostComponent
   minDate = new Date();
   maxDate = new Date(2020, 0, 1);
   companionForm: FormGroup;
+  // tslint:disable-next-line: no-use-before-declare
   memfileMatcher = new CrossFieldErrorMatcher();
 
   listSchedules: Schedule[] = [];
@@ -196,8 +197,6 @@ export class CreateFindingCompanionsPostComponent
     dialogRef.afterClosed().subscribe(res => {
       if (res !== undefined) {
         schedule = new Schedule();
-        // tslint:disable-next-line:no-debugger
-        debugger;
         schedule.title = res.scheduleTitle;
         schedule.day = res.scheduleDate;
         schedule.content = res.scheduleNote;

@@ -105,23 +105,14 @@ export class ChatService {
     return this.http.post<any>(this.baseUrl + '/add-user?conversationId=' + user.conversationId + '&userId=' + user.userId, user, httpOption);
   }
 
-  // create group chat
-  createGroupChat(userId): Observable<any> {
-    // tslint:disable-next-line:prefer-const
-    let conversation = {
-      GroupAdmin: userId,
-      Receivers: [userId],
-      Type: 'group',
-      SeenIds: [userId],
-      name: '',
-      date: new Date()
-    };
+  leaveGroupChat(conversationId: string, userId: string): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post(this.baseUrl + '/create-group-chat' , conversation, httpOption);
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(this.baseUrl + '/remove-user?conversationId=' + conversationId + '&userId=' + userId, httpOption);
   }
 }

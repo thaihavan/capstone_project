@@ -36,11 +36,11 @@ namespace PostService.Services
 
         public Post Add(Post param)
         {
-            //_publishToTopic.PublishCP(new IncreasingCP()
-            //{
-            //    UserId = param.AuthorId,
-            //    Point = 1
-            //});
+            _publishToTopic.PublishCP(new IncreasingCP()
+            {
+                UserId = param.AuthorId,
+                Point = 1
+            });
             return _postRepository.Add(param);
         }
 

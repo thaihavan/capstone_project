@@ -110,7 +110,7 @@ export class ChatPopupComponent implements OnInit {
     if (user) {
       return user.profileImage;
     }
-    return '';
+    return 'https://storage.googleapis.com/trip-sharing-final-image-bucket/image-default-user-avatar.png';
   }
 
   sendMessage(message) {
