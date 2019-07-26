@@ -60,7 +60,7 @@ export class VirtualTripSmallComponent implements OnInit {
     } else {
       // tslint:disable-next-line:max-line-length
       const url = {
-        url: 'https://1.bp.blogspot.com/-ZvShXfYhUGo/TsU-7srTr6I/AAAAAAAACkk/YAnQeyudiNo/s1600/Sapa_Vietnam.jpg',
+        url: 'https://montehorizonte.com/wp-content/themes/fortunato-pro/images/no-image-box.png',
         caption: '',
         href: '#'
       };

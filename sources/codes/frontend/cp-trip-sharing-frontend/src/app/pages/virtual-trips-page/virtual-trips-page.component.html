@@ -4,14 +4,15 @@
       <div #leftContent class="row">
         <mat-card class="example-card">
           <div class="header-card">
-            <div class="image-header" [class.no-image]="!urlCoverImage">
+            <div class="image-header" [class.no-image]="!urlCoverImage&&userRole === 'author'">
               <ng-container *ngIf="urlCoverImage; else coverImage">
                 <img mat-card-image src="{{urlCoverImage}}" alt="Photo cover">
               </ng-container>
               <ng-template #coverImage>
-                <button (click)="fileClick()" mat-icon-button class="">
+                <button *ngIf="userRole === 'author'" (click)="fileClick()" mat-icon-button class="">
                   <mat-icon>add_photo_alternate</mat-icon>
                 </button>
+                <img *ngIf="userRole !== 'author'" mat-card-image src="https://montehorizonte.com/wp-content/themes/fortunato-pro/images/no-image-box.png" alt="Photo cover">
               </ng-template>
               <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1'
                 resizeToWidth="600" #uploadImage></app-upload-image>
