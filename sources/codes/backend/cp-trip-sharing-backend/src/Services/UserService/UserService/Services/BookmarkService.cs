@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using UserServices.Helpers;
 using UserServices.Models;
 using UserServices.Reponsitories;
+using UserServices.Reponsitories.Interfaces;
 using UserServices.Services.Interfaces;
 
 namespace UserServices.Services
 {
     public class BookmarkService : IBookmarkService
     {
-        private readonly BookmarkRepository _bookmarkRepository = null;
+        private readonly IBookmarkRepository _bookmarkRepository = null;
 
-        public BookmarkService(BookmarkRepository bookmarkRepository)
+        public BookmarkService(IBookmarkRepository bookmarkRepository)
         {
             _bookmarkRepository = bookmarkRepository;
         }

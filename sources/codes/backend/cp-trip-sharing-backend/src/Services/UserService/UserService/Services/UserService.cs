@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using UserServices.Helpers;
 using UserServices.Models;
 using UserServices.Reponsitories;
+using UserServices.Reponsitories.Interfaces;
 using UserServices.Services.Interfaces;
 
 namespace UserServices.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserRepository _userRepository = null;
+        private readonly IUserRepository _userRepository = null;
         private readonly IPublishToTopic _publishToTopic = null;
 
         public UserService(IOptions<AppSettings> settings)
@@ -21,9 +22,10 @@ namespace UserServices.Services
             _publishToTopic = new PublishToTopic();
         }
 
-        public UserService(UserRepository userRepository)
+        public UserService(IUserRepository userRepository, IPublishToTopic publishToTopic)
         {
             _userRepository = userRepository;
+            _publishToTopic = publishToTopic;
         }
 
         public User Add(User user)

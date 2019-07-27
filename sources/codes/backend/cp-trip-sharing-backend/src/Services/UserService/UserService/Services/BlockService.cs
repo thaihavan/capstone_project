@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using UserServices.Helpers;
 using UserServices.Models;
 using UserServices.Reponsitories;
+using UserServices.Reponsitories.Interfaces;
 using UserServices.Services.Interfaces;
 
 namespace UserServices.Services
 {
     public class BlockService : IBlockService
     {
-        private readonly BlockRepository _blockRepository = null;
+        private readonly IBlockRepository _blockRepository = null;
 
-        public BlockService(BlockRepository blockRepository)
+        public BlockService(IBlockRepository blockRepository)
         {
             _blockRepository = blockRepository;
         }

@@ -7,14 +7,15 @@ using Microsoft.Extensions.Options;
 using UserServices.Helpers;
 using UserServices.Models;
 using UserServices.Services.Interfaces;
+using UserServices.Reponsitories.Interfaces;
 
 namespace UserServices.Services
 {
     public class PhotoService : IPhotoService
     {
-        private readonly PhotoRepository _photoRepository = null;
+        private readonly IPhotoRepository _photoRepository = null;
 
-        public PhotoService(PhotoRepository photoRepository)
+        public PhotoService(IPhotoRepository photoRepository)
         {
             _photoRepository = photoRepository;
         }
