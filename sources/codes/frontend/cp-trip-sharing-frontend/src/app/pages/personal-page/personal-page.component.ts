@@ -253,4 +253,16 @@ export class PersonalPageComponent implements OnInit {
     const instance = dialogRef.componentInstance;
     instance.title = title;
   }
+
+  gotoBookmarkList() {
+    const account = JSON.parse(localStorage.getItem('Account'));
+    this.userId = account.userId;
+    window.location.href = '/user/' + this.userId + '/da-danh-dau';
+  }
+
+  gotoBlockedList() {
+    const account = JSON.parse(localStorage.getItem('Account'));
+    this.userId = account.userId;
+    window.location.href = '/user/' + this.userId + '/danh-sach-chan';
+  }
 }

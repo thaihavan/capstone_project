@@ -69,11 +69,13 @@
       </div>
 
     </div>
-    <div [style.margin-top.px]="isFixMenuBar ? '61' : '0'" class="row personal-content">
+    <div [style.margin-top.px]="isFixMenuBar ? '61' : '20'" class="row personal-content">
       <div class="col-md-3 card-personal">
-        <!-- Card -->
+        <!-- Card 1-->
         <div class="card promoting-card">
-
+          <div class="card-header">
+            <span class="card-title">Thông tin</span>
+          </div>
           <!-- Card content -->
           <div class="card-body">
             <!-- Text -->
@@ -82,7 +84,8 @@
                 <!-- <i class="fa fa-product-hunt"></i> -->
                 <mat-icon class="align-middle">local_parking</mat-icon>
                 <span class="align-middle">Điểm tích lũy</span>
-                <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'15px'" >{{user.contributionPoint}}</b></span>
+                <span class="align-middle"><b [appHighlight]="'#2196f3'"
+                    [size]="'19px'">{{user.contributionPoint}}</b></span>
               </a>
             </div>
             <div [hidden]="user.dob == null" class="card-person-infor">
@@ -108,27 +111,55 @@
             <div class="card-person-infor">
               <a (click)="showFolowerUser()" class="mat-button a-hover">
                 <mat-icon class="align-middle">rss_feed</mat-icon>
-                <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'15px'">{{user.followerCount}}</b> người theo dõi</span>
+                <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'15px'">{{user.followerCount}}</b>
+                  người theo dõi</span>
               </a>
             </div>
             <div class="card-person-infor">
               <a (click)="showFollowingUser()" class="mat-button a-hover">
                 <mat-icon class="align-middle">rss_feed</mat-icon>
-                <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'15px'">{{user.followingCount}}</b> đang theo dõi</span>
-              </a>
-            </div>
-            <div *ngIf="usergetLocalStorage == null || userId == usergetLocalStorage.id" class="card-person-infor">
-              <a class="mat-button a-hover">
-                  <i class="fa fa-edit icon-size align-middle"></i>
-                <span class="align-middle" (click)="callUpdateProfile()">Chỉnh sửa trang cá nhân</span>
+                <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'15px'">{{user.followingCount}}</b>
+                  đang theo dõi</span>
               </a>
             </div>
           </div>
 
         </div>
-        <!-- Card -->
+
+        <!-- Card 1-->
+        <!-- Card 2-->
+        <div *ngIf="usergetLocalStorage == null || userId == usergetLocalStorage.id" class="card promoting-card">
+          <div class="card-header">
+            <span class="card-title">Tuỳ Chỉnh</span>
+          </div>
+          <!-- Card content -->
+          <div class="card-body">
+            <!-- Text -->
+            <div *ngIf="usergetLocalStorage == null || userId == usergetLocalStorage.id" class="card-person-infor">
+              <a class="mat-button a-hover">
+                <i class="fa fa-edit icon-size align-middle"></i>
+                <span class="align-middle" (click)="callUpdateProfile()">Chỉnh sửa trang cá nhân</span>
+              </a>
+            </div>
+            <div class="card-person-infor">
+              <a (click)="gotoBookmarkList()" class="mat-button a-hover">
+                <mat-icon class="align-middle">bookmark_border</mat-icon>
+                <span class="align-middle">Bài viết đã lưu</span>
+              </a>
+            </div>
+            <div (click)="gotoBlockedList()" class="card-person-infor">
+              <a class="mat-button a-hover">
+                <mat-icon class="align-middle">block</mat-icon>
+                <span class="align-middle">Danh sách chặn</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Card 2 -->
       </div>
-      <div class="col-md-6">
+      <div class="col-md-7 mb-5">
 
         <router-outlet></router-outlet>
       </div>

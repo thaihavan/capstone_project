@@ -7,7 +7,7 @@
 }
 .profile-infor {
   position: absolute;
-  bottom: -62px;
+  bottom: -50px;
   margin-left: 10%;
   z-index: 9999;
   transition: bottom 0.4s;
@@ -41,12 +41,18 @@ a:hover {
   position: sticky;
   top: 0px;
 }
+.card {
+  margin-bottom: 40px;
+}
 .card-personal {
-  margin-top: 4.9em;
+  /* margin-top: 12px; */
+}
+.card-header{
+  border: none;
+  background-color: #efefef !important;
 }
 .card-title {
-  color: #4051b5 !important;
-  text-align: center;
+  font-size: 22px;
 }
 .personal-content {
   padding: 0 5%;
