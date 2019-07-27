@@ -30,6 +30,7 @@ import { FindingCompanionService } from 'src/app/core/services/post-service/find
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { ChatService } from 'src/app/core/services/chat-service/chat.service';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 @Component({
   selector: 'app-create-finding-companions-post',
   templateUrl: './create-finding-companions-post.component.html',
@@ -50,7 +51,8 @@ export class CreateFindingCompanionsPostComponent
     private companionService: FindingCompanionService,
     private fb: FormBuilder,
     private chatService: ChatService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private errorHandler: GlobalErrorHandler
   ) {
     this.initForm();
   }
@@ -285,10 +287,7 @@ export class CreateFindingCompanionsPostComponent
         res => {
           this.openDialogMessageConfirm('Bàn đăng đã được tạo!', res.id);
         },
-        err => {
-          console.log(err);
-        },
-        () => {}
+        this.errorHandler.handleError
       );
   }
 

@@ -13,6 +13,7 @@ import { SendMessagePopupComponent } from 'src/app/shared/components/send-messag
 import { Author } from 'src/app/model/Author';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { ReportPopupComponent } from 'src/app/shared/components/report-popup/report-popup.component';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-personal-page',
@@ -38,8 +39,12 @@ export class PersonalPageComponent implements OnInit {
   myProfile: Author;
   isFixMenuBar: boolean;
 
-  constructor(private router: Router, private userService: UserService, public dialog: MatDialog,
-              private route: ActivatedRoute, private titleService: Title) {
+  constructor(private router: Router,
+              private userService: UserService,
+              public dialog: MatDialog,
+              private route: ActivatedRoute,
+              private titleService: Title,
+              private errorHandler: GlobalErrorHandler) {
     this.titleService.setTitle('Người dùng');
     this.navLinks = [
       {
@@ -116,9 +121,7 @@ export class PersonalPageComponent implements OnInit {
       } else {
         this.gender = 'Nữ';
       }
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   callUpdateProfile() {
@@ -141,18 +144,14 @@ export class PersonalPageComponent implements OnInit {
     this.userService.getAllFollowing(this.userId).subscribe((result: any) => {
       this.listUser = result;
       this.openDialogFollow(this.user.followingCount + ' người bạn đang theo dõi', this.listUser);
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   showFolowerUser() {
     this.userService.getAllFollower(this.userId).subscribe((result: any) => {
       this.listUser = result;
       this.openDialogFollow(this.user.followerCount + ' người đang theo dõi bạn', this.listUser);
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   openDialogFollow(title: any, listUsers: any) {
@@ -208,18 +207,14 @@ export class PersonalPageComponent implements OnInit {
         this.follow = true;
         this.listUserIdFollowing.push(userId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     } else {
       this.userService.unFollow(userId, this.token).subscribe((data: any) => {
         this.follow = false;
         const unfollow = this.listUserIdFollowing.indexOf(userId);
         this.listUserIdFollowing.splice(unfollow, 1);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
   }
   // change avatar image
@@ -235,9 +230,7 @@ export class PersonalPageComponent implements OnInit {
       res => {
 
       },
-      (err) => {
-        console.log('update avatar image error', err.message);
-      },
+      this.errorHandler.handleError,
       () => {
         localStorage.setItem('User', JSON.stringify(user));
       }

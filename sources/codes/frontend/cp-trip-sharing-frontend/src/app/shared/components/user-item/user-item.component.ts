@@ -4,6 +4,7 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { MessagePopupComponent } from '../message-popup/message-popup.component';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-user-item',
@@ -22,7 +23,9 @@ export class UserItemComponent implements OnInit {
   imgAvatar = '';
   isFollowed = false;
   listUserIdFollowing: string[] = [];
-  constructor(private userService: UserService, public dialog: MatDialog) { }
+  constructor(private userService: UserService,
+              public dialog: MatDialog,
+              private errorHandler: GlobalErrorHandler) { }
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('User'));
@@ -44,9 +47,7 @@ export class UserItemComponent implements OnInit {
     if (token != null) {
       this.userService.unBlock(userId, token).subscribe((result: any) => {
         this.openDialogMessageConfirm();
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
   }
 
@@ -76,18 +77,14 @@ export class UserItemComponent implements OnInit {
         this.isFollowed = true;
         this.listUserIdFollowing.push(userId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     } else {
       this.userService.unFollow(userId, token).subscribe((data: any) => {
         this.isFollowed = false;
         const unfollow = this.listUserIdFollowing.indexOf(userId);
         this.listUserIdFollowing.splice(unfollow, 1);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
   }
 

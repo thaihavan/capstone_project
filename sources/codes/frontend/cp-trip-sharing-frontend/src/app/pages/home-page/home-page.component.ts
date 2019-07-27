@@ -12,6 +12,7 @@ import { CompanionPost } from 'src/app/model/CompanionPost';
 import { LocationMarker } from 'src/app/model/LocationMarker';
 import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 import { User } from 'src/app/model/User';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-home-page',
@@ -33,12 +34,15 @@ export class HomePageComponent implements OnInit {
               private postService: PostService,
               private virtualTripService: VirtualTripService,
               private companionPostService: FindingCompanionService,
-              private zone: NgZone) {
+              private errorHandler: GlobalErrorHandler) {
     this.titleService.setTitle('Trang chủ');
     this.user = JSON.parse(localStorage.getItem('User'));
   }
 
   ngOnInit() {
+    if (this.user != null) {
+      this.getRecommendArticles(undefined);
+    }
     this.getNewestArticles(undefined);
     this.getPopularArticles(undefined);
     this.getVirtualTrips(undefined);
@@ -56,9 +60,7 @@ export class HomePageComponent implements OnInit {
       if (this.newestArticles != null && this.newestArticles.length > 6) {
         this.newestArticles = this.newestArticles.slice(0, 6);
       }
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getPopularArticles(postFilter: PostFilter): void {
@@ -72,9 +74,21 @@ export class HomePageComponent implements OnInit {
       if (this.popularArticles != null && this.popularArticles.length > 6) {
         this.popularArticles = this.popularArticles.slice(0, 6);
       }
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
+  }
+
+  getRecommendArticles(postFilter: PostFilter): void {
+    if (!postFilter) {
+      postFilter = new PostFilter();
+      postFilter.topics = [];
+      postFilter.timePeriod = 'all_time';
+    }
+    this.postService.getRecommendArticles(postFilter).subscribe((data: Article[]) => {
+      this.recommendedArticles = data;
+      if (this.recommendedArticles != null && this.recommendedArticles.length > 6) {
+        this.recommendedArticles = this.recommendedArticles.slice(0, 6);
+      }
+    }, this.errorHandler.handleError);
   }
 
   getVirtualTrips(postFilter: PostFilter): void {
@@ -89,9 +103,7 @@ export class HomePageComponent implements OnInit {
       if (this.virtualTrips != null && this.virtualTrips.length > 6) {
         this.virtualTrips = this.virtualTrips.slice(0, 6);
       }
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getCompanionPosts(postFilter: PostFilter): void {
@@ -106,9 +118,7 @@ export class HomePageComponent implements OnInit {
       if (this.companionPosts != null && this.companionPosts.length > 6) {
         this.companionPosts = this.companionPosts.slice(0, 6);
       }
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
    // on google-map-search submit add address location.

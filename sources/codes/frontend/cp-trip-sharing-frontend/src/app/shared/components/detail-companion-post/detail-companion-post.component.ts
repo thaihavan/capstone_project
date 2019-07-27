@@ -8,6 +8,7 @@ import { AlertifyService } from 'src/app/core/services/alertify-service/alertify
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { MatDialog } from '@angular/material';
 import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-detail-companion-post',
@@ -28,6 +29,7 @@ export class DetailCompanionPostComponent implements OnInit {
     private alertify: AlertifyService,
     private postService: FindingCompanionService,
     private dialog: MatDialog,
+    private errorHandler: GlobalErrorHandler
   ) {}
 
   ngOnInit() {
@@ -70,9 +72,7 @@ export class DetailCompanionPostComponent implements OnInit {
       res => {
         this.userListGroup = res;
       },
-      err => {
-        console.log('get members group chat error! ', err.message);
-      },
+      this.errorHandler.handleError,
       () => {
         const user = JSON.parse(localStorage.getItem('User'));
         if (user === null) {
@@ -118,9 +118,7 @@ export class DetailCompanionPostComponent implements OnInit {
   deleteRequest(index, join) {
     this.postService.deleteRequest(this.userListRequests[index]).subscribe(
       res => {},
-      err => {
-        alert(err.message);
-      },
+      this.errorHandler.handleError,
       () => {
         if (!join) {
           this.alertify.success('Đã xoá yêu cầu');

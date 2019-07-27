@@ -8,6 +8,7 @@ import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angular
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-login-page',
@@ -37,7 +38,8 @@ export class LoginPageComponent implements OnInit {
               private userService: UserService,
               private authService: AuthService,
               private notifyService: NotifyService,
-              private alertifyService: AlertifyService) {
+              private alertifyService: AlertifyService,
+              private errorHandler: GlobalErrorHandler) {
     this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }

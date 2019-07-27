@@ -11,6 +11,7 @@ import { Post } from 'src/app/model/Post';
 import { MatDialog } from '@angular/material';
 import { ReportPopupComponent } from '../report-popup/report-popup.component';
 import { User } from 'src/app/model/User';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-single-comment',
@@ -31,7 +32,10 @@ export class SingleCommentComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(private postService: PostService, private notifyService: NotifyService, private dialog: MatDialog) {
+  constructor(private postService: PostService,
+              private notifyService: NotifyService,
+              private dialog: MatDialog,
+              private errorHandler: GlobalErrorHandler) {
     this.like = new Like();
     this.user = JSON.parse(localStorage.getItem('User'));
   }
@@ -54,9 +58,7 @@ export class SingleCommentComponent implements OnInit {
 
       // Send notification
       this.sendCommentNotification();
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
     this.commentContent = '';
   }
 
@@ -70,16 +72,12 @@ export class SingleCommentComponent implements OnInit {
 
         // Send notification
         this.sendLikeCommentNotification();
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.comment.likeCount -= 1;
         this.comment.liked = false;
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
   }
 
@@ -134,9 +132,7 @@ export class SingleCommentComponent implements OnInit {
     this.editComments = true;
     this.postService.updateComment(this.comment).subscribe((result: any) => {
       this.editComments = true;
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   removeComment() {

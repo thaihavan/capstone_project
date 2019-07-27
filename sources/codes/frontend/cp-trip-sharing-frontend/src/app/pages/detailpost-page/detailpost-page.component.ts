@@ -17,6 +17,7 @@ import { NotificationTemplates } from 'src/app/core/globals/NotificationTemplate
 import { HostGlobal } from 'src/app/core/global-variables';
 import { User } from 'src/app/model/User';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -65,7 +66,8 @@ export class DetailpostPageComponent implements OnInit {
   constructor(private postService: PostService, private route: ActivatedRoute,
               private userService: UserService, private titleService: Title,
               public dialog: MatDialog, private notifyService: NotifyService,
-              private postCopmanionService: FindingCompanionService) {
+              private postCopmanionService: FindingCompanionService,
+              private errorHandler: GlobalErrorHandler) {
     this.comments = [];
     const articlePostId = this.route.snapshot.paramMap.get('articleId');
     const companionPostId = this.route.snapshot.paramMap.get('companionId');
@@ -103,9 +105,7 @@ export class DetailpostPageComponent implements OnInit {
       this.getCommentByPostId(this.post.id);
       this.titleService.setTitle(this.post.title);
     },
-    (err) => {
-      console.log(err);
-    });
+    this.errorHandler.handleError);
   }
 
   // get companionpost
@@ -127,9 +127,7 @@ export class DetailpostPageComponent implements OnInit {
         this.getStates();
         this.titleService.setTitle(this.post.title);
       },
-      err => {
-        console.log('error load data companion post', err.message);
-      },
+      this.errorHandler.handleError,
       () => {
         this.typePost = 'companion';
       }
@@ -170,9 +168,7 @@ export class DetailpostPageComponent implements OnInit {
       this.comments.push(res);
       // Send notification
       this.sendCommentNotification();
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   followPerson(authorId: any) {
@@ -181,18 +177,14 @@ export class DetailpostPageComponent implements OnInit {
         this.follow = true;
         this.listUserIdFollowing.push(authorId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     } else {
       this.userService.unFollow(authorId, this.token).subscribe((data: any) => {
         this.follow = false;
         const unfollow = this.listUserIdFollowing.indexOf(authorId);
         this.listUserIdFollowing.splice(unfollow, 1);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
   }
 
@@ -205,16 +197,12 @@ export class DetailpostPageComponent implements OnInit {
         this.detailPost.post.likeCount += 1;
         // Send notitication
         this.sendLikeNotification();
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.detailPost.post.liked = false;
         this.detailPost.post.likeCount -= 1;
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
   }
 
@@ -228,18 +216,14 @@ export class DetailpostPageComponent implements OnInit {
         this.bookmark = true;
         this.listPostIdBookMark.push(postId);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     } else {
       this.userService.deleteBookMark(postId, this.token).subscribe((data: any) => {
         this.bookmark = false;
         const unbookmark = this.listPostIdBookMark.indexOf(postId);
         this.listPostIdBookMark.splice(unbookmark, 1);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
   }
 
@@ -271,9 +255,7 @@ export class DetailpostPageComponent implements OnInit {
   removePost() {
     this.postService.removeArticle(this.postId).subscribe((data: any) => {
       this.openDialogMessageConfirm('Bạn đã xóa bài viết thành công!', '');
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   openDialogMessageConfirm(message: string, url: string) {

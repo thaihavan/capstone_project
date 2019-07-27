@@ -41,9 +41,9 @@
       </div>
       <div *ngIf="editComments" class="bottom-like-share">
         <span class="number-like"><i class="fa fa-thumbs-up"></i> {{comment.likeCount}}</span>
-        <span class="like-comment" [class]="comment.liked ? 'like-comment':'unlike-comment'"(click)="likeComment(comment.liked,comment.id)">Thích</span>
-        <span class="rep-comment" (click)="showRepComment()">Trả lời</span>
-        <div *ngIf="showRep" class="comment-textarea-container">
+        <span *ngIf="user != null" class="like-comment" [class]="comment.liked ? 'like-comment':'unlike-comment'"(click)="likeComment(comment.liked,comment.id)">Thích</span>
+        <span *ngIf="user != null" class="rep-comment" (click)="showRepComment()">Trả lời</span>
+        <div *ngIf="user != null && showRep" class="comment-textarea-container">
           <textarea rows="3" (keydown.enter)="submitComment()" [(ngModel)]="commentContent"></textarea>
         </div>
       </div>

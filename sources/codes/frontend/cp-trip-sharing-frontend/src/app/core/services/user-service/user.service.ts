@@ -183,13 +183,8 @@ export class UserService {
     return this.http.get<any>(this.apiUserService + 'follow/following?userId=' + userId);
   }
 
-  getAllFollowingId(token: any): Observable<any> {
-    const httpAuthen = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + token
-      })
-    };
-    return this.http.get<any>(this.apiUserService + 'follow/followingids', httpAuthen);
+  getAllFollowingId(userId: string): Observable<any> {
+    return this.http.get<any>(this.apiUserService + 'follow/followingids?userId=' + userId);
   }
 
   // getAllPhoto(): Observable<any> {

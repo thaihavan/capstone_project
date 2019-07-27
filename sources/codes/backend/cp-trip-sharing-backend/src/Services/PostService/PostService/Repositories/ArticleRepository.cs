@@ -358,9 +358,8 @@ namespace PostService.Repositories
                 .Where(topicFilter.Compile())
                 .Where(dateFilter.Compile())
                 .Where(userInfoFilter.Compile())
-                
-                .Select(a => a)
                 .OrderByDescending(a => a.Post.PubDate)
+                .Select(a => a)
                 .Skip(12 * (page-1))
                 .Take(12);
             return articles.ToList();
@@ -439,8 +438,9 @@ namespace PostService.Repositories
                 )
                 .Where(searchFilter.Compile())
                 .Where(topicFilter.Compile())
-                .Select(a => a)
                 .OrderByDescending(a => a.Post.LikeCount)
+                .OrderByDescending(a => a.Post.PubDate)
+                .Select(a => a)
                 .Skip(12 * (page - 1))
                 .Take(12);
             return articles.ToList();

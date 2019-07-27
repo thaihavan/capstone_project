@@ -12,6 +12,7 @@ import { ChatUser } from 'src/app/model/ChatUser';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { ImageUpload } from 'src/app/model/ImageUpload';
 import { UserService } from 'src/app/core/services/user-service/user.service';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-chat-page',
@@ -39,7 +40,8 @@ export class ChatPageComponent implements OnInit {
   constructor(private chatService: ChatService,
               private titleService: Title,
               private uploadImageService: UploadImageService,
-              private userService: UserService) {
+              private userService: UserService,
+              private errorHandler: GlobalErrorHandler) {
     this.titleService.setTitle('Tin nhắn');
   }
 
@@ -106,9 +108,7 @@ export class ChatPageComponent implements OnInit {
         this.onClickUserItem(this.selectedConversation);
       }
       this.setConversationInfo();
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   setConversationInfo() {
@@ -137,14 +137,10 @@ export class ChatPageComponent implements OnInit {
         const chatUser = this.selectedConversation.users.find(u => u.id !== this.user.id);
         this.userService.getUserById(chatUser.id).subscribe((user: User) => {
           this.selectedUser = user;
-        }, (error: HttpErrorResponse) => {
-          console.log(error);
-        });
+        }, this.errorHandler.handleError);
       }
 
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getProfileImage(userId: string) {
@@ -187,9 +183,7 @@ export class ChatPageComponent implements OnInit {
 
   seen() {
     this.chatService.seen(this.selectedConversation.id).subscribe((res: boolean) => {
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   processImage(imageInput: any) {
@@ -204,9 +198,7 @@ export class ChatPageComponent implements OnInit {
 
       this.uploadImageService.uploadImage(imageUpload).subscribe((res: any) => {
         this.sendMessage(`<img width="100%" src='${res.image}'>`);
-      }, (error: HttpErrorResponse) => {
-        console.log(error);
-      });
+      }, this.errorHandler.handleError);
     };
   }
 
@@ -217,8 +209,6 @@ export class ChatPageComponent implements OnInit {
   leaveGroupChat(conversationId: string, userId: string) {
     this.chatService.leaveGroupChat(conversationId, userId).subscribe((res) => {
       window.location.reload();
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 }

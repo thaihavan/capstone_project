@@ -6,6 +6,7 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-initial-user-information-page',
@@ -28,7 +29,10 @@ export class InitialUserInformationPageComponent implements OnInit {
   gender = 'true';
   birthday: Date;
   fakeinput = '';
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private titleService: Title) {
+  constructor(private formBuilder: FormBuilder,
+              private userService: UserService,
+              private titleService: Title,
+              private errorHandler: GlobalErrorHandler) {
     this.titleService.setTitle('Khởi tạo');
   }
   ngOnInit() {
@@ -95,9 +99,7 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.getValueFromFormGroup();
     this.userService.updateUser(this.user).subscribe((result: any) => {
       window.location.href = '/user/' + this.user.id;
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getValueFromFormGroup() {

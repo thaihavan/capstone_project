@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Bookmark } from 'src/app/model/Bookmark';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-bookmark-post',
@@ -12,7 +13,8 @@ export class BookmarkPostComponent implements OnInit {
   @Input() bookmark: Bookmark;
   listPostIdBookMark: string[] = [];
   checkRemoved = false;
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private errorHandler: GlobalErrorHandler) { }
 
   ngOnInit() {
     if (this.bookmark.title == null) {
@@ -36,9 +38,7 @@ export class BookmarkPostComponent implements OnInit {
         this.listPostIdBookMark.splice(unbookmark, 1);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
         this.checkRemoved = true;
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
 
   }

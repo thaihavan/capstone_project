@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormAddTopicsComponent } from './form-add-topics/form-add-topics.component';
 import { Topic } from 'src/app/model/Topic';
 import { DeleteConfirmPopupComponent } from 'src/app/shared/components/delete-confirm-popup/delete-confirm-popup.component';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 
 @Component({
@@ -16,7 +17,9 @@ export class TopicPageAdminComponent implements OnInit {
   listTopics: Topic[] = [];
   selectedTopics: string[] = [];
 
-  constructor(private postService: PostService, public dialog: MatDialog) {
+  constructor(private postService: PostService,
+              public dialog: MatDialog,
+              private errorHandler: GlobalErrorHandler) {
     this.getAllTopics();
   }
 
@@ -26,9 +29,7 @@ export class TopicPageAdminComponent implements OnInit {
   getAllTopics() {
     this.postService.getAllTopics().subscribe((topics: any) => {
       this.listTopics = topics;
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   onClickTopic(topic: Topic) {
@@ -98,9 +99,7 @@ export class TopicPageAdminComponent implements OnInit {
             this.postService.removeTopics(this.selectedTopics).subscribe((result: any) => {
               this.listTopics = this.listTopics.filter(t => this.selectedTopics.find(x => x === t.id) == null);
               this.selectedTopics = [];
-            }, (err: HttpErrorResponse) => {
-              console.log(err);
-            });
+            }, this.errorHandler.handleError);
           }
         }
       });

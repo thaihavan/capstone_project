@@ -10,6 +10,7 @@ import { ImageUpload } from 'src/app/model/ImageUpload';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { OuterSubscriber } from 'rxjs/internal/OuterSubscriber';
 import { HostGlobal } from 'src/app/core/global-variables';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-chat-popup',
@@ -34,7 +35,8 @@ export class ChatPopupComponent implements OnInit {
 
   constructor(private chatService: ChatService,
               private userService: UserService,
-              private uploadImageService: UploadImageService) {
+              private uploadImageService: UploadImageService,
+              private errorHandler: GlobalErrorHandler) {
     this.user = JSON.parse(localStorage.getItem('User'));
   }
 
@@ -100,9 +102,7 @@ export class ChatPopupComponent implements OnInit {
       this.scrollTop = undefined;
       setTimeout(() => { this.scrollTop = this.chatContainer.nativeElement.scrollHeight; }, 0);
 
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getProfileImage(userId: string) {
@@ -155,9 +155,7 @@ export class ChatPopupComponent implements OnInit {
 
       this.uploadImageService.uploadImage(imageUpload).subscribe((res: any) => {
         this.sendMessage(`<img width="100%" src='${res.image}'>`);
-      }, (error: HttpErrorResponse) => {
-        console.log(error);
-      });
+      }, this.errorHandler.handleError);
     };
   }
 

@@ -6,6 +6,7 @@ import { PostService } from 'src/app/core/services/post-service/post.service';
 import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-list-post-page',
@@ -16,7 +17,8 @@ export class ListPostPageComponent implements OnInit {
   constructor(private titleService: Title,
               private route: ActivatedRoute,
               private postService: PostService,
-              private virtualTripService: VirtualTripService) {
+              private virtualTripService: VirtualTripService,
+              private errorHandler: GlobalErrorHandler) {
     this.homeNav = this.route.snapshot.paramMap.get('home-nav');
     this.setTitle();
   }
@@ -130,9 +132,7 @@ export class ListPostPageComponent implements OnInit {
     }
     this.postService.getAllArticles(postFilter).subscribe((data: Article[]) => {
       this.posts = data;
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getVirtualTrips(postFilter: PostFilter): void {
@@ -146,9 +146,7 @@ export class ListPostPageComponent implements OnInit {
 
     this.virtualTripService.getVirtualTrips(postFilter).subscribe(data => {
       this.posts = data;
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   onScroll() {

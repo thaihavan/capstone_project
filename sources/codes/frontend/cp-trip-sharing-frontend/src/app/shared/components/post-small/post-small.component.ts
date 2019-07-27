@@ -10,6 +10,7 @@ import { NotifyService } from 'src/app/core/services/notify-service/notify.servi
 import { Notification } from 'src/app/model/Notification';
 import { NotificationTemplates } from 'src/app/core/globals/NotificationTemplates';
 import { HostGlobal } from 'src/app/core/global-variables';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-post-small',
@@ -33,7 +34,8 @@ export class PostSmallComponent implements OnInit {
   listPostIdBookMark: string[] = [];
 
   constructor(private postService: PostService,
-              private userService: UserService) {
+              private userService: UserService,
+              private errorHandler: GlobalErrorHandler) {
     this.token = localStorage.getItem('Token');
   }
 
@@ -65,18 +67,14 @@ export class PostSmallComponent implements OnInit {
 
         this.listUserIdFollowing.push(userId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     } else {
       this.userService.unFollow(userId, this.token).subscribe((data: any) => {
         this.follow = false;
         const unfollow = this.listUserIdFollowing.indexOf(userId);
         this.listUserIdFollowing.splice(unfollow, 1);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
   }
 
@@ -92,18 +90,14 @@ export class PostSmallComponent implements OnInit {
         this.bookmark = true;
         this.listPostIdBookMark.push(this.post.post.id);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     } else {
       this.userService.deleteBookMark(this.post.post.id, this.token).subscribe((data: any) => {
         this.bookmark = false;
         const unbookmark = this.listPostIdBookMark.indexOf(this.post.post.id);
         this.listPostIdBookMark.splice(unbookmark, 1);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     }
   }
 

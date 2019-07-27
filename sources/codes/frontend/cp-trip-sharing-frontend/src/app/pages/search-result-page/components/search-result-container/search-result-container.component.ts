@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { CompanionPost } from 'src/app/model/CompanionPost';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-search-result-container',
@@ -59,7 +60,8 @@ export class SearchResultContainerComponent implements OnInit {
               private postService: PostService,
               private virtualTripService: VirtualTripService,
               private companionPostService: FindingCompanionService,
-              private userService: UserService) {
+              private userService: UserService,
+              private errorHandler: GlobalErrorHandler) {
   }
 
   ngOnInit() {
@@ -130,33 +132,25 @@ export class SearchResultContainerComponent implements OnInit {
 
     this.userService.getUsers(search).subscribe((res: any) => {
       this.users = res;
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getArticles(postFilter: PostFilter) {
     this.postService.getAllArticles(postFilter).subscribe((res: Article[]) => {
       this.posts = res;
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getVirtualTrips(postFilter: PostFilter) {
     this.virtualTripService.getVirtualTrips(postFilter).subscribe((res: VirtualTrip[]) => {
       this.posts = res;
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getCompanionPosts(postFilter: PostFilter) {
     this.companionPostService.getCompanionPosts(postFilter).subscribe((res: CompanionPost[]) => {
       this.posts = res;
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   submitFilter(postFilter: PostFilter) {

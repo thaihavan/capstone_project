@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/model/User';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-list-user-blocked',
@@ -13,7 +14,8 @@ export class ListUserBlockedComponent implements OnInit {
   listUserSave: any[];
   title = 'Danh sách người dùng bạn đã chặn';
   searchUserName: any;
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private errorHandler: GlobalErrorHandler) {
     this.getListUserBlocked();
   }
 
@@ -24,9 +26,7 @@ export class ListUserBlockedComponent implements OnInit {
     this.userService.getAllUserBlockedByUserId(token).subscribe((result: any) => {
       this.listUser = result;
       this.listUserSave = this.listUser;
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   search(searchUser: any) {

@@ -10,6 +10,7 @@ import { ChatMessage } from 'src/app/model/ChatMessage';
 import { UserService } from '../../services/user-service/user.service';
 import { User } from 'src/app/model/User';
 import { Account } from 'src/app/model/Account';
+import { GlobalErrorHandler } from '../../globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-header',
@@ -36,7 +37,8 @@ export class HeaderComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private notifyService: NotifyService,
               private userService: UserService,
-              private chatService: ChatService) {
+              private chatService: ChatService,
+              private errorHandler: GlobalErrorHandler) {
 
   }
 
@@ -91,10 +93,7 @@ export class HeaderComponent implements OnInit {
     localStorage.clear();
     this.userService.Logout().subscribe((res) => {
       window.location.href = '/';
-    }, (error: HttpErrorResponse) => {
-      window.location.href = '/';
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   gotoPersonalPage() {
@@ -130,9 +129,7 @@ export class HeaderComponent implements OnInit {
     this.notifyService.getNotifications().subscribe((res: Notification[]) => {
       this.notifications = res;
       this.calcNumNewNotification();
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getAllConversations() {
@@ -146,9 +143,7 @@ export class HeaderComponent implements OnInit {
       this.conversations = result;
       this.setConversationInfo(user);
       this.calcNumNewMessage();
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   setConversationInfo(user: any) {
@@ -203,18 +198,14 @@ export class HeaderComponent implements OnInit {
   }
 
   getFollowings() {
-    this.userService.getAllFollowingId(this.account.token).subscribe((result: any) => {
+    this.userService.getAllFollowingId(this.account.userId).subscribe((result: any) => {
       localStorage.setItem('listUserIdFollowing', JSON.stringify(result));
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getListPostIdBookmark() {
     this.userService.getListPostIdBookmarks(this.account.token).subscribe((result: any) => {
       localStorage.setItem('listPostIdBookmark', JSON.stringify(result));
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 }

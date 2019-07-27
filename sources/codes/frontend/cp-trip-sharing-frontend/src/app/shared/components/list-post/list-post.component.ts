@@ -10,6 +10,7 @@ import { PostFilter } from 'src/app/model/PostFilter';
 import { Topic } from 'src/app/model/Topic';
 import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
 import { ArticleDisplay } from 'src/app/model/ArticleDisplay';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 @Component({
   selector: 'app-list-post',
   templateUrl: './list-post.component.html',
@@ -51,7 +52,8 @@ export class ListPostComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private postService: PostService,
               private userService: UserService,
-              private tripService: VirtualTripService) { }
+              private tripService: VirtualTripService,
+              private errorHandler: GlobalErrorHandler) { }
 
   ngOnInit() {
     this.getTopics();
@@ -114,9 +116,7 @@ export class ListPostComponent implements OnInit {
       this.topics.forEach(topic => {
         this.isCheckedDict[topic.id] = true;
       });
-    }, (err: HttpErrorResponse) => {
-      console.log(err);
-    });
+    }, this.errorHandler.handleError);
   }
 
   resetListPost() {
@@ -142,9 +142,7 @@ export class ListPostComponent implements OnInit {
             }
           });
           this.isLoading = false;
-        }, (err: HttpErrorResponse) => {
-          console.log(err);
-        });
+        }, this.errorHandler.handleError);
       } else if (this.personalNav === 'chuyen-di') {
         this.tripService.getVirtualTripsByUser(userId, postFilter).subscribe(data => {
           this.resetListPost();

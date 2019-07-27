@@ -5,6 +5,7 @@ import { StatisticsFilter } from 'src/app/model/StatisticsFilter';
 import { AdminService } from 'src/app/admin/services/admin-service/admin.service';
 import { ChartSingleModel } from 'src/app/model/ChartModel';
 import { HttpErrorResponse } from '@angular/common/http';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-overview-page-admin',
@@ -23,7 +24,7 @@ export class OverviewPageAdminComponent implements OnInit {
   userFilter: StatisticsFilter;
   now: Date;
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private errorHandler: GlobalErrorHandler) {
     this.initChartFilter();
     this.initChartAttributes();
     this.getPostStatistic();
@@ -60,17 +61,13 @@ export class OverviewPageAdminComponent implements OnInit {
   getPostStatistic() {
     this.adminService.getPostStatistic(this.postFilter).subscribe((res: ChartSingleModel[]) => {
       this.postData = res;
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
   getUserStatistic() {
     this.adminService.getUserStatistic(this.userFilter).subscribe((res: ChartSingleModel[]) => {
       this.userData = res;
-    }, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
+    }, this.errorHandler.handleError);
   }
 
 }

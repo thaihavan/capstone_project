@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { ImageUpload } from 'src/app/model/ImageUpload';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-form-add-topics',
@@ -19,7 +20,8 @@ export class FormAddTopicsComponent implements OnInit {
   topic: Topic = new Topic();
   constructor(private postService: PostService,
               private imageService: UploadImageService,
-              private dialogRef: MatDialogRef<FormAddTopicsComponent>) { }
+              private dialogRef: MatDialogRef<FormAddTopicsComponent>,
+              private errorHandler: GlobalErrorHandler) { }
 
   ngOnInit() {
   }
@@ -47,9 +49,7 @@ export class FormAddTopicsComponent implements OnInit {
       imageUpload.image = imageBase64[1];
       this.imageService.uploadImage(imageUpload).subscribe((res: any) => {
         this.topic.imgUrl = res.image;
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     };
   }
 
@@ -57,9 +57,7 @@ export class FormAddTopicsComponent implements OnInit {
     if (this.topic.imgUrl != null && this.topic.name != null) {
       this.postService.addOrUpdateTopic(this.topic).subscribe((result: any) => {
         this.dialogRef.close(result);
-      }, (err: HttpErrorResponse) => {
-        console.log(err);
-      });
+      }, this.errorHandler.handleError);
     } else {
       this.message = 'Bạn phải điền đầy đủ thông tin';
     }

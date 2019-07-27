@@ -17,6 +17,7 @@ import { UploadImageComponent } from 'src/app/shared/components/upload-image/upl
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-virtual-trips-page',
@@ -49,7 +50,8 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private tripService: VirtualTripService,
     private route: ActivatedRoute,
-    private titleService: Title
+    private titleService: Title,
+    private errorHandler: GlobalErrorHandler
   ) {
     this.titleService.setTitle('Chuyến đi');
   }
@@ -98,10 +100,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         this.author = this.virtualTrip.post.author;
         this.userRole = this.checkRoleUser();
       },
-      error => {
-        console.log(error);
-        alert(error.message);
-      }
+      this.errorHandler.handleError
     );
   }
 
@@ -213,9 +212,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         dialogRef.close();
         this.openDialogMessageConfirm('Bàn đăng đã được tạo!', result.id);
       },
-      error => {
-        alert('create ' + error.message);
-      },
+      this.errorHandler.handleError,
       () => {
         console.log('create success!');
       }
@@ -272,9 +269,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     if (this.isViewDetailTrip) {
       this.tripService.updateVirtualTrip(this.virtualTrip).subscribe(
         res => {},
-        error => {
-          alert('update ' + error.messageText);
-        },
+        this.errorHandler.handleError,
         () => {
           console.log('update success!');
         }

@@ -16,6 +16,7 @@ import { MessagePopupComponent } from 'src/app/shared/components/message-popup/m
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
   selector: 'app-create-post-page',
@@ -73,7 +74,8 @@ export class CreatePostPageComponent implements OnInit {
     private datePipe: DatePipe,
     private imageService: UploadImageService,
     private route: ActivatedRoute,
-    private titleService: Title
+    private titleService: Title,
+    private errorHandler: GlobalErrorHandler
   ) {
     this.titleService.setTitle('Tạo bài viết');
   }
@@ -97,8 +99,7 @@ export class CreatePostPageComponent implements OnInit {
           this.content = res.post.content;
           this.articlereturn = res;
         },
-        error => { },
-        () => { }
+        this.errorHandler.handleError
       );
     }
   }
@@ -168,9 +169,7 @@ export class CreatePostPageComponent implements OnInit {
             (data: Article) => {
               this.articlereturn = data;
             },
-            error => {
-              console.log(error);
-            },
+            this.errorHandler.handleError,
             () => {
               this.openDialogMessageConfirm('Chỉnh sửa bài thành công');
             }
@@ -181,9 +180,7 @@ export class CreatePostPageComponent implements OnInit {
               this.articlereturn = data;
               this.openDialogMessageConfirm('Bạn đã đăng bài thành công');
             },
-            error => {
-              console.log(error);
-            }
+            this.errorHandler.handleError
           );
         }
       }

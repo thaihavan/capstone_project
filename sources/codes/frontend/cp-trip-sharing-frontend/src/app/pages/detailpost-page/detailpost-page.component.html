@@ -78,14 +78,14 @@
 </ng-container>
 
 
-<div [ngClass]="typePost === 'article' ? 'content-post-page' : 'col-9 comment-companiont'" class="">
+<div [ngClass]="typePost === 'article' ? 'content-post-page' : 'col-9 comment-companiont'">
   <div class="comment text mt-5 mb-5">
     <h3>Bình luận</h3>
     <div class="iconuser-textarea" #target>
-      <div class="form-group">
+      <div *ngIf="user != null" class="form-group">
         <textarea class="form-control" rows="5" id="comment" name="text" [(ngModel)]="commentContent"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary" (click)="submitComment()">Bình luận</button>
+      <button *ngIf="user != null" type="submit" class="btn btn-primary" (click)="submitComment()">Bình luận</button>
 
       <!-- Comment container include all comments -->
       <app-comment-container [comments]="comments" [post]="detailPost"></app-comment-container>
