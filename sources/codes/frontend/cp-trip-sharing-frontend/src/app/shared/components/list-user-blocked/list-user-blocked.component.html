@@ -1,14 +1,21 @@
 <div class="form-list-blocked">
   <div class="title">
-    <span><i class="fa fa-user"></i>   {{title}}</span>
+    <i class="fa fa-ban"></i>
+    <span class="txt-title"> {{title}}</span>
   </div>
   <div class="header">
-    <input type="text" #searchUserName (keyup)="search(searchUserName.value)" class="form-control form-control-no-border" id="usr">
-    <i class="fa fa-search icon-search"></i>
+    <mat-form-field appearance="outline">
+      <mat-label>Tìm kiếm</mat-label>
+      <input  #searchUserName (keyup)="search(searchUserName.value)" matInput placeholder="Nhập tên">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <!-- <input type="text" #searchUserName (keyup)="search(searchUserName.value)"
+      class="form-control form-control-no-border" id="usr">
+    <i class="fa fa-search icon-search"></i> -->
   </div>
   <div class="list-user-blocked">
     <div *ngFor="let user of listUser">
-      <app-user-item [user]="user" [showBlockedButton]="true"></app-user-item>
+      <app-user-item (removeBLockUser)="removeBlockUser($event)" [user]="user" [showBlockedButton]="true"></app-user-item>
     </div>
   </div>
 </div>

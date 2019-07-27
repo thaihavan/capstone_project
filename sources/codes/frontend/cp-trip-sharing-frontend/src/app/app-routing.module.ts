@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GoogleMapComponent } from './shared/components/google-map/google-map.component';
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotpassword-page.component';
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
-import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
 import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
 import { HeaderComponent } from './core/components/header/header.component';
@@ -17,7 +15,6 @@ import { InitialUserInformationPageComponent } from './pages/initial-user-inform
 import { VirtualTripsPageComponent } from './pages/virtual-trips-page/virtual-trips-page.component';
 import { ListBookmarksComponent } from './shared/components/list-bookmarks/list-bookmarks.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
-import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
 import { CreateFindingCompanionsPostComponent } from './pages/create-finding-companions-post/create-finding-companions-post.component';
 import { ListPostPageComponent } from './pages/list-post-page/list-post-page.component';
 import { DashboardPageComponent } from './admin/pages/dashboard-page/dashboard-page.component';
@@ -53,7 +50,6 @@ const routes: Routes = [
         children: [
           { path: '', redirectTo: 'bai-viet', pathMatch: 'full' },
           { path: 'da-danh-dau', component: ListBookmarksComponent },
-          { path: 'danh-sach-chan', component: ListUserBlockedComponent },
           { path: ':personal-nav', component: ListPostComponent }
         ]
       },

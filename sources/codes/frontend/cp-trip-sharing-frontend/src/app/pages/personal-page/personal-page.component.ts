@@ -14,6 +14,7 @@ import { Author } from 'src/app/model/Author';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { ReportPopupComponent } from 'src/app/shared/components/report-popup/report-popup.component';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { ListUserBlockedComponent } from 'src/app/shared/components/list-user-blocked/list-user-blocked.component';
 
 @Component({
   selector: 'app-personal-page',
@@ -152,6 +153,13 @@ export class PersonalPageComponent implements OnInit {
       this.listUser = result;
       this.openDialogFollow(this.user.followerCount + ' người đang theo dõi bạn', this.listUser);
     }, this.errorHandler.handleError);
+  }
+
+  showBlokUsers() {
+    const dialogRef = this.dialog.open(ListUserBlockedComponent, {
+      height: '450px',
+      width: '50%'
+    });
   }
 
   openDialogFollow(title: any, listUsers: any) {

@@ -3,7 +3,7 @@
     height: 120px;
     display: inline-block;
     clear: both;
-    border-bottom: 1px solid gainsboro;
+    /* border-bottom: 1px solid #f3f3f3; */
     padding: 15px 0px 15px 10px;
     position: relative;
 }
@@ -65,22 +65,24 @@
 
 .icon-remove{
     position: absolute;
-    right: 0%;
-    margin-top: -86px;
-
+    right: 20px;
+    top: 7px;
+    display: none;
 }
 
 .follow-button {
-    width: 100px;
-    height: 40px;
-    position: absolute;
-    padding: 0 !important;
-    top: 35px;
-    right: 10px;
-    border: solid 2px #2196f3;
-    border-radius: 4px;
-    line-height: 1.0 !important;
-    color: #2196f3;
+        /* min-width: 110px; */
+        height: 40px;
+        position: absolute;
+        padding: 0 5px 0 0px!important;
+        /* padding-right: 5px !important; */
+        top: 35px;
+        right: 25px;
+        border: solid 2px #2196f3;
+        border-radius: 4px;
+        line-height: 1.0 !important;
+        color: #2196f3;
+        width: auto;
   }
 
 .infor-user{
@@ -92,4 +94,13 @@
     top: -3px;
     position: relative;
     margin-right: 2px;
+}
+.user-item {
+    padding: 12px 24px;
+}
+.user-item:hover {
+    background-color: #f3f3f3;
+}
+.user-item:hover .icon-remove {
+    display: block;
 }

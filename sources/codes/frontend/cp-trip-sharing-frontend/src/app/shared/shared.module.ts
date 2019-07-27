@@ -116,7 +116,7 @@ const Material = [
     DeleteConfirmPopupComponent,
     DetailCompanionPostComponent,
     ChatPopupComponent,
-	  HighlightDirective
+    HighlightDirective
   ],
   imports: [
     CommonModule,
@@ -162,7 +162,7 @@ const Material = [
     DeleteConfirmPopupComponent,
     DetailCompanionPostComponent,
     ChatPopupComponent,
-	  HighlightDirective
+    HighlightDirective
   ],
   entryComponents: [
     StepCreatePostComponent,

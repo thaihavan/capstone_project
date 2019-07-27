@@ -8,7 +8,7 @@
         <div class="avatar-display">
           <div class="avatar-image">
             <img src="{{user.avatar ? user.avatar : avatar }}" class="avatar-img">
-            <div class="display-none" (click)="changeAvatar()">
+            <div *ngIf="usergetLocalStorage == null || userId == usergetLocalStorage.id" class="display-none" (click)="changeAvatar()">
               <div class="change-avatar">
               </div>
               <div class="btn-change-avatar">
@@ -147,7 +147,7 @@
                 <span class="align-middle">Bài viết đã lưu</span>
               </a>
             </div>
-            <div (click)="gotoBlockedList()" class="card-person-infor">
+            <div (click)="showBlokUsers()" class="card-person-infor">
               <a class="mat-button a-hover">
                 <mat-icon class="align-middle">block</mat-icon>
                 <span class="align-middle">Danh sách chặn</span>

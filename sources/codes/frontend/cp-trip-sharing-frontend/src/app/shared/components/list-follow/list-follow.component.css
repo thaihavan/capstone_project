@@ -1,76 +1,94 @@
-.form-list-follow{
-    margin: -24px;
-    height: auto;
+.form-list-follow {
+  margin: -24px;
+  height: auto;
 }
 
-.title{
+.title {
   width: 100%;
   background-color: #2196f3;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
-  padding: 11px 0px 8px 16px;
+  padding: 11px 0px 8px 32px;
   height: 50px;
+  position: sticky;
+  top: -24px;
+  z-index: 2;
 }
-
-.header{
-    margin-top: 10px;
-    width: 100%;
-    display: inline-block;
+.txt-title {
+  font-size: 17px;
+  font-weight: 400;
+  margin-left: 10px;
 }
-.form-control{
-    width: 70%;
-    height: 30px;
-    margin: 0 auto;
-    padding-right: 35px;
-    float: left;
-    margin-left: 15%;
+.header {
+  margin-top: 20px;
+  width: 40%;
+  display: inline-block;
+  margin-left: 5%;
+}
+.mat-form-field {
+  display: block;
+}
+.form-control {
+  width: 70%;
+  height: 30px;
+  margin: 0 auto;
+  padding-right: 35px;
+  float: left;
+  margin-left: 15%;
 }
 .form-control-no-border:focus {
-  border-color:#ccc;
+  border-color: #ccc;
   outline: 0;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.icon-search{
-    margin: 3px 0px -3px -29px;
-    float: left;
-    border-left: 1px solid gainsboro;
-    padding: 4px;
-    color: gainsboro;
+.icon-search {
+  margin: 3px 0px -3px -29px;
+  float: left;
+  border-left: 1px solid gainsboro;
+  padding: 4px;
+  color: gainsboro;
 }
 
-.list-user-follow{
-    width: 95%;
-    height: 80%;
-    overflow: auto;
-    margin: 0 auto;
+.list-user-follow {
+  /* width: 95%; */
+  height: 80%;
+  overflow: auto;
+  /* margin: 0 auto; */
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 3px;
-    border-radius: 3px;
-    margin-top: 1em;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-    border-radius: 3px;
-    margin-top: 1em;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: gainsboro; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: gainsboro; 
-  }
+  width: 3px;
+  border-radius: 3px;
+  margin-top: 1em;
+}
 
-  .selected {
-    opacity: 0.5 !important;
-  }
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+  margin-top: 1em;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: gainsboro;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: gainsboro;
+}
+
+.selected {
+  opacity: 0.5 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0em 0.5em 0em !important;
+}
+::ng-deep .mat-form-field-label-wrapper {
+  top: -1.3em !important;
+}

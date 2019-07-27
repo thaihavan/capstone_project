@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -16,6 +16,7 @@ export class UserItemComponent implements OnInit {
   @Input() user: User;
   @Input() showBlockedButton = false;
   @Input() showFollowButton = false;
+  @Output() removeBLockUser = new EventEmitter();
 
   isYou = false;
   gender: string;
@@ -46,24 +47,9 @@ export class UserItemComponent implements OnInit {
     const token = localStorage.getItem('Token');
     if (token != null) {
       this.userService.unBlock(userId, token).subscribe((result: any) => {
-        this.openDialogMessageConfirm();
+        this.removeBLockUser.emit(userId);
       }, this.errorHandler.handleError);
     }
-  }
-
-  openDialogMessageConfirm() {
-    const user = JSON.parse(localStorage.getItem('User'));
-    const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
-      height: 'auto',
-      position: {
-        top: '20px'
-      },
-      disableClose: true
-    });
-    const instance = dialogRef.componentInstance;
-    instance.message.messageText = 'Đã bỏ chặn người dùng thành công!';
-    instance.message.url = '/user/' + user.id + '/danh-sach-chan';
   }
 
   gotoPersionalPage(authorId: any) {

@@ -41,4 +41,9 @@ export class ListUserBlockedComponent implements OnInit {
       this.listUser = listUserSearch;
     }
   }
+
+  removeBlockUser(userId) {
+    const index = this.listUser.findIndex(u => u.id === userId);
+    this.listUser.splice(index, 1);
+  }
 }
