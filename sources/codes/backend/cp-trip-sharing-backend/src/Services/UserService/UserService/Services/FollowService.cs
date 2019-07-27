@@ -13,9 +13,9 @@ namespace UserServices.Services
 {
     public class FollowService : IFollowService
     {
-        private readonly FollowRepository _followRepository = null;
+        private readonly IFollowRepository _followRepository = null;
 
-        public FollowService(FollowRepository followRepository)
+        public FollowService(IFollowRepository followRepository)
         {
             _followRepository = followRepository;
         }
