@@ -1,35 +1,39 @@
-  <ng-container>
-    <ng-container *ngIf="!originText; else hasText">
-        <button mat-button (click)="editAble = true">+ Thêm ghi chú mới</button>      
-    </ng-container>
-    <ng-template #hasText>
-        <button (click)="editAble = true" mat-icon-button>
-            <mat-icon>edit</mat-icon>
-          </button>
-    </ng-template>
+<ng-container>
+  <ng-container *ngIf="!originText; else hasText">
+    <button mat-button (click)="editAble = true">+ Thêm ghi chú mới</button>
   </ng-container>
-  <div *ngIf="editAble" class="editable-form">
-      <mat-card>
-        <mat-card-header>
-            <div class="header-text">Chỉnh sửa tiêu đề</div>
-        </mat-card-header>
-        <mat-card-content>
-          <ng-container *ngIf="isInputText; else textArea">
-            <div class="form-group">
-                <input [(ngModel)]="text" type="text" class="form-control">
-            </div>
-          </ng-container>
-          <ng-template #textArea>
-              <div class="form-group">
-                  <textarea class="form-control text-area" [(ngModel)]="text" rows="5"></textarea>
-                  <small id="helpId" class="form-text text-muted text-right">300 kí tự</small>
-              </div>
-          </ng-template>
-    
-        </mat-card-content>
-        <mat-card-actions>
-          <button (click)="save()" mat-mini-fab>Lưu</button>
-        </mat-card-actions>
-      </mat-card>
-      <mat-icon class="arrow">arrow_drop_down</mat-icon>
-    </div>
+  <ng-template #hasText>
+    <button   (click)="editAble = true" mat-icon-button>
+      <mat-icon  matTooltip="Chỉnh sửa">edit</mat-icon>
+    </button>
+  </ng-template>
+</ng-container>
+<div *ngIf="editAble" class="editable-form">
+  <mat-card>
+    <mat-card-header>
+      <div class="header-text">Chỉnh sửa tiêu đề</div>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-container *ngIf="isInputText; else textArea">
+        <div class="form-group">
+          <input [(ngModel)]="text" type="text" class="form-control">
+        </div>
+      </ng-container>
+      <ng-template #textArea>
+        <div class="d-flex flex-column">
+          <mat-form-field hintLabel="Không quá 500 kí tự" appearance="outline">
+            <mat-label>Nhập mô tả cho chuyến đi</mat-label>
+            <textarea #txtarea [(ngModel)]="text" rows="7" matInput maxlength="500"
+              placeholder="Nhập mô tả cho chuyến đi"></textarea>
+            <mat-hint align="end">{{txtarea.value?.length || 0}}/500</mat-hint>
+          </mat-form-field>
+        </div>
+      </ng-template>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button (click)="save()" mat-mini-fab>Lưu</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-icon class="arrow">arrow_drop_down</mat-icon>
+</div>

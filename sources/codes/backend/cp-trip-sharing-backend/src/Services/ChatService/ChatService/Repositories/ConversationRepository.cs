@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ChatService.Repositories
@@ -139,11 +140,16 @@ namespace ChatService.Repositories
 
         public bool RemoveUserFromGroupChat(string conversationId, string userId)
         {
-            var result = _conversations.UpdateOne(
-                c => c.Id == conversationId,
-                Builders<Conversation>.Update.PullFilter<string>(c => c.Receivers, userId));
+            var conversation = _conversations.Find(c => c.Id == conversationId).FirstOrDefault();
+            var result = false;
 
-            return result.IsAcknowledged;
+            if (conversation != null)
+            {
+                conversation.Receivers.Remove(userId);
+                result = _conversations.ReplaceOne(c => c.Id == conversationId, conversation).IsAcknowledged;
+            }
+
+            return result;
         }
 
         public bool UpdateSeenIds(string conversationId, List<string> seenIds)

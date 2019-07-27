@@ -106,7 +106,7 @@ namespace ChatService.Controllers
             return Ok(result);
         }
 
-        [HttpPost("remove-user")]
+        [HttpGet("remove-user")]
         [Authorize(Roles = "member")]
         public IActionResult RemoveUserToGroupChat([FromQuery] string conversationId, [FromQuery] string userId)
         {

@@ -152,7 +152,7 @@ export class ChatPageComponent implements OnInit {
     if (user) {
       return user.profileImage;
     }
-    return '';
+    return 'https://storage.googleapis.com/trip-sharing-final-image-bucket/image-default-user-avatar.png';
   }
 
   sendMessage(message: string) {
@@ -212,5 +212,13 @@ export class ChatPageComponent implements OnInit {
 
   isImage(imgTag: string): boolean {
     return imgTag.startsWith('<img');
+  }
+
+  leaveGroupChat(conversationId: string, userId: string) {
+    this.chatService.leaveGroupChat(conversationId, userId).subscribe((res) => {
+      window.location.reload();
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 }

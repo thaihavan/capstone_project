@@ -43,7 +43,8 @@ namespace PostService.Controllers
             {
                 try
                 {
-                    httpClient.BaseAddress = new Uri("https://localhost:44360/");
+                    //httpClient.BaseAddress = new Uri("https://localhost:44360/");
+                    httpClient.BaseAddress = new Uri("http://34.87.20.32:5000");
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Split(' ')[1]);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     var conversation = new

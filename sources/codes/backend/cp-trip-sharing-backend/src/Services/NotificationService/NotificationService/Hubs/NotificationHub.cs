@@ -29,7 +29,6 @@ namespace NotificationService.Hubs
         public void SendNotification(Notification notification)
         {
             notification.Id = ObjectId.GenerateNewId().ToString();
-            notification.SeenIds = new List<string>();
             notification.Date = DateTime.Now;
 
             _notificationRepository.Add(notification);

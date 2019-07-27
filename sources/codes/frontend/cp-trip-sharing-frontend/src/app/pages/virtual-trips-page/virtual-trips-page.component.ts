@@ -26,18 +26,22 @@ import { Title } from '@angular/platform-browser';
 })
 export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   screenHeight: number;
-  isExpandLeft = false;
   expandWidth: number;
-  virtualTrip: VirtualTrip;
-  virtualTripId: string;
+
+  virtualTripId = '';
   title = '';
   note = '';
+  urlCoverImage = '';
+  userRole = '';
+
   isPublic: boolean;
   readMore = false;
+  isExpandLeft = false;
+  isViewDetailTrip: boolean;
+
+  virtualTrip: VirtualTrip;
   post: Post;
   author: Author;
-  urlCoverImage = '';
-  isViewDetailTrip: boolean;
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @ViewChild('leftContent') leftContent;
   constructor(
@@ -60,32 +64,9 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       this.virtualTripId !== ''
     ) {
       this.isViewDetailTrip = true;
-      this.tripService.getDetailVtrip(this.virtualTripId).subscribe(
-        trip => {
-          this.virtualTrip = trip;
-          this.isPublic = this.virtualTrip.post.isPublic;
-          this.title = this.virtualTrip.post.title;
-          this.note = this.virtualTrip.post.content;
-          this.urlCoverImage = this.virtualTrip.post.coverImage;
-          this.author = this.virtualTrip.post.author;
-        },
-        error => {
-          console.log(error);
-          alert(error.message);
-        }
-      );
+      this.getVirtualTrip();
     } else {
-      // set variable if is create
-      this.post = new Post();
-      this.post.pubDate = this.datePipe.transform(
-        new Date(),
-        'yyyy-MM-dd hh:mm:ss'
-      );
-      if (localStorage.getItem('Token') !== null) {
-        this.author = new Author();
-        this.post.author = this.author;
-      }
-      this.isPublic = true;
+      this.preCreate();
     }
 
     this.getScreenSize();
@@ -103,6 +84,53 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight - 60;
     this.expandWidth = -this.leftContent.nativeElement.clientWidth;
+  }
+
+  // getVirtual by id
+  getVirtualTrip() {
+    this.tripService.getDetailVtrip(this.virtualTripId).subscribe(
+      trip => {
+        this.virtualTrip = trip;
+        this.isPublic = this.virtualTrip.post.isPublic;
+        this.title = this.virtualTrip.post.title;
+        this.note = this.virtualTrip.post.content;
+        this.urlCoverImage = this.virtualTrip.post.coverImage;
+        this.author = this.virtualTrip.post.author;
+        this.userRole = this.checkRoleUser();
+      },
+      error => {
+        console.log(error);
+        alert(error.message);
+      }
+    );
+  }
+
+  // pre create virtual trip
+  preCreate() {
+    // set variable if is create
+    this.post = new Post();
+    this.post.pubDate = this.datePipe.transform(
+      new Date(),
+      'yyyy-MM-dd hh:mm:ss'
+    );
+    if (localStorage.getItem('Token') !== null) {
+      this.author = new Author();
+      this.post.author = this.author;
+      this.userRole = 'author';
+    }
+    this.isPublic = true;
+  }
+
+  // check role user
+  checkRoleUser() {
+    const user = JSON.parse(localStorage.getItem('User'));
+    if (user === null) {
+      return 'guest';
+    }
+    if (user.id === this.author.id) {
+    return 'author';
+    }
+    return 'member';
   }
 
   // add destination from google-map-search

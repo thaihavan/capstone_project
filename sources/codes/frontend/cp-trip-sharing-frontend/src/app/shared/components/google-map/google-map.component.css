@@ -26,8 +26,12 @@ agm-map {
 .search-box{
     position: absolute;
     z-index: 1000;
-    top:20px;
+    top:30px;
     right:10px;
+    width: 300px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px soild gray;
 }
 .over-flow{
     position: absolute;
@@ -36,4 +40,10 @@ agm-map {
     content: '';
     background: #131313;
     opacity: 0.4;
+}
+::ng-deep .search-box .mat-form-field-wrapper {
+    padding-bottom: 0px;
+}
+::ng-deep .search-box  .form-group {
+    margin-bottom: 0px;
 }

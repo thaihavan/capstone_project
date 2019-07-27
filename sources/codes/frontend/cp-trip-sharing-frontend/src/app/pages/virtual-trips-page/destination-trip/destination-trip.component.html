@@ -2,20 +2,27 @@
   <div class='line'></div>
   <div class="child-content">
     <div class="image-header" [class.no-image]="!item.image">
-      <ng-container *ngIf="item.image; else coverImage">
-        <img mat-card-image src="{{item.image}}" alt="Photo cover">
+      <ng-container [ngSwitch]="userRole">
+      <ng-container *ngSwitchCase="'author'">
+          <ng-container *ngIf="item.image; else coverImage">
+              <img mat-card-image src="{{item.image}}" alt="Photo cover">
+            </ng-container>
+            <ng-template #coverImage>
+              <button (click)="fileClick()" mat-icon-button class="">
+                <mat-icon>add_photo_alternate</mat-icon>
+                <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1' [resizeToWidth]="600"
+                  #uploadImage></app-upload-image>
+              </button>
+            </ng-template>
       </ng-container>
-      <ng-template #coverImage>
-        <button (click)="fileClick()" mat-icon-button class="">
-          <mat-icon>add_photo_alternate</mat-icon>
-          <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1' [resizeToWidth]="600"
-            #uploadImage></app-upload-image>
-        </button>
-      </ng-template>
+      <ng-container *ngSwitchDefault>
+          <img mat-card-image src="{{item.image}}" alt="Photo cover">
+      </ng-container>
+      </ng-container>
     </div>
     <div class="title-lacotion">
       <span>{{item.name}}</span>
-      <button class="btn-edit" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <button *ngIf="userRole === 'author'" class="btn-edit" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_horiz</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
@@ -34,7 +41,7 @@
 
     <p><span class="sub-title">{{item.formattedAddress}}</span></p>
     <div class="note">
-      <app-read-more (saveText)="updateDestination($event)" [isEditable]='true' text="{{item.note}}"></app-read-more>
+      <app-read-more (saveText)="updateDestination($event)" [isEditable]='userRole === "author" ' text="{{item.note}}"></app-read-more>
     </div>
   </div>
 </mat-card-content>
