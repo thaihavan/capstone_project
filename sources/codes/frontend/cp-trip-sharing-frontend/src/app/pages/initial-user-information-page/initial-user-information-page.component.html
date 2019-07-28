@@ -29,7 +29,7 @@
                 <mat-form-field class="col-6 full-width">
                   <input matInput placeholder="@Username" [(ngModel)]="username" formControlName="userName" required>
                   <mat-error *ngIf="hasError('userName','required')">Yêu cầu nhập username</mat-error>
-                  <mat-hint>Username là duy nhất cho mỗi tài khoản</mat-hint>
+                  <mat-hint>Duy nhất cho mỗi tài khoản</mat-hint>
                 </mat-form-field>
                 <mat-form-field class="col-6 full-width">
                   <input matInput placeholder="Tên hiển thị" [(ngModel)]="displayname" formControlName="displayName"

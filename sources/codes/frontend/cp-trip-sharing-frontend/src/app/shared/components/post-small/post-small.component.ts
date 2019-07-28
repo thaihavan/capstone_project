@@ -82,7 +82,7 @@ export class PostSmallComponent implements OnInit {
     if (this.bookmark === false) {
       const bookmarkObject = new Bookmark();
       bookmarkObject.coverImage = this.post.post.coverImage;
-      bookmarkObject.postId = this.post.post.id;
+      bookmarkObject.postId = this.post.id;
       bookmarkObject.postType = this.postType;
       bookmarkObject.title = this.post.post.title;
 

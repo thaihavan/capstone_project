@@ -1,21 +1,28 @@
 <div [hidden]="checkRemoved" [class]=" checkRemoved?'bookmarkHidden':'bookmark-item'">
   <div class="image-cover">
-    <img src="{{bookmark.coverImage}}" />
+    <img (click)="goToPostDetail()" src="{{bookmark.coverImage}}" />
   </div>
   <div class="content">
-    <div class="title"><span>{{bookmark.title}}</span></div>
+    <div class="title"><a (click)="goToPostDetail()" href="">{{bookmark.title}}</a></div>
     <div class="icon-remove">
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
+      <button mat-icon-button class="close-btn" (click)="removeBookmark(bookmark.postId)" >
+        <mat-icon>close</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="removeBookmark(bookmark.postId)">
-          <mat-icon>remove</mat-icon>
-          <span>Xóa</span>
-        </button>
-      </mat-menu>
     </div>
-    <div class="category-post"><span><i class="fa fa-circle icon-circle"></i>Thể loại: {{bookmark.postType}}</span></div>
-    <div class="share"><i class="fa fa-share"></i> <span> Chia sẻ </span></div>
+    <div class="category-post"><span><i class="fa fa-circle icon-circle"></i>Thể loại: <b>{{bookmark.postType}}</b></span></div>
+  <div class="author">Được đăng bởi <a href="" (click)="gotoPersionalPage(bookmark.userId)" class="author-name">PhongNV</a> </div>
   </div>
 </div>
+
+<!-- <div class="d-flex flex-column">
+  <div class="cover-image">
+    <img src="{{bookmark.coverImage}}" alt="">
+  </div>
+  <div class="post-content">
+    <h4>{{bookmark.title}}</h4>
+    <div class="sub-content">
+
+    </div>
+    <div class="date-post"></div>
+  </div>
+</div> -->

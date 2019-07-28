@@ -30,15 +30,9 @@
 
     <!-- Remove blocked button -->
     <div *ngIf="showBlockedButton" class="icon-remove">
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
+      <button matTooltip="Huỷ chặn" mat-icon-button (click)="removeBlocked(user.id)">
+        <mat-icon>clear</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="removeBlocked(user.id)">
-          <mat-icon>remove</mat-icon>
-          <span>Bỏ chặn</span>
-        </button>
-      </mat-menu>
     </div>
 
     <!-- Follow button -->

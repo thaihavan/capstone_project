@@ -40,6 +40,13 @@ export class BookmarkPostComponent implements OnInit {
         this.checkRemoved = true;
       }, this.errorHandler.handleError);
     }
-
+  }
+  goToPostDetail() {
+    window.location.href = '/bai-viet/' + this.bookmark.postId;
+  }
+  gotoPersionalPage(userId: string) {
+    // tslint:disable-next-line:no-debugger
+    debugger;
+    window.location.href = `/user/${userId}`;
   }
 }

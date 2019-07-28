@@ -14,6 +14,7 @@ import { Author } from 'src/app/model/Author';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { ReportPopupComponent } from 'src/app/shared/components/report-popup/report-popup.component';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { ListUserBlockedComponent } from 'src/app/shared/components/list-user-blocked/list-user-blocked.component';
 
 @Component({
   selector: 'app-personal-page',
@@ -154,6 +155,13 @@ export class PersonalPageComponent implements OnInit {
     }, this.errorHandler.handleError);
   }
 
+  showBlokUsers() {
+    const dialogRef = this.dialog.open(ListUserBlockedComponent, {
+      height: '450px',
+      width: '50%'
+    });
+  }
+
   openDialogFollow(title: any, listUsers: any) {
     const dialogRef = this.dialog.open(ListFollowComponent, {
       height: '450px',
@@ -252,5 +260,17 @@ export class PersonalPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.title = title;
+  }
+
+  gotoBookmarkList() {
+    const account = JSON.parse(localStorage.getItem('Account'));
+    this.userId = account.userId;
+    window.location.href = '/user/' + this.userId + '/da-danh-dau';
+  }
+
+  gotoBlockedList() {
+    const account = JSON.parse(localStorage.getItem('Account'));
+    this.userId = account.userId;
+    window.location.href = '/user/' + this.userId + '/danh-sach-chan';
   }
 }

@@ -44,6 +44,7 @@ import { SearchResultContainerComponent } from './pages/search-result-page/compo
 import { ReportPopupComponent } from './shared/components/report-popup/report-popup.component';
 import { CoreModule } from './core/core.module';
 import { ShareModule } from '@ngx-share/core';
+import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,7 @@ import { ShareModule } from '@ngx-share/core';
   ],
   bootstrap: [AppComponent],
   entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent,
-                    ListFollowComponent, ReportPopupComponent, InitialUserInformationPageComponent]
+                    ListFollowComponent, ReportPopupComponent, InitialUserInformationPageComponent, ListUserBlockedComponent]
 
 })
 export class AppModule { }

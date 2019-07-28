@@ -49,7 +49,7 @@ export class InterestedTopicComponent implements OnInit {
       console.log(err);
     },
     () => {
-      if (this.listTopicIdSelected !== undefined) {
+      if (this.listTopicIdSelected !== undefined && this.listTopicIdSelected !== null) {
         this.listTopicIdSelected.forEach(topicId => {
           this.onSelectTopic(topicId);
           this.IsChecked(topicId);
