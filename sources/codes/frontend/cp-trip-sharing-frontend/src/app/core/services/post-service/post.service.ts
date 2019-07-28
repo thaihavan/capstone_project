@@ -33,40 +33,40 @@ export class PostService {
   //   return this.http.get(baseUrl + '?postId=' + postId);
   // }
 
-  getAllArticles(postFilter: PostFilter): Observable<any> {
+  getAllArticles(postFilter: PostFilter, page: number): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
     };
-    return this.http.post<Article>(this.baseUrl + 'all', postFilter, httpOption);
+    return this.http.post<Article>(this.baseUrl + 'all?page=' + page, postFilter, httpOption);
   }
 
-  getPopularArticles(postFilter: PostFilter): Observable<any> {
+  getPopularArticles(postFilter: PostFilter, page: number): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
     };
-    return this.http.post<Article>(this.baseUrl + 'popular', postFilter, httpOption);
+    return this.http.post<Article>(this.baseUrl + 'popular?page=' + page, postFilter, httpOption);
   }
 
-  getRecommendArticles(postFilter: PostFilter): Observable<any> {
+  getRecommendArticles(postFilter: PostFilter, page: number): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
     };
-    return this.http.post<Article>(this.baseUrl + 'recommend', postFilter, httpOption);
+    return this.http.post<Article>(this.baseUrl + 'recommend?page=' + page, postFilter, httpOption);
   }
 
-  getAllArticlesByUserId(userId: string, postFilter: PostFilter): Observable<any> {
+  getAllArticlesByUserId(userId: string, postFilter: PostFilter, page: number): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
     };
-    return this.http.post<Article>(this.baseUrl + 'user?userId=' + userId, postFilter, httpOption);
+    return this.http.post<Article>(this.baseUrl + 'user?userId=' + userId + '&page=' + page, postFilter, httpOption);
   }
 
   getCommentByPost(postId: string, token: string): Observable<any> {

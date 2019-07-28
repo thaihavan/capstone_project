@@ -19,13 +19,13 @@ export class FindingCompanionService {
     this.user = JSON.parse(localStorage.getItem('User'));
   }
 
-  getCompanionPosts(postFilter: PostFilter): Observable<CompanionPost[]> {
+  getCompanionPosts(postFilter: PostFilter, page: number): Observable<CompanionPost[]> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post<CompanionPost[]>(this.baseUrl + '/post/all', postFilter, httpOption);
+    return this.http.post<CompanionPost[]>(this.baseUrl + '/post/all?page=' + page, postFilter, httpOption);
   }
 
   createPost(companionPost: CompanionPost): Observable<any> {

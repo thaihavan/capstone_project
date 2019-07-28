@@ -1,4 +1,8 @@
 export class ArticleDisplay {
     typeArticle: string;
-    items: any;
+    items: [];
+
+    constructor() {
+        this.items = [];
+    }
 }

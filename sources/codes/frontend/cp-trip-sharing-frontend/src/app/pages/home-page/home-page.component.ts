@@ -55,7 +55,7 @@ export class HomePageComponent implements OnInit {
       postFilter.topics = [];
       postFilter.timePeriod = 'all_time';
     }
-    this.postService.getAllArticles(postFilter).subscribe((data: Article[]) => {
+    this.postService.getAllArticles(postFilter, 1).subscribe((data: Article[]) => {
       this.newestArticles = data;
       if (this.newestArticles != null && this.newestArticles.length > 6) {
         this.newestArticles = this.newestArticles.slice(0, 6);
@@ -67,9 +67,9 @@ export class HomePageComponent implements OnInit {
     if (!postFilter) {
       postFilter = new PostFilter();
       postFilter.topics = [];
-      postFilter.timePeriod = 'this_year';
+      postFilter.timePeriod = 'all_time';
     }
-    this.postService.getPopularArticles(postFilter).subscribe((data: Article[]) => {
+    this.postService.getPopularArticles(postFilter, 1).subscribe((data: Article[]) => {
       this.popularArticles = data;
       if (this.popularArticles != null && this.popularArticles.length > 6) {
         this.popularArticles = this.popularArticles.slice(0, 6);
@@ -83,7 +83,7 @@ export class HomePageComponent implements OnInit {
       postFilter.topics = [];
       postFilter.timePeriod = 'all_time';
     }
-    this.postService.getRecommendArticles(postFilter).subscribe((data: Article[]) => {
+    this.postService.getRecommendArticles(postFilter, 1).subscribe((data: Article[]) => {
       this.recommendedArticles = data;
       if (this.recommendedArticles != null && this.recommendedArticles.length > 6) {
         this.recommendedArticles = this.recommendedArticles.slice(0, 6);
@@ -98,7 +98,7 @@ export class HomePageComponent implements OnInit {
       postFilter.timePeriod = 'all_time';
     }
 
-    this.virtualTripService.getVirtualTrips(postFilter).subscribe(data => {
+    this.virtualTripService.getVirtualTrips(postFilter, 1).subscribe(data => {
       this.virtualTrips = data;
       if (this.virtualTrips != null && this.virtualTrips.length > 6) {
         this.virtualTrips = this.virtualTrips.slice(0, 6);
@@ -113,7 +113,7 @@ export class HomePageComponent implements OnInit {
       postFilter.timePeriod = 'all_time';
     }
 
-    this.companionPostService.getCompanionPosts(postFilter).subscribe(data => {
+    this.companionPostService.getCompanionPosts(postFilter, 1).subscribe(data => {
       this.companionPosts = data;
       if (this.companionPosts != null && this.companionPosts.length > 6) {
         this.companionPosts = this.companionPosts.slice(0, 6);

@@ -34,6 +34,8 @@ export class ListPostPageComponent implements OnInit {
   isLoading = false;
   isScrollTopShow = false;
   topPosToStartShowing = 100;
+  postFilter: PostFilter;
+  page = 1;
 
   VALID_HOME_NAVS: string[] = [
     'de-xuat',
@@ -101,8 +103,10 @@ export class ListPostPageComponent implements OnInit {
       case '':
         break;
       case 'de-xuat':
+        this.getRecommendArticles(postFilter);
         break;
       case 'pho-bien':
+        this.getPopularArticles(postFilter);
         break;
       case 'moi-nhat':
         this.getNewestArticles(postFilter);
@@ -118,8 +122,9 @@ export class ListPostPageComponent implements OnInit {
   }
 
   submitFilter(postFilter: PostFilter) {
-    console.log(postFilter);
-    this.getPosts(postFilter);
+    this.postFilter = postFilter;
+    this.posts = [];
+    this.getPosts(this.postFilter);
   }
 
   getNewestArticles(postFilter: PostFilter) {
@@ -130,8 +135,30 @@ export class ListPostPageComponent implements OnInit {
 
       this.isLoading = true;
     }
-    this.postService.getAllArticles(postFilter).subscribe((data: Article[]) => {
-      this.posts = data;
+    this.postService.getAllArticles(postFilter, this.page).subscribe((data: Article[]) => {
+      this.posts.push(...data);
+    }, this.errorHandler.handleError);
+  }
+
+  getPopularArticles(postFilter: PostFilter): void {
+    if (!postFilter) {
+      postFilter = new PostFilter();
+      postFilter.topics = [];
+      postFilter.timePeriod = 'all_time';
+    }
+    this.postService.getPopularArticles(postFilter, this.page).subscribe((data: Article[]) => {
+      this.posts.push(...data);
+    }, this.errorHandler.handleError);
+  }
+
+  getRecommendArticles(postFilter: PostFilter): void {
+    if (!postFilter) {
+      postFilter = new PostFilter();
+      postFilter.topics = [];
+      postFilter.timePeriod = 'all_time';
+    }
+    this.postService.getRecommendArticles(postFilter, this.page).subscribe((data: Article[]) => {
+      this.posts.push(...data);
     }, this.errorHandler.handleError);
   }
 
@@ -144,16 +171,17 @@ export class ListPostPageComponent implements OnInit {
       this.isLoading = true;
     }
 
-    this.virtualTripService.getVirtualTrips(postFilter).subscribe(data => {
-      this.posts = data;
+    this.virtualTripService.getVirtualTrips(postFilter, this.page).subscribe(data => {
+      this.posts.push(...data);
     }, this.errorHandler.handleError);
   }
 
   onScroll() {
     this.isLoading = true;
-
+    this.page++;
+    console.log('page-' + this.page);
     // Continue loading data
-    // this.getPost();
+    this.getPosts(this.postFilter);
   }
 
   gotoTop() {

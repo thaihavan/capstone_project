@@ -29,11 +29,11 @@ export class VirtualTripService {
     return this.http.get<VirtualTrip>(this.baseUrl + '?id=' + id, this.httpOption);
   }
 
-  getVirtualTrips(postFilter: PostFilter): Observable<VirtualTrip[]> {
-    return this.http.post<VirtualTrip[]>(this.baseUrl + '/all', postFilter, this.httpOption);
+  getVirtualTrips(postFilter: PostFilter, page: number): Observable<VirtualTrip[]> {
+    return this.http.post<VirtualTrip[]>(this.baseUrl + '/all?page=' + page, postFilter, this.httpOption);
   }
 
-  getVirtualTripsByUser(userId: string, postFilter: PostFilter): Observable<VirtualTrip[]> {
-    return this.http.post<VirtualTrip[]>(this.baseUrl + '/user?userId=' + userId, postFilter, this.httpOption);
+  getVirtualTripsByUser(userId: string, postFilter: PostFilter, page: number): Observable<VirtualTrip[]> {
+    return this.http.post<VirtualTrip[]>(this.baseUrl + '/user?userId=' + userId + '&page=' + page, postFilter, this.httpOption);
   }
 }

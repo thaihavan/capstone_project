@@ -11,6 +11,7 @@ export class Conversation {
     seenIds: string[];
     createdDate: Date;
     avatar: string;
+    groupAdmin: string;
 
     users: ChatUser[];
     messages: ChatMessage[];

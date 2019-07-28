@@ -41,6 +41,9 @@ export class SearchResultContainerComponent implements OnInit {
   posts: any;
   users: [];
   listType: string;
+  postFilter: PostFilter;
+
+  page = 1;
 
   @HostListener('window:scroll') checkScroll() {
     const scrollPosition =
@@ -62,6 +65,7 @@ export class SearchResultContainerComponent implements OnInit {
               private companionPostService: FindingCompanionService,
               private userService: UserService,
               private errorHandler: GlobalErrorHandler) {
+    this.titleService.setTitle('Tìm kiếm');
   }
 
   ngOnInit() {
@@ -75,7 +79,8 @@ export class SearchResultContainerComponent implements OnInit {
         this.tab = 'bai-viet';
       }
 
-      this.getSearchResult(this.initPostFilter());
+      this.postFilter = this.initPostFilter();
+      this.getSearchResult(this.postFilter, true);
 
     });
   }
@@ -99,9 +104,12 @@ export class SearchResultContainerComponent implements OnInit {
     return postFilter;
   }
 
-  getSearchResult(postFilter: PostFilter) {
-    this.posts = [];
-    this.users = [];
+  getSearchResult(postFilter: PostFilter, isReset: boolean) {
+    if (isReset) {
+      this.posts = [];
+      this.users = [];
+      this.page = 1;
+    }
     switch (this.tab) {
       case 'moi-nguoi':
         this.showFilter = false;
@@ -130,40 +138,40 @@ export class SearchResultContainerComponent implements OnInit {
       search = '';
     }
 
-    this.userService.getUsers(search).subscribe((res: any) => {
-      this.users = res;
+    this.userService.getUsers(search).subscribe((res: []) => {
+      this.users.push(...res);
     }, this.errorHandler.handleError);
   }
 
   getArticles(postFilter: PostFilter) {
-    this.postService.getAllArticles(postFilter).subscribe((res: Article[]) => {
-      this.posts = res;
+    this.postService.getAllArticles(postFilter, this.page).subscribe((res: Article[]) => {
+      this.posts.push(...res);
     }, this.errorHandler.handleError);
   }
 
   getVirtualTrips(postFilter: PostFilter) {
-    this.virtualTripService.getVirtualTrips(postFilter).subscribe((res: VirtualTrip[]) => {
-      this.posts = res;
+    this.virtualTripService.getVirtualTrips(postFilter, this.page).subscribe((res: VirtualTrip[]) => {
+      this.posts.push(...res);
     }, this.errorHandler.handleError);
   }
 
   getCompanionPosts(postFilter: PostFilter) {
-    this.companionPostService.getCompanionPosts(postFilter).subscribe((res: CompanionPost[]) => {
-      this.posts = res;
+    this.companionPostService.getCompanionPosts(postFilter, this.page).subscribe((res: CompanionPost[]) => {
+      this.posts.push(...res);
     }, this.errorHandler.handleError);
   }
 
   submitFilter(postFilter: PostFilter) {
-    postFilter.search = this.search;
-    switch (this.tab) {
-      case 'bai-viet':
-        this.getArticles(postFilter);
+    this.postFilter = postFilter;
+    switch (this.searchType) {
+      case 'text':
+        this.postFilter.search = this.search;
         break;
-      case 'chuyen-di':
-        break;
-      case 'tim-ban-dong-hanh':
+      case 'location':
+        this.postFilter.locationId = this.search;
         break;
     }
+    this.getSearchResult(this.postFilter, true);
   }
 
   getSearchTypeParam() {
@@ -178,9 +186,10 @@ export class SearchResultContainerComponent implements OnInit {
 
   onScroll() {
     this.isLoading = true;
-
+    this.page++;
+    console.log('page-' + this.page);
     // Continue loading data
-    // this.getPost();
+    this.getSearchResult(this.postFilter, false);
   }
 
   gotoTop() {

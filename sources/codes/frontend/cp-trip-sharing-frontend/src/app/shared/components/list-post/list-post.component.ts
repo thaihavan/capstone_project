@@ -37,6 +37,8 @@ export class ListPostComponent implements OnInit {
   isScrollTopShow = false;
   topPosToStartShowing = 100;
 
+  page = 1;
+
   @HostListener('window:scroll') checkScroll() {
     const scrollPosition =
       window.pageYOffset ||
@@ -59,12 +61,13 @@ export class ListPostComponent implements OnInit {
     this.getTopics();
     this.setNavParams();
   }
-  onScroll() {
-    console.log('list-post-on-scrole');
-    this.isLoading = true;
 
+  onScroll() {
+    this.isLoading = true;
+    this.page++;
+    console.log('page-' + this.page);
     // Continue loading data
-    // this.getPost();
+    this.getPosts(false);
   }
 
   onButtonToggleChange(value: string) {
@@ -73,7 +76,7 @@ export class ListPostComponent implements OnInit {
 
   submitFilter() {
     this.isDisplayFilter = false;
-    this.getPosts();
+    this.getPosts(true);
   }
 
   onCheckboxToggleChange(topicId: string) {
@@ -99,7 +102,7 @@ export class ListPostComponent implements OnInit {
       this.initPostFilter();
 
       // Get posts
-      this.getPosts();
+      this.getPosts(true);
     });
   }
 
@@ -120,11 +123,12 @@ export class ListPostComponent implements OnInit {
   }
 
   resetListPost() {
+    this.page = 1;
     this.articleDisplay.items = [];
     this.articleDisplay.typeArticle = null;
   }
 
-  getPosts(): void {
+  getPosts(isReset: boolean): void {
     const postFilter: PostFilter = JSON.parse(JSON.stringify(this.postFilter));
     if (this.postFilter.topics.length === this.topics.length) {
       postFilter.topics = [];
@@ -132,24 +136,27 @@ export class ListPostComponent implements OnInit {
 
     if (this.personalNav != null) {
       const userId = this.getUserIdFromUrl();
+      if (isReset) {
+        this.page = 1;
+      }
       if (this.personalNav === 'bai-viet') {
-        this.postService.getAllArticlesByUserId(userId, postFilter).subscribe((data: any) => {
-          this.resetListPost();
+        this.postService.getAllArticlesByUserId(userId, postFilter, this.page).subscribe((data: []) => {
+          if (isReset) {
+            this.resetListPost();
+          }
           this.articleDisplay.typeArticle = 'article';
-          data.forEach((article: any) => {
-            if (article.post.isActive === true) {
-              this.articleDisplay.items.push(article);
-            }
-          });
+          this.articleDisplay.items.push(...data);
           this.isLoading = false;
         }, this.errorHandler.handleError);
       } else if (this.personalNav === 'chuyen-di') {
-        this.tripService.getVirtualTripsByUser(userId, postFilter).subscribe(data => {
-          this.resetListPost();
+        this.tripService.getVirtualTripsByUser(userId, postFilter, this.page).subscribe((data: []) => {
+          if (isReset) {
+            this.resetListPost();
+          }
           this.articleDisplay.typeArticle = 'virtual-trip';
-          this.articleDisplay.items = data;
+          this.articleDisplay.items.push(...data);
           this.isLoading = false;
-        });
+        }, this.errorHandler.handleError);
       }
     }
   }
