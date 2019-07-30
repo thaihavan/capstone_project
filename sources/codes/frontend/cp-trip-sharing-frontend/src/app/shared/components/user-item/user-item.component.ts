@@ -53,7 +53,9 @@ export class UserItemComponent implements OnInit {
   }
 
   gotoPersionalPage(authorId: any) {
-    window.location.href = '/user/' + authorId;
+    if (!this.showBlockedButton) {
+      window.location.href = '/user/' + authorId;
+    }
   }
 
   followPerson(userId: any) {

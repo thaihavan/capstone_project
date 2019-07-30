@@ -28,22 +28,22 @@ export class EmailConfirmPageComponent implements OnInit {
     this.token = this.route.snapshot.paramMap.get('token');
     this.userService.verifyEmail(this.token).subscribe((data: any) => {
       this.message = 'Xác nhận email thành công';
-      this.openDialogMessageConfirm(this.message);
+      this.openDialogMessageConfirm(this.message, 'success');
       setTimeout(() => {
         this.dialog.closeAll();
         window.location.href = '';
       }, 5000);
     }, (err: HttpErrorResponse) => {
       this.message = 'Xác nhận email thất bại';
-      this.openDialogMessageConfirm(this.message);
+      this.openDialogMessageConfirm(this.message, 'danger');
       setTimeout(() => {
         window.location.href = '';
       }, 5000);
     });
   }
-  openDialogMessageConfirm(message: string) {
+  openDialogMessageConfirm(message: string, messageType: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
+      width: '500px',
       height: 'auto',
       position: {
         top: '20px'
@@ -52,6 +52,7 @@ export class EmailConfirmPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
+    instance.message.messageType = messageType;
     instance.message.url = '/trang-chu';
   }
 }

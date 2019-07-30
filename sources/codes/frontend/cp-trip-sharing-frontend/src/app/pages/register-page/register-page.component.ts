@@ -137,7 +137,7 @@ export class RegisterPageComponent implements OnInit {
         () => {
           this.errorEmailHasUse = false;
           this.errorRegister = false;
-          this.openDialogMessageConfirm();
+          this.openDialogMessageConfirm('success');
           setTimeout(() => {
             window.location.href = '';
           }, 5000);
@@ -145,9 +145,9 @@ export class RegisterPageComponent implements OnInit {
       );
   }
 
-  openDialogMessageConfirm() {
+  openDialogMessageConfirm(messageType: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
+      width: '500px',
       height: 'auto',
       position: {
         top: '20px'
@@ -155,6 +155,7 @@ export class RegisterPageComponent implements OnInit {
       disableClose: true
     });
     const instance = dialogRef.componentInstance;
+    instance.message.messageType = messageType;
     instance.message.messageText =
       'Đăng kí thành công, vui lòng kiểm tra lại email!';
     instance.message.url = '/trang-chu';

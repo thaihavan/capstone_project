@@ -210,11 +210,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     this.tripService.createVirtualTrip(this.virtualTrip).subscribe(
       result => {
         dialogRef.close();
-        this.openDialogMessageConfirm('Bàn đăng đã được tạo!', result.id);
+        this.openDialogMessageConfirm('Bàn đăng đã được tạo!', result.id, 'success');
       },
       this.errorHandler.handleError,
       () => {
-        console.log('create success!');
       }
     );
   }
@@ -250,9 +249,9 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   }
 
   // open dialog confirm
-  openDialogMessageConfirm(message: string, data) {
+  openDialogMessageConfirm(message: string, data, messageType: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
+      width: '500px',
       height: 'auto',
       position: {
         top: '20px'
@@ -260,6 +259,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       disableClose: true
     });
     const instance = dialogRef.componentInstance;
+    instance.message.messageType = messageType;
     instance.message.messageText = message;
     instance.message.url = '/chuyen-di?tripId=' + data;
   }
@@ -275,5 +275,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         }
       );
     }
+  }
+
+  // go to personal page
+  gotoPersionalPage(authorId: any) {
+      window.location.href = '/user/' + authorId;
   }
 }

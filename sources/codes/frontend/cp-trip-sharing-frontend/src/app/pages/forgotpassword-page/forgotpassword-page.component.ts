@@ -32,14 +32,14 @@ export class ForgotpasswordPageComponent implements OnInit {
   forgotPassword() {
     const email = this.form.value.email;
     this.userService.forgotPassword(email).subscribe((data: any) => {
-      this.openDialogMessageConfirm();
+      this.openDialogMessageConfirm('success');
     }, (err: HttpErrorResponse) => {
       this.message = 'Lấy lại mật khẩu thất bại!';
     });
   }
-  openDialogMessageConfirm() {
+  openDialogMessageConfirm(messageType: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
+      width: '500px',
       height: 'auto',
       position: {
         top: '20px'
@@ -47,6 +47,7 @@ export class ForgotpasswordPageComponent implements OnInit {
       disableClose: true
     });
     const instance = dialogRef.componentInstance;
+    instance.message.messageType = messageType;
     instance.message.messageText = 'Kiểm tra Email! Mật khẩu mới đã được gửi về email của bạn.';
     instance.message.url = '/trang-chu';
   }

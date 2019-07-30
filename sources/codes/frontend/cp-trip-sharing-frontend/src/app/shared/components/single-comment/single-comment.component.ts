@@ -109,7 +109,7 @@ export class SingleCommentComponent implements OnInit {
 
   openDialogMessageConfirm(title: string) {
     const dialogRef = this.dialog.open(ReportPopupComponent, {
-      width: '400px',
+      width: '500px',
       height: 'auto',
       position: {
         top: '10px'

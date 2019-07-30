@@ -37,9 +37,9 @@ export class ResetPasswordPageComponent implements OnInit {
     this.token = this.route.snapshot.paramMap.get('token');
   }
 
-  openDialogMessageConfirm() {
+  openDialogMessageConfirm(messageType: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
+      width: '500px',
       height: 'auto',
       position: {
         top: '20px'
@@ -47,6 +47,7 @@ export class ResetPasswordPageComponent implements OnInit {
       disableClose: true
     });
     const instance = dialogRef.componentInstance;
+    instance.message.messageType = messageType;
     instance.message.messageText = 'Đổi mật khẩu thành công bạn có thể đăng nhập lại!';
     instance.message.url = '/trang-chu';
   }
@@ -57,7 +58,7 @@ export class ResetPasswordPageComponent implements OnInit {
     } else {
       this.resetPasswordModel.NewPassword = this.form.value.repassword;
       this.userService.resetPassword(this.token, this.resetPasswordModel).subscribe((data: any) => {
-        this.openDialogMessageConfirm();
+        this.openDialogMessageConfirm('success');
       }, (err: HttpErrorResponse) => {
         this.message = 'Đặt lại mật khẩu thất bại!';
       });

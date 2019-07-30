@@ -31,6 +31,7 @@ import { MessagePopupComponent } from 'src/app/shared/components/message-popup/m
 import { ChatService } from 'src/app/core/services/chat-service/chat.service';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-create-finding-companions-post',
   templateUrl: './create-finding-companions-post.component.html',
@@ -285,9 +286,11 @@ export class CreateFindingCompanionsPostComponent
     this.companionPost.destinations = this.destinations;
     this.companionService.createPost(this.companionPost).subscribe(
         res => {
-          this.openDialogMessageConfirm('Bàn đăng đã được tạo!', res.id);
+          this.openDialogMessageConfirm('Bàn đăng đã được tạo!', res.id, 'success' );
         },
-        this.errorHandler.handleError
+        (err: HttpErrorResponse) => {
+          this.openDialogMessageConfirm(err.message, null, 'danger');
+        }
       );
   }
 
@@ -310,17 +313,18 @@ export class CreateFindingCompanionsPostComponent
     });
   }
   // open dialog confirm
-  openDialogMessageConfirm(message: string, data) {
+  openDialogMessageConfirm(message: string, data, messageType: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '400px',
-      height: '200px',
+      width: '500px',
+      height: 'auto',
       position: {
-        top: '10px'
+        top: '20px'
       },
       disableClose: true
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
+    instance.message.messageType = messageType;
     instance.message.url = '/tim-ban-dong-hanh/' + data;
   }
 
