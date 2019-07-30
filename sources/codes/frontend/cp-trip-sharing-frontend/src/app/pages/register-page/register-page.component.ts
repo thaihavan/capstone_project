@@ -17,7 +17,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 /** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
+class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
     form: FormGroupDirective | NgForm | null

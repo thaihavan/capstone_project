@@ -11,6 +11,7 @@ import { UserService } from '../../services/user-service/user.service';
 import { User } from 'src/app/model/User';
 import { Account } from 'src/app/model/Account';
 import { GlobalErrorHandler } from '../../globals/GlobalErrorHandler';
+import { ChangePasswordComponent } from 'src/app/shared/components/change-password/change-password.component';
 
 @Component({
   selector: 'app-header',
@@ -208,4 +209,12 @@ export class HeaderComponent implements OnInit {
       localStorage.setItem('listPostIdBookmark', JSON.stringify(result));
     }, this.errorHandler.handleError);
   }
+
+  // dialog change password
+  openDialogChangePassword() {
+      const dialogRef = this.dialog.open(ChangePasswordComponent, {
+        height: 'auto',
+        width: '400px'
+      });
+    }
 }

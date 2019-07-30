@@ -19,7 +19,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
 import { SingleCommentComponent } from './shared/components/single-comment/single-comment.component';
 import { MessagePopupComponent } from './shared/components/message-popup/message-popup.component';
@@ -57,7 +56,6 @@ import { ListUserBlockedComponent } from './shared/components/list-user-blocked/
     PersonalPageComponent,
     ForgotpasswordPageComponent,
     CreatePostPageComponent,
-    ChangepasswordPageComponent,
     DetailpostPageComponent,
     EmailConfirmPageComponent,
     ResetPasswordPageComponent,

@@ -52,6 +52,7 @@ import { DeleteConfirmPopupComponent } from './components/delete-confirm-popup/d
 import { DetailCompanionPostComponent } from './components/detail-companion-post/detail-companion-post.component';
 import { ChatPopupComponent } from './components/chat-popup/chat-popup.component';
 import { HighlightDirective } from './directives/highlight.directive';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const Material = [
   MatButtonModule,
@@ -116,7 +117,8 @@ const Material = [
     DeleteConfirmPopupComponent,
     DetailCompanionPostComponent,
     ChatPopupComponent,
-    HighlightDirective
+    HighlightDirective,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -162,14 +164,16 @@ const Material = [
     DeleteConfirmPopupComponent,
     DetailCompanionPostComponent,
     ChatPopupComponent,
-    HighlightDirective
+    HighlightDirective,
+    ChangePasswordComponent
   ],
   entryComponents: [
     StepCreatePostComponent,
     CropImageComponent,
     LoadingScreenComponent,
     SendMessagePopupComponent,
-    DialogStepFindingCompanionsComponent
+    DialogStepFindingCompanionsComponent,
+    ChangePasswordComponent
   ]
 })
 export class SharedModule { }

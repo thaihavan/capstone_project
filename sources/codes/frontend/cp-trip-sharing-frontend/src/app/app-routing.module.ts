@@ -4,7 +4,6 @@ import { PersonalPageComponent } from './pages/personal-page/personal-page.compo
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotpassword-page.component';
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
-import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
 import { HeaderComponent } from './core/components/header/header.component';
 import { EmailConfirmPageComponent } from './pages/email-confirm-page/email-confirm-page.component';
@@ -67,7 +66,6 @@ const routes: Routes = [
       { path: 'quen-mat-khau', component: ForgotpasswordPageComponent },
       { path: 'tao-bai-viet', component: CreatePostPageComponent },
       { path: 'chinh-sua-bai-viet/:articleId', component: CreatePostPageComponent },
-      { path: 'doi-mat-khau', component: ChangepasswordPageComponent },
       { path: 'dat-lai-mat-khau/:token', component: ResetPasswordPageComponent },
       { path: 'bai-viet/:articleId', component: DetailpostPageComponent },
       { path: 'khoi-tao', component: InitialUserInformationPageComponent },
