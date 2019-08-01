@@ -14,11 +14,13 @@ namespace UserServices.Reponsitories
     public class BookmarkRepository : IBookmarkRepository
     {
         private readonly IMongoCollection<Bookmark> _bookmarks = null;
+        private readonly IMongoCollection<User> _users = null;
         
         public BookmarkRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
             _bookmarks = dbContext.BookmarkCollection;
+            _users = dbContext.Users;
         }
         
         public Bookmark Add(Bookmark bookmark)
@@ -40,7 +42,15 @@ namespace UserServices.Reponsitories
 
         public IEnumerable<Bookmark> GetAll(string id)
         {
-            List<Bookmark> bookmarks = _bookmarks.Find(temp => temp.UserId.Equals(id)).ToList();
+            Func<Bookmark, User, Bookmark> selectAuthor =
+                ((bookmark, user) => { bookmark.Author = user; return bookmark; });
+            //List<Bookmark> bookmarks = _bookmarks.Find(temp => temp.UserId.Equals(id)).ToList();
+            var bookmarks = _bookmarks.AsQueryable().Where(x => x.UserId.Equals(id))
+                .Join(_users.AsQueryable(),
+                bookmark => bookmark.AuthorId,
+                user => user.Id,
+                selectAuthor
+                ).ToList();
             return bookmarks;
         }
 
