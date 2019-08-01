@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component';
 import { NotifyService } from '../../services/notify-service/notify.service';
 import { Notification } from 'src/app/model/Notification';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -12,6 +11,7 @@ import { User } from 'src/app/model/User';
 import { Account } from 'src/app/model/Account';
 import { GlobalErrorHandler } from '../../globals/GlobalErrorHandler';
 import { ChangePasswordComponent } from 'src/app/shared/components/change-password/change-password.component';
+import { LoginPageComponent } from 'src/app/shared/components/login-page/login-page.component';
 
 @Component({
   selector: 'app-header',

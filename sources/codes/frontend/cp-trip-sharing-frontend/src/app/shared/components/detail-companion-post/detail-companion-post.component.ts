@@ -7,8 +7,8 @@ import { ChatUser } from 'src/app/model/ChatUser';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { MatDialog } from '@angular/material';
-import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { LoginPageComponent } from '../login-page/login-page.component';
 
 @Component({
   selector: 'app-detail-companion-post',

@@ -1,14 +1,11 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { UserService } from 'src/app/core/services/user-service/user.service';
-import { Title } from '@angular/platform-browser';
-import { Account } from 'src/app/model/Account';
-import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
+import { Title } from '@angular/platform-browser';
+import { UserService } from 'src/app/core/services/user-service/user.service';
+import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
-import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { Account } from 'src/app/model/Account';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
@@ -16,6 +13,7 @@ import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
+
   email = '';
   password = '';
   pasHide = true;
@@ -34,12 +32,9 @@ export class LoginPageComponent implements OnInit {
     ])
   });
   constructor(private titleService: Title,
-              private dialogRef: MatDialogRef<LoginPageComponent>,
               private userService: UserService,
               private authService: AuthService,
-              private notifyService: NotifyService,
-              private alertifyService: AlertifyService,
-              private errorHandler: GlobalErrorHandler) {
+              private alertifyService: AlertifyService) {
     this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }
@@ -96,11 +91,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   callRegisterPage(): void {
-    this.dialogRef.close();
+    // this.dialogRef.close();
   }
 
   forgotPassword(): void {
-    this.dialogRef.close();
+    // this.dialogRef.close();
   }
 
   loginFunction() {
@@ -132,5 +127,6 @@ export class LoginPageComponent implements OnInit {
       });
     }
   }
+
 
 }

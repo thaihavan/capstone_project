@@ -24,9 +24,11 @@ import { TopicPageAdminComponent } from './admin/pages/dashboard-page/components
 import { OverviewPageAdminComponent } from './admin/pages/dashboard-page/components/overview-page-admin/overview-page-admin.component';
 import { PostPageAdminComponent } from './admin/pages/dashboard-page/components/post-page-admin/post-page-admin.component';
 import { UserPageAdminComponent } from './admin/pages/dashboard-page/components/user-page-admin/user-page-admin.component';
+import { AdminLoginPageComponent } from './admin/pages/dashboard-page/components/admin-login-page/admin-login-page.component';
 
 
 const routes: Routes = [
+  {path: 'admin-login', component: AdminLoginPageComponent},
   {
     path: 'dashboard', component: DashboardPageComponent,
     children: [
