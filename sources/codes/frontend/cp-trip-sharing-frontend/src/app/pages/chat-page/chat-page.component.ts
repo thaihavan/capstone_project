@@ -211,4 +211,17 @@ export class ChatPageComponent implements OnInit {
       window.location.reload();
     }, this.errorHandler.handleError);
   }
+
+  gotoUserPage(user: ChatUser) {
+    window.location.href = `/user/${user.id}`;
+  }
+
+  removeMember(selectedConversation: Conversation, user: ChatUser) {
+    if (selectedConversation.groupAdmin === this.user.id) {
+      this.chatService.leaveGroupChat(selectedConversation.id, user.id).subscribe((res) => {
+        selectedConversation.users = selectedConversation.users.filter(u => u.id !== user.id);
+      }, this.errorHandler.handleError);
+    }
+  }
+
 }

@@ -1,0 +1,48 @@
+/* common */
+div {
+    box-sizing: border-box;
+}
+
+.use-page-container {
+    background-color: #fff;
+    padding: 30px;
+    position: relative;
+}
+
+/* search */
+.search-section {
+    margin-bottom: 30px;
+}
+
+.search-section input {
+    padding: 20px 40px;
+    height: 50px;
+}
+
+.search-section .search-icon {
+    position: absolute;
+    color: #2196f3;
+    margin: 12px;
+}
+
+::ng-deep .search-section input:focus {
+    border: 2px solid #2196f3 !important;
+    box-shadow: none !important;
+}
+
+.search-button {
+    background-color: #2196f3;
+    color: #fff;
+    height: 48px;
+    font-weight: 500;
+    padding: 12px 40px;
+}
+
+.search-button:focus {
+    box-shadow: none;
+}
+
+/* list users */
+.user-item {
+    border-bottom: solid 1px #ccc;
+}

@@ -1,3 +1,22 @@
-<p>
-  user-page-admin works!
-</p>
+<div class="use-page-container">
+  
+  <!-- search by text -->
+  <div *ngIf="searchType == 'text'" class="search-section row">
+    <div class="col-md-8">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" class="form-control" placeholder="Tìm kiếm" [(ngModel)]="search"
+        (keyup.enter)="searchByText()">
+    </div>
+    <div class="col-md-4">
+      <button class="btn search-button" (click)="searchByText()">Tìm kiếm</button>
+    </div>
+  </div>
+
+  <!-- list of users -->
+  <div *ngIf="users && users.length > 0">
+    <div *ngFor="let user of users" class="user-item">
+      <app-user-item [user]="user" [showFollowButton]="false"></app-user-item>
+    </div>
+  </div>
+
+</div>

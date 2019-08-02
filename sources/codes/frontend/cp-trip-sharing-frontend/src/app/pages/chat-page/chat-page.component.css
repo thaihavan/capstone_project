@@ -206,6 +206,36 @@ mat-card-actions {
     right: 10px;
 }
 
+.action-item {
+    border-bottom: solid 1px #d8d8d8;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.action-item:hover {
+    background-color: #efefef;
+}
+
+.chat-input-icon {
+    width: 40px;
+    position: absolute;
+    margin-top: 10px;
+}
+
+.chat-input-icon mat-icon {
+    font-size: 32px !important;
+    cursor: pointer;
+}
+
+.chat-input-icon mat-icon:hover {
+    color: #2196f3 !important;
+}
+
+.chat-input-message {
+    margin-left: 40px;
+}
+
+
 /* chat-info-container */
 .chat-info-container {
     border-left: 1px solid rgba(120,130,140,.13);
@@ -248,31 +278,13 @@ mat-expansion-panel p {
     padding-left: 36px;
 }
 
-.action-item {
-    border-bottom: solid 1px #d8d8d8;
-    cursor: pointer;
-    padding: 10px;
+.chat-member-item {
+    height: 50px !important;
 }
 
-.action-item:hover {
-    background-color: #efefef;
-}
-
-.chat-input-icon {
-    width: 40px;
+.icon-settings {
+    color: #999;
     position: absolute;
-    margin-top: 10px;
-}
-
-.chat-input-icon mat-icon {
-    font-size: 32px !important;
-    cursor: pointer;
-}
-
-.chat-input-icon mat-icon:hover {
-    color: #2196f3 !important;
-}
-
-.chat-input-message {
-    margin-left: 40px;
+    margin-top: -10px;
+    right: 0px;
 }
