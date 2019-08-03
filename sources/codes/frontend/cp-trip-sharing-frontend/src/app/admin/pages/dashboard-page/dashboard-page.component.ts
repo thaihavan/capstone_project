@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Account } from 'src/app/model/Account';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -12,14 +13,21 @@ export class DashboardPageComponent implements OnInit {
   selectedTab = '';
   tabTitle = '';
 
+  account: Account;
 
-  constructor(private router: Router) { }
+
+  constructor(private router: Router) {
+    this.account = JSON.parse(localStorage.getItem('Account'));
+
+    if (this.account == null || this.account.role !== 'admin') {
+      window.location.href = '/admin/login';
+    }
+  }
 
   ngOnInit() {
     this.selectedTab = this.getTabFromUrl();
 
     this.setTabTitle();
-
   }
 
   setTabTitle() {

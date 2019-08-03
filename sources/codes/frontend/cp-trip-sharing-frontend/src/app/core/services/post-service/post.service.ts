@@ -55,6 +55,7 @@ export class PostService {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
     return this.http.post<Article>(this.baseUrl + 'recommend?page=' + page, postFilter, httpOption);

@@ -20,7 +20,6 @@ namespace PostService.Controllers
     {
         private readonly IArticleService _articleService = null;
         private readonly IPostService _postService = null;
-        private readonly IAuthorService _authorService = null;
 
         public ArticleController(IArticleService articleService, IPostService postService)
         {
@@ -44,21 +43,17 @@ namespace PostService.Controllers
             return Ok(article);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "member")]
         [HttpPost("recommend")]
         public IActionResult GetRecommendArticles([FromBody]PostFilter postFilter, [FromQuery]int page)
         {
-            
             UserInfo userInfo = new UserInfo();
-            if (User.Identity.IsAuthenticated)
-            {
-                var identity = User.Identity as ClaimsIdentity;
-                var userId = identity.FindFirst("user_id").Value;
-                userInfo.Id = userId;
-                IEnumerable<Article> articles = _articleService.GetRecommendArticles(postFilter, userInfo, page);
-                return Ok(articles);
-            }
-            else return (Ok(_articleService.GetPopularArticles(postFilter, page)));
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+            userInfo.Id = userId;
+
+            IEnumerable<Article> articles = _articleService.GetRecommendArticles(postFilter, userInfo, page);
+            return Ok(articles);
         }
 
         [AllowAnonymous]

@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <mat-icon class="search-icon">search</mat-icon>
         <input type="text" class="form-control" placeholder="Tìm kiếm" [(ngModel)]="search"
-          (keyup.enter)="onSearchBtnClick()">
+          (keyup.enter)="searchByText()">
       </div>
       <div class="col-md-4">
         <button class="btn search-button" (click)="searchByText()">Tìm kiếm</button>

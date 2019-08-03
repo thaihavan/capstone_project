@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
 
         this.initSocketConnection();
       } else if (this.account.role === 'admin') {
-        window.location.href = '/dashboard';
+        window.location.href = '/admin/dashboard';
       }
     } else {
       this.checkLogin = true;

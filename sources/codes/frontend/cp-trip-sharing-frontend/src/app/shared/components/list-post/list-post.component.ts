@@ -11,6 +11,7 @@ import { Topic } from 'src/app/model/Topic';
 import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
 import { ArticleDisplay } from 'src/app/model/ArticleDisplay';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 @Component({
   selector: 'app-list-post',
   templateUrl: './list-post.component.html',
@@ -55,6 +56,7 @@ export class ListPostComponent implements OnInit {
   constructor(private route: ActivatedRoute, private postService: PostService,
               private userService: UserService,
               private tripService: VirtualTripService,
+              private companionPostService: FindingCompanionService,
               private errorHandler: GlobalErrorHandler) { }
 
   ngOnInit() {
@@ -157,6 +159,15 @@ export class ListPostComponent implements OnInit {
           this.articleDisplay.items.push(...data);
           this.isLoading = false;
         }, this.errorHandler.handleError);
+      } else if (this.personalNav === 'tim-ban-dong-hanh') {
+        this.companionPostService.getCompanionPostsByUser(userId, postFilter, this.page).subscribe((data: []) => {
+          if (isReset) {
+            this.resetListPost();
+          }
+          this.articleDisplay.typeArticle = 'companion-post';
+          this.articleDisplay.items.push(...data);
+          this.isLoading = false;
+        });
       }
     }
   }

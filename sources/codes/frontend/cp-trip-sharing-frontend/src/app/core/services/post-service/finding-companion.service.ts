@@ -28,6 +28,15 @@ export class FindingCompanionService {
     return this.http.post<CompanionPost[]>(this.baseUrl + '/post/all?page=' + page, postFilter, httpOption);
   }
 
+  getCompanionPostsByUser(userId: string, postFilter: PostFilter, page: number): Observable<CompanionPost[]> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post<CompanionPost[]>(this.baseUrl + '/post/user?userId=' + userId + '&page=' + page, postFilter, httpOption);
+  }
+
   createPost(companionPost: CompanionPost): Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
