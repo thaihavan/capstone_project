@@ -46,6 +46,11 @@ namespace UserServices.Services
             return result;
         }
 
+        public bool CheckUsername(string username)
+        {
+            return this._userRepository.CheckUsername(username);
+        }
+
         public User GetUserById(string userId)
         {
             return _userRepository.GetById(userId);

@@ -9,6 +9,9 @@ namespace UserServices.Reponsitories.Interfaces
         IEnumerable<User> GetUsers(string search);
 
         object GetUserStatistics(StatisticsFilter filter);
+
         void IncreaseContributionPoint(string userId, int point);
+
+        bool CheckUsername(string username);
     }
 }

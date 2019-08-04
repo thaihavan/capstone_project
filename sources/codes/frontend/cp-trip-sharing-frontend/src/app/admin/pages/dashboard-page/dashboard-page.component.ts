@@ -79,18 +79,18 @@ export class DashboardPageComponent implements OnInit {
   gotoPostManagement() {
     this.selectedTab = 'bai-viet';
     this.tabTitle = 'Bài viết';
-    this.router.navigate(['dashboard/bai-viet']);
+    this.router.navigate(['admin/dashboard/bai-viet']);
   }
 
   gotoUserManagement() {
     this.selectedTab = 'nguoi-dung';
     this.tabTitle = 'Người dùng';
-    this.router.navigate(['dashboard/nguoi-dung']);
+    this.router.navigate(['admin/dashboard/nguoi-dung']);
   }
 
   gotoTopicManagement() {
     this.selectedTab = 'chu-de';
     this.tabTitle = 'Chủ đề';
-    this.router.navigate(['dashboard/chu-de']);
+    this.router.navigate(['admin/dashboard/chu-de']);
   }
 }

@@ -78,6 +78,20 @@ namespace UserServices.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "member")]
+        [HttpGet]
+        public IActionResult CheckUsername([FromQuery] string username)
+        {
+            var result = _userService.CheckUsername(username.Trim());
+
+            if (!result)
+            {
+                return BadRequest("Username is exist.");
+            }
+
+            return Ok();
+        }
+
         [Authorize(Roles = "admin")]         
         [HttpPost("statistics")]
         public IActionResult GetUserStatistics([FromBody] StatisticsFilter filter)
