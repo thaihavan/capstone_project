@@ -10,6 +10,7 @@ export class MessagePopupComponent implements OnInit {
   message = new PopupMessage();
   @Input()
   typePopup = 'success';
+  @Input() confirm: boolean;
   constructor() {}
 
   ngOnInit() {
