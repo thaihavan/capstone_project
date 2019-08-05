@@ -28,7 +28,7 @@
     <div>
       <mat-form-field hintLabel="Yêu cầu ngày trong lịch trình" appearance="outline">
         <mat-label>Chọn ngày</mat-label>
-        <input matInput [(ngModel)]="scheduleDate" [matDatepicker]="picker" placeholder="Chọn ngày">
+        <input matInput [(ngModel)]="scheduleDate" [min]="data.minDate" [max]="data.maxDate" [matDatepicker]="picker" placeholder="Chọn ngày" (click)="picker.open()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -46,6 +46,6 @@
     </div>
   </div>
   <div class="btn-create mr-5">
-    <button (click)="onCreate()" mat-raised-button color="primary">{{data.edit ? 'Lưu' : 'Tạo' }}</button>
+    <button (click)="onCreate()" mat-raised-button color="primary">{{data.isUpdate ? 'Lưu' : 'Tạo' }}</button>
   </div>
 </div>

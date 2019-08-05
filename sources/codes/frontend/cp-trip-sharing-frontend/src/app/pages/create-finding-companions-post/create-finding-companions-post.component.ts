@@ -184,7 +184,11 @@ export class CreateFindingCompanionsPostComponent
   }
 
   // create step
-  createStep(schedule: Schedule) {
+  createStep(schedule: Schedule, update: boolean) {
+    if (this.fromDate === undefined || this.toDate === undefined) {
+      this.alertifyService.error('Yêu cầu nhập ngày đi!');
+      return;
+    }
     if (schedule === undefined || schedule === null) {
       schedule = new Schedule();
     }
@@ -194,16 +198,23 @@ export class CreateFindingCompanionsPostComponent
         scheduleTitle: schedule.title,
         scheduleDate: schedule.day,
         scheduleNote: schedule.content,
-        isUpdate: this.isUpdate
+        isUpdate: update,
+        minDate: this.fromDate,
+        maxDate: this.toDate
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res !== undefined) {
-        schedule = new Schedule();
-        schedule.title = res.scheduleTitle;
-        schedule.day = res.scheduleDate;
-        schedule.content = res.scheduleNote;
-        this.listSchedules.push(schedule);
+       const updateSchedule = new Schedule();
+       updateSchedule.title = res.scheduleTitle;
+       updateSchedule.day = res.scheduleDate;
+       updateSchedule.content = res.scheduleNote;
+       if (update) {
+         const index =  this.listSchedules.findIndex(s => schedule.title === s.title);
+         this.listSchedules[index] = updateSchedule;
+        } else {
+          this.listSchedules.push(updateSchedule);
+        }
       }
     });
   }
@@ -216,7 +227,7 @@ export class CreateFindingCompanionsPostComponent
 
   // update schedule item
   updateStepper(event) {
-    this.createStep(event);
+    this.createStep(event, true);
   }
 
   // delete schedule item
