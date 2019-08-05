@@ -7,6 +7,7 @@ using MongoDB.Bson;
 
 namespace UserServices.Models
 {
+    [BsonIgnoreExtraElements]
     public class Bookmark : Model
     {
         [BsonId]
@@ -29,5 +30,14 @@ namespace UserServices.Models
 
         [BsonElement("post_type")]
         public string PostType { get; set; }
+
+        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("author_id")]
+        public string AuthorId { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
+        public User Author { get; set; }
+
     }
 }

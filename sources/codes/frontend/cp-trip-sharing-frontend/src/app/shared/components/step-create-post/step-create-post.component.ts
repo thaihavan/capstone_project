@@ -1,11 +1,8 @@
 import { Component, OnInit, NgZone, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { LocationMarker } from 'src/app/model/LocationMarker';
 import { MatStepper } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CreatePostPageComponent } from 'src/app/pages/create-post-page/create-post-page.component';
-import { Topic } from 'src/app/model/Topic';
 import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 @Component({
   selector: 'app-step-create-post',

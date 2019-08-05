@@ -186,3 +186,6 @@
 .mat-card-image:first-child {
       margin-top: 0px !important;
     }
+a:hover {
+  cursor: pointer;
+}

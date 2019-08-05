@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ChartSingleModel } from 'src/app/model/ChartModel';
 import { HostGlobal } from 'src/app/core/global-variables';
 import { StatisticsFilter } from 'src/app/model/StatisticsFilter';
+import { UserService } from 'src/app/core/services/user-service/user.service';
 
 @Injectable({
   providedIn: 'root'

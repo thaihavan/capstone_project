@@ -16,10 +16,6 @@ export class HeaderAdminComponent implements OnInit {
 
   constructor(private userService: UserService) {
     this.account = JSON.parse(localStorage.getItem('Account'));
-
-    if (this.account == null || this.account.role !== 'admin') {
-      window.location.href = '/';
-    }
   }
 
   ngOnInit() {

@@ -142,5 +142,13 @@ namespace UserServices.Reponsitories
             }
             return user;
         }
+
+        // Return false if username is exist
+        public bool CheckUsername(string username)
+        {
+            var user = this._users.Find(u => u.UserName == username).FirstOrDefault();
+
+            return user == null;
+        }
     }
 }

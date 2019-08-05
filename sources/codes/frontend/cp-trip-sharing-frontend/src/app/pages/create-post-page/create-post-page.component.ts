@@ -3,7 +3,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { UploadAdapter } from 'src/app/model/UploadAdapter';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { StepCreatePostComponent } from 'src/app/shared/components/step-create-post/step-create-post.component';
 import { Article } from 'src/app/model/Article';
@@ -17,6 +17,7 @@ import { UploadImageService } from 'src/app/core/services/upload-image-service/u
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-create-post-page',
@@ -75,7 +76,8 @@ export class CreatePostPageComponent implements OnInit {
     private imageService: UploadImageService,
     private route: ActivatedRoute,
     private titleService: Title,
-    private errorHandler: GlobalErrorHandler
+    private errorHandler: GlobalErrorHandler,
+    private alertify: AlertifyService
   ) {
     this.titleService.setTitle('Tạo bài viết');
   }
@@ -169,16 +171,18 @@ export class CreatePostPageComponent implements OnInit {
             (data: Article) => {
               this.articlereturn = data;
             },
-            this.errorHandler.handleError,
+            (err: HttpErrorResponse) => {
+              this.openDialogMessageConfirm('Chỉnh sửa bài thành công', 'success');
+            },
             () => {
-              this.openDialogMessageConfirm('Chỉnh sửa bài thành công');
+              this.openDialogMessageConfirm('Chỉnh sửa bài thành công', 'danger');
             }
           );
         } else {
           this.postService.createPost(article).subscribe(
             (data: Article) => {
               this.articlereturn = data;
-              this.openDialogMessageConfirm('Bạn đã đăng bài thành công');
+              this.openDialogMessageConfirm('Bạn đã đăng bài thành công', 'success');
             },
             this.errorHandler.handleError
           );
@@ -188,9 +192,9 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   // dialog crop image
-  openDialogMessageConfirm(message: string) {
+  openDialogMessageConfirm(message: string, messageType: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
+      width: '500px',
       height: 'auto',
       position: {
         top: '20px'
@@ -199,9 +203,14 @@ export class CreatePostPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
+    instance.message.messageType = messageType;
     instance.message.url = '/bai-viet/' + this.articlereturn.id;
   }
   createPost() {
+    if (this.title === '' || this.content === '') {
+      this.alertify.error('Bạn cần nhập thông tin bài viết');
+      return;
+    }
     if (this.isUpdate) {
       this.openDialog(
         this.articlereturn.topics,

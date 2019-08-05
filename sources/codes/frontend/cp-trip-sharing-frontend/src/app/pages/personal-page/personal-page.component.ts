@@ -176,15 +176,15 @@ export class PersonalPageComponent implements OnInit {
     const token = localStorage.getItem('Token');
     if (token != null) {
       this.userService.addBlock(userId, token).subscribe((result: any) => {
-        this.openDialogMessageConfirm();
+        this.openDialogMessageConfirm('success');
       });
     }
   }
 
-  openDialogMessageConfirm() {
+  openDialogMessageConfirm(messageType: string) {
     const user = JSON.parse(localStorage.getItem('User'));
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
+      width: '500px',
       height: 'auto',
       position: {
         top: '20px'
@@ -192,6 +192,7 @@ export class PersonalPageComponent implements OnInit {
       disableClose: true
     });
     const instance = dialogRef.componentInstance;
+    instance.message.messageType = messageType;
     instance.message.messageText = 'Chặn người dùng thành công!';
     instance.message.url = '/user/' + user.id + '/danh-sach-chan';
   }

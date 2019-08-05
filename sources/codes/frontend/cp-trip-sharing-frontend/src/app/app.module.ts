@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { OnlyForHomePageComponent } from './pages/home-page/components/only-for-home-page/only-for-home-page.component';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { GoogleMapComponent } from './shared/components/google-map/google-map.component';
@@ -19,7 +18,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { ChangepasswordPageComponent } from './pages/changepassword-page/changepassword-page.component';
 import { DetailpostPageComponent } from './pages/detailpost-page/detailpost-page.component';
 import { SingleCommentComponent } from './shared/components/single-comment/single-comment.component';
 import { MessagePopupComponent } from './shared/components/message-popup/message-popup.component';
@@ -51,13 +49,11 @@ import { ListUserBlockedComponent } from './shared/components/list-user-blocked/
     AppComponent,
     HomePageComponent,
     OnlyForHomePageComponent,
-    LoginPageComponent,
     GoogleMapComponent,
     RegisterPageComponent,
     PersonalPageComponent,
     ForgotpasswordPageComponent,
     CreatePostPageComponent,
-    ChangepasswordPageComponent,
     DetailpostPageComponent,
     EmailConfirmPageComponent,
     ResetPasswordPageComponent,
@@ -106,7 +102,7 @@ import { ListUserBlockedComponent } from './shared/components/list-user-blocked/
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPageComponent, MessagePopupComponent, DialogCreateTripComponent,
+  entryComponents: [ MessagePopupComponent, DialogCreateTripComponent,
                     ListFollowComponent, ReportPopupComponent, InitialUserInformationPageComponent, ListUserBlockedComponent]
 
 })

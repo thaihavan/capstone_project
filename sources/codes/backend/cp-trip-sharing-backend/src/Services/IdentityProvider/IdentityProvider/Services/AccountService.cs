@@ -90,7 +90,7 @@ namespace IdentityProvider.Services
                 {
                     Subject = "Thanks for joining TripSharing",
                     To = result.Email,
-                    Url = $"http://localhost:4200/xac-nhan-email/{result.Token}",
+                    Url = $"http://trip-sharing.net/xac-nhan-email/{result.Token}",
                     EmailType = "EmailConfirm"
                 };
 

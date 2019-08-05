@@ -19,5 +19,7 @@ namespace UserServices.Services.Interfaces
         object GetUserStatistics(StatisticsFilter filter);
         
         void IncreaseContributionPoint(string userId, int point);
+
+        bool CheckUsername(string username);
     }
 }

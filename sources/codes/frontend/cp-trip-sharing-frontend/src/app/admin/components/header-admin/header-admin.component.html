@@ -2,14 +2,13 @@
   <div class="logo">
     <img src="../../../../assets/trip share logo-01.png">
   </div>
-  <div class="avatar-container">
+  <div *ngIf="account !== null && account.role === 'admin'" class="avatar-container">
     <span class="name-user">Hi, {{name}}</span>
-    <button class="m-r-5 mat-icon-button">
+    <button  class="m-r-5 mat-icon-button">
       <img class="img-circle" src="{{urlImgavatar}}">
     </button>
   </div>
-
-  <div class="user-menu">
+  <div *ngIf="account !== null && account.role === 'admin'" class="user-menu">
     <button aria-haspopup="true" class="m-r-5 mat-icon-button" mat-icon-button="" [matMenuTriggerFor]="menuProfile">
       <mat-icon class="menu-icon">menu</mat-icon>
     </button>

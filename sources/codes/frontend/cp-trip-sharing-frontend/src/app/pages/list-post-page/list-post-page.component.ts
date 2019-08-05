@@ -7,6 +7,7 @@ import { VirtualTripService } from 'src/app/core/services/post-service/virtual-t
 import { HttpErrorResponse } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 
 @Component({
   selector: 'app-list-post-page',
@@ -18,6 +19,7 @@ export class ListPostPageComponent implements OnInit {
               private route: ActivatedRoute,
               private postService: PostService,
               private virtualTripService: VirtualTripService,
+              private companionPostService: FindingCompanionService,
               private errorHandler: GlobalErrorHandler) {
     this.homeNav = this.route.snapshot.paramMap.get('home-nav');
     this.setTitle();
@@ -111,12 +113,11 @@ export class ListPostPageComponent implements OnInit {
       case 'moi-nhat':
         this.getNewestArticles(postFilter);
         break;
-      case 'bai-viet':
-        break;
       case 'chuyen-di':
         this.getVirtualTrips(postFilter);
         break;
       case 'tim-ban-dong-hanh':
+        this.getCompanionPosts(postFilter);
         break;
     }
   }
@@ -172,6 +173,20 @@ export class ListPostPageComponent implements OnInit {
     }
 
     this.virtualTripService.getVirtualTrips(postFilter, this.page).subscribe(data => {
+      this.posts.push(...data);
+    }, this.errorHandler.handleError);
+  }
+
+  getCompanionPosts(postFilter: PostFilter): void {
+    if (!postFilter) {
+      postFilter = new PostFilter();
+      postFilter.topics = [];
+      postFilter.timePeriod = 'all_time';
+
+      this.isLoading = true;
+    }
+
+    this.companionPostService.getCompanionPosts(postFilter, this.page).subscribe(data => {
       this.posts.push(...data);
     }, this.errorHandler.handleError);
   }

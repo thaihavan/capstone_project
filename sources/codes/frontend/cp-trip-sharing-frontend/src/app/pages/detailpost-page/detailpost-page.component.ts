@@ -239,7 +239,7 @@ export class DetailpostPageComponent implements OnInit {
     const token = localStorage.getItem('Token');
     if (token != null) {
       this.userService.addBlock(userId, token).subscribe((result: any) => {
-        this.openDialogMessageConfirm('Bạn đã chặn người dùng thành công!', '/danh-sach-chan');
+        this.openDialogMessageConfirm('Bạn đã chặn người dùng thành công!', '', 'success');
       });
     }
   }
@@ -254,13 +254,13 @@ export class DetailpostPageComponent implements OnInit {
 
   removePost() {
     this.postService.removeArticle(this.postId).subscribe((data: any) => {
-      this.openDialogMessageConfirm('Bạn đã xóa bài viết thành công!', '');
+      this.openDialogMessageConfirm('Bạn đã xóa bài viết thành công!', '', 'success');
     }, this.errorHandler.handleError);
   }
 
-  openDialogMessageConfirm(message: string, url: string) {
+  openDialogMessageConfirm(message: string, url: string, messageType: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '320px',
+      width: '500px',
       height: 'auto',
       position: {
         top: '20px'
@@ -269,6 +269,7 @@ export class DetailpostPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
+    instance.message.messageType = messageType;
     instance.message.url = '/user/' + this.user.id + url;
   }
 

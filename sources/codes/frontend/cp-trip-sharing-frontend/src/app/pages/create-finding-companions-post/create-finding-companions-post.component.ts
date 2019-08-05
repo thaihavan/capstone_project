@@ -31,6 +31,7 @@ import { MessagePopupComponent } from 'src/app/shared/components/message-popup/m
 import { ChatService } from 'src/app/core/services/chat-service/chat.service';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-create-finding-companions-post',
   templateUrl: './create-finding-companions-post.component.html',
@@ -183,7 +184,11 @@ export class CreateFindingCompanionsPostComponent
   }
 
   // create step
-  createStep(schedule: Schedule) {
+  createStep(schedule: Schedule, update: boolean) {
+    if (this.fromDate === undefined || this.toDate === undefined) {
+      this.alertifyService.error('Yêu cầu nhập ngày đi!');
+      return;
+    }
     if (schedule === undefined || schedule === null) {
       schedule = new Schedule();
     }
@@ -193,16 +198,23 @@ export class CreateFindingCompanionsPostComponent
         scheduleTitle: schedule.title,
         scheduleDate: schedule.day,
         scheduleNote: schedule.content,
-        isUpdate: this.isUpdate
+        isUpdate: update,
+        minDate: this.fromDate,
+        maxDate: this.toDate
       }
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res !== undefined) {
-        schedule = new Schedule();
-        schedule.title = res.scheduleTitle;
-        schedule.day = res.scheduleDate;
-        schedule.content = res.scheduleNote;
-        this.listSchedules.push(schedule);
+       const updateSchedule = new Schedule();
+       updateSchedule.title = res.scheduleTitle;
+       updateSchedule.day = res.scheduleDate;
+       updateSchedule.content = res.scheduleNote;
+       if (update) {
+         const index =  this.listSchedules.findIndex(s => schedule.title === s.title);
+         this.listSchedules[index] = updateSchedule;
+        } else {
+          this.listSchedules.push(updateSchedule);
+        }
       }
     });
   }
@@ -215,7 +227,7 @@ export class CreateFindingCompanionsPostComponent
 
   // update schedule item
   updateStepper(event) {
-    this.createStep(event);
+    this.createStep(event, true);
   }
 
   // delete schedule item
@@ -285,9 +297,11 @@ export class CreateFindingCompanionsPostComponent
     this.companionPost.destinations = this.destinations;
     this.companionService.createPost(this.companionPost).subscribe(
         res => {
-          this.openDialogMessageConfirm('Bàn đăng đã được tạo!', res.id);
+          this.openDialogMessageConfirm('Bàn đăng đã được tạo!', res.id, 'success' );
         },
-        this.errorHandler.handleError
+        (err: HttpErrorResponse) => {
+          this.openDialogMessageConfirm(err.message, null, 'danger');
+        }
       );
   }
 
@@ -310,17 +324,18 @@ export class CreateFindingCompanionsPostComponent
     });
   }
   // open dialog confirm
-  openDialogMessageConfirm(message: string, data) {
+  openDialogMessageConfirm(message: string, data, messageType: string) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
-      width: '400px',
-      height: '200px',
+      width: '500px',
+      height: 'auto',
       position: {
-        top: '10px'
+        top: '20px'
       },
       disableClose: true
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
+    instance.message.messageType = messageType;
     instance.message.url = '/tim-ban-dong-hanh/' + data;
   }
 

@@ -17,7 +17,7 @@
               <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1'
                 resizeToWidth="600" #uploadImage></app-upload-image>
             </div>
-            <figure class="profile">
+            <figure (click)="gotoPersionalPage(this.author.id)" class="profile">
               <img src="{{author ? author.profileImage : ''}}" class="profile-avatar" alt="">
             </figure>
             <figure *ngIf="userRole === 'author'" class="profile-right">
@@ -47,7 +47,7 @@
           <mat-card-content>
             <div class="parent-content mt-5">
               <h4>{{title == '' ? 'Tên chuyến đi' : title}}</h4>
-              <p><span class="sub-title">Bởi </span><a href="#"><span class="author-name">{{author? author.displayName : ''}}</span></a></p>
+              <p><span class="sub-title">Bởi </span><a (click)="gotoPersionalPage(this.author.id)"><span class="author-name">{{author? author.displayName : ''}}</span></a></p>
               <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
               <a mat-button *ngIf="!note"  (click)="editAble()">+ Thêm mô tả chuyến đi</a>
               <p><span class="sub-title">0 mục cập nhập vào tháng 6 năm 2019</span></p>

@@ -8,6 +8,8 @@ import { PopupMessage } from 'src/app/model/PopupMessage';
 })
 export class MessagePopupComponent implements OnInit {
   message = new PopupMessage();
+  @Input()
+  typePopup = 'success';
   constructor() {}
 
   ngOnInit() {
@@ -16,4 +18,5 @@ export class MessagePopupComponent implements OnInit {
   gotoHomePage() {
     window.location.href = this.message.url;
   }
+
 }

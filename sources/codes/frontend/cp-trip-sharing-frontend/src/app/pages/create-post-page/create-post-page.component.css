@@ -89,9 +89,20 @@ input[type="file"] {
   bottom: 20px;
   width: 80%;
   margin-left: 10%;
+  padding: 5px;
+  background: white;
 }
-.title-input input {
+/* .title-input input {
   height: 55px !important;
+} */
+::ng-deep .title-input .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  opacity: 0.8 !important;
+}
+.title-input ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0px;
+}
+.title-input .mat-form-field {
+  display: block;
 }
 .create-post-body {
   width: 80%;

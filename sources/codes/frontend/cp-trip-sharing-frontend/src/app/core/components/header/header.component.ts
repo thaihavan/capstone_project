@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { LoginPageComponent } from 'src/app/pages/login-page/login-page.component';
 import { NotifyService } from '../../services/notify-service/notify.service';
 import { Notification } from 'src/app/model/Notification';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,6 +10,8 @@ import { UserService } from '../../services/user-service/user.service';
 import { User } from 'src/app/model/User';
 import { Account } from 'src/app/model/Account';
 import { GlobalErrorHandler } from '../../globals/GlobalErrorHandler';
+import { ChangePasswordComponent } from 'src/app/shared/components/change-password/change-password.component';
+import { LoginPageComponent } from 'src/app/shared/components/login-page/login-page.component';
 
 @Component({
   selector: 'app-header',
@@ -58,7 +59,7 @@ export class HeaderComponent implements OnInit {
 
         this.initSocketConnection();
       } else if (this.account.role === 'admin') {
-        window.location.href = '/dashboard';
+        window.location.href = '/admin/dashboard';
       }
     } else {
       this.checkLogin = true;
@@ -208,4 +209,12 @@ export class HeaderComponent implements OnInit {
       localStorage.setItem('listPostIdBookmark', JSON.stringify(result));
     }, this.errorHandler.handleError);
   }
+
+  // dialog change password
+  openDialogChangePassword() {
+      const dialogRef = this.dialog.open(ChangePasswordComponent, {
+        height: 'auto',
+        width: '400px'
+      });
+    }
 }

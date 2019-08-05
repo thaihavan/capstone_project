@@ -17,7 +17,6 @@ export class UploadAdapter {
                      this.ImagePost.type = file.type;
                      this.uploadImageService.uploadImage(this.ImagePost).subscribe(
                       url => {
-                        console.log('my url', url.image);
                         resolve({ default: url.image});
                        }
                      );

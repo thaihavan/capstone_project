@@ -43,8 +43,8 @@ namespace PostService.Controllers
             {
                 try
                 {
-                    //httpClient.BaseAddress = new Uri("https://localhost:44360/");
-                    httpClient.BaseAddress = new Uri("http://34.87.20.32:5000");
+                    httpClient.BaseAddress = new Uri("https://localhost:44360/");
+                    //httpClient.BaseAddress = new Uri("http://34.87.20.32:5000");
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Split(' ')[1]);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     var conversation = new
@@ -74,7 +74,7 @@ namespace PostService.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest();
+                    return BadRequest(ex.ToString());
                 }
             }
         }
@@ -182,7 +182,7 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpDelete("post/request/cancel")]
-        public IActionResult CancelRequest([FromBody]string postId)
+        public IActionResult CancelRequest([FromQuery]string postId)
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = identity.FindFirst("user_id").Value;
