@@ -19,10 +19,18 @@ namespace PostService.Models
         [BsonElement("report_type")]
         public string ReportType { get; set; }
 
-        [BsonElement("content")]
-        public string Content { get; set; }
+        [BsonElement("object_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string ObjectId { get; set; }
 
-        [BsonElement(re)]
+        [BsonElement("object_type")]
+        public string ObjectType { get; set; }
 
+        [BsonElement("reporter_id")]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string ReporterId { get; set; }
+
+        [BsonElement("date")]
+        public DateTime Date { get; set; }
     }
 }
