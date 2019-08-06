@@ -231,6 +231,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   // get image when crop image done
   ImageCropted(image) {
     this.urlCoverImage = image;
+    if (this.isViewDetailTrip) {
+      this.virtualTrip.post.coverImage = this.urlCoverImage;
+      this.sendUpdateRequest();
+    }
   }
 
   // update virtual trip to server

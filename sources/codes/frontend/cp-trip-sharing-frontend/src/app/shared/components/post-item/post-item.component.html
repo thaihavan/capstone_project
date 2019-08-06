@@ -1,0 +1,19 @@
+<div class='post-item'>
+  <div class="image-cover">
+    <img (click)="goToPostDetail()" src="{{post.coverImage}}" />
+  </div>
+  <div class="content">
+    <div class="title"><a (click)="goToPostDetail()">{{post.title}}</a></div>
+    <div class="category-post">
+      <span>
+        <i class="fa fa-circle icon-circle"></i>
+        Thể loại:
+        <b>{{post.postType}}</b>
+      </span>
+    </div>
+    <div class="author">
+      Được đăng bởi
+      <a href="" (click)="gotoPersonalPage(post.author.id)" class="author-name">PhongNV</a>
+    </div>
+  </div>
+</div>

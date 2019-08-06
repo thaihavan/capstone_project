@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { HostGlobal } from 'src/app/core/global-variables';
 
 @Component({
   selector: 'app-user-page-admin',
@@ -26,6 +27,7 @@ export class UserPageAdminComponent implements OnInit {
   }
 
   searchByText() {
+    this.users = [];
     this.getUsers(this.search);
   }
 
@@ -37,6 +39,14 @@ export class UserPageAdminComponent implements OnInit {
     this.userService.getUsers(search).subscribe((res: []) => {
       this.users.push(...res);
     }, this.errorHandler.handleError);
+  }
+
+  goToUserPage(user: User) {
+    window.open(`${HostGlobal.HOST_FRONTEND}/user/${user.id}`, '_blank');
+  }
+
+  banUser(user: User) {
+
   }
 
 }

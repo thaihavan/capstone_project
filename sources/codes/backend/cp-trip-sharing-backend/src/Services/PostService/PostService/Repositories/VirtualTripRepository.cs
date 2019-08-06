@@ -162,7 +162,7 @@ namespace PostService.Repositories
 
             var result = _virtualTrips.AsQueryable()
                 .Join(
-                    _posts.AsQueryable(),
+                    _posts.AsQueryable().Where(p => p.IsActive),
                     virtualTrip => virtualTrip.PostId,
                     post => post.Id,
                     SelectVirtualTripWithPost)
@@ -232,7 +232,7 @@ namespace PostService.Repositories
 
             var result = _virtualTrips.AsQueryable()
                 .Join(
-                    _posts.AsQueryable(),
+                    _posts.AsQueryable().Where(p => p.IsActive),
                     virtualTrip => virtualTrip.PostId,
                     post => post.Id,
                     SelectVirtualTripWithPost)
@@ -266,7 +266,7 @@ namespace PostService.Repositories
 
             var virtualTrips = _virtualTrips.AsQueryable()
                 .Join(
-                    _posts.AsQueryable(),
+                    _posts.AsQueryable().Where(p => p.IsActive),
                     virtualTrip => virtualTrip.PostId,
                     post => post.Id,
                     SelectVirtualTripWithPost)

@@ -91,12 +91,13 @@ namespace PostService.Controllers
 
             article.Post.AuthorId = userId;
             article.Id = ObjectId.GenerateNewId().ToString();
-            article.PostId = ObjectId.GenerateNewId().ToString();
-            article.Post.Id = article.PostId;
+            article.PostId = article.Id;
+            article.Post.Id = article.Id;
             article.Post.LikeCount = 0;
             article.Post.CommentCount = 0;
             article.Post.PubDate = DateTime.Now;
             article.Post.IsActive = true;
+            article.Post.PostType = "Article";
 
             Post addedPost = _postService.Add(article.Post);
             Article addedArticle = _articleService.Add(article);

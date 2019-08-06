@@ -13,7 +13,7 @@ export class Post {
     isPublic: boolean;
     isActive: boolean;
     pubDate: string;
-    postType: null;
+    postType: string;
     author: Author;
     time: string;
     likes: number;

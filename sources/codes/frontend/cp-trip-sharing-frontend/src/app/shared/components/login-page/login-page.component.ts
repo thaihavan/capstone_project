@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { UserService } from 'src/app/core/services/user-service/user.service';
@@ -13,6 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
+
+  @Input() allowRegister = true;
 
   email = '';
   password = '';
@@ -108,24 +110,30 @@ export class LoginPageComponent implements OnInit {
     }
   }
 
-  handleGetUserSuccessful(user: any) {
+  handleGetUserSuccessful(account: any, user: any) {
     if (user == null) {
+      localStorage.setItem('Account', JSON.stringify(account));
+      localStorage.setItem('Token', account.token);
       window.location.href = '/khoi-tao';
     } else {
-      localStorage.setItem('User', JSON.stringify(user));
-      window.location.href = '/';
+      if (account.role === 'admin') {
+        sessionStorage.setItem('Account', JSON.stringify(account));
+        sessionStorage.setItem('User', JSON.stringify(user));
+        sessionStorage.setItem('Token', account.token);
+        window.location.href = '/admin/dashboard';
+      } else {
+        localStorage.setItem('Account', JSON.stringify(account));
+        localStorage.setItem('Token', account.token);
+        localStorage.setItem('User', JSON.stringify(user));
+        window.location.href = '/';
+      }
     }
   }
 
   handleGetAccountSuccessful(account: any) {
-    localStorage.setItem('Account', JSON.stringify(account));
-    localStorage.setItem('Token', account.token);
-        // Call http request to userservice để lấy thông tin user
+    // Call http request to userservice để lấy thông tin user
     this.userService.getUserById(account.userId).subscribe((user: any) => {
-      if (account.role === 'admin') {
-        window.location.href = '/admin/dashboard';
-      }
-      this.handleGetUserSuccessful(user);
+      this.handleGetUserSuccessful(account, user);
     });
   }
 

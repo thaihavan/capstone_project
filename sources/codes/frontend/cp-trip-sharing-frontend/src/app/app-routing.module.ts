@@ -63,7 +63,7 @@ const routes: Routes = [
         ]
       },
       { path: 'dang-ky', component: RegisterPageComponent },
-      { path: 'chuyen-di', component: VirtualTripsPageComponent },
+      { path: 'tao-chuyen-di', component: VirtualTripsPageComponent },
       { path: 'chuyen-di/:tripId', component: VirtualTripsPageComponent },
       { path: 'quen-mat-khau', component: ForgotpasswordPageComponent },
       { path: 'tao-bai-viet', component: CreatePostPageComponent },

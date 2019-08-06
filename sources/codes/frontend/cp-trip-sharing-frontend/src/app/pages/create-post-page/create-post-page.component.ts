@@ -17,6 +17,7 @@ import { UploadImageService } from 'src/app/core/services/upload-image-service/u
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-create-post-page',
@@ -75,7 +76,8 @@ export class CreatePostPageComponent implements OnInit {
     private imageService: UploadImageService,
     private route: ActivatedRoute,
     private titleService: Title,
-    private errorHandler: GlobalErrorHandler
+    private errorHandler: GlobalErrorHandler,
+    private alertify: AlertifyService
   ) {
     this.titleService.setTitle('Tạo bài viết');
   }
@@ -205,6 +207,10 @@ export class CreatePostPageComponent implements OnInit {
     instance.message.url = '/bai-viet/' + this.articlereturn.id;
   }
   createPost() {
+    if (this.title === '' || this.content === '') {
+      this.alertify.error('Bạn cần nhập thông tin bài viết');
+      return;
+    }
     if (this.isUpdate) {
       this.openDialog(
         this.articlereturn.topics,

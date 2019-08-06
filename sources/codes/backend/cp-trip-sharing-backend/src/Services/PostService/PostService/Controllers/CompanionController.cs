@@ -43,8 +43,8 @@ namespace PostService.Controllers
             {
                 try
                 {
-                    //httpClient.BaseAddress = new Uri("https://localhost:44360/");
-                    httpClient.BaseAddress = new Uri("http://34.87.20.32:5000");
+                    httpClient.BaseAddress = new Uri("https://localhost:44360/");
+                    //httpClient.BaseAddress = new Uri("http://34.87.20.32:5000");
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Split(' ')[1]);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     var conversation = new
@@ -58,15 +58,17 @@ namespace PostService.Controllers
                         );
                     var conversationId = await response.Content.ReadAsStringAsync();
                     conversationId = conversationId.Replace("\"", "");
-
-                    //generate new postid and new conversationid 
-                    var postId = ObjectId.GenerateNewId().ToString();
-
+                    
+                    param.Id = ObjectId.GenerateNewId().ToString();
                     param.Post.AuthorId = userId;
-                    param.Post.Id = postId;
-                    param.PostId = postId;
+                    param.Post.Id = param.Id;
+                    param.PostId = param.Id;
                     param.Post.PubDate = DateTime.Now;
                     param.ConversationId = conversationId;
+                    param.Post.IsActive = true;
+                    param.Post.PostType = "CompanionPost";
+                    param.Post.LikeCount = 0;
+                    param.Post.CommentCount = 0;
 
                     _postService.Add(param.Post);
                     var result = _companionPostService.Add(param);

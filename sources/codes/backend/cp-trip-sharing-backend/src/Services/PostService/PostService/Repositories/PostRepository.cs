@@ -61,7 +61,10 @@ namespace PostService.Repositories
 
         public IEnumerable<Post> GetAll()
         {
-            return _posts.Find(p => true).ToList();
+            var result = _posts.Find(p => p.IsActive)
+                .SortByDescending(p => p.PubDate)
+                .ToList();
+            return result;
         }
 
         public Post GetById(string id)
