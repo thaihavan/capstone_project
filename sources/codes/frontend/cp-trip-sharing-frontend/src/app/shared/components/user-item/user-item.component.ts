@@ -21,7 +21,6 @@ export class UserItemComponent implements OnInit {
   isYou = false;
   gender: string;
   showAddress = true;
-  imgAvatar = '';
   isFollowed = false;
   listUserIdFollowing: string[] = [];
   constructor(private userService: UserService,
@@ -39,7 +38,6 @@ export class UserItemComponent implements OnInit {
           this.isFollowed = this.listUserIdFollowing.indexOf(this.user.id) !== -1;
         }
       }
-      this.imgAvatar = this.user.avatar;
     }
   }
 

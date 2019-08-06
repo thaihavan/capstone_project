@@ -45,4 +45,13 @@ div {
 /* list users */
 .user-item {
     border-bottom: solid 1px #ccc;
+    position: relative;
+}
+
+.user-item .option-icon {
+    position: absolute;
+    right: 10px;
+    top: 45px;
+    color: #666;
+    cursor: pointer;
 }

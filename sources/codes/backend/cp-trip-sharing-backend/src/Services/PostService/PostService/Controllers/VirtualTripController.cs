@@ -61,11 +61,13 @@ namespace PostService.Controllers
 
             virtualTrip.Post.AuthorId = userId;
             virtualTrip.Id = ObjectId.GenerateNewId().ToString();
-            virtualTrip.PostId = ObjectId.GenerateNewId().ToString();
+            virtualTrip.PostId = virtualTrip.Id;
             virtualTrip.Post.Id = virtualTrip.PostId;
             virtualTrip.Post.LikeCount = 0;
             virtualTrip.Post.CommentCount = 0;
             virtualTrip.Post.PubDate = DateTime.Now;
+            virtualTrip.Post.IsActive = true;
+            virtualTrip.Post.PostType = "VirtualTrip";
 
             Post addedPost = _postService.Add(virtualTrip.Post);
             VirtualTrip addedVirtualTrip = _virtualTripService.Add(virtualTrip);

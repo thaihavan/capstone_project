@@ -3,9 +3,9 @@
     <img src="../../../../assets/trip share logo-01.png">
   </div>
   <div *ngIf="account !== null && account.role === 'admin'" class="avatar-container">
-    <span class="name-user">Hi, {{name}}</span>
-    <button  class="m-r-5 mat-icon-button">
-      <img class="img-circle" src="{{urlImgavatar}}">
+    <span class="name-user">Hi, {{user.displayName}}</span>
+    <button class="m-r-5 mat-icon-button">
+      <img class="img-circle" src="{{user.avatar}}">
     </button>
   </div>
   <div *ngIf="account !== null && account.role === 'admin'" class="user-menu">
@@ -13,18 +13,14 @@
       <mat-icon class="menu-icon">menu</mat-icon>
     </button>
     <mat-menu #menuProfile="matMenu">
-        <button class="options" (click)="gotoPersonalPage()" mat-menu-item>
-          <mat-icon>person_outline</mat-icon>
-          Trang cá nhân
-        </button>
-        <button routerLink="/doi-mat-khau" mat-menu-item>
-          <mat-icon>cached</mat-icon>
-          Đổi mật khẩu
-        </button>
-        <button (click)="signOut()" mat-menu-item>
-          <mat-icon>exit_to_app</mat-icon>
-          Đăng xuất
-        </button>
-      </mat-menu>
+      <button routerLink="/doi-mat-khau" mat-menu-item>
+        <mat-icon>cached</mat-icon>
+        Đổi mật khẩu
+      </button>
+      <button (click)="signOut()" mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        Đăng xuất
+      </button>
+    </mat-menu>
   </div>
 </nav>

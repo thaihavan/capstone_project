@@ -7,6 +7,7 @@ import { Comment } from 'src/app/model/Comment';
 import { Like } from 'src/app/model/Like';
 import { PostFilter } from 'src/app/model/PostFilter';
 import { Topic } from 'src/app/model/Topic';
+import { Post } from 'src/app/model/Post';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,16 @@ export class PostService {
   constructor(private http: HttpClient) {
     this.baseUrl = HostGlobal.HOST_POST_SERVICE + '/api/postservice/article/';
   }
+
+  getAllPosts(): Observable<Post[]> {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this.http.get<Post[]>(`${HostGlobal.HOST_POST_SERVICE}/api/postservice/post/all`, httpOption);
+  }
+
   createPost(article: Article): Observable<Article> {
     const httpOptionAuth = {
       headers: new HttpHeaders({
@@ -95,7 +106,6 @@ export class PostService {
     const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/add';
     return this.http.post<Comment>(url, comment, httpOptionAuth);
   }
-
 
   getAllTopics(): Observable<any> {
     return this.http.get(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/all');

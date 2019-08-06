@@ -17,7 +17,7 @@ export class DashboardPageComponent implements OnInit {
 
 
   constructor(private router: Router) {
-    this.account = JSON.parse(localStorage.getItem('Account'));
+    this.account = JSON.parse(sessionStorage.getItem('Account'));
 
     if (this.account == null || this.account.role !== 'admin') {
       window.location.href = '/admin/login';
@@ -64,10 +64,10 @@ export class DashboardPageComponent implements OnInit {
 
   getTabFromUrl() {
     const urlSplit = window.location.href.split('/');
-    if (urlSplit.length < 5) {
+    if (urlSplit.length < 6) {
       return '';
     }
-    return urlSplit[4];
+    return urlSplit[5];
   }
 
   gotoOverview() {
