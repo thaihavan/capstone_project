@@ -7,9 +7,9 @@
 }
 .search-address{
     position: absolute;
-    width: 50vw;
-    top:45%;
-    left: 25vw;
+    top: 38%;
+    left: 52vw;
+    transform: translate(-50%);
 }
 .cover-image {
     max-height: 315px;

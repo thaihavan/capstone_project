@@ -65,10 +65,10 @@
   color: #ffff;
 }
 .modal-bg-success {
-  background-color: #00c851;
+  background-color: #2196f3;
 }
 .color-success {
-  color: #28a745 !important;
+  color: #2196f3 !important;
 }
 .modal-bg-warn {
   background-color: #fb3;
@@ -112,17 +112,17 @@
   outline: 0;
 }
 .btn-outline-success button {
-  border: 2px solid #00c851 !important;
+  border: 2px solid #2196f3 !important;
   background-color: transparent !important;
-  color: #00c851 !important;
+  color: #2196f3 !important;
 }
 .btn-outline-success:hover {
   background-color: #fff !important;
 }
 .btn-success button {
   color: #fff;
-  background-color: #28a745;
-  border: 2px solid #28a745;
+  background-color: #2196f3;
+  border: 2px solid #2196f3;
 }
 .btn-outline-danger button {
   border: 2px solid #ff3547 !important;

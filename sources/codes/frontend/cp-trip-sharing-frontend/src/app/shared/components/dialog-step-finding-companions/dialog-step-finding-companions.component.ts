@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 // tslint:disable-next-line:max-line-length
 import { CreateFindingCompanionsPostComponent } from 'src/app/pages/create-finding-companions-post/create-finding-companions-post.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-dialog-step-finding-companions',
@@ -9,12 +10,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./dialog-step-finding-companions.component.css']
 })
 export class DialogStepFindingCompanionsComponent implements OnInit {
-  scheduleTitle: string;
-  scheduleNote: string;
+  scheduleTitle = '';
+  scheduleNote = '';
   scheduleDate: Date;
   constructor(
     private dialogRef: MatDialogRef<CreateFindingCompanionsPostComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private alertify: AlertifyService
   ) {}
 
   ngOnInit() {
@@ -31,6 +33,10 @@ export class DialogStepFindingCompanionsComponent implements OnInit {
 
   // create step
   onCreate() {
+    if (this.scheduleTitle === '' || this.scheduleNote === '' || this.scheduleDate === null) {
+      this.alertify.error('Yêu cầu nhập đầy đủ thông tin');
+      return;
+    }
     this.data.scheduleTitle = this.scheduleTitle;
     this.data.scheduleNote = this.scheduleNote;
     this.data.scheduleDate = this.scheduleDate;

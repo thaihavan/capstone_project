@@ -46,6 +46,11 @@ namespace UserServices.Services
             return result;
         }
 
+        public bool BanAnUser(string userId)
+        {
+            return _userRepository.BanAnUser(userId);
+        }
+
         public bool CheckUsername(string username)
         {
             return this._userRepository.CheckUsername(username);
