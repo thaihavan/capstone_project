@@ -53,5 +53,18 @@ namespace PostService.Controllers
             var result = _postService.GetAllPostStatistics(filter);
             return Ok(result);
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost("post/reported")]
+        public IActionResult GetReportedPosts([FromBody] StatisticsFilter filter)
+        {
+            if (filter == null)
+            {
+                filter.From = new DateTime(0);
+                filter.To = DateTime.Now;
+            }
+            var result = _postService.GetAllPostStatistics(filter);
+            return Ok(result);
+        }
     }
 }

@@ -19,9 +19,11 @@ namespace UserServices.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService = null;
+        private readonly IReportService _reportService = null;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IReportService reportService)
         {
+            _reportService = reportService;
             _userService = userService;
         }
 
@@ -98,6 +100,42 @@ namespace UserServices.Controllers
         {
             var result = _userService.GetUserStatistics(filter);
             return Ok(result);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut("ban")]
+        public IActionResult BanAnUser([FromQuery] string userId)
+        {
+            var result = _userService.BanAnUser(userId);
+            return Ok();
+        }
+
+        [Authorize(Roles ="member")]
+        [HttpPost("report")]
+        public IActionResult ReportAnUser([FromBody] Report param)
+        {
+            return Ok(_reportService.Add(param));
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpDelete("report")]
+        public IActionResult DeleteAReport([FromQuery] string id)
+        {
+            return Ok(_reportService.DeleteReport(id));
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet("reports")]
+        public IActionResult GetAllReport([FromQuery] int page)
+        {
+            return Ok(_reportService.GetAll(page));
+        }
+
+        [Authorize(Roles = "member")]
+        [HttpGet("report/type")]
+        public IActionResult GetAllReportType()
+        {
+            return Ok(_reportService.GetAllReportType());
         }
     }
 }
