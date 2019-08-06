@@ -136,7 +136,10 @@ export class HomePageComponent implements OnInit {
   }
 
   filterBlocker(posts: any[]) {
-    const listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+    let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+    if (listBlockers == null) {
+      listBlockers = [];
+    }
     posts = posts.filter(p => listBlockers.find(u => u.id === p.post.author.id) == null);
     return posts;
   }

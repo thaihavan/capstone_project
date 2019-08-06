@@ -190,13 +190,19 @@ export class SearchResultContainerComponent implements OnInit {
   }
 
   filterPostBlocker(posts: any[]) {
-    const listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+    let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+    if (listBlockers == null) {
+      listBlockers = [];
+    }
     posts = posts.filter(p => listBlockers.find(b => b.id === p.post.author.id) == null);
     return posts;
   }
 
   filterUserBlocker(users: any[]) {
-    const listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+    let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+    if (listBlockers == null) {
+      listBlockers = [];
+    }
     users = users.filter(u => listBlockers.find(b => b.id === u.id) == null);
     return users;
   }
