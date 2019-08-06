@@ -35,6 +35,11 @@ namespace UserServices.Services
             return _blockRepository.GetBlockedUsers(blockerId);
         }
 
+        public IEnumerable<User> GetBlockers(string userId)
+        {
+            return _blockRepository.GetBlockers(userId);
+        }
+
         public Block UnBlock(Block block)
         {
             return _blockRepository.Delete(block);

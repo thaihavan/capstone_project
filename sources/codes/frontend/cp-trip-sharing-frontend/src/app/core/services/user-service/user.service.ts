@@ -110,6 +110,16 @@ export class UserService {
     return this.http.get<any>(this.apiUserService + 'block/blocked', httpAuthen);
   }
 
+  getBlockers(): Observable<User[]> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.get<User[]>(this.apiUserService + 'block/blocker', httpAuthen);
+  }
+
   getListPostIdBookmarks(token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
@@ -205,10 +215,10 @@ export class UserService {
   }
 
   getUserById(userId: string): Observable<any> {
-    return this.http.get<any>(this.apiUserService + 'user?userId=' + userId, httpOptionAuthen);
+    return this.http.get<any>(this.apiUserService + 'user?userId=' + userId, httpOption);
   }
 
-  getUsers(search: string): Observable<any> {
-    return this.http.get<any>(this.apiUserService + 'user/all?search=' + search, httpOption);
+  getUsers(search: string, page: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUserService}user/all?page=${page}&search=${search}`, httpOption);
   }
 }

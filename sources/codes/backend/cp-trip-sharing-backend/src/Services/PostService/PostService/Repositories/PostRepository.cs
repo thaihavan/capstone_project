@@ -8,6 +8,7 @@ using PostService.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PostService.Repositories
@@ -70,6 +71,27 @@ namespace PostService.Repositories
         public Post GetById(string id)
         {
             return _posts.Find(p => p.Id == id).FirstOrDefault();
+        }
+
+        public IEnumerable<Post> GetPosts(string search, int page)
+        {
+            if (search == null)
+            {
+                search = "";
+            }
+
+            Expression<Func<Post, bool>> searchFilter;
+            searchFilter = p => p.Title != null && p.Title.IndexOf(search.Trim(), StringComparison.OrdinalIgnoreCase) >= 0;
+
+            var result = _posts.AsQueryable()
+                .Where(p => p.IsActive)
+                .Where(searchFilter.Compile())
+                .Select(p => p)
+                .OrderByDescending(p => p.PubDate)
+                .Skip(12 * (page - 1))
+                .Take(12)
+                .ToList();
+            return result;
         }
 
         public bool IncreaseCommentCount(string id)

@@ -66,9 +66,13 @@ namespace UserServices.Controllers
 
         [AllowAnonymous]
         [HttpGet("all")]
-        public IActionResult GetAll([FromQuery] string search)
+        public IActionResult GetAll([FromQuery] string search, [FromQuery] int page)
         {
-            var result = _userService.GetUsers(search);
+            if (page < 1)
+            {
+                page = 1;
+            }
+            var result = _userService.GetUsers(search, page);
             return Ok(result);
         }
 
@@ -81,7 +85,7 @@ namespace UserServices.Controllers
         }
 
         [Authorize(Roles = "member")]
-        [HttpGet]
+        [HttpGet("check-username")]
         public IActionResult CheckUsername([FromQuery] string username)
         {
             var result = _userService.CheckUsername(username.Trim());

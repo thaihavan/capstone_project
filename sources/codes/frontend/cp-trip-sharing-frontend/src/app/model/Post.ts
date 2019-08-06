@@ -14,6 +14,7 @@ export class Post {
     isActive: boolean;
     pubDate: string;
     postType: string;
+    authorId: string;
     author: Author;
     time: string;
     likes: number;

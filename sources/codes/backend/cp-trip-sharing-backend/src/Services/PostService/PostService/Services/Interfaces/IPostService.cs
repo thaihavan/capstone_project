@@ -8,7 +8,7 @@ namespace PostService.Services.Interfaces
 {
     public interface IPostService
     {
-        IEnumerable<Post> GetAll();
+        IEnumerable<Post> GetPosts(string search, int page);
 
         Post GetById(string id);
 

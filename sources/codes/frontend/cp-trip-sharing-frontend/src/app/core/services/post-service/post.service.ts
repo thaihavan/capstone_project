@@ -19,13 +19,15 @@ export class PostService {
     this.baseUrl = HostGlobal.HOST_POST_SERVICE + '/api/postservice/article/';
   }
 
-  getAllPosts(): Observable<Post[]> {
+  getAllPosts(search: string, page: number): Observable<Post[]> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
     };
-    return this.http.get<Post[]>(`${HostGlobal.HOST_POST_SERVICE}/api/postservice/post/all`, httpOption);
+    return this.http.get<Post[]>(
+      `${HostGlobal.HOST_POST_SERVICE}/api/postservice/post/all?page=${page}&search=${search}`,
+      httpOption);
   }
 
   createPost(article: Article): Observable<Article> {

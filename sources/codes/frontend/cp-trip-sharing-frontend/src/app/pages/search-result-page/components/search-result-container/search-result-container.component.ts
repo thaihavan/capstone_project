@@ -11,6 +11,7 @@ import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { CompanionPost } from 'src/app/model/CompanionPost';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'app-search-result-container',
@@ -38,8 +39,8 @@ export class SearchResultContainerComponent implements OnInit {
   topPosToStartShowing = 100;
 
   // list result
-  posts: any;
-  users: [];
+  posts: any[];
+  users: User[];
   listType: string;
   postFilter: PostFilter;
 
@@ -138,25 +139,29 @@ export class SearchResultContainerComponent implements OnInit {
       search = '';
     }
 
-    this.userService.getUsers(search).subscribe((res: []) => {
+    this.userService.getUsers(search, this.page).subscribe((res: User[]) => {
+      res = this.filterUserBlocker(res);
       this.users.push(...res);
     }, this.errorHandler.handleError);
   }
 
   getArticles(postFilter: PostFilter) {
     this.postService.getAllArticles(postFilter, this.page).subscribe((res: Article[]) => {
+      res = this.filterPostBlocker(res);
       this.posts.push(...res);
     }, this.errorHandler.handleError);
   }
 
   getVirtualTrips(postFilter: PostFilter) {
     this.virtualTripService.getVirtualTrips(postFilter, this.page).subscribe((res: VirtualTrip[]) => {
+      res = this.filterPostBlocker(res);
       this.posts.push(...res);
     }, this.errorHandler.handleError);
   }
 
   getCompanionPosts(postFilter: PostFilter) {
     this.companionPostService.getCompanionPosts(postFilter, this.page).subscribe((res: CompanionPost[]) => {
+      res = this.filterPostBlocker(res);
       this.posts.push(...res);
     }, this.errorHandler.handleError);
   }
@@ -182,6 +187,18 @@ export class SearchResultContainerComponent implements OnInit {
     }
 
     return decodeURI(urlSplit[4]);
+  }
+
+  filterPostBlocker(posts: any[]) {
+    const listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+    posts = posts.filter(p => listBlockers.find(b => b.id === p.post.author.id) == null);
+    return posts;
+  }
+
+  filterUserBlocker(users: any[]) {
+    const listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+    users = users.filter(u => listBlockers.find(b => b.id === u.id) == null);
+    return users;
   }
 
   onScroll() {

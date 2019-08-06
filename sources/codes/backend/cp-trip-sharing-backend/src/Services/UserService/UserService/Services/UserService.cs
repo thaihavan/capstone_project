@@ -61,9 +61,9 @@ namespace UserServices.Services
             return _userRepository.GetById(userId);
         }
 
-        public IEnumerable<User> GetUsers(string search)
+        public IEnumerable<User> GetUsers(string search, int page)
         {
-            return _userRepository.GetUsers(search);
+            return _userRepository.GetUsers(search, page);
         }
 
         public object GetUserStatistics(StatisticsFilter filter)

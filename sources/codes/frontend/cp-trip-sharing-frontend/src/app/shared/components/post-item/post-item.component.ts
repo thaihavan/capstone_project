@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Post } from 'src/app/model/Post';
-import { UserService } from 'src/app/core/services/user-service/user.service';
-import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { HostGlobal } from 'src/app/core/global-variables';
 
 @Component({
   selector: 'app-post-item',
@@ -11,8 +10,7 @@ import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 export class PostItemComponent implements OnInit {
 
   @Input() post: Post;
-  constructor(private userService: UserService,
-              private errorHandler: GlobalErrorHandler) { }
+  constructor() { }
 
   ngOnInit() {
     if (this.post.title == null) {
@@ -27,7 +25,18 @@ export class PostItemComponent implements OnInit {
   }
 
   goToPostDetail() {
-    window.location.href = '/bai-viet/' + this.post.id;
+    switch (this.post.postType) {
+      case 'Article':
+        window.open(`${HostGlobal.HOST_FRONTEND}/bai-viet/${this.post.id}`, '_blank');
+        break;
+      case 'VirtualTrip':
+        window.open(`${HostGlobal.HOST_FRONTEND}/chuyen-di/${this.post.id}`, '_blank');
+        break;
+      case 'CompanionPost':
+        window.open(`${HostGlobal.HOST_FRONTEND}/tim-ban-dong-hanh/${this.post.id}`, '_blank');
+        break;
+    }
+
   }
   gotoPersonalPage(userId: string) {
     window.location.href = `/user/${userId}`;

@@ -24,7 +24,7 @@ namespace UserServices.Reponsitories
         }
 
         public BlockRepository()
-        { 
+        {
         }
 
         public Block Add(Block document)
@@ -56,11 +56,25 @@ namespace UserServices.Reponsitories
 
         public IEnumerable<User> GetBlockedUsers(string blockerId)
         {
-            return _blocks.AsQueryable().Where(x => x.BlockerId.Equals(blockerId))
-                .Join(_users.AsQueryable(),
-                block => block.BlockedId,
-                user => user.Id,
-                (block, user) => user)
+            return _blocks.AsQueryable()
+                .Where(x => x.BlockerId.Equals(blockerId))
+                .Join(
+                    _users.AsQueryable(),
+                    block => block.BlockedId,
+                    user => user.Id,
+                    (block, user) => user)
+                .ToList();
+        }
+
+        public IEnumerable<User> GetBlockers(string userId)
+        {
+            return _blocks.AsQueryable()
+                .Where(x => x.BlockedId.Equals(userId))
+                .Join(
+                    _users.AsQueryable(),
+                    block => block.BlockerId,
+                    user => user.Id,
+                    (block, user) => user)
                 .ToList();
         }
     }

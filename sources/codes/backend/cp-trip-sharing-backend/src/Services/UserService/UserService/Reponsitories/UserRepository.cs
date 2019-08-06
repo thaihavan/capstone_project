@@ -109,7 +109,7 @@ namespace UserServices.Reponsitories
             };
         }
 
-        public IEnumerable<User> GetUsers(string search)
+        public IEnumerable<User> GetUsers(string search, int page)
         {
             // Search filter
             if (search == null || search.Trim() == "")
@@ -122,6 +122,8 @@ namespace UserServices.Reponsitories
 
             var users = _users.AsQueryable()
                         .Where(searchFilter.Compile())
+                        .Skip(12 * (page - 1))
+                        .Take(12)
                         .ToList();
             return users;
         }

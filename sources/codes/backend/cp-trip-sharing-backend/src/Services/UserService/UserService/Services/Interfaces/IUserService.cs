@@ -8,7 +8,7 @@ namespace UserServices.Services.Interfaces
 {
     public interface IUserService
     {
-        IEnumerable<User> GetUsers(string search);
+        IEnumerable<User> GetUsers(string search, int page);
 
         User Add(User user);
 

@@ -27,9 +27,13 @@ namespace PostService.Controllers
 
         [AllowAnonymous]
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public IActionResult GetPosts([FromQuery] string search, [FromQuery] int page)
         {
-            var result = _postService.GetAll();
+            if (page < 1)
+            {
+                page = 1;
+            }
+            var result = _postService.GetPosts(search, page);
             return Ok(result);
         }
 

@@ -14,12 +14,14 @@ export class UserPageAdminComponent implements OnInit {
   search: string;
   searchType: string;
   users: User[];
+  page: number;
 
   constructor(private userService: UserService,
               private errorHandler: GlobalErrorHandler) {
     this.searchType = 'text';
     this.search = '';
     this.users = [];
+    this.page = 1;
   }
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class UserPageAdminComponent implements OnInit {
       search = '';
     }
 
-    this.userService.getUsers(search).subscribe((res: []) => {
+    this.userService.getUsers(search, this.page).subscribe((res: []) => {
       this.users.push(...res);
     }, this.errorHandler.handleError);
   }

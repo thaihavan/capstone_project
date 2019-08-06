@@ -27,7 +27,6 @@ export class PersonalPageComponent implements OnInit {
   usergetLocalStorage: any;
   gender = '';
   coverImage = '../../../assets/cover-image.png';
-  avatar = '../../../assets/img_avatar.png';
   title = 'angular-material-tab-router';
   navLinks: any[];
   activeLinkIndex = 0;

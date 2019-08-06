@@ -6,5 +6,7 @@ namespace UserServices.Reponsitories.Interfaces
     public interface IBlockRepository : IRepository<Block>
     {
         IEnumerable<User> GetBlockedUsers(string blockerId);
+
+        IEnumerable<User> GetBlockers(string userId);
     }
 }
