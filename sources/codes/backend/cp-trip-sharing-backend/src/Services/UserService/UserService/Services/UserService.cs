@@ -78,6 +78,11 @@ namespace UserServices.Services
             _userRepository.IncreaseContributionPoint(userId, point);
         }
 
+        public bool UnBanAnUser(string userId)
+        {
+            return _userRepository.UnBanAnUser(userId);
+        }
+
         public User Update(User user)
         {
             var result = _userRepository.Update(user);

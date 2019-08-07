@@ -15,5 +15,7 @@ namespace UserServices.Reponsitories.Interfaces
         bool CheckUsername(string username);
 
         bool BanAnUser(string userId);
+
+        bool UnBanAnUser(string userId);
     }
 }
