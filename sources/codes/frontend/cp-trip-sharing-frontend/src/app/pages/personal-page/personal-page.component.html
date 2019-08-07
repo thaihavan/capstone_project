@@ -82,17 +82,11 @@
             <div class="card-person-infor">
               <a class="mat-button a-hover">
                 <!-- <i class="fa fa-product-hunt"></i> -->
-                <mat-icon class="align-middle">local_parking</mat-icon>
+                <mat-icon class="align-middle">stars</mat-icon>
+                <i class="fas fa-coins"></i>
                 <span class="align-middle">Điểm tích lũy</span>
                 <span class="align-middle"><b [appHighlight]="'#2196f3'"
                     [size]="'19px'">{{user.contributionPoint}}</b></span>
-              </a>
-            </div>
-            <div [hidden]="user.dob == null" class="card-person-infor">
-              <a class="mat-button ">
-                <!-- <i class="fa fa-product-hunt"></i> -->
-                <mat-icon class="align-middle">date_range</mat-icon>
-                <span class="align-middle">Ngày sinh: {{user.dob | date: 'dd-MM-yyyy'}}</span>
               </a>
             </div>
             <div [hidden]="gender == null" class="card-person-infor">
@@ -105,7 +99,7 @@
               <a class="mat-button">
                 <mat-icon class="align-middle">person_pin</mat-icon>
                 <!-- <i class="fa fa-product-hunt"></i> -->
-                <span class="align-middle">Địa chỉ: {{user.address}}</span>
+                <span class="align-middle">Đến từ: {{user.address}}</span>
               </a>
             </div>
             <div class="card-person-infor">

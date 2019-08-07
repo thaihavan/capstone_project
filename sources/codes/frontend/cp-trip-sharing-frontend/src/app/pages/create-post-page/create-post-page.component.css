@@ -130,3 +130,9 @@ input[type="file"] {
 .clear{
   clear: both;
 }
+.content-center{
+  margin-top: 1em;
+}
+::ng-deep .mat-form-field-infix {
+  width: 210px !important;
+}

@@ -25,6 +25,7 @@ import { OverviewPageAdminComponent } from './admin/pages/dashboard-page/compone
 import { PostPageAdminComponent } from './admin/pages/dashboard-page/components/post-page-admin/post-page-admin.component';
 import { UserPageAdminComponent } from './admin/pages/dashboard-page/components/user-page-admin/user-page-admin.component';
 import { AdminLoginPageComponent } from './admin/pages/admin-login-page/admin-login-page.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { ReportedUserPageComponent } from './admin/pages/dashboard-page/components/reported-user-page/reported-user-page.component';
 import { ReportedPostPageComponent } from './admin/pages/dashboard-page/components/reported-post-page/reported-post-page.component';
 // tslint:disable-next-line: max-line-length
@@ -80,7 +81,8 @@ const routes: Routes = [
       { path: 'khoi-tao', component: InitialUserInformationPageComponent },
       { path: 'tin-nhan', component: ChatPageComponent },
       { path: 'tao-bai-viet/tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
-      { path: 'tim-ban-dong-hanh/:companionId', component: DetailpostPageComponent}
+      { path: 'tim-ban-dong-hanh/:companionId', component: DetailpostPageComponent},
+      { path: 'dieu-khoan', component: PrivacyPolicyComponent }
     ]
   },
 ];

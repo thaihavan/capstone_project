@@ -68,7 +68,7 @@
               </ng-template>
             </button>
           </mat-menu>
-          <button (click)="viewMessageNotification()" mat-icon-button matTooltip="Tin nhắn"
+          <button *ngIf="!checkLogin" (click)="viewMessageNotification()" mat-icon-button matTooltip="Tin nhắn"
             [matMenuTriggerFor]="menu_message_notification">
             <mat-icon matBadge="{{numNewMessages}}" matBadgeHidden="{{numNewMessages == 0}}"
               matBadgePosition="above after" matBadgeColor="warn">mail</mat-icon>
@@ -76,7 +76,7 @@
           <mat-menu #menu_message_notification="matMenu" class="menu message-menu">
             <app-message [conversations]="conversations" (selectConversation)="selectConversation($event)"></app-message>
           </mat-menu>
-          <button (click)="viewNotification()" mat-icon-button matTooltip="Thông báo"
+          <button *ngIf="!checkLogin" (click)="viewNotification()" mat-icon-button matTooltip="Thông báo"
             [matMenuTriggerFor]="menu_new_notification">
             <mat-icon matBadge="{{numNewNotifications}}" matBadgeHidden="{{numNewNotifications == 0}}"
               matBadgePosition="above after" matBadgeColor="warn">notifications</mat-icon>

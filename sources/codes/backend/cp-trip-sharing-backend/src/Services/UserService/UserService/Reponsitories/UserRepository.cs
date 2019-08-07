@@ -160,5 +160,13 @@ namespace UserServices.Reponsitories
                 Builders<User>.Update.Set(x => x.Active, false));
             return true;
         }
+
+        public bool UnBanAnUser(string userId)
+        {
+            _users.FindOneAndUpdate(
+                Builders<User>.Filter.Eq(x => x.Id, userId),
+                Builders<User>.Update.Set(x => x.Active, true));
+            return true;
+        }
     }
 }

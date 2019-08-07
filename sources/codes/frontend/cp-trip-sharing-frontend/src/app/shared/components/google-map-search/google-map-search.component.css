@@ -45,9 +45,9 @@
 .mat-form-field-appearance-outline .mat-form-field-wrapper {
     margin: 0 !important;
 }
-::ng-deep .pac-item {
+/* ::ng-deep .pac-item {
   line-height: 50px;
-}
+} */
 
 .search-box{
   position: relative;
@@ -70,7 +70,7 @@
   font-size: 25px;
   font-weight: 500;
   background-color: #fdfdfd;
-  padding: 8px 12px;
+  padding: 7px 12px;
   border-radius: 30px;
   z-index: 5;
 }
@@ -83,4 +83,7 @@
   margin-top: -4px;
   width: 35px;
   overflow: hidden;
+}
+.width-500{
+  width: 500px;
 }

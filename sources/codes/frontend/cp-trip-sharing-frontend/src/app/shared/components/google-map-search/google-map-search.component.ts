@@ -18,6 +18,7 @@ export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
   @Input() width: number;
   @Input() height: number;
   @Input() matFill = false;
+  isShow = true;
   private element: HTMLInputElement;
   ngOnInit(): void {
   }

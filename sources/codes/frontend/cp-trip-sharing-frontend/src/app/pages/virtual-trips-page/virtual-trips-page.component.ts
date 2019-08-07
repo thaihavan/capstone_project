@@ -18,6 +18,7 @@ import { MessagePopupComponent } from 'src/app/shared/components/message-popup/m
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-virtual-trips-page',
@@ -51,7 +52,8 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     private tripService: VirtualTripService,
     private route: ActivatedRoute,
     private titleService: Title,
-    private errorHandler: GlobalErrorHandler
+    private errorHandler: GlobalErrorHandler,
+    private alertify: AlertifyService
   ) {
     this.titleService.setTitle('Chuyến đi');
   }
@@ -194,6 +196,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
 
   // create virtual trip
   createTrip() {
+    if (this.urlCoverImage === '') {
+      this.alertify.error('Yêu cầu ảnh bìa cho bài viết');
+      return;
+    }
     this.post.title = this.title;
     this.post.isPublic = this.isPublic;
     this.post.coverImage = this.urlCoverImage;

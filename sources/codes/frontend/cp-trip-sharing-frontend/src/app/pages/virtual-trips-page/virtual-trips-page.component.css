@@ -22,7 +22,7 @@
   position: absolute;
   z-index: 1000;
   left: 0;
-  overflow: scroll;
+  overflow: auto;
   height: 100%;
 }
 .virtual-trip {

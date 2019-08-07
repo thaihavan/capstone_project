@@ -114,6 +114,14 @@ namespace UserServices.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
+        [HttpPut("unban")]
+        public IActionResult UnBanAnUser([FromQuery] string userId)
+        {
+            var result = _userService.UnBanAnUser(userId);
+            return Ok();
+        }
+
         [Authorize(Roles ="member")]
         [HttpPost("report")]
         public IActionResult ReportAnUser([FromBody] Report param)
