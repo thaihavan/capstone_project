@@ -54,6 +54,7 @@ import { ChatPopupComponent } from './components/chat-popup/chat-popup.component
 import { HighlightDirective } from './directives/highlight.directive';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { PostItemComponent } from './components/post-item/post-item.component';
 
 const Material = [
   MatButtonModule,
@@ -120,7 +121,8 @@ const Material = [
     ChatPopupComponent,
     HighlightDirective,
     ChangePasswordComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    PostItemComponent
   ],
   imports: [
     CommonModule,
@@ -168,7 +170,8 @@ const Material = [
     ChatPopupComponent,
     HighlightDirective,
     ChangePasswordComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    PostItemComponent
   ],
   entryComponents: [
     LoginPageComponent,

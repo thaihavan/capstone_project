@@ -56,6 +56,7 @@ export class HeaderComponent implements OnInit {
         this.getAllConversations();
         this.getFollowings();
         this.getListPostIdBookmark();
+        this.getListBlockers();
 
         this.initSocketConnection();
       } else if (this.account.role === 'admin') {
@@ -210,11 +211,17 @@ export class HeaderComponent implements OnInit {
     }, this.errorHandler.handleError);
   }
 
+  getListBlockers() {
+    this.userService.getBlockers().subscribe((res: User[]) => {
+      localStorage.setItem('listBlockers', JSON.stringify(res));
+    }, this.errorHandler.handleError);
+  }
+
   // dialog change password
   openDialogChangePassword() {
       const dialogRef = this.dialog.open(ChangePasswordComponent, {
         height: 'auto',
         width: '400px'
       });
-    }
+  }
 }

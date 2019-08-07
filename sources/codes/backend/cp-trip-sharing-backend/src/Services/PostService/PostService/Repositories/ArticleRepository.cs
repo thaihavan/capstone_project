@@ -179,7 +179,7 @@ namespace PostService.Repositories
 
             var articles = _articles.AsQueryable()
                 .Join(
-                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate),
+                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate && p.IsActive),
                     article => article.PostId,
                     post => post.Id,
                     SelectArticleWithPost
@@ -260,7 +260,7 @@ namespace PostService.Repositories
 
             var articles = _articles.AsQueryable()
                 .Join(
-                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate && p.AuthorId == userId),
+                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate && p.AuthorId == userId && p.IsActive),
                     article => article.PostId,
                     post => post.Id,
                     SelectArticleWithPost
@@ -344,7 +344,7 @@ namespace PostService.Repositories
 
             var articles = _articles.AsQueryable()
                 .Join(
-                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate),
+                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate && p.IsActive),
                     article => article.PostId,
                     post => post.Id,
                     SelectArticleWithPost
@@ -426,7 +426,7 @@ namespace PostService.Repositories
 
             var articles = _articles.AsQueryable()
                 .Join(
-                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate),
+                    _posts.AsQueryable().Where(p => p.PubDate >= filterDate && p.IsActive),
                     article => article.PostId,
                     post => post.Id,
                     SelectArticleWithPost
@@ -439,7 +439,7 @@ namespace PostService.Repositories
                 .Where(searchFilter.Compile())
                 .Where(topicFilter.Compile())
                 .OrderByDescending(a => a.Post.LikeCount)
-                .OrderByDescending(a => a.Post.PubDate)
+                .ThenByDescending(a => a.Post.PubDate)
                 .Select(a => a)
                 .Skip(12 * (page - 1))
                 .Take(12);
@@ -461,7 +461,7 @@ namespace PostService.Repositories
 
             var articles = _articles.AsQueryable()
                 .Join(
-                    _posts.AsQueryable(),
+                    _posts.AsQueryable().Where(p => p.IsActive),
                     article => article.PostId,
                     post => post.Id,
                     SelectArticleWithPost

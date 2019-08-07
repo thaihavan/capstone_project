@@ -195,7 +195,7 @@ namespace PostService.Repositories
 
             result = _companionPosts.AsQueryable()
                 .Join(
-                    _posts.AsQueryable(),
+                    _posts.AsQueryable().Where(p => p.IsActive),
                     companionPost => companionPost.PostId,
                     post => post.Id,
                     SelectCompanionPostWithPost)
@@ -298,7 +298,7 @@ namespace PostService.Repositories
 
             result = _companionPosts.AsQueryable()
                 .Join(
-                    _posts.AsQueryable(),
+                    _posts.AsQueryable().Where(p => p.IsActive),
                     companionPost => companionPost.PostId,
                     post => post.Id,
                     SelectCompanionPostWithPost)
@@ -343,7 +343,7 @@ namespace PostService.Repositories
 
             var companionPosts = _companionPosts.AsQueryable()
                 .Join(
-                    _posts.AsQueryable(),
+                    _posts.AsQueryable().Where(p => p.IsActive),
                     companionPost => companionPost.PostId,
                     post => post.Id,
                     SelectCompanionPostWithPost)

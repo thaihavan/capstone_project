@@ -20,7 +20,7 @@ export class AdminService {
   httpOptionAuthen = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('Token')
+      Authorization: 'Bearer ' + sessionStorage.getItem('Token')
     })
   };
 

@@ -16,6 +16,11 @@
   <div *ngIf="users && users.length > 0">
     <div *ngFor="let user of users" class="user-item">
       <app-user-item [user]="user" [showFollowButton]="false"></app-user-item>
+      <span class="option-icon" [matMenuTriggerFor]="userOption"><mat-icon>more_horiz</mat-icon></span>
+      <mat-menu #userOption="matMenu">
+        <button mat-menu-item (click)="goToUserPage(user)">Trang cá nhân</button>
+        <button mat-menu-item (click)="banUser(user)">Đình chỉ</button>
+      </mat-menu>
     </div>
   </div>
 

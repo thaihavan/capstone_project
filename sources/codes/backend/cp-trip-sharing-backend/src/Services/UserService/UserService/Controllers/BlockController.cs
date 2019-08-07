@@ -70,7 +70,19 @@ namespace UserServices.Controllers
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = identity.FindFirst("user_id").Value;
+
             var result = _blockService.GetBlockedUsers(userId);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "member")]
+        [HttpGet("blocker")]
+        public IActionResult GetBlockers()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            var result = _blockService.GetBlockers(userId);
             return Ok(result);
         }
     }

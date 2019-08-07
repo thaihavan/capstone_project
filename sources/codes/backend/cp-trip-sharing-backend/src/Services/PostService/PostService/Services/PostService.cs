@@ -44,11 +44,6 @@ namespace PostService.Services
             return _postRepository.Add(param);
         }
 
-        public IEnumerable<Post> GetAll()
-        {
-            return _postRepository.GetAll();
-        }
-
         public Post GetById(string id)
         {
             return _postRepository.GetById(id);
@@ -80,6 +75,11 @@ namespace PostService.Services
             result.Add(virtualTripStatistic);
 
             return result;
+        }
+
+        public IEnumerable<Post> GetPosts(string search, int page)
+        {
+            return _postRepository.GetPosts(search, page);
         }
     }
 }

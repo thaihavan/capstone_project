@@ -1,3 +1,26 @@
-<p>
-  post-page-admin works!
-</p>
+<div class="post-page-container">
+  
+  <!-- search by text -->
+  <div *ngIf="searchType == 'text'" class="search-section row">
+    <div class="col-md-8">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" class="form-control" placeholder="Tìm kiếm" [(ngModel)]="search"
+        (keyup.enter)="searchByText()">
+    </div>
+    <div class="col-md-4">
+      <button class="btn search-button" (click)="searchByText()">Tìm kiếm</button>
+    </div>
+  </div>
+
+  <!-- list of post -->
+  <div *ngIf="posts && posts.length > 0">
+    <div *ngFor="let post of posts" class="post-item">
+      <app-post-item [post]="post"></app-post-item>
+      <span class="option-icon" [matMenuTriggerFor]="postOption"><mat-icon>more_horiz</mat-icon></span>
+      <mat-menu #postOption="matMenu">
+        <button mat-menu-item (click)="removePost(post)">Gỡ bài</button>
+      </mat-menu>
+    </div>
+  </div>
+
+</div>

@@ -17,6 +17,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using UserServices.Services.Processes;
+using UserServices.Reponsitories.Interfaces;
+using UserServices.Reponsitories;
 
 namespace UserServices
 {
@@ -66,12 +68,17 @@ namespace UserServices
             pullIncreasingCPProcess.Start();
 
             // Configure DI for application services
+            // Repositories
+            //services.AddScoped<IReportRepository, ReportRepository>();
+
+            // Services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBlockService, BlockService>();
             services.AddScoped<IBookmarkService, BookmarkService>();
             services.AddScoped<IFollowService, FollowService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IPublishToTopic, PublishToTopic>();
+            services.AddScoped<IReportService, ReportService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
