@@ -43,6 +43,7 @@ import { ReportPopupComponent } from './shared/components/report-popup/report-po
 import { CoreModule } from './core/core.module';
 import { ShareModule } from '@ngx-share/core';
 import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
+import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ListUserBlockedComponent } from './shared/components/list-user-blocked/
     CreateFindingCompanionsPostComponent,
     ListPostPageComponent,
     SearchResultPageComponent,
-    SearchResultContainerComponent
+    SearchResultContainerComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     CoreModule,

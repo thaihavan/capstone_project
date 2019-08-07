@@ -19,8 +19,8 @@
         <div [hidden]='isHasImg' class="upload-image">
             <button (click)="fileClick()" mat-icon-button class="">
                 <mat-icon>add_photo_alternate</mat-icon>
-                <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]="3.3/1" [resizeToWidth]="1350"
-                    #uploadImage></app-upload-image>
+                <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]="3.3/1"
+                    [resizeToWidth]="1350" #uploadImage></app-upload-image>
             </button>
             <div>
                 <h4>Thêm hình/video cover bài viết</h4>
@@ -37,10 +37,30 @@
         </div>
     </div>
     <div class="create-post-body">
+        <div>
+            <h5 class="mb-4 mb-accent">1. Địa điểm chuyến đi</h5>
+        </div>
+        <div class=row>
+            <div class="pl-3 pr-3">
+                <app-google-map-search width="100" height="40" matFill="true" (onSelect)="addDestination($event)">
+                </app-google-map-search>
+            </div>
+            <div class="content-center">
+                <mat-chip-list>
+                    <mat-chip selected color="primary" *ngFor="let location of destinations; let i=index"
+                        [removable]="true" (removed)="removeDestination(i)">
+                        {{location.name}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+        </div>
+        <h5 class="mb-4" color="accent">2. Viết bài cho chuyến đi</h5>
         <ckeditor [config]="config" #myEditor [editor]="Editor" [(ngModel)]="content" (ready)="onReady($event)">
         </ckeditor>
         <div class="row btnCreate">
-            <button mat-raised-button (click)="createPost()" color="primary">{{ isUpdate ? 'Thay đổi' : 'Tạo bài viết'}}</button>
+            <button mat-raised-button (click)="createPost()"
+                color="primary">{{ isUpdate ? 'Thay đổi' : 'Tạo bài viết'}}</button>
         </div>
         <div class="clear"></div>
     </div>

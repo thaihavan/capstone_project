@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { UploadAdapter } from 'src/app/model/UploadAdapter';
@@ -10,14 +9,13 @@ import { Article } from 'src/app/model/Article';
 import { Post } from 'src/app/model/Post';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { DatePipe } from '@angular/common';
-import { Account } from 'src/app/model/Account';
-import { Author } from 'src/app/model/Author';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
+import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 
 @Component({
   selector: 'app-create-post-page',
@@ -36,6 +34,7 @@ export class CreatePostPageComponent implements OnInit {
   articlereturn: Article;
   articleId: string;
   isUpdate: boolean;
+  destinations: ArticleDestinationItem[] = [];
   config = {
     filebrowserUploadUrl:
       'http://192.168.0.107:8000/api/crm/v1.0/crm-distribution-library-files',
@@ -69,7 +68,6 @@ export class CreatePostPageComponent implements OnInit {
     };
   }
   constructor(
-    private http: HttpClient,
     public dialog: MatDialog,
     private postService: PostService,
     private datePipe: DatePipe,
@@ -77,7 +75,8 @@ export class CreatePostPageComponent implements OnInit {
     private route: ActivatedRoute,
     private titleService: Title,
     private errorHandler: GlobalErrorHandler,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private zone: NgZone
   ) {
     this.titleService.setTitle('Tạo bài viết');
   }
@@ -146,7 +145,7 @@ export class CreatePostPageComponent implements OnInit {
         const article = new Article();
         article.topics = res.topics;
         // article.topics = []; // Because res.topics is undefined. will be removed
-        article.destinations = res.destinations;
+        article.destinations = this.destinations;
         const post = new Post();
         post.title = this.title;
         post.content = this.myEditor.editorInstance.getData();
@@ -166,7 +165,7 @@ export class CreatePostPageComponent implements OnInit {
           this.articlereturn.post.isPublic = post.isPublic;
           this.articlereturn.post.coverImage = post.coverImage;
           this.articlereturn.topics = res.topics;
-          this.articlereturn.destinations = res.destinations;
+          this.articlereturn.destinations = this.destinations;
           this.postService.updateArticle(this.articlereturn).subscribe(
             (data: Article) => {
               this.articlereturn = data;
@@ -213,13 +212,32 @@ export class CreatePostPageComponent implements OnInit {
     }
     if (this.isUpdate) {
       this.openDialog(
-        this.articlereturn.topics,
-        this.articlereturn.destinations
+        this.articlereturn.topics, []
       );
     } else {
       if (this.myEditor && this.myEditor.editorInstance) {
         this.openDialog([], []);
       }
     }
+  }
+
+  // on google-map-search submit add address location.
+  addDestination(addrObj) {
+    this.zone.run(() => {
+      let addrKeys;
+      let addr;
+      addr = addrObj;
+      addrKeys = Object.keys(addrObj);
+      const location: ArticleDestinationItem = {
+        id: addrObj.locationId,
+        name: addrObj.name
+      };
+      this.destinations.push(location);
+    });
+  }
+
+  // remove destination
+  removeDestination(index) {
+    this.destinations.splice(index, 1);
   }
 }

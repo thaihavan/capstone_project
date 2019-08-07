@@ -20,12 +20,12 @@
   </div>
 </ng-container>
 <ng-template #elseTemplate>
-  <div class="form-group full-size search-box">
-    <div class="search-title">
+  <div  class="form-group full-size search-box">
+    <div *ngIf="isShow" class="search-title">
       <span>Bạn muốn đi đâu?</span><img src="../../../../assets/marker.png" >
     </div>
-    <input #searchmap [(ngModel)]="textInput" type="text" class="form-control search-input" [style.height.px]="height"
-      placeholder="Search">
+    <input [class.width-500]="!isShow" #searchmap (blur)="isShow=true" (focus)="isShow=false" [(ngModel)]="textInput" type="text" class="form-control search-input" [style.height.px]="height"
+      placeholder="Nhập địa điểm tìm kiếm">
     <span class="fa fa-search form-control-icon" [style.line-height.px]="height"></span>
   </div>
 </ng-template>

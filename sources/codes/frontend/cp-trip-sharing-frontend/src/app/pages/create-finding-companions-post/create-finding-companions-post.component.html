@@ -213,7 +213,7 @@
             <div class=" ml-3 d-flex flex-column full-input">
                 <div>
                     <mat-form-field hintLabel="Enter để tạo mới item">
-                        <input [(ngModel)]="estCostItem" class="example-right-align" matInput
+                        <input (keyup.enter)="addEstimatedCostItem()" [(ngModel)]="estCostItem" class="example-right-align" matInput
                             placeholder="Thêm mới chi phí bao gồm">
                     </mat-form-field>
                 </div>

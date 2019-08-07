@@ -21,7 +21,7 @@
               <img src="{{author ? author.profileImage : ''}}" class="profile-avatar" alt="">
             </figure>
             <figure *ngIf="userRole === 'author'" class="profile-right">
-              <button mat-icon-button (click)="setPolicy()">
+              <button matTooltip="{{isPublic ? 'công khai' : 'riêng tư'}}" mat-icon-button (click)="setPolicy()">
                 <mat-icon>{{ isPublic ? 'lock_open' : 'lock'}}</mat-icon>
               </button>
             </figure>
