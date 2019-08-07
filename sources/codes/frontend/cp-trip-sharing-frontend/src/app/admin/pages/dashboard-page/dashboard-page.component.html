@@ -16,7 +16,7 @@
               [ngClass]="{'active-tab': selectedTab=='tong-quan'}">
                 <mat-panel-title>
                   <mat-icon>insert_chart</mat-icon>
-                  <span>Overview</span>
+                  <span>Tổng quan</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
             </mat-expansion-panel>
@@ -63,16 +63,16 @@
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <mat-icon>report</mat-icon>
-                  <span>Báo cáo</span>
+                  <span>Vi phạm</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="gotoReportedUser()">
                 <mat-icon>person</mat-icon><span>Người dùng</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="gotoReportedPost()">
                 <mat-icon>list_alt</mat-icon><span>Bài đăng</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="gotoReportedComment()">
                 <mat-icon>comment</mat-icon><span>Bình luận</span>
               </button>
             </mat-expansion-panel>

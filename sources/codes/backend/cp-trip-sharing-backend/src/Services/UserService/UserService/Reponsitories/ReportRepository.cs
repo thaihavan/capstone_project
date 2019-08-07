@@ -57,14 +57,16 @@ namespace UserServices.Reponsitories
 
             var reports = _reports.AsQueryable()
                 .Join(_users.AsQueryable(),
-                report=>report.UserId,
-                user=>user.Id,
+                report => report.UserId,
+                user => user.Id,
                 selectReportWithUser)
-                .Join(_reportTypes.AsQueryable(),
-                report=>report.ReportTypeId,
-                reportType=>reportType.Id,
-                selectReportWithReportType)
-                .OrderBy(x=>x.Date)
+                .Join(
+                    _reportTypes.AsQueryable(),
+                    report => report.ReportTypeId,
+                    reportType => reportType.Id,
+                    selectReportWithReportType)
+                .Where(r => !r.IsResolved)
+                .OrderByDescending(x => x.Date)
                 .Skip(12 * (page - 1))
                 .Take(12);
             return reports;
@@ -82,7 +84,12 @@ namespace UserServices.Reponsitories
 
         public Report Update(Report document)
         {
-            throw new NotImplementedException();
+            var result = _reports.ReplaceOne(r => r.Id.Equals(document.Id), document);
+            if (!result.IsAcknowledged)
+            {
+                return null;
+            }
+            return document;
         }
     }
 }

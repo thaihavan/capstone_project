@@ -10,6 +10,8 @@ namespace UserServices.Services.Interfaces
     {
         Report Add(Report document);
 
+        Report Update(Report document);
+
         IEnumerable<Report> GetAll(int page);
 
         IEnumerable<ReportType> GetAllReportType();

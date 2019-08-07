@@ -40,6 +40,7 @@ namespace PostService.Controllers
         public IActionResult AddTopic([FromBody] Topic param)
         {
             param.Id = ObjectId.GenerateNewId().ToString();
+            param.IsActive = true;
             var temp = _topicService.Add(param);
             if (temp != null)
             {
@@ -56,7 +57,7 @@ namespace PostService.Controllers
             {
                 param.Id = ObjectId.GenerateNewId().ToString();
             }
-            
+            param.IsActive = true;
             var temp = _topicService.InsertOrUpdate(param);
             if (temp != null)
             {

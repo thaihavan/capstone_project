@@ -246,7 +246,7 @@ export class PersonalPageComponent implements OnInit {
   }
 
   reportUser(userId: any) {
-    this.openDialogRepoetUser('Báo cáo người dùng');
+    this.openDialogRepoetUser('Báo cáo vi phạm');
   }
 
   openDialogRepoetUser(title: string) {
@@ -260,6 +260,7 @@ export class PersonalPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.title = title;
+    instance.userId = this.userId;
   }
 
   gotoBookmarkList() {

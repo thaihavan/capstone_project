@@ -12,4 +12,5 @@ export class User {
     public followerCount: number;
     public followingCount: number;
     public avatar: string;
+    public active: boolean;
 }

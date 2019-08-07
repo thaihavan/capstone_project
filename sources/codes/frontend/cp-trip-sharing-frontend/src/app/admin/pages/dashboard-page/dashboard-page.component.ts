@@ -48,6 +48,15 @@ export class DashboardPageComponent implements OnInit {
         case 'chu-de':
           this.tabTitle = 'Chủ đề';
           break;
+        case 'nguoi-dung-vi-pham':
+          this.tabTitle = 'Người dùng vi phạm';
+          break;
+        case 'bai-viet-vi-pham':
+          this.tabTitle = 'Bài viết vi phạm';
+          break;
+        case 'binh-luan-vi-pham':
+          this.tabTitle = 'Bình luận vi phạm';
+          break;
       }
     }
   }
@@ -92,5 +101,23 @@ export class DashboardPageComponent implements OnInit {
     this.selectedTab = 'chu-de';
     this.tabTitle = 'Chủ đề';
     this.router.navigate(['admin/dashboard/chu-de']);
+  }
+
+  gotoReportedUser() {
+    this.selectedTab = 'nguoi-dung-vi-pham';
+    this.tabTitle = 'Nguời dùng vi phạm';
+    this.router.navigate(['admin/dashboard/nguoi-dung-vi-pham']);
+  }
+
+  gotoReportedPost() {
+    this.selectedTab = 'bai-viet-vi-pham';
+    this.tabTitle = 'Bài viết vi phạm';
+    this.router.navigate(['admin/dashboard/bai-viet-vi-pham']);
+  }
+
+  gotoReportedComment() {
+    this.selectedTab = 'binh-luan-vi-pham';
+    this.tabTitle = 'Bình luận vi phạm';
+    this.router.navigate(['admin/dashboard/binh-luan-vi-pham']);
   }
 }

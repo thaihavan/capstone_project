@@ -18,6 +18,9 @@ import { ReportPageAdminComponent } from './pages/dashboard-page/components/repo
 import { FormAddTopicsComponent } from './pages/dashboard-page/components/topic-page-admin/form-add-topics/form-add-topics.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AdminLoginPageComponent } from './pages/admin-login-page/admin-login-page.component';
+import { ReportedUserPageComponent } from './pages/dashboard-page/components/reported-user-page/reported-user-page.component';
+import { ReportedPostPageComponent } from './pages/dashboard-page/components/reported-post-page/reported-post-page.component';
+import { ReportedCommentPageComponent } from './pages/dashboard-page/components/reported-comment-page/reported-comment-page.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { AdminLoginPageComponent } from './pages/admin-login-page/admin-login-pa
     UserPageAdminComponent,
     TopicPageAdminComponent,
     ReportPageAdminComponent,
-    AdminLoginPageComponent
+    AdminLoginPageComponent,
+    ReportedUserPageComponent,
+    ReportedPostPageComponent,
+    ReportedCommentPageComponent
   ],
   imports: [
     CommonModule,

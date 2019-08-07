@@ -23,8 +23,18 @@ namespace UserServices.Models
         [BsonElement("report_type_id")]
         public string ReportTypeId { get; set; }
 
+        [BsonElement("content")]
+        public string Content { get; set; }
+
         [BsonElement("date")]
         public DateTime Date { get; set; }
+
+        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("reporter_id")]
+        public string ReporterId { get; set; }
+
+        [BsonElement("is_resolved")]
+        public bool IsResolved { get; set; }
 
         [BsonIgnore]
         [BsonExtraElements]

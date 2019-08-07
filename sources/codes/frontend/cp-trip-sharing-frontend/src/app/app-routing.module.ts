@@ -25,6 +25,10 @@ import { OverviewPageAdminComponent } from './admin/pages/dashboard-page/compone
 import { PostPageAdminComponent } from './admin/pages/dashboard-page/components/post-page-admin/post-page-admin.component';
 import { UserPageAdminComponent } from './admin/pages/dashboard-page/components/user-page-admin/user-page-admin.component';
 import { AdminLoginPageComponent } from './admin/pages/admin-login-page/admin-login-page.component';
+import { ReportedUserPageComponent } from './admin/pages/dashboard-page/components/reported-user-page/reported-user-page.component';
+import { ReportedPostPageComponent } from './admin/pages/dashboard-page/components/reported-post-page/reported-post-page.component';
+// tslint:disable-next-line: max-line-length
+import { ReportedCommentPageComponent } from './admin/pages/dashboard-page/components/reported-comment-page/reported-comment-page.component';
 
 
 const routes: Routes = [
@@ -36,7 +40,10 @@ const routes: Routes = [
       { path: 'tong-quan', component: OverviewPageAdminComponent},
       { path: 'bai-viet', component: PostPageAdminComponent},
       { path: 'nguoi-dung', component: UserPageAdminComponent},
-      { path: 'chu-de', component: TopicPageAdminComponent }
+      { path: 'chu-de', component: TopicPageAdminComponent },
+      { path: 'nguoi-dung-vi-pham', component: ReportedUserPageComponent },
+      { path: 'bai-viet-vi-pham', component: ReportedPostPageComponent },
+      { path: 'binh-luan-vi-pham', component: ReportedCommentPageComponent }
     ]
   },
   { path: 'xac-nhan-email/:token', component: EmailConfirmPageComponent },

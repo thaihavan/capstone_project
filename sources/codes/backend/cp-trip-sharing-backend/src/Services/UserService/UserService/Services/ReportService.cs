@@ -44,5 +44,10 @@ namespace UserServices.Services
         {
             return _reportRepository.GetAllReportType();
         }
+
+        public Report Update(Report document)
+        {
+            return _reportRepository.Update(document);
+        }
     }
 }

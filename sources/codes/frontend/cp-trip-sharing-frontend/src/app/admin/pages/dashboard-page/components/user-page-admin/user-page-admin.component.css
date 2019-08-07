@@ -51,7 +51,16 @@ div {
 .user-item .option-icon {
     position: absolute;
     right: 10px;
-    top: 45px;
+    top: 48px;
     color: #666;
     cursor: pointer;
+}
+
+.text-banned {
+    position: absolute;
+    color: #ed4035;
+    right: 80px;
+    top: 45px;
+    font-size: 20px;
+    font-weight: 500;
 }

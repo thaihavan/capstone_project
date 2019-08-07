@@ -36,14 +36,18 @@ namespace PostService.Repositories
 
         public bool DeleteMany(List<string> topics)
         {
-            var result = _topics.DeleteMany(Builders<Topic>.Filter.In(t => t.Id, topics));
+            //var result = _topics.DeleteMany(Builders<Topic>.Filter.In(t => t.Id, topics));
+            var updateDefinition = Builders<Topic>.Update
+                .Set("is_active", false);
+
+            var result = _topics.UpdateMany(Builders<Topic>.Filter.In(t => t.Id, topics), updateDefinition);
 
             return result.IsAcknowledged;
         }
 
         public IEnumerable<Topic> GetAll()
         {
-            return _topics.Find(x => true).ToList();
+            return _topics.Find(x => x.IsActive).ToList();
         }
 
         public Topic GetById(string id)

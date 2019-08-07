@@ -174,7 +174,7 @@ export class PostService {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('Token')
+        Authorization: 'Bearer ' + sessionStorage.getItem('Token')
       })
     };
     return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/insert-or-update', topic, httpOption);
@@ -184,7 +184,7 @@ export class PostService {
     const httpOptionRemoveTopic = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('Token')
+        Authorization: 'Bearer ' + sessionStorage.getItem('Token')
       })
     };
     return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/topic/delete', topicIds, httpOptionRemoveTopic);

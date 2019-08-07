@@ -3,6 +3,7 @@ import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { HostGlobal } from 'src/app/core/global-variables';
+import { AdminService } from 'src/app/admin/services/admin-service/admin.service';
 
 @Component({
   selector: 'app-user-page-admin',
@@ -17,6 +18,7 @@ export class UserPageAdminComponent implements OnInit {
   page: number;
 
   constructor(private userService: UserService,
+              private adminService: AdminService,
               private errorHandler: GlobalErrorHandler) {
     this.searchType = 'text';
     this.search = '';
@@ -48,7 +50,8 @@ export class UserPageAdminComponent implements OnInit {
   }
 
   banUser(user: User) {
-
+    this.adminService.banUser(user.id).subscribe((res: any) => {
+    }, this.errorHandler.handleError);
   }
 
 }

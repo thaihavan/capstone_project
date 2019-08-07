@@ -107,7 +107,7 @@ namespace UserServices.Reponsitories.DbContext
             {
                 if (_database != null)
                 {
-                    return _database.GetCollection<Report>("Reports");
+                    return _database.GetCollection<Report>("ReportedUsers");
                 }
                 return null;
             }
@@ -119,7 +119,7 @@ namespace UserServices.Reponsitories.DbContext
             {
                 if (_database != null)
                 {
-                    return _database.GetCollection<ReportType>("ReportTypes");
+                    return _database.GetCollection<ReportType>("ReportUserTypes");
                 }
                 return null;
             }

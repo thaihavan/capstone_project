@@ -118,7 +118,32 @@ namespace UserServices.Controllers
         [HttpPost("report")]
         public IActionResult ReportAnUser([FromBody] Report param)
         {
+            if (param == null)
+            {
+                return BadRequest();
+            }
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            param.Id = ObjectId.GenerateNewId().ToString();
+            param.Date = DateTime.Now;
+            param.ReporterId = userId;
             return Ok(_reportService.Add(param));
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut("report")]
+        public IActionResult UpdateReport([FromBody] Report param)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            if (param == null)
+            {
+                return BadRequest();
+            }
+            
+            return Ok(_reportService.Update(param));
         }
 
         [Authorize(Roles = "admin")]

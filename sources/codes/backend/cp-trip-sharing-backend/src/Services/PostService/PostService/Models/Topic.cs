@@ -19,5 +19,8 @@ namespace PostService.Models
 
         [BsonElement("img_url")]
         public string ImgUrl { get; set; }
+
+        [BsonElement("is_active")]
+        public bool IsActive { get; set; }
     }
 }

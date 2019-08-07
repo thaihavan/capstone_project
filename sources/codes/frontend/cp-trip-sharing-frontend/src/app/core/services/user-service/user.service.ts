@@ -7,6 +7,8 @@ import { User } from 'src/app/model/User';
 import { ChangePassword } from 'src/app/model/ChangePassword';
 import { HostGlobal } from 'src/app/core/global-variables';
 import { Bookmark } from 'src/app/model/Bookmark';
+import { ReportType } from 'src/app/model/ReportType';
+import { ReportedUser } from 'src/app/model/ReportedUser';
 
 const httpOption = {
   headers: new HttpHeaders({
@@ -220,5 +222,15 @@ export class UserService {
 
   getUsers(search: string, page: number): Observable<any> {
     return this.http.get<any>(`${this.apiUserService}user/all?page=${page}&search=${search}`, httpOption);
+  }
+
+  getReportUserTypes(): Observable<ReportType[]> {
+    const url = `${this.apiUserService}user/report/type`;
+    return this.http.get<ReportType[]>(url, httpOptionAuthen);
+  }
+
+  sendReportUser(reportUser: ReportedUser): Observable<any> {
+    const url = `${this.apiUserService}user/report`;
+    return this.http.post(url, reportUser, httpOptionAuthen);
   }
 }

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/core/services/user-service/user.service';
+import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { ReportType } from 'src/app/model/ReportType';
+import { ReportedUser } from 'src/app/model/ReportedUser';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-report-popup',
@@ -7,34 +12,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportPopupComponent implements OnInit {
   title: string;
-  showReasonOthers = false;
-  listReasonString: string[] = ['Ảnh khỏa thân', 'Bạo lực', 'Quấy rối', 'Tự tử/Tự gây thương tích',
-    'Spam', 'Bán hàng trái phep', 'Ngôn từ gây thù ghét', 'Khủng bố', 'Khác...'];
-  listReasonSelect: string[] = [];
-  checkActiveReasons = false;
+  userId: string;
+  listReportTypes: ReportType[];
+  selectedReportType: ReportType;
 
-  constructor() { }
+  showReasonOthers = false;
+  reportContent: string;
+
+  constructor(private userService: UserService,
+              private errorHandler: GlobalErrorHandler,
+              private dialogRef: MatDialogRef<ReportPopupComponent>) {
+                this.listReportTypes = [];
+                this.selectedReportType = null;
+                this.reportContent = '';
+              }
 
   ngOnInit() {
+    this.getReportUserTypes();
   }
 
-  getReason(reason: string) {
-    if (reason === 'Khác...') {
-      this.showReasonOthers = !this.showReasonOthers;
-    }
+  getReportUserTypes() {
+    this.userService.getReportUserTypes().subscribe((res: ReportType[]) => {
+      this.listReportTypes = res;
+    }, this.errorHandler.handleError);
+  }
 
-    if (this.listReasonSelect.indexOf(reason) === -1) {
-      this.listReasonSelect.push(reason);
+  onClickReportType(reportType: ReportType) {
+    this.selectedReportType = reportType;
+    if (reportType.name === 'Lí do khác') {
+      this.showReasonOthers = true;
     } else {
-      const unselected = this.listReasonSelect.indexOf(reason);
-      this.listReasonSelect.splice(unselected, 1);
+      this.showReasonOthers = false;
+      this.reportContent = '';
     }
   }
 
-  checkActiveReason(reason: string): boolean {
-    if (this.listReasonSelect.indexOf(reason) !== -1) {
-      return true;
+  sendReport() {
+    if (this.selectedReportType == null) {
+      return;
     }
-    return false;
+
+    const reportedUser = new ReportedUser();
+    reportedUser.reportTypeId = this.selectedReportType.id;
+    reportedUser.content = this.reportContent.trim();
+    reportedUser.userId = this.userId;
+
+    this.userService.sendReportUser(reportedUser).subscribe((res: any) => {
+      console.log(res);
+    }, this.errorHandler.handleError);
+
+    this.dialogRef.close();
   }
+
 }
