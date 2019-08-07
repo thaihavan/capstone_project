@@ -51,6 +51,13 @@ export class UserPageAdminComponent implements OnInit {
 
   banUser(user: User) {
     this.adminService.banUser(user.id).subscribe((res: any) => {
+      user.active = false;
+    }, this.errorHandler.handleError);
+  }
+
+  unbanUser(user: User) {
+    this.adminService.unbanUser(user.id).subscribe((res: any) => {
+      user.active = true;
     }, this.errorHandler.handleError);
   }
 

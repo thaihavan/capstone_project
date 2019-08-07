@@ -11,8 +11,10 @@
         <button mat-menu-item (click)="resolve(reportedUser)">Đã giải quyết</button>
       </mat-menu>
       <div class="report-reason-text">
-        <mat-icon>error</mat-icon> Lí do vi phạm:
-        {{(reportedUser.content === '') ? reportedUser.reportType.name : reportedUser.content}}
+        <mat-icon>error</mat-icon> {{reportedUser.date | customDate}}
+        <div>
+          Lí do vi phạm: {{(reportedUser.content === '') ? reportedUser.reportType.name : reportedUser.content}}
+        </div>
       </div>
     </div>
   </div>
