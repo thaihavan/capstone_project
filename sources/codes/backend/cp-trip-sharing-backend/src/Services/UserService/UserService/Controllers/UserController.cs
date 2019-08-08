@@ -111,6 +111,10 @@ namespace UserServices.Controllers
         public IActionResult BanAnUser([FromQuery] string userId)
         {
             var result = _userService.BanAnUser(userId);
+            if (!result)
+            {
+                return BadRequest();
+            }
             return Ok();
         }
 
@@ -119,6 +123,10 @@ namespace UserServices.Controllers
         public IActionResult UnBanAnUser([FromQuery] string userId)
         {
             var result = _userService.UnBanAnUser(userId);
+            if(!result)
+            {
+                return BadRequest();
+            }
             return Ok();
         }
 

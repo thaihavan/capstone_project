@@ -42,6 +42,11 @@ export class AdminService {
     return this.http.put(url, null, this.httpOptionAuthen);
   }
 
+  unbanUser(userId: string): Observable<any> {
+    const url = HostGlobal.HOST_USER_SERVICE + '/api/userservice/user/unban?userId=' + userId;
+    return this.http.put(url, null, this.httpOptionAuthen);
+  }
+
   getReportedUsers(): Observable<ReportedUser[]> {
     const url = HostGlobal.HOST_USER_SERVICE + '/api/userservice/user/reports';
     return this.http.get<ReportedUser[]>(url, this.httpOptionAuthen);
