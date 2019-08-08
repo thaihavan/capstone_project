@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PostService.Repositories.Interfaces
 {
-    interface ICompanionPostRepository:IRepository<CompanionPost>
+   public interface ICompanionPostRepository:IRepository<CompanionPost>
     {
         CompanionPost GetById(string id, string userId);
 

@@ -125,7 +125,7 @@ namespace PostService.Controllers
         public IActionResult DeleteCompanionPost([FromQuery]string id)
         {
             var identity = User.Identity as ClaimsIdentity;
-            var userId = User.Identity.IsAuthenticated ? identity.FindFirst("user_id").Value : null;
+            var userId = User.Identity.IsAuthenticated ? identity.FindFirst("user_id").Value : "";
             var post = _companionPostService.GetById(id);
             if (!userId.Equals(post.Post.AuthorId)) return Unauthorized();
             var result = _companionPostService.Delete(id);
