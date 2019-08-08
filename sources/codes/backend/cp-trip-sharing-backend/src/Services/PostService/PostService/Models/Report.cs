@@ -16,21 +16,44 @@ namespace PostService.Models
         public string Id { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
-        [BsonElement("report_type")]
-        public string ReportType { get; set; }
+        [BsonElement("report_type_id")]
+        public string ReportTypeId { get; set; }
 
-        [BsonElement("object_id")]
+        [BsonElement("reported_id")]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string ObjectId { get; set; }
+        public string PostId { get; set; }
 
-        [BsonElement("object_type")]
-        public string ObjectType { get; set; }
+        [BsonElement("reported_type")]
+        public string PostType { get; set; }
 
         [BsonElement("reporter_id")]
         [BsonRepresentation(BsonType.ObjectId)]
         public string ReporterId { get; set; }
 
+        [BsonElement("content")]
+        public string Content { get; set; }
+
         [BsonElement("date")]
         public DateTime Date { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
+        public Article Article { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
+        public CompanionPost CompanionPost { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
+        public VirtualTrip VirtualTrip { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
+        public Comment Comment { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
+        public ReportType ReportType { get; set; }                
     }
 }
