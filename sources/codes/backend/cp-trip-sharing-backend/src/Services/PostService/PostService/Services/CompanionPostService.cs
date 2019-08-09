@@ -25,6 +25,11 @@ namespace PostService.Services
             _settings = settings;
         }
 
+        public CompanionPostService(ICompanionPostRepository companionPostRepository)
+        {
+            _companionPostRepository = companionPostRepository;
+        }
+
         public CompanionPost Add(CompanionPost post)
         {
             return _companionPostRepository.Add(post);

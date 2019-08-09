@@ -132,5 +132,29 @@ namespace PostService.Repositories.DbContext
                 return null;
             }
         }
+
+        public IMongoCollection<Report> Reports
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<Report>("Reports");
+                }
+                return null;
+            }
+        }
+
+        public IMongoCollection<ReportType> ReportTypes
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<ReportType>("ReportTypes");
+                }
+                return null;
+            }
+        }
     }
 }
