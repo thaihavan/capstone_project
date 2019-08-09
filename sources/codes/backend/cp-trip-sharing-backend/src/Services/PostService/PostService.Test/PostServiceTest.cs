@@ -49,28 +49,28 @@ namespace PostService.Test
         [TestCase]
         public void TestGetAll()
         {
-            IEnumerable<Post> posts = new List<Post>()
-            {
-                new Post()
-                {
-                    Id = "5d07d847a2c5f845707dc69x",
-                    Content = "<p>Post Test</p>",
-                    AuthorId = "5d0b2b0b1c9d440000d8e9ax",
-                    CommentCount = 0,
-                    IsActive = true,
-                    IsPublic = true,
-                    LikeCount = 0,
-                    CoverImage = @"https://storage.googleapis.com/trip-sharing-final-image-bucket/image-201907131748509069-dy8beuyj1kfgwx98.png",
-                    PostType = "article",
-                    PubDate = DateTime.Now,
-                    liked = false,
-                    Title = "Post Test",
-                }
-        };
-            mockPostRepository.Setup(x => x.GetAll()).Returns(posts);
-            PostService.Services.PostService _postService = new PostService.Services.PostService(mockPostRepository.Object);
-            IEnumerable<Post> listpost = _postService.GetAll();
-            Assert.IsNotNull(listpost);
+        //    IEnumerable<Post> posts = new List<Post>()
+        //    {
+        //        new Post()
+        //        {
+        //            Id = "5d07d847a2c5f845707dc69x",
+        //            Content = "<p>Post Test</p>",
+        //            AuthorId = "5d0b2b0b1c9d440000d8e9ax",
+        //            CommentCount = 0,
+        //            IsActive = true,
+        //            IsPublic = true,
+        //            LikeCount = 0,
+        //            CoverImage = @"https://storage.googleapis.com/trip-sharing-final-image-bucket/image-201907131748509069-dy8beuyj1kfgwx98.png",
+        //            PostType = "article",
+        //            PubDate = DateTime.Now,
+        //            liked = false,
+        //            Title = "Post Test",
+        //        }
+        //};
+        //    mockPostRepository.Setup(x => x.GetAll()).Returns(posts);
+        //    PostService.Services.PostService _postService = new PostService.Services.PostService(mockPostRepository.Object);
+        //    IEnumerable<Post> listpost = _postService.GetAll();
+        //    Assert.IsNotNull(listpost);
         }
 
         [TestCase]

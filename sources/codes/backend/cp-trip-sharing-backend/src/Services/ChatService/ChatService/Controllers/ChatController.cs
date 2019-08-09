@@ -85,7 +85,7 @@ namespace ChatService.Controllers
             conversation.SeenIds = new List<string>() { userId };
             if (conversation.Avatar == null || conversation.Avatar.Trim() == "")
             {
-                conversation.Avatar = "https://storage.googleapis.com/trip-sharing-final-image-bucket/image-default-group-chat-avatar.png";
+                conversation.Avatar = "https://storage.googleapis.com/trip-sharing-cp-image-bucket/image-default-group-chat-avatar.png";
             }
 
 

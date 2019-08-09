@@ -76,7 +76,7 @@ namespace PostService.Services
         private void GetFollowings(UserInfo userInfo)
         {
             //string baseUrl = "https://localhost:44351/api/userservice/follow/followingids?userId=";
-            string baseUrl = "http://35.244.136.34/api/userservice/follow/followingids?userId=";
+            string baseUrl = "http://35.187.244.118/api/userservice/follow/followingids?userId=";
             // Create a request for the URL.   
             WebRequest request = WebRequest.Create(baseUrl
               + userInfo.Id);
@@ -105,7 +105,7 @@ namespace PostService.Services
         private void GetUserTopics(UserInfo userInfo)
         {
             //string baseUrl = "https://localhost:44351/api/userservice/user?userId=";
-            string baseUrl = "http://35.244.136.34/api/userservice/user?userId=";
+            string baseUrl = "http://35.187.244.118/api/userservice/user?userId=";
             // Create a request for the URL.   
             WebRequest request = WebRequest.Create(baseUrl
               + userInfo.Id);      

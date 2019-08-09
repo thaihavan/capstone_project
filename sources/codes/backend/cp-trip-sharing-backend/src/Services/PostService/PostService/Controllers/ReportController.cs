@@ -12,7 +12,7 @@ using PostService.Services.Interfaces;
 
 namespace PostService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/postservice/[controller]")]
     [ApiController]
     public class ReportController : ControllerBase
     {

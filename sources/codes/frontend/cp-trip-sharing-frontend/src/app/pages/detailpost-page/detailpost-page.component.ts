@@ -18,6 +18,7 @@ import { HostGlobal } from 'src/app/core/global-variables';
 import { User } from 'src/app/model/User';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { ReportPopupComponent } from 'src/app/shared/components/report-popup/report-popup.component';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -235,13 +236,8 @@ export class DetailpostPageComponent implements OnInit {
     el.scrollIntoView();
   }
 
-  blockUserById(userId: any) {
-    const token = localStorage.getItem('Token');
-    if (token != null) {
-      this.userService.addBlock(userId, token).subscribe((result: any) => {
-        this.openDialogMessageConfirm('Bạn đã chặn người dùng thành công!', '', 'success');
-      });
-    }
+  reportPost(postId: string) {
+    this.openDialogReportPost('Báo cáo vi phạm', postId);
   }
 
   gotoPersonalPage(authorId: any) {
@@ -256,6 +252,21 @@ export class DetailpostPageComponent implements OnInit {
     this.postService.removeArticle(this.postId).subscribe((data: any) => {
       this.openDialogMessageConfirm('Bạn đã xóa bài viết thành công!', '', 'success');
     }, this.errorHandler.handleError);
+  }
+
+  openDialogReportPost(title: string, postId: string) {
+    const dialogRef = this.dialog.open(ReportPopupComponent, {
+      width: '400px',
+      height: 'auto',
+      position: {
+        top: '10px'
+      },
+      disableClose: false
+    });
+    const instance = dialogRef.componentInstance;
+    instance.title = title;
+    instance.targetId = postId;
+    instance.type = 'post';
   }
 
   openDialogMessageConfirm(message: string, url: string, messageType: string) {

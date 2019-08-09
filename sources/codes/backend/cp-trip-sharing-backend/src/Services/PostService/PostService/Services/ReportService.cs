@@ -20,6 +20,11 @@ namespace PostService.Services
             _reportRepository = new ReportRepository(settings);
         }
 
+        public ReportService(IReportRepository reportRepository)
+        {
+            _reportRepository = reportRepository;
+        }
+        
         public Report Add(Report param)
         {
             return _reportRepository.Add(param);

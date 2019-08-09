@@ -44,7 +44,7 @@ namespace PostService.Controllers
                 try
                 {
                     httpClient.BaseAddress = new Uri("https://localhost:44360/");
-                    //httpClient.BaseAddress = new Uri("http://34.87.20.32:5000");
+                    //httpClient.BaseAddress = new Uri("http://35.247.164.212:5000");
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Split(' ')[1]);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     var conversation = new
@@ -125,7 +125,7 @@ namespace PostService.Controllers
         public IActionResult DeleteCompanionPost([FromQuery]string id)
         {
             var identity = User.Identity as ClaimsIdentity;
-            var userId = User.Identity.IsAuthenticated ? identity.FindFirst("user_id").Value : null;
+            var userId = User.Identity.IsAuthenticated ? identity.FindFirst("user_id").Value : "";
             var post = _companionPostService.GetById(id);
             if (!userId.Equals(post.Post.AuthorId)) return Unauthorized();
             var result = _companionPostService.Delete(id);
