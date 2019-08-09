@@ -54,32 +54,22 @@ namespace PostService.Controllers
             return Ok(_reportService.GetAllReportType());
         }
 
+        [Authorize(Roles = "admin")]
+        [HttpGet("all")]
+        public IActionResult GetAllReport([FromQuery] int page)
+        {
+            return Ok(_reportService.GetAllReport(page));
+        }
+
         [Authorize(Roles ="admin")]
-        [HttpGet("article")]
-        public IActionResult GetAllArticleReports([FromQuery] int page)
+        [HttpPut()]
+        public IActionResult UpdateReport([FromBody] Report param)
         {
-            return Ok(_reportService.GetAllArticleReports(page));
+            return Ok(_reportService.Update(param));
         }
 
-        [Authorize(Roles = "admin")]
-        [HttpGet("comment")]
-        public IActionResult GetAllCommentReports([FromQuery] int page)
-        {
-            return Ok(_reportService.GetAllCommentReports(page));
-        }
 
-        [Authorize(Roles = "admin")]
-        [HttpGet("companion-post")]
-        public IActionResult GetAllCompanionPostReports([FromQuery] int page)
-        {
-            return Ok(_reportService.GetAllCompanionPostReports(page));
-        }
 
-        [Authorize(Roles = "admin")]
-        [HttpGet("virtual-trip")]
-        public IActionResult GetAllVirtualTripReports([FromQuery] int page)
-        {
-            return Ok(_reportService.GetAllVirtualTripReports(page));
-        }
+
     }
 }

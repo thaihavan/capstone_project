@@ -19,12 +19,12 @@ namespace PostService.Models
         [BsonElement("report_type_id")]
         public string ReportTypeId { get; set; }
 
-        [BsonElement("reported_id")]
+        [BsonElement("target_id")]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string PostId { get; set; }
+        public string TargetId { get; set; }
 
-        [BsonElement("reported_type")]
-        public string PostType { get; set; }
+        [BsonElement("target_type")]
+        public string TargetType { get; set; }
 
         [BsonElement("reporter_id")]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -36,21 +36,12 @@ namespace PostService.Models
         [BsonElement("date")]
         public DateTime Date { get; set; }
 
-        [BsonIgnore]
-        [BsonExtraElements]
-        public Article Article { get; set; }
+        [BsonElement("is_resolved")]
+        public bool IsResolve { get; set; }
 
         [BsonIgnore]
         [BsonExtraElements]
-        public CompanionPost CompanionPost { get; set; }
-
-        [BsonIgnore]
-        [BsonExtraElements]
-        public VirtualTrip VirtualTrip { get; set; }
-
-        [BsonIgnore]
-        [BsonExtraElements]
-        public Comment Comment { get; set; }
+        public object Target { get; set; }
 
         [BsonIgnore]
         [BsonExtraElements]

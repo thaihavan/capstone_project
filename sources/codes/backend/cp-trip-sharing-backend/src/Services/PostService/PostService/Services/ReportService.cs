@@ -30,19 +30,9 @@ namespace PostService.Services
             return _reportRepository.Delete(id);
         }
 
-        public IEnumerable<Report> GetAllArticleReports(int page)
+        public IEnumerable<Report> GetAllReport(int page)
         {
-            return _reportRepository.GetAllArticleReports(page);
-        }
-
-        public IEnumerable<Report> GetAllCommentReports(int page)
-        {
-            return _reportRepository.GetAllCommentReports(page);
-        }
-
-        public IEnumerable<Report> GetAllCompanionPostReports(int page)
-        {
-            return _reportRepository.GetAllCompanionPostReports(page);
+            return _reportRepository.GetAllReport(page);
         }
 
         public IEnumerable<ReportType> GetAllReportType()
@@ -50,9 +40,9 @@ namespace PostService.Services
             return _reportRepository.GetAllReportType();
         }
 
-        public IEnumerable<Report> GetAllVirtualTripReports(int page)
+        public Report Update(Report param)
         {
-            return _reportRepository.GetAllVirtualTripReports(page);
+            return _reportRepository.Update(param);
         }
     }
 }
