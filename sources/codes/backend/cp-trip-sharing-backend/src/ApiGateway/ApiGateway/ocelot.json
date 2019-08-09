@@ -2,45 +2,36 @@
   "ReRoutes": [
     {
       "DownstreamPathTemplate": "/api/identity/{catchAll}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44353
+          "Host": "10.0.5.15",
+          "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/api/identity/{catchAll}",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "auth-provider-key"
-      }
+      "UpstreamPathTemplate": "/api/identity/{catchAll}"
     },
     {
       "DownstreamPathTemplate": "/api/userservice/{catchAll}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "34.96.97.110",
-          "Port": 80
+          "Host": "10.0.11.243",
+          "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/api/userservice/{catchAll}",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "auth-provider-key"
-      }
+      "UpstreamPathTemplate": "/api/userservice/{catchAll}"
     },
     {
       "DownstreamPathTemplate": "/api/postservice/{catchAll}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "34.96.97.110",
-          "Port": 80
+          "Host": "10.0.7.235",
+          "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/api/postservice/{catchAll}",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "auth-provider-key"
-      }
+      "UpstreamPathTemplate": "/api/postservice/{catchAll}"
     }
   ],
   "GlobalConfiguration": {

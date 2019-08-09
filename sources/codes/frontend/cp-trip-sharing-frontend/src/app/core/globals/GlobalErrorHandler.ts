@@ -10,7 +10,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
                 localStorage.clear();
-                window.location.reload();
+                // window.location.reload();
             }
         }
         console.log(error);

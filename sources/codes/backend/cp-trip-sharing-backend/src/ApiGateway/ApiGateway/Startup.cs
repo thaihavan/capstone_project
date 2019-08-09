@@ -35,45 +35,18 @@ namespace ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddOcelot(Configuration);
-
-            var authenticationProviderKey = "auth-provider-key";
 
             // Configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
-            // Configure jwt authentication
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddOcelot(Configuration);
 
-            // Configure jwt authentication
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(authenticationProviderKey, x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = true,
-                    ValidIssuer = "auth.tripsharing.com",
-                    ValidateAudience = false,
-                    RequireExpirationTime = false
-                };
-            });
-
-            // Memmory cache for blacklist token
+            // Blacklist token
             services.AddSession();
             services.AddTransient<TokenManagerMiddleware>();
             services.AddTransient<ITokenManager, TokenManager>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,9 +67,8 @@ namespace ApiGateway
                 .AllowAnyHeader()
                 .AllowCredentials());
 
-            app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseMiddleware<TokenManagerMiddleware>().UseAuthentication();
+            app.UseMiddleware<TokenManagerMiddleware>();
             app.UseMvc();
             await app.UseOcelot();
         }
