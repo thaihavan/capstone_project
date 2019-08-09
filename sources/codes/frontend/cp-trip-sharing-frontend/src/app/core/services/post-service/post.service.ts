@@ -8,6 +8,7 @@ import { Like } from 'src/app/model/Like';
 import { PostFilter } from 'src/app/model/PostFilter';
 import { Topic } from 'src/app/model/Topic';
 import { Post } from 'src/app/model/Post';
+import { ReportType } from 'src/app/model/ReportType';
 
 @Injectable({
   providedIn: 'root'
@@ -210,5 +211,15 @@ export class PostService {
     };
     return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/delete?id=' + commentId
       + '&&authorId=' + authorId, httpOptionRemoveComment);
+  }
+
+  getReportTypes(): Observable<ReportType[]> {
+    const httpOptionAuthen = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.get<ReportType[]>(`${HostGlobal.HOST_POST_SERVICE}/api/postservice/report/type`, httpOptionAuthen);
   }
 }

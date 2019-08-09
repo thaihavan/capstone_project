@@ -245,11 +245,11 @@ export class PersonalPageComponent implements OnInit {
     );
   }
 
-  reportUser(userId: any) {
-    this.openDialogRepoetUser('Báo cáo vi phạm');
+  reportUser(userId: string) {
+    this.openDialogReportUser('Báo cáo vi phạm', userId);
   }
 
-  openDialogRepoetUser(title: string) {
+  openDialogReportUser(title: string, userId: string) {
     const dialogRef = this.dialog.open(ReportPopupComponent, {
       width: '400px',
       height: 'auto',
@@ -260,7 +260,8 @@ export class PersonalPageComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.title = title;
-    instance.userId = this.userId;
+    instance.targetId = userId;
+    instance.type = 'user';
   }
 
   gotoBookmarkList() {

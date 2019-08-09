@@ -17,7 +17,7 @@ export class NotifyService {
 
   constructor(private http: HttpClient) {
     this.user = JSON.parse(localStorage.getItem('User'));
-    // this.initNotifyHubConnection(undefined);
+    // this.initNotifyHubConnection();
   }
 
   initNotifyHubConnection() {

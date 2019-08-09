@@ -4,6 +4,7 @@ import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { ReportType } from 'src/app/model/ReportType';
 import { ReportedUser } from 'src/app/model/ReportedUser';
 import { MatDialogRef } from '@angular/material';
+import { PostService } from 'src/app/core/services/post-service/post.service';
 
 @Component({
   selector: 'app-report-popup',
@@ -11,8 +12,9 @@ import { MatDialogRef } from '@angular/material';
   styleUrls: ['./report-popup.component.css']
 })
 export class ReportPopupComponent implements OnInit {
+  type: string;
   title: string;
-  userId: string;
+  targetId: string;
   listReportTypes: ReportType[];
   selectedReportType: ReportType;
 
@@ -20,6 +22,7 @@ export class ReportPopupComponent implements OnInit {
   reportContent: string;
 
   constructor(private userService: UserService,
+              private postService: PostService,
               private errorHandler: GlobalErrorHandler,
               private dialogRef: MatDialogRef<ReportPopupComponent>) {
                 this.listReportTypes = [];
@@ -28,11 +31,26 @@ export class ReportPopupComponent implements OnInit {
               }
 
   ngOnInit() {
-    this.getReportUserTypes();
+    switch (this.type) {
+      case 'user':
+        this.getReportUserTypes();
+        break;
+      case 'post':
+        this.getReportPostTypes();
+        break;
+      case 'comment':
+        break;
+    }
   }
 
   getReportUserTypes() {
     this.userService.getReportUserTypes().subscribe((res: ReportType[]) => {
+      this.listReportTypes = res;
+    }, this.errorHandler.handleError);
+  }
+
+  getReportPostTypes() {
+    this.postService.getReportTypes().subscribe((res: ReportType[]) => {
       this.listReportTypes = res;
     }, this.errorHandler.handleError);
   }
@@ -52,16 +70,28 @@ export class ReportPopupComponent implements OnInit {
       return;
     }
 
+    switch (this.type) {
+      case 'user':
+        this.sendReportUser();
+        break;
+      case 'post':
+        break;
+      case 'comment':
+        break;
+    }
+
+    this.dialogRef.close();
+  }
+
+  sendReportUser() {
     const reportedUser = new ReportedUser();
     reportedUser.reportTypeId = this.selectedReportType.id;
     reportedUser.content = this.reportContent.trim();
-    reportedUser.userId = this.userId;
+    reportedUser.userId = this.targetId;
 
     this.userService.sendReportUser(reportedUser).subscribe((res: any) => {
       console.log(res);
     }, this.errorHandler.handleError);
-
-    this.dialogRef.close();
   }
 
 }
