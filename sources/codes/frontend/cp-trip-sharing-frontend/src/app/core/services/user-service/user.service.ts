@@ -233,4 +233,9 @@ export class UserService {
     const url = `${this.apiUserService}user/report`;
     return this.http.post(url, reportUser, httpOptionAuthen);
   }
+
+  checkValidateUserName(username) {
+    const url = `${this.apiUserService}user/check-username`;
+    return this.http.get(url + '?username=' + username, httpOptionAuthen);
+  }
 }

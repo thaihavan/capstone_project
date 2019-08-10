@@ -1,15 +1,3 @@
-<!-- <div class="message-form">
-  <div class="header-message">
-    <span>Thông báo</span>
-  </div>
-  <div class="dialog-content">
-    <span>{{message.messageText}}</span>
-  </div>
-  <div class="btn-actions">
-    <button type="button" class="btn btn-primary btn-confirm" (click)="gotoHomePage()">Tiếp tục</button>
-  </div>
-  <br class="clearleft"/>
-</div> -->
 <!-- Central Modal Medium Success -->
   <div class="modal-dialog modal-notify modal-success" role="document">
     <!--Content-->
@@ -17,29 +5,25 @@
       <!--Header-->
       <div class="modal-header {{'modal-bg-' + message.messageType}}">
         <p class="heading">{{typePopup === 'success' ? 'Thành công' : 'Thất bại'}}</p>
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" class="white-text">&times;</span>
-        </button> -->
         <button mat-icon-button>
           <mat-icon>clear</mat-icon>
         </button>
       </div>
-
       <!--Body-->
       <div class="modal-body">
         <div class="text-center">
-          <i *ngIf="message.messageType === 'success'" class="fa fa-check fa-4x mb-3 animated rotateIn {{'color-' +typePopup}}"></i>
-          <i *ngIf="message.messageType !== 'success'" class="fa fa-exclamation-triangle fa-4x mb-3 animated rotateIn {{'color-' +typePopup}}"></i>
+          <i *ngIf="typePopup === 'success'" class="fa fa-check fa-4x mb-3 animated rotateIn {{'color-' +typePopup}}"></i>
+          <i *ngIf="typePopup !== 'success'" class="fa fa-exclamation-triangle fa-4x mb-3 animated rotateIn {{'color-' +typePopup}}"></i>
           <p>{{message.messageText}}</p>
         </div>
       </div>
 
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <div class="{{'btn-'+message.messageType}}">
+        <div class="{{'btn-'+typePopup}}">
             <button class="btn" (click)="gotoHomePage()" mat-raised-button>Tiếp tục</button>
         </div>
-        <div *ngIf="confirm" class="{{'btn-outline-'+message.messageType}}">
+        <div *ngIf="confirm" class="{{'btn-outline-'+typePopup}}">
             <button class="btn" mat-raised-button>Huỷ bỏ</button>
         </div>
       </div>

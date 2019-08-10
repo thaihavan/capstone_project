@@ -8,7 +8,7 @@
 
 .card-image img {
     margin: 0px;
-    width: 100%;
+    width: auto;
     height: 100%;
     transition: transform 0.3s; /* Animation */
 }

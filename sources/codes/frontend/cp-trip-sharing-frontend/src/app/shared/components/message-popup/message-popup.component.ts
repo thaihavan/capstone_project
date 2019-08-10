@@ -14,6 +14,7 @@ export class MessagePopupComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.typePopup = this.message.messageType;
   }
 
   gotoHomePage() {
