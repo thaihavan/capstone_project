@@ -9,5 +9,7 @@ namespace IdentityProvider.Repositories.Interfaces
     public interface IAccountRepository:IRepository<Account>
     {
         Account GetByEmail(string email);
+        Account GetByGoogleId(string id);
+        Account GetByFacebookId(string id);
     }
 }

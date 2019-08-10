@@ -201,7 +201,7 @@ namespace IdentityProvider.Services
             {
                 return null;
             }
-            var user = _accountRepository.GetByEmail(userInfo.Email);
+            var user = _accountRepository.GetByGoogleId(userInfo.Id);
             if (user != null)
             {
                 user.Token = JwtToken.Generate(_settings.Value.Secret, user);
@@ -218,7 +218,8 @@ namespace IdentityProvider.Services
                     Password = Hash.HashPassword(GenerateRandomPassword(),salt),
                     PasswordSalt = salt,
                     Role = "member",
-                    UserId = ObjectId.GenerateNewId().ToString()
+                    UserId = ObjectId.GenerateNewId().ToString(),
+                    GoogleId=userInfo.Id
                 };
                 _accountRepository.Add(newAccount);
                 newAccount.Password = null;
@@ -235,7 +236,7 @@ namespace IdentityProvider.Services
             {
                 return null;
             }
-            var user = _accountRepository.GetByEmail(userInfo.Email);
+            var user = _accountRepository.GetByFacebookId(userInfo.Id);
             if (user != null)
             {
                 user.Token = JwtToken.Generate(_settings.Value.Secret, user);
@@ -252,7 +253,8 @@ namespace IdentityProvider.Services
                     Password = Hash.HashPassword(GenerateRandomPassword(), salt),
                     PasswordSalt = salt,
                     Role = "member",
-                    UserId = ObjectId.GenerateNewId().ToString()
+                    UserId = ObjectId.GenerateNewId().ToString(),
+                    FaceBookId=userInfo.Id
                 };
                 _accountRepository.Add(newAccount);
                 newAccount.Password = null;

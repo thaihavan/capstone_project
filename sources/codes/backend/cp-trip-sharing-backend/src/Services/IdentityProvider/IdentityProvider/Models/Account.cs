@@ -30,6 +30,12 @@ namespace IdentityProvider.Models
         [BsonElement("role")]
         public string Role { get; set; }
 
+        [BsonElement("facebook_id")]
+        public string FaceBookId { get; set; }
+
+        [BsonElement("google_id")]
+        public string GoogleId { get; set; }
+
         [BsonIgnore]
         public string Token { get; set; }       
     }

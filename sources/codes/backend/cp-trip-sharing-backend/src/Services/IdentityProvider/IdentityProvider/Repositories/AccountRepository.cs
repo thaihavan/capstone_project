@@ -65,5 +65,14 @@ namespace IdentityProvider.Repositories
             return _accounts.Find(account => account.Email.Equals(email)).FirstOrDefault();
         }
 
+        public Account GetByGoogleId(string id)
+        {
+            return _accounts.Find(x => x.GoogleId.Equals(id)).FirstOrDefault();
+        }
+
+        public Account GetByFacebookId(string id)
+        {
+            return _accounts.Find(x => x.FaceBookId.Equals(id)).FirstOrDefault();
+        }
     }
 }
