@@ -214,7 +214,6 @@ namespace IdentityProvider.Services
                 var salt = Salt.Generate();
                 var newAccount = new Account()
                 {
-                    Email = userInfo.Email,
                     Password = Hash.HashPassword(GenerateRandomPassword(),salt),
                     PasswordSalt = salt,
                     Role = "member",
@@ -249,12 +248,11 @@ namespace IdentityProvider.Services
                 var salt = Salt.Generate();
                 var newAccount = new Account()
                 {
-                    Email = userInfo.Email,
                     Password = Hash.HashPassword(GenerateRandomPassword(), salt),
                     PasswordSalt = salt,
                     Role = "member",
                     UserId = ObjectId.GenerateNewId().ToString(),
-                    FaceBookId=userInfo.Id
+                    FacebookId=userInfo.Id
                 };
                 _accountRepository.Add(newAccount);
                 newAccount.Password = null;

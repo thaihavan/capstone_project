@@ -1,3 +1,23 @@
-<p>
-  reported-post-page works!
-</p>
+<div class="report-post-page-container">
+
+  <!-- list of post -->
+  <div *ngIf="reportedPosts && reportedPosts.length > 0">
+    <div *ngFor="let reportPost of reportedPosts" class="post-item" [hidden]="reportPost.isResolved">
+      <app-post-item [post]="reportPost.target"></app-post-item>
+      <span [hidden]="reportPost.target.isActive" class="text-removed">Đã gỡ</span>
+      <span class="option-icon" [matMenuTriggerFor]="postOption"><mat-icon>more_horiz</mat-icon></span>
+      <mat-menu #postOption="matMenu">
+        <button mat-menu-item [hidden]="!reportPost.target.isActive" (click)="removePost(reportPost.target)">Gỡ bài</button>
+        <button mat-menu-item [hidden]="reportPost.target.isActive" (click)="restorePost(reportPost.target)">Khôi phục</button>
+        <button mat-menu-item (click)="resolve(reportPost)">Đã giải quyết</button>
+      </mat-menu>
+      <div class="report-reason-text">
+        <mat-icon>error</mat-icon> {{reportPost.date | customDate}}
+        <div>
+          Lí do vi phạm: {{(reportPost.content === '') ? reportPost.reportType.name : reportPost.content}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

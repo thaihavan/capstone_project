@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PostService.Models
 {
     [BsonIgnoreExtraElements]
-    public class Report:Model
+    public class Report : Model
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -37,7 +37,7 @@ namespace PostService.Models
         public DateTime Date { get; set; }
 
         [BsonElement("is_resolved")]
-        public bool IsResolve { get; set; }
+        public bool IsResolved { get; set; }
 
         [BsonIgnore]
         [BsonExtraElements]

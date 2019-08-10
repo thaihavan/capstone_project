@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { ReportType } from 'src/app/model/ReportType';
-import { ReportedUser } from 'src/app/model/ReportedUser';
+import { Report } from 'src/app/model/Report';
 import { MatDialogRef } from '@angular/material';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 
@@ -75,8 +75,10 @@ export class ReportPopupComponent implements OnInit {
         this.sendReportUser();
         break;
       case 'post':
+        this.sendReportPost();
         break;
       case 'comment':
+        this.sendReportComment();
         break;
     }
 
@@ -84,12 +86,35 @@ export class ReportPopupComponent implements OnInit {
   }
 
   sendReportUser() {
-    const reportedUser = new ReportedUser();
+    const reportedUser = new Report();
     reportedUser.reportTypeId = this.selectedReportType.id;
     reportedUser.content = this.reportContent.trim();
-    reportedUser.userId = this.targetId;
+    reportedUser.targetId = this.targetId;
 
     this.userService.sendReportUser(reportedUser).subscribe((res: any) => {
+    }, this.errorHandler.handleError);
+  }
+
+  sendReportPost() {
+    const reportPost = new Report();
+    reportPost.reportTypeId = this.selectedReportType.id;
+    reportPost.content = this.reportContent.trim();
+    reportPost.targetId = this.targetId;
+    reportPost.targetType = 'post';
+
+    this.postService.sendReport(reportPost).subscribe((res: any) => {
+      console.log(res);
+    }, this.errorHandler.handleError);
+  }
+
+  sendReportComment() {
+    const reportComment = new Report();
+    reportComment.reportTypeId = this.selectedReportType.id;
+    reportComment.content = this.reportContent.trim();
+    reportComment.targetId = this.targetId;
+    reportComment.targetType = 'comment';
+
+    this.postService.sendReport(reportComment).subscribe((res: any) => {
       console.log(res);
     }, this.errorHandler.handleError);
   }

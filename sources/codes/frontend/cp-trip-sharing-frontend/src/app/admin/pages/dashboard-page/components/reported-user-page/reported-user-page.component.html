@@ -1,13 +1,13 @@
 <div class="reported-user-page-container">
   <div *ngIf="reportedUsers && reportedUsers.length > 0">
     <div *ngFor="let reportedUser of reportedUsers" class="user-item" [hidden]="reportedUser.isResolved">
-      <app-user-item [user]="reportedUser.user" [showFollowButton]="false"></app-user-item>
-      <span [hidden]="reportedUser.user.active" class="text-banned">Đã đình chỉ</span>
+      <app-user-item [user]="reportedUser.target" [showFollowButton]="false"></app-user-item>
+      <span [hidden]="reportedUser.target.active" class="text-banned">Đã đình chỉ</span>
       <span class="option-icon" [matMenuTriggerFor]="userOption"><mat-icon>more_horiz</mat-icon></span>
       <mat-menu #userOption="matMenu">
-        <button mat-menu-item (click)="goToUserPage(reportedUser.user)">Trang cá nhân</button>
-        <button [hidden]="!reportedUser.user.active" mat-menu-item (click)="banUser(reportedUser.user)">Đình chỉ</button>
-        <button [hidden]="reportedUser.user.active" mat-menu-item (click)="unbanUser(reportedUser.user)">Bỏ đình chỉ</button>
+        <button mat-menu-item (click)="goToUserPage(reportedUser.target)">Trang cá nhân</button>
+        <button [hidden]="!reportedUser.target.active" mat-menu-item (click)="banUser(reportedUser.target)">Đình chỉ</button>
+        <button [hidden]="reportedUser.target.active" mat-menu-item (click)="unbanUser(reportedUser.target)">Bỏ đình chỉ</button>
         <button mat-menu-item (click)="resolve(reportedUser)">Đã giải quyết</button>
       </mat-menu>
       <div class="report-reason-text">

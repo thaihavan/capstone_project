@@ -8,7 +8,7 @@ namespace PostService.Repositories.Interfaces
 {
     public interface IReportRepository:IRepository<Report>
     {
-        IEnumerable<Report> GetAllReport(int page);
+        IEnumerable<Report> GetAllReport(string targetType);
 
         IEnumerable<ReportType> GetAllReportType();
     }

@@ -5,7 +5,8 @@ import { ChartSingleModel } from 'src/app/model/ChartModel';
 import { HostGlobal } from 'src/app/core/global-variables';
 import { StatisticsFilter } from 'src/app/model/StatisticsFilter';
 import { UserService } from 'src/app/core/services/user-service/user.service';
-import { ReportedUser } from 'src/app/model/ReportedUser';
+import { Report } from 'src/app/model/Report';
+import { Post } from 'src/app/model/Post';
 
 @Injectable({
   providedIn: 'root'
@@ -47,14 +48,35 @@ export class AdminService {
     return this.http.put(url, null, this.httpOptionAuthen);
   }
 
-  getReportedUsers(): Observable<ReportedUser[]> {
-    const url = HostGlobal.HOST_USER_SERVICE + '/api/userservice/user/reports';
-    return this.http.get<ReportedUser[]>(url, this.httpOptionAuthen);
+  updatePost(post: Post): Observable<any> {
+    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/post';
+    return this.http.put(url, post, this.httpOptionAuthen);
   }
 
-  resolveReportedUser(reportedUser: ReportedUser): Observable<ReportedUser> {
+  getReportedUsers(): Observable<Report[]> {
+    const url = HostGlobal.HOST_USER_SERVICE + '/api/userservice/user/reports';
+    return this.http.get<Report[]>(url, this.httpOptionAuthen);
+  }
+
+  getReportedPosts(): Observable<Report[]> {
+    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/report/all?targetType=post';
+    return this.http.get<Report[]>(url, this.httpOptionAuthen);
+  }
+
+  getReportedComments(): Observable<Report[]> {
+    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/report/all?targetType=comment';
+    return this.http.get<Report[]>(url, this.httpOptionAuthen);
+  }
+
+  resolveReportedUser(reportedUser: Report): Observable<Report> {
     reportedUser.isResolved = true;
     const url = HostGlobal.HOST_USER_SERVICE + '/api/userservice/user/report';
-    return this.http.put<ReportedUser>(url, reportedUser, this.httpOptionAuthen);
+    return this.http.put<Report>(url, reportedUser, this.httpOptionAuthen);
+  }
+
+  resolveReport(report: Report): Observable<Report> {
+    report.isResolved = true;
+    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/report';
+    return this.http.put<Report>(url, report, this.httpOptionAuthen);
   }
 }

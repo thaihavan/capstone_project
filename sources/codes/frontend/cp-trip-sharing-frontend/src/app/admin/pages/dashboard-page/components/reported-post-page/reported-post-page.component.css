@@ -1,0 +1,48 @@
+/* common */
+div {
+    box-sizing: border-box;
+}
+
+.report-post-page-container {
+    background-color: #fff;
+    padding: 30px;
+    position: relative;
+}
+
+/* list post */
+.post-item {
+    position: relative;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.post-item .option-icon {
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    color: #666;
+    cursor: pointer;
+}
+
+.text-removed {
+    position: absolute;
+    color: #ed4035;
+    right: 80px;
+    top: 45px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.report-reason-text {
+    color: #ed4035 !important;
+    font-size: 14px;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 28px;
+}
+
+.report-reason-text mat-icon {
+    font-size: 20px;
+    position: absolute;
+    margin-top: 0px;
+    margin-left: -28px;
+}

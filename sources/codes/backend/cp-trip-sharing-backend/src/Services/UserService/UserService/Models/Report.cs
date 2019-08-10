@@ -16,8 +16,8 @@ namespace UserServices.Models
         public string Id { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
-        [BsonElement("user_id")]
-        public string UserId { get; set; }
+        [BsonElement("target_id")]
+        public string TargetId { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("report_type_id")]
@@ -38,7 +38,7 @@ namespace UserServices.Models
 
         [BsonIgnore]
         [BsonExtraElements]
-        public User User { get; set; }
+        public User Target { get; set; }
 
         [BsonIgnore]
         [BsonExtraElements]

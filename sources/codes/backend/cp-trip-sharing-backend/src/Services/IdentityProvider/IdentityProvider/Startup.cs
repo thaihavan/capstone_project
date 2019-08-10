@@ -62,10 +62,8 @@ namespace IdentityProvider
 
             // Memmory cache for blacklist token
             services.AddSession();
-            services.AddTransient<TokenManagerMiddleware>();
             services.AddTransient<ITokenManager, Services.TokenManager>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddDistributedMemoryCache();
 
             // Configure DI for application services
             services.AddScoped<IAccountService, AccountService>();
@@ -91,7 +89,6 @@ namespace IdentityProvider
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            //app.UseMiddleware<TokenManagerMiddleware>().UseAuthentication();
             app.UseMvc();
         }
     }

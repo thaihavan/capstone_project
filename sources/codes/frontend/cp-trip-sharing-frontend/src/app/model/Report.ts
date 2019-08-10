@@ -1,15 +1,18 @@
 import { User } from './User';
 import { ReportType } from './ReportType';
+import { Post } from './Post';
+import { Comment } from './Comment';
 
-export class ReportedUser {
+export class Report {
     id: string;
-    userId: string;
+    targetId: string;
+    targetType: string;
     reportTypeId: string;
     content: string;
     date: Date;
     reporterId: string;
     isResolved: boolean;
 
-    user: User;
+    target: any;
     reportType: ReportType;
 }
