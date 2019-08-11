@@ -13,7 +13,7 @@
     </div>
     <div class="author">
       Được đăng bởi
-      <a href="" (click)="gotoPersonalPage(post.author.id)" class="author-name">PhongNV</a>
+      <a href="" (click)="gotoPersonalPage(post.author.id)" class="author-name">{{post.author != null ? post.author.displayName : 'Unknown'}}</a>
       - {{post.pubDate | customDate}}
     </div>
   </div>

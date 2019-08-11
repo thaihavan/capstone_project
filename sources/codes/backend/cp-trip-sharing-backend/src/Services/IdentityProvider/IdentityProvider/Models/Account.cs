@@ -31,7 +31,7 @@ namespace IdentityProvider.Models
         public string Role { get; set; }
 
         [BsonElement("facebook_id")]
-        public string FaceBookId { get; set; }
+        public string FacebookId { get; set; }
 
         [BsonElement("google_id")]
         public string GoogleId { get; set; }

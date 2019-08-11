@@ -25,7 +25,7 @@ namespace PostService.Controllers
             _postService = postService;
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
         [HttpGet("all")]
         public IActionResult GetPosts([FromQuery] string search, [FromQuery] int page)
         {
@@ -34,6 +34,20 @@ namespace PostService.Controllers
                 page = 1;
             }
             var result = _postService.GetPosts(search, page);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut]
+        public IActionResult UpdatePost([FromBody] Post post)
+        {
+            var result = _postService.Update(post);
+            
+            if (result == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(result);
         }
 

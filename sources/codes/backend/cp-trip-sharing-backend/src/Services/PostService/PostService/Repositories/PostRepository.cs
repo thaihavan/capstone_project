@@ -18,12 +18,14 @@ namespace PostService.Repositories
 
         private readonly IMongoCollection<Post> _posts = null;
         private readonly IMongoCollection<Comment> _comments = null;
+        private readonly IMongoCollection<Author> _authors = null;
 
         public PostRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
             _posts = dbContext.Posts;
             _comments = dbContext.Comments;
+            _authors = dbContext.Authors;
         }
 
         public Post Add(Post param)
@@ -83,9 +85,17 @@ namespace PostService.Repositories
             Expression<Func<Post, bool>> searchFilter;
             searchFilter = p => p.Title != null && p.Title.IndexOf(search.Trim(), StringComparison.OrdinalIgnoreCase) >= 0;
 
+            Func<Post, Author, Post> SelectPostWithAuthor =
+                ((post, author) => { post.Author = author; return post; });
+
             var result = _posts.AsQueryable()
-                .Where(p => p.IsActive)
                 .Where(searchFilter.Compile())
+                .Join(
+                    _authors.AsQueryable(),
+                    post => post.AuthorId,
+                    author => author.Id,
+                    SelectPostWithAuthor
+                )
                 .Select(p => p)
                 .OrderByDescending(p => p.PubDate)
                 .Skip(12 * (page - 1))

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/model/Post';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { AdminService } from 'src/app/admin/services/admin-service/admin.service';
 
 @Component({
   selector: 'app-post-page-admin',
@@ -16,6 +17,7 @@ export class PostPageAdminComponent implements OnInit {
   page: number;
 
   constructor(private postService: PostService,
+              private adminService: AdminService,
               private errorHandler: GlobalErrorHandler) {
     this.searchType = 'text';
     this.search = '';
@@ -44,7 +46,18 @@ export class PostPageAdminComponent implements OnInit {
   }
 
   removePost(post: Post) {
+    post.isActive = false;
+    this.updatePost(post);
+  }
 
+  restorePost(post: Post) {
+    post.isActive = true;
+    this.updatePost(post);
+  }
+
+  updatePost(post: Post) {
+    this.adminService.updatePost(post).subscribe((res: any) => {
+    }, this.errorHandler.handleError);
   }
 
 }

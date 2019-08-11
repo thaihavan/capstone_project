@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper';
 import { User } from 'src/app/model/User';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -29,6 +28,7 @@ export class InitialUserInformationPageComponent implements OnInit {
   gender = 'true';
   birthday: Date;
   fakeinput = '';
+  isValidUserName = true;
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private titleService: Title,
@@ -37,7 +37,6 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
   ngOnInit() {
     this.checkHasAccount();
-    console.log(this.user);
     this.firstFormGroup = this.formBuilder.group({
       userName: ['', Validators.required],
       displayName: ['', Validators.required],
@@ -69,9 +68,29 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.birthday = this.user.dob;
     this.gender = this.user.gender ? 'true' : 'false';
   }
-   // form check has validation error
-   public hasError = (controlName: string, errorName: string) => {
+  // form check has validation error
+  public hasError = (controlName: string, errorName: string) => {
     return this.firstFormGroup.controls[controlName].hasError(errorName);
+  }
+
+  // valid user name from server
+  validUserName() {
+    if (this.username === '') {
+      return;
+    }
+    this.userService.checkValidateUserName(this.username).subscribe(res => {
+    },
+      (error) => {
+        this.isValidUserName = false;
+        this.firstFormGroup.controls.userName.setErrors({
+          notMatched: true
+        });
+      },
+      () => {
+        this.isValidUserName = true;
+        this.firstFormGroup.controls.userName.setErrors(null);
+      }
+    );
   }
 
   selectedTopics(topics: any) {
@@ -112,19 +131,19 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.user.gender = this.gender === 'true' ? true : false;
   }
 
-    // change avatar image
-    changeAvatar() {
-      this.uploadImage.file.nativeElement.click();
-    }
-    // Image crop
-    ImageCropted(image) {
-      this.user.avatar = image;
-    }
-    // check has account?
-    checkHasAccount() {
-     const account = JSON.parse(localStorage.getItem('Account'));
-     if (account === null) {
+  // change avatar image
+  changeAvatar() {
+    this.uploadImage.file.nativeElement.click();
+  }
+  // Image crop
+  ImageCropted(image) {
+    this.user.avatar = image;
+  }
+  // check has account?
+  checkHasAccount() {
+    const account = JSON.parse(localStorage.getItem('Account'));
+    if (account === null) {
       window.location.href = '/trang-chu';
-     }
     }
+  }
 }

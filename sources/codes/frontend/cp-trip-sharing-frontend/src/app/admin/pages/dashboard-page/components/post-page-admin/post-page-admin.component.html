@@ -16,9 +16,11 @@
   <div *ngIf="posts && posts.length > 0">
     <div *ngFor="let post of posts" class="post-item">
       <app-post-item [post]="post"></app-post-item>
+      <span [hidden]="post.isActive" class="text-removed">Đã gỡ</span>
       <span class="option-icon" [matMenuTriggerFor]="postOption"><mat-icon>more_horiz</mat-icon></span>
       <mat-menu #postOption="matMenu">
-        <button mat-menu-item (click)="removePost(post)">Gỡ bài</button>
+        <button mat-menu-item [hidden]="!post.isActive" (click)="removePost(post)">Gỡ bài</button>
+        <button mat-menu-item [hidden]="post.isActive" (click)="restorePost(post)">Khôi phục</button>
       </mat-menu>
     </div>
   </div>

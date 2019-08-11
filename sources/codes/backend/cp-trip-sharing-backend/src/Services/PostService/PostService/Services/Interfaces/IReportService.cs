@@ -8,7 +8,7 @@ namespace PostService.Services.Interfaces
 {
     public interface IReportService
     {
-        IEnumerable<Report> GetAllReport(int page);
+        IEnumerable<Report> GetAllReport(string targetType);
 
         IEnumerable<ReportType> GetAllReportType();
 

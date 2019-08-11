@@ -56,9 +56,9 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpGet("all")]
-        public IActionResult GetAllReport([FromQuery] int page)
+        public IActionResult GetAllReport([FromQuery] string targetType)
         {
-            return Ok(_reportService.GetAllReport(page));
+            return Ok(_reportService.GetAllReport(targetType));
         }
 
         [Authorize(Roles ="admin")]

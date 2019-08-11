@@ -9,6 +9,7 @@ import { PostFilter } from 'src/app/model/PostFilter';
 import { Topic } from 'src/app/model/Topic';
 import { Post } from 'src/app/model/Post';
 import { ReportType } from 'src/app/model/ReportType';
+import { Report } from 'src/app/model/Report';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class PostService {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + sessionStorage.getItem('Token')
       })
     };
     return this.http.get<Post[]>(
@@ -221,5 +223,15 @@ export class PostService {
       })
     };
     return this.http.get<ReportType[]>(`${HostGlobal.HOST_POST_SERVICE}/api/postservice/report/type`, httpOptionAuthen);
+  }
+
+  sendReport(report: Report): Observable<any> {
+    const httpOptionAuthen = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.post(`${HostGlobal.HOST_POST_SERVICE}/api/postservice/report`, report, httpOptionAuthen);
   }
 }

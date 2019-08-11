@@ -51,15 +51,16 @@ namespace UserServices.Reponsitories
         public IEnumerable<Report> GetAll(int page)
         {
             Func<Report, User, Report> selectReportWithUser =
-                (report, user) => { report.User = user; return report; };
+                (report, user) => { report.Target = user; return report; };
             Func<Report, ReportType, Report> selectReportWithReportType =
                 (report, type) => { report.ReportType = type; return report; };
 
             var reports = _reports.AsQueryable()
-                .Join(_users.AsQueryable(),
-                report => report.UserId,
-                user => user.Id,
-                selectReportWithUser)
+                .Join(
+                    _users.AsQueryable(),
+                    report => report.TargetId,
+                    user => user.Id,
+                    selectReportWithUser)
                 .Join(
                     _reportTypes.AsQueryable(),
                     report => report.ReportTypeId,

@@ -35,9 +35,9 @@ namespace PostService.Services
             return _reportRepository.Delete(id);
         }
 
-        public IEnumerable<Report> GetAllReport(int page)
+        public IEnumerable<Report> GetAllReport(string targetType)
         {
-            return _reportRepository.GetAllReport(page);
+            return _reportRepository.GetAllReport(targetType);
         }
 
         public IEnumerable<ReportType> GetAllReportType()

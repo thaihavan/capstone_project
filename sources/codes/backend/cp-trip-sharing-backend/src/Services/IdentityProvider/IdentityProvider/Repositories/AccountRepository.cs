@@ -72,7 +72,7 @@ namespace IdentityProvider.Repositories
 
         public Account GetByFacebookId(string id)
         {
-            return _accounts.Find(x => x.FaceBookId.Equals(id)).FirstOrDefault();
+            return _accounts.Find(x => x.FacebookId.Equals(id)).FirstOrDefault();
         }
     }
 }

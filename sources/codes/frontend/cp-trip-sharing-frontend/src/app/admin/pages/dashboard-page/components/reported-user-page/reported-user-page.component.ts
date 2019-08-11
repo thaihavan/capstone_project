@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReportedUser } from 'src/app/model/ReportedUser';
+import { Report } from 'src/app/model/Report';
 import { AdminService } from 'src/app/admin/services/admin-service/admin.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
@@ -9,7 +9,7 @@ import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
   styleUrls: ['./reported-user-page.component.css']
 })
 export class ReportedUserPageComponent implements OnInit {
-  reportedUsers: ReportedUser[];
+  reportedUsers: Report[];
 
   constructor(private adminService: AdminService,
               private errorHanlder: GlobalErrorHandler) {
@@ -21,13 +21,13 @@ export class ReportedUserPageComponent implements OnInit {
   }
 
   getReportedUsers() {
-    this.adminService.getReportedUsers().subscribe((res: ReportedUser[]) => {
+    this.adminService.getReportedUsers().subscribe((res: Report[]) => {
       this.reportedUsers = res;
     }, this.errorHanlder.handleError);
   }
 
-  resolve(reportedUser: ReportedUser) {
-    this.adminService.resolveReportedUser(reportedUser).subscribe((res: ReportedUser) => {
+  resolve(reportedUser: Report) {
+    this.adminService.resolveReportedUser(reportedUser).subscribe((res: Report) => {
       if (res == null) {
         reportedUser.isResolved = false;
       }

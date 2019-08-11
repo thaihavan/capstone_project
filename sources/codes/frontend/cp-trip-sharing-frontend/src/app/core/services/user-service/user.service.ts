@@ -8,7 +8,7 @@ import { ChangePassword } from 'src/app/model/ChangePassword';
 import { HostGlobal } from 'src/app/core/global-variables';
 import { Bookmark } from 'src/app/model/Bookmark';
 import { ReportType } from 'src/app/model/ReportType';
-import { ReportedUser } from 'src/app/model/ReportedUser';
+import { Report } from 'src/app/model/Report';
 
 const httpOption = {
   headers: new HttpHeaders({
@@ -229,8 +229,13 @@ export class UserService {
     return this.http.get<ReportType[]>(url, httpOptionAuthen);
   }
 
-  sendReportUser(reportUser: ReportedUser): Observable<any> {
+  sendReportUser(reportUser: Report): Observable<any> {
     const url = `${this.apiUserService}user/report`;
     return this.http.post(url, reportUser, httpOptionAuthen);
+  }
+
+  checkValidateUserName(username) {
+    const url = `${this.apiUserService}user/check-username`;
+    return this.http.get(url + '?username=' + username, httpOptionAuthen);
   }
 }
