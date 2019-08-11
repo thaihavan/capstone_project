@@ -88,7 +88,7 @@ namespace PostService.Repositories
 
         public IEnumerable<Comment> GetCommentByPost(string postId)
         {
-            var comments = _comments.AsQueryable().Where(x=>x.Active==true)
+            var comments = _comments.AsQueryable().Where(x=>x.IsActive==true)
                 .Where(c => c.PostId == postId)
                 .Join(
                    _authors.AsQueryable(),
@@ -98,7 +98,7 @@ namespace PostService.Repositories
                    {
                        Id = comment.Id,
                        AuthorId = comment.AuthorId,
-                       Active = comment.Active,
+                       IsActive = comment.IsActive,
                        Content = comment.Content,
                        ParentId = comment.ParentId,
                        PostId = comment.PostId,
@@ -147,7 +147,7 @@ namespace PostService.Repositories
                    {
                        Id = comment.Id,
                        AuthorId = comment.AuthorId,
-                       Active = comment.Active,
+                       IsActive = comment.IsActive,
                        Content = comment.Content,
                        ParentId = comment.ParentId,
                        PostId = comment.PostId,

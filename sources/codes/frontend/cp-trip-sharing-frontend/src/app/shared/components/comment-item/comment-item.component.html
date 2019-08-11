@@ -1,0 +1,11 @@
+<div class="comment-item">
+  <div>{{comment.content}}</div>
+  <div class="post">
+    tại bài viết <span class="post-title">{{comment.postId}}</span>
+  </div>
+  <div class="author">
+    Đăng bởi: 
+    <a href="" class="author-name">{{comment.author != null ? comment.author.displayName : 'Unknown'}}</a>
+     - {{comment.date | customDate}}
+  </div>
+</div>

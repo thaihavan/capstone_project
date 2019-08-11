@@ -1,3 +1,23 @@
-<p>
-  reported-comment-page works!
-</p>
+<div class="report-comment-page-container">
+
+  <!-- list of post -->
+  <div *ngIf="reportedComments && reportedComments.length > 0">
+    <div *ngFor="let reportComment of reportedComments" class="comment-item" [hidden]="reportComment.isResolved">
+      <app-comment-item [comment]="reportComment.target"></app-comment-item>
+      <span [hidden]="reportComment.target.isActive" class="text-removed">Đã gỡ</span>
+      <span class="option-icon" [matMenuTriggerFor]="commentOption"><mat-icon>more_horiz</mat-icon></span>
+      <mat-menu #commentOption="matMenu">
+        <button mat-menu-item [hidden]="!reportComment.target.isActive" (click)="removeComment(reportComment.target)">Gỡ bài</button>
+        <button mat-menu-item [hidden]="reportComment.target.isActive" (click)="restoreComment(reportComment.target)">Khôi phục</button>
+        <button mat-menu-item (click)="resolve(reportComment)">Đã giải quyết</button>
+      </mat-menu>
+      <div class="report-reason-text">
+        <mat-icon>error</mat-icon> {{reportComment.date | customDate}}
+        <div>
+          Lí do vi phạm: {{(reportComment.content === '') ? reportComment.reportType.name : reportComment.content}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -48,16 +48,17 @@ namespace PostService.Repositories
 
         public IEnumerable<Report> GetAllReport(string targetType)
         {
+            object abc = new object();
             Func<Report, Post, Report> selectReportedPost =
-                ((report, post) => { report.TargetPost = post; return report; });
+                ((report, post) => { report.Target = post; return report; });
             Func<Report, Comment, Report> selectReportedComment =
-                ((report, Comment) => { report.TargetComment = Comment; return report; });
+                ((report, Comment) => { report.Target = Comment; return report; });
             Func<Report, ReportType, Report> selectReportWithReportType =
                 (report, type) => { report.ReportType = type; return report; };
             Func<Report,Author,Report> selectReportedCommentAuthor =
-                ((report, author) => { report.TargetComment.Author = author; return report; });
+                ((report, author) => { ((Comment)report.Target).Author = author; return report; });
             Func<Report, Author, Report> selectReportedPostAuthor =
-                ((report, author) => { report.TargetPost.Author = author; return report; });
+                ((report, author) => { ((Post)report.Target).Author = author; return report; });
 
 
             IEnumerable<Report> reports = null;
@@ -78,7 +79,7 @@ namespace PostService.Repositories
                                     selectReportWithReportType)
                                 .Join(
                                     _authors.AsQueryable(),
-                                    report => report.TargetComment.AuthorId,
+                                    report => ((Post)report.Target).AuthorId,
                                     author => author.Id,
                                     selectReportedPostAuthor)
                                 .OrderByDescending(x => x.Date)
@@ -98,7 +99,7 @@ namespace PostService.Repositories
                                     selectReportWithReportType)
                                 .Join(
                                     _authors.AsQueryable(),
-                                    report=>report.TargetComment.AuthorId,
+                                    report=> ((Comment)report.Target).AuthorId,
                                     author=>author.Id,
                                     selectReportedCommentAuthor)
                                 .OrderByDescending(x => x.Date)

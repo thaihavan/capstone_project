@@ -104,10 +104,10 @@ export class SingleCommentComponent implements OnInit {
   }
 
   reportComment() {
-    this.openDialogMessageConfirm('Báo cáo bình luận');
+    this.openDialogMessageConfirm('Báo cáo bình luận', this.comment.id);
   }
 
-  openDialogMessageConfirm(title: string) {
+  openDialogMessageConfirm(title: string, commentId: string) {
     const dialogRef = this.dialog.open(ReportPopupComponent, {
       width: '500px',
       height: 'auto',
@@ -118,6 +118,8 @@ export class SingleCommentComponent implements OnInit {
     });
     const instance = dialogRef.componentInstance;
     instance.title = title;
+    instance.targetId = commentId;
+    instance.type = 'comment';
   }
 
   editComment() {

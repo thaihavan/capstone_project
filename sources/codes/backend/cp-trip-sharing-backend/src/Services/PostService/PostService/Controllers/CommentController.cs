@@ -54,7 +54,7 @@ namespace PostService.Controllers
             // Set comment property
             param.Id = ObjectId.GenerateNewId().ToString();
             param.AuthorId = userId;
-            param.Active = true;
+            param.IsActive = true;
             param.Date = DateTime.Now;
             param.Author = _authorService.GetById(param.AuthorId);
 

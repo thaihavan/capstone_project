@@ -33,7 +33,7 @@ namespace PostService.Models
         public DateTime Date { get; set; }
 
         [BsonElement("is_active")]
-        public bool Active { get; set; }
+        public bool IsActive { get; set; }
 
         [BsonElement("like_count")]
         public int LikeCount { get; set; }

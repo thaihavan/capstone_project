@@ -11,6 +11,7 @@ export class Comment {
     public authorId: string;
     public author: Author;
     public liked: boolean;
+    public isActive: boolean;
 
     constructor() {
         this.author = new Author();
