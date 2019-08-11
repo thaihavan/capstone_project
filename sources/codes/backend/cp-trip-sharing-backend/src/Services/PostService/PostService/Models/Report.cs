@@ -41,7 +41,11 @@ namespace PostService.Models
 
         [BsonIgnore]
         [BsonExtraElements]
-        public object Target { get; set; }
+        public Post TargetPost { get; set; }
+
+        [BsonIgnore]
+        [BsonExtraElements]
+        public Comment TargetComment { get; set; }
 
         [BsonIgnore]
         [BsonExtraElements]

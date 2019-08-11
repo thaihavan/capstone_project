@@ -55,9 +55,13 @@ namespace PostService.Repositories
         public IEnumerable<Report> GetAllReport(int page)
         {
             Func<Report, Post, Report> selectReportedPost =
-                ((report, post) => { report.Target = post; return report; });
+                ((report, post) => { report.TargetPost = post; return report; });
             Func<Report, Comment, Report> selectReportedComment =
-                ((report, Comment) => { report.Target = Comment; return report; });
+                ((report, Comment) => { report.TargetComment = Comment; return report; });
+            Func<Report, Author, Report> selectReportedCommentAuthor =
+                ((report, author) => { report.TargetComment.Author = author; return report; });
+            Func<Report, Author, Report> selectReportedPostAuthor =
+                ((report, author) => { report.TargetPost.Author = author; return report; });
 
             var reports= _reports.AsQueryable()
                 .Join(_posts.AsQueryable(),
@@ -68,6 +72,14 @@ namespace PostService.Repositories
                 report=>report.TargetId,
                 comment=>comment.Id,
                 selectReportedComment)
+                .Join(_authors.AsQueryable(),
+                report=>report.TargetComment.AuthorId,
+                author=>author.Id,
+                selectReportedCommentAuthor)
+                .Join(_authors.AsQueryable(),
+                report => report.TargetPost.AuthorId,
+                author => author.Id,
+                selectReportedPostAuthor)
                 .OrderByDescending(x=>x.Date)
                 .Skip(12 * (page - 1))
                 .Take(12);
