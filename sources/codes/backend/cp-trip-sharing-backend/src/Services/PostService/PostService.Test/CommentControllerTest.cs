@@ -30,7 +30,7 @@ namespace PostService.Test
                 PostId = "5d027ea59b358d247cd219a2",
                 Content = "day la test commentservice",
                 Date = DateTime.Now,
-                Active = true,
+                IsActive = true,
                 Liked = false,
                 LikeCount = 0
             };
