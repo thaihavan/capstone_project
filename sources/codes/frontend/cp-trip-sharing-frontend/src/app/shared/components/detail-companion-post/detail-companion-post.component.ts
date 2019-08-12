@@ -9,6 +9,8 @@ import { FindingCompanionService } from 'src/app/core/services/post-service/find
 import { MatDialog } from '@angular/material';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { LoginPageComponent } from '../login-page/login-page.component';
+import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
+import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'app-detail-companion-post',
@@ -24,13 +26,18 @@ export class DetailCompanionPostComponent implements OnInit {
   userListRequests: CompanionPostRequest[] = [];
   userListGroup: ChatUser[] = [];
   isAuthorPost = false;
+  user: User;
+
   constructor(
     private chatService: ChatService,
     private alertify: AlertifyService,
     private postService: FindingCompanionService,
     private dialog: MatDialog,
-    private errorHandler: GlobalErrorHandler
-  ) {}
+    private errorHandler: GlobalErrorHandler,
+    private notifyService: NotifyService
+  ) {
+    this.user = JSON.parse(localStorage.getItem('User'));
+  }
 
   ngOnInit() {
     this.checkAuthorPost();
@@ -42,11 +49,10 @@ export class DetailCompanionPostComponent implements OnInit {
 
   // check author
   checkAuthorPost() {
-    const user = JSON.parse(localStorage.getItem('User'));
-    if (user === null) {
+    if (this.user === null) {
       return;
         }
-    if (user.id === this.companionPost.post.author.id) {
+    if (this.user.id === this.companionPost.post.author.id) {
       this.isAuthorPost = true;
     }
   }
@@ -110,6 +116,8 @@ export class DetailCompanionPostComponent implements OnInit {
       },
       () => {
         this.alertify.success('Đã thêm mới một thành viên');
+        // Send notification
+        this.notifyService.sendJoinRequestAcceptedNotification(this.user, this.companionPost, user_id);
       }
     );
   }
@@ -157,6 +165,8 @@ export class DetailCompanionPostComponent implements OnInit {
           () => {
             this.statustRequest.IsWaiting();
             this.alertify.success('Gửi yêu câu thành công!');
+            // Send notification
+            this.notifyService.sendJoinRequestNotification(this.user, this.companionPost);
           }
         );
     } else {

@@ -3,18 +3,13 @@ import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Comment } from 'src/app/model/Comment';
 import { Post } from 'src/app/model/Post';
 import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from 'src/app/core/services/user-service/user.service';
-import { Article } from 'src/app/model/Article';
 import { Like } from 'src/app/model/Like';
 import { Bookmark } from 'src/app/model/Bookmark';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
-import { Notification } from 'src/app/model/Notification';
-import { NotificationTemplates } from 'src/app/core/globals/NotificationTemplates';
-import { HostGlobal } from 'src/app/core/global-variables';
 import { User } from 'src/app/model/User';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
@@ -168,7 +163,7 @@ export class DetailpostPageComponent implements OnInit {
       console.log('add comment res: ' + res);
       this.comments.push(res);
       // Send notification
-      this.sendCommentNotification();
+      this.notifyService.sendCommentNotification(this.user, this.detailPost);
     }, this.errorHandler.handleError);
   }
 
@@ -197,7 +192,7 @@ export class DetailpostPageComponent implements OnInit {
         this.detailPost.post.liked = true;
         this.detailPost.post.likeCount += 1;
         // Send notitication
-        this.sendLikeNotification();
+        this.notifyService.sendLikeNotification(this.user, this.detailPost);
       }, this.errorHandler.handleError);
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
@@ -282,28 +277,6 @@ export class DetailpostPageComponent implements OnInit {
     instance.message.messageText = message;
     instance.message.messageType = messageType;
     instance.message.url = '/user/' + this.user.id + url;
-  }
-
-  sendLikeNotification() {
-    const notification = new Notification();
-    notification.content = new NotificationTemplates()
-    .getLikePostNotiTemplate(this.user.displayName, this.detailPost.post.title);
-    notification.displayImage = this.user.avatar;
-    notification.receivers = [this.detailPost.post.author.id];
-    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.detailPost.id;
-    notification.seenIds = [this.user.id];
-    this.notifyService.sendNotification(notification);
-  }
-
-  sendCommentNotification() {
-    const notification = new Notification();
-    notification.content = new NotificationTemplates()
-      .getCommentedNotiTemplate(this.user.displayName, this.detailPost.post.title);
-    notification.displayImage = this.user.avatar;
-    notification.receivers = [this.detailPost.post.author.id];
-    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.detailPost.id;
-    notification.seenIds = [this.user.id];
-    this.notifyService.sendNotification(notification);
   }
 
 }

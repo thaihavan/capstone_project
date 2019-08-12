@@ -3,7 +3,8 @@
   <div *ngIf="notifications.length == 0">
     <div class="item-menu no-notification">Bạn không có thông báo nào</div>
   </div>
-  <div *ngFor="let item of notifications" [ngClass]="{'item-menu': true, 'not-seen': isNotSeen(item.id)}">
+  <div *ngFor="let item of notifications" [ngClass]="{'item-menu': true, 'not-seen': isNotSeen(item.id)}"
+  (click)="goToDetail(item)">
     <div class="avatar">
       <img src="{{item.displayImage}}">
     </div>

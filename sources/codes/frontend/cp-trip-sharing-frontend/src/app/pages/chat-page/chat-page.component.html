@@ -138,7 +138,7 @@
               </mat-accordion>
 
               <!-- Thao tác -->
-              <mat-accordion>
+              <mat-accordion [hidden]="selectedConversation.groupAdmin == user.id">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -166,18 +166,18 @@
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <mat-nav-list class="list-members">
-                    <div *ngFor="let user of selectedConversation.users">
+                    <div *ngFor="let userItem of selectedConversation.users">
                       <mat-list-item class="chat-member-item">
-                        <img class="mat-list-avatar" src="{{user.profileImage}}">
+                        <img class="mat-list-avatar" src="{{userItem.profileImage}}">
                         <div class="mat-list-text">
-                          <h3 class="mat-line" matline="">{{user.displayName}}</h3>
+                          <h3 class="mat-line" matline="">{{userItem.displayName}}</h3>
                         </div>
                         <span class="icon-settings" [matMenuTriggerFor]="settingsMenu">
-                          <mat-icon>settings</mat-icon>
+                          <mat-icon>more_vert</mat-icon>
                         </span>
                         <mat-menu #settingsMenu="matMenu">
-                          <button mat-menu-item (click)="gotoUserPage(user)">Trang cá nhân</button>
-                          <button mat-menu-item (click)="removeMember(selectedConversation, user)">Xóa khỏi nhóm</button>
+                          <button mat-menu-item (click)="gotoUserPage(userItem)">Trang cá nhân</button>
+                          <button mat-menu-item *ngIf="selectedConversation.groupAdmin == user.id" (click)="removeMember(selectedConversation, userItem)">Xóa khỏi nhóm</button>
                         </mat-menu>
                       </mat-list-item>
                     </div>

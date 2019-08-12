@@ -148,7 +148,7 @@ export class ChatPageComponent implements OnInit {
     if (user) {
       return user.profileImage;
     }
-    return 'https://storage.googleapis.com/trip-sharing-final-image-bucket/image-default-user-avatar.png';
+    return 'https://storage.googleapis.com/trip-sharing-cp-image-bucket/image-default-user-avatar.png';
   }
 
   sendMessage(message: string) {

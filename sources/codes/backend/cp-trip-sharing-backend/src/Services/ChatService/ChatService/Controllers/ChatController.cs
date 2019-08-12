@@ -83,6 +83,7 @@ namespace ChatService.Controllers
             conversation.Receivers = new List<string>() { userId };
             conversation.Type = "group";
             conversation.SeenIds = new List<string>() { userId };
+            conversation.CreatedDate = DateTime.Now;
             if (conversation.Avatar == null || conversation.Avatar.Trim() == "")
             {
                 conversation.Avatar = "https://storage.googleapis.com/trip-sharing-cp-image-bucket/image-default-group-chat-avatar.png";
