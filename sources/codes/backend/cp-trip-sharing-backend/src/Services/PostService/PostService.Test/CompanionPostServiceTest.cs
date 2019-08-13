@@ -13,7 +13,6 @@ namespace PostService.Test
     [TestFixture]
     class CompanionPostServiceTest
     {
-        AppSettings _setting = null;
         Mock<ICompanionPostRepository> _mockICompanionPostRepository = null;
         CompanionPost companionPost = null;
         Post post = null;

@@ -234,5 +234,17 @@ namespace ChatService.Test
             var type = getMembers.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
+
+
+        [TestCase]
+        public void TestGetMembersReturnBadRequest()
+        {
+            IEnumerable<User> ienumableUser = null;
+            mockChatService.Setup(x => x.GetAllMember(It.IsAny<string>())).Returns(ienumableUser);
+            var chatController = new ChatService.Controllers.ChatController(mockChatService.Object);
+            IActionResult getMembers = chatController.GetMembers("af5af5asf6af7g7g7fg8f8gfgsd");
+            var type = getMembers.GetType();
+            Assert.AreEqual(type.Name, "BadRequestResult");
+        }
     }
 }

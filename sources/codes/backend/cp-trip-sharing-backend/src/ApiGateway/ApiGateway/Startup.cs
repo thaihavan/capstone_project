@@ -70,6 +70,7 @@ namespace ApiGateway
             app.UseHttpsRedirection();
             app.UseMiddleware<TokenManagerMiddleware>();
             app.UseMvc();
+            app.UseWebSockets();
             await app.UseOcelot();
         }
     }

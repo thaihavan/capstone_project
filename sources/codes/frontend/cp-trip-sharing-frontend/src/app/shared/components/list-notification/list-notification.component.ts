@@ -40,4 +40,8 @@ export class ListNotificationComponent implements OnInit {
     return this.listNotSeen.indexOf(notificationId) !== -1;
   }
 
+  goToDetail(notification: Notification) {
+    window.location.href = notification.url;
+  }
+
 }

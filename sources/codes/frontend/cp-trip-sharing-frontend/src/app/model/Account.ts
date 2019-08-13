@@ -6,4 +6,6 @@ export class Account {
     public newPassword: string;
     public role: string;
     public token: string;
+    public googleId: string;
+    public facebookId: string;
 }

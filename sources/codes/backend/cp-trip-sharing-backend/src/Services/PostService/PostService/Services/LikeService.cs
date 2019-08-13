@@ -16,6 +16,7 @@ namespace PostService.Services
         private readonly ILikeRepository _likeRepository = null;
         private readonly IPostRepository _postRepository = null;
         private readonly ICommentRepository _commentRepository = null;
+        private readonly IPublishToTopic _publishToTopic = null;
 
         public LikeService(ILikeRepository likeRepository, IPostRepository postRepository, ICommentRepository commentRepository)
         {
@@ -29,6 +30,7 @@ namespace PostService.Services
             _likeRepository = new LikeRepository(settings);
             _postRepository = new PostRepository(settings);
             _commentRepository = new CommentRepository(settings);
+            _publishToTopic = new PublishToTopic();
         }
 
         public Like Add(Like like)
@@ -36,6 +38,7 @@ namespace PostService.Services
             switch (like.ObjectType)
             {
                 case "post":
+                    IncreaseCPFor100LikesAsync(like.ObjectId);
                     _postRepository.IncreaseLikeCount(like.ObjectId);
                     break;
                 case "comment":
@@ -57,6 +60,20 @@ namespace PostService.Services
                     break;
             }
             return _likeRepository.Delete(like.ObjectId, like.UserId);
+        }
+
+        private async Task IncreaseCPFor100LikesAsync(string postId)
+        {
+            var post = _postRepository.GetById(postId);
+            int x = post.LikeCount % 100;
+            if (x + 1 == 100)
+            {
+                _publishToTopic.PublishCP(new IncreasingCP()
+                {
+                    UserId = post.AuthorId,
+                    Point = 1
+                });
+            }
         }
     }
 }

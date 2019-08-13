@@ -1,0 +1,29 @@
+.comment-item{
+    width: 100%;
+    height: auto;
+    clear: both;
+    padding: 10px;
+    display: inline-block;
+    position: relative;
+}
+
+.post {
+    color: #838383;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.post-title {
+    color: #2296f3;
+}
+
+.author {
+    bottom: 6px;
+    color: #838383;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.author-name{
+    color: #2296f3;
+}

@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { ChartSingleModel } from 'src/app/model/ChartModel';
 import { HostGlobal } from 'src/app/core/global-variables';
 import { StatisticsFilter } from 'src/app/model/StatisticsFilter';
-import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Report } from 'src/app/model/Report';
 import { Post } from 'src/app/model/Post';
+import { Comment } from 'src/app/model/Comment';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +51,11 @@ export class AdminService {
   updatePost(post: Post): Observable<any> {
     const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/post';
     return this.http.put(url, post, this.httpOptionAuthen);
+  }
+
+  updateComment(comment: Comment): Observable<any> {
+    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/update';
+    return this.http.put(url, comment, this.httpOptionAuthen);
   }
 
   getReportedUsers(): Observable<Report[]> {

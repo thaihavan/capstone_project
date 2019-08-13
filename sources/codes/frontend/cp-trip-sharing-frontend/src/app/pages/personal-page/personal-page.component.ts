@@ -38,6 +38,7 @@ export class PersonalPageComponent implements OnInit {
   token: any;
   myProfile: Author;
   isFixMenuBar: boolean;
+  listBlockeds: User[];
 
   constructor(private router: Router,
               private userService: UserService,
@@ -90,6 +91,8 @@ export class PersonalPageComponent implements OnInit {
         this.navLinks.find(tab => tab.link === '.' + this.router.url)
       );
     });
+
+    this.listBlockeds = JSON.parse(localStorage.getItem('listBlockeds'));
   }
 
   // check scroll fix menu nav
@@ -273,6 +276,10 @@ export class PersonalPageComponent implements OnInit {
   gotoBlockedList() {
     const account = JSON.parse(localStorage.getItem('Account'));
     this.userId = account.userId;
-    window.location.href = '/user/' + this.userId + '/danh-sach-chan';
+    window.location.href = '/user/' + this.userId;
+  }
+
+  isBlocked(userId: string) {
+    return this.listBlockeds.find(u => u.id === userId) != null;
   }
 }

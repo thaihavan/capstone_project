@@ -4,6 +4,8 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { HostGlobal } from 'src/app/core/global-variables';
 import { AdminService } from 'src/app/admin/services/admin-service/admin.service';
+import { MatDialog } from '@angular/material';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 
 @Component({
   selector: 'app-user-page-admin',
@@ -19,6 +21,7 @@ export class UserPageAdminComponent implements OnInit {
 
   constructor(private userService: UserService,
               private adminService: AdminService,
+              private dialog: MatDialog,
               private errorHandler: GlobalErrorHandler) {
     this.searchType = 'text';
     this.search = '';
@@ -50,15 +53,47 @@ export class UserPageAdminComponent implements OnInit {
   }
 
   banUser(user: User) {
-    this.adminService.banUser(user.id).subscribe((res: any) => {
-      user.active = false;
-    }, this.errorHandler.handleError);
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '500px',
+      height: 'auto',
+      position: {
+        top: '20px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = `Bạn có chắc muốn đình chỉ người dùng này không?`;
+    instance.message.messageType = 'confirm';
+
+    dialogRef.afterClosed().subscribe((res: string) => {
+      if (res === 'continue') {
+        this.adminService.banUser(user.id).subscribe((result: any) => {
+          user.active = false;
+        }, this.errorHandler.handleError);
+      }
+    });
   }
 
   unbanUser(user: User) {
-    this.adminService.unbanUser(user.id).subscribe((res: any) => {
-      user.active = true;
-    }, this.errorHandler.handleError);
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '500px',
+      height: 'auto',
+      position: {
+        top: '20px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = `Bạn có chắc muốn bỏ đình chỉ người dùng này không?`;
+    instance.message.messageType = 'confirm';
+
+    dialogRef.afterClosed().subscribe((res: string) => {
+      if (res === 'continue') {
+        this.adminService.unbanUser(user.id).subscribe((result: any) => {
+          user.active = true;
+        }, this.errorHandler.handleError);
+      }
+    });
   }
 
 }

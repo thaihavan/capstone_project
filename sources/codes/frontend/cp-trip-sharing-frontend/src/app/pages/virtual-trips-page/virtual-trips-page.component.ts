@@ -271,7 +271,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     const instance = dialogRef.componentInstance;
     instance.message.messageType = messageType;
     instance.message.messageText = message;
-    instance.message.url = '/chuyen-di?tripId=' + data;
+    instance.message.url = '/chuyen-di/' + data;
   }
 
   // send update request to server

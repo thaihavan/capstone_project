@@ -55,6 +55,7 @@ import { HighlightDirective } from './directives/highlight.directive';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { PostItemComponent } from './components/post-item/post-item.component';
+import { CommentItemComponent } from './components/comment-item/comment-item.component';
 
 const Material = [
   MatButtonModule,
@@ -122,7 +123,8 @@ const Material = [
     HighlightDirective,
     ChangePasswordComponent,
     LoginPageComponent,
-    PostItemComponent
+    PostItemComponent,
+    CommentItemComponent
   ],
   imports: [
     CommonModule,
@@ -171,7 +173,8 @@ const Material = [
     HighlightDirective,
     ChangePasswordComponent,
     LoginPageComponent,
-    PostItemComponent
+    PostItemComponent,
+    CommentItemComponent
   ],
   entryComponents: [
     LoginPageComponent,

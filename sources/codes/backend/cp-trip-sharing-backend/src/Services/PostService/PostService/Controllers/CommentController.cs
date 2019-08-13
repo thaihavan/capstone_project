@@ -54,7 +54,7 @@ namespace PostService.Controllers
             // Set comment property
             param.Id = ObjectId.GenerateNewId().ToString();
             param.AuthorId = userId;
-            param.Active = true;
+            param.IsActive = true;
             param.Date = DateTime.Now;
             param.Author = _authorService.GetById(param.AuthorId);
 
@@ -76,16 +76,10 @@ namespace PostService.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "member")]
+        [Authorize(Roles = "member, admin")]
         [HttpPut("update")]
         public IActionResult UpdateComment([FromBody] Comment param)
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_id").Value;
-            if (!param.AuthorId.Equals(userId))
-            {
-                return Unauthorized();
-            }
             _commentService.Update(param);
             return Ok(param);
         }

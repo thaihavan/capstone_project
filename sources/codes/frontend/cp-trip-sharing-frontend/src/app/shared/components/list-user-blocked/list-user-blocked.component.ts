@@ -22,8 +22,7 @@ export class ListUserBlockedComponent implements OnInit {
   ngOnInit() { }
 
   getListUserBlocked() {
-    const token = localStorage.getItem('Token');
-    this.userService.getAllUserBlockedByUserId(token).subscribe((result: any) => {
+    this.userService.getBlockeds().subscribe((result: any) => {
       this.listUser = result;
       this.listUserSave = this.listUser;
     }, this.errorHandler.handleError);

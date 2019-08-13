@@ -140,30 +140,22 @@ export class ListPostComponent implements OnInit {
       const userId = this.getUserIdFromUrl();
       if (isReset) {
         this.page = 1;
+        this.resetListPost();
       }
       if (this.personalNav === 'bai-viet') {
         this.postService.getAllArticlesByUserId(userId, postFilter, this.page).subscribe((data: []) => {
-          if (isReset) {
-            this.resetListPost();
-          }
           this.articleDisplay.typeArticle = 'article';
           this.articleDisplay.items.push(...data);
           this.isLoading = false;
         }, this.errorHandler.handleError);
       } else if (this.personalNav === 'chuyen-di') {
         this.tripService.getVirtualTripsByUser(userId, postFilter, this.page).subscribe((data: []) => {
-          if (isReset) {
-            this.resetListPost();
-          }
           this.articleDisplay.typeArticle = 'virtual-trip';
           this.articleDisplay.items.push(...data);
           this.isLoading = false;
         }, this.errorHandler.handleError);
       } else if (this.personalNav === 'tim-ban-dong-hanh') {
         this.companionPostService.getCompanionPostsByUser(userId, postFilter, this.page).subscribe((data: []) => {
-          if (isReset) {
-            this.resetListPost();
-          }
           this.articleDisplay.typeArticle = 'companion-post';
           this.articleDisplay.items.push(...data);
           this.isLoading = false;

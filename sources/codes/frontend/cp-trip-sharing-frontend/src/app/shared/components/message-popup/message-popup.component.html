@@ -1,10 +1,10 @@
 <!-- Central Modal Medium Success -->
-  <div class="modal-dialog modal-notify modal-success" role="document">
+  <div class="modal-dialog modal-notify" role="document">
     <!--Content-->
     <div class="modal-content">
       <!--Header-->
       <div class="modal-header {{'modal-bg-' + message.messageType}}">
-        <p class="heading">{{typePopup === 'success' ? 'Thành công' : 'Thất bại'}}</p>
+        <p class="heading">{{title}}</p>
         <button mat-icon-button>
           <mat-icon>clear</mat-icon>
         </button>
@@ -12,19 +12,20 @@
       <!--Body-->
       <div class="modal-body">
         <div class="text-center">
-          <i *ngIf="typePopup === 'success'" class="fa fa-check fa-4x mb-3 animated rotateIn {{'color-' +typePopup}}"></i>
-          <i *ngIf="typePopup !== 'success'" class="fa fa-exclamation-triangle fa-4x mb-3 animated rotateIn {{'color-' +typePopup}}"></i>
+          <i *ngIf="message.messageType === 'success'" class="fa fa-check fa-4x mb-3 animated rotateIn {{'color-' + message.messageType}}"></i>
+          <i *ngIf="message.messageType === 'danger'" class="fa fa-exclamation-triangle fa-4x mb-3 animated rotateIn {{'color-' + message.messageType}}"></i>
+          <i *ngIf="message.messageType === 'confirm'" class="fa fa-exclamation-triangle fa-4x mb-3 animated rotateIn {{'color-' + message.messageType}}"></i>
           <p>{{message.messageText}}</p>
         </div>
       </div>
 
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <div class="{{'btn-'+typePopup}}">
-            <button class="btn" (click)="gotoHomePage()" mat-raised-button>Tiếp tục</button>
+        <div class="{{'btn-' + message.messageType}}">
+            <button class="btn" (click)="continue()" mat-raised-button>Tiếp tục</button>
         </div>
-        <div *ngIf="confirm" class="{{'btn-outline-'+typePopup}}">
-            <button class="btn" mat-raised-button>Huỷ bỏ</button>
+        <div *ngIf="message.messageType === 'confirm'" class="{{'btn-outline-' + message.messageType}}">
+            <button class="btn" (click)="cancel()" mat-raised-button>Huỷ bỏ</button>
         </div>
       </div>
     </div>

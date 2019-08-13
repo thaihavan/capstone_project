@@ -103,10 +103,10 @@ export class UserService {
     return this.http.delete<any>(this.apiUserService + 'block/unblock?blocked=' + userId , httpAuthen);
   }
 
-  getAllUserBlockedByUserId(token: any): Observable<any> {
+  getBlockeds(): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
-        Authorization: 'Bearer ' + token
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
     return this.http.get<any>(this.apiUserService + 'block/blocked', httpAuthen);

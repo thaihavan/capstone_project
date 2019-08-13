@@ -40,7 +40,7 @@ namespace UserServices.Utils
             {
                 ProjectId = pubsubSettings.GetSection("ProjectId").Value,
                 PushTopicId = pubsubSettings.GetSection("PushTopicId").Value,
-                SubcriptionId = pubsubSettings.GetSection("SubcriptionId").Value
+                SubcriptionId = pubsubSettings.GetSection("SubscriptionId").Value
             });
 
             return settings;

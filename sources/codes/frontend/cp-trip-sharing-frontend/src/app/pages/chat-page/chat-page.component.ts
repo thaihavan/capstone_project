@@ -13,6 +13,8 @@ import { UploadImageService } from 'src/app/core/services/upload-image-service/u
 import { ImageUpload } from 'src/app/model/ImageUpload';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { MatDialog } from '@angular/material';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 
 @Component({
   selector: 'app-chat-page',
@@ -41,6 +43,7 @@ export class ChatPageComponent implements OnInit {
               private titleService: Title,
               private uploadImageService: UploadImageService,
               private userService: UserService,
+              private dialog: MatDialog,
               private errorHandler: GlobalErrorHandler) {
     this.titleService.setTitle('Tin nhắn');
   }
@@ -148,7 +151,7 @@ export class ChatPageComponent implements OnInit {
     if (user) {
       return user.profileImage;
     }
-    return 'https://storage.googleapis.com/trip-sharing-final-image-bucket/image-default-user-avatar.png';
+    return 'https://storage.googleapis.com/trip-sharing-cp-image-bucket/image-default-user-avatar.png';
   }
 
   sendMessage(message: string) {
@@ -207,9 +210,25 @@ export class ChatPageComponent implements OnInit {
   }
 
   leaveGroupChat(conversationId: string, userId: string) {
-    this.chatService.leaveGroupChat(conversationId, userId).subscribe((res) => {
-      window.location.reload();
-    }, this.errorHandler.handleError);
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '500px',
+      height: 'auto',
+      position: {
+        top: '20px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = 'Bạn có chắc chắn muốn rời khỏi nhóm không?';
+    instance.message.messageType = 'confirm';
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result === 'continue') {
+        this.chatService.leaveGroupChat(conversationId, userId).subscribe((res) => {
+          window.location.reload();
+        }, this.errorHandler.handleError);
+      }
+    });
   }
 
   gotoUserPage(user: ChatUser) {
@@ -218,9 +237,25 @@ export class ChatPageComponent implements OnInit {
 
   removeMember(selectedConversation: Conversation, user: ChatUser) {
     if (selectedConversation.groupAdmin === this.user.id) {
-      this.chatService.leaveGroupChat(selectedConversation.id, user.id).subscribe((res) => {
-        selectedConversation.users = selectedConversation.users.filter(u => u.id !== user.id);
-      }, this.errorHandler.handleError);
+      const dialogRef = this.dialog.open(MessagePopupComponent, {
+        width: '500px',
+        height: 'auto',
+        position: {
+          top: '20px'
+        },
+        disableClose: true
+      });
+      const instance = dialogRef.componentInstance;
+      instance.message.messageText = 'Bạn có chắc chắn muốn xóa thành viên này khỏi nhóm không?';
+      instance.message.messageType = 'confirm';
+
+      dialogRef.afterClosed().subscribe((result: string) => {
+        if (result === 'continue') {
+          this.chatService.leaveGroupChat(selectedConversation.id, user.id).subscribe((res) => {
+            selectedConversation.users = selectedConversation.users.filter(u => u.id !== user.id);
+          }, this.errorHandler.handleError);
+        }
+      });
     }
   }
 

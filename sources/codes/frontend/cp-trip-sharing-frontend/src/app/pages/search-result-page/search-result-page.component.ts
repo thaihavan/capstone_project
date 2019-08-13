@@ -37,7 +37,7 @@ export class SearchResultPageComponent implements OnInit {
     this.navLinks = [
       {
         path: `bai-viet`,
-        label: 'Blogs'
+        label: 'Cảm hứng du lịch'
       },
       {
         path: `chuyen-di`,
@@ -84,7 +84,7 @@ export class SearchResultPageComponent implements OnInit {
 
   searchByText() {
     if (this.search && this.search.trim() !== '') {
-      window.location.href = '/search/text/' + this.selectedPath + '/' + this.search;
+      window.location.href = '/search/text/' + this.selectedPath + '/' + this.search.trim();
     }
   }
 

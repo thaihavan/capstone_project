@@ -32,9 +32,75 @@
         }
       ],
       "UpstreamPathTemplate": "/api/postservice/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/chatservice/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "10.0.13.73",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/chatservice/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/chat/negotiate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "10.0.13.73",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/chat/negotiate"
+    },
+    {
+      "DownstreamPathTemplate": "/chat",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "10.0.13.73",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/chat"
+    },
+    {
+      "DownstreamPathTemplate": "/api/notificationservice/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "10.0.11.101",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/notificationservice/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/notification/negotiate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "10.0.11.101",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/notification/negotiate"
+    },
+    {
+      "DownstreamPathTemplate": "/notification",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "10.0.11.101",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/notification"
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44345"
+    "BaseUrl": "http://35.187.244.118"
   }
 }

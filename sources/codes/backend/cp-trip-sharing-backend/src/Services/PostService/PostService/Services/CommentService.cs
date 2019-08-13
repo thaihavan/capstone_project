@@ -59,8 +59,11 @@ namespace PostService.Services
                 }
                 else
                 {
-                    var parent = dict[x.Value.ParentId];
-                    parent.Childs.Add(x.Value);
+                    Comment parent;
+                    if (dict.TryGetValue(x.Value.ParentId, out parent))
+                    {
+                        parent.Childs.Add(x.Value);
+                    }
                 }
             }
             return comments;
@@ -84,8 +87,11 @@ namespace PostService.Services
                 }
                 else
                 {
-                    var parent = dict[x.Value.ParentId];
-                    parent.Childs.Add(x.Value);
+                    Comment parent;
+                    if (dict.TryGetValue(x.Value.ParentId, out parent))
+                    {
+                        parent.Childs.Add(x.Value);
+                    }
                 }
             }
             return comments;

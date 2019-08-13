@@ -38,7 +38,7 @@
             <mat-icon class="icon-more">more_horiz</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="blockUserById(userId)">
+            <button [hidden]="isBlocked(userId)" mat-menu-item (click)="blockUserById(userId)">
               <mat-icon>block</mat-icon>
               <span>Chặn người dùng</span>
             </button>
@@ -153,7 +153,7 @@
 
         <!-- Card 2 -->
       </div>
-      <div class="col-md-7 mb-5">
+      <div class="col-md-6 mb-5">
 
         <router-outlet></router-outlet>
       </div>

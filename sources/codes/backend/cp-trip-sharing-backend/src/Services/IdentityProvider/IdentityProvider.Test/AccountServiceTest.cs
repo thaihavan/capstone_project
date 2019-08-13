@@ -184,14 +184,14 @@ namespace IdentityProvider.Test
             Assert.IsTrue(result);
         }
 
-        //[TestCase]
-        //public void TestGetGoogleUserInformation()
-        //{
-        //    AccountService accountService = new AccountService(Options.Create(_setting));
-        //    string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjVkMGExNzcwMWEwYTQyMDAwMTdkZTZjOCIsInJvbGUiOiJtZW1iZXIiLCJ1c2VyX2lkIjoiNWQwYTE3NzAxYTBhNDIwMDAxN2RlNmM3IiwibmJmIjoxNTYyOTA2NjI3LCJleHAiOjE1NjI5MjgyMjcsImlhdCI6MTU2MjkwNjYyNywiaXNzIjoiYXV0aC50cmlwc2hhcmluZy5jb20ifQ.ou0CVGErEDI7DNGSpHsm3Q6aT5g8u2tVekWM9jklvY0";
-        //    GoogleUser googleUser = accountService.GetGoogleUserInformation(token);
-        //    Assert.IsNull(googleUser);
-        //}
+        [TestCase]
+        public void TestGetGoogleUserInformation()
+        {
+            var accountService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
+            string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjVkMGExNzcwMWEwYTQyMDAwMTdkZTZjOCIsInJvbGUiOiJtZW1iZXIiLCJ1c2VyX2lkIjoiNWQwYTE3NzAxYTBhNDIwMDAxN2RlNmM3IiwibmJmIjoxNTYyOTA2NjI3LCJleHAiOjE1NjI5MjgyMjcsImlhdCI6MTU2MjkwNjYyNywiaXNzIjoiYXV0aC50cmlwc2hhcmluZy5jb20ifQ.ou0CVGErEDI7DNGSpHsm3Q6aT5g8u2tVekWM9jklvY0";
+            GoogleUser googleUser = accountService.GetGoogleUserInformation(token);
+            Assert.IsNull(googleUser);
+        }
 
         [TestCase]
         public void TestGoogleAuthenticate()
@@ -215,19 +215,19 @@ namespace IdentityProvider.Test
             moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             moqIAccountRepository.Setup(x => x.Add(It.IsAny<Account>())).Returns(acc);
             //moqaccountService.Setup(x => x.GetGoogleUserInformation(It.IsAny<string>())).Returns(googleUser);
-            var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
-            var account = testService.GoogleAuthenticate(token);
+            var accountService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
+            var account = accountService.GoogleAuthenticate(token);
             Assert.IsNull(account);
         }
 
-        //[TestCase]
-        //public void TestGetFacebookUserInformation()
-        //{
-        //    AccountService accountService = new AccountService(Options.Create(_setting));
-        //    string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjVkMGExNzcwMWEwYTQyMDAwMTdkZTZjOCIsInJvbGUiOiJtZW1iZXIiLCJ1c2VyX2lkIjoiNWQwYTE3NzAxYTBhNDIwMDAxN2RlNmM3IiwibmJmIjoxNTYyOTA2NjI3LCJleHAiOjE1NjI5MjgyMjcsImlhdCI6MTU2MjkwNjYyNywiaXNzIjoiYXV0aC50cmlwc2hhcmluZy5jb20ifQ.ou0CVGErEDI7DNGSpHsm3Q6aT5g8u2tVekWM9jklvY0";
-        //    FacebookUser googleUser = accountService.GetFacebookUserInformation(token);
-        //    Assert.IsNull(googleUser);
-        //}
+        [TestCase]
+        public void TestGetFacebookUserInformation()
+        {
+            var accountService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
+            string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjVkMGExNzcwMWEwYTQyMDAwMTdkZTZjOCIsInJvbGUiOiJtZW1iZXIiLCJ1c2VyX2lkIjoiNWQwYTE3NzAxYTBhNDIwMDAxN2RlNmM3IiwibmJmIjoxNTYyOTA2NjI3LCJleHAiOjE1NjI5MjgyMjcsImlhdCI6MTU2MjkwNjYyNywiaXNzIjoiYXV0aC50cmlwc2hhcmluZy5jb20ifQ.ou0CVGErEDI7DNGSpHsm3Q6aT5g8u2tVekWM9jklvY0";
+            FacebookUser facebookUser = accountService.GetFacebookUserInformation(token);
+            Assert.IsNull(facebookUser);
+        }
 
         [TestCase]
         public void TestFacebookAuthenticate()
@@ -251,8 +251,8 @@ namespace IdentityProvider.Test
             moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             moqIAccountRepository.Setup(x => x.Add(It.IsAny<Account>())).Returns(acc);
             //moqaccountService.Setup(x => x.GetGoogleUserInformation(It.IsAny<string>())).Returns(googleUser);
-            var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
-            var account = testService.FacebookAuthenticate(token);
+            var accountService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
+            var account = accountService.FacebookAuthenticate(token);
             Assert.IsNull(account);
         }
     }

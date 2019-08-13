@@ -39,6 +39,7 @@ export class ReportPopupComponent implements OnInit {
         this.getReportPostTypes();
         break;
       case 'comment':
+        this.getReportPostTypes();
         break;
     }
   }

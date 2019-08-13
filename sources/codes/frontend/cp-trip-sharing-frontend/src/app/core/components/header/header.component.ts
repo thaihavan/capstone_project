@@ -57,6 +57,7 @@ export class HeaderComponent implements OnInit {
         this.getFollowings();
         this.getListPostIdBookmark();
         this.getListBlockers();
+        this.getListBlockeds();
 
         this.initSocketConnection();
       } else if (this.account.role === 'admin') {
@@ -214,6 +215,12 @@ export class HeaderComponent implements OnInit {
   getListBlockers() {
     this.userService.getBlockers().subscribe((res: User[]) => {
       localStorage.setItem('listBlockers', JSON.stringify(res));
+    }, this.errorHandler.handleError);
+  }
+
+  getListBlockeds() {
+    this.userService.getBlockeds().subscribe((res: User[]) => {
+      localStorage.setItem('listBlockeds', JSON.stringify(res));
     }, this.errorHandler.handleError);
   }
 

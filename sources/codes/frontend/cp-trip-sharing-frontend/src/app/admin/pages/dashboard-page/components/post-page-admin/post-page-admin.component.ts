@@ -3,6 +3,8 @@ import { Post } from 'src/app/model/Post';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { AdminService } from 'src/app/admin/services/admin-service/admin.service';
+import { MatDialog } from '@angular/material';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 
 @Component({
   selector: 'app-post-page-admin',
@@ -18,6 +20,7 @@ export class PostPageAdminComponent implements OnInit {
 
   constructor(private postService: PostService,
               private adminService: AdminService,
+              private dialog: MatDialog,
               private errorHandler: GlobalErrorHandler) {
     this.searchType = 'text';
     this.search = '';
@@ -46,13 +49,45 @@ export class PostPageAdminComponent implements OnInit {
   }
 
   removePost(post: Post) {
-    post.isActive = false;
-    this.updatePost(post);
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '500px',
+      height: 'auto',
+      position: {
+        top: '20px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = `Bạn có chắc chắn muốn gỡ bỏ bài viết này không?`;
+    instance.message.messageType = 'confirm';
+
+    dialogRef.afterClosed().subscribe((res: string) => {
+      if (res === 'continue') {
+        post.isActive = false;
+        this.updatePost(post);
+      }
+    });
   }
 
   restorePost(post: Post) {
-    post.isActive = true;
-    this.updatePost(post);
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '500px',
+      height: 'auto',
+      position: {
+        top: '20px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = `Bạn có chắc chắn muốn khôi phục bài viết này không?`;
+    instance.message.messageType = 'confirm';
+
+    dialogRef.afterClosed().subscribe((res: string) => {
+      if (res === 'continue') {
+        post.isActive = true;
+        this.updatePost(post);
+      }
+    });
   }
 
   updatePost(post: Post) {

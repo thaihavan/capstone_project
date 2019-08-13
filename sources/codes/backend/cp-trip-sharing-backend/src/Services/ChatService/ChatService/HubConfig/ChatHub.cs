@@ -112,6 +112,10 @@ namespace ChatService.HubConfig
             }
             else
             {
+                if (user.Connections == null)
+                {
+                    user.Connections = new List<string>();
+                }
                 user.Connections.Add(Context.ConnectionId);
                 _userRepository.Update(user);
             }

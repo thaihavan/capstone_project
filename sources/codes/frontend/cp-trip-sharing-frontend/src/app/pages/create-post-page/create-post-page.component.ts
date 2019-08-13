@@ -169,12 +169,10 @@ export class CreatePostPageComponent implements OnInit {
           this.postService.updateArticle(this.articlereturn).subscribe(
             (data: Article) => {
               this.articlereturn = data;
-            },
-            (err: HttpErrorResponse) => {
               this.openDialogMessageConfirm('Chỉnh sửa bài thành công', 'success');
             },
-            () => {
-              this.openDialogMessageConfirm('Chỉnh sửa bài thành công', 'danger');
+            (err: HttpErrorResponse) => {
+              this.openDialogMessageConfirm('Chỉnh sửa bài thất bại', 'danger');
             }
           );
         } else {

@@ -39,7 +39,7 @@ namespace PostService.Services
             _publishToTopic.PublishCP(new IncreasingCP()
             {
                 UserId = param.AuthorId,
-                Point = 1
+                Point = 5
             });
             return _postRepository.Add(param);
         }

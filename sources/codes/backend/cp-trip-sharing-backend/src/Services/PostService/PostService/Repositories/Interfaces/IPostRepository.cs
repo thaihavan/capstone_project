@@ -17,7 +17,5 @@ namespace PostService.Repositories.Interfaces
         bool IncreaseCommentCount(string id);
 
         bool DecreaseCommentCount(string id);
-
- 
     }
 }
