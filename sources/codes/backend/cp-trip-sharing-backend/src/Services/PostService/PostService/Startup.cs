@@ -81,6 +81,7 @@ namespace PostService
             services.AddScoped<ICompanionPostService, CompanionPostService>();
             services.AddScoped<IPublishToTopic, PublishToTopic>();
             services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IBookmarkService, BookmarkService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

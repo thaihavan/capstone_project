@@ -74,7 +74,6 @@ namespace UserServices
             // Services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBlockService, BlockService>();
-            services.AddScoped<IBookmarkService, BookmarkService>();
             services.AddScoped<IFollowService, FollowService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IPublishToTopic, PublishToTopic>();

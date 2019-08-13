@@ -52,18 +52,6 @@ namespace UserServices.Reponsitories.DbContext
             }
         }
 
-        public IMongoCollection<Bookmark> BookmarkCollection
-        {
-            get
-            {
-                if (_database != null)
-                {
-                    return _database.GetCollection<Bookmark>("Bookmarks");
-                }
-                return null;
-            }
-        }
-
         public IMongoCollection<Photo> PhotoCollection
         {
             get

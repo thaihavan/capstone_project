@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Options;
+using PostService.Helpers;
+using PostService.Models;
+using PostService.Repositories;
+using PostService.Repositories.Interfaces;
+using PostService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UserServices.Helpers;
-using UserServices.Models;
-using UserServices.Reponsitories;
-using UserServices.Reponsitories.Interfaces;
-using UserServices.Services.Interfaces;
 
-namespace UserServices.Services
+namespace PostService.Services
 {
     public class BookmarkService : IBookmarkService
     {
@@ -30,9 +30,14 @@ namespace UserServices.Services
             return _bookmarkRepository.Add(bookmark);
         }
 
-        public Bookmark DeleteBookmark(Bookmark bookmark)
+        public bool DeleteBookmark(string id)
         {
-            return _bookmarkRepository.Delete(bookmark);
+            return _bookmarkRepository.Delete(id);
+        }
+
+        public Bookmark GetById(string id)
+        {
+            return _bookmarkRepository.GetById(id);
         }
 
         public IEnumerable<string> GetUserBookmarkId(string id)
@@ -40,9 +45,9 @@ namespace UserServices.Services
             return _bookmarkRepository.GetUserBookmarkId(id);
         }
 
-        public IEnumerable<Bookmark> GetUserBookmarks(string userId)
+        public IEnumerable<Bookmark> GetUserBookmarks(string userId, int page)
         {
-            return _bookmarkRepository.GetAll(userId);
+            return _bookmarkRepository.GetAll(userId,page);
         }
     }
 }

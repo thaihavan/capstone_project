@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
-using UserServices.Models;
-using UserServices.Services.Interfaces;
+using PostService.Models;
+using PostService.Services.Interfaces;
 
-namespace UserServices.Controllers
+namespace PostService.Controllers
 {
-    [Route("api/userservice/[controller]")]
+    [Route("api/postservice/[controller]")]
     [ApiController]
     public class BookmarkController : ControllerBase
     {
@@ -30,7 +29,7 @@ namespace UserServices.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            bookmark.UserId =userId;
+            bookmark.UserId = userId;
             if (_bookmarkService.AddBookmark(bookmark) != null)
             {
                 return Ok(bookmark);
@@ -45,16 +44,13 @@ namespace UserServices.Controllers
         // body { postId : "id" }
         [Authorize(Roles = "member")]
         [HttpDelete("bookmark")]
-        public IActionResult DeleteBookmark([FromQuery] string postId)
+        public IActionResult DeleteBookmark([FromQuery] string id)
         {
-            var bookmark = new Bookmark
-            {
-                PostId = postId
-            };
+            var bookmark = _bookmarkService.GetById(id);
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
             bookmark.UserId = userId;
-            if (_bookmarkService.DeleteBookmark(bookmark) != null)
+            if (_bookmarkService.DeleteBookmark(id) != null)
             {
                 return Ok(bookmark);
             }
@@ -67,11 +63,11 @@ namespace UserServices.Controllers
 
         [Authorize(Roles = "member")]
         [HttpGet("bookmark")]
-        public IActionResult GetUserBookmarks()
+        public IActionResult GetUserBookmarks([FromQuery] int page)
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            return Ok(_bookmarkService.GetUserBookmarks(userId));
+            return Ok(_bookmarkService.GetUserBookmarks(userId,page));
         }
 
         [Authorize(Roles = "member")]

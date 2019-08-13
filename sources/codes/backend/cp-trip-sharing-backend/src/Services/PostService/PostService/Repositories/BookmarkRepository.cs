@@ -1,56 +1,60 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using PostService.Helpers;
+using PostService.Models;
+using PostService.Repositories.DbContext;
+using PostService.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UserServices.Helpers;
-using UserServices.Models;
-using UserServices.Reponsitories.DbContext;
-using UserServices.Reponsitories.Interfaces;
 
-namespace UserServices.Reponsitories
+namespace PostService.Repositories
 {
-    public class BookmarkRepository : IBookmarkRepository
+    public class BookmarkRepository: IBookmarkRepository
     {
         private readonly IMongoCollection<Bookmark> _bookmarks = null;
-        private readonly IMongoCollection<User> _users = null;
-        
+        private readonly IMongoCollection<Author> _authors = null;
+        private readonly IMongoCollection<Post> _posts = null;
+
         public BookmarkRepository(IOptions<AppSettings> settings)
         {
             var dbContext = new MongoDbContext(settings);
             _bookmarks = dbContext.BookmarkCollection;
-            _users = dbContext.Users;
+            _authors = dbContext.Authors;
         }
-        
+
         public Bookmark Add(Bookmark bookmark)
         {
             _bookmarks.InsertOne(bookmark);
             return bookmark;
         }
 
-        public Bookmark GetById(string user_id)
+        public Bookmark GetById(string id)
         {
-            throw new NotImplementedException();
+            return _bookmarks.Find(x => x.Id.Equals(id)).FirstOrDefault();
         }
 
-        public Bookmark Delete(Bookmark document)
+        public IEnumerable<Bookmark> GetAll(string id,int page)
         {
-            _bookmarks.DeleteOne(item => item.UserId.Equals(document.UserId) && item.PostId.Equals(document.PostId));
-            return document;
-        }
-
-        public IEnumerable<Bookmark> GetAll(string id)
-        {
-            Func<Bookmark, User, Bookmark> selectAuthor =
+            Func<Bookmark, Author, Bookmark> selectAuthor =
                 ((bookmark, user) => { bookmark.Author = user; return bookmark; });
-            //List<Bookmark> bookmarks = _bookmarks.Find(temp => temp.UserId.Equals(id)).ToList();
+            Func<Bookmark, Post, Bookmark> selectPost =
+                ((bookmark, post) => { bookmark.Post = post; return bookmark; });
+
             var bookmarks = _bookmarks.AsQueryable().Where(x => x.UserId.Equals(id))
-                .Join(_users.AsQueryable(),
-                bookmark => bookmark.AuthorId,
-                user => user.Id,
-                selectAuthor
-                ).ToList();
+                .Join(_authors.AsQueryable(),
+                    bookmark => bookmark.AuthorId,
+                    user => user.Id,
+                    selectAuthor
+                )
+                .Join(_posts.AsQueryable(),
+                    bookmark=>bookmark.PostId,
+                    post=>post.Id,
+                    selectPost
+                ).Skip(12 * (page - 1))
+                .Take(12)
+                .ToList();
             return bookmarks;
         }
 
@@ -65,7 +69,6 @@ namespace UserServices.Reponsitories
         }
 
         public IEnumerable<string> GetUserBookmarkId(string id)
-    
         {
             List<string> bookmarks = _bookmarks
                 .AsQueryable()
@@ -73,6 +76,12 @@ namespace UserServices.Reponsitories
                 .Equals(id))
                 .Select(x => x.PostId).ToList();
             return bookmarks;
+        }
+
+        public bool Delete(string id)
+        {
+            _bookmarks.FindOneAndDelete(x => x.Id.Equals(id));
+            return true;
         }
     }
 }
