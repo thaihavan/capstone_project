@@ -6,6 +6,7 @@ import { FormAddTopicsComponent } from './form-add-topics/form-add-topics.compon
 import { Topic } from 'src/app/model/Topic';
 import { DeleteConfirmPopupComponent } from 'src/app/shared/components/delete-confirm-popup/delete-confirm-popup.component';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 
 
 @Component({
@@ -43,7 +44,11 @@ export class TopicPageAdminComponent implements OnInit {
 
   addTopic() {
     const dialogRef = this.dialog.open(FormAddTopicsComponent, {
-      width: '420px',
+      width: '500px',
+      height: 'auto',
+        position: {
+          top: '20px'
+        },
       data: {
         toppics: [],
         destinations: [],
@@ -60,7 +65,11 @@ export class TopicPageAdminComponent implements OnInit {
   UpdateTopic() {
     if (this.selectedTopics.length === 1) {
       const dialogRef = this.dialog.open(FormAddTopicsComponent, {
-        width: '420px',
+        width: '500px',
+        height: 'auto',
+        position: {
+          top: '20px'
+        },
         data: {
           toppics: [],
           destinations: [],
@@ -82,19 +91,20 @@ export class TopicPageAdminComponent implements OnInit {
 
   removeTopics() {
     if (this.selectedTopics.length > 0) {
-      const dialogRef = this.dialog.open(DeleteConfirmPopupComponent, {
-        width: '320px',
+      const dialogRef = this.dialog.open(MessagePopupComponent, {
+        width: '500px',
         height: 'auto',
         position: {
-          top: '150px'
+          top: '20px'
         },
         disableClose: true
       });
       const instance = dialogRef.componentInstance;
-      instance.message = `Bạn có chắc muốn xóa ${this.selectedTopics.length} chủ đề này không?`;
+      instance.message.messageText = `Bạn có chắc muốn xóa ${this.selectedTopics.length} chủ đề này không?`;
+      instance.message.messageType = 'confirm';
 
       dialogRef.afterClosed().subscribe((res: string) => {
-        if (res === 'yes') {
+        if (res === 'continue') {
           if (this.selectedTopics.length > 0) {
             this.postService.removeTopics(this.selectedTopics).subscribe((result: any) => {
               this.listTopics = this.listTopics.filter(t => this.selectedTopics.find(x => x === t.id) == null);
