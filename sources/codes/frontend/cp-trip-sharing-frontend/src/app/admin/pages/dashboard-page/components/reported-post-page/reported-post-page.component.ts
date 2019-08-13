@@ -3,6 +3,8 @@ import { AdminService } from 'src/app/admin/services/admin-service/admin.service
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { Report } from 'src/app/model/Report';
 import { Post } from 'src/app/model/Post';
+import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-reported-post-page',
@@ -13,6 +15,7 @@ export class ReportedPostPageComponent implements OnInit {
 
   reportedPosts: Report[];
   constructor(private adminService: AdminService,
+              private dialog: MatDialog,
               private errorHandler: GlobalErrorHandler) {
     this.reportedPosts = [];
   }
@@ -38,13 +41,45 @@ export class ReportedPostPageComponent implements OnInit {
   }
 
   removePost(post: Post) {
-    post.isActive = false;
-    this.updatePost(post);
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '500px',
+      height: 'auto',
+      position: {
+        top: '20px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = `Bạn có chắc chắn muốn gỡ bỏ bài viết này không?`;
+    instance.message.messageType = 'confirm';
+
+    dialogRef.afterClosed().subscribe((res: string) => {
+      if (res === 'continue') {
+        post.isActive = false;
+        this.updatePost(post);
+      }
+    });
   }
 
   restorePost(post: Post) {
-    post.isActive = true;
-    this.updatePost(post);
+    const dialogRef = this.dialog.open(MessagePopupComponent, {
+      width: '500px',
+      height: 'auto',
+      position: {
+        top: '20px'
+      },
+      disableClose: true
+    });
+    const instance = dialogRef.componentInstance;
+    instance.message.messageText = `Bạn có chắc chắn muốn khôi phục bài viết này không?`;
+    instance.message.messageType = 'confirm';
+
+    dialogRef.afterClosed().subscribe((res: string) => {
+      if (res === 'continue') {
+        post.isActive = true;
+        this.updatePost(post);
+      }
+    });
   }
 
   updatePost(post: Post) {

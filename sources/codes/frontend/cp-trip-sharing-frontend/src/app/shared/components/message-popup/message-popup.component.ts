@@ -8,17 +8,36 @@ import { PopupMessage } from 'src/app/model/PopupMessage';
 })
 export class MessagePopupComponent implements OnInit {
   message = new PopupMessage();
-  @Input()
-  typePopup = 'success';
-  @Input() confirm: boolean;
-  constructor() {}
+
+  title: string;
+  constructor(private dialogRef: MatDialogRef<MessagePopupComponent>) { }
 
   ngOnInit() {
-    this.typePopup = this.message.messageType;
+    switch (this.message.messageType) {
+      case 'success':
+        this.title = 'Thành công';
+        break;
+      case 'danger':
+        this.title = 'Thất bại';
+        break;
+      case 'confirm':
+        this.title = 'Xác nhận';
+        break;
+    }
   }
 
-  gotoHomePage() {
-    window.location.href = this.message.url;
+  continue() {
+    if (this.message.messageType === 'confirm') {
+      this.dialogRef.close('continue');
+    } else {
+      window.location.href = this.message.url;
+    }
+  }
+
+  cancel() {
+    if (this.message.messageType === 'confirm') {
+      this.dialogRef.close('cancel');
+    }
   }
 
 }

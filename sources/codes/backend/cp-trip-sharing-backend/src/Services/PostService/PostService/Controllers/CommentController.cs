@@ -76,16 +76,10 @@ namespace PostService.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "member")]
+        [Authorize(Roles = "member, admin")]
         [HttpPut("update")]
         public IActionResult UpdateComment([FromBody] Comment param)
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            var userId = identity.FindFirst("user_id").Value;
-            if (!param.AuthorId.Equals(userId))
-            {
-                return Unauthorized();
-            }
             _commentService.Update(param);
             return Ok(param);
         }
