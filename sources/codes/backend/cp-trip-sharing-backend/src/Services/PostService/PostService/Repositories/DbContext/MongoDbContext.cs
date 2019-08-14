@@ -156,5 +156,17 @@ namespace PostService.Repositories.DbContext
                 return null;
             }
         }
+
+        public IMongoCollection<Bookmark> BookmarkCollection
+        {
+            get
+            {
+                if (_database != null)
+                {
+                    return _database.GetCollection<Bookmark>("Bookmarks");
+                }
+                return null;
+            }
+        }
     }
 }

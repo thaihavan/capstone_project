@@ -1,0 +1,17 @@
+﻿using PostService.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace PostService.Services.Interfaces
+{
+    public interface IBookmarkService
+    {
+        Bookmark AddBookmark(Bookmark bookmark);
+        bool DeleteBookmark(string id);
+        IEnumerable<Bookmark> GetUserBookmarks(string userId, int page);
+        IEnumerable<string> GetUserBookmarkId(string id);
+        Bookmark GetById(string id);
+    }
+}

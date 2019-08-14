@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
 
-namespace UserServices.Models
+namespace PostService.Models
 {
     [BsonIgnoreExtraElements]
     public class Bookmark : Model
@@ -25,11 +25,6 @@ namespace UserServices.Models
 
         [BsonElement("title")]
         public string Title { get; set; }
-        [BsonElement("cover_image")]
-        public string CoverImage { get; set; }
-
-        [BsonElement("post_type")]
-        public string PostType { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("author_id")]
@@ -37,7 +32,11 @@ namespace UserServices.Models
 
         [BsonIgnore]
         [BsonExtraElements]
-        public User Author { get; set; }
+        public Author Author { get; set; }
 
+        [BsonIgnore]
+        [BsonExtraElements]
+        public Post Post { get; set; }
     }
 }
+
