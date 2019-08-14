@@ -136,19 +136,19 @@ namespace PostService.Test
             Assert.IsNotNull(list_articles);
         }
 
-        [TestCase]
-        public void TestGetRecommendArticles()
-        {
-            IEnumerable<Article> articles = new List<Article>()
-            {
-                article
-            };
-            mockArticleRepository.Setup(x => x.GetRecommendArticles(It.IsAny<PostFilter>(), It.IsAny<UserInfo>(), It.IsAny<int>())).Returns(articles);
-            var _articleService = new ArticleService(mockArticleRepository.Object);
-            IEnumerable<Article> list_articles = null;
-            list_articles = _articleService.GetRecommendArticles(postFilter, null, 6);
-            Assert.IsNotNull(list_articles);
-        }
+        //[TestCase]
+        //public void TestGetRecommendArticles()
+        //{
+        //    IEnumerable<Article> articles = new List<Article>()
+        //    {
+        //        article
+        //    };
+        //    mockArticleRepository.Setup(x => x.GetRecommendArticles(It.IsAny<PostFilter>(), It.IsAny<UserInfo>(), It.IsAny<int>())).Returns(articles);
+        //    var _articleService = new ArticleService(mockArticleRepository.Object);
+        //    IEnumerable<Article> list_articles = null;
+        //    list_articles = _articleService.GetRecommendArticles(postFilter, null, 6);
+        //    Assert.IsNotNull(list_articles);
+        //}
 
         [TestCase]
         public void TestGetPopularArticles()

@@ -84,8 +84,8 @@ namespace PostService.Test
             IEnumerable<Article> _iEnumerableArticle = articles;
             mockArticleService.Setup(x => x.GetAllArticles(It.IsAny<PostFilter>(),It.IsAny<int>())).Returns(_iEnumerableArticle);
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
-            IActionResult getArticleById = _articleController.GetAllArticles(postFilter,4);
-            var type = getArticleById.GetType();
+            IActionResult getAllArticles = _articleController.GetAllArticles(postFilter,4);
+            var type = getAllArticles.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
@@ -97,22 +97,30 @@ namespace PostService.Test
             IEnumerable<Article> _iEnumerableArticle = articles;
             mockArticleService.Setup(x => x.GetAllArticlesByUser(It.IsAny<string>(), It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(_iEnumerableArticle);
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
-            IActionResult getArticleById = _articleController.GetAllArticlesByUser("as4dasdd56sdasdasd44as2",postFilter, 4);
-            var type = getArticleById.GetType();
+            IActionResult getAllArticlesByUser = _articleController.GetAllArticlesByUser("as4dasdd56sdasdasd44as2",postFilter, 4);
+            var type = getAllArticlesByUser.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]
         public void TestGetRecommendArticles()
         {
-            UserInfo userInfo = null;
+            ClaimsIdentity claims = new ClaimsIdentity(new Claim[]
+            {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","authorId")
+            });
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             List<Article> articles = new List<Article>();
             articles.Add(article);
             IEnumerable<Article> _iEnumerableArticle = articles;
             mockArticleService.Setup(x => x.GetRecommendArticles(It.IsAny<PostFilter>(), It.IsAny<UserInfo>(), It.IsAny<int>())).Returns(_iEnumerableArticle);
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
-            IActionResult getArticleById = _articleController.GetRecommendArticles(postFilter, 4);
-            var type = getArticleById.GetType();
+            _articleController.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult getRecommendArticles = _articleController.GetRecommendArticles(postFilter, 4);
+            var type = getRecommendArticles.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
@@ -210,7 +218,7 @@ namespace PostService.Test
         public void TestUpdateArticleReturnBadRequest()
         {
             var contextMock = new Mock<HttpContext>();
-
+            article.PostId = "";
             var claims = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, "abc"),

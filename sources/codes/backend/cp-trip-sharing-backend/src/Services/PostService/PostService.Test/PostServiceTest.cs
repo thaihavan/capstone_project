@@ -37,14 +37,14 @@ namespace PostService.Test
             mockPostRepository = new Mock<IPostRepository>();
         }
 
-        [TestCase]
-        public void TestAdd()
-        {
-            mockPostRepository.Setup(x => x.Add(It.IsAny<Post>())).Returns(post);
-            PostService.Services.PostService _postService = new PostService.Services.PostService(mockPostRepository.Object);
-            Post postReturn = _postService.Add(post);
-            Assert.IsNotNull(postReturn);
-        }
+        //[TestCase]
+        //public void TestAdd()
+        //{
+        //    mockPostRepository.Setup(x => x.Add(It.IsAny<Post>())).Returns(post);
+        //    PostService.Services.PostService _postService = new PostService.Services.PostService(mockPostRepository.Object);
+        //    Post postReturn = _postService.Add(post);
+        //    Assert.IsNotNull(postReturn);
+        //}
 
         [TestCase]
         public void TestGetAll()
