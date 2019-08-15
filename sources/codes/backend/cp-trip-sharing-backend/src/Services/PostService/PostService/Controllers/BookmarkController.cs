@@ -22,7 +22,7 @@ namespace PostService.Controllers
             _bookmarkService = bookmarkService;
         }
 
-        // POST: api/UserService/bookmark
+        // POST: api/postservice/bookmark
         [Authorize(Roles = "member")]
         [HttpPost("bookmark")]
         public IActionResult Bookmark([FromBody] Bookmark bookmark)
@@ -40,7 +40,7 @@ namespace PostService.Controllers
             }
         }
 
-        // DELETE: api/UserServices/bookmark
+        // DELETE: api/postservice/bookmark
         // body { postId : "id" }
         [Authorize(Roles = "member")]
         [HttpDelete("bookmark")]
@@ -63,11 +63,11 @@ namespace PostService.Controllers
 
         [Authorize(Roles = "member")]
         [HttpGet("bookmark")]
-        public IActionResult GetUserBookmarks([FromQuery] int page)
+        public IActionResult GetUserBookmarks()
         {
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            return Ok(_bookmarkService.GetUserBookmarks(userId,page));
+            return Ok(_bookmarkService.GetUserBookmarks(userId));
         }
 
         [Authorize(Roles = "member")]

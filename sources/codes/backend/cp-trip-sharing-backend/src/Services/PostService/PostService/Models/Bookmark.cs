@@ -23,17 +23,6 @@ namespace PostService.Models
         [BsonElement("post_id")]
         public string PostId { get; set; }
 
-        [BsonElement("title")]
-        public string Title { get; set; }
-
-        [BsonRepresentation(BsonType.ObjectId)]
-        [BsonElement("author_id")]
-        public string AuthorId { get; set; }
-
-        [BsonIgnore]
-        [BsonExtraElements]
-        public Author Author { get; set; }
-
         [BsonIgnore]
         [BsonExtraElements]
         public Post Post { get; set; }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Bookmark } from 'src/app/model/Bookmark';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 

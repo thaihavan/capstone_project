@@ -45,9 +45,9 @@ namespace PostService.Services
             return _bookmarkRepository.GetUserBookmarkId(id);
         }
 
-        public IEnumerable<Bookmark> GetUserBookmarks(string userId, int page)
+        public IEnumerable<Bookmark> GetUserBookmarks(string userId)
         {
-            return _bookmarkRepository.GetAll(userId,page);
+            return _bookmarkRepository.GetAll(userId);
         }
     }
 }

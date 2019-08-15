@@ -1,15 +1,6 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
-import { PostService } from 'src/app/core/services/post-service/post.service';
 import { UserService } from 'src/app/core/services/user-service/user.service';
-import { Like } from 'src/app/model/Like';
-import { HttpErrorResponse } from '@angular/common/http';
-import { IImage } from 'ng-simple-slideshow';
-import { trigger, state, transition, style, animate } from '@angular/animations';
 import { Bookmark } from 'src/app/model/Bookmark';
-import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
-import { Notification } from 'src/app/model/Notification';
-import { NotificationTemplates } from 'src/app/core/globals/NotificationTemplates';
-import { HostGlobal } from 'src/app/core/global-variables';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 
 @Component({
@@ -33,8 +24,7 @@ export class PostSmallComponent implements OnInit {
   listUserIdFollowing: string[] = [];
   listPostIdBookMark: string[] = [];
 
-  constructor(private postService: PostService,
-              private userService: UserService,
+  constructor(private userService: UserService,
               private errorHandler: GlobalErrorHandler) {
     this.token = localStorage.getItem('Token');
   }
@@ -81,10 +71,7 @@ export class PostSmallComponent implements OnInit {
   bookmarkPost() {
     if (this.bookmark === false) {
       const bookmarkObject = new Bookmark();
-      bookmarkObject.coverImage = this.post.post.coverImage;
       bookmarkObject.postId = this.post.id;
-      bookmarkObject.postType = this.postType;
-      bookmarkObject.title = this.post.post.title;
 
       this.userService.addBookMark(bookmarkObject, this.token).subscribe((data: any) => {
         this.bookmark = true;
