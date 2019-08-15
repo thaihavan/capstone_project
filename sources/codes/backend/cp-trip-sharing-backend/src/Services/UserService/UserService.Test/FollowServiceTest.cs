@@ -86,7 +86,7 @@ namespace UserService.Test
             mockFollowRepository.Setup(x => x.GetAllFollowerId(It.IsAny<string>())).Returns(getAllFollowerId);
             var followService = new FollowService(mockFollowRepository.Object);
             List<string> getAllFollowerIds = followService.GetAllFollowerId("5d111299f3b75e0001f4ed78");
-            Assert.AreEqual(getAllFollowerIds.Count,2);
+            Assert.IsTrue(getAllFollowerIds.Count == 2);
         }
 
         [TestCase]
@@ -104,7 +104,7 @@ namespace UserService.Test
             mockFollowRepository.Setup(x => x.GetAllFollowingId(It.IsAny<string>())).Returns(getAllFollowingId);
             var followService = new FollowService(mockFollowRepository.Object);
             List<string> getAllFollowingIds = followService.GetAllFollowingId("5d111299f3b75e0001f4ed78");
-            Assert.AreEqual(getAllFollowingIds.Count,2);
+            Assert.IsTrue(getAllFollowingIds.Count == 2);
         }
 
         [TestCase]

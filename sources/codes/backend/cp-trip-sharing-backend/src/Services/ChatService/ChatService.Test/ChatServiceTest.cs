@@ -23,14 +23,36 @@ namespace ChatService.Test
             mockConversationRepository = new Mock<IConversationRepository>();
             mockMessageRepository = new Mock<IMessageRepository>();
 
+            user = new User()
+            {
+                Id = "5d4d012613376b00013a8908",
+                DisplayName = "PhongTV",
+                ProfileImage = ""
+            };
+
+            List<string> listReceivers = new List<string>();
+            listReceivers.Add("5d4d012613376b00013a8986");
+            listReceivers.Add("5d4d012613376b00013a898x");
+
+            List<string> listSeenIds = new List<string>();
+            listSeenIds.Add("5d4d012613376b00013a8986");
+            listSeenIds.Add("5d4d012613376b00013a898x");
+
+            List<User> listUsers = new List<User>();
+            listUsers.Add(user);
+
             messageDetail = new MessageDetail()
             {
-                Id = "fgaf9sfa8fas7fa7sf7",
+                Id = "5d4d012613376b00013a892x",
                 Content = "Message Content",
-                ConversationId = "adasf7afaf565af5a5f",
-                FromUserId = "casfafafafa8af7sf6a",
+                ConversationId = "534d012613376b00013a898x",
+                FromUserId = "5d4d0x2613376b00013a898x",
                 Time = DateTime.Now
             };
+
+            List<MessageDetail> listMessageDetail = new List<MessageDetail>();
+            listMessageDetail.Add(messageDetail);
+
 
             conversation = new Conversation()
             {
@@ -39,15 +61,12 @@ namespace ChatService.Test
                 CreatedDate = DateTime.Now,
                 GroupAdmin = "admin",
                 LastMessage = messageDetail,
-                Name = "",
-                Type = "conversation"
-            };
-
-            user = new User()
-            {
-                Id = "asafafsaf8asf7asfas6",
-                DisplayName = "phongtv",
-                ProfileImage = ""
+                Name = "Conversation",
+                Type = "conversation",
+                Messages = listMessageDetail,
+                Receivers = listReceivers,
+                SeenIds = listSeenIds,
+                Users = listUsers
             };
         }
         public IEnumerable<MessageDetail> _iEnumableMessageDetail()

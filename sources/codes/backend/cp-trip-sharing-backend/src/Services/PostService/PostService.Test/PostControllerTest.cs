@@ -40,7 +40,7 @@ namespace PostService.Test
             statisticsFilter = new StatisticsFilter()
             {
                 To = DateTime.Now,
-                From = DateTime.Parse("22/06/2019")
+                From = DateTime.Parse("12/06/2019")
             };
         }
 

@@ -120,26 +120,6 @@ namespace PostService.Test
         }
 
         [TestCase]
-        public void TestUpdateCommentReturnUnauthorized()
-        {
-            var contextMock = new Mock<HttpContext>();
-
-            var claims = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, "abc"),
-                    new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
-                });
-            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
-            mockCommentService.Setup(x => x.Update(It.IsAny<Comment>())).Returns(cmt);
-            var _commenController = new CommentController(mockCommentService.Object, mockAuthorService.Object);
-            _commenController.ControllerContext.HttpContext = contextMock.Object;
-            var comment = _commenController.UpdateComment(cmt);
-            var type = comment.GetType();
-            Assert.AreEqual(type.Name, "UnauthorizedResult");
-        }
-
-        [TestCase]
         public void TestUpdateCommentSuccess()
         {
             cmt.Content = "Update content";

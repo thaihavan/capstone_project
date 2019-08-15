@@ -76,6 +76,24 @@ namespace UserService.Test
         }
 
         [TestCase]
+        public void TestBanAnUser()
+        {
+            mockUserRepository.Setup(x => x.BanAnUser(It.IsAny<string>())).Returns(true);
+            var userService = new UserServices.Services.UserService(mockUserRepository.Object, mockPublishToTopic.Object);
+            bool banAnUser = userService.BanAnUser("5d300f07a346270001a5bef4");
+            Assert.IsTrue(banAnUser);
+        }
+
+        [TestCase]
+        public void TestCheckUsername()
+        {
+            mockUserRepository.Setup(x => x.CheckUsername(It.IsAny<string>())).Returns(true);
+            var userService = new UserServices.Services.UserService(mockUserRepository.Object, mockPublishToTopic.Object);
+            bool checkUsername = userService.CheckUsername("phongtv");
+            Assert.IsTrue(checkUsername);
+        }
+
+        [TestCase]
         public void TestGetUserById()
         {
             mockUserRepository.Setup(x => x.GetById(It.IsAny<string>())).Returns(user);
@@ -87,20 +105,28 @@ namespace UserService.Test
         [TestCase]
         public void TestGetUsers()
         {
-            mockUserRepository.Setup(x => x.GetUsers(It.IsAny<string>())).Returns(ienumableUser);
+            mockUserRepository.Setup(x => x.GetUsers(It.IsAny<string>(),It.IsAny<int>())).Returns(ienumableUser);
             var userService = new UserServices.Services.UserService(mockUserRepository.Object, mockPublishToTopic.Object);
-            IEnumerable<User> ienumableReturn = userService.GetUsers("5d300f07a346270001a5bef2");
+            IEnumerable<User> ienumableReturn = userService.GetUsers("5d300f07a346270001a5bef2",6);
             Assert.IsNotEmpty(ienumableReturn);
         }
 
         [TestCase]
         public void TestGetUserStatistics()
         {
-            //object???
-            //mockUserRepository.Setup(x => x.GetUserStatistics(It.IsAny<StatisticsFilter>())).Returns(statisticsFilter);
-            //var userService = new UserServices.Services.UserService(mockUserRepository.Object, mockPublishToTopic.Object);
-            //var objectReturn = userService.GetUserStatistics(statisticsFilter);
-            //Assert.IsNotNull(objectReturn);
+            mockUserRepository.Setup(x => x.GetUserStatistics(It.IsAny<StatisticsFilter>())).Returns(statisticsFilter);
+            var userService = new UserServices.Services.UserService(mockUserRepository.Object, mockPublishToTopic.Object);
+            var objectReturn = userService.GetUserStatistics(statisticsFilter);
+            Assert.IsNotNull(objectReturn);
+        }
+
+        [TestCase]
+        public void TestUnBanAnUser()
+        {
+            mockUserRepository.Setup(x => x.UnBanAnUser(It.IsAny<string>())).Returns(true);
+            var userService = new UserServices.Services.UserService(mockUserRepository.Object, mockPublishToTopic.Object);
+            bool unbanUser = userService.UnBanAnUser("5d300f07a346270001a5bef2");
+            Assert.IsTrue(unbanUser);
         }
 
         [TestCase]
@@ -111,7 +137,7 @@ namespace UserService.Test
             var userService = new UserServices.Services.UserService(mockUserRepository.Object, mockPublishToTopic.Object);
             User userReturn = userService.Update(user);
             Assert.AreEqual(userReturn.DisplayName, "PHONGTV UPDATE");
-        }
+        }       
 
         [TestCase]
         public void TestUpdateReturnNull()
