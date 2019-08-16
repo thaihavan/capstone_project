@@ -22,6 +22,7 @@ namespace PostService.Repositories
             var dbContext = new MongoDbContext(settings);
             _bookmarks = dbContext.BookmarkCollection;
             _authors = dbContext.Authors;
+            _posts = dbContext.Posts;
         }
 
         public Bookmark Add(Bookmark bookmark)
@@ -35,26 +36,26 @@ namespace PostService.Repositories
             return _bookmarks.Find(x => x.Id.Equals(id)).FirstOrDefault();
         }
 
-        public IEnumerable<Bookmark> GetAll(string id,int page)
+        public IEnumerable<Bookmark> GetAll(string id)
         {
-            Func<Bookmark, Author, Bookmark> selectAuthor =
-                ((bookmark, user) => { bookmark.Author = user; return bookmark; });
             Func<Bookmark, Post, Bookmark> selectPost =
                 ((bookmark, post) => { bookmark.Post = post; return bookmark; });
+            Func<Bookmark, Author, Bookmark> selectAuthor =
+                ((bookmark, author) => { bookmark.Post.Author = author; return bookmark; });
 
-            var bookmarks = _bookmarks.AsQueryable().Where(x => x.UserId.Equals(id))
-                .Join(_authors.AsQueryable(),
-                    bookmark => bookmark.AuthorId,
-                    user => user.Id,
-                    selectAuthor
-                )
+            var bookmarks = _bookmarks.AsQueryable()
+                .Where(x => x.UserId.Equals(id))
                 .Join(_posts.AsQueryable(),
-                    bookmark=>bookmark.PostId,
-                    post=>post.Id,
+                    bookmark => bookmark.PostId,
+                    post => post.Id,
                     selectPost
-                ).Skip(12 * (page - 1))
-                .Take(12)
-                .ToList();
+                )
+                .Join(_authors.AsQueryable(),
+                    bookmark => bookmark.Post.AuthorId,
+                    author => author.Id,
+                    selectAuthor
+                ).ToList();
+
             return bookmarks;
         }
 
@@ -72,8 +73,7 @@ namespace PostService.Repositories
         {
             List<string> bookmarks = _bookmarks
                 .AsQueryable()
-                .Where(x => x.UserId
-                .Equals(id))
+                .Where(x => x.UserId.Equals(id))
                 .Select(x => x.PostId).ToList();
             return bookmarks;
         }

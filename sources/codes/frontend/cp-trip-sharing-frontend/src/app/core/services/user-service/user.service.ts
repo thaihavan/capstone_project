@@ -29,9 +29,11 @@ const httpOptionAuthen = {
 export class UserService {
   apiUrl: string = null;
   apiUserService: string = null;
+  apiPostService: string = null;
   constructor(private http: HttpClient) {
     this.apiUrl = HostGlobal.HOST_IDENTITY_PROVIDER + '/api/identity/account/';
     this.apiUserService = HostGlobal.HOST_USER_SERVICE + '/api/userservice/';
+    this.apiPostService = HostGlobal.HOST_POST_SERVICE + '/api/postservice/';
   }
 
   getAccount(account: Account): Observable<Account> {
@@ -122,43 +124,6 @@ export class UserService {
     return this.http.get<User[]>(this.apiUserService + 'block/blocker', httpAuthen);
   }
 
-  getListPostIdBookmarks(token: string): Observable<any> {
-    const httpAuthen = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + token
-      })
-    };
-    return this.http.get<any>(this.apiUserService + 'bookmark/bookmarkPostId', httpAuthen);
-  }
-
-  getListBookmarksFromUserId(token: string): Observable<any> {
-    const httpAuthen = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + token
-      })
-    };
-    return this.http.get<any>(this.apiUserService + 'bookmark/bookmark', httpAuthen);
-  }
-
-  addBookMark(bookmark: any, token: string): Observable<any> {
-    const httpAuthen = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + token
-      })
-    };
-    return this.http.post<any>(this.apiUserService + 'bookmark/bookmark', bookmark, httpAuthen);
-  }
-
-  deleteBookMark(postId: string, token: string): Observable<any> {
-    const httpAuthen = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + token
-      }),
-      body: null
-    };
-    return this.http.delete<any>(this.apiUserService + 'bookmark/bookmark?postId=' + postId, httpAuthen);
-  }
-
   addFollow(following: string, token: string): Observable<any> {
     const httpAuthen = {
       headers: new HttpHeaders({
@@ -199,14 +164,42 @@ export class UserService {
     return this.http.get<any>(this.apiUserService + 'follow/followingids?userId=' + userId);
   }
 
-  // getAllPhoto(): Observable<any> {
-  //   return this.http.get<any>(this.apiUserService + 'user/allphoto');
-  // }
+  getListPostIdBookmarks(token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.get<any>(this.apiPostService + 'bookmark/bookmarkPostId', httpAuthen);
+  }
 
-  // addPhoto(url: string, date: Date): Observable<any> {
-  //   const objectJson = '{"url":' + '"' + url + '"' + ',' + '"date":' + '"' + date + '"';
-  //   return this.http.post<any>(this.apiUserService + 'user/addphoto', JSON.parse(objectJson), httpOption);
-  // }
+  getListBookmarksFromUserId(token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.get<any>(this.apiPostService + 'bookmark/bookmark', httpAuthen);
+  }
+
+  addBookMark(bookmark: any, token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.post<any>(this.apiPostService + 'bookmark/bookmark', bookmark, httpAuthen);
+  }
+
+  deleteBookMark(postId: string, token: string): Observable<any> {
+    const httpAuthen = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      }),
+      body: null
+    };
+    return this.http.delete<any>(this.apiPostService + 'bookmark/bookmark?postId=' + postId, httpAuthen);
+  }
 
   registerUser(user: User): Observable<any> {
     return this.http.post<any>(this.apiUserService + 'user/register', user, httpOptionAuthen);
