@@ -59,7 +59,8 @@ namespace PostService.Repositories
         {
             var updateDefinition = Builders<Topic>.Update
                 .Set("name", topic.Name)
-                .Set("img_url", topic.ImgUrl);
+                .Set("img_url", topic.ImgUrl)
+                .Set("is_active", topic.IsActive);
 
             var result = _topics.UpdateOne(
                 a => a.Id == topic.Id,

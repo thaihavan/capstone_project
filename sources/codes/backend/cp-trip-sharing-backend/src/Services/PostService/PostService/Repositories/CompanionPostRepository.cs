@@ -380,7 +380,7 @@ namespace PostService.Repositories
 
             return new
             {
-                name = "CompanionPost",
+                name = "Tìm bạn đồng hành",
                 series = result
             };
         }

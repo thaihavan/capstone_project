@@ -48,6 +48,10 @@ export class UserService {
     return this.http.get<Account>(this.apiUrl + 'authenticate/google?token=' + token);
   }
 
+  loginWithFacebook(token: string): Observable<Account> {
+    return this.http.get<Account>(this.apiUrl + 'authenticate/facebook?token=' + token);
+  }
+
   registerAccount(account: Account): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'register', account, httpOption);
   }

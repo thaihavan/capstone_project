@@ -302,7 +302,7 @@ namespace PostService.Repositories
                 .Select(x => x);
             return new
             {
-                name = "VirtualTrip",
+                name = "Chuyến đi",
                 series = result
             };
         }
