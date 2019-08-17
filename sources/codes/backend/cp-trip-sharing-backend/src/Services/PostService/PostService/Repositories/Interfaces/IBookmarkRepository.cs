@@ -8,7 +8,7 @@ namespace PostService.Repositories.Interfaces
 {
     public interface IBookmarkRepository:IRepository<Bookmark>
     {
-        IEnumerable<Bookmark> GetAll(string id, int page);
+        IEnumerable<Bookmark> GetAll(string id);
         IEnumerable<string> GetUserBookmarkId(string id);
     }
 }

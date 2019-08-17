@@ -30,7 +30,7 @@
       </mat-form-field>
 
       <!-- Sign in button -->
-      <button class="btn-sign-in" mat-flat-button color="primary" (click)="loginFunction()" type="submit">
+      <button class="btn-sign-in" mat-flat-button color="primary" (click)="signInWithEmail()" type="submit">
         Đăng Nhập
         <ng-container *ngIf="isLoading">
           <div class="spinner-border spinner-border-sm" role="status">

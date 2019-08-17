@@ -25,7 +25,7 @@ namespace EmailService.Services
             _settings = settings;
             _apiKey = _settings.Value.ApiKey;
         }
-        public Task<HttpResponseMessage> SendEmailAsync(Email param)
+        public async Task<HttpResponseMessage> SendEmailAsync(Email param)
         {
             string emailTemplate = null;
             if (param.EmailType.Equals("EmailConfirm"))
@@ -69,7 +69,7 @@ namespace EmailService.Services
 
             string jsonRequest = JsonConvert.SerializeObject(request);
 
-            return sendgrid3.PostAsync(
+            return await sendgrid3.PostAsync(
                 "https://api.sendgrid.com/v3/mail/send",
                 new StringContent(jsonRequest, System.Text.Encoding.UTF8,
                 "application/json"));

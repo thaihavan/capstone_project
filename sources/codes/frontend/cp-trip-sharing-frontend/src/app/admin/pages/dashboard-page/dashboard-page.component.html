@@ -66,13 +66,16 @@
                   <span>Vi phạm</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <button mat-menu-item (click)="gotoReportedUser()">
+              <button mat-menu-item (click)="gotoReportedUser()"
+                [ngClass]="{'active-tab': selectedTab=='nguoi-dung-vi-pham'}">
                 <mat-icon>person</mat-icon><span>Người dùng</span>
               </button>
-              <button mat-menu-item (click)="gotoReportedPost()">
+              <button mat-menu-item (click)="gotoReportedPost()"
+                [ngClass]="{'active-tab': selectedTab=='bai-viet-vi-pham'}">
                 <mat-icon>list_alt</mat-icon><span>Bài đăng</span>
               </button>
-              <button mat-menu-item (click)="gotoReportedComment()">
+              <button mat-menu-item (click)="gotoReportedComment()"
+                [ngClass]="{'active-tab': selectedTab=='binh-luan-vi-pham'}">
                 <mat-icon>comment</mat-icon><span>Bình luận</span>
               </button>
             </mat-expansion-panel>

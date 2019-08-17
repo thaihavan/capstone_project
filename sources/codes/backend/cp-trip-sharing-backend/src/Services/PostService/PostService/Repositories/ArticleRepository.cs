@@ -498,7 +498,7 @@ namespace PostService.Repositories
                 .Select(x => x);
             return new
             {
-                name = "Article",
+                name = "Bài viết",
                 series = result
             };
         }

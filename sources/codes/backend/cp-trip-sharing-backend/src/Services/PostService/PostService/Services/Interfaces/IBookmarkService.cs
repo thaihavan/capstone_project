@@ -10,7 +10,7 @@ namespace PostService.Services.Interfaces
     {
         Bookmark AddBookmark(Bookmark bookmark);
         bool DeleteBookmark(string id);
-        IEnumerable<Bookmark> GetUserBookmarks(string userId, int page);
+        IEnumerable<Bookmark> GetUserBookmarks(string userId);
         IEnumerable<string> GetUserBookmarkId(string id);
         Bookmark GetById(string id);
     }

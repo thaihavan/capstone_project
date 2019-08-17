@@ -82,7 +82,7 @@ export class DashboardPageComponent implements OnInit {
   gotoOverview() {
     this.selectedTab = 'tong-quan';
     this.tabTitle = 'Tổng quan';
-    this.router.navigate(['dashboard/tong-quan']);
+    this.router.navigate(['admin/dashboard/tong-quan']);
   }
 
   gotoPostManagement() {

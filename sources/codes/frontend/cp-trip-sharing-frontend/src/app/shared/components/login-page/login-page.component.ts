@@ -61,22 +61,12 @@ export class LoginPageComponent implements OnInit {
   signInWithFb(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((fUser) => {
       console.log(fUser);
-      // this.userService.loginWithgoogle(fUser.authToken).subscribe((account: any) => {
-      //   localStorage.setItem('Account', JSON.stringify(account));
-      //   localStorage.setItem('Token', account.token);
-      //   // Call http request to userservice để lấy thông tin user
-      //   this.userService.getUserById(account.userId).subscribe((user: any) => {
-      //     if (user == null) {
-      //       window.location.href = '/khoi-tao';
-      //     } else {
-      //       localStorage.setItem('User', JSON.stringify(user));
-      //       window.location.href = '/';
-      //     }
-      //   });
-      // }, (error: HttpErrorResponse) => {
-      //   this.message = 'Đăng nhập bằng Google thất bại!';
-      //   console.log(error);
-      // });
+      this.userService.loginWithFacebook(fUser.authToken).subscribe((account: any) => {
+        this.handleGetAccountSuccessful(account);
+      }, (error: HttpErrorResponse) => {
+        this.message = 'Đăng nhập bằng Facebook thất bại!';
+        console.log(error);
+      });
     }).catch((error) => {
       console.log(error);
     });
@@ -90,7 +80,7 @@ export class LoginPageComponent implements OnInit {
     // this.dialogRef.close();
   }
 
-  loginFunction() {
+  signInWithEmail() {
     if (!this.form.invalid) {
       this.isLoading = true;
       this.account.email = this.form.value.email;
@@ -116,16 +106,21 @@ export class LoginPageComponent implements OnInit {
       localStorage.setItem('Token', account.token);
       window.location.href = '/khoi-tao';
     } else {
-      if (account.role === 'admin') {
-        sessionStorage.setItem('Account', JSON.stringify(account));
-        sessionStorage.setItem('User', JSON.stringify(user));
-        sessionStorage.setItem('Token', account.token);
-        window.location.href = '/admin/dashboard';
+      if (user.isActive) {
+        if (account.role === 'admin') {
+          sessionStorage.setItem('Account', JSON.stringify(account));
+          sessionStorage.setItem('User', JSON.stringify(user));
+          sessionStorage.setItem('Token', account.token);
+          window.location.href = '/admin/dashboard';
+        } else {
+          localStorage.setItem('Account', JSON.stringify(account));
+          localStorage.setItem('Token', account.token);
+          localStorage.setItem('User', JSON.stringify(user));
+          window.location.href = '/';
+        }
       } else {
-        localStorage.setItem('Account', JSON.stringify(account));
-        localStorage.setItem('Token', account.token);
-        localStorage.setItem('User', JSON.stringify(user));
-        window.location.href = '/';
+        this.alertifyService.error('Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với Quản trị viên để được hỗ trợ.');
+        this.isInvalEmailPass = true;
       }
     }
   }

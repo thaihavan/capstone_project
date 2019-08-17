@@ -39,8 +39,8 @@ namespace EmailService.Test
         public void TestSendEmailAsync()
         {
             var emailService = new EmailService.Services.EmailService(Options.Create(_setting));
-            Task<HttpResponseMessage> sendEmailAsync = emailService.SendEmailAsync(email);
-
+            Task<HttpResponseMessage> sendEmailAsync =  emailService.SendEmailAsync(email);
+            Assert.IsNotNull(sendEmailAsync);
         }
     }
 }

@@ -55,7 +55,6 @@ export class OverviewPageAdminComponent implements OnInit {
     this.userChartAttributes = new NgxChartInterface();
     this.userChartAttributes.view = [940, 360];
     this.userChartAttributes.showLegend = false;
-    // this.userChartAttributes.xAxisTicks = [];
   }
 
   getPostStatistic() {
@@ -68,6 +67,14 @@ export class OverviewPageAdminComponent implements OnInit {
     this.adminService.getUserStatistic(this.userFilter).subscribe((res: ChartSingleModel[]) => {
       this.userData = res;
     }, this.errorHandler.handleError);
+  }
+
+  yAxisTickFormatting(value: number) {
+    if (Number.isInteger(value)) {
+      return Math.floor(value).toString();
+    } else {
+      return '';
+    }
   }
 
 }

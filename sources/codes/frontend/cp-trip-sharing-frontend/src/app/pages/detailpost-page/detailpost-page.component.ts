@@ -202,12 +202,9 @@ export class DetailpostPageComponent implements OnInit {
     }
   }
 
-  bookmarkPost(postId: any, title: any, imgCover: any, postType: any) {
+  bookmarkPost(postId: string) {
     if (this.bookmark === false) {
-      this.bookmarkObject.coverImage = imgCover;
       this.bookmarkObject.postId = postId;
-      this.bookmarkObject.postType = postType;
-      this.bookmarkObject.title = title;
       this.userService.addBookMark(this.bookmarkObject, this.token).subscribe((data: any) => {
         this.bookmark = true;
         this.listPostIdBookMark.push(postId);
