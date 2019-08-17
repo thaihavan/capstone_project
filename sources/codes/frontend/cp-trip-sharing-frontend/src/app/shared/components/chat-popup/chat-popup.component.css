@@ -15,7 +15,7 @@ div {
     position: fixed;
     bottom: 0%;
     right: 120px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 /* chat-header */
@@ -126,7 +126,7 @@ div {
 .chat-input-icon {
     width: 30px;
     position: absolute;
-    margin-top: 14px;
+    margin-top: 18px;
     margin-left: 4px;
 }
 
@@ -172,4 +172,8 @@ div {
 
 ::ng-deep .chat-popup .mat-form-field-infix {
     padding: 2px 0px !important;
+}
+/* ::ng-deep .chat-popup .mat-form-field-underline, */
+::ng-deep .chat-popup .mat-form-field-ripple {
+    height: 0px !important;
 }

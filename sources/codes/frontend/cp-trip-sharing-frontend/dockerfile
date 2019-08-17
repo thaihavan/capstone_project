@@ -7,7 +7,7 @@ COPY . .
 
 RUN npm install
 
-RUN npm run build
+RUN npm run build --prod --aot
 
 # Stage 2
 FROM nginx:alpine

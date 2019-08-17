@@ -106,7 +106,7 @@ export class LoginPageComponent implements OnInit {
       localStorage.setItem('Token', account.token);
       window.location.href = '/khoi-tao';
     } else {
-      if (user.isActive) {
+      if (user.active) {
         if (account.role === 'admin') {
           sessionStorage.setItem('Account', JSON.stringify(account));
           sessionStorage.setItem('User', JSON.stringify(user));
@@ -120,7 +120,6 @@ export class LoginPageComponent implements OnInit {
         }
       } else {
         this.alertifyService.error('Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với Quản trị viên để được hỗ trợ.');
-        this.isInvalEmailPass = true;
       }
     }
   }
