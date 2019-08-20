@@ -54,11 +54,11 @@
       <ng-container *ngIf="post.author.id">
         <button mat-button (click)="followPerson(post.author.id)" *ngIf="user !== null && user.id !== post.author.id"
           class="btn-follow size-20">
-          <ng-container *ngIf="follow; else follow">
+          <ng-container *ngIf="follow; else follower">
             <mat-icon class="middle">rss_feed</mat-icon>
             <span class="middle infor-count">Đã theo dõi</span>
           </ng-container>
-          <ng-template #follow>
+          <ng-template #follower>
             <mat-icon class="middle">rss_feed</mat-icon>
             <span class="middle infor-count">Theo dõi</span>
           </ng-template>
