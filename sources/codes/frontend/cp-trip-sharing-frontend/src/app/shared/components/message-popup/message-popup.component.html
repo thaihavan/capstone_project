@@ -5,7 +5,7 @@
       <!--Header-->
       <div class="modal-header {{'modal-bg-' + message.messageType}}">
         <p class="heading">{{title}}</p>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="cancel()">
           <mat-icon>clear</mat-icon>
         </button>
       </div>

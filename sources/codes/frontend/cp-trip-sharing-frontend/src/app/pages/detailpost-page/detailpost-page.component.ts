@@ -267,6 +267,10 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   reportPost(postId: string) {
+    if (this.user === null) {
+      this.openDialogLoginForm();
+      return;
+    }
     this.openDialogReportPost('Báo cáo vi phạm', postId);
   }
 

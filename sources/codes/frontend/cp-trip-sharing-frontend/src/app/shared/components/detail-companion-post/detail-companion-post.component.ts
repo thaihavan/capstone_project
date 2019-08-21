@@ -183,6 +183,11 @@ export class DetailCompanionPostComponent implements OnInit {
       );
     }
   }
+
+  // go to messages
+  goToMessages() {
+    window.location.href = 'tin-nhan';
+  }
 }
 class StatustRequest {
   type: string;
