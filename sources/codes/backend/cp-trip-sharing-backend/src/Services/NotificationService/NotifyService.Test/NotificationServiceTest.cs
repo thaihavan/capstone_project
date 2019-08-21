@@ -5,6 +5,7 @@ using NotificationService.Repositories.Interfaces;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NotifyService.Test
@@ -13,21 +14,22 @@ namespace NotifyService.Test
     class NotificationServiceTest
     {
         Mock<INotificationRepository> mockNotificationRepository;
-        Notification notificationObject = null;
+        Notification notificationObject, notificationSecond = null;
+        List<Notification> notifications = new List<Notification>();
 
         [SetUp]
         public void Config()
         {
             List<string> list_receivers = new List<string>();
-            list_receivers.Add("afaf7fa6fas6fas5f5af");
-            list_receivers.Add("as7fa7f6afaf5a4sf4asf");
+            list_receivers.Add("5d4d2143523376b00013a8986");
+            list_receivers.Add("5d4d012613376b00013a8911");
             List<string> list_seenIds = new List<string>();
-            list_seenIds.Add("afaf7fa6fas6fas5f5af");
-            list_seenIds.Add("as7fa7f6afaf5a4sf4asf");
+            list_seenIds.Add("5d4d012613376b00013a8912");
+            list_seenIds.Add("5d4d012613376b00013a89as");
 
             notificationObject = new Notification()
             {
-                Id = "afaf7af6af6afa5faf",
+                Id = "5d4d01261337124g23528986",
                 Content = "have notification",
                 Date = DateTime.Now,
                 Url = "",
@@ -35,6 +37,20 @@ namespace NotifyService.Test
                 Receivers = list_receivers,
                 SeenIds = list_seenIds
             };
+
+            notificationSecond = new Notification()
+            {
+                Id = "5d4d012613376b00013a898s",
+                Content = "have notification",
+                Date = DateTime.Now,
+                Url = "",
+                DisplayImage = "",
+                Receivers = list_receivers,
+                SeenIds = list_seenIds
+            };
+
+            notifications.Add(notificationObject);
+            notifications.Add(notificationSecond);
 
             mockNotificationRepository = new Mock<INotificationRepository>();
         }
@@ -44,18 +60,19 @@ namespace NotifyService.Test
         {
             mockNotificationRepository.Setup(x => x.Add(It.IsAny<Notification>())).Returns(notificationObject);
             var notificationService = new NotificationService.Services.NotificationService(mockNotificationRepository.Object);
-            Notification notification = notificationService.Add(notificationObject);
-            Assert.IsNotNull(notification);
+            Notification notificationActual = notificationService.Add(notificationObject);
+            Assert.AreEqual(notificationActual,notificationObject);
         }
 
         [TestCase]
         public void TestGetNotifications()
         {
-            IEnumerable<Notification> ienumable = null;
+            IEnumerable<Notification> ienumable = notifications;
             mockNotificationRepository.Setup(x => x.GetNotifications(It.IsAny<string>())).Returns(ienumable);
             var notificationService = new NotificationService.Services.NotificationService(mockNotificationRepository.Object);
-            IEnumerable<Notification> notification = notificationService.GetNotifications("asfasfas9af7a7f7asf");
-            Assert.IsNull(notification);
+            IEnumerable<Notification> iEnumerablenotification = notificationService.GetNotifications("5d4d012613376b00013a8986");
+            Notification notificationActual = iEnumerablenotification.FirstOrDefault();
+            Assert.AreEqual(notificationActual,notificationObject);
         }
     }
 }

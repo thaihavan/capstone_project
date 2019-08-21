@@ -10,12 +10,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="EmailTemplate\ResetPasswordEmailTemplate.html" />
+    <EmbeddedResource Include="EmailTemplate\ResetPasswordEmailTemplate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="EmailTemplate\VerifyEmailTemplate.html">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 

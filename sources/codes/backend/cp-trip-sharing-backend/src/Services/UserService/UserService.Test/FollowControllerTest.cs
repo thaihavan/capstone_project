@@ -18,7 +18,7 @@ namespace UserService.Test
         Follow follow = null;
         Mock<IFollowService> mockfollowService;
         ClaimsIdentity claims;
-        User user = null;
+        User user, userSecond = null;
         List<string> getAllFollowerIds = new List<string>();
         List<string> getAllFollowingIds = new List<string>();
 
@@ -36,13 +36,34 @@ namespace UserService.Test
             {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","afa5fafaf4aga4g")
+                    new Claim("user_id","5d2e0e4cbb113a0001036a12")
             });
 
             user = new User()
             {
-                Id = "",
-                AccountId = "",
+                Id = "5d027ea59b358d247cd21aa3",
+                AccountId = "5d027ea59b358d247cd12re78",
+                Active = true,
+                Address = "Nam Dinh",
+                Avatar = "",
+                ContributionPoint = 0,
+                CreatedDate = DateTime.Now,
+                DisplayName = "PhongTv",
+                Dob = DateTime.Parse("02/01/1997"),
+                FirstName = "Tran",
+                FollowerCount = 0,
+                FollowingCount = 34,
+                Gender = true,
+                Interested = null,
+                IsFirstTime = false,
+                LastName = "phong",
+                UserName = "phongtv"
+            };
+
+            userSecond = new User()
+            {
+                Id = "5d027ea59b358d212o3iu456b",
+                AccountId = "5d027ea59b358d247cd12re12",
                 Active = true,
                 Address = "Nam Dinh",
                 Avatar = "",
@@ -64,11 +85,6 @@ namespace UserService.Test
             getAllFollowingIds.Add("5d111299f3b75e0001f4ed78");
             mockfollowService = new Mock<IFollowService>();
         }
-
-        public IEnumerable<User> ienumableUser() {
-            yield return user;
-        }
-
 
         [TestCase]
         public void TestFollow()
@@ -155,6 +171,7 @@ namespace UserService.Test
         [TestCase]
         public void TestGetAllFollower()
         {
+            IEnumerable<User> ienumableUser = new List<User>() { user, userSecond };
             mockfollowService.Setup(x => x.GetAllFollower(It.IsAny<string>())).Returns(ienumableUser);
             var followController = new FollowController(mockfollowService.Object);
             IActionResult getAllFollower = followController.GetAllFollower("5d0a17701a0a4200017de6c7");
@@ -165,6 +182,7 @@ namespace UserService.Test
         [TestCase]
         public void TestGetAllFollowing()
         {
+            IEnumerable<User> ienumableUser = new List<User>() { user, userSecond };
             mockfollowService.Setup(x => x.GetAllFollower(It.IsAny<string>())).Returns(ienumableUser);
             var followController = new FollowController(mockfollowService.Object);
             IActionResult getAllFollowing = followController.GetAllFollowing("5d0a17701a0a4200017de6c7");

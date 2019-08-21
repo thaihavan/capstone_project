@@ -29,9 +29,17 @@ namespace PostService.Services
             _publishToTopic = new PublishToTopic();
         }
 
-        public PostService(IPostRepository postRepository)
+        public PostService(IPostRepository postRepository,IPublishToTopic publishToTopic)
         {
             _postRepository = postRepository;
+            _publishToTopic = publishToTopic;
+        }
+
+        public PostService(IVirtualTripRepository virtualTripRepository,IArticleRepository articleRepository, ICompanionPostRepository companionPostRepository)
+        {
+            _virtualTripRepository = virtualTripRepository;
+            _articleRepository = articleRepository;
+            _companionPostRepository = companionPostRepository;
         }
 
         public Post Add(Post param)

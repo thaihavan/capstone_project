@@ -70,11 +70,20 @@ namespace PostService.Test
                     Name = "Thien nhien",
                     ImgUrl = "https://storage.googleapis.com/trip-sharing-final-image-bucket/image-201907201619337977-3i9uvrioa3noa7c3.jpg"
                 }
-        };
+            };
             mockTopicRepository.Setup(x => x.GetAll()).Returns(topics);
             var topicService = new TopicService(mockTopicRepository.Object);
             IEnumerable<Topic> list_topics = topicService.GetAll();
             Assert.IsNotNull(list_topics);
+        }
+
+        [TestCase]
+        public void TestInsertOrUpdate()
+        {
+            mockTopicRepository.Setup(x => x.InsertOrUpdate(It.IsAny<Topic>())).Returns(topic);
+            var topicService = new TopicService(mockTopicRepository.Object);
+            Topic topicActual = topicService.InsertOrUpdate(topic);
+            Assert.AreEqual(topicActual, topic);
         }
     }
 }

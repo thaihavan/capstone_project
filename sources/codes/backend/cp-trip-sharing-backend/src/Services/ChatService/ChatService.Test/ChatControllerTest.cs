@@ -15,14 +15,17 @@ namespace ChatService.Test
     class ChatControllerTest
     {
         Mock<IChatService> mockChatService;
-        MessageDetail messageDetail = null;
-        Conversation conversation = null;
+        Conversation conversation, conversationSecond = null;
+        MessageDetail messageDetail, messageDetailSecond = null;
+        User user, userSecond = null;
+        List<User> listUsers = new List<User>();
+        List<MessageDetail> listMessageDetails = new List<MessageDetail>();
+        List<Conversation> listConversations = new List<Conversation>();
         ClaimsIdentity claims = null;
-        User user = null;
 
-       [SetUp]
+        [SetUp]
         public void Config()
-        {
+        {        
             user = new User()
             {
                 Id = "5d4d012613376b00013a8908",
@@ -30,6 +33,12 @@ namespace ChatService.Test
                 ProfileImage = ""
             };
 
+            userSecond = new User()
+            {
+                Id = "5d4d012613376b00013a8",
+                DisplayName = "MinhNH",
+                ProfileImage = ""
+            };
             List<string> listReceivers = new List<string>();
             listReceivers.Add("5d4d012613376b00013a8986");
             listReceivers.Add("5d4d012613376b00013a898x");
@@ -38,9 +47,10 @@ namespace ChatService.Test
             listSeenIds.Add("5d4d012613376b00013a8986");
             listSeenIds.Add("5d4d012613376b00013a898x");
 
-            List<User> listUsers = new List<User>();
+
             listUsers.Add(user);
-                       
+            listUsers.Add(userSecond);
+
             messageDetail = new MessageDetail()
             {
                 Id = "5d4d012613376b00013a892x",
@@ -50,24 +60,50 @@ namespace ChatService.Test
                 Time = DateTime.Now
             };
 
-            List<MessageDetail> listMessageDetail = new List<MessageDetail>();
-            listMessageDetail.Add(messageDetail);
+            messageDetailSecond = new MessageDetail()
+            {
+                Id = "5d4d012613376b00013a892z",
+                Content = "Message Content Second",
+                ConversationId = "534d012613376b00013a898z",
+                FromUserId = "5d4d0x2613376b00013a898z",
+                Time = DateTime.Now
+            };
 
+            listMessageDetails.Add(messageDetail);
+            listMessageDetails.Add(messageDetailSecond);
 
             conversation = new Conversation()
             {
-                Id = "afafafaf9afas8fas8f",
+                Id = "5d4d0x2613376b00013a8909",
                 Avatar = "",
                 CreatedDate = DateTime.Now,
-                GroupAdmin ="admin",
+                GroupAdmin = "admin",
                 LastMessage = messageDetail,
                 Name = "Conversation",
                 Type = "conversation",
-                Messages = listMessageDetail,
+                Messages = listMessageDetails,
                 Receivers = listReceivers,
                 SeenIds = listSeenIds,
                 Users = listUsers
             };
+
+            conversationSecond = new Conversation()
+            {
+                Id = "5d4d0x2613376b00013a8911",
+                Avatar = "",
+                CreatedDate = DateTime.Now,
+                GroupAdmin = "admin",
+                LastMessage = messageDetail,
+                Name = "Conversation",
+                Type = "conversation",
+                Messages = listMessageDetails,
+                Receivers = listReceivers,
+                SeenIds = listSeenIds,
+                Users = listUsers
+            };
+
+            listConversations.Add(conversation);
+            listConversations.Add(conversationSecond);
 
             claims = new ClaimsIdentity(new Claim[]
               {
@@ -77,21 +113,6 @@ namespace ChatService.Test
               });
 
             mockChatService = new Mock<IChatService>();
-        }
-
-        public IEnumerable<MessageDetail> _iEnumableMessageDetail()
-        {
-            yield return messageDetail;
-        }
-
-        public IEnumerable<Conversation> _iEnumerableConversation()
-        {
-            yield return conversation;
-        }
-
-        public IEnumerable<User> _iEnumerableUser()
-        {
-            yield return user;
         }
 
         [TestCase]
@@ -108,7 +129,8 @@ namespace ChatService.Test
         [TestCase]
         public void TestGetMessageByConversation()
         {
-            mockChatService.Setup(x => x.GetByConversationId(It.IsAny<string>())).Returns(_iEnumableMessageDetail());
+            IEnumerable<MessageDetail> _iEnumableMessageDetail = listMessageDetails;
+            mockChatService.Setup(x => x.GetByConversationId(It.IsAny<string>())).Returns(_iEnumableMessageDetail);
             var chatController = new ChatService.Controllers.ChatController(mockChatService.Object);
             IActionResult getMessageByConversation = chatController.GetMessageByConversation("aasfafas7afaf6a6fs");
             var type = getMessageByConversation.GetType();
@@ -118,6 +140,7 @@ namespace ChatService.Test
         [TestCase]
         public void TestGetAllConversations()
         {
+            IEnumerable<Conversation> _iEnumerableConversation = listConversations;
             mockChatService.Setup(x => x.GetByUserId(It.IsAny<string>())).Returns(_iEnumerableConversation);
             var chatController = new ChatService.Controllers.ChatController(mockChatService.Object);
             IActionResult getAllConversations = chatController.GetAllConversations("aasfafas7afaf6a6fs");
@@ -246,6 +269,7 @@ namespace ChatService.Test
         [TestCase]
         public void TestGetMembers()
         {
+            IEnumerable<User> _iEnumerableUser = listUsers;
             mockChatService.Setup(x => x.GetAllMember(It.IsAny<string>())).Returns(_iEnumerableUser);
             var chatController = new ChatService.Controllers.ChatController(mockChatService.Object);
             IActionResult getMembers = chatController.GetMembers("af5af5asf6af7g7g7fg8f8gfgsd");

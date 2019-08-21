@@ -17,17 +17,38 @@ namespace PostService.Test
     {
         Mock<ICommentService> mockCommentService;
         Mock<IAuthorService> mockAuthorService;
-        Comment cmt = null;
+        Comment cmt, cmtSecond = null;
         Author author = null;
+        ClaimsIdentity claims = null;
 
         [SetUp]
         public void Config()
         {
+
+            claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d15941f197c3400015db0aa")
+                });
+
             cmt = new Comment()
             {
                 Id = "5d027ea59b358d247cd219a0",
                 AuthorId = "5d15941f197c3400015db0aa",
                 PostId = "5d027ea59b358d247cd219a2",
+                Content = "day la test commentservice",
+                Date = DateTime.Now,
+                IsActive = true,
+                Liked = false,
+                LikeCount = 0
+            };
+
+            cmtSecond = new Comment()
+            {
+                Id = "5d027ea59b358d247cd21922",
+                AuthorId = "5d15941f197c3400015db022",
+                PostId = "5d027ea59b358d247cd219a22",
                 Content = "day la test commentservice",
                 Date = DateTime.Now,
                 IsActive = true,
@@ -48,48 +69,38 @@ namespace PostService.Test
         [TestCase]
         public void TestGetCommentByPost()
         {
+            List<Comment> listComment = new List<Comment>();
+            listComment.Add(cmt);
+            listComment.Add(cmtSecond);
+            IEnumerable<Comment> comments = listComment;
             var contextMock = new Mock<HttpContext>();
-
-            var claims = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, "abc"),
-                    new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
-                });
-
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockCommentService.Setup(x => x.GetCommentByPost(It.IsAny<string>())).Returns(comments);
+            var _commenController = new CommentController(mockCommentService.Object, mockAuthorService.Object);
+            _commenController.ControllerContext.HttpContext = contextMock.Object;
+            var getCommentByPost = _commenController.GetCommentByPost("5d15941f197c3400015db0aa");
+            var type = getCommentByPost.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]
         public void TestAddComment()
         {
             var contextMock = new Mock<HttpContext>();
-
-            var claims = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, "abc"),
-                    new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
-                });
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockAuthorService.Setup(x => x.GetById(It.IsAny<string>())).Returns(author);
+            mockCommentService.Setup(x => x.Add(It.IsAny<Comment>())).Returns(cmt);
             var _commenController = new CommentController(mockCommentService.Object, mockAuthorService.Object);
             _commenController.ControllerContext.HttpContext = contextMock.Object;
-            var comment = _commenController.AddComment(cmt);
-            Assert.IsNotNull(comment);
+            var addcomment = _commenController.AddComment(cmt);
+            var type = addcomment.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]
         public void TestDelCommentReturnUnauthorized()
         {
             var contextMock = new Mock<HttpContext>();
-
-            var claims = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, "abc"),
-                    new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
-                });
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockCommentService.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
             var _commenController = new CommentController(mockCommentService.Object, mockAuthorService.Object);
@@ -124,13 +135,6 @@ namespace PostService.Test
         {
             cmt.Content = "Update content";
             var contextMock = new Mock<HttpContext>();
-
-            var claims = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, "abc"),
-                    new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","5d15941f197c3400015db0aa")
-                });
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockCommentService.Setup(x => x.Update(It.IsAny<Comment>())).Returns(cmt);
             var _commenController = new CommentController(mockCommentService.Object, mockAuthorService.Object);

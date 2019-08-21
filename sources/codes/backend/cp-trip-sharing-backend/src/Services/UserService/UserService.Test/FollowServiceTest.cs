@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UserServices.Models;
 using UserServices.Reponsitories.Interfaces;
@@ -14,7 +15,7 @@ namespace UserService.Test
     {
         Mock<IFollowRepository> mockFollowRepository;
         Follow follow = null;
-        User user = null;
+        User user, userSecond = null;
         List<string> getAllFollowerId = new List<string>();
         List<string> getAllFollowingId = new List<string>();
 
@@ -28,8 +29,29 @@ namespace UserService.Test
 
             user = new User()
             {
-                Id = "",
-                AccountId = "",
+                Id = "5d027ea59b358d247cd21aa3",
+                AccountId = "5d027ea59b358d247cd12re78",
+                Active = true,
+                Address = "Nam Dinh",
+                Avatar = "",
+                ContributionPoint = 0,
+                CreatedDate = DateTime.Now,
+                DisplayName = "PhongTv",
+                Dob = DateTime.Parse("02/01/1997"),
+                FirstName = "Tran",
+                FollowerCount = 0,
+                FollowingCount = 34,
+                Gender = true,
+                Interested = null,
+                IsFirstTime = false,
+                LastName = "phong",
+                UserName = "phongtv"
+            };
+
+            userSecond = new User()
+            {
+                Id = "5d027ea59b358d212o3iu456b",
+                AccountId = "5d027ea59b358d247cd12re12",
                 Active = true,
                 Address = "Nam Dinh",
                 Avatar = "",
@@ -57,11 +79,6 @@ namespace UserService.Test
             mockFollowRepository = new Mock<IFollowRepository>();
         }
 
-        public IEnumerable<User> ienumableUsers()
-        {
-            yield return user;
-        }
-
         [TestCase]
         public void TestAddFollows()
         {
@@ -74,10 +91,12 @@ namespace UserService.Test
         [TestCase]
         public void TestGetAllFollower()
         {
+            IEnumerable<User> ienumableUsers = new List<User>() { user, userSecond };
             mockFollowRepository.Setup(x => x.GetAllFollower(It.IsAny<string>())).Returns(ienumableUsers);
             var followService = new FollowService(mockFollowRepository.Object);
             IEnumerable<User> ienumableReturn = followService.GetAllFollower("5d111299f3b75e0001f4ed78");
-            Assert.IsNotEmpty(ienumableReturn);
+            User userActual = ienumableReturn.FirstOrDefault();
+            Assert.AreEqual(userActual,user);
         }
 
         [TestCase]
@@ -86,16 +105,19 @@ namespace UserService.Test
             mockFollowRepository.Setup(x => x.GetAllFollowerId(It.IsAny<string>())).Returns(getAllFollowerId);
             var followService = new FollowService(mockFollowRepository.Object);
             List<string> getAllFollowerIds = followService.GetAllFollowerId("5d111299f3b75e0001f4ed78");
-            Assert.IsTrue(getAllFollowerIds.Count == 2);
+            string followerIdFirstActual = getAllFollowerIds.FirstOrDefault();
+            Assert.AreEqual(followerIdFirstActual, "5d0a17701a0a4200017de6c7");
         }
 
         [TestCase]
         public void TestGetAllFollowing()
         {
+            IEnumerable<User> ienumableUsers = new List<User>() { user, userSecond };
             mockFollowRepository.Setup(x => x.GetAllFollowing(It.IsAny<string>())).Returns(ienumableUsers);
             var followService = new FollowService(mockFollowRepository.Object);
             IEnumerable<User> getAllFollowing = followService.GetAllFollowing("5d111299f3b75e0001f4ed78");
-            Assert.IsNotEmpty(getAllFollowing);
+            User userActual = getAllFollowing.FirstOrDefault();
+            Assert.AreEqual(userActual, user);
         }
 
         [TestCase]
@@ -104,7 +126,8 @@ namespace UserService.Test
             mockFollowRepository.Setup(x => x.GetAllFollowingId(It.IsAny<string>())).Returns(getAllFollowingId);
             var followService = new FollowService(mockFollowRepository.Object);
             List<string> getAllFollowingIds = followService.GetAllFollowingId("5d111299f3b75e0001f4ed78");
-            Assert.IsTrue(getAllFollowingIds.Count == 2);
+            string followeingIdFirstActual = getAllFollowingIds.FirstOrDefault();
+            Assert.AreEqual(followeingIdFirstActual, "5d0a17701a0a4200017de6cv");
         }
 
         [TestCase]

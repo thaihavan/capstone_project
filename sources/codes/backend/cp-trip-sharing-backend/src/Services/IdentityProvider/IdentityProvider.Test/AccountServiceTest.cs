@@ -210,7 +210,12 @@ namespace IdentityProvider.Test
             };
             GoogleUser googleUser = new GoogleUser()
             {
-                Email = "phongtv@gmail.com"
+                Email = "phongtv@gmail.com",
+                Gender = "Nam",
+                Given_name = "Phongtv",
+                Id = "5d027f10de896f17a87b104s",
+                Name = "Tran Van Phong",
+                Picture = ""
             };
             moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             moqIAccountRepository.Setup(x => x.Add(It.IsAny<Account>())).Returns(acc);
@@ -246,7 +251,9 @@ namespace IdentityProvider.Test
             };
             FacebookUser googleUser = new FacebookUser()
             {
-                Email = "phongtv@gmail.com"
+                Email = "phongtv@gmail.com",
+                Id = "5d027f10de896f17a87b104s",
+                Name = "Tran Van Phong"
             };
             moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             moqIAccountRepository.Setup(x => x.Add(It.IsAny<Account>())).Returns(acc);

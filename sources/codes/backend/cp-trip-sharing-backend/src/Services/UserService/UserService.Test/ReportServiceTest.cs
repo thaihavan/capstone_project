@@ -15,12 +15,18 @@ namespace UserService.Test
     {
         Mock<IReportRepository> _mockReportRepository;
         Report report = null;
-        ReportType reportType = null;
+        ReportType reportType, reportTypeSecond = null;
 
         [SetUp]
         public void Config()
         {
             reportType = new ReportType()
+            {
+                Id = "5d027ea59b358d247cd219az",
+                Name = "comment"
+            };
+
+            reportTypeSecond = new ReportType()
             {
                 Id = "5d027ea59b358d247cd219az",
                 Name = "comment"
@@ -40,17 +46,8 @@ namespace UserService.Test
             };
 
             _mockReportRepository = new Mock<IReportRepository>();
-        }
-
-        public IEnumerable<ReportType> ienumerableReportType()
-        {
-            yield return reportType;
-        }
-
-        public IEnumerable<Report> ienumerableReport()
-        {
-            yield return report;
-        }
+        }     
+               
 
         [TestCase]
         public void TestAdd()
@@ -73,6 +70,7 @@ namespace UserService.Test
         [TestCase]
         public void TestGetAll()
         {
+            IEnumerable<Report> ienumerableReport = new List<Report>{report};
             _mockReportRepository.Setup(x => x.GetAll(It.IsAny<int>())).Returns(ienumerableReport);
             var reportService = new ReportService(_mockReportRepository.Object);
             IEnumerable<Report> getAllReport = reportService.GetAll(6);
@@ -83,6 +81,7 @@ namespace UserService.Test
         [TestCase]
         public void TestGetAllReportType()
         {
+            IEnumerable<ReportType> ienumerableReportType = new List<ReportType> { reportType, reportTypeSecond };
             _mockReportRepository.Setup(x => x.GetAllReportType()).Returns(ienumerableReportType);
             var reportService = new ReportService(_mockReportRepository.Object);
             IEnumerable<ReportType> getAllReportType = reportService.GetAllReportType();

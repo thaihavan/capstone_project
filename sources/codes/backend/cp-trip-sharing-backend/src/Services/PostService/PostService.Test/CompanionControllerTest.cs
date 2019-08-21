@@ -17,10 +17,11 @@ namespace PostService.Test
         public Mock<ICompanionPostService> _mockCompanionPostService = null;
         public Mock<IPostService> _mockPostService = null;
         ClaimsIdentity claims = null;
-        CompanionPost companionPost = null;
+        CompanionPost companionPost, companionPostSecond = null;
         Post post = null;
         PostFilter postFilter = null;
-        CompanionPostJoinRequest companionPostJoinRequest = null;
+        CompanionPostJoinRequest companionPostJoinRequest, companionPostJoinRequestSecond = null;
+        List<CompanionPostJoinRequest> listcompanionPostJoinRequest = new List<CompanionPostJoinRequest>();
 
         [SetUp]
         public void Config()
@@ -70,13 +71,21 @@ namespace PostService.Test
                 Id = "5d15941f197c3400015db0aa",
                 CompanionPostId = "5d15941f197c3400015db0aa",
                 Date = DateTime.Parse("11/08/2019"),
-                UserId = "",
+                UserId = "5d15941f197c3400015da9s898s7",
                 User = author
             };
 
-            List<CompanionPostJoinRequest> listcompanionPostJoinRequest = new List<CompanionPostJoinRequest>();
-            listcompanionPostJoinRequest.Add(companionPostJoinRequest);
+            companionPostJoinRequestSecond= new CompanionPostJoinRequest()
+            {
+                Id = "5d15941f197c3400015a98s87f67f",
+                CompanionPostId = "5d15941f197c3400015db0aa",
+                Date = DateTime.Parse("11/08/2019"),
+                UserId = "5d15941f197c3400015da9s898s7",
+                User = author
+            };
 
+            listcompanionPostJoinRequest.Add(companionPostJoinRequest);
+            listcompanionPostJoinRequest.Add(companionPostJoinRequestSecond);
             post = new Post()
             {
                 Id = "5d07d847a2c5f845707dc69a",
@@ -94,9 +103,10 @@ namespace PostService.Test
             };
 
             estimatedCostItems.Add("Ăn,ngủ,nghỉ");
+
             companionPost = new CompanionPost()
             {
-                Id = "",
+                Id = "5d33f09763c6060b5a8casfa12",
                 EstimatedCost = 1000000,
                 ExpiredDate = DateTime.Parse("10/08/2019"),
                 MaxMembers = 10,
@@ -112,18 +122,34 @@ namespace PostService.Test
                 JoinRequests = listcompanionPostJoinRequest,
                 Requested = true
             };
+
+
+            companionPostSecond = new CompanionPost()
+            {
+                Id = "5d33f09763c606a4a43s6d5s3d7s",
+                EstimatedCost = 1000000,
+                ExpiredDate = DateTime.Parse("10/08/2019"),
+                MaxMembers = 10,
+                MinMembers = 5,
+                From = DateTime.Parse("10/08/2019"),
+                To = DateTime.Parse("12/08/2019"),
+                ConversationId = "",
+                EstimatedCostItems = estimatedCostItems,
+                ScheduleItems = listScheduleItems,
+                Destinations = listArticleDestinationItem,
+                PostId = "5d33f09763c6060b5a8c519b",
+                Post = post,
+                JoinRequests = listcompanionPostJoinRequest,
+                Requested = true
+            };
+
             claims = new ClaimsIdentity(new Claim[]
            {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
+                    new Claim("user_id","5d33f09763c6060b5a8c519b")
            });
-        }
-
-        IEnumerable<CompanionPost> ienumerableCompanionPost()
-        {
-            yield return companionPost;
-        }
+        }        
 
         [TestCase]
         public void TestCreateAsync()
@@ -165,6 +191,12 @@ namespace PostService.Test
         [TestCase]
         public void TestGetAllCompanionPost()
         {
+            IEnumerable<CompanionPost> ienumerableCompanionPost = new List<CompanionPost>
+            {
+                companionPost,
+                companionPostSecond
+            };
+
             _mockCompanionPostService.Setup(x => x.GetAll(It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(ienumerableCompanionPost);
             var _companionController = new CompanionController(_mockCompanionPostService.Object, _mockPostService.Object);
             var resultActual = _companionController.GetAllCompanionPost(postFilter, 6);
@@ -188,7 +220,15 @@ namespace PostService.Test
         [TestCase]
         public void TestDeleteCompanionPostReturnOkObjectResult()
         {
-
+            //var contextMock = new Mock<HttpContext>();
+            //contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            //_mockCompanionPostService.Setup(x => x.GetById(It.IsAny<string>())).Returns(companionPost);
+            //_mockCompanionPostService.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
+            //var _companionController = new CompanionController(_mockCompanionPostService.Object, _mockPostService.Object);
+            //_companionController.ControllerContext.HttpContext = contextMock.Object;
+            //var resultActual = _companionController.DeleteCompanionPost("5d0b2b0b1c9d440000d8e9a1");
+            //var type = resultActual.GetType();
+            //Assert.AreEqual(type.Name, "UnauthorizedResult");
         }
 
         [TestCase]
@@ -220,6 +260,8 @@ namespace PostService.Test
         [TestCase]
         public void TestGetAllRequestReturnOkObjectResult()
         {
+            IEnumerable<CompanionPostJoinRequest> companionPostJoinRequests = listcompanionPostJoinRequest;
+
              var new_claims = new ClaimsIdentity(new Claim[]
              {
                     new Claim(ClaimTypes.Name, "abc"),
@@ -229,6 +271,7 @@ namespace PostService.Test
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(new_claims));
             _mockCompanionPostService.Setup(x => x.GetById(It.IsAny<string>())).Returns(companionPost);
+            _mockCompanionPostService.Setup(x => x.GetAllJoinRequest(It.IsAny<string>())).Returns(companionPostJoinRequests);
             var _companionController = new CompanionController(_mockCompanionPostService.Object, _mockPostService.Object);
             _companionController.ControllerContext.HttpContext = contextMock.Object;
             var resultActual = _companionController.GetAllRequest("5d0b2b0b1c9d440000d8e9a1");
@@ -285,6 +328,11 @@ namespace PostService.Test
         [TestCase]
         public void TestGetAllCompanionPostByUser()
         {
+            IEnumerable<CompanionPost> ienumerableCompanionPost = new List<CompanionPost>
+            {
+                companionPost,
+                companionPostSecond
+            };
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             _mockCompanionPostService.Setup(x => x.GetAllCompanionPostByUser(It.IsAny<string>(), It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(ienumerableCompanionPost);

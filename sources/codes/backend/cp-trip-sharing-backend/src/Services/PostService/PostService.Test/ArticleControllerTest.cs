@@ -154,7 +154,8 @@ namespace PostService.Test
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
             _articleController.ControllerContext.HttpContext = contextMock.Object;
             var getArticleById = _articleController.GetArticleById("asddadsdad90sdsd8");
-            Assert.IsNotNull(getArticleById);
+            var type = getArticleById.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]
@@ -177,16 +178,6 @@ namespace PostService.Test
             var type = getArticleById.GetType();
             Assert.AreEqual(type.Name, "BadRequestResult");
         }
-
-        //[TestCase]
-        //public void TestGetNumberOfCompanionPost()
-        //{
-        //    mockArticleService.Setup(x => x.GetNumberOfArticlePost(It.IsAny<PostFilter>())).Returns(3);
-        //    var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
-        //    IActionResult getArticleById = _articleController.GetNumberOfCompanionPost(postFilter);
-        //    var type = getArticleById.GetType();
-        //    Assert.AreEqual(type.Name, "OkObjectResult");
-        //}
 
         [TestCase]
         public void TestCreateArticle()

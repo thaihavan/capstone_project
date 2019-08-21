@@ -6,6 +6,7 @@ using PostService.Repositories.Interfaces;
 using PostService.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PostService.Test
@@ -13,8 +14,8 @@ namespace PostService.Test
     [TestFixture]
     public class ArticleServiceTest
     {
-        Mock<IArticleRepository> mockArticleRepository;
-        Article article;
+        Mock<IArticleRepository> mockArticleRepository = null;
+        Article article, articleSecond = null;
         PostFilter postFilter = null;
 
         [SetUp]
@@ -56,6 +57,15 @@ namespace PostService.Test
             {
                 Id = "5d247a04eff1030d7c5209a0",
                 PostId = "5d247a04eff1030d7c5209a1",
+                Destinations = listArticleDestination,
+                Post = post,
+                Topics = listTopics
+            };
+
+            articleSecond = new Article()
+            {
+                Id = "5d247a04eff1030d7c5209zz",
+                PostId = "5d247a04eff1030d7c5209zza",
                 Destinations = listArticleDestination,
                 Post = post,
                 Topics = listTopics
@@ -113,13 +123,14 @@ namespace PostService.Test
         {
             IEnumerable<Article> articles = new List<Article>()
             {
-                article
+                article,
+                articleSecond
             };
             mockArticleRepository.Setup(x => x.GetAllArticles(It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(articles);
             var _articleService = new ArticleService(mockArticleRepository.Object);
-            IEnumerable<Article> list_articles = null;
-            list_articles = _articleService.GetAllArticles(postFilter, 6);
-            Assert.IsNotNull(list_articles);
+            IEnumerable<Article> list_articles = _articleService.GetAllArticles(postFilter, 6);
+            Article articleActual = list_articles.FirstOrDefault();
+            Assert.AreEqual(articleActual,article);
         }
 
         [TestCase]
@@ -127,41 +138,51 @@ namespace PostService.Test
         {
             IEnumerable<Article> articles = new List<Article>()
             {
-                article
+                 article,
+                 articleSecond
             };
             mockArticleRepository.Setup(x => x.GetAllArticlesByUser(It.IsAny<string>(), It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(articles);
             var _articleService = new ArticleService(mockArticleRepository.Object);
-            IEnumerable<Article> list_articles = null;
-            list_articles = _articleService.GetAllArticlesByUser("7asf6asfsfs5fsf6af6safa", postFilter, 6);
-            Assert.IsNotNull(list_articles);
+            IEnumerable<Article> list_articles = _articleService.GetAllArticlesByUser("7asf6asfsfs5fsf6af6safa", postFilter, 6);
+            Article articleActual = list_articles.FirstOrDefault();
+            Assert.AreEqual(articleActual, article);
         }
 
-        //[TestCase]
-        //public void TestGetRecommendArticles()
-        //{
-        //    IEnumerable<Article> articles = new List<Article>()
-        //    {
-        //        article
-        //    };
-        //    mockArticleRepository.Setup(x => x.GetRecommendArticles(It.IsAny<PostFilter>(), It.IsAny<UserInfo>(), It.IsAny<int>())).Returns(articles);
-        //    var _articleService = new ArticleService(mockArticleRepository.Object);
-        //    IEnumerable<Article> list_articles = null;
-        //    list_articles = _articleService.GetRecommendArticles(postFilter, null, 6);
-        //    Assert.IsNotNull(list_articles);
-        //}
+        [TestCase]
+        public void TestGetRecommendArticles()
+        {
+            //IEnumerable<Article> articles = new List<Article>()
+            //{
+            //    article
+            //};
+
+            //UserInfo userInfo = new UserInfo()
+            //{
+            //    Id = "",
+            //    Follows = new List<string>(),
+            //    Topics = new List<string>()
+            //};
+
+            //mockArticleRepository.Setup(x => x.GetRecommendArticles(It.IsAny<PostFilter>(), It.IsAny<UserInfo>(), It.IsAny<int>())).Returns(articles);
+            //var _articleService = new ArticleService(mockArticleRepository.Object);
+            //IEnumerable<Article> list_articles = null;
+            //list_articles = _articleService.GetRecommendArticles(postFilter, null, 6);
+            //Assert.IsNotNull(list_articles);
+        }
 
         [TestCase]
         public void TestGetPopularArticles()
         {
             IEnumerable<Article> articles = new List<Article>()
             {
-                article
+                article,
+                articleSecond
             };
             mockArticleRepository.Setup(x => x.GetPopularArticles(It.IsAny<PostFilter>(),It.IsAny<int>())).Returns(articles);
             var _articleService = new ArticleService(mockArticleRepository.Object);
-            IEnumerable<Article> list_articles = null;
-            list_articles = _articleService.GetPopularArticles(postFilter,6);
-            Assert.IsNotNull(list_articles);
+            IEnumerable<Article> list_articles = _articleService.GetPopularArticles(postFilter,6);
+            Article articleActual = list_articles.FirstOrDefault();
+            Assert.AreEqual(articleActual, article);
         }        
     }
 }

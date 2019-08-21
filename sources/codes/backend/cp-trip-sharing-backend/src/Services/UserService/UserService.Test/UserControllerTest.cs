@@ -17,7 +17,7 @@ namespace UserService.Test
     {
         Mock<IUserService> mockUserService;
         Mock<IReportService> mockReportService;
-        User user = null;
+        User user, userSecond = null;
         ClaimsIdentity claims = null;
         StatisticsFilter statisticsFilter = null;
         Report report = null;
@@ -66,6 +66,27 @@ namespace UserService.Test
                 UserName = "phongtv"
             };
 
+            userSecond = new User()
+            {
+                Id = "5d027ea59b358d212o3iu456b",
+                AccountId = "5d027ea59b358d247cd12re12",
+                Active = true,
+                Address = "Nam Dinh",
+                Avatar = "",
+                ContributionPoint = 0,
+                CreatedDate = DateTime.Now,
+                DisplayName = "PhongTv",
+                Dob = DateTime.Parse("02/01/1997"),
+                FirstName = "Tran",
+                FollowerCount = 0,
+                FollowingCount = 34,
+                Gender = true,
+                Interested = null,
+                IsFirstTime = false,
+                LastName = "phong",
+                UserName = "phongtv"
+            };
+
             claims = new ClaimsIdentity(new Claim[]
                {
                     new Claim(ClaimTypes.Name, "abc"),
@@ -82,11 +103,7 @@ namespace UserService.Test
             mockReportService = new Mock<IReportService>();
             mockUserService = new Mock<IUserService>();
         }
-
-        IEnumerable<User> ienumerableUser()
-        {
-            yield return user;
-        }
+       
 
         [TestCase]
         public void TestRegister()
@@ -132,6 +149,7 @@ namespace UserService.Test
         [TestCase]
         public void TestGetAll()
         {
+            IEnumerable<User> ienumerableUser = new List<User>() { user, userSecond };
             mockUserService.Setup(x => x.GetUsers(It.IsAny<string>(), It.IsAny<int>())).Returns(ienumerableUser);
             var userController = new UserController(mockUserService.Object, mockReportService.Object);
             IActionResult getAllUser = userController.GetAll("as8fa7fa6fas5f5asf5",6);

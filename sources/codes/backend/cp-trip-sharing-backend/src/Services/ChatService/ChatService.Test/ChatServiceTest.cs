@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ChatService.Test
@@ -13,9 +14,12 @@ namespace ChatService.Test
     {
         Mock<IMessageRepository> mockMessageRepository;
         Mock<IConversationRepository> mockConversationRepository;
-        Conversation conversation = null;
-        MessageDetail messageDetail = null;
-        User user = null;
+        Conversation conversation, conversationSecond = null;
+        MessageDetail messageDetail, messageDetailSecond = null;
+        User user, userSecond = null;
+        List<User> listUsers = new List<User>();
+        List<MessageDetail> listMessageDetails = new List<MessageDetail>();
+        List<Conversation> listConversations = new List<Conversation>();
 
         [SetUp]
         public void Config()
@@ -30,6 +34,12 @@ namespace ChatService.Test
                 ProfileImage = ""
             };
 
+            userSecond = new User()
+            {
+                Id = "5d4d012613376b00013a8",
+                DisplayName = "MinhNH",
+                ProfileImage = ""
+            };
             List<string> listReceivers = new List<string>();
             listReceivers.Add("5d4d012613376b00013a8986");
             listReceivers.Add("5d4d012613376b00013a898x");
@@ -38,8 +48,9 @@ namespace ChatService.Test
             listSeenIds.Add("5d4d012613376b00013a8986");
             listSeenIds.Add("5d4d012613376b00013a898x");
 
-            List<User> listUsers = new List<User>();
+            
             listUsers.Add(user);
+            listUsers.Add(userSecond);
 
             messageDetail = new MessageDetail()
             {
@@ -50,37 +61,51 @@ namespace ChatService.Test
                 Time = DateTime.Now
             };
 
-            List<MessageDetail> listMessageDetail = new List<MessageDetail>();
-            listMessageDetail.Add(messageDetail);
+            messageDetailSecond = new MessageDetail()
+            {
+                Id = "5d4d012613376b00013a892z",
+                Content = "Message Content Second",
+                ConversationId = "534d012613376b00013a898z",
+                FromUserId = "5d4d0x2613376b00013a898z",
+                Time = DateTime.Now
+            };
 
+            listMessageDetails.Add(messageDetail);
+            listMessageDetails.Add(messageDetailSecond);
 
             conversation = new Conversation()
             {
-                Id = "afafafaf9afas8fas8f",
+                Id = "5d4d0x2613376b00013a8909",
                 Avatar = "",
                 CreatedDate = DateTime.Now,
                 GroupAdmin = "admin",
                 LastMessage = messageDetail,
                 Name = "Conversation",
                 Type = "conversation",
-                Messages = listMessageDetail,
+                Messages = listMessageDetails,
                 Receivers = listReceivers,
                 SeenIds = listSeenIds,
                 Users = listUsers
             };
-        }
-        public IEnumerable<MessageDetail> _iEnumableMessageDetail()
-        {
-            yield return messageDetail;
-        }
-        public IEnumerable<Conversation> _iEnumerableConversation()
-        {
-            yield return conversation;
-        }
-        public IEnumerable<User> _iEnumerableUser()
-        {
-            yield return user;
-        }
+
+            conversationSecond = new Conversation()
+            {
+                Id = "5d4d0x2613376b00013a8911",
+                Avatar = "",
+                CreatedDate = DateTime.Now,
+                GroupAdmin = "admin",
+                LastMessage = messageDetail,
+                Name = "Conversation",
+                Type = "conversation",
+                Messages = listMessageDetails,
+                Receivers = listReceivers,
+                SeenIds = listSeenIds,
+                Users = listUsers
+            };
+
+            listConversations.Add(conversation);
+            listConversations.Add(conversationSecond);
+        }        
 
         [TestCase]
         public void TestAddMessage()
@@ -89,8 +114,8 @@ namespace ChatService.Test
             mockConversationRepository.Setup(x => x.Update(It.IsAny<Conversation>())).Returns(conversation);
             mockMessageRepository.Setup(x => x.Add(It.IsAny<MessageDetail>())).Returns(messageDetail);
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
-            MessageDetail messageReturn = chatService.AddMessage("",messageDetail);
-            Assert.IsNotNull(messageReturn);
+            MessageDetail messageDetailActual = chatService.AddMessage("5d4d0x2613376b00013a898z", messageDetail);
+            Assert.AreEqual(messageDetailActual, messageDetail);
         }
 
         [TestCase]
@@ -101,8 +126,8 @@ namespace ChatService.Test
             mockConversationRepository.Setup(x => x.Add(It.IsAny<Conversation>())).Returns(conversation);
             mockMessageRepository.Setup(x => x.Add(It.IsAny<MessageDetail>())).Returns(messageDetail);
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
-            MessageDetail messageReturn = chatService.AddMessage("asf6af5asf4s4af3afa5f", messageDetail);
-            Assert.IsNotNull(messageReturn);
+            MessageDetail messageDetailActual = chatService.AddMessage("5d4d0x2613376b00013a898z", messageDetail);
+            Assert.AreEqual(messageDetailActual, messageDetail);
         }
 
         [TestCase]
@@ -119,8 +144,8 @@ namespace ChatService.Test
         {
             mockConversationRepository.Setup(x => x.AddUserToGroupChat(It.IsAny<string>(), It.IsAny<string>())).Returns(user);
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
-            User userReturn = chatService.AddUserToGroupChat("asf6af5asf4s4af3afa5f", "asf6af5asf4s4af3afa5f");
-            Assert.IsNotNull(userReturn);
+            User userActual = chatService.AddUserToGroupChat("asf6af5asf4s4af3afa5f", "asf6af5asf4s4af3afa5f");
+            Assert.AreEqual(userActual,user);
         }
 
         [TestCase]
@@ -128,26 +153,30 @@ namespace ChatService.Test
         {
             mockConversationRepository.Setup(x => x.Add(It.IsAny<Conversation>())).Returns(conversation);
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
-            Conversation conversationReturn = chatService.CreateGroupChat(conversation);
-            Assert.IsNotNull(conversationReturn);
+            Conversation conversationActual = chatService.CreateGroupChat(conversation);
+            Assert.AreEqual(conversationActual,conversation);
         }
 
         [TestCase]
         public void TestGetAllMember()
         {
+            IEnumerable<User> _iEnumerableUser = listUsers;
             mockConversationRepository.Setup(x => x.GetAllUserInConversation(It.IsAny<string>())).Returns(_iEnumerableUser);
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
-            IEnumerable<User> iEnumerableGetAllMember = chatService.GetAllMember("asfas9fdsa8fa7f6sf6as");
-            Assert.IsNotEmpty(iEnumerableGetAllMember);
+            IEnumerable<User> iEnumerableGetAllMemberActual = chatService.GetAllMember("asfas9fdsa8fa7f6sf6as");
+            User userActual = _iEnumerableUser.FirstOrDefault();
+            Assert.AreEqual(userActual, user);
         }
 
         [TestCase]
         public void TestGetByConversationId()
         {
+            IEnumerable<MessageDetail> _iEnumableMessageDetail = listMessageDetails;
             mockConversationRepository.Setup(x => x.GetMessageByConversationId(It.IsAny<string>())).Returns(_iEnumableMessageDetail);
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
-            IEnumerable<MessageDetail> iEnumerableGetByConversationId = chatService.GetByConversationId("asfas9fdsa8fa7f6sf6as");
-            Assert.IsNotEmpty(iEnumerableGetByConversationId);
+            IEnumerable<MessageDetail> _iEnumerableGetByConversationId = chatService.GetByConversationId("asfas9fdsa8fa7f6sf6as");
+            MessageDetail messageDetailActual = _iEnumerableGetByConversationId.FirstOrDefault();
+            Assert.AreEqual(messageDetailActual,messageDetail);
         }
 
         [TestCase]
@@ -155,17 +184,19 @@ namespace ChatService.Test
         {
             mockConversationRepository.Setup(x => x.GetById(It.IsAny<string>())).Returns(conversation);
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
-            Conversation conversationReturn = chatService.GetById("asfas9fdsa8fa7f6sf6as");
-            Assert.IsNotNull(conversationReturn);
+            Conversation conversationActual = chatService.GetById("asfas9fdsa8fa7f6sf6as");
+            Assert.AreEqual(conversationActual,conversation);
         }
 
         [TestCase]
         public void TestGetByUserId()
         {
+            IEnumerable<Conversation> _iEnumerableConversation = listConversations;         
             mockConversationRepository.Setup(x => x.GetByUserId(It.IsAny<string>())).Returns(_iEnumerableConversation);
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
             IEnumerable<Conversation> ienumableGetByUserId = chatService.GetByUserId("asfas9fdsa8fa7f6sf6as");
-            Assert.IsNotEmpty(ienumableGetByUserId);
+            Conversation conversationActual = ienumableGetByUserId.FirstOrDefault();
+            Assert.AreEqual(conversationActual,conversation);
         }
 
         [TestCase]
@@ -175,7 +206,6 @@ namespace ChatService.Test
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
             bool checkRemove = chatService.RemoveUserFromGroupChat("asfas9fdsa8fa7f6sf6as", "asfas9fdsa8fa7f6sf6ass");
             Assert.IsTrue(checkRemove);
-
         }
     }
 }

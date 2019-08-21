@@ -18,15 +18,15 @@ namespace UserService.Test
         Mock<IBlockService> mockBlockService;
         Block block = null;
         ClaimsIdentity claims = null;
-        User user = null;
+        User user, userSecond = null;
 
         [SetUp]
         public void Config()
         {
             user = new User()
             {
-                Id = "",
-                AccountId = "",
+                Id = "5d027ea59b358d247cd21aa3",
+                AccountId = "5d027ea59b358d247cd12re78",
                 Active = true,
                 Address = "Nam Dinh",
                 Avatar = "",
@@ -44,6 +44,27 @@ namespace UserService.Test
                 UserName= "phongtv"
             };
 
+            userSecond = new User()
+            {
+                Id = "5d027ea59b358d212o3iu456b",
+                AccountId = "5d027ea59b358d247cd12re12",
+                Active = true,
+                Address = "Nam Dinh",
+                Avatar = "",
+                ContributionPoint = 0,
+                CreatedDate = DateTime.Now,
+                DisplayName = "PhongTv",
+                Dob = DateTime.Parse("02/01/1997"),
+                FirstName = "Tran",
+                FollowerCount = 0,
+                FollowingCount = 34,
+                Gender = true,
+                Interested = null,
+                IsFirstTime = false,
+                LastName = "phong",
+                UserName = "phongtv"
+            };
+
             block = new Block()
             {
                 Id = "5d027ea59b358d247cd21a55",
@@ -55,16 +76,13 @@ namespace UserService.Test
                {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","afa5fafaf4aga4g")
+                    new Claim("user_id","5d027ea59b358d247cd51a2s")
                });
 
             mockBlockService = new Mock<IBlockService>();
         }
 
-        IEnumerable<User> ienumableUser()
-        {
-            yield return user;
-        }
+        
 
         [TestCase]
         public void TestAddBlock()
@@ -123,12 +141,27 @@ namespace UserService.Test
         [TestCase]
         public void TestGetBlockedUsers()
         {
+            IEnumerable<User> ienumableUser = new List<User>(){user,userSecond};           
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockBlockService.Setup(x => x.GetBlockedUsers(It.IsAny<string>())).Returns(ienumableUser);
             var blockController = new BlockController(mockBlockService.Object);
             blockController.ControllerContext.HttpContext = contextMock.Object;
             IActionResult getBlockedUsers = blockController.GetBlockedUsers();
+            var type = getBlockedUsers.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
+        }
+
+        [TestCase]
+        public void TestGetBlockers()
+        {
+            IEnumerable<User> ienumableUser = new List<User>() { user, userSecond };
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockBlockService.Setup(x => x.GetBlockers(It.IsAny<string>())).Returns(ienumableUser);
+            var blockController = new BlockController(mockBlockService.Object);
+            blockController.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult getBlockedUsers = blockController.GetBlockers();
             var type = getBlockedUsers.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
         }

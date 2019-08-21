@@ -8,6 +8,7 @@ using PostService.Repositories.Interfaces;
 using PostService.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PostService.Test
@@ -18,11 +19,20 @@ namespace PostService.Test
         AppSettings _setting;
         Mock<ICommentRepository> mockCommentRepository;
         Mock<IPostRepository> mockPostRepository;
-        Comment cmt;
+        Comment cmt, cmtSecond = null;
+        List<Comment> listChildComment = new List<Comment>();
+        Author author = null;
 
         [SetUp]
         public void Config()
         {
+            author = new Author()
+            {
+                Id = "5d247a04eff1030d7c5209a1",
+                DisplayName = "authorName",
+                ProfileImage = "profileImage"
+            };           
+
             cmt = new Comment()
             {
                 Id = "5d027ea59b358d247cd219a0",
@@ -32,8 +42,29 @@ namespace PostService.Test
                 Date = DateTime.Now,
                 IsActive = true,
                 Liked = false,
-                LikeCount = 0
+                LikeCount = 0,
+                Author = author,
+                Childs = null,
+                ParentId = null
             };
+
+            cmtSecond = new Comment()
+            {
+                Id = "5d027ea59b358d247cd21911",
+                AuthorId = "5d027ea59b358d247cd219a12",
+                PostId = "5d027ea59b358d247cd219a22",
+                Content = "day la test commentservice2",
+                Date = DateTime.Now,
+                IsActive = true,
+                Liked = false,
+                LikeCount = 0,
+                Author = author,
+                Childs = listChildComment,
+                ParentId = "5d027ea59b358d247cd219a2"
+            };
+
+            listChildComment.Add(cmtSecond);
+
             _setting = new AppSettings()
             {
                 Secret = "VGhpcyBpcyB0aGUgc2VjcmV0IGtleQ==",
@@ -62,18 +93,21 @@ namespace PostService.Test
             mockPostRepository.Setup(x => x.DecreaseCommentCount(It.IsAny<string>())).Returns(true);
             var testService = new CommentService(mockCommentRepository.Object, mockPostRepository.Object, Options.Create(_setting));
             bool result = testService.Delete(id);
-            Assert.AreEqual(result, true);
+            Assert.IsTrue(result);
         }
 
         [TestCase]
         public void TestGetCommentByPost()
         {          
-            List<Comment> comments = new List<Comment>();
-            comments.Add(cmt);
+            List<Comment> listComments = new List<Comment>();
+            listComments.Add(cmt);
+            listComments.Add(cmtSecond);
+            IEnumerable<Comment> comments = listComments;
             mockCommentRepository.Setup(x => x.GetCommentByPost(It.IsAny<string>())).Returns(comments);
             var testService = new CommentService(mockCommentRepository.Object, mockPostRepository.Object, Options.Create(_setting));
             IEnumerable<Comment> result = testService.GetCommentByPost("5d027ea59b358d247cd219a0");
-            Assert.AreEqual(comments, result);
+            Comment commentActual = result.FirstOrDefault();
+            Assert.AreEqual(cmt, commentActual);
         }
 
         [TestCase]
@@ -89,21 +123,15 @@ namespace PostService.Test
         public void TestGetCommentByPostbyPostId()
         {
             IEnumerable<Comment> comments = new List<Comment>() {
-               new Comment(){
-                Id = "5d027ea59b358d247cd219a0",
-                AuthorId = "5d027ea59b358d247cd219a1",
-                PostId = "5d027ea59b358d247cd219a2",
-                Content = "day la test commentservice",
-                Date = DateTime.Now,
-                IsActive = true,
-                Liked = false,
-                LikeCount = 0
-               }
+                cmt,
+                cmtSecond
             };
+             
             mockCommentRepository.Setup(x => x.GetCommentByPost(It.IsAny<string>(), It.IsAny<string>())).Returns(comments);
             var testService = new CommentService(mockCommentRepository.Object, mockPostRepository.Object, Options.Create(_setting));
-            IEnumerable <Comment> ienumerableComment = testService.GetCommentByPost("postId", "userId");
-            Assert.IsNotNull(ienumerableComment);
+            IEnumerable <Comment> ienumerableComment = testService.GetCommentByPost("5d027ea59b358d247cd219a1", "5d027ea59b358d247cd21912");
+            Comment commentActual = ienumerableComment.FirstOrDefault();
+            Assert.AreEqual(commentActual, cmt);
         }
 
     }

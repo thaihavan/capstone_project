@@ -2,35 +2,70 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using PostService.Controllers;
+using PostService.Models;
+using PostService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
-using UserServices.Controllers;
-using UserServices.Models;
-using UserServices.Services.Interfaces;
+
 
 namespace UserService.Test
 {
     [TestFixture]
     class BookmarkControllerTest
     {
-        Bookmark bookmark = null;
+        Bookmark bookmark,bookmarkSecond = null;
         ClaimsIdentity claims = null;
         Mock<IBookmarkService> mockBookmarkService;
+        List<Bookmark> bookmarks = new List<Bookmark>();
 
         [SetUp]
         public void Config()
         {
+            Author author = new Author()
+            {
+                Id = "5d247a04eff1030d7c5209a1",
+                DisplayName = "authorName",
+                ProfileImage = "profileImage"
+            };
+
+            Post post = new Post()
+            {
+                Id = "5d247a04eff1030d7c5209a1",
+                AuthorId = "authorId",
+                CommentCount = 0,
+                Content = "content",
+                IsActive = true,
+                IsPublic = true,
+                CoverImage = "coverImage",
+                LikeCount = 0,
+                PostType = "article",
+                Title = "title",
+                liked = false,
+                PubDate = DateTime.Parse("2019-04-05"),
+                Author = author
+            };
+
             bookmark = new Bookmark()
             {
                 Id = "5d1da79eb7ee1f00013b2e70",
-                CoverImage = "https://storage.googleapis.com/trip-sharing-final-image-bucket/image-201907110413435104-ojo6kpvcex0qwnql.png",
                 PostId = "5d0a17701a0a4200017de6c7",
-                PostType = "article",
-                Title = "TRƯỚC 30 TUỔI, BẠN ĐÃ TRẢI NGHIỆM ĐƯỢC BAO NHIÊU ĐIỀU DƯỚI ĐÂY RỒI?",
-                UserId = "5d0b7d335ec06233948a5056",                
+                UserId = "5d0b7d335ec06233948a5056",
+                Post = post
             };
+
+            bookmarkSecond = new Bookmark()
+            {
+                Id = "5d1da79eb7ee1f00013b2e702",
+                PostId = "5d0a17701a0a4200017de6c72",
+                UserId = "5d0b7d335ec06233948a50562",
+                Post = post
+            };
+
+            bookmarks.Add(bookmark);
+            bookmarks.Add(bookmarkSecond);
 
             claims = new ClaimsIdentity(new Claim[]
               {
@@ -40,18 +75,8 @@ namespace UserService.Test
               });
 
             mockBookmarkService = new Mock<IBookmarkService>();
-        }
-
-        IEnumerable<Bookmark> ienumableBookmark()
-        {
-            yield return bookmark;
-        }
-
-        IEnumerable<string> ienumableUserId()
-        {
-            yield return "5d0b7d335ec06233948a5056";
-        }
-
+        }    
+      
         [TestCase]
         public void TestBookmark()
         {
@@ -84,7 +109,8 @@ namespace UserService.Test
         {
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
-            mockBookmarkService.Setup(x => x.DeleteBookmark(It.IsAny<Bookmark>())).Returns(bookmark);
+            mockBookmarkService.Setup(x => x.GetById(It.IsAny<string>())).Returns(bookmark);
+            mockBookmarkService.Setup(x => x.DeleteBookmark(It.IsAny<string>())).Returns(true);
             var bookmarkController = new BookmarkController(mockBookmarkService.Object);
             bookmarkController.ControllerContext.HttpContext = contextMock.Object;
             IActionResult deleteBookmark = bookmarkController.DeleteBookmark("5d1da79eb7ee1f00013b2e70");
@@ -99,7 +125,8 @@ namespace UserService.Test
             Bookmark boorkmarkNull = null;
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
-            mockBookmarkService.Setup(x => x.DeleteBookmark(It.IsAny<Bookmark>())).Returns(boorkmarkNull);
+            mockBookmarkService.Setup(x => x.GetById(It.IsAny<string>())).Returns(bookmark);
+            mockBookmarkService.Setup(x => x.DeleteBookmark(It.IsAny<string>())).Returns(false);
             var bookmarkController = new BookmarkController(mockBookmarkService.Object);
             bookmarkController.ControllerContext.HttpContext = contextMock.Object;
             IActionResult deleteBookmark = bookmarkController.DeleteBookmark("5d1da79eb7ee1f00013b2e70");
@@ -110,6 +137,7 @@ namespace UserService.Test
         [TestCase]
         public void TestGetUserBookmarks()
         {
+            IEnumerable<Bookmark> ienumableBookmark = bookmarks;          
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockBookmarkService.Setup(x => x.GetUserBookmarks(It.IsAny<string>())).Returns(ienumableBookmark);
@@ -123,6 +151,10 @@ namespace UserService.Test
         [TestCase]
         public void TestGetUserBookmarkIds()
         {
+            List<String> listUserId = new List<string>();
+            listUserId.Add("5d4d1fc413376b00013a898e");
+            listUserId.Add("5d4d1fc413376b00013a89as");
+            IEnumerable<string> ienumableUserId = listUserId;
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockBookmarkService.Setup(x => x.GetUserBookmarkId(It.IsAny<string>())).Returns(ienumableUserId);
