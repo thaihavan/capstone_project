@@ -58,16 +58,7 @@ namespace PostService.Test
 
             _mockReportService = new Mock<IReportService>();
         }
-
-        public IEnumerable<ReportType> ienumerableReportType()
-        {
-            yield return reportType;
-        }
-
-        public IEnumerable<Report> ienumerableReport()
-        {
-            yield return report;
-        }
+      
         [TestCase]
         public void TestAddNewReportReturnBadRequest()
         {
@@ -104,6 +95,10 @@ namespace PostService.Test
         [TestCase]
         public void TestGetAllReportType()
         {
+            IEnumerable<ReportType> ienumerableReportType = new List<ReportType>
+            {
+                 reportType
+            };
             _mockReportService.Setup(x => x.GetAllReportType()).Returns(ienumerableReportType);
             var reportController = new ReportController(_mockReportService.Object);
             var getAllReportType = reportController.GetAllReportType();
@@ -114,6 +109,10 @@ namespace PostService.Test
         [TestCase]
         public void TestGetAllReport()
         {
+            IEnumerable<Report> ienumerableReport = new List<Report>
+            {
+               report
+            };
             _mockReportService.Setup(x => x.GetAllReport(It.IsAny<string>())).Returns(ienumerableReport);
             var reportController = new ReportController(_mockReportService.Object);
             IActionResult getAllReport = reportController.GetAllReport("comment");

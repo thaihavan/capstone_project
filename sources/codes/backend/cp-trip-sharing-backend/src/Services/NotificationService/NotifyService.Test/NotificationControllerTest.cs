@@ -16,7 +16,8 @@ namespace NotifyService.Test
     {
         Mock<INotificationService> mockNotificationService;
         ClaimsIdentity claims = null;
-        Notification notification = null;
+        Notification notification,notificationSecond = null;
+        List<Notification> notifications = new List<Notification>();
 
         [SetUp]
         public void Config()
@@ -33,7 +34,7 @@ namespace NotifyService.Test
              {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
+                    new Claim("user_id","as7fa7f6afaf5a4sf4asf")
              });
 
             notification = new Notification()
@@ -46,6 +47,20 @@ namespace NotifyService.Test
                 Receivers = list_receivers,
                 SeenIds = list_seenIds
             };
+
+            notificationSecond = new Notification()
+            {
+                Id = "as7fa7f6afaf5a4sf4asf",
+                Content = "have notification",
+                Date = DateTime.Now,
+                Url = "",
+                DisplayImage = "",
+                Receivers = list_receivers,
+                SeenIds = list_seenIds
+            };
+
+            notifications.Add(notification);
+            notifications.Add(notificationSecond);
         }
 
         [TestCase]
@@ -53,7 +68,7 @@ namespace NotifyService.Test
         {
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
-            IEnumerable<Notification> _ienumerable = null;
+            IEnumerable<Notification> _ienumerable = notifications;
             mockNotificationService.Setup(x => x.GetNotifications(It.IsAny<string>())).Returns(_ienumerable);
             var _notificationController = new NotificationController(mockNotificationService.Object);
             _notificationController.ControllerContext.HttpContext = contextMock.Object;

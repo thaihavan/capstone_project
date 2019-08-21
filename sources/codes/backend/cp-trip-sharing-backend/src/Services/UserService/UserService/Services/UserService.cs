@@ -61,6 +61,11 @@ namespace UserServices.Services
             return _userRepository.GetById(userId);
         }
 
+        public object GetUserContributionPoint(string userId)
+        {
+            return _userRepository.GetUserContributionPoint(userId);
+        }
+
         public IEnumerable<User> GetUsers(string search, int page)
         {
             return _userRepository.GetUsers(search, page);

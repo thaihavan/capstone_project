@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UserServices.Models;
 using UserServices.Reponsitories.Interfaces;
@@ -14,7 +15,7 @@ namespace UserService.Test
     {
         Mock<IUserRepository> mockUserRepository;
         Mock<IPublishToTopic> mockPublishToTopic;
-        User user = null;
+        User user,userSecond = null;
         StatisticsFilter statisticsFilter = null;
 
         [SetUp]
@@ -41,6 +42,27 @@ namespace UserService.Test
                 UserName = "phongtv"
             };
 
+            userSecond = new User()
+            {
+                Id = "5d027ea59b358d212o3iu456b",
+                AccountId = "5d027ea59b358d247cd12re12",
+                Active = true,
+                Address = "Nam Dinh",
+                Avatar = "",
+                ContributionPoint = 0,
+                CreatedDate = DateTime.Now,
+                DisplayName = "PhongTv",
+                Dob = DateTime.Parse("02/01/1997"),
+                FirstName = "Tran",
+                FollowerCount = 0,
+                FollowingCount = 34,
+                Gender = true,
+                Interested = null,
+                IsFirstTime = false,
+                LastName = "phong",
+                UserName = "phongtv"
+            };
+
             statisticsFilter = new StatisticsFilter()
             {
                 From = DateTime.Parse("01/01/2019"),
@@ -49,12 +71,7 @@ namespace UserService.Test
 
             mockUserRepository = new Mock<IUserRepository>();
             mockPublishToTopic = new Mock<IPublishToTopic>();
-        }
-
-        public IEnumerable<User> ienumableUser()
-        {
-            yield return user;
-        }
+        }      
 
         [TestCase]
         public void TestAdd()
@@ -98,17 +115,19 @@ namespace UserService.Test
         {
             mockUserRepository.Setup(x => x.GetById(It.IsAny<string>())).Returns(user);
             var userService = new UserServices.Services.UserService(mockUserRepository.Object, mockPublishToTopic.Object);
-            User userReturn = userService.GetUserById("5d300f07a346270001a5bef2");
-            Assert.IsNotNull(userReturn);
+            User userActual = userService.GetUserById("5d300f07a346270001a5bef2");
+            Assert.AreEqual(userActual, user);
         }
 
         [TestCase]
         public void TestGetUsers()
         {
-            mockUserRepository.Setup(x => x.GetUsers(It.IsAny<string>(),It.IsAny<int>())).Returns(ienumableUser);
+            IEnumerable<User> ienumerableUser = new List<User>() { user, userSecond };
+            mockUserRepository.Setup(x => x.GetUsers(It.IsAny<string>(),It.IsAny<int>())).Returns(ienumerableUser);
             var userService = new UserServices.Services.UserService(mockUserRepository.Object, mockPublishToTopic.Object);
             IEnumerable<User> ienumableReturn = userService.GetUsers("5d300f07a346270001a5bef2",6);
-            Assert.IsNotEmpty(ienumableReturn);
+            User userActual = ienumableReturn.FirstOrDefault();
+            Assert.AreEqual(userActual, user);
         }
 
         [TestCase]

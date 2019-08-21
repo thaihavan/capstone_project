@@ -50,7 +50,7 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
             bookmark.UserId = userId;
-            if (_bookmarkService.DeleteBookmark(id) != null)
+            if (_bookmarkService.DeleteBookmark(id))
             {
                 return Ok(bookmark);
             }

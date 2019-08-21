@@ -43,7 +43,7 @@ namespace PostService.Test
         }
 
         [TestCase]
-        public void TestGetAllReturnNull ()
+        public void TestGetAllReturnNoContent()
         {
             List<Topic> listTopic = new List<Topic>();
             IEnumerable<Topic> iEnumerableTopic = listTopic;
@@ -65,13 +65,35 @@ namespace PostService.Test
         }
 
         [TestCase]
-        public void TestAddTopicReturnNull()
+        public void TestAddTopicReturnNoContent()
         {
             Topic topicNull = null;
             mockTopicService.Setup(x => x.Add(It.IsAny<Topic>())).Returns(topicNull);
             var topicController = new TopicController(mockTopicService.Object);
             IActionResult getAllTopic = topicController.AddTopic(topic);
             var type = getAllTopic.GetType();
+            Assert.AreEqual(type.Name, "NoContentResult");
+        }
+
+        [TestCase]
+        public void TestInsertOrUpdate()
+        {
+            mockTopicService.Setup(x => x.InsertOrUpdate(It.IsAny<Topic>())).Returns(topic);
+            var topicController = new TopicController(mockTopicService.Object);
+            IActionResult isDelete = topicController.InsertOrUpdate(topic);
+            var type = isDelete.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
+        }
+
+        [TestCase]
+        public void TestInsertOrUpdateReturnNoContent()
+        {
+            topic.Id = null;
+            Topic topicNull = null;
+            mockTopicService.Setup(x => x.InsertOrUpdate(It.IsAny<Topic>())).Returns(topicNull);
+            var topicController = new TopicController(mockTopicService.Object);
+            IActionResult isDelete = topicController.InsertOrUpdate(topic);
+            var type = isDelete.GetType();
             Assert.AreEqual(type.Name, "NoContentResult");
         }
 

@@ -34,20 +34,17 @@ namespace UserService.Test
               {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","afa5fafaf4aga4g")
+                    new Claim("user_id","5d0b233b1a0a4200017de612")
               });
 
             mockPhotoService = new Mock<IPhotoService>();
         }
-
-        IEnumerable<Photo> ienumablePhoto()
-        {
-            yield return photo; 
-        }
-
+        
         [TestCase]
         public void TestGetAllPhoto()
         {
+
+            IEnumerable<Photo> ienumablePhoto = new List<Photo>() { photo };
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockPhotoService.Setup(x => x.GetAllPhoto(It.IsAny<string>())).Returns(ienumablePhoto);

@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UserServices.Models;
 using UserServices.Reponsitories.Interfaces;
@@ -29,10 +30,6 @@ namespace UserService.Test
             mockPhotoRepository = new Mock<IPhotoRepository>();
         }
 
-        public IEnumerable<Photo> ienumablePhoto()
-        {
-            yield return photo;
-        }
 
         [TestCase]
         public void AddPhoto()
@@ -46,10 +43,12 @@ namespace UserService.Test
         [TestCase]
         public void TestGetAllPhoto()
         {
+            IEnumerable<Photo> ienumablePhoto = new List<Photo>() { photo };
             mockPhotoRepository.Setup(x => x.GetAll(It.IsAny<string>())).Returns(ienumablePhoto);
             var photoService = new PhotoService(mockPhotoRepository.Object);
             IEnumerable<Photo> ienumablePhotoReturn = photoService.GetAllPhoto("5d0b233b1a0a4200017de6c9");
-            Assert.IsNotEmpty(ienumablePhotoReturn);
+            Photo photoActual = ienumablePhotoReturn.FirstOrDefault();
+            Assert.AreEqual(photoActual,photo);
         }
     }
 }

@@ -182,5 +182,12 @@ namespace UserServices.Controllers
         {
             return Ok(_reportService.GetAllReportType());
         }
+
+        [AllowAnonymous]
+        [HttpGet("contribution")]
+        public IActionResult GetUserContributionPoint([FromQuery] string userId)
+        {
+            return Ok(_userService.GetUserContributionPoint(userId));
+        }
     }
 }

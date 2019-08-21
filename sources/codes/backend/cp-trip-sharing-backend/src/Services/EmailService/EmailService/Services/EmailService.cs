@@ -79,11 +79,13 @@ namespace EmailService.Services
         {
             string html = null;
             using (var stream = Assembly.GetEntryAssembly().GetManifestResourceStream(fileName))
-            using (var reader = new StreamReader(stream))
             {
-                html = reader.ReadToEnd();
+                using (var reader = new StreamReader(stream))
+                {
+                    html = reader.ReadToEnd();
+                }
             }
-
+            
             return html;
         }
 

@@ -35,11 +35,22 @@ namespace EmailService.Test
                 Subject = "Test Email Service"
             };
         }
+
         [TestCase]
         public void TestSendEmailAsync()
         {
             var emailService = new EmailService.Services.EmailService(Options.Create(_setting));
             Task<HttpResponseMessage> sendEmailAsync =  emailService.SendEmailAsync(email);
+            Assert.IsNotNull(sendEmailAsync);
+        }
+
+
+        [TestCase]
+        public void TestSendEmailAsyncOtherEmailType()
+        {
+            email.EmailType = "EmailResetPassword";
+            var emailService = new EmailService.Services.EmailService(Options.Create(_setting));
+            Task<HttpResponseMessage> sendEmailAsync = emailService.SendEmailAsync(email);
             Assert.IsNotNull(sendEmailAsync);
         }
     }

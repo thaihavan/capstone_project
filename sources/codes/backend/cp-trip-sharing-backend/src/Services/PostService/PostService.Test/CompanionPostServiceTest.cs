@@ -6,6 +6,7 @@ using PostService.Repositories.Interfaces;
 using PostService.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PostService.Test
@@ -108,17 +109,7 @@ namespace PostService.Test
             };
 
             _mockICompanionPostRepository = new Mock<ICompanionPostRepository>();
-        }
-
-        IEnumerable<CompanionPost> ienumerableCompanionPost()
-        {
-            yield return companionPost;
-        }
-
-        IEnumerable<CompanionPostJoinRequest> ienumerableCompanionPostJoinRequest()
-        {
-            yield return companionPostJoinRequest;
-        }
+        }        
 
         [TestCase]
         public void TestAdd()
@@ -198,28 +189,40 @@ namespace PostService.Test
         [TestCase]
         public void TestGetAll()
         {
+            List<CompanionPost> listCompanionPost = new List<CompanionPost>();
+            listCompanionPost.Add(companionPost);
+            IEnumerable<CompanionPost> ienumerableCompanionPost = listCompanionPost;
             _mockICompanionPostRepository.Setup(x => x.GetAll(It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(ienumerableCompanionPost);
             var companionPostService = new CompanionPostService(_mockICompanionPostRepository.Object);
             var ienumCompanionPost = companionPostService.GetAll(postFilter,6);
-            Assert.IsNotEmpty(ienumCompanionPost);
+            CompanionPost companionPostActual = ienumCompanionPost.FirstOrDefault();
+            Assert.AreEqual(companionPostActual, companionPost);
         }
 
         [TestCase]
         public void TestGetAllCompanionPostByUser()
         {
+            List<CompanionPost> listCompanionPost = new List<CompanionPost>();
+            listCompanionPost.Add(companionPost);
+            IEnumerable<CompanionPost> ienumerableCompanionPost = listCompanionPost;
             _mockICompanionPostRepository.Setup(x => x.GetAllCompanionPostByUser(It.IsAny<string>(), It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(ienumerableCompanionPost);
             var companionPostService = new CompanionPostService(_mockICompanionPostRepository.Object);
             var ienumCompanionPost = companionPostService.GetAllCompanionPostByUser("5d15941f197c3400015db0aa", postFilter, 6);
-            Assert.IsNotEmpty(ienumCompanionPost);
+            CompanionPost companionPostActual = ienumCompanionPost.FirstOrDefault();
+            Assert.AreEqual(companionPostActual, companionPost);
         }
 
         [TestCase]
         public void TestGetAllJoinRequest()
         {
+            List<CompanionPostJoinRequest> listCompanionPostJoinRequest = new List<CompanionPostJoinRequest>();
+            listCompanionPostJoinRequest.Add(companionPostJoinRequest);
+            IEnumerable<CompanionPostJoinRequest> ienumerableCompanionPostJoinRequest = listCompanionPostJoinRequest;
             _mockICompanionPostRepository.Setup(x => x.GetAllJoinRequest(It.IsAny<string>())).Returns(ienumerableCompanionPostJoinRequest);
             var companionPostService = new CompanionPostService(_mockICompanionPostRepository.Object);
             var ienumCompanionPost = companionPostService.GetAllJoinRequest("5d15941f197c3400015db0aa");
-            Assert.IsNotEmpty(ienumCompanionPost);
+            CompanionPostJoinRequest companionPostJoinRequestActual = ienumCompanionPost.FirstOrDefault();
+            Assert.AreEqual(companionPostJoinRequestActual, companionPostJoinRequest);
         }
 
         [TestCase]
