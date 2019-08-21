@@ -47,12 +47,13 @@ export class UploadImageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
         if (result.croppedImage !== '') {
-          const dialogLoad = this.dialog.open(LoadingScreenComponent, {
-            width: '100%',
+          const dialogLoad  = this.dialog.open(LoadingScreenComponent, {
+            height: '100vh',
             data: {
               title: '',
               isPublic: ''
             },
+            panelClass: 'full-screen-modal',
             disableClose: true
           });
           const image = result.croppedImage.split(',');

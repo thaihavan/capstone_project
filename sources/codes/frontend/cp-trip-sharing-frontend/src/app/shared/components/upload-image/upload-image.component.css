@@ -8,3 +8,10 @@ input[type="file"] {
     z-index: -9999;
     display: none;
   }
+
+  ::ng-deep .full-screen-modal .mat-dialog-container {
+    padding: 0px !important;
+    border-radius: 0px !important;
+    overflow: visible;
+    box-shadow: none;
+  }

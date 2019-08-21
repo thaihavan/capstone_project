@@ -14,6 +14,7 @@ import { User } from 'src/app/model/User';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { ReportPopupComponent } from 'src/app/shared/components/report-popup/report-popup.component';
+import { LoginPageComponent } from 'src/app/shared/components/login-page/login-page.component';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -59,12 +60,20 @@ export class DetailpostPageComponent implements OnInit {
       this.isScrollTopShow = false;
     }
   }
-  constructor(private postService: PostService, private route: ActivatedRoute,
-              private userService: UserService, private titleService: Title,
-              public dialog: MatDialog, private notifyService: NotifyService,
-              private postCopmanionService: FindingCompanionService,
-              private errorHandler: GlobalErrorHandler) {
+  constructor(
+    private postService: PostService,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private titleService: Title,
+    public dialog: MatDialog,
+    private notifyService: NotifyService,
+    private postCopmanionService: FindingCompanionService,
+    private errorHandler: GlobalErrorHandler
+  ) {
     this.comments = [];
+  }
+
+  ngOnInit() {
     const articlePostId = this.route.snapshot.paramMap.get('articleId');
     const companionPostId = this.route.snapshot.paramMap.get('companionId');
     if (articlePostId !== null) {
@@ -76,11 +85,8 @@ export class DetailpostPageComponent implements OnInit {
       this.loadCompanionPostById(this.postId);
     }
     this.token = localStorage.getItem('Token');
-  }
-
-  ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('User'));
-   }
+  }
 
   // get article post
   loadArticlePostById(articleId: string) {
@@ -100,8 +106,7 @@ export class DetailpostPageComponent implements OnInit {
       this.getStates();
       this.getCommentByPostId(this.post.id);
       this.titleService.setTitle(this.post.title);
-    },
-    this.errorHandler.handleError);
+    }, this.errorHandler.handleError);
   }
 
   // get companionpost
@@ -131,26 +136,33 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   getStates(): void {
-    this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
+    this.listUserIdFollowing = JSON.parse(
+      localStorage.getItem('listUserIdFollowing')
+    );
     if (this.listUserIdFollowing != null) {
-      this.follow = this.listUserIdFollowing.indexOf(this.post.author.id) !== -1;
+      this.follow =
+        this.listUserIdFollowing.indexOf(this.post.author.id) !== -1;
     }
-    this.listPostIdBookMark = JSON.parse(localStorage.getItem('listPostIdBookmark'));
+    this.listPostIdBookMark = JSON.parse(
+      localStorage.getItem('listPostIdBookmark')
+    );
     if (this.listPostIdBookMark != null) {
       this.bookmark = this.listPostIdBookMark.indexOf(this.post.id) !== -1;
     }
   }
 
   getCommentByPostId(postId: string) {
-    this.postService.getCommentByPost(postId, this.token).subscribe((data: any) => {
-      if (data != null) {
-        console.log('Comment: ' + data);
-        console.log('Total comment: ', data.length);
-        this.comments = data;
-      } else {
-        console.log('Can not get comments of this post.');
-      }
-    });
+    this.postService
+      .getCommentByPost(postId, this.token)
+      .subscribe((data: any) => {
+        if (data != null) {
+          console.log('Comment: ' + data);
+          console.log('Total comment: ', data.length);
+          this.comments = data;
+        } else {
+          console.log('Can not get comments of this post.');
+        }
+      });
   }
 
   submitComment() {
@@ -169,22 +181,34 @@ export class DetailpostPageComponent implements OnInit {
 
   followPerson(authorId: any) {
     if (this.follow === false) {
-      this.userService.addFollow(authorId, this.token).subscribe((data: any) => {
-        this.follow = true;
-        this.listUserIdFollowing.push(authorId);
-        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
-      }, this.errorHandler.handleError);
+      this.userService
+        .addFollow(authorId, this.token)
+        .subscribe((data: any) => {
+          this.follow = true;
+          this.listUserIdFollowing.push(authorId);
+          localStorage.setItem(
+            'listUserIdFollowing',
+            JSON.stringify(this.listUserIdFollowing)
+          );
+        }, this.errorHandler.handleError);
     } else {
       this.userService.unFollow(authorId, this.token).subscribe((data: any) => {
         this.follow = false;
         const unfollow = this.listUserIdFollowing.indexOf(authorId);
         this.listUserIdFollowing.splice(unfollow, 1);
-        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+        localStorage.setItem(
+          'listUserIdFollowing',
+          JSON.stringify(this.listUserIdFollowing)
+        );
       }, this.errorHandler.handleError);
     }
   }
 
   likePost(like: any) {
+    if (this.user === null) {
+      this.openDialogLoginForm();
+      return;
+    }
     this.like.objectId = this.detailPost.post.id;
     this.like.objectType = 'post';
     if (like === false) {
@@ -203,20 +227,34 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   bookmarkPost(postId: string) {
+    if (this.user === null) {
+      this.openDialogLoginForm();
+      return;
+    }
     if (this.bookmark === false) {
       this.bookmarkObject.postId = postId;
-      this.userService.addBookMark(this.bookmarkObject, this.token).subscribe((data: any) => {
-        this.bookmark = true;
-        this.listPostIdBookMark.push(postId);
-        localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-      }, this.errorHandler.handleError);
+      this.userService
+        .addBookMark(this.bookmarkObject, this.token)
+        .subscribe((data: any) => {
+          this.bookmark = true;
+          this.listPostIdBookMark.push(postId);
+          localStorage.setItem(
+            'listPostIdBookmark',
+            JSON.stringify(this.listPostIdBookMark)
+          );
+        }, this.errorHandler.handleError);
     } else {
-      this.userService.deleteBookMark(postId, this.token).subscribe((data: any) => {
-        this.bookmark = false;
-        const unbookmark = this.listPostIdBookMark.indexOf(postId);
-        this.listPostIdBookMark.splice(unbookmark, 1);
-        localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-      }, this.errorHandler.handleError);
+      this.userService
+        .deleteBookMark(postId, this.token)
+        .subscribe((data: any) => {
+          this.bookmark = false;
+          const unbookmark = this.listPostIdBookMark.indexOf(postId);
+          this.listPostIdBookMark.splice(unbookmark, 1);
+          localStorage.setItem(
+            'listPostIdBookmark',
+            JSON.stringify(this.listPostIdBookMark)
+          );
+        }, this.errorHandler.handleError);
     }
   }
 
@@ -242,7 +280,11 @@ export class DetailpostPageComponent implements OnInit {
 
   removePost() {
     this.postService.removeArticle(this.postId).subscribe((data: any) => {
-      this.openDialogMessageConfirm('Bạn đã xóa bài viết thành công!', '', 'success');
+      this.openDialogMessageConfirm(
+        'Bạn đã xóa bài viết thành công!',
+        '',
+        'success'
+      );
     }, this.errorHandler.handleError);
   }
 
@@ -276,4 +318,12 @@ export class DetailpostPageComponent implements OnInit {
     instance.message.url = '/user/' + this.user.id + url;
   }
 
+  openDialogLoginForm() {
+    if (this.user === null) {
+      const dialogRef = this.dialog.open(LoginPageComponent, {
+        height: 'auto',
+        width: '400px'
+      });
+    }
+  }
 }

@@ -48,7 +48,7 @@
       <div class="stars size-20">
         <a class="mat-button">
           <mat-icon class="middle">stars</mat-icon>
-          <span class="middle infor-count">{{user.contributionPoint}} điểm</span>
+          <span class="middle infor-count">123 điểm</span>
         </a>
       </div>
       <ng-container *ngIf="post.author.id">
@@ -112,7 +112,7 @@
       <button class="interact-bookmark" mat-icon-button matTooltip="Bookmark" (click)="bookmarkPost(detailPost.id)">
         <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
       </button>
-      <button matTooltip="Chia sẻ facebook" shareButton="facebook" class="share-facebook" mat-icon-button
+      <button matTooltip="Chia sẻ facebook" shareButton="facebook" [title]="post.title" [description]="post.description" [image]="post.coverImage" class="share-facebook" mat-icon-button
         color="primary">
         <i class="fa fa-facebook-f"></i>
       </button>

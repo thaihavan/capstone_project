@@ -1,15 +1,12 @@
-import { Component, OnInit, HostListener, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Article } from 'src/app/model/Article';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { PostFilter } from 'src/app/model/PostFilter';
-import { HttpErrorResponse } from '@angular/common/http';
 import { VirtualTrip } from 'src/app/model/VirtualTrip';
 import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { CompanionPost } from 'src/app/model/CompanionPost';
-import { LocationMarker } from 'src/app/model/LocationMarker';
 import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 import { User } from 'src/app/model/User';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
