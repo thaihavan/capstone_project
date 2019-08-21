@@ -168,5 +168,15 @@ namespace UserServices.Reponsitories
                 Builders<User>.Update.Set(x => x.Active, true));
             return true;
         }
+
+        public object GetUserContributionPoint(string userId)
+        {
+            var user = _users.Find(x => x.Id.Equals(userId)).FirstOrDefault();
+            return new
+            {
+                userId = user.Id,
+                contributionPoint = user.ContributionPoint
+            };
+        }
     }
 }
