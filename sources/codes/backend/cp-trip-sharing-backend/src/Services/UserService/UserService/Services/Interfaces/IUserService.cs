@@ -25,5 +25,6 @@ namespace UserServices.Services.Interfaces
         bool BanAnUser(string userId);
 
         bool UnBanAnUser(string userId);
+
     }
 }

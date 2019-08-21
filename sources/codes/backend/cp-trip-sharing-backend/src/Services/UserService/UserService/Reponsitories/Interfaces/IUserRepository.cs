@@ -17,5 +17,7 @@ namespace UserServices.Reponsitories.Interfaces
         bool BanAnUser(string userId);
 
         bool UnBanAnUser(string userId);
+
+        object GetUserContributionPoint(string userId);
     }
 }
