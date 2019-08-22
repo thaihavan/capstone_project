@@ -92,7 +92,7 @@
           </div>
           <div class="join-request">
             <ng-container *ngIf="statustRequest.type === 'joined'; else handelRequest">
-                <button  mat-flat-button color="primary">
+                <button (click)="goToMessages()"  mat-flat-button color="primary">
                   {{statustRequest.text}}
                 </button>
             </ng-container>

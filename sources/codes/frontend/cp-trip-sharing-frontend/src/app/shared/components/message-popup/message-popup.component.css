@@ -58,16 +58,16 @@
   border: 0;
   color: #ffff;
 }
-.modal-bg-success, .modal-bg-confirm {
+.modal-bg-success {
   background-color: #2196f3;
 }
-.color-success, .color-confirm {
+.color-success {
   color: #2196f3 !important;
 }
-.modal-bg-warn {
+.modal-bg-confirm {
   background-color: #fb3;
 }
-.color-warn {
+.color-confirm {
   color: #fb3 !important;
 }
 .modal-bg-danger {
@@ -105,18 +105,15 @@
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
   outline: 0;
 }
-.btn-outline-success button,
-.btn-outline-confirm button {
+.btn-outline-success button {
   border: 2px solid #2196f3 !important;
   background-color: transparent !important;
   color: #2196f3 !important;
 }
-.btn-outline-success:hover,
-.btn-outline-confirm:hover {
+.btn-outline-success:hover {
   background-color: #fff !important;
 }
-.btn-success button,
-.btn-confirm button {
+.btn-success button {
   color: #fff;
   background-color: #2196f3;
   border: 2px solid #2196f3;
@@ -134,18 +131,18 @@
   background-color: #ff3547;
   border: 2px solid #ff3547;
 }
-.btn-outline-warn {
+.btn-outline-confirm {
   border: 2px solid #fb3 !important;
   background-color: transparent !important;
   color: #fb3 !important;
 }
-.btn-outline-warn:hover {
+.btn-outline-confirm:hover {
   background-color: #fff !important;
 }
-.btn-warn {
+.btn-confirm {
   color: #fff;
-  background-color: #fb3;
-  border: 2px solid #fb3;
+  background-color: #fb3 !important;
+  border: 2px solid #fb3 !important;
 }
 .animated {
   animation-duration: 1s;
