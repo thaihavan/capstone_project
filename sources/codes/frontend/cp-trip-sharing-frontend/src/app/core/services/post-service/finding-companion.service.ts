@@ -57,6 +57,16 @@ export class FindingCompanionService {
     return this.http.get<CompanionPost>(this.baseUrl + '/post?id=' + id, httpOption);
   }
 
+  updatePost(companionPost: CompanionPost): any {
+    const httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    return this.http.post(this.baseUrl + '/post/update', companionPost, httpOption);
+  }
+
   getCommentByPost(postId: string, token: string): Observable<any> {
     const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/all';
     if (token != null) {
