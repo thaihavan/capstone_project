@@ -103,29 +103,33 @@ namespace PostService.Test
         }
 
         [TestCase]
-        public void TestGetRecommendArticles()
+        public void TestGetRecommendArticlesReturnOkObjectResult()
         {
+            // mock ClaimsIdentity Object
             ClaimsIdentity claims = new ClaimsIdentity(new Claim[]
             {
-                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Name, "PhongTvs"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
+                    new Claim("user_id","5d247a04eff1030d7c5209a1")
             });
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             List<Article> articles = new List<Article>();
             articles.Add(article);
             IEnumerable<Article> _iEnumerableArticle = articles;
-            mockArticleService.Setup(x => x.GetRecommendArticles(It.IsAny<PostFilter>(), It.IsAny<UserInfo>(), It.IsAny<int>())).Returns(_iEnumerableArticle);
+            // mock data of GetRecommendArticles() function return _iEnumerableArticle
+            mockArticleService.Setup(x => x.GetRecommendArticles(It.IsAny<PostFilter>(),
+                It.IsAny<UserInfo>(), It.IsAny<int>())).Returns(_iEnumerableArticle);
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
             _articleController.ControllerContext.HttpContext = contextMock.Object;
+            // get actual value of GetRecommendArticles function from ActicleController
             IActionResult getRecommendArticles = _articleController.GetRecommendArticles(postFilter, 4);
             var type = getRecommendArticles.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]
-        public void TestGetPopularArticles()
+        public void TestGetPopularArticlesReturnOkObjectResults()
         {
             List<Article> articles = new List<Article>();
             articles.Add(article);
