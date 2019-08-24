@@ -26,5 +26,6 @@ namespace UserServices.Services.Interfaces
 
         bool UnBanAnUser(string userId);
 
+        object GetUserContributionPoint(string userId);
     }
 }
