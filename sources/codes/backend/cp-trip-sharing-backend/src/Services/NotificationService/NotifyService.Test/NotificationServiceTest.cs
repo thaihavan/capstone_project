@@ -72,7 +72,7 @@ namespace NotifyService.Test
             var notificationService = new NotificationService.Services.NotificationService(mockNotificationRepository.Object);
             IEnumerable<Notification> iEnumerablenotification = notificationService.GetNotifications("5d4d012613376b00013a8986");
             Notification notificationActual = iEnumerablenotification.FirstOrDefault();
-            Assert.AreEqual(notificationActual,notificationObject);
+            Assert.AreEqual(notificationActual.Id, "5d4d01261337124g23528986");
         }
     }
 }

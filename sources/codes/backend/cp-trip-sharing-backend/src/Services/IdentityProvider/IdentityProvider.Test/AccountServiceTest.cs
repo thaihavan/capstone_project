@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using IdentityProvider.Repositories.Interfaces;
 using IdentityProvider.Services.Interfaces;
+using System.Linq;
 
 namespace IdentityProvider.Test
 {
@@ -39,8 +40,8 @@ namespace IdentityProvider.Test
             Account acc = new Account() { UserId = "5d027f3e8254691f48a4ab7c", Email = "linhlp4@fpt.edu.vn", Password = "ERatj0gngbZJh/tYJC4cHlVZBfLrT43vtIedGicemPk=", Role = "member", PasswordSalt = "hpyty+EEZw70tE8OqHN9Ow==", Token = "asvaanbfbsgnnsn", Id = "5d027f3e8254691f48a4ab7d" };
             moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
-            Account result = testService.Authenticate("abc@gmail.com", "new_password");
-            Assert.IsNotNull(result);
+            Account resultActual = testService.Authenticate("abc@gmail.com", "new_password");
+            Assert.AreEqual(resultActual.Email, "linhlp4@fpt.edu.vn");
         }
 
         [TestCase]
@@ -62,7 +63,8 @@ namespace IdentityProvider.Test
             moqIAccountRepository.Setup(x => x.GetAll()).Returns(accounts);
             var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
             IEnumerable<Account> resultaccounts = testService.GetAll();
-            Assert.IsNotNull(resultaccounts);
+            Account accountActual = resultaccounts.FirstOrDefault();
+            Assert.AreEqual(accountActual, acc);
         }
 
         [TestCase]
@@ -70,7 +72,18 @@ namespace IdentityProvider.Test
         public void TestRegister()
         {
             Account accNull = null;
-            Account acc = new Account() { Email = "linhlppp@fpt.edu.vn", Password = "125436458569679" };
+            Account acc = new Account()
+            {
+                Email = "linhlppp@fpt.edu.vn",
+                Password = "125436458569679",
+                FacebookId = "",
+                GoogleId = "",
+                Id = "5d027f3e8254691f48a4ab7c",
+                PasswordSalt = "",
+                Role="member",
+                Token = "",
+                UserId = "5d027f3e8254691f48a4aasc"
+            };
             moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(accNull);
             moqIAccountRepository.Setup(x => x.Add(It.IsAny<Account>())).Returns(acc);
             var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
@@ -83,7 +96,7 @@ namespace IdentityProvider.Test
         public void TestRegisterReturnNull()
         {
             Account acc = new Account() { Email = "linhlppp@fpt.edu.vn", Password = "125436458569679" };
-            Account account = new Account();
+            Account account = null;
             moqIAccountRepository.Setup(x => x.GetByEmail(It.IsAny<string>())).Returns(acc);
             moqIAccountRepository.Setup(x => x.Add(It.IsAny<Account>())).Returns(account);
             var testService = new AccountService(moqIAccountRepository.Object, Options.Create(_setting), moqIpublishtotopic.Object);
