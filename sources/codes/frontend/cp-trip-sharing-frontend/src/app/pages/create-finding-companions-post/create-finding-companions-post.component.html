@@ -71,7 +71,7 @@
                         <mat-error *ngIf="hasError('fromDate','required')">
                             Ngày bắt đầu<strong> bắt buộc</strong>
                         </mat-error>
-                        <mat-error *ngIf="hasError('fromDate','matDatepickerMin')">Ngày bắt đã qua</mat-error>
+                        <mat-error *ngIf="hasError('fromDate','matDatepickerMin')">Ngày bắt đầu đã qua</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="end-date col-4">
@@ -220,7 +220,7 @@
             </div>
         </div>
         <div class="row btnCreate">
-            <button mat-raised-button color="primary"  type="submit" form="companionForm" (click)="createPost()">Tạo bài viết</button>
+            <button mat-raised-button color="primary"  type="submit" form="companionForm" (click)="createPost()">{{isUpdate ? 'Tạo bài viết' : 'Cập nhập'}}</button>
         </div>
         <div class="clear"></div>
     </div>

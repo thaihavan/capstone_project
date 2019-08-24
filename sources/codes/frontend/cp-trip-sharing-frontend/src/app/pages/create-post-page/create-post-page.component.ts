@@ -97,6 +97,7 @@ export class CreatePostPageComponent implements OnInit {
           if (this.imgUrl !== undefined) {
             this.isHasImg = true;
           }
+          this.destinations = res.destinations;
           this.content = res.post.content;
           this.articlereturn = res;
         },

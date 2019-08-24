@@ -82,6 +82,7 @@ const routes: Routes = [
       { path: 'tin-nhan', component: ChatPageComponent },
       { path: 'tao-bai-viet/tim-ban-dong-hanh', component: CreateFindingCompanionsPostComponent },
       { path: 'tim-ban-dong-hanh/:companionId', component: DetailpostPageComponent},
+      { path: 'chinh-sua-tim-ban-dong-hanh/:companionId', component: CreateFindingCompanionsPostComponent},
       { path: 'dieu-khoan', component: PrivacyPolicyComponent }
     ]
   },
