@@ -57,8 +57,8 @@ namespace PostService.Repositories
 
         public bool Delete(string id)
         {
-            _posts.DeleteOne(p => p.Id == id);
-
+            _posts.FindOneAndUpdate(p => p.Id == id,
+                Builders<Post>.Update.Set(x=>x.IsActive, false));
             return true;
         }
 
