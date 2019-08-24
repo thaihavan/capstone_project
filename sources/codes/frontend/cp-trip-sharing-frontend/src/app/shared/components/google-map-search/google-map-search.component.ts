@@ -81,8 +81,6 @@ export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
     locationObj['lat'] = place.geometry.location.lat();
     // tslint:disable-next-line:no-string-literal
     locationObj['lng'] = place.geometry.location.lng();
-    // tslint:disable-next-line:no-string-literal
-    this.uploadImage.uploadGoogleMapImage(locationObj['image']);
     return locationObj;
   }
 }
