@@ -5,9 +5,11 @@ WORKDIR /src/app
 
 COPY . .
 
-RUN npm install
-
-RUN npm run build --prod --aot
+# Need to build project before rund docker build...
+#
+# RUN npm install
+# 
+# RUN npm run build
 
 # Stage 2
 FROM nginx:alpine
