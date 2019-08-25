@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using PostService.Controllers;
@@ -6,6 +7,7 @@ using PostService.Models;
 using PostService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace PostService.Test
@@ -123,5 +125,51 @@ namespace PostService.Test
             var type = getPostStatisticst.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
        }
+
+        [TestCase]
+        public void TestDeletePostReturnUnauthorized()
+        {
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+               {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d247a04eff1030d7c520aa1")
+               });
+
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockPostService.Setup(x => x.GetById(It.IsAny<string>())).Returns(post);
+            mockPostService.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
+            var _postController = new PostController(mockPostService.Object);
+            _postController.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult deletePost = _postController.DeletePost("5d247a04eff1030d7c5209a1");
+            var type = deletePost.GetType();
+            Assert.AreEqual(type.Name, "UnauthorizedResult");
+        }
+
+
+        [TestCase]
+        public void TestDeletePostReturnOkObjectResult()
+        {
+            var contextMock = new Mock<HttpContext>();
+
+            var claims = new ClaimsIdentity(new Claim[]
+               {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d0b2b0b1c9d440000d8e9a1")
+               });
+
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockPostService.Setup(x => x.GetById(It.IsAny<string>())).Returns(post);
+            mockPostService.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
+            var _postController = new PostController(mockPostService.Object);
+            _postController.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult deletePost = _postController.DeletePost("5d247a04eff1030d7c5209a1");
+            var okObjectResult = deletePost as OkObjectResult;
+            bool checkDelete = (bool) okObjectResult.Value;
+            Assert.IsTrue(checkDelete);
+        }
     }
 }

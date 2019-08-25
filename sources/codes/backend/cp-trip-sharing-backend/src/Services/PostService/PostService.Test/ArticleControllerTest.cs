@@ -19,6 +19,7 @@ namespace PostService.Test
         Mock<IPostService> mockPostService;
         Article article = null;
         PostFilter postFilter = null;
+        Post post = null;
 
         [SetUp]
         public void Config()
@@ -27,21 +28,21 @@ namespace PostService.Test
             List<string> listTopics = new List<string>() { "5d247a04eff1030d7c5209a3" };
             listArticleDestination.Add(new ArticleDestinationItem()
             {
-                Id = "articleDestinationItemId",
+                Id = "5d247a04eff1030d7c520a2k4",
                 Name = "articleDestinationItemName"
             });
 
             Author author = new Author()
             {
-                Id = "5d247a04eff1030d7c5209a1",
+                Id = "5d247a04eff1030d7c520a287",
                 DisplayName = "authorName",
                 ProfileImage = "profileImage"
             };
 
-            Post post = new Post()
+            post = new Post()
             {
                 Id = "5d247a04eff1030d7c5209a1",
-                AuthorId = "authorId",
+                AuthorId = "5d247a04eff1030d7c520a2m32",
                 CommentCount = 0,
                 Content = "content",
                 IsActive = true,
@@ -66,7 +67,7 @@ namespace PostService.Test
 
             postFilter = new PostFilter()
             {
-                LocationId = "5sd239asdd8fass7",
+                LocationId = "5d247a04eff1030d7c520123",
                 Search = "ha noi",
                 TimePeriod = "Tuan qua",
                 Topics = listTopics
@@ -97,7 +98,7 @@ namespace PostService.Test
             IEnumerable<Article> _iEnumerableArticle = articles;
             mockArticleService.Setup(x => x.GetAllArticlesByUser(It.IsAny<string>(), It.IsAny<PostFilter>(), It.IsAny<int>())).Returns(_iEnumerableArticle);
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
-            IActionResult getAllArticlesByUser = _articleController.GetAllArticlesByUser("as4dasdd56sdasdasd44as2",postFilter, 4);
+            IActionResult getAllArticlesByUser = _articleController.GetAllArticlesByUser("5d247a04eff1030d7c520a111", postFilter, 4);
             var type = getAllArticlesByUser.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
@@ -150,37 +151,38 @@ namespace PostService.Test
                 {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
+                    new Claim("user_id","5d247a04eff1030d7c520a222")
                 });
 
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockArticleService.Setup(x => x.GetArticleById(It.IsAny<string>(), It.IsAny<string>())).Returns(article);
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
             _articleController.ControllerContext.HttpContext = contextMock.Object;
-            var getArticleById = _articleController.GetArticleById("asddadsdad90sdsd8");
+            var getArticleById = _articleController.GetArticleById("5d247a04eff1030d7c520a1212");
             var type = getArticleById.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]
-        public void TestRemoveArticle()
+        public void TestGetArticleByIdIsAuthenticated()
         {
-            mockArticleService.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
-            var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
-            IActionResult getArticleById = _articleController.RemoveArticle("asddadsdad90sdsd8");
-            var type = getArticleById.GetType();
-            Assert.AreEqual(type.Name, "OkResult");
-        }
+            var contextMock = new Mock<HttpContext>();
 
+            var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d247a04eff1030d7c520a7uu77")
+                },"authenticationType");
 
-        [TestCase]
-        public void TestRemoveArticleReturnNull()
-        {
-            mockArticleService.Setup(x => x.Delete(It.IsAny<string>())).Returns(false);
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockArticleService.Setup(x => x.GetArticleById(It.IsAny<string>(), It.IsAny<string>())).Returns(article);
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
-            IActionResult getArticleById = _articleController.RemoveArticle("asddadsdad90sdsd8");
-            var type = getArticleById.GetType();
-            Assert.AreEqual(type.Name, "BadRequestResult");
+            _articleController.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult getArticleById = _articleController.GetArticleById("5d247a04eff1030d7c520ac123");
+            var okObjectResult = getArticleById as OkObjectResult;
+            Article articleActual = (Article) okObjectResult.Value;
+            Assert.AreEqual(articleActual, article);
         }
 
         [TestCase]
@@ -195,7 +197,7 @@ namespace PostService.Test
                 {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
+                    new Claim("user_id","5d247a04eff1030d7c520v321")
                 });
 
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
@@ -204,21 +206,22 @@ namespace PostService.Test
          
             controller.ControllerContext.HttpContext = contextMock.Object;
 
-            var actual = controller.CreateArticle(article);
-
-            Assert.IsNotNull(actual);
+            IActionResult createArticle = controller.CreateArticle(article);
+            OkObjectResult okObjectResult = createArticle as OkObjectResult;
+            Article articleActual = (Article)okObjectResult.Value;
+            Assert.AreEqual(articleActual,article);
         }
 
         [TestCase]
         public void TestUpdateArticleReturnBadRequest()
         {
             var contextMock = new Mock<HttpContext>();
-            article.PostId = "";
+            article.PostId = "5d247a04eff1030d7c520a2xxx";
             var claims = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
+                    new Claim("user_id","5d247a04eff1030d7c520a2m32")
                 });
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
@@ -237,7 +240,7 @@ namespace PostService.Test
                 {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","dasfafsf6sfasfasf")
+                    new Claim("user_id","5d247a04eff1030d7c520a987a")
                 });
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
@@ -256,14 +259,39 @@ namespace PostService.Test
                 {
                     new Claim(ClaimTypes.Name, "abc"),
                     new Claim(ClaimTypes.Role, "member"),
-                    new Claim("user_id","authorId")
+                    new Claim("user_id","5d247a04eff1030d7c520a2m32")
                 });
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockPostService.Setup(x => x.Update(It.IsAny<Post>())).Returns(post);
+            mockArticleService.Setup(x => x.Update(It.IsAny<Article>())).Returns(article);
             var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
             _articleController.ControllerContext.HttpContext = contextMock.Object;
-            var checkUpdateArticle = _articleController.UpdateArticle(article);
-            var type = checkUpdateArticle.GetType();
-            Assert.AreEqual(type.Name, "OkObjectResult");
+            IActionResult checkUpdateArticle = _articleController.UpdateArticle(article);
+            OkObjectResult okObjectResult = checkUpdateArticle as OkObjectResult;
+            Article articleActual = (Article) okObjectResult.Value;
+            Assert.AreEqual(articleActual.Id, "5d247a04eff1030d7c5209a0");
+        }
+
+
+        [TestCase]
+        public void TestRemoveArticle()
+        {
+            mockArticleService.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
+            var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
+            IActionResult getArticleById = _articleController.RemoveArticle("5d247a04eff1030d7c520a1188");
+            var type = getArticleById.GetType();
+            Assert.AreEqual(type.Name, "OkResult");
+        }
+
+
+        [TestCase]
+        public void TestRemoveArticleReturnBadRequestResult()
+        {
+            mockArticleService.Setup(x => x.Delete(It.IsAny<string>())).Returns(false);
+            var _articleController = new ArticleController(mockArticleService.Object, mockPostService.Object);
+            IActionResult getArticleById = _articleController.RemoveArticle("5d247a04eff1030d7c520l654");
+            var type = getArticleById.GetType();
+            Assert.AreEqual(type.Name, "BadRequestResult");
         }
     }
 }

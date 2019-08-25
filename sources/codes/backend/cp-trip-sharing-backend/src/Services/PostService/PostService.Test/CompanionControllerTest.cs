@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using PostService.Controllers;
@@ -151,19 +152,25 @@ namespace PostService.Test
            });
         }        
 
-        [TestCase]
-        public void TestCreateAsync()
-        {
-            var contextMock = new Mock<HttpContext>();
-            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
-            //mockLikeService.Setup(x => x.Add(It.IsAny<Like>())).Returns(like);
-            //var _companionController = new CompanionController(_mockCompanionPostService.Object, _mockPostService.Object);
-            //_likeController.ControllerContext.HttpContext = contextMock.Object;
-        }
+        //[TestCase]
+        //public void TestCreateAsync()
+        //{
+        //    var contextMock = new Mock<HttpContext>();
+        //    contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+        //    //mockLikeService.Setup(x => x.Add(It.IsAny<Like>())).Returns(like);
+        //    //var _companionController = new CompanionController(_mockCompanionPostService.Object, _mockPostService.Object);
+        //    //_likeController.ControllerContext.HttpContext = contextMock.Object;
+        //}
 
         [TestCase]
-        public void TestUpdate()
+        public void TestUpdateReturnUnauthorized()
         {
+            var claims = new ClaimsIdentity(new Claim[]
+            {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d33f09763c6060b5a8c519b")
+            });
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             _mockPostService.Setup(x => x.Add(It.IsAny<Post>())).Returns(post);
@@ -172,7 +179,28 @@ namespace PostService.Test
             _companionController.ControllerContext.HttpContext = contextMock.Object;
             var resultActual = _companionController.Update(companionPost);
             var type = resultActual.GetType();
-            Assert.AreEqual(type.Name, "OkObjectResult");
+            Assert.AreEqual(type.Name, "UnauthorizedResult");
+        }
+
+        [TestCase]
+        public void TestUpdateReturnOkObjectResult()
+        {
+            var claims = new ClaimsIdentity(new Claim[]
+            {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d0b2b0b1c9d440000d8e9a1")
+            });
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            _mockPostService.Setup(x => x.Update(It.IsAny<Post>())).Returns(post);
+            _mockCompanionPostService.Setup(x => x.Update(It.IsAny<CompanionPost>())).Returns(companionPost);
+            var _companionController = new CompanionController(_mockCompanionPostService.Object, _mockPostService.Object);
+            _companionController.ControllerContext.HttpContext = contextMock.Object;
+            IActionResult resultActual = _companionController.Update(companionPost);
+            var actionResult = resultActual as OkObjectResult;
+            CompanionPost companionPostActual = (CompanionPost) actionResult.Value;
+            Assert.AreEqual(companionPostActual, companionPost);
         }
 
         [TestCase]
@@ -218,17 +246,43 @@ namespace PostService.Test
         }
 
         [TestCase]
+        public void TestDeleteCompanionPostReturnOkResult()
+        {
+            var claims = new ClaimsIdentity(new Claim[]
+            {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d0b2b0b1c9d440000d8e9a1")
+            },"authenticationType");
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            _mockCompanionPostService.Setup(x => x.GetById(It.IsAny<string>())).Returns(companionPost);
+            _mockCompanionPostService.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
+            var _companionController = new CompanionController(_mockCompanionPostService.Object, _mockPostService.Object);
+            _companionController.ControllerContext.HttpContext = contextMock.Object;
+            var resultActual = _companionController.DeleteCompanionPost("5d0b2b0b1c9d440000d8e9a1");
+            var type = resultActual.GetType();
+            Assert.AreEqual(type.Name,"OkObjectResult");
+        }
+
+        [TestCase]
         public void TestDeleteCompanionPostReturnOkObjectResult()
         {
-            //var contextMock = new Mock<HttpContext>();
-            //contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
-            //_mockCompanionPostService.Setup(x => x.GetById(It.IsAny<string>())).Returns(companionPost);
-            //_mockCompanionPostService.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
-            //var _companionController = new CompanionController(_mockCompanionPostService.Object, _mockPostService.Object);
-            //_companionController.ControllerContext.HttpContext = contextMock.Object;
-            //var resultActual = _companionController.DeleteCompanionPost("5d0b2b0b1c9d440000d8e9a1");
-            //var type = resultActual.GetType();
-            //Assert.AreEqual(type.Name, "UnauthorizedResult");
+            var claims = new ClaimsIdentity(new Claim[]
+             {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d0b2b0b1c9d440000d8e9a1")
+            },"authenticationTyoe");
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            _mockCompanionPostService.Setup(x => x.GetById(It.IsAny<string>())).Returns(companionPost);
+            _mockCompanionPostService.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
+            var _companionController = new CompanionController(_mockCompanionPostService.Object, _mockPostService.Object);
+            _companionController.ControllerContext.HttpContext = contextMock.Object;
+            var resultActual = _companionController.DeleteCompanionPost("5d0b2b0b1c9d440000d8e9a1");
+            var type = resultActual.GetType();
+            Assert.AreEqual(type.Name, "OkObjectResult");
         }
 
         [TestCase]

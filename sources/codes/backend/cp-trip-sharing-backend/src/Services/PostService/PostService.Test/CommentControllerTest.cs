@@ -7,6 +7,7 @@ using PostService.Models;
 using PostService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -81,6 +82,31 @@ namespace PostService.Test
             var getCommentByPost = _commenController.GetCommentByPost("5d15941f197c3400015db0aa");
             var type = getCommentByPost.GetType();
             Assert.AreEqual(type.Name, "OkObjectResult");
+        }
+
+        [TestCase]
+        public void TestGetCommentByPostIsAuthenticated()
+        {
+           var claims = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "abc"),
+                    new Claim(ClaimTypes.Role, "member"),
+                    new Claim("user_id","5d15941f197c3400015db0aa")
+                },"authenticationType");
+            List<Comment> listComment = new List<Comment>();
+            listComment.Add(cmt);
+            listComment.Add(cmtSecond);
+            IEnumerable<Comment> comments = listComment;
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
+            mockCommentService.Setup(x => x.GetCommentByPost(It.IsAny<string>(),It.IsAny<string>())).Returns(comments);
+            var _commenController = new CommentController(mockCommentService.Object, mockAuthorService.Object);
+            _commenController.ControllerContext.HttpContext = contextMock.Object;
+            var getCommentByPost = _commenController.GetCommentByPost("5d15941f197c3400015db0aa");
+            OkObjectResult okObjectResult = getCommentByPost as OkObjectResult;
+            List<Comment> listComments = (List < Comment >) okObjectResult.Value;
+            Comment commentActual = listComments.FirstOrDefault();
+            Assert.AreEqual(commentActual, cmt);
         }
 
         [TestCase]

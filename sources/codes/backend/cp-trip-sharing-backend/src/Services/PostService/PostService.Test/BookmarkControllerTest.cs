@@ -122,7 +122,6 @@ namespace UserService.Test
         [TestCase]
         public void TestDeleteBookmarkReturnBadRequest()
         {
-            Bookmark boorkmarkNull = null;
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockBookmarkService.Setup(x => x.GetById(It.IsAny<string>())).Returns(bookmark);
