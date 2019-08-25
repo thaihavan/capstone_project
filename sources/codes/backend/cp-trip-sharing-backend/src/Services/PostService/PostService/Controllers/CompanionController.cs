@@ -82,23 +82,20 @@ namespace PostService.Controllers
         }
 
         [Authorize(Roles = "member")]
-        [HttpPost("post/update")]
+        [HttpPut("post/update")]
         public IActionResult Update([FromBody]CompanionPost param)
         {
             var identity = User.Identity as ClaimsIdentity;
             var userId = identity.FindFirst("user_id").Value;
 
             //generate new postid and new conversationid 
-            var postId = ObjectId.GenerateNewId().ToString();
-            var conversationId = ObjectId.GenerateNewId().ToString();
+            if (!userId.Equals(param.Post.AuthorId))
+            {
+                return Unauthorized();
+            }
 
-            param.Post.AuthorId = userId;
-            param.Post.Id = postId;
-            param.PostId = postId;
-            param.ConversationId = conversationId;
-
-            _postService.Add(param.Post);
-            var result = _companionPostService.Add(param);
+            _postService.Update(param.Post);
+            var result = _companionPostService.Update(param);
             return Ok(result);
         }
 
