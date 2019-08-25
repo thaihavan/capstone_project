@@ -101,6 +101,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://35.187.244.118"
+    "BaseUrl": "https://api.trip-sharing.net"
   }
 }

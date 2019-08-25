@@ -10,11 +10,11 @@ export class HostGlobal {
     // public static HOST_NOTIFY_SERVICE = 'https://localhost:44335';
 
     // CLOUD
-    public static HOST_IDENTITY_PROVIDER = 'http://35.187.244.118';
-    public static HOST_USER_SERVICE = 'http://35.187.244.118';
-    public static HOST_POST_SERVICE = 'http://35.187.244.118';
-    public static HOST_CHAT_SERVICE = 'http://35.187.244.118';
-    public static HOST_NOTIFY_SERVICE = 'http://35.187.244.118';
+    public static HOST_IDENTITY_PROVIDER = 'https://api.trip-sharing.net';
+    public static HOST_USER_SERVICE = 'https://api.trip-sharing.net';
+    public static HOST_POST_SERVICE = 'https://api.trip-sharing.net';
+    public static HOST_CHAT_SERVICE = 'https://api.trip-sharing.net';
+    public static HOST_NOTIFY_SERVICE = 'https://api.trip-sharing.net';
 
     // API GATEWAY
     // public static HOST_IDENTITY_PROVIDER = 'https://localhost:44345';
@@ -23,5 +23,5 @@ export class HostGlobal {
     // public static HOST_CHAT_SERVICE = 'https://localhost:44345';
     // public static HOST_NOTIFY_SERVICE = 'https://localhost:44345';
 
-    public static HOST_FRONTEND = 'http://trip-sharing.net';
+    public static HOST_FRONTEND = 'https://trip-sharing.net';
 }
