@@ -74,7 +74,7 @@ export class CreateFindingCompanionsPostComponent
   maxMembers: number;
   minMembers: number;
   isMemberValide = true;
-  content = '<p>Hello world!</p>';
+  content = '';
   public Editor = DecoupledEditor;
   minDate = new Date();
   maxDate = new Date(2020, 0, 1);

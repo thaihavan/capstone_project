@@ -42,8 +42,11 @@
     text-overflow: ellipsis;
 }
 
-.article-short-description {
+.virtual-trip-short-description {
     margin-top: -6px;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .location-container {

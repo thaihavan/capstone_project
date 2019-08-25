@@ -71,6 +71,7 @@ export class PersonalPageComponent implements OnInit {
       this.getInforUser(this.userId);
     } else if (this.usergetLocalStorage != null) {
       this.userId = this.usergetLocalStorage.id;
+      this.listBlockeds = JSON.parse(localStorage.getItem('listBlockeds'));
       this.getInforUser(this.userId);
     }
     this.token = localStorage.getItem('Token');
@@ -91,8 +92,6 @@ export class PersonalPageComponent implements OnInit {
         this.navLinks.find(tab => tab.link === '.' + this.router.url)
       );
     });
-
-    this.listBlockeds = JSON.parse(localStorage.getItem('listBlockeds'));
   }
 
   // check scroll fix menu nav
@@ -280,6 +279,6 @@ export class PersonalPageComponent implements OnInit {
   }
 
   isBlocked(userId: string) {
-    return this.listBlockeds.find(u => u.id === userId) != null;
+    return this.listBlockeds ? this.listBlockeds.find(u => u.id === userId) != null : false;
   }
 }

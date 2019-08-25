@@ -172,7 +172,7 @@ export class DetailpostPageComponent implements OnInit {
     comment.parentId = null;
 
     this.postService.addComment(comment).subscribe((res: Comment) => {
-      console.log('add comment res: ' + res);
+      this.commentContent = '';
       this.comments.push(res);
       // Send notification
       this.notifyService.sendCommentNotification(this.user, this.detailPost);

@@ -76,4 +76,17 @@ export class VirtualTripSmallComponent implements OnInit {
     });
   }
 
+  getShortDescription(textContent: string) {
+    if (!textContent) {
+      return '';
+    }
+
+    let shortDes = textContent.trim();
+    if (textContent.length > 80) {
+      shortDes = shortDes.substr(0, 80) + '...';
+    }
+
+    return shortDes;
+  }
+
 }

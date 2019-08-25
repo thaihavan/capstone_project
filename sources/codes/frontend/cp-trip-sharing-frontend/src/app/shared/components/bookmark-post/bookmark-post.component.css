@@ -1,4 +1,6 @@
-
+a {
+    cursor: pointer;
+}
 .bookmark-item{
     width: 100%;
     height: auto;

@@ -3,13 +3,13 @@
     <img (click)="goToPostDetail()" src="{{bookmark.post.coverImage}}" />
   </div>
   <div class="content">
-    <div class="title"><a (click)="goToPostDetail()" href="">{{bookmark.post.title}}</a></div>
+    <div class="title"><a (click)="goToPostDetail()">{{bookmark.post.title}}</a></div>
     <div class="icon-remove">
       <button mat-icon-button class="close-btn" (click)="removeBookmark(bookmark.postId)" >
         <mat-icon>close</mat-icon>
       </button>
     </div>
     <div class="category-post"><span><i class="fa fa-circle icon-circle"></i>Thể loại: <b>{{bookmark.post.postType}}</b></span></div>
-  <div class="author">Được đăng bởi <a href="" (click)="gotoPersionalPage(bookmark.userId)" class="author-name">{{bookmark.post.author.displayName}}</a> </div>
+  <div class="author">Được đăng bởi <a (click)="gotoPersionalPage(bookmark.userId)" class="author-name">{{bookmark.post.author.displayName}}</a> </div>
   </div>
 </div>
