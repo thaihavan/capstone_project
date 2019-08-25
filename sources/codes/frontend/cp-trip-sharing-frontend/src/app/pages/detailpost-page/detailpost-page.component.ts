@@ -15,6 +15,7 @@ import { FindingCompanionService } from 'src/app/core/services/post-service/find
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { ReportPopupComponent } from 'src/app/shared/components/report-popup/report-popup.component';
 import { LoginPageComponent } from 'src/app/shared/components/login-page/login-page.component';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -68,7 +69,8 @@ export class DetailpostPageComponent implements OnInit {
     public dialog: MatDialog,
     private notifyService: NotifyService,
     private postCopmanionService: FindingCompanionService,
-    private errorHandler: GlobalErrorHandler
+    private errorHandler: GlobalErrorHandler,
+    private alertify: AlertifyService
   ) {
     this.comments = [];
   }
@@ -287,13 +289,27 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   removePost() {
-    this.postService.removeArticle(this.postId).subscribe((data: any) => {
-      this.openDialogMessageConfirm(
-        'Bạn đã xóa bài viết thành công!',
-        '',
-        'success'
+    if (this.typePost === 'article') {
+      this.postService.removeArticle(this.postId).subscribe(respone => { },
+        (error) => {
+          this.alertify.error('Lỗi xóa bài viết');
+        },
+        () => {
+          // this.alertify.success('Xóa bài viết thành công');
+          this.openDialogMessageConfirm('Bài viết đã được xóa!', '', 'success');
+        }
+        );
+    } else {
+      this.postCopmanionService.deletePost(this.postId).subscribe(respone => { },
+        (error) => {
+          this.alertify.error('Lỗi xóa bài viết');
+        },
+        () => {
+          // this.alertify.success('Xóa bài viết thành công');
+          this.openDialogMessageConfirm('Bài viết đã được xóa!', '', 'success');
+        }
       );
-    }, this.errorHandler.handleError);
+    }
   }
 
   openDialogReportPost(title: string, postId: string) {
@@ -318,12 +334,19 @@ export class DetailpostPageComponent implements OnInit {
       position: {
         top: '20px'
       },
-      disableClose: true
+      disableClose: messageType === 'success' ? true : false
     });
     const instance = dialogRef.componentInstance;
     instance.message.messageText = message;
     instance.message.messageType = messageType;
-    instance.message.url = '/user/' + this.user.id + url;
+    if (messageType === 'success') {
+      instance.message.url = '/user/' + this.user.id + url;
+    }
+    dialogRef.afterClosed().subscribe(res => {
+      if (res === 'continue') {
+        this.removePost();
+      }
+    });
   }
 
   openDialogLoginForm() {

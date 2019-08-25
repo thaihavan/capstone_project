@@ -98,4 +98,16 @@ export class GoogleMapComponent implements OnInit, AfterViewInit, OnChanges {
       return this.locationMarker.length > 1;
     }
   }
+
+  // mouse over marker
+  onMouseOver(infoWindow, gm) {
+
+    if (gm.lastOpen != null) {
+        gm.lastOpen.close();
+    }
+
+    gm.lastOpen = infoWindow;
+
+    infoWindow.open();
+}
 }

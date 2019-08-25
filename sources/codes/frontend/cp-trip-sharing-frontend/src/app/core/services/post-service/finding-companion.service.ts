@@ -3,8 +3,6 @@ import { HostGlobal } from '../../global-variables';
 import { CompanionPost } from 'src/app/model/CompanionPost';
 import { Observable, Observer } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Comment } from 'src/app/model/Comment';
-import { Like } from 'src/app/model/Like';
 import { CompanionPostRequest } from 'src/app/model/CompanionPostRequest';
 import { PostFilter } from 'src/app/model/PostFilter';
 
@@ -67,19 +65,15 @@ export class FindingCompanionService {
     return this.http.post(this.baseUrl + '/post/update', companionPost, httpOption);
   }
 
-  getCommentByPost(postId: string, token: string): Observable<any> {
-    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/all';
-    if (token != null) {
-      const httpOptionAuth = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token
-        })
-      };
-      return this.http.get(url + '?id=' + postId, httpOptionAuth);
-    } else {
-      return this.http.get(url + '?id=' + postId);
-    }
+  deletePost(id): Observable<any> {
+    const httpOptionRemoveArticle = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    // tslint:disable-next-line:max-line-length
+    return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/post/remove?postId=' + id, httpOptionRemoveArticle);
   }
 
   // get all request from members
@@ -127,35 +121,4 @@ export class FindingCompanionService {
     return this.http.delete(this.baseUrl + '/post/request/cancel?postId=' + pId, httpOption);
   }
 
-  addComment(comment: Comment): Observable<any> {
-    const httpOptionAuth = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('Token')
-      })
-    };
-    const url = HostGlobal.HOST_POST_SERVICE + '/api/postservice/comment/add';
-    return this.http.post<Comment>(url, comment, httpOptionAuth);
-  }
-
-  likeAPost(likeObject: Like): Observable<any> {
-    const httpOptionLike = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('Token')
-      })
-    };
-    return this.http.post<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/like/like', likeObject, httpOptionLike);
-  }
-
-  unlikeAPost(likeObject: Like): Observable<any> {
-    const httpOptionUnLike = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('Token')
-      }),
-      body: likeObject
-    };
-    return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/like/unlike', httpOptionUnLike);
-  }
 }

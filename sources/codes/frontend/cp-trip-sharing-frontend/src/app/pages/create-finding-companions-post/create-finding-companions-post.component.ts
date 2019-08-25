@@ -109,6 +109,7 @@ export class CreateFindingCompanionsPostComponent
           this.content = this.companionPost.post.content ;
           this.isPublic = this.companionPost.post.isPublic ;
           this.imgUrl = this.companionPost.post.coverImage ;
+          this.isHasImg = true;
           this.destinations = this.companionPost.destinations ;
           this.estAdultAmount = this.onAmountChange(this.companionPost.estimatedCost.toString());
           setTimeout( () => {this.listSchedules = this.companionPost.scheduleItems; }, 2000);

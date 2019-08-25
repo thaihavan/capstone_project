@@ -216,7 +216,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     this.tripService.createVirtualTrip(this.virtualTrip).subscribe(
       result => {
         dialogRef.close();
-        this.openDialogMessageConfirm('Bàn đăng đã được tạo!', result.id, 'success');
+        this.openDialogMessageConfirm('Bàn đăng đã được tạo!', result.id, 'success', false);
       },
       this.errorHandler.handleError,
       () => {
@@ -259,19 +259,59 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   }
 
   // open dialog confirm
-  openDialogMessageConfirm(message: string, data, messageType: string) {
+  // openDialogMessageConfirm(message: string, data, messageType: string) {
+  //   const dialogRef = this.dialog.open(MessagePopupComponent, {
+  //     width: '500px',
+  //     height: 'auto',
+  //     position: {
+  //       top: '20px'
+  //     },
+  //     disableClose: true
+  //   });
+  //   const instance = dialogRef.componentInstance;
+  //   instance.message.messageType = messageType;
+  //   instance.message.messageText = message;
+  //   instance.message.url = '/chuyen-di/' + data;
+  // }
+
+  openDialogMessageConfirm(message: string, url: string, messageType: string, remove: boolean) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {
       width: '500px',
       height: 'auto',
       position: {
         top: '20px'
       },
-      disableClose: true
+      disableClose: messageType === 'success' ? true : false
     });
     const instance = dialogRef.componentInstance;
-    instance.message.messageType = messageType;
     instance.message.messageText = message;
-    instance.message.url = '/chuyen-di/' + data;
+    instance.message.messageType = messageType;
+    if (messageType === 'success') {
+      if (remove) {
+        instance.message.url = '/user/' + this.author.id + url;
+      } else {
+        instance.message.url = '/chuyen-di/' + url;
+      }
+    }
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res === 'continue') {
+        this.tripService.deletePost(this.virtualTripId).subscribe(
+          respone => { },
+        (error) => {
+          this.alertify.error('Lỗi xóa bài viết');
+        },
+        () => {
+          // this.alertify.success('Xóa bài viết thành công');
+          this.openDialogMessageConfirm('Bài viết đã được xóa!', '', 'success', true);
+        }
+        );
+      }
+    });
+  }
+
+  removeTrip() {
+    this.openDialogMessageConfirm('Bạn có muốn xóa bài viết?', this.author.id, 'confirm', true);
   }
 
   // send update request to server

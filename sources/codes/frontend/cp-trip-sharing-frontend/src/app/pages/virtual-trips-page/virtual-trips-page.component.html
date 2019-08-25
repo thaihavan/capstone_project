@@ -30,8 +30,8 @@
               <mat-icon>more_horiz</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button *ngIf="virtualTripId" mat-menu-item>
-                <mat-icon >delete</mat-icon>
+              <button *ngIf="virtualTripId" (click)="removeTrip()" mat-menu-item>
+                <mat-icon >delete_outline</mat-icon>
                 <span>Xoá</span>
               </button>
               <button (click)="editAble()" mat-menu-item>

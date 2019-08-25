@@ -25,6 +25,17 @@ export class VirtualTripService {
     return this.http.post<VirtualTrip>(this.baseUrl + '/update', virtualTrip, this.httpOption);
   }
 
+  deletePost(id): Observable<any> {
+    const httpOptionRemoveArticle = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('Token')
+      })
+    };
+    // tslint:disable-next-line:max-line-length
+    return this.http.delete<any>(HostGlobal.HOST_POST_SERVICE + '/api/postservice/post/remove?postId=' + id, httpOptionRemoveArticle);
+  }
+
   getDetailVtrip(id: string): Observable<VirtualTrip> {
     return this.http.get<VirtualTrip>(this.baseUrl + '?id=' + id, this.httpOption);
   }

@@ -86,7 +86,7 @@ namespace PostService.Controllers
         }
 
         [Authorize(Roles = "member")]
-        [HttpDelete("post")]
+        [HttpDelete("remove")]
         public IActionResult DeletePost([FromQuery] string postId)
         {
             var post = _postService.GetById(postId);

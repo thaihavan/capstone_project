@@ -5,8 +5,26 @@
       <app-google-map-search width="100" height="30" matFill="true" (onSelect)="setAddress($event)"></app-google-map-search>
   </div>  
 <div [style.height.px]="heightMap">
-    <agm-map [ngClass.gt-lg]="" [latitude]="lat" [longitude]="lng" [fitBounds]="fitBound()">
-          <agm-marker [agmFitBounds]="true" *ngFor="let marker of locationMarker" [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+    <agm-map #gm [ngClass.gt-lg]="" [latitude]="lat" [longitude]="lng" [fitBounds]="fitBound()">
+          <agm-marker [agmFitBounds]="true" *ngFor="let marker of locationMarker" 
+          [label]=" {
+            color: '#007bff',
+            fontWeight: 'bold',
+            text: marker.name
+          }"
+          [latitude]="marker.latitude"
+          [longitude]="marker.longitude"
+          (mouseOver)="onMouseOver(infoWindow,gm)">
+          <agm-info-window [disableAutoPan]="false" #infoWindow>
+            <div class="infor-place">
+              <div class="place-image-bound">
+                  <img src="{{marker.image}}">
+              </div>              
+               <div class="place-name">{{marker.name}}</div> 
+            </div>
+        </agm-info-window>
+
+        </agm-marker>
     </agm-map>
 </div>
 </div>
