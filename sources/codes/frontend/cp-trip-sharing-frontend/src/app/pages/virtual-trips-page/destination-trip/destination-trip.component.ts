@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { LocationMarker } from 'src/app/model/LocationMarker';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { ActionDestination } from 'src/app/model/ActionDestination';
+import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
+import { ImageUpload } from 'src/app/model/ImageUpload';
 
 @Component({
   selector: 'app-destination-trip',
@@ -14,9 +16,42 @@ export class DestinationTripComponent implements OnInit {
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @Output() saveDestination = new EventEmitter();
   acDestination = new ActionDestination();
-  constructor() {}
+  constructor(private uploadImageService: UploadImageService) {}
 
   ngOnInit() {
+    this.initImage();
+  }
+
+  // init image
+  initImage() {
+    if (this.item.image.includes('maps.googleapis.com')) {
+      this.uploadImageService.uploadGoogleMapImage(this.item.image).subscribe(res => {
+        // tslint:disable-next-line:prefer-const
+        let ImagePost = new ImageUpload();
+        const reader = new FileReader();
+        // Add a listener to handle successful reading of the blob
+        reader.addEventListener('load', () => {
+          // Set the src attribute of the image to be the resulting data URL
+          // obtained after reading the content of the blob
+          const image = reader.result.toString().split(',');
+          ImagePost.image = image[1];
+          ImagePost.type = res.type;
+          this.uploadImageService.uploadImage(ImagePost).subscribe(
+            url => {
+              this.item.image = url.image;
+            },
+            (error) => {
+              console.log(error);
+            },
+            () => {
+            }
+          );
+        });
+        // Start reading the content of the blob
+        // The result should be a base64 data URL
+        reader.readAsDataURL(res);
+      });
+    }
   }
 
   // event when change image

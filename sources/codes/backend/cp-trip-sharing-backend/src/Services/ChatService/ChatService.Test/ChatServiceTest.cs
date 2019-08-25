@@ -164,8 +164,8 @@ namespace ChatService.Test
             mockConversationRepository.Setup(x => x.GetAllUserInConversation(It.IsAny<string>())).Returns(_iEnumerableUser);
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
             IEnumerable<User> iEnumerableGetAllMemberActual = chatService.GetAllMember("asfas9fdsa8fa7f6sf6as");
-            User userActual = _iEnumerableUser.FirstOrDefault();
-            Assert.AreEqual(userActual, user);
+            User userActual = iEnumerableGetAllMemberActual.FirstOrDefault();
+            Assert.AreEqual(userActual.Id, "5d4d012613376b00013a8908");
         }
 
         [TestCase]
@@ -176,7 +176,7 @@ namespace ChatService.Test
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
             IEnumerable<MessageDetail> _iEnumerableGetByConversationId = chatService.GetByConversationId("asfas9fdsa8fa7f6sf6as");
             MessageDetail messageDetailActual = _iEnumerableGetByConversationId.FirstOrDefault();
-            Assert.AreEqual(messageDetailActual,messageDetail);
+            Assert.AreEqual(messageDetailActual.Id, "5d4d012613376b00013a892x");
         }
 
         [TestCase]
@@ -196,7 +196,7 @@ namespace ChatService.Test
             var chatService = new ChatService.Services.ChatService(mockConversationRepository.Object, mockMessageRepository.Object);
             IEnumerable<Conversation> ienumableGetByUserId = chatService.GetByUserId("asfas9fdsa8fa7f6sf6as");
             Conversation conversationActual = ienumableGetByUserId.FirstOrDefault();
-            Assert.AreEqual(conversationActual,conversation);
+            Assert.AreEqual(conversationActual.Id, "5d4d0x2613376b00013a8909");
         }
 
         [TestCase]

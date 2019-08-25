@@ -23,15 +23,13 @@ import { MatDialog } from '@angular/material';
 import { DialogStepFindingCompanionsComponent } from 'src/app/shared/components/dialog-step-finding-companions/dialog-step-finding-companions.component';
 import { Schedule } from 'src/app/model/Schedule';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { LocationMarker } from 'src/app/model/LocationMarker';
 import { CompanionPost } from 'src/app/model/CompanionPost';
 import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
-import { ChatService } from 'src/app/core/services/chat-service/chat.service';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
-import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-create-finding-companions-post',
   templateUrl: './create-finding-companions-post.component.html',
@@ -51,9 +49,9 @@ export class CreateFindingCompanionsPostComponent
     private zone: NgZone,
     private companionService: FindingCompanionService,
     private fb: FormBuilder,
-    private chatService: ChatService,
     private alertifyService: AlertifyService,
-    private errorHandler: GlobalErrorHandler
+    private route: ActivatedRoute,
+    private postCopmanionService: FindingCompanionService
   ) {
     this.initForm();
   }
@@ -87,8 +85,39 @@ export class CreateFindingCompanionsPostComponent
   estCostItem = '';
   destinations: ArticleDestinationItem[] = [];
   companionPost: CompanionPost;
-  ngOnInit() {}
-  ngAfterViewInit(): void {}
+  companionPostId: string;
+
+  ngOnInit() {
+    this.companionPost = new CompanionPost();
+    this.companionPostId = this.route.snapshot.paramMap.get('companionId');
+    if (
+      this.companionPostId !== undefined &&
+      this.companionPostId !== null &&
+      this.companionPostId !== ''
+    ) {
+      this.isUpdate = true;
+      this.postCopmanionService.getPost(this.companionPostId).subscribe(
+        res => {
+          this.companionPost = res;
+          this.fromDate = this.companionPost.from ;
+          this.toDate = this.companionPost.to ;
+          this.estimatedDate = this.companionPost.expiredDate ;
+          this.minMembers = this.companionPost.minMembers ;
+          this.maxMembers = this.companionPost.maxMembers ;
+          this.estimatedCostItems = this.companionPost.estimatedCostItems ;
+          this.title = this.companionPost.post.title;
+          this.content = this.companionPost.post.content ;
+          this.isPublic = this.companionPost.post.isPublic ;
+          this.imgUrl = this.companionPost.post.coverImage ;
+          this.destinations = this.companionPost.destinations ;
+          this.estAdultAmount = this.onAmountChange(this.companionPost.estimatedCost.toString());
+          setTimeout( () => {this.listSchedules = this.companionPost.scheduleItems; }, 2000);
+        }
+      );
+    }
+  }
+  ngAfterViewInit(): void {
+  }
   public onReady(editor) {
     editor.ui
       .getEditableElement()
@@ -295,6 +324,17 @@ export class CreateFindingCompanionsPostComponent
     this.companionPost.post.isPublic = this.isPublic;
     this.companionPost.post.coverImage = this.imgUrl;
     this.companionPost.destinations = this.destinations;
+    if (this.isUpdate) {
+      this.companionService.updatePost(this.companionPost).subscribe(
+        res => {
+          this.openDialogMessageConfirm('Bạn đã cập nhập thành công!', res.id , 'success' );
+        },
+        (error) => {
+          this.openDialogMessageConfirm(error.message, null, 'danger');
+        }
+      );
+      return;
+    }
     this.companionService.createPost(this.companionPost).subscribe(
         res => {
           this.openDialogMessageConfirm('Bàn đăng đã được tạo!', res.id, 'success' );

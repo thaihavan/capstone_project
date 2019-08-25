@@ -2,6 +2,7 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, AfterViewInit, Input } from '@angular/core';
 /// <reference path="<relevant path>/node_modules/@types/googlemaps/index.d.ts" />
 import {MapsAPILoader} from '@agm/core';
+import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 @Component({
   selector: 'app-google-map-search',
   templateUrl: './google-map-search.component.html',
@@ -10,7 +11,8 @@ import {MapsAPILoader} from '@agm/core';
 
 export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
   textInput = '';
-  constructor(private mapLoader: MapsAPILoader) {
+  constructor(private mapLoader: MapsAPILoader,
+              private uploadImage: UploadImageService) {
   }
   @ViewChild('searchmap') inputSearch;
   // tslint:disable-next-line:no-output-on-prefix

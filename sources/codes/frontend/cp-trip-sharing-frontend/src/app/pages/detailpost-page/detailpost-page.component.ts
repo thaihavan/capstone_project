@@ -279,7 +279,11 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   editpost() {
-    window.location.href = '/chinh-sua-bai-viet/' + this.postId;
+    if (this.typePost === 'article') {
+      window.location.href = '/chinh-sua-bai-viet/' + this.postId;
+    } else {
+      window.location.href = '/chinh-sua-tim-ban-dong-hanh/' + this.postId;
+    }
   }
 
   removePost() {

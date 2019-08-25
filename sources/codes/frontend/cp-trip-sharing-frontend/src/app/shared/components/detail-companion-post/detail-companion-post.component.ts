@@ -94,6 +94,11 @@ export class DetailCompanionPostComponent implements OnInit {
         if (this.companionPost.requested) {
           this.statustRequest.IsWaiting();
         }
+        const currDate = new Date();
+        const fromDate = new Date(this.companionPost.from);
+        if (fromDate.getTime() < currDate.getTime()) {
+          this.statustRequest.IsExpired();
+        }
       }
     );
   }
@@ -203,5 +208,9 @@ class StatustRequest {
   public IsJoined() {
     this.type = 'joined';
     this.text = 'Đã tham gia';
+  }
+  public IsExpired() {
+    this.type = 'expired';
+    this.text = 'Đã hết hạn';
   }
 }

@@ -84,5 +84,21 @@ namespace PostService.Controllers
             var result = _postService.GetAllPostStatistics(filter);
             return Ok(result);
         }
+
+        [Authorize(Roles = "member")]
+        [HttpDelete("post")]
+        public IActionResult DeletePost([FromQuery] string postId)
+        {
+            var post = _postService.GetById(postId);
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+
+            if (!post.AuthorId.Equals((userId)))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(_postService.Delete(postId));
+        }
     }
 }
