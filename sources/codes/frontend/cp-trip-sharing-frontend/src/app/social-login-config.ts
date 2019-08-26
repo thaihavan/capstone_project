@@ -8,7 +8,7 @@ export function provideSocialLoginConfig() {
         },
         {
           id: FacebookLoginProvider.PROVIDER_ID,
-          provider: new FacebookLoginProvider('1223156774441056')
+          provider: new FacebookLoginProvider('2725302120814952')
         }
       ]);
 
