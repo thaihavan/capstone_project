@@ -235,4 +235,9 @@ export class UserService {
     const url = `${this.apiUserService}user/check-username`;
     return this.http.get(url + '?username=' + username, httpOptionAuthen);
   }
+
+  getContributionPoint(userId): Observable<any> {
+    const url = `${this.apiUserService}user/contribution`;
+    return this.http.get(url + '?userId=' + userId, httpOptionAuthen);
+  }
 }

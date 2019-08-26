@@ -93,11 +93,15 @@
       </div>
       <div class="join-request">
         <ng-container [ngSwitch]="statustRequest.type">
-          <button *ngSwitchCase="'expired'" (click)="goToMessages()" mat-flat-button disabled>
+          <button *ngSwitchCase="'expired'" mat-flat-button disabled>
             {{statustRequest.text}}
           </button>
-          <button *ngSwitchCase="'joined'" (click)='sendRequest()' mat-flat-button
-            color="{{statustRequest.type === 'waiting' ? 'warn' : 'primary'}}">
+          <button *ngSwitchCase="'request'" (click)='sendRequest()' mat-flat-button
+            color="primary">
+            {{statustRequest.text}}
+          </button>
+          <button *ngSwitchCase="'waiting'" (click)='sendRequest()' mat-flat-button
+            color="warn">
             {{statustRequest.text}}
           </button>
           <button *ngSwitchDefault (click)="goToMessages()" mat-flat-button color="primary">

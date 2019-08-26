@@ -205,6 +205,11 @@ export class CreatePostPageComponent implements OnInit {
     instance.message.url = '/bai-viet/' + this.articlereturn.id;
   }
   createPost() {
+    if (!this.imgUrl) {
+      this.alertify.error('Yêu cầu ảnh bìa cho bài viết');
+      this.goToTop();
+      return;
+    }
     if (this.title === '' || this.content === '' || this.destinations.length === 0) {
       this.alertify.error('Bạn cần nhập thông tin bài viết');
       window.scroll({
@@ -244,4 +249,13 @@ export class CreatePostPageComponent implements OnInit {
   removeDestination(index) {
     this.destinations.splice(index, 1);
   }
+
+    // scroll to top
+    goToTop() {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
 }

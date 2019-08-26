@@ -51,7 +51,7 @@ export class DetailCompanionPostComponent implements OnInit {
   checkAuthorPost() {
     if (this.user === null) {
       return;
-        }
+    }
     if (this.user.id === this.companionPost.post.author.id) {
       this.isAuthorPost = true;
     }
@@ -72,8 +72,8 @@ export class DetailCompanionPostComponent implements OnInit {
     });
   }
 
-   // get member in group chat
-   geGroupChatMembers() {
+  // get member in group chat
+  geGroupChatMembers() {
     this.chatService.getMembers(this.companionPost.conversationId).subscribe(
       res => {
         this.userListGroup = res;
@@ -83,6 +83,13 @@ export class DetailCompanionPostComponent implements OnInit {
         const user = JSON.parse(localStorage.getItem('User'));
         if (user === null) {
           this.statustRequest.IsRequestJoin();
+          // tslint:disable-next-line:no-shadowed-variable
+          const currDate = new Date();
+          // tslint:disable-next-line:no-shadowed-variable
+          const fromDate = new Date(this.companionPost.from);
+          if (fromDate.getTime() < currDate.getTime()) {
+            this.statustRequest.IsExpired();
+          }
           return;
         }
         const isJoined = this.userListGroup.find(u => u.id === user.id);
@@ -122,23 +129,25 @@ export class DetailCompanionPostComponent implements OnInit {
       () => {
         this.alertify.success('Đã thêm mới một thành viên');
         // Send notification
-        this.notifyService.sendJoinRequestAcceptedNotification(this.user, this.companionPost, user_id);
+        this.notifyService.sendJoinRequestAcceptedNotification(
+          this.user,
+          this.companionPost,
+          user_id
+        );
       }
     );
   }
 
   // for author delete request soecify member
   deleteRequest(index, join) {
-    this.postService.deleteRequest(this.userListRequests[index]).subscribe(
-      res => {},
-      this.errorHandler.handleError,
-      () => {
+    this.postService
+      .deleteRequest(this.userListRequests[index])
+      .subscribe(res => {}, this.errorHandler.handleError, () => {
         if (!join) {
           this.alertify.success('Đã xoá yêu cầu');
         }
         this.userListRequests.splice(index, 1);
-      }
-    );
+      });
   }
 
   // for member send request to join group companion
@@ -147,11 +156,11 @@ export class DetailCompanionPostComponent implements OnInit {
       this.companionPostRequest = new CompanionPostRequest();
       const user = JSON.parse(localStorage.getItem('User'));
       if (user === null) {
-            const dialogRef = this.dialog.open(LoginPageComponent, {
-              height: 'auto',
-              width: '400px'
-            });
-            return;
+        const dialogRef = this.dialog.open(LoginPageComponent, {
+          height: 'auto',
+          width: '400px'
+        });
+        return;
       }
       this.companionPostRequest.userId = user.id;
       this.companionPostRequest.date = new Date();
@@ -171,7 +180,10 @@ export class DetailCompanionPostComponent implements OnInit {
             this.statustRequest.IsWaiting();
             this.alertify.success('Gửi yêu câu thành công!');
             // Send notification
-            this.notifyService.sendJoinRequestNotification(this.user, this.companionPost);
+            this.notifyService.sendJoinRequestNotification(
+              this.user,
+              this.companionPost
+            );
           }
         );
     } else {
@@ -191,6 +203,14 @@ export class DetailCompanionPostComponent implements OnInit {
 
   // go to messages
   goToMessages() {
+    const user = JSON.parse(localStorage.getItem('User'));
+    if (user === null) {
+      const dialogRef = this.dialog.open(LoginPageComponent, {
+        height: 'auto',
+        width: '400px'
+      });
+      return;
+    }
     window.location.href = 'tin-nhan';
   }
 }

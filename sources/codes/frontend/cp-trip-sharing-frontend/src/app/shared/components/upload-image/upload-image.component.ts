@@ -5,6 +5,7 @@ import { EventEmitter } from '@angular/core';
 import { UploadImageService } from 'src/app/core/services/upload-image-service/upload-image.service';
 import { ImageUpload } from 'src/app/model/ImageUpload';
 import { LoadingScreenComponent } from '../loading-screen/loading-screen.component';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-upload-image',
@@ -21,7 +22,8 @@ export class UploadImageComponent implements OnInit {
   @ViewChild('file') file;
   constructor(
     public dialog: MatDialog,
-    private imageService: UploadImageService
+    private imageService: UploadImageService,
+    private alertify: AlertifyService
   ) {}
 
   ngOnInit() {
@@ -29,6 +31,14 @@ export class UploadImageComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
+    if (event.currentTarget.files.lenght === 0) {
+      return;
+    }
+    const mimeType = event.currentTarget.files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+     this.alertify.error('Yêu cầu chọn file ảnh');
+     return;
+    }
     this.imageChangedEvent = event;
     this.openDialog();
   }

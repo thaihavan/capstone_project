@@ -32,6 +32,7 @@ export class DetailpostPageComponent implements OnInit {
   postId: string;
   companionPostId: string;
   token: string;
+  contributionPoint: string;
 
   bookmark = false;
   follow = false;
@@ -98,6 +99,7 @@ export class DetailpostPageComponent implements OnInit {
       this.displayName = data.post.author.displayName;
       this.profileImage = data.post.author.profileImage;
       this.authorId = data.post.author.id;
+      this.getContributionPoint(this.authorId);
       if (this.post.coverImage == null) {
         this.post.coverImage = '../../../assets/coverimg.jpg';
       }
@@ -122,6 +124,7 @@ export class DetailpostPageComponent implements OnInit {
         this.profileImage = data.post.author.profileImage;
         this.listLocation = data.destinations;
         this.authorId = this.post.author.id;
+        this.getContributionPoint(this.authorId);
         if (this.profileImage == null) {
           this.profileImage = '../../../assets/img_avatar.png';
         }
@@ -151,6 +154,19 @@ export class DetailpostPageComponent implements OnInit {
     if (this.listPostIdBookMark != null) {
       this.bookmark = this.listPostIdBookMark.indexOf(this.post.id) !== -1;
     }
+  }
+
+  // get author contribution point
+  getContributionPoint(id) {
+    this.userService.getContributionPoint(id).subscribe(
+      res => {
+        this.contributionPoint = res.contributionPoint;
+      },
+      error => {
+
+      },
+      () => {}
+    );
   }
 
   getCommentByPostId(postId: string) {
@@ -296,7 +312,7 @@ export class DetailpostPageComponent implements OnInit {
         },
         () => {
           // this.alertify.success('Xóa bài viết thành công');
-          this.openDialogMessageConfirm('Bài viết đã được xóa!', '', 'success');
+          this.openDialogMessageConfirm('Bài viết đã được xóa!', '/bai-viet', 'success');
         }
         );
     } else {
@@ -306,7 +322,7 @@ export class DetailpostPageComponent implements OnInit {
         },
         () => {
           // this.alertify.success('Xóa bài viết thành công');
-          this.openDialogMessageConfirm('Bài viết đã được xóa!', '', 'success');
+          this.openDialogMessageConfirm('Bài viết đã được xóa!', '/tim-ban-dong-hanh', 'success');
         }
       );
     }

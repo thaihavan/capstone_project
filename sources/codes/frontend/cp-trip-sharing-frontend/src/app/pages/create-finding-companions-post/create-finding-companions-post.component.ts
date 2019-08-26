@@ -300,15 +300,22 @@ export class CreateFindingCompanionsPostComponent
 
   // create finding companions post
   createPost() {
+    if (!this.imgUrl) {
+      this.alertifyService.error('Yêu cầu ảnh bìa cho bài viết');
+      this.goToTop(0);
+      return;
+    }
     if (this.destinations.length < 1) {
       this.alertifyService.error('Yêu cầu nhập địa điểm cho chuyến đi');
-      this.goToTop();
+      this.goToTop(200);
       return;
     }
     if (this.companionForm.invalid) {
       return;
     }
-    this.companionPost = new CompanionPost();
+    if (!this.isUpdate) {
+      this.companionPost = new CompanionPost();
+    }
     this.companionPost.from = this.fromDate;
     this.companionPost.to = this.toDate;
     this.companionPost.expiredDate = this.estimatedDate;
@@ -349,17 +356,23 @@ export class CreateFindingCompanionsPostComponent
   // on submit form
   onSubmit() {
     // stop here if form is invalid
+    if (!this.imgUrl) {
+      return;
+    }
+    if (this.destinations.length < 1) {
+      return;
+    }
     if (this.companionForm.invalid) {
       this.alertifyService.error('Lỗi thông tin bài viết!');
-      this.goToTop();
+      this.goToTop(200);
       return;
   }
   }
 
   // scroll to top
-  goToTop() {
+  goToTop(height) {
     window.scroll({
-      top: 200,
+      top: height,
       left: 0,
       behavior: 'smooth'
     });
