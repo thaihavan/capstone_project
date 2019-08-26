@@ -24,7 +24,6 @@ namespace UserService.Test
             user = new User()
             {
                 Id = "5d300f07a346270001a5bef4",
-                AccountId = "5d300f07a346270001a5bef2",
                 Active = true,
                 Address = "Nam Dinh",
                 Avatar = "https://storage.googleapis.com/trip-sharing-final-image-bucket/image-default-user-avatar.png",
@@ -45,7 +44,6 @@ namespace UserService.Test
             userSecond = new User()
             {
                 Id = "5d027ea59b358d212o3iu456b",
-                AccountId = "5d027ea59b358d247cd12re12",
                 Active = true,
                 Address = "Nam Dinh",
                 Avatar = "",
