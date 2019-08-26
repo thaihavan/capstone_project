@@ -313,7 +313,9 @@ export class CreateFindingCompanionsPostComponent
     if (this.companionForm.invalid) {
       return;
     }
-    this.companionPost = new CompanionPost();
+    if (!this.isUpdate) {
+      this.companionPost = new CompanionPost();
+    }
     this.companionPost.from = this.fromDate;
     this.companionPost.to = this.toDate;
     this.companionPost.expiredDate = this.estimatedDate;

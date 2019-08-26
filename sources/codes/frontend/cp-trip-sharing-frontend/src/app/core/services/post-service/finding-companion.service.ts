@@ -62,7 +62,7 @@ export class FindingCompanionService {
         Authorization: 'Bearer ' + localStorage.getItem('Token')
       })
     };
-    return this.http.post(this.baseUrl + '/post/update', companionPost, httpOption);
+    return this.http.put(this.baseUrl + '/post/update', companionPost, httpOption);
   }
 
   deletePost(id): Observable<any> {
