@@ -26,7 +26,6 @@ namespace UserService.Test
             user = new User()
             {
                 Id = "5d027ea59b358d247cd21aa3",
-                AccountId = "5d027ea59b358d247cd12re78",
                 Active = true,
                 Address = "Nam Dinh",
                 Avatar = "",
@@ -47,7 +46,6 @@ namespace UserService.Test
             userSecond = new User()
             {
                 Id = "5d027ea59b358d212o3iu456b",
-                AccountId = "5d027ea59b358d247cd12re12",
                 Active = true,
                 Address = "Nam Dinh",
                 Avatar = "",

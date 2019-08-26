@@ -14,10 +14,6 @@ namespace UserServices.Models
         [BsonElement("_id")]
         public string Id { get; set; }
 
-        [BsonRepresentation(BsonType.ObjectId)]
-        [BsonElement("account_id")]
-        public string AccountId { get; set; }
-
         [BsonElement("username")]
         public string UserName { get; set; }
 
