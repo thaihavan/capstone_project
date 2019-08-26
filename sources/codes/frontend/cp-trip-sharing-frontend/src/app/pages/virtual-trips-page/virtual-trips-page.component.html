@@ -12,7 +12,9 @@
                 <button *ngIf="userRole === 'author'" (click)="fileClick()" mat-icon-button class="">
                   <mat-icon>add_photo_alternate</mat-icon>
                 </button>
-                <img *ngIf="userRole !== 'author'" mat-card-image src="https://montehorizonte.com/wp-content/themes/fortunato-pro/images/no-image-box.png" alt="Photo cover">
+                <img *ngIf="userRole !== 'author'" mat-card-image
+                  src="https://montehorizonte.com/wp-content/themes/fortunato-pro/images/no-image-box.png"
+                  alt="Photo cover">
               </ng-template>
               <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1'
                 resizeToWidth="600" #uploadImage></app-upload-image>
@@ -31,36 +33,42 @@
             </button>
             <mat-menu #menu="matMenu">
               <button *ngIf="virtualTripId" (click)="removeTrip()" mat-menu-item>
-                <mat-icon >delete_outline</mat-icon>
+                <mat-icon>delete_outline</mat-icon>
                 <span>Xoá</span>
               </button>
               <button (click)="editAble()" mat-menu-item>
                 <mat-icon>edit</mat-icon>
                 <span>Chỉnh sửa</span>
               </button>
-              <button  (click)="fileClick()" mat-menu-item>
-                  <mat-icon>add_photo_alternate</mat-icon>
-                  <span>Thay ảnh</span>
-                </button>
+              <button (click)="fileClick()" mat-menu-item>
+                <mat-icon>add_photo_alternate</mat-icon>
+                <span>Thay ảnh</span>
+              </button>
             </mat-menu>
           </div>
           <mat-card-content>
             <div class="parent-content mt-5">
               <h4>{{title == '' ? 'Tên chuyến đi' : title}}</h4>
-              <p><span class="sub-title">Bởi </span><a (click)="gotoPersionalPage(this.author.id)"><span class="author-name">{{author? author.displayName : ''}}</span></a></p>
+              <p><span class="sub-title">Bởi </span><a (click)="gotoPersionalPage(this.author.id)"><span
+                    class="author-name">{{author? author.displayName : ''}}</span></a></p>
               <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
-              <a mat-button *ngIf="!note"  (click)="editAble()">+ Thêm mô tả chuyến đi</a>
+              <a mat-button *ngIf="!note" (click)="editAble()">+ Thêm mô tả chuyến đi</a>
               <p><span class="sub-title">0 mục cập nhập vào tháng 6 năm 2019</span></p>
             </div>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-icon-button>
-              <mat-icon>share</mat-icon>
-            </button>
+            <div class="interaction">
+                <button matTooltip="Chia sẻ facebook" shareButton="facebook" [title]="title"
+                [description]="note" [image]="urlCoverImage" class="share-facebook" mat-icon-button
+                color="primary">
+                <i class="fa fa-facebook-f"></i>
+              </button>
+            </div>
           </mat-card-actions>
           <div *ngIf="virtualTrip.items!=undefined">
             <ng-container *ngFor="let item of virtualTrip.items">
-              <app-destination-trip (saveDestination)="saveDestination($event)" [userRole]='userRole' [item]='item'></app-destination-trip>
+              <app-destination-trip (saveDestination)="saveDestination($event)" [userRole]='userRole' [item]='item'>
+              </app-destination-trip>
             </ng-container>
           </div>
         </mat-card>
@@ -77,7 +85,8 @@
     </div>
     <div class="col-12 right-content pl-0 pr-0 mt-0 ">
       <div class="fixed">
-        <app-google-map [userRole]='userRole' [heightMap]="screenHeight" [locationMarker]="virtualTrip.items" (addDestination)="addDestination($event)"></app-google-map>
+        <app-google-map [userRole]='userRole' [heightMap]="screenHeight" [locationMarker]="virtualTrip.items"
+          (addDestination)="addDestination($event)"></app-google-map>
       </div>
     </div>
   </div>

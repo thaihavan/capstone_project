@@ -189,3 +189,21 @@
 a:hover {
   cursor: pointer;
 }
+.interaction .mat-icon{
+  height: 24px;
+  width: 40px;
+}
+.interaction .material-icons {
+  font-size: 27px;
+}
+.interaction .mat-icon-button {
+  width: 45px;
+  height: 45px;
+}
+.interaction .fa{
+  font-size: 22px;
+}
+.share-facebook {
+  background-color: #d2e9fb;
+  margin-left: 10px;
+}

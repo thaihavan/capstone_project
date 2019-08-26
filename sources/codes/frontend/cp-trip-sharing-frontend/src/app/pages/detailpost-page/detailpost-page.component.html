@@ -45,12 +45,12 @@
         <span>{{displayName}}</span>
         <div class="time">{{post.pubDate | customDate}}</div>
       </div>
-      <!-- <div class="stars size-20">
+      <div *ngIf="contributionPoint" class="stars size-20">
         <a class="mat-button">
           <mat-icon class="middle">stars</mat-icon>
-          <span class="middle infor-count">123 điểm</span>
+          <span class="middle infor-count">{{contributionPoint}} điểm</span>
         </a>
-      </div> -->
+      </div>
       <ng-container *ngIf="post.author.id">
         <button mat-button (click)="followPerson(post.author.id)" *ngIf="user !== null && user.id !== post.author.id"
           class="btn-follow size-20">
