@@ -64,18 +64,6 @@ namespace UserServices.Reponsitories.DbContext
             }
         }
 
-        public IMongoCollection<Block> BlockCollection
-        {
-            get
-            {
-                if (_database != null)
-                {
-                    return _database.GetCollection<Block>("Blocks");
-                }
-                return null;
-            }
-        }
-
         // get user collection
         public IMongoCollection<User> Users
         {
