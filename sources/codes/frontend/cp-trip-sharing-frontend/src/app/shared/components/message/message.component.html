@@ -10,7 +10,7 @@
         <img src="{{item.avatar}}">
       </div>
       <div class="content">
-        <div class="username">{{item.name}}</div>
+        <div class="username" matTooltip={{item.name}}>{{item.name.length > 40 ? item.name.substring(0,40)+'...' :item.name}}</div>
         <div [ngClass]="{'content-message': true, 'bold': item.seenIds.indexOf(user.id) === -1}"
         [innerHtml]="isImage(item.lastMessage.content) ? '' : item.lastMessage.content"></div>
         <div class="time">{{item.lastMessage.time | customDate}}</div>

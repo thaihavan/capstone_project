@@ -1,6 +1,6 @@
 <div class="chat-popup">
   <div class="chat-header">
-    <div>{{conversation.name}}</div>
+    <div matTooltip={{conversation.name}}>{{conversation.name.length > 30 ? conversation.name.substring(0,30)+'...' :conversation.name }}</div>
     <span class="icon-close" (click)="closeChatPopup()"><mat-icon>close</mat-icon></span>
   </div>
 
