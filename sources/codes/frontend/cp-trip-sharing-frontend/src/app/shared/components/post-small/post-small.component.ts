@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/cor
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Bookmark } from 'src/app/model/Bookmark';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-post-small',
   templateUrl: './post-small.component.html',
@@ -25,7 +25,8 @@ export class PostSmallComponent implements OnInit {
   listPostIdBookMark: string[] = [];
 
   constructor(private userService: UserService,
-              private errorHandler: GlobalErrorHandler) {
+              private errorHandler: GlobalErrorHandler,
+              private router: Router) {
     this.token = localStorage.getItem('Token');
   }
 
@@ -89,7 +90,7 @@ export class PostSmallComponent implements OnInit {
   }
 
   gotoPersionalPage(userId: string) {
-    window.location.href = `/user/${userId}`;
+    this.router.navigate(['/user', userId]);
   }
 
 }

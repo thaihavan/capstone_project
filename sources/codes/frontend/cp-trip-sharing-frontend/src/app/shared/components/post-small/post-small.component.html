@@ -23,7 +23,7 @@
     </ng-container>
 
     <mat-card-header class="post-footer">
-      <img mat-card-avatar src="{{post.post.author.profileImage}}" />
+      <a [routerLink]="[ '/user', post.post.author.id ]"><img mat-card-avatar src="{{post.post.author.profileImage}}" /></a>
       <mat-card-title class="author-name" (click)="gotoPersionalPage(post.post.author.id)">
         {{post.post.author.displayName}}
       </mat-card-title>

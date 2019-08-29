@@ -122,6 +122,7 @@
 
         <!-- Card 1-->
         <!-- Card 2-->
+<<<<<<< Updated upstream
         <div *ngIf="usergetLocalStorage == null || userId == usergetLocalStorage.id" class="card promoting-card">
           <div class="card-header">
             <span class="card-title">Tuỳ Chỉnh</span>
@@ -151,6 +152,39 @@
 
         </div>
 
+=======
+        <ng-container *ngIf="usergetLocalStorage">
+            <div *ngIf="userId == usergetLocalStorage.id" class="card promoting-card">
+                <div class="card-header">
+                  <span class="card-title">Tuỳ Chỉnh</span>
+                </div>
+                <!-- Card content -->
+                <div class="card-body">
+                  <!-- Text -->
+                  <div *ngIf="userId == usergetLocalStorage.id" class="card-person-infor">
+                    <a class="mat-button a-hover">
+                      <i class="fa fa-edit icon-size align-middle"></i>
+                      <span class="align-middle" (click)="callUpdateProfile()">Chỉnh sửa trang cá nhân</span>
+                    </a>
+                  </div>
+                  <div class="card-person-infor">
+                    <a (click)="gotoBookmarkList()" class="mat-button a-hover">
+                      <mat-icon class="align-middle">bookmark_border</mat-icon>
+                      <span class="align-middle">Bài viết đã lưu</span>
+                    </a>
+                  </div>
+                  <div (click)="showBlokUsers()" class="card-person-infor">
+                    <a class="mat-button a-hover">
+                      <mat-icon class="align-middle">block</mat-icon>
+                      <span class="align-middle">Danh sách chặn</span>
+                    </a>
+                  </div>
+                </div>
+      
+              </div>
+        </ng-container>
+        
+>>>>>>> Stashed changes
         <!-- Card 2 -->
       </div>
       <div class="col-md-6 mb-5">

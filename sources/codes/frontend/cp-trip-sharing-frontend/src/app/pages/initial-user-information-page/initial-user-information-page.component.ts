@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-initial-user-information-page',
@@ -32,7 +33,8 @@ export class InitialUserInformationPageComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private titleService: Title,
-              private errorHandler: GlobalErrorHandler) {
+              private errorHandler: GlobalErrorHandler,
+              private router: Router) {
     this.titleService.setTitle('Khởi tạo');
   }
   ngOnInit() {
@@ -107,9 +109,11 @@ export class InitialUserInformationPageComponent implements OnInit {
       this.getValueFromFormGroup();
       this.userService.registerUser(this.user).subscribe((result: any) => {
         localStorage.setItem('User', JSON.stringify(result));
-        window.location.href = '/trang-chu';
+        this.router.navigate(['/trang-chu']);
+        // window.location.href = '/trang-chu';
       }, (err: HttpErrorResponse) => {
-        window.location.href = '/khoi-tao';
+        this.router.navigate(['/khoi-tao']);
+        // window.location.href = '/khoi-tao';
       });
     }
   }
@@ -117,7 +121,8 @@ export class InitialUserInformationPageComponent implements OnInit {
   updateUser() {
     this.getValueFromFormGroup();
     this.userService.updateUser(this.user).subscribe((result: any) => {
-      window.location.href = '/user/' + this.user.id;
+      this.router.navigate(['/user', this.user.id]);
+      // window.location.href = '/user/' + this.user.id;
     }, this.errorHandler.handleError);
   }
 
@@ -143,7 +148,8 @@ export class InitialUserInformationPageComponent implements OnInit {
   checkHasAccount() {
     const account = JSON.parse(localStorage.getItem('Account'));
     if (account === null) {
-      window.location.href = '/trang-chu';
+      this.router.navigate(['/trang-chu']);
+      // window.location.href = '/trang-chu';
     }
   }
 }

@@ -54,7 +54,7 @@ export class VirtualTripSmallComponent implements OnInit {
       const url = {
         url: this.virtualTrip.post.coverImage,
         caption: '',
-        href: '#'
+        href: 'chuyen-di/' + this.virtualTrip.id
       };
       this.imageSources.push(url);
     } else {
@@ -62,7 +62,7 @@ export class VirtualTripSmallComponent implements OnInit {
       const url = {
         url: 'https://montehorizonte.com/wp-content/themes/fortunato-pro/images/no-image-box.png',
         caption: '',
-        href: '#'
+        href: 'chuyen-di/' + this.virtualTrip.id
       };
       this.imageSources.push(url);
     }
@@ -70,7 +70,7 @@ export class VirtualTripSmallComponent implements OnInit {
       const url = {
         url: art.image,
         caption: art.name,
-        href: '#'
+        href: 'chuyen-di/' + this.virtualTrip.id
       };
       this.imageSources.push(url);
     });

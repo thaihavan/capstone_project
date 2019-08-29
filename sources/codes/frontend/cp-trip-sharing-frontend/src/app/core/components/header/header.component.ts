@@ -11,6 +11,7 @@ import { GlobalErrorHandler } from '../../globals/GlobalErrorHandler';
 import { ChangePasswordComponent } from 'src/app/shared/components/change-password/change-password.component';
 import { LoginPageComponent } from 'src/app/shared/components/login-page/login-page.component';
 import { UserService } from '../../services/user-service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -38,7 +39,8 @@ export class HeaderComponent implements OnInit {
               private notifyService: NotifyService,
               private userService: UserService,
               private chatService: ChatService,
-              private errorHandler: GlobalErrorHandler) {
+              private errorHandler: GlobalErrorHandler,
+              private router: Router) {
 
   }
 
@@ -60,7 +62,8 @@ export class HeaderComponent implements OnInit {
 
         this.initSocketConnection();
       } else if (this.account.role === 'admin') {
-        window.location.href = '/admin/dashboard';
+        this.router.navigate(['/admin/dashboard']);
+        // window.location.href = '/admin/dashboard';
       }
     } else {
       this.checkLogin = true;
@@ -101,19 +104,14 @@ export class HeaderComponent implements OnInit {
   gotoPersonalPage() {
     const account = JSON.parse(localStorage.getItem('Account'));
     this.userId = account.userId;
+    // this.router.navigate(['/user', this.userId]);
     window.location.href = '/user/' + this.userId;
   }
 
   gotoBookmarkList() {
     const account = JSON.parse(localStorage.getItem('Account'));
     this.userId = account.userId;
-    window.location.href = '/user/' + this.userId + '/da-danh-dau';
-  }
-
-  gotoBlockedList() {
-    const account = JSON.parse(localStorage.getItem('Account'));
-    this.userId = account.userId;
-    window.location.href = '/user/' + this.userId + '/danh-sach-chan';
+    this.router.navigate(['/user', this.userId, 'da-danh-dau' ]);
   }
 
   viewNotification() {
@@ -195,6 +193,7 @@ export class HeaderComponent implements OnInit {
 
   onSearchBtnClick() {
     if (this.search && this.search.trim() !== '') {
+      // this.router.navigate(['/search/text/bai-viet/', this.search ]);
       window.location.href = 'search/text/bai-viet/' + this.search;
     }
   }

@@ -56,6 +56,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { PostItemComponent } from './components/post-item/post-item.component';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
+import { RouterModule } from '@angular/router';
 
 const Material = [
   MatButtonModule,
@@ -135,7 +136,8 @@ const Material = [
     ImageCropperModule,
     InfiniteScrollModule,
     SlideshowModule,
-  ],
+    RouterModule
+    ],
   exports: [
     Material,
     InfiniteScrollModule,

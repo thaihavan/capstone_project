@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
@@ -19,7 +19,8 @@ export class SearchResultPageComponent implements OnInit {
 
   selectedPath: string;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
     this.searchType = this.route.snapshot.paramMap.get('searchType');
     this.search = this.getSearchParam();
 
@@ -84,11 +85,13 @@ export class SearchResultPageComponent implements OnInit {
 
   searchByText() {
     if (this.search && this.search.trim() !== '') {
+      // this.router.navigate(['/search/text', this.selectedPath, this.search.trim()]);
       window.location.href = '/search/text/' + this.selectedPath + '/' + this.search.trim();
     }
   }
 
   searchByLocation(addressObject: any) {
+    // this.router.navigate(['/search/location', this.selectedPath, addressObject.locationId]);
     window.location.href = '/search/location/' + this.selectedPath + '/' + addressObject.locationId;
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Comment } from 'src/app/model/Comment';
 import { Post } from 'src/app/model/Post';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Like } from 'src/app/model/Like';
 import { Bookmark } from 'src/app/model/Bookmark';
@@ -71,7 +71,8 @@ export class DetailpostPageComponent implements OnInit {
     private notifyService: NotifyService,
     private postCopmanionService: FindingCompanionService,
     private errorHandler: GlobalErrorHandler,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private router: Router
   ) {
     this.comments = [];
   }
@@ -294,14 +295,17 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   gotoPersonalPage(authorId: any) {
-    window.location.href = '/user/' + authorId;
+    this.router.navigate(['/user', authorId]);
+    // window.location.href = '/user/' + authorId;
   }
 
   editpost() {
     if (this.typePost === 'article') {
-      window.location.href = '/chinh-sua-bai-viet/' + this.postId;
+      this.router.navigate(['/chinh-sua-bai-viet', this.postId]);
+      // window.location.href = '/chinh-sua-bai-viet/' + this.postId;
     } else {
-      window.location.href = '/chinh-sua-tim-ban-dong-hanh/' + this.postId;
+      this.router.navigate(['/chinh-sua-tim-ban-dong-hanh', this.postId]);
+      // window.location.href = '/chinh-sua-tim-ban-dong-hanh/' + this.postId;
     }
   }
 

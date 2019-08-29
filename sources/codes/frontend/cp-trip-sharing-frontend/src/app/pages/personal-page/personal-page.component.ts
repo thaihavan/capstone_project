@@ -5,7 +5,6 @@ import { User } from 'src/app/model/User';
 import { MatDialog } from '@angular/material/dialog';
 import { InitialUserInformationPageComponent } from '../initial-user-information-page/initial-user-information-page.component';
 import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ListFollowComponent } from 'src/app/shared/components/list-follow/list-follow.component';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
 import { Title } from '@angular/platform-browser';
@@ -40,12 +39,17 @@ export class PersonalPageComponent implements OnInit {
   isFixMenuBar: boolean;
   listBlockeds: User[];
 
-  constructor(private router: Router,
-              private userService: UserService,
-              public dialog: MatDialog,
-              private route: ActivatedRoute,
-              private titleService: Title,
-              private errorHandler: GlobalErrorHandler) {
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private titleService: Title,
+    private errorHandler: GlobalErrorHandler
+  ) {
+    this.Init();
+  }
+  Init() {
     this.titleService.setTitle('Người dùng');
     this.navLinks = [
       {
@@ -76,21 +80,25 @@ export class PersonalPageComponent implements OnInit {
     }
     this.token = localStorage.getItem('Token');
     this.getStates();
+    this.myProfile = new Author();
   }
   ngOnInit(): void {
-    this.myProfile = new Author();
-    if (this.router.url.indexOf('da-danh-dau') !== -1) {
-      this.isDisplayNav = false;
-    }
-
-    if (this.router.url.indexOf('danh-sach-chan') !== -1) {
-      this.isDisplayNav = false;
-    }
-
     this.router.events.subscribe(res => {
+      if (this.router.url.indexOf('da-danh-dau') !== -1) {
+        this.isDisplayNav = false;
+      } else {
+        this.isDisplayNav = true;
+      }
       this.activeLinkIndex = this.navLinks.indexOf(
         this.navLinks.find(tab => tab.link === '.' + this.router.url)
       );
+    });
+    this.route.params.subscribe(res => {
+      // tslint:disable-next-line:no-unused-expression
+      if (this.userId !== res.userId) {
+        this.Init();
+        this.router.navigate(['/user', this.userId, 'bai-viet']);
+      }
     });
   }
 
@@ -109,7 +117,9 @@ export class PersonalPageComponent implements OnInit {
   }
 
   getStates(): void {
-    this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
+    this.listUserIdFollowing = JSON.parse(
+      localStorage.getItem('listUserIdFollowing')
+    );
     if (this.listUserIdFollowing != null) {
       this.follow = this.listUserIdFollowing.indexOf(this.userId) !== -1;
     }
@@ -135,7 +145,7 @@ export class PersonalPageComponent implements OnInit {
       width: '60%',
       data: {
         toppics: [],
-        destinations: [],
+        destinations: []
       }
     });
     const instance = dialogRef.componentInstance;
@@ -144,15 +154,21 @@ export class PersonalPageComponent implements OnInit {
 
   showFollowingUser() {
     this.userService.getAllFollowing(this.userId).subscribe((result: any) => {
-      this.listUser = result;
-      this.openDialogFollow(this.user.followingCount + ' người bạn đang theo dõi', this.listUser);
+      const listUser = result;
+      this.openDialogFollow(
+        this.user.followingCount + ' người bạn đang theo dõi',
+        listUser
+      );
     }, this.errorHandler.handleError);
   }
 
   showFolowerUser() {
     this.userService.getAllFollower(this.userId).subscribe((result: any) => {
-      this.listUser = result;
-      this.openDialogFollow(this.user.followerCount + ' người đang theo dõi bạn', this.listUser);
+      const listUser = result;
+      this.openDialogFollow(
+        this.user.followerCount + ' người đang theo dõi bạn',
+        listUser
+      );
     }, this.errorHandler.handleError);
   }
 
@@ -216,14 +232,20 @@ export class PersonalPageComponent implements OnInit {
       this.userService.addFollow(userId, this.token).subscribe((data: any) => {
         this.follow = true;
         this.listUserIdFollowing.push(userId);
-        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+        localStorage.setItem(
+          'listUserIdFollowing',
+          JSON.stringify(this.listUserIdFollowing)
+        );
       }, this.errorHandler.handleError);
     } else {
       this.userService.unFollow(userId, this.token).subscribe((data: any) => {
         this.follow = false;
         const unfollow = this.listUserIdFollowing.indexOf(userId);
         this.listUserIdFollowing.splice(unfollow, 1);
-        localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+        localStorage.setItem(
+          'listUserIdFollowing',
+          JSON.stringify(this.listUserIdFollowing)
+        );
       }, this.errorHandler.handleError);
     }
   }
@@ -236,15 +258,11 @@ export class PersonalPageComponent implements OnInit {
     this.user.avatar = image;
     const user = JSON.parse(localStorage.getItem('User'));
     user.avatar = image;
-    this.userService.updateUser(user).subscribe(
-      res => {
-
-      },
-      this.errorHandler.handleError,
-      () => {
+    this.userService
+      .updateUser(user)
+      .subscribe(res => {}, this.errorHandler.handleError, () => {
         localStorage.setItem('User', JSON.stringify(user));
-      }
-    );
+      });
   }
 
   reportUser(userId: string) {
@@ -269,16 +287,13 @@ export class PersonalPageComponent implements OnInit {
   gotoBookmarkList() {
     const account = JSON.parse(localStorage.getItem('Account'));
     this.userId = account.userId;
-    window.location.href = '/user/' + this.userId + '/da-danh-dau';
-  }
-
-  gotoBlockedList() {
-    const account = JSON.parse(localStorage.getItem('Account'));
-    this.userId = account.userId;
-    window.location.href = '/user/' + this.userId;
+    this.router.navigate(['/user', this.userId, 'da-danh-dau']);
+    // window.location.href = '/user/' + this.userId + '/da-danh-dau';
   }
 
   isBlocked(userId: string) {
-    return this.listBlockeds ? this.listBlockeds.find(u => u.id === userId) != null : false;
+    return this.listBlockeds
+      ? this.listBlockeds.find(u => u.id === userId) != null
+      : false;
   }
 }

@@ -2,22 +2,22 @@
   <div class="header">
     <mat-toolbar color="primary">
       <mat-toolbar-row>
-        <span><img class="logo" src="../../../../assets/trip share logo-01.png"></span>
+        <span><a [routerLink]="[ '/trang-chu']"> <img class="logo" src="../../../../assets/trip share logo-01.png"></a></span>
         <span class="menu-spacer"></span>
         <div fxShow="true" fxHide.lt-md class="nav-top d-flex flex-row align-items-center">
           <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-          <button class="nav-icon-text" mat-button>
-            <a href="trang-chu">
+          <button [routerLink]="[ '/trang-chu']" class="nav-icon-text" mat-button>
+            <a>
               Trang chủ
             </a>
           </button>
-          <button class="nav-icon-text" mat-button>
-            <a href="trang-chu/chuyen-di">
+          <button [routerLink]="[ '/trang-chu/chuyen-di']" class="nav-icon-text" mat-button>
+            <a>
               Chuyến đi
             </a>
           </button>
-          <button class="nav-icon-text" mat-button>
-            <a href="trang-chu/tim-ban-dong-hanh">
+          <button [routerLink]="[ '/trang-chu/tim-ban-dong-hanh']" class="nav-icon-text" mat-button>
+            <a >
               Tìm bạn đồng hành
             </a>
           </button>
@@ -123,7 +123,7 @@
             </button>
           </mat-menu>
           <div class="inputsearch">
-            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="search"
+            <input type="text" class="form-control" placeholder="Tìm kiếm" [(ngModel)]="search"
               (keyup.enter)="onSearchBtnClick()">
             <mat-icon class="iconserach" (click)="onSearchBtnClick()">search</mat-icon>
             <!-- <i class="fa fa-search iconserach"></i> -->

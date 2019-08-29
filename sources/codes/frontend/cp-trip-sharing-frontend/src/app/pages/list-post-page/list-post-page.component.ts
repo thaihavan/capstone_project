@@ -21,8 +21,6 @@ export class ListPostPageComponent implements OnInit {
               private virtualTripService: VirtualTripService,
               private companionPostService: FindingCompanionService,
               private errorHandler: GlobalErrorHandler) {
-    this.homeNav = this.route.snapshot.paramMap.get('home-nav');
-    this.setTitle();
   }
   coverImage = '../../../assets/cover-image.png';
   homeNav = '';
@@ -62,7 +60,16 @@ export class ListPostPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getPosts(undefined);
+    this.route.params.subscribe(routeParams => {
+      this.homeNav = routeParams['home-nav'];
+      this.setTitle();
+      this.posts = [];
+      this.page = 1;
+      this.getPosts(undefined);
+    });
+    // this.homeNav = this.route.snapshot.paramMap.get('home-nav');
+    // this.setTitle();
+    // this.getPosts(undefined);
   }
 
   setTitle() {

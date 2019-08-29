@@ -1,4 +1,4 @@
-<div class="user-item" *ngIf="!isYou">
+<div class="user-item">
 
   <!-- Avatar -->
   <div class="avatar">
@@ -36,7 +36,7 @@
     </div>
 
     <!-- Follow button -->
-    <button *ngIf="showFollowButton" (click)="followPerson(user.id)" class="follow-button" mat-icon-button>
+    <button *ngIf="showFollowButton&&!isYou" (click)="followPerson(user.id)" class="follow-button" mat-icon-button>
       <mat-icon>rss_feed</mat-icon>
       <span *ngIf="isFollowed === false">Theo dõi</span>
       <span *ngIf="isFollowed === true">Đã theo dõi</span>

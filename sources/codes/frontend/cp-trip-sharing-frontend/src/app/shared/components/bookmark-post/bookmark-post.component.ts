@@ -2,8 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Bookmark } from 'src/app/model/Bookmark';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+<<<<<<< Updated upstream
 import { MessagePopupComponent } from '../message-popup/message-popup.component';
 import { MatDialog } from '@angular/material';
+=======
+import { Router } from '@angular/router';
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-bookmark-post',
@@ -16,7 +20,11 @@ export class BookmarkPostComponent implements OnInit {
   checkRemoved = false;
   constructor(private userService: UserService,
               private errorHandler: GlobalErrorHandler,
+<<<<<<< Updated upstream
               private dialog: MatDialog) { }
+=======
+              private router: Router) { }
+>>>>>>> Stashed changes
 
   ngOnInit() {
   }
@@ -48,10 +56,13 @@ export class BookmarkPostComponent implements OnInit {
       });
     }
   }
-  goToPostDetail() {
-    window.location.href = '/bai-viet/' + this.bookmark.postId;
-  }
-  gotoPersionalPage(userId: string) {
-    window.location.href = `/user/${userId}`;
+  goToPostDetail(type) {
+    if (type === 'Article') {
+      this.router.navigate(['/bai-viet', this.bookmark.postId]);
+    }
+    if ( type === 'CompanionPost') {
+      this.router.navigate(['/tim-ban-dong-hanh', this.bookmark.postId]);
+    }
+    // window.location.href = '/bai-viet/' + this.bookmark.postId;
   }
 }

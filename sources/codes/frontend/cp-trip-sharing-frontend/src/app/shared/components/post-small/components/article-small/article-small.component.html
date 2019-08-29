@@ -1,8 +1,8 @@
 <div class="article-small">
   <div *ngIf="article.post.coverImage" class="card-image">
     <div class="image-mask"></div>
-    <img mat-card-image src="{{article.post.coverImage}}" alt="">
-
+    <a [routerLink]="['/bai-viet', article.id]"><img mat-card-image src="{{article.post.coverImage}}" alt="">
+    </a>
     <div class="like-comment-info">
       <span>
         <mat-icon>favorite_border</mat-icon>{{article.post.likeCount}}
@@ -14,15 +14,17 @@
     </div>
 
     <div class="location-container">
-      <div class="location" *ngFor="let location of article.destinations">
-        <span><i class="fa fa-tag"></i> {{location.name}}</span>
-      </div>
+      <ng-container *ngFor="let location of article.destinations, let i = index">
+          <div *ngIf="i<2" matTooltip="{{ location.name.length >= 15 ? location.name : ''}}" class="location" >
+              <span><i class="fa fa-tag"></i> {{ location.name.length >= 15 ? location.name.substring(0,13) + '...' : location.name}}</span>
+            </div>
+      </ng-container>
     </div>
 
   </div>
   <div class="card-body">
     <mat-card-title>
-      <a class="card-link" href="bai-viet/{{article.id}}">
+      <a class="card-link" [routerLink]="['/bai-viet', article.id]">
         <div class="card-title">{{article.post.title}}</div>
       </a>
     </mat-card-title>
