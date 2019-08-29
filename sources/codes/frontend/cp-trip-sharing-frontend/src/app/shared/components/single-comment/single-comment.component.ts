@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material';
 import { ReportPopupComponent } from '../report-popup/report-popup.component';
 import { User } from 'src/app/model/User';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { MessagePopupComponent } from '../message-popup/message-popup.component';
 
 @Component({
   selector: 'app-single-comment',
@@ -140,8 +141,24 @@ export class SingleCommentComponent implements OnInit {
   }
 
   removeComment() {
-    this.postService.removeComment(this.comment.id, this.comment.authorId).subscribe((result: any) => {
-      this.checkRemoveComment = true;
-    });
-  }
+      const dialogRef = this.dialog.open(MessagePopupComponent, {
+        width: '500px',
+        height: 'auto',
+        position: {
+          top: '20px'
+        },
+        disableClose: true
+      });
+      const instance = dialogRef.componentInstance;
+      instance.message.messageText = `Bạn có chắc chắn muốn xóa bình luận này không?`;
+      instance.message.messageType = 'confirm';
+
+      dialogRef.afterClosed().subscribe((res: string) => {
+        if (res === 'continue') {
+          this.postService.removeComment(this.comment.id, this.comment.authorId).subscribe((result: any) => {
+            this.checkRemoveComment = true;
+          }, this.errorHandler.handleError);
+        }
+      });
+    }
 }
