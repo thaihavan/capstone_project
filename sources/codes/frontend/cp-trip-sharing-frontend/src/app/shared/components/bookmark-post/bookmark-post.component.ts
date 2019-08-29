@@ -2,12 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Bookmark } from 'src/app/model/Bookmark';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
-<<<<<<< Updated upstream
 import { MessagePopupComponent } from '../message-popup/message-popup.component';
 import { MatDialog } from '@angular/material';
-=======
 import { Router } from '@angular/router';
->>>>>>> Stashed changes
 
 @Component({
   selector: 'app-bookmark-post',
@@ -20,11 +17,8 @@ export class BookmarkPostComponent implements OnInit {
   checkRemoved = false;
   constructor(private userService: UserService,
               private errorHandler: GlobalErrorHandler,
-<<<<<<< Updated upstream
-              private dialog: MatDialog) { }
-=======
+              private dialog: MatDialog,
               private router: Router) { }
->>>>>>> Stashed changes
 
   ngOnInit() {
   }

@@ -278,3 +278,6 @@ button:focus {
 .a-hover:hover {
   color: #2196f3 !important;
 }
+.no-pointer {
+  cursor: auto !important;
+}

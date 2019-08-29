@@ -54,15 +54,15 @@
         <div *ngFor="let item of userListRequests; let i=index" class="">
           <div class="d-flex flex-row justify-content-between member-request-item">
             <div class="d-flex flex-row">
-              <a class="member-avatar" aria-haspopup="true" mat-icon-button>
+              <div class="member-avatar" aria-haspopup="true" mat-icon-button>
                 <span class="mat-button-wrapper">
-                  <img alt="user" class="imgavatar" src="{{item.user.profileImage}}">
+                  <a [routerLink]="[ '/user', item.user.id ]"><img alt="user" class="imgavatar" src="{{item.user.profileImage}}"></a>
                 </span>
                 <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
                 <div class="mat-button-focus-overlay"></div>
-              </a>
+              </div>
               <div class="">
-                <h6>{{item.user.displayName}}</h6>
+                <a [routerLink]="[ '/user', item.user.id ]"><h6>{{item.user.displayName}}</h6></a>
                 <p class="infor-text-item ">
                   <span class="text-muted">{{item.date | date:'dd-MM-yyyy'}}</span>
                 </p>
@@ -108,16 +108,6 @@
             {{statustRequest.text}}
           </button>
         </ng-container>
-        <!-- <ng-container *ngIf="statustRequest.type === 'joined'; else handelRequest">
-
-        </ng-container>
-        <ng-template #handelRequest>
-          <button (click)='sendRequest()' mat-flat-button
-            color="{{statustRequest.type === 'waiting' ? 'warn' : 'primary'}}">
-            {{statustRequest.text}}
-          </button>
-        </ng-template> -->
-
 
       </div>
       <div class="infor-item d-flex flex-row">
@@ -164,7 +154,7 @@
       <div class="d-flex flex-wrap">
         <a *ngFor="let item of userListGroup" class="member-avatar" aria-haspopup="true" mat-icon-button>
           <span class="mat-button-wrapper">
-            <img matTooltip="{{item.displayName}}" alt="user" class="imgavatar" src="{{item.profileImage}}">
+            <a [routerLink]="[ '/user', item.id ]"><img matTooltip="{{item.displayName}}" alt="user" class="imgavatar" src="{{item.profileImage}}"></a>
           </span>
           <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple=""></div>
           <div class="mat-button-focus-overlay"></div>
