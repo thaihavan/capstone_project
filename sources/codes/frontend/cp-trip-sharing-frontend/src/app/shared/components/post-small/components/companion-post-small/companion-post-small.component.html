@@ -1,7 +1,7 @@
 <div class="companion-post-small">
   <div class="card-image">
     <div class="image-mask"></div>
-    <img mat-card-image src="{{companionPost.post.coverImage ? companionPost.post.coverImage : coverImage}}" alt="">
+    <a [routerLink]="['/tim-ban-dong-hanh', companionPost.id]"><img mat-card-image src="{{companionPost.post.coverImage ? companionPost.post.coverImage : coverImage}}" alt=""></a>
 
     <div class="companion-post-extra-info">
       <span class="days-info">{{getDays()}} Ngày</span><br/>
@@ -18,16 +18,19 @@
       </span>
     </div>
 
+    
     <div class="location-container">
-      <div class="location" *ngFor="let location of companionPost.destinations">
-        <span><i class="fa fa-tag"></i> {{location.name}}</span>
-      </div>
+      <ng-container *ngFor="let location of companionPost.destinations, let i = index">
+          <div *ngIf="i<2" matTooltip="{{ location.name.length >= 15 ? location.name : ''}}" class="location" >
+              <span><i class="fa fa-tag"></i> {{ location.name.length >= 15 ? location.name.substring(0,13) + '...' : location.name}}</span>
+            </div>
+      </ng-container>
     </div>
 
   </div>
   <div class="card-body">
     <mat-card-title>
-      <a class="card-link" href="tim-ban-dong-hanh/{{companionPost.id}}">
+      <a class="card-link" [routerLink]="['/tim-ban-dong-hanh', companionPost.id]">
         <div class="card-title">{{companionPost.post.title}}</div>
       </a>
     </mat-card-title>

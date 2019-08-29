@@ -1,4 +1,4 @@
-.content-create{
+.content-create {
   position: relative;
 }
 .dialog-step {
@@ -16,13 +16,13 @@
   background-size: cover;
   position: relative;
   background: linear-gradient(#f1f1f1, transparent),
-    linear-gradient(90deg, skyblue, transparent),
-    linear-gradient(-90deg, coral, transparent);
+    linear-gradient(90deg, #a5e2ff, transparent),
+    linear-gradient(-90deg, #b3e9ff, transparent);
   background-blend-mode: screen;
 }
-.editImage{
+.editImage {
   position: absolute;
-  top:20px;
+  top: 20px;
   margin-left: 10%;
   z-index: 9999;
   background: #3f51b5;
@@ -95,7 +95,10 @@ input[type="file"] {
 /* .title-input input {
   height: 55px !important;
 } */
-::ng-deep .title-input .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+::ng-deep
+  .title-input
+  .mat-form-field-appearance-outline
+  .mat-form-field-outline-thick {
   opacity: 0.8 !important;
 }
 .title-input ::ng-deep .mat-form-field-wrapper {
@@ -114,25 +117,31 @@ input[type="file"] {
   width: 55px !important;
   font-size: 55px !important;
 }
-.clear{
+.clear {
   clear: both;
 }
 :host ::ng-deep .ck-editor__editable_inline {
   min-height: 500px;
   border: 1px solid var(--ck-color-toolbar-border);
 }
-.btnCreate{
+.btnCreate {
   margin-bottom: 30px;
   float: right;
   margin-right: 0px;
   margin-top: 10px;
 }
-.clear{
+.clear {
   clear: both;
 }
-.content-center{
+.content-center {
   margin-top: 1em;
 }
 ::ng-deep .mat-form-field-infix {
   width: 210px !important;
+}
+.destinations ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0px;
+}
+.destinations .form-group {
+  margin-bottom:0px;
 }

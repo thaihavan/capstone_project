@@ -313,6 +313,11 @@ export class CreateFindingCompanionsPostComponent
     if (this.companionForm.invalid) {
       return;
     }
+    if (this.content.trim() === '') {
+      this.alertifyService.error('Yêu cầu nhập đầy đủ thông tin');
+      this.goToTop(600);
+      return;
+    }
     if (!this.isUpdate) {
       this.companionPost = new CompanionPost();
     }

@@ -15,6 +15,7 @@ import { UserService } from 'src/app/core/services/user-service/user.service';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { MatDialog } from '@angular/material';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat-page',
@@ -44,7 +45,8 @@ export class ChatPageComponent implements OnInit {
               private uploadImageService: UploadImageService,
               private userService: UserService,
               private dialog: MatDialog,
-              private errorHandler: GlobalErrorHandler) {
+              private errorHandler: GlobalErrorHandler,
+              private router: Router) {
     this.titleService.setTitle('Tin nhắn');
   }
 
@@ -232,7 +234,8 @@ export class ChatPageComponent implements OnInit {
   }
 
   gotoUserPage(user: ChatUser) {
-    window.location.href = `/user/${user.id}`;
+    this.router.navigate(['/user', user.id]);
+    // window.location.href = `/user/${user.id}`;
   }
 
   removeMember(selectedConversation: Conversation, user: ChatUser) {

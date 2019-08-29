@@ -20,7 +20,7 @@
                 resizeToWidth="600" #uploadImage></app-upload-image>
             </div>
             <figure (click)="gotoPersionalPage(this.author.id)" class="profile">
-              <img src="{{author ? author.profileImage : ''}}" class="profile-avatar" alt="">
+              <a [routerLink]="[ '/user', this.author.id ]"><img src="{{author ? author.profileImage : ''}}" class="profile-avatar" alt=""></a>
             </figure>
             <figure *ngIf="userRole === 'author'" class="profile-right">
               <button matTooltip="{{isPublic ? 'công khai' : 'riêng tư'}}" mat-icon-button (click)="setPolicy()">

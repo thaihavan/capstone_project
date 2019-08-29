@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Router } from '@angular/router';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -54,7 +55,8 @@ export class RegisterPageComponent implements OnInit {
     private dialog: MatDialog,
     private userService: UserService,
     private titleService: Title,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.titleService.setTitle('Đăng ký');
     this.account = new Account();
@@ -139,7 +141,8 @@ export class RegisterPageComponent implements OnInit {
           this.errorRegister = false;
           this.openDialogMessageConfirm('success');
           setTimeout(() => {
-            window.location.href = '';
+            this.router.navigate(['/']);
+            // window.location.href = '';
           }, 5000);
         }
       );

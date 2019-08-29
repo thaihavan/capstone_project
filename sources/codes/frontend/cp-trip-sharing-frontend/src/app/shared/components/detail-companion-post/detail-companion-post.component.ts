@@ -11,6 +11,7 @@ import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { LoginPageComponent } from '../login-page/login-page.component';
 import { NotifyService } from 'src/app/core/services/notify-service/notify.service';
 import { User } from 'src/app/model/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-companion-post',
@@ -34,7 +35,8 @@ export class DetailCompanionPostComponent implements OnInit {
     private postService: FindingCompanionService,
     private dialog: MatDialog,
     private errorHandler: GlobalErrorHandler,
-    private notifyService: NotifyService
+    private notifyService: NotifyService,
+    private router: Router
   ) {
     this.user = JSON.parse(localStorage.getItem('User'));
   }
@@ -211,7 +213,8 @@ export class DetailCompanionPostComponent implements OnInit {
       });
       return;
     }
-    window.location.href = 'tin-nhan';
+    this.router.navigate(['/tin-nhan']);
+    // window.location.href = 'tin-nhan';
   }
 }
 class StatustRequest {

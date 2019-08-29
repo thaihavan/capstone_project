@@ -10,6 +10,7 @@ import { CompanionPost } from 'src/app/model/CompanionPost';
 import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 import { User } from 'src/app/model/User';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -31,7 +32,8 @@ export class HomePageComponent implements OnInit {
               private postService: PostService,
               private virtualTripService: VirtualTripService,
               private companionPostService: FindingCompanionService,
-              private errorHandler: GlobalErrorHandler) {
+              private errorHandler: GlobalErrorHandler,
+              private router: Router) {
     this.titleService.setTitle('Trang chủ');
     this.user = JSON.parse(localStorage.getItem('User'));
   }
@@ -128,7 +130,7 @@ export class HomePageComponent implements OnInit {
     const searchDestination = new  ArticleDestinationItem();
     searchDestination.id = addrObj.locationId;
     searchDestination.name = addrObj.name;
-
+    // this.router.navigate(['/search/location/bai-viet', addrObj.locationId ]);
     window.location.href = `/search/location/bai-viet/${addrObj.locationId}`;
   }
 

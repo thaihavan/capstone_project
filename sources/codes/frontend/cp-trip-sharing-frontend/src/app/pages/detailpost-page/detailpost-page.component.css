@@ -81,7 +81,7 @@
 .location {
   padding: 5px 5px 5px 6px;
   border: 1px solid #fff;
-  display: inline;
+  display: inline-block;
   font-size: 13px;
   color: white;
   text-transform: uppercase;

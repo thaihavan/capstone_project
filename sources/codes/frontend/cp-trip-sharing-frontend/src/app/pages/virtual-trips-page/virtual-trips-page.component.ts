@@ -15,7 +15,7 @@ import { VirtualTripService } from 'src/app/core/services/post-service/virtual-t
 import { LoadingScreenComponent } from 'src/app/shared/components/loading-screen/loading-screen.component';
 import { UploadImageComponent } from 'src/app/shared/components/upload-image/upload-image.component';
 import { MessagePopupComponent } from 'src/app/shared/components/message-popup/message-popup.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
@@ -53,7 +53,8 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private titleService: Title,
     private errorHandler: GlobalErrorHandler,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private router: Router
   ) {
     this.titleService.setTitle('Chuyến đi');
   }
@@ -329,6 +330,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
 
   // go to personal page
   gotoPersionalPage(authorId: any) {
-      window.location.href = '/user/' + authorId;
+    this.router.navigate(['/user', authorId]);
+    // window.location.href = '/user/' + authorId;
   }
 }
