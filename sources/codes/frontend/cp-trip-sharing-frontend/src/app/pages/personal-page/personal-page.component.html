@@ -38,10 +38,10 @@
             <mat-icon class="icon-more">more_horiz</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button [hidden]="isBlocked(userId)" mat-menu-item (click)="blockUserById(userId)">
+            <!-- <button [hidden]="isBlocked(userId)" mat-menu-item (click)="blockUserById(userId)">
               <mat-icon>block</mat-icon>
               <span>Chặn người dùng</span>
-            </button>
+            </button> -->
             <button mat-menu-item (click)="reportUser(userId)">
               <mat-icon>report</mat-icon>
               <span>Báo cáo vi phạm</span>
@@ -141,12 +141,12 @@
                 <span class="align-middle">Bài viết đã lưu</span>
               </a>
             </div>
-            <div (click)="showBlokUsers()" class="card-person-infor">
+            <!-- <div (click)="showBlokUsers()" class="card-person-infor">
               <a class="mat-button a-hover">
                 <mat-icon class="align-middle">block</mat-icon>
                 <span class="align-middle">Danh sách chặn</span>
               </a>
-            </div>
+            </div> -->
           </div>
 
         </div>

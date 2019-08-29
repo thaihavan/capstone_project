@@ -53,6 +53,7 @@ export class SingleCommentComponent implements OnInit {
     comment.content = this.commentContent;
     comment.postId = this.comment.postId;
     comment.parentId = this.comment.id;
+    if (comment.content.trim() !== '') {
     this.postService.addComment(comment).subscribe((res: Comment) => {
       this.comment.childs.push(res);
 
@@ -60,6 +61,7 @@ export class SingleCommentComponent implements OnInit {
       this.sendCommentNotification();
     }, this.errorHandler.handleError);
     this.commentContent = '';
+   }
   }
 
   likeComment(liked: any, commetId: any) {

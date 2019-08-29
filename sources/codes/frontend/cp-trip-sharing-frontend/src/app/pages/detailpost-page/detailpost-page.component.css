@@ -105,6 +105,7 @@
 textarea {
   width: 100%;
   resize: none;
+  cursor: pointer;
 }
 .mat-form-field{
   display: inline;

@@ -188,7 +188,7 @@ export class DetailpostPageComponent implements OnInit {
     comment.content = this.commentContent;
     comment.postId = this.post.id;
     comment.parentId = null;
-
+    if (comment.content.trim() !== '') {
     this.postService.addComment(comment).subscribe((res: Comment) => {
       this.commentContent = '';
       this.comments.push(res);
@@ -196,6 +196,7 @@ export class DetailpostPageComponent implements OnInit {
       this.notifyService.sendCommentNotification(this.user, this.detailPost);
     }, this.errorHandler.handleError);
   }
+}
 
   followPerson(authorId: any) {
     if (this.follow === false) {

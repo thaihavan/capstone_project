@@ -156,12 +156,12 @@ export class PersonalPageComponent implements OnInit {
     }, this.errorHandler.handleError);
   }
 
-  showBlokUsers() {
-    const dialogRef = this.dialog.open(ListUserBlockedComponent, {
-      height: '450px',
-      width: '50%'
-    });
-  }
+  // showBlokUsers() {
+  //   const dialogRef = this.dialog.open(ListUserBlockedComponent, {
+  //     height: '450px',
+  //     width: '50%'
+  //   });
+  // }
 
   openDialogFollow(title: any, listUsers: any) {
     const dialogRef = this.dialog.open(ListFollowComponent, {
@@ -173,14 +173,14 @@ export class PersonalPageComponent implements OnInit {
     instance.title = title;
   }
 
-  blockUserById(userId: any) {
-    const token = localStorage.getItem('Token');
-    if (token != null) {
-      this.userService.addBlock(userId, token).subscribe((result: any) => {
-        this.openDialogMessageConfirm('success');
-      });
-    }
-  }
+  // blockUserById(userId: any) {
+  //   const token = localStorage.getItem('Token');
+  //   if (token != null) {
+  //     this.userService.addBlock(userId, token).subscribe((result: any) => {
+  //       this.openDialogMessageConfirm('success');
+  //     });
+  //   }
+  // }
 
   openDialogMessageConfirm(messageType: string) {
     const user = JSON.parse(localStorage.getItem('User'));
