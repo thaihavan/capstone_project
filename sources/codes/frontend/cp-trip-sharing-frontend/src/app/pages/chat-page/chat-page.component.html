@@ -145,10 +145,10 @@
                       Thao tác
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                  <p *ngIf="selectedConversation.type=='private'" class="action-item">
+                  <!-- <p *ngIf="selectedConversation.type=='private'" class="action-item">
                     <mat-icon>block</mat-icon>
                     Chặn người dùng
-                  </p>
+                  </p> -->
                   <p *ngIf="selectedConversation.type=='group' && selectedConversation.groupAdmin!=user.id" class="action-item"
                   (click)="leaveGroupChat(selectedConversation.id, user.id)">
                     <mat-icon>exit_to_app</mat-icon>
@@ -177,7 +177,7 @@
                         </span>
                         <mat-menu #settingsMenu="matMenu">
                           <button mat-menu-item (click)="gotoUserPage(userItem)">Trang cá nhân</button>
-                          <button mat-menu-item *ngIf="selectedConversation.groupAdmin == user.id" (click)="removeMember(selectedConversation, userItem)">Xóa khỏi nhóm</button>
+                          <button mat-menu-item *ngIf="selectedConversation.groupAdmin == user.id && userItem.id !== user.id" (click)="removeMember(selectedConversation, userItem)">Xóa khỏi nhóm</button>
                         </mat-menu>
                       </mat-list-item>
                     </div>
