@@ -19,10 +19,9 @@
       </div>
 
       <div class="number-follow">
-        <b>{{user.followingCount}}</b> lượt theo dõi
-        &nbsp;
-        <i class="fa fa-circle icon-circle"></i>
-        &nbsp;
+        <!-- <b>{{user.followingCount}}</b> lượt theo dõi
+        &nbsp; -->
+       <mat-icon>stars</mat-icon>
         <b>{{user.contributionPoint}}</b> điểm tích lũy
       </div>
 
@@ -38,8 +37,8 @@
     <!-- Follow button -->
     <button *ngIf="showFollowButton&&!isYou" (click)="followPerson(user.id)" class="follow-button" mat-icon-button>
       <mat-icon>rss_feed</mat-icon>
-      <span *ngIf="isFollowed === false">Theo dõi</span>
-      <span *ngIf="isFollowed === true">Đã theo dõi</span>
+      <span *ngIf="!isFollowed">Theo dõi</span>
+      <span *ngIf="isFollowed">Đã theo dõi</span>
     </button>
   </div>
 </div>

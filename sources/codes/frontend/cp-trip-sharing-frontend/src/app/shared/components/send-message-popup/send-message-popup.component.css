@@ -1,13 +1,15 @@
 .send-message-popup {
     display: block;
-    margin: auto;
+    margin: -24px;
     z-index: 9999;
     background-color: #ffffff;
 }
 
 .title-section {
-    border-bottom: solid 1px #666666;
+    background-color: #2196f3;
     padding: 10px 20px 4px 20px;
+    color: white;
+    position: relative;
 }
 
 .body-section {
@@ -17,8 +19,31 @@
 .body-section textarea {
     resize: none;
     width: 100%;
+    outline: none;
+    height: 200px;
+    border-radius: 8px;
+    padding: 6px;
 }
 .send-button {
     background-color: #2196f3;
-    color: #ffffff;
+    color: #ffffff;    
+    margin-top: 15px;
+}
+
+.receiverName{
+    position: absolute;
+    top: 8px;
+    left: 50px;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.title-section button{
+    right: 10px;
+    position: absolute;
+    top: 0px;
+}
+
+.errorMessage{
+    color: red;
 }

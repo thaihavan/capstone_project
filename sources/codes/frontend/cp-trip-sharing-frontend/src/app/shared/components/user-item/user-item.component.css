@@ -104,3 +104,10 @@
 .user-item:hover .icon-remove {
     display: block;
 }
+
+.number-follow mat-icon{
+    font-size: 11px;
+    padding: 0;
+    display: inline;
+    padding-right: 3px;
+}

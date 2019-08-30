@@ -1,15 +1,18 @@
 <div class="send-message-popup">
   <div class="title-section">
     <div>
-      <h4>Gửi tin nhắn tới {{receiver.displayName}}</h4>
+      <mat-icon>textsms</mat-icon>
+      <span class="receiverName">Gửi tin nhắn tới {{receiver.displayName}}</span>
+      <button mat-icon-button (click)="cancel()">
+          <mat-icon>clear</mat-icon>
+      </button>
     </div>
   </div>
   <div class="body-section">
-    <div>Nội dung:</div>
     <div>
-      <textarea rows="4" [(ngModel)]="message"></textarea>
+      <textarea rows="4" [(ngModel)]="message" placeholder="Nhập nội dung tin nhắn..."></textarea>
     </div>
-    <div>
+    <div class="errorMessage">
       {{errorMessage}}
     </div>
     <div>

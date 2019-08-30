@@ -41,4 +41,8 @@ export class SendMessagePopupComponent implements OnInit {
     }
   }
 
+  cancel() {
+      this.dialogRef.close();
+  }
+
 }
