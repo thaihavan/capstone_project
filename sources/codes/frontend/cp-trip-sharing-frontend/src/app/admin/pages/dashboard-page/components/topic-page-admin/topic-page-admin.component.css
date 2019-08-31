@@ -23,13 +23,16 @@ div {
 
 .button-add {
     background-color: #4caf50;
+    cursor: pointer;
 }
 
 .button-update {
     background-color: #2196f3;
+    cursor: pointer;    
 }
 
 .button-delete {
+    cursor: pointer;
     background-color: #ed4035;
 }
 
@@ -50,6 +53,7 @@ div {
     box-sizing: border-box;
     display: block;
     position: relative;
+    cursor: pointer;
 }
 
 .name-topic{

@@ -55,8 +55,8 @@ export class TopicPageAdminComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe((res: Topic) => {
-      if (res && res != null) {
+    dialogRef.afterClosed().subscribe((res: any) => {
+      if (res && res != null && res !== 'cancel') {
         this.listTopics.push(res);
       }
     });

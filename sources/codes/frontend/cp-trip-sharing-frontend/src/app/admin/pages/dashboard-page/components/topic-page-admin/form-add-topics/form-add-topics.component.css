@@ -11,6 +11,13 @@
     background-color: #2196f3;
     color: #fff;
     margin-bottom: 30px;
+    position: relative;
+}
+
+.title button{
+    position: absolute;
+    right: 3px;
+    top: 8px;
 }
 
 .form-add-topic img{
@@ -34,7 +41,7 @@
     margin: 0 auto;
 }
 
-button{
+.btn-add-topic{
     background-color: #2196f3;
     color: #fff !important;
     display: block;
@@ -59,4 +66,5 @@ button{
     width: 80%;
     display: block;
     margin: 0 auto;
+    margin-bottom: 5px;
 }

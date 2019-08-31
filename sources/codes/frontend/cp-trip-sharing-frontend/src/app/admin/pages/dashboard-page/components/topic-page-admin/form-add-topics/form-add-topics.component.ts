@@ -16,7 +16,7 @@ export class FormAddTopicsComponent implements OnInit {
   imagePath: any;
   imgURL: any;
   message: string;
-
+  isEditForm = false;
   topic: Topic = new Topic();
   constructor(private postService: PostService,
               private imageService: UploadImageService,
@@ -24,6 +24,9 @@ export class FormAddTopicsComponent implements OnInit {
               private errorHandler: GlobalErrorHandler) { }
 
   ngOnInit() {
+    if (this.topic.name !== undefined) {
+      this.isEditForm = true;
+    }
   }
 
   preview(files: any) {
@@ -54,13 +57,17 @@ export class FormAddTopicsComponent implements OnInit {
   }
 
   addOrUpdateTopic() {
-    if (this.topic.imgUrl != null && this.topic.name != null) {
+    if (this.topic.imgUrl != null && this.topic.name != null && this.topic.name !== '' && this.topic.name.trim() !== '') {
       this.postService.addOrUpdateTopic(this.topic).subscribe((result: any) => {
         this.dialogRef.close(result);
       }, this.errorHandler.handleError);
     } else {
       this.message = 'Bạn phải điền đầy đủ thông tin';
     }
+  }
+
+  cancel() {
+      this.dialogRef.close('cancel');
   }
 
 }
