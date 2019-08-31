@@ -76,22 +76,17 @@
             </div>
             <!-- chat-footer -->
             <mat-card-actions class="chat-footer">
-              <div class="chat-input-icon">
-                <label>
+              <div class="chat-input-message">
+                <button class="btn-add-image " mat-icon-button matTooltip="Thêm ảnh" (click)="imageInput.click()">
                   <mat-icon>add_photo_alternate</mat-icon>
                   <input #imageInput class="display-none" type="file" accept="image/*"
                     (change)="processImage(imageInput)">
-                </label>
-              </div>
-              <div class="chat-input-message">
-                <mat-form-field>
-                  <input matInput class="input-message" type="text" placeholder="Nhập tin nhắn" autocomplete="off"
-                    [(ngModel)]="inputMessage" (keyup.enter)="sendMessage(inputMessage)" (focus)="seenConversation()">
-                </mat-form-field>
-                <button color="primary" class="button-send mat-fab mat-primary" (click)="sendMessage(inputMessage)">
-                  <span class="mat-button-wrapper">
-                    <mat-icon>send</mat-icon>
-                  </span>
+                </button>
+                <input class="form-control" placeholder="Nhập tin nhắn..." autocomplete="off" [(ngModel)]="inputMessage"
+                  (keyup.enter)="sendMessage(inputMessage)" (focus)="seenConversation()" />
+                <button mat-icon-button color="primary" class="button-send float-right"
+                  (click)="sendMessage(inputMessage)">
+                  <mat-icon color="primary">send</mat-icon>
                 </button>
               </div>
             </mat-card-actions>
