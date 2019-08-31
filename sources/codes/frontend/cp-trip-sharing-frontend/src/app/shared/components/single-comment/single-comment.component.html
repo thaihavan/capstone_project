@@ -12,14 +12,14 @@
     </div>
     <div class="comment-body">
       <div class="comment-row">
-        <div *ngIf="editComments" class="content-comment">
+        <div *ngIf="!editComments" class="content-comment">
           <div class="text">{{comment.content}}</div>
         </div>
-        <div *ngIf="editComments === false" class="comment-textarea-container">
-          <textarea rows="3" (keydown.esc)="cancelEdit()" (keydown.enter)="updateComment()" [(ngModel)]="comment.content"></textarea>
+        <div *ngIf="editComments" class="comment-textarea-container">
+          <textarea #areaCommentContent rows="3" (keydown.esc)="cancelEdit()" (keydown.enter)="updateComment(areaCommentContent.value)">{{comment.content}}</textarea>
           <span>Nhấn esc trên bàn phím để thoát</span>
         </div>
-        <div *ngIf="editComments" class="icon-menu">
+        <div *ngIf="!editComments" class="icon-menu">
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
             <mat-icon>more_horiz</mat-icon>
           </button>
@@ -39,12 +39,13 @@
           </mat-menu>
         </div>
       </div>
-      <div *ngIf="editComments" class="bottom-like-share">
+      <div *ngIf="!editComments" class="bottom-like-share">
         <span class="number-like"><i class="fa fa-thumbs-up"></i> {{comment.likeCount}}</span>
         <span *ngIf="user != null" class="like-comment" [class]="comment.liked ? 'like-comment':'unlike-comment'"(click)="likeComment(comment.liked,comment.id)">Thích</span>
         <span *ngIf="user != null" class="rep-comment" (click)="showRepComment()">Trả lời</span>
         <div *ngIf="user != null && showRep" class="comment-textarea-container">
-          <textarea rows="3" (keydown.enter)="submitComment()" [(ngModel)]="commentContent"></textarea>
+          <textarea rows="3" (keydown.esc)="cancelRepComment()" (keydown.enter)="submitComment()" [(ngModel)]="commentContent"></textarea>
+          <span>Nhấn esc trên bàn phím để thoát</span>
         </div>
       </div>
 

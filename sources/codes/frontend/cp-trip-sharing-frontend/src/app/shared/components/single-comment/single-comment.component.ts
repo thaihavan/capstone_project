@@ -24,7 +24,7 @@ export class SingleCommentComponent implements OnInit {
   @Input() post: any;
 
   user: User;
-  editComments = true;
+  editComments = false;
   commentContent = '';
   liked = false;
   showRep = false;
@@ -47,9 +47,6 @@ export class SingleCommentComponent implements OnInit {
 
   submitComment() {
     console.log('content: ' + this.commentContent);
-
-    this.showRep = false;
-
     const comment = new Comment();
     comment.content = this.commentContent;
     comment.postId = this.comment.postId;
@@ -62,6 +59,7 @@ export class SingleCommentComponent implements OnInit {
       this.sendCommentNotification();
     }, this.errorHandler.handleError);
     this.commentContent = '';
+    this.showRep = false;
    }
   }
 
@@ -126,18 +124,24 @@ export class SingleCommentComponent implements OnInit {
   }
 
   editComment() {
-    this.editComments = false;
+    this.editComments = true;
   }
 
   cancelEdit() {
-    this.editComments = true;
+    this.editComments = false;
   }
 
-  updateComment() {
-    this.editComments = true;
-    this.postService.updateComment(this.comment).subscribe((result: any) => {
-      this.editComments = true;
+  cancelRepComment() {
+    this.showRep = false;
+  }
+
+  updateComment(txtcomment: string) {
+    if (txtcomment.trim() !== '') {
+      this.comment.content = txtcomment;
+      this.postService.updateComment(this.comment).subscribe((result: any) => {
+      this.editComments = false;
     }, this.errorHandler.handleError);
+   }
   }
 
   removeComment() {
