@@ -216,7 +216,7 @@ export class PersonalPageComponent implements OnInit {
 
   openSendMessagePopup() {
     const dialogRef = this.dialog.open(SendMessagePopupComponent, {
-      width: '40%',
+      width: '35%',
       height: 'auto',
       position: {
         top: '100px'

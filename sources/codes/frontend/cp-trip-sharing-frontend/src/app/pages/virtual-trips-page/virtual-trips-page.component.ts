@@ -64,14 +64,15 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     // check is view detail?
     this.virtualTripId = this.route.snapshot.paramMap.get('tripId');
     if (
-      this.virtualTripId !== undefined &&
-      this.virtualTripId !== null &&
-      this.virtualTripId !== ''
+      this.virtualTripId === undefined ||
+      this.virtualTripId === null ||
+      this.virtualTripId === ''
     ) {
+      this.preCreate();
+      // this.openDialog('', '', true, true);
+    } else {
       this.isViewDetailTrip = true;
       this.getVirtualTrip();
-    } else {
-      this.preCreate();
     }
 
     this.getScreenSize();
@@ -80,7 +81,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     if (!this.isViewDetailTrip) {
       setTimeout(() => {
         this.openDialog('', '', true, true);
-      }, 1000);
+      }, 500);
     }
   }
 
@@ -201,6 +202,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       this.alertify.error('Yêu cầu ảnh bìa cho bài viết');
       return;
     }
+    if (this.virtualTrip.items.length === 0) {
+      this.alertify.error('Yêu cầu nhập địa điểm của chuyến đi!');
+      return;
+    }
     this.post.title = this.title;
     this.post.isPublic = this.isPublic;
     this.post.coverImage = this.urlCoverImage;
@@ -259,21 +264,6 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     this.sendUpdateRequest();
   }
 
-  // open dialog confirm
-  // openDialogMessageConfirm(message: string, data, messageType: string) {
-  //   const dialogRef = this.dialog.open(MessagePopupComponent, {
-  //     width: '500px',
-  //     height: 'auto',
-  //     position: {
-  //       top: '20px'
-  //     },
-  //     disableClose: true
-  //   });
-  //   const instance = dialogRef.componentInstance;
-  //   instance.message.messageType = messageType;
-  //   instance.message.messageText = message;
-  //   instance.message.url = '/chuyen-di/' + data;
-  // }
 
   openDialogMessageConfirm(message: string, url: string, messageType: string, remove: boolean) {
     const dialogRef = this.dialog.open(MessagePopupComponent, {

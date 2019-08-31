@@ -8,9 +8,9 @@
     <agm-map #gm [ngClass.gt-lg]="" [latitude]="lat" [longitude]="lng" [fitBounds]="fitBound()">
           <agm-marker [agmFitBounds]="true" *ngFor="let marker of locationMarker" 
           [label]=" {
-            color: '#007bff',
+            color: '#0000',
             fontWeight: 'bold',
-            text: marker.name
+            text: marker.name ? marker.name : ''
           }"
           [latitude]="marker.latitude"
           [longitude]="marker.longitude"

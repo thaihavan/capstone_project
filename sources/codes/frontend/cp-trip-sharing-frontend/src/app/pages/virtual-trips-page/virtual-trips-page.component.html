@@ -19,8 +19,8 @@
               <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1'
                 resizeToWidth="600" #uploadImage></app-upload-image>
             </div>
-            <figure (click)="gotoPersionalPage(this.author.id)" class="profile">
-              <a [routerLink]="[ '/user', this.author.id ]"><img src="{{author ? author.profileImage : ''}}" class="profile-avatar" alt=""></a>
+            <figure (click)="gotoPersionalPage(author.id)" class="profile">
+              <a [routerLink]="[ '/user', author? author.id : '' ]"><img src="{{author ? author.profileImage : ''}}" class="profile-avatar" alt=""></a>
             </figure>
             <figure *ngIf="userRole === 'author'" class="profile-right">
               <button matTooltip="{{isPublic ? 'công khai' : 'riêng tư'}}" mat-icon-button (click)="setPolicy()">
@@ -53,7 +53,7 @@
                     class="author-name">{{author? author.displayName : ''}}</span></a></p>
               <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
               <a mat-button *ngIf="!note" (click)="editAble()">+ Thêm mô tả chuyến đi</a>
-              <p><span class="sub-title">0 mục cập nhập vào tháng 6 năm 2019</span></p>
+              <p *ngIf="isViewDetailTrip"><span class="sub-title">{{ isViewDetailTrip ? virtualTrip.items.length : 0}} mục cập nhập vào {{virtualTrip.post.pubDate | date:'dd-MM-yyyy'}}</span></p>
             </div>
           </mat-card-content>
           <mat-card-actions>
@@ -85,7 +85,7 @@
     </div>
     <div class="col-12 right-content pl-0 pr-0 mt-0 ">
       <div class="fixed">
-        <app-google-map [userRole]='userRole' [heightMap]="screenHeight" [locationMarker]="virtualTrip.items"
+        <app-google-map [userRole]='userRole' [isCreate]='!isViewDetailTrip' [heightMap]="screenHeight" [locationMarker]="virtualTrip.items"
           (addDestination)="addDestination($event)"></app-google-map>
       </div>
     </div>

@@ -4,19 +4,25 @@
       <mat-icon>textsms</mat-icon>
       <span class="receiverName">Gửi tin nhắn tới {{receiver.displayName}}</span>
       <button mat-icon-button (click)="cancel()">
-          <mat-icon>clear</mat-icon>
+        <mat-icon>clear</mat-icon>
       </button>
     </div>
   </div>
   <div class="body-section">
     <div>
-      <textarea rows="4" [(ngModel)]="message" placeholder="Nhập nội dung tin nhắn..."></textarea>
+      <h5 class="mb-3">Tin nhắn</h5>
+      <mat-form-field appearance="outline">
+        <mat-label>Nhập nội dung tin nhắn</mat-label>
+        <textarea class="max-width" #txtarea [(ngModel)]="message" rows="4" matInput
+          placeholder="Nhập nội dung tin nhắn..."></textarea>
+      </mat-form-field>
+      <!-- <textarea matInput rows="4" [(ngModel)]="message" placeholder="Nhập nội dung tin nhắn..."></textarea> -->
     </div>
     <div class="errorMessage">
       {{errorMessage}}
     </div>
     <div>
-        <button class="send-button" mat-button (click)="sendMessage()">Gửi</button>
+      <button class="send-button float-right" mat-button (click)="sendMessage()">Gửi</button>
     </div>
   </div>
 </div>

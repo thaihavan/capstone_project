@@ -25,18 +25,18 @@ export class GoogleMapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() userRole;
   @Input() heightMap: any;
   @Input() locationMarker: LocationMarker[] = [];
+  @Input() isCreate: boolean;
   constructor(private zone: NgZone) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isFirstTime = this.isCreate;
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      if (this.locationMarker === undefined || this.locationMarker === null) {
+      if (this.isCreate) {
         this.locationMarker = [];
         this.setCurrentLocation();
-        this.isFirstTime = true;
-      } else {
-        this.isFirstTime = false;
       }
     }, 1000);
   }
