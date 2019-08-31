@@ -20,11 +20,11 @@ div {
 
 /* chat-header */
 .chat-header {
-    height: 40px;
+    height: 50px;
     background-color: #2196f3;
-    padding: 8px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    padding: 12px 8px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     font-weight: 500;
     color: #fff;
 }
@@ -32,14 +32,17 @@ div {
 .icon-close {
     position: absolute;
     right: 6px;
-    margin-top: -22px;
+    /* margin-top: -22px; */
     cursor: pointer;
+}
+.icon-close mat-icon{
+    font-size: 19px;
 }
 
 /* chat-body */
 .chat-body {
     background-color: #fff;
-    height: 300px;
+    height: 280px;
     border-left: solid 1px #ccc;
     border-right: solid 1px #ccc;
 }
@@ -86,6 +89,7 @@ div {
     display: block;
     padding: 6px 4px;
     border-radius: 4px;
+    font-size: 14px
 }
 
 .text-message img {
@@ -118,29 +122,42 @@ div {
 
 /* chat-footer */
 .chat-footer {
-    height: 60px;
+    height: 70px;
     background-color: #fff;
     border: solid 1px #ccc;
+    border-top-color: #f3f1f1;
 }
 
 .chat-input-icon {
     width: 30px;
     position: absolute;
-    margin-top: 18px;
-    margin-left: 4px;
+    margin-top: -2px;
+    /* margin-left: 4px; */
 }
 
-.chat-input-icon mat-icon {
-    font-size: 26px !important;
+.chat-input-message mat-icon {
+    font-size: 19px !important;
     cursor: pointer;
+    opacity: 0.6;
 }
-
+/* .chat-input-message .mat-icon-button {
+    background: aliceblue;
+} */
 .chat-input-icon mat-icon:hover {
     color: #2196f3 !important;
 }
 
+.chat-input-message .form-control {
+    font-size: .9rem;
+    border-radius: 20px;
+    margin: 0px 3px;
+    height: 40px;
+    width: 74%;
+}
+
 .chat-input-message {
-    margin-left: 30px;
+    display: flex;
+    padding: 10px;
 }
 
 .chat-footer mat-form-field {
@@ -150,12 +167,7 @@ div {
 }
 
 .button-send {
-    position: absolute;
-    margin-top: 10px;
-    right: 6px;
-    width: 40px;
-    height: 40px;
-    background-color: #fff !important;
+    background-color: aliceblue !important;
 }
 
 .mat-button-wrapper {
@@ -176,4 +188,18 @@ div {
 /* ::ng-deep .chat-popup .mat-form-field-underline, */
 ::ng-deep .chat-popup .mat-form-field-ripple {
     height: 0px !important;
+}
+.chat-date {
+    font-size: 13px;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    outline: 0;
+    box-shadow: none;
+}
+.btn-add-image {
+    opacity: 0.7;
+    background-color: #f1f1f1;
 }

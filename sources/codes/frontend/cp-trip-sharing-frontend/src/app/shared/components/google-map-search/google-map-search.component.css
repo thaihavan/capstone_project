@@ -87,3 +87,9 @@
 .width-500{
   width: 500px;
 }
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  outline: 0;
+  box-shadow: none;
+}

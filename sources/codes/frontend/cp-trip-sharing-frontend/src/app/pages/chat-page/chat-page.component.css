@@ -202,8 +202,7 @@ mat-card-actions {
 }
 
 .button-send {
-    position: absolute;
-    right: 10px;
+    background-color: aliceblue !important;
 }
 
 .action-item {
@@ -229,10 +228,6 @@ mat-card-actions {
 
 .chat-input-icon mat-icon:hover {
     color: #2196f3 !important;
-}
-
-.chat-input-message {
-    margin-left: 40px;
 }
 
 
@@ -287,4 +282,27 @@ mat-expansion-panel p {
     position: absolute;
     margin-top: -10px;
     right: 0px;
+}
+
+.chat-input-message .form-control {
+    font-size: .9rem;
+    border-radius: 20px;
+    margin: 0px 3px;
+    height: 40px;
+    width: 89%;
+}
+
+.chat-input-message {
+    display: flex;
+    padding: 10px;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    outline: 0;
+    box-shadow: none;
+}
+.btn-add-image {
+    opacity: 0.7;
+    background-color: #f1f1f1;
 }

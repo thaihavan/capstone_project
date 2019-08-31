@@ -44,6 +44,7 @@ import { CoreModule } from './core/core.module';
 import { ShareModule } from '@ngx-share/core';
 import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
     ListPostPageComponent,
     SearchResultPageComponent,
     SearchResultContainerComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    ErrorPageComponent
   ],
   imports: [
     CoreModule,

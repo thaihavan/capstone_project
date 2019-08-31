@@ -30,6 +30,7 @@ import { ReportedUserPageComponent } from './admin/pages/dashboard-page/componen
 import { ReportedPostPageComponent } from './admin/pages/dashboard-page/components/reported-post-page/reported-post-page.component';
 // tslint:disable-next-line: max-line-length
 import { ReportedCommentPageComponent } from './admin/pages/dashboard-page/components/reported-comment-page/reported-comment-page.component';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
 
 
 const routes: Routes = [
@@ -86,6 +87,7 @@ const routes: Routes = [
       { path: 'dieu-khoan', component: PrivacyPolicyComponent }
     ]
   },
+  {path: 'error', component: ErrorPageComponent}
 ];
 
 @NgModule({
