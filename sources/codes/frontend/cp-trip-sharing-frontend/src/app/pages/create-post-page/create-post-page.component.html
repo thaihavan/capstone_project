@@ -32,7 +32,7 @@
             <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Nhập tiêu đề bài viết</mat-label>
                 <input [(ngModel)]="title" class="example-right-align" matInput type="text"
-                    placeholder="Nhập tiêu đề bài viết">
+                [maxlength]='145' placeholder="Nhập tiêu đề bài viết">
             </mat-form-field>
         </div>
     </div>

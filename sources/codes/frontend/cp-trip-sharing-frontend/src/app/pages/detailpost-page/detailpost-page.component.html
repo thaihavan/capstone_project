@@ -3,7 +3,7 @@
     <img class="cover-image" src="{{post.coverImage}}">
   </div>
   <div class="profile-infor">
-    <a href="#"><img src="{{profileImage}}" class="avatar-img"></a>
+    <a [routerLink]="['/user', authorId]"><img src="{{profileImage}}" class="avatar-img"></a>
   </div>
   <div class="icon-block">
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -46,10 +46,10 @@
         <div class="time">{{post.pubDate | customDate}}</div>
       </div>
       <div *ngIf="contributionPoint" class="stars size-20">
-        <a class="mat-button">
+        <span class="no-cursor mat-button">
           <mat-icon class="middle">stars</mat-icon>
           <span class="middle infor-count">{{contributionPoint}} điểm</span>
-        </a>
+        </span>
       </div>
       <ng-container *ngIf="post.author.id">
         <button mat-button (click)="followPerson(post.author.id)" *ngIf="user !== null && user.id !== post.author.id"
@@ -70,13 +70,13 @@
 
       <div class="like-share size-20">
         <div class="like">
-          <a class="mat-button">
+          <a class="no-cursor mat-button">
             <mat-icon color="warn" class="middle">favorite_border</mat-icon>
             <span class="middle infor-count">{{post.likeCount}} thích</span>
           </a>
         </div>
         <div class="share">
-          <a class="mat-button">
+          <a class="no-cursor mat-button">
             <mat-icon class="middle">chat_bubble_outline</mat-icon>
             <span class="middle infor-count">{{post.commentCount}} bình luận</span>
           </a>
@@ -149,6 +149,9 @@
   </button>
   <button mat-button matTooltip="Bookmark" [matTooltipPosition]="'right'" (click)="bookmarkPost(detailPost.id)">
     <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
+  </button>
+  <button mat-button matTooltip="Chia sẻ" [matTooltipPosition]="'right'" mat-button shareButton="facebook">
+    <i class="f-20 fa fa-facebook-f"></i>
   </button>
   <button mat-button matTooltip="Bình luận" [matTooltipPosition]="'right'" mat-button (click)="commentPost(target)">
     <mat-icon>chat_bubble_outline</mat-icon>

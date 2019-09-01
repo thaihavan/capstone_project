@@ -74,6 +74,7 @@ export class CreateFindingCompanionsPostComponent
   isMemberValide = true;
   content = '';
   public Editor = DecoupledEditor;
+  currentDate = new Date();
   minDate = new Date();
   maxDate = new Date(2020, 0, 1);
   companionForm: FormGroup;
@@ -89,6 +90,7 @@ export class CreateFindingCompanionsPostComponent
 
   ngOnInit() {
     this.companionPost = new CompanionPost();
+    this.minDate.setDate(this.minDate.getDate() + 1);
     this.companionPostId = this.route.snapshot.paramMap.get('companionId');
     if (
       this.companionPostId !== undefined &&
@@ -140,8 +142,8 @@ export class CreateFindingCompanionsPostComponent
         fromDate: new FormControl('', [Validators.required]),
         toDate: new FormControl('', [Validators.required]),
         estimatedDate: new FormControl('', [Validators.required]),
-        minMembers: new FormControl('', [Validators.required]),
-        maxMembers: new FormControl('', [Validators.required]),
+        minMembers: new FormControl('', [Validators.required, Validators.max(100), Validators.min(0)]),
+        maxMembers: new FormControl('', [Validators.required, Validators.max(100), Validators.min(0)]),
         estAdultAmount: new FormControl()
       },
       {
@@ -255,6 +257,16 @@ export class CreateFindingCompanionsPostComponent
     this.endPicker.open();
   }
 
+  // Expires date
+  maxExpiresDate(fromDate) {
+    if (fromDate) {
+      // tslint:disable-next-line:prefer-const
+      let fDate = new Date(fromDate);
+      fDate.setDate(fDate.getDate() - 1);
+      return fDate;
+    }
+    return fromDate;
+  }
   // update schedule item
   updateStepper(event) {
     this.createStep(event, true);

@@ -69,9 +69,13 @@ export class DetailCompanionPostComponent implements OnInit {
 
   // for author check request from user accecpt or delete
   getAllRequests() {
-    this.postService.getAllRequests(this.companionPost.id).subscribe(res => {
-      this.userListRequests = res;
-    });
+    const currDate = new Date();
+    const fromDate = new Date(this.companionPost.from);
+    if (fromDate.getTime() > currDate.getTime()) {
+      this.postService.getAllRequests(this.companionPost.id).subscribe(res => {
+        this.userListRequests = res;
+      });
+    }
   }
 
   // get member in group chat

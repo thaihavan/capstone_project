@@ -53,7 +53,7 @@
                     class="author-name">{{author? author.displayName : ''}}</span></a></p>
               <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
               <a mat-button *ngIf="!note" (click)="editAble()">+ Thêm mô tả chuyến đi</a>
-              <p *ngIf="isViewDetailTrip"><span class="sub-title">{{ isViewDetailTrip ? virtualTrip.items.length : 0}} mục cập nhập vào {{virtualTrip.post.pubDate | date:'dd-MM-yyyy'}}</span></p>
+              <p *ngIf="isViewDetailTrip"><span class="sub-title">{{ virtualTrip.items ? virtualTrip.items.length : 0}} mục cập nhập vào {{virtualTrip.post.pubDate | date:'dd-MM-yyyy'}}</span></p>
             </div>
           </mat-card-content>
           <mat-card-actions>
