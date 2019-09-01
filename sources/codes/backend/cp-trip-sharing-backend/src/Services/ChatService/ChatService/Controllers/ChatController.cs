@@ -61,7 +61,7 @@ namespace ChatService.Controllers
             message.Id = ObjectId.GenerateNewId().ToString();
             message.Time = DateTime.Now;
             message.FromUserId = userId;
-            var result = _chatService.AddMessage(userId,receiverId, message);
+            var result = _chatService.AddMessage(userId, receiverId, message);
 
             if (result == null)
             {
