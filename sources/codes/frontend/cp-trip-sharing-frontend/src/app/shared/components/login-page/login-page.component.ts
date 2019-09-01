@@ -6,6 +6,7 @@ import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angular
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 import { Account } from 'src/app/model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-login-page',
@@ -36,7 +37,8 @@ export class LoginPageComponent implements OnInit {
   constructor(private titleService: Title,
               private userService: UserService,
               private authService: AuthService,
-              private alertifyService: AlertifyService) {
+              private alertifyService: AlertifyService,
+              private dialogRef: MatDialogRef<LoginPageComponent>) {
     this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }
@@ -73,11 +75,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   callRegisterPage(): void {
-    // this.dialogRef.close();
+    this.dialogRef.close();
   }
 
   forgotPassword(): void {
-    // this.dialogRef.close();
+    this.dialogRef.close();
   }
 
   signInWithEmail() {

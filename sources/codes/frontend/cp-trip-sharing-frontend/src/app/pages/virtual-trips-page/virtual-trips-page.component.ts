@@ -255,6 +255,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       this.virtualTrip.items = this.virtualTrip.items.filter(
         item => item.locationId !== des.item.locationId
       );
+      this.alertify.success('Đã xóa địa điểm');
     } else {
       const foundIndex = this.virtualTrip.items.findIndex(
         x => x.locationId === des.item.locationId

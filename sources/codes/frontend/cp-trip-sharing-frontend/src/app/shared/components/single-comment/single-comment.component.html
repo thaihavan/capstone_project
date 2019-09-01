@@ -6,7 +6,7 @@
       </div>
       <div class="">
         <a [routerLink]="[ '/user', comment.authorId ]"><span
-            class="name-user">{{comment.author.displayName}}</span></a>
+            class="name-user">{{comment.author.displayName? comment.author.displayName : 'Tác giả'}}</span></a>
         <br />
         <span class="time">{{comment.date | customDate}}</span>
       </div>
