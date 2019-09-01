@@ -29,24 +29,28 @@
                 <mat-form-field class="col-6 full-width">
                   <input (blur)="validUserName()" matInput placeholder="@Username"
                     [(ngModel)]="username" formControlName="userName" required>
-                  <mat-error *ngIf="hasError('userName','required')">Yêu cầu nhập username</mat-error>
+                  <mat-error *ngIf="hasError('userName','required') && isValidUserName && !hasError('userName','whitespace')">Yêu cầu nhập username</mat-error>
                   <mat-hint>Duy nhất cho mỗi tài khoản</mat-hint>
                   <mat-error *ngIf="!isValidUserName">User name đã tồn tại</mat-error>
+                  <mat-error *ngIf="hasError('userName','whitespace')">Không hợp lệ</mat-error>
                 </mat-form-field>
                 <mat-form-field class="col-6 full-width">
                   <input matInput placeholder="Tên hiển thị" [(ngModel)]="displayname" formControlName="displayName"
-                    required>
-                  <mat-error *ngIf="hasError('displayName','required')">Yêu cầu nhập tên hiển thị</mat-error>
+                    required maxlength="30">
+                  <mat-error *ngIf="hasError('displayName','required') && !hasError('displayName','whitespace')">Yêu cầu nhập tên hiển thị</mat-error>
+                  <mat-error *ngIf="hasError('displayName','whitespace')">Không hợp lệ</mat-error>
                 </mat-form-field>
               </div>
               <div class="row">
                 <mat-form-field class="col-6 full-width">
                   <input matInput placeholder="Họ" [(ngModel)]="firstname" formControlName="firstName" required>
-                  <mat-error *ngIf="hasError('firstName', 'required')">Yêu cầu nhập họ tên</mat-error>
+                  <mat-error *ngIf="hasError('firstName', 'required') && !hasError('firstName','whitespace')">Yêu cầu nhập họ tên</mat-error>
+                  <mat-error *ngIf="hasError('firstName','whitespace')">Không hợp lệ</mat-error>
                 </mat-form-field>
                 <mat-form-field class="col-6 full-width">
                   <input matInput placeholder="Tên" [(ngModel)]="lastname" formControlName="lastName" required>
-                  <mat-error *ngIf="hasError('lastName','required')">Yêu cầu nhập họ tên</mat-error>
+                  <mat-error *ngIf="hasError('lastName','required') && !hasError('lastName','whitespace')">Yêu cầu nhập họ tên</mat-error>
+                  <mat-error *ngIf="hasError('lastName','whitespace')">Không hợp lệ</mat-error>
                 </mat-form-field>
               </div>
               <div class="row">
