@@ -48,7 +48,6 @@ export class LoginPageComponent implements OnInit {
 
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((gUser) => {
-      console.log(gUser);
       this.userService.loginWithgoogle(gUser.authToken).subscribe((account: any) => {
         this.handleGetAccountSuccessful(account);
       }, (error: HttpErrorResponse) => {
@@ -62,7 +61,6 @@ export class LoginPageComponent implements OnInit {
 
   signInWithFb(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((fUser) => {
-      console.log(fUser);
       this.userService.loginWithFacebook(fUser.authToken).subscribe((account: any) => {
         this.handleGetAccountSuccessful(account);
       }, (error: HttpErrorResponse) => {

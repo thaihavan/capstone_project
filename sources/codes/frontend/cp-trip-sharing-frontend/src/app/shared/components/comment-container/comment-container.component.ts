@@ -15,7 +15,6 @@ export class CommentContainerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('Comments value in comment-container: ' + this.comments);
   }
 
 }

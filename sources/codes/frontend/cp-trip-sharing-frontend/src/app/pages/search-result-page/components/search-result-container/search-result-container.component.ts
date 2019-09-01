@@ -140,28 +140,28 @@ export class SearchResultContainerComponent implements OnInit {
     }
 
     this.userService.getUsers(search, this.page).subscribe((res: User[]) => {
-      res = this.filterUserBlocker(res);
+      // res = this.filterUserBlocker(res);
       this.users.push(...res);
     }, this.errorHandler.handleError);
   }
 
   getArticles(postFilter: PostFilter) {
     this.postService.getAllArticles(postFilter, this.page).subscribe((res: Article[]) => {
-      res = this.filterPostBlocker(res);
+      // res = this.filterPostBlocker(res);
       this.posts.push(...res);
     }, this.errorHandler.handleError);
   }
 
   getVirtualTrips(postFilter: PostFilter) {
     this.virtualTripService.getVirtualTrips(postFilter, this.page).subscribe((res: VirtualTrip[]) => {
-      res = this.filterPostBlocker(res);
+      // res = this.filterPostBlocker(res);
       this.posts.push(...res);
     }, this.errorHandler.handleError);
   }
 
   getCompanionPosts(postFilter: PostFilter) {
     this.companionPostService.getCompanionPosts(postFilter, this.page).subscribe((res: CompanionPost[]) => {
-      res = this.filterPostBlocker(res);
+      // res = this.filterPostBlocker(res);
       this.posts.push(...res);
     }, this.errorHandler.handleError);
   }
@@ -189,23 +189,23 @@ export class SearchResultContainerComponent implements OnInit {
     return decodeURI(urlSplit[4]);
   }
 
-  filterPostBlocker(posts: any[]) {
-    let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
-    if (listBlockers == null) {
-      listBlockers = [];
-    }
-    posts = posts.filter(p => listBlockers.find(b => b.id === p.post.author.id) == null);
-    return posts;
-  }
+  // filterPostBlocker(posts: any[]) {
+  //   let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+  //   if (listBlockers == null) {
+  //     listBlockers = [];
+  //   }
+  //   posts = posts.filter(p => listBlockers.find(b => b.id === p.post.author.id) == null);
+  //   return posts;
+  // }
 
-  filterUserBlocker(users: any[]) {
-    let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
-    if (listBlockers == null) {
-      listBlockers = [];
-    }
-    users = users.filter(u => listBlockers.find(b => b.id === u.id) == null);
-    return users;
-  }
+  // filterUserBlocker(users: any[]) {
+  //   let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+  //   if (listBlockers == null) {
+  //     listBlockers = [];
+  //   }
+  //   users = users.filter(u => listBlockers.find(b => b.id === u.id) == null);
+  //   return users;
+  // }
 
   onScroll() {
     this.isLoading = true;

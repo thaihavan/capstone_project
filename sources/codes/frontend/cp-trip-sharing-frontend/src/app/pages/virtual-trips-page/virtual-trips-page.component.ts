@@ -313,7 +313,6 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         res => {},
         this.errorHandler.handleError,
         () => {
-          console.log('update success!');
         }
       );
     }

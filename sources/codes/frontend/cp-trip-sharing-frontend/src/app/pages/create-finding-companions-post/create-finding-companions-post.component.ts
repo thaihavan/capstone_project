@@ -129,8 +129,6 @@ export class CreateFindingCompanionsPostComponent
         editor.ui.getEditableElement()
       );
     editor.plugins.get('FileRepository').createUploadAdapter = loader => {
-      // tslint:disable-next-line:no-string-literal
-      console.log(loader['file']);
       return new UploadAdapter(loader, this.imageService);
     };
   }

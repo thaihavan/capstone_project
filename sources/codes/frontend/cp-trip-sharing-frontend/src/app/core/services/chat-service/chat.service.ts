@@ -32,7 +32,7 @@ export class ChatService {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('Connection started!');
+        console.log('Chat connection started!');
       })
       .catch(error => {
         console.log(error);

@@ -27,7 +27,6 @@ export class ReportedPostPageComponent implements OnInit {
   getReportedPosts() {
     this.adminService.getReportedPosts().subscribe((res: Report[]) => {
       this.reportedPosts = res;
-      console.log(this.reportedPosts);
     }, this.errorHandler.handleError);
   }
 

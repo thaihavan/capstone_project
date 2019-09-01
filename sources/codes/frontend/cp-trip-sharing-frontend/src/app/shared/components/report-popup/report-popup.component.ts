@@ -104,7 +104,6 @@ export class ReportPopupComponent implements OnInit {
     reportPost.targetType = 'post';
 
     this.postService.sendReport(reportPost).subscribe((res: any) => {
-      console.log(res);
     }, this.errorHandler.handleError);
   }
 
@@ -116,7 +115,6 @@ export class ReportPopupComponent implements OnInit {
     reportComment.targetType = 'comment';
 
     this.postService.sendReport(reportComment).subscribe((res: any) => {
-      console.log(res);
     }, this.errorHandler.handleError);
   }
 

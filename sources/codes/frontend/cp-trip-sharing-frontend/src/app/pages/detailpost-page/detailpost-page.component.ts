@@ -175,11 +175,7 @@ export class DetailpostPageComponent implements OnInit {
       .getCommentByPost(postId, this.token)
       .subscribe((data: any) => {
         if (data != null) {
-          console.log('Comment: ' + data);
-          console.log('Total comment: ', data.length);
           this.comments = data;
-        } else {
-          console.log('Can not get comments of this post.');
         }
       });
   }

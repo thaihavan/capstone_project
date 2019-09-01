@@ -16,7 +16,6 @@ export class ListBookmarksComponent implements OnInit {
     if (token != null) {
       this.userService.getListBookmarksFromUserId(token).subscribe((result: any) => {
         this.listBookmark = result;
-        console.log(this.listBookmark);
       }, this.errorHandler.handleError);
     }
   }

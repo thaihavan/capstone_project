@@ -46,7 +46,6 @@ export class SingleCommentComponent implements OnInit {
   }
 
   submitComment() {
-    console.log('content: ' + this.commentContent);
     const comment = new Comment();
     comment.content = this.commentContent;
     comment.postId = this.comment.postId;

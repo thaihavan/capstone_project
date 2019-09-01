@@ -144,7 +144,7 @@ export class ListPostPageComponent implements OnInit {
       this.isLoading = true;
     }
     this.postService.getAllArticles(postFilter, this.page).subscribe((data: Article[]) => {
-      data = this.filterBlocker(data);
+      // data = this.filterBlocker(data);
       this.posts.push(...data);
     }, this.errorHandler.handleError);
   }
@@ -156,7 +156,7 @@ export class ListPostPageComponent implements OnInit {
       postFilter.timePeriod = 'all_time';
     }
     this.postService.getPopularArticles(postFilter, this.page).subscribe((data: Article[]) => {
-      data = this.filterBlocker(data);
+      // data = this.filterBlocker(data);
       this.posts.push(...data);
     }, this.errorHandler.handleError);
   }
@@ -168,7 +168,7 @@ export class ListPostPageComponent implements OnInit {
       postFilter.timePeriod = 'all_time';
     }
     this.postService.getRecommendArticles(postFilter, this.page).subscribe((data: Article[]) => {
-      data = this.filterBlocker(data);
+      // data = this.filterBlocker(data);
       this.posts.push(...data);
     }, this.errorHandler.handleError);
   }
@@ -183,7 +183,7 @@ export class ListPostPageComponent implements OnInit {
     }
 
     this.virtualTripService.getVirtualTrips(postFilter, this.page).subscribe(data => {
-      data = this.filterBlocker(data);
+      // data = this.filterBlocker(data);
       this.posts.push(...data);
     }, this.errorHandler.handleError);
   }
@@ -198,19 +198,19 @@ export class ListPostPageComponent implements OnInit {
     }
 
     this.companionPostService.getCompanionPosts(postFilter, this.page).subscribe(data => {
-      data = this.filterBlocker(data);
+      // data = this.filterBlocker(data);
       this.posts.push(...data);
     }, this.errorHandler.handleError);
   }
 
-  filterBlocker(posts: any[]) {
-    let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
-    if (listBlockers == null) {
-      listBlockers = [];
-    }
-    posts = posts.filter(p => listBlockers.find(u => u.id === p.post.author.id) == null);
-    return posts;
-  }
+  // filterBlocker(posts: any[]) {
+  //   let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+  //   if (listBlockers == null) {
+  //     listBlockers = [];
+  //   }
+  //   posts = posts.filter(p => listBlockers.find(u => u.id === p.post.author.id) == null);
+  //   return posts;
+  // }
 
   onScroll() {
     this.isLoading = true;

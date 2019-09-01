@@ -27,7 +27,6 @@ export class ReportedCommentPageComponent implements OnInit {
   getReportedComments() {
     this.adminService.getReportedComments().subscribe((res: Report[]) => {
       this.reportedComments = res;
-      console.log(this.reportedComments);
     }, this.errorHandler.handleError);
   }
 

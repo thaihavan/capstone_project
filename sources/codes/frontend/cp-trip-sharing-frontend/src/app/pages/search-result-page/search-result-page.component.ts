@@ -28,7 +28,6 @@ export class SearchResultPageComponent implements OnInit {
 
     this.routerLinkActive = `bai-viet`;
     this.selectedPath = this.getTabParam();
-    console.log(this.selectedPath);
    }
 
   ngOnInit() {

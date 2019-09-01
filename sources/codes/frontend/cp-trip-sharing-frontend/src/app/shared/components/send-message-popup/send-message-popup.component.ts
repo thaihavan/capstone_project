@@ -24,7 +24,6 @@ export class SendMessagePopupComponent implements OnInit {
   }
 
   sendMessage() {
-    console.log(this.message);
     if (!this.message || this.message == null || this.message.trim() === '') {
       this.errorMessage = 'Nội dung tin nhắn không được để trống.';
     } else {
@@ -32,7 +31,6 @@ export class SendMessagePopupComponent implements OnInit {
       const chatMessage = new ChatMessage();
       chatMessage.content = this.message;
       this.chatService.sendMessage(this.receiver.id, chatMessage).subscribe((res) => {
-        console.log(res);
         this.dialogRef.close();
       }, (error: HttpErrorResponse) => {
         console.log(error);

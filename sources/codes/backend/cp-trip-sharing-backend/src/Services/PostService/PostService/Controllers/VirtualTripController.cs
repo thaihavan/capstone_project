@@ -59,8 +59,14 @@ namespace PostService.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
 
-            virtualTrip.Post.AuthorId = userId;
             virtualTrip.Id = ObjectId.GenerateNewId().ToString();
+
+            if (virtualTrip.Items == null)
+            {
+                virtualTrip.Items = new List<VirtualTripItem>();
+            }
+
+            virtualTrip.Post.AuthorId = userId;
             virtualTrip.PostId = virtualTrip.Id;
             virtualTrip.Post.Id = virtualTrip.PostId;
             virtualTrip.Post.LikeCount = 0;

@@ -29,7 +29,6 @@ export class ListNotificationComponent implements OnInit {
     for (const noti of this.notifications) {
       if (noti.seenIds.indexOf(this.user.id) === -1) {
         this.listNotSeen.push(noti.id);
-        console.log(this.listNotSeen);
       } else {
         break;
       }
