@@ -30,9 +30,9 @@ namespace PostService.Services
             return _bookmarkRepository.Add(bookmark);
         }
 
-        public bool DeleteBookmark(string id)
+        public bool DeleteBookmark(string postId, string userId)
         {
-            return _bookmarkRepository.Delete(id);
+            return _bookmarkRepository.DeleteBookmark(postId, userId);
         }
 
         public Bookmark GetById(string id)

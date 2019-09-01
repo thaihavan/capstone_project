@@ -83,5 +83,14 @@ namespace PostService.Repositories
             _bookmarks.FindOneAndDelete(x => x.Id.Equals(id));
             return true;
         }
+
+        public bool DeleteBookmark(string postId, string userId)
+        {
+            _bookmarks.FindOneAndDelete(
+                Builders<Bookmark>.Filter.Eq(x => x.PostId, postId) &
+                Builders<Bookmark>.Filter.Eq(x => x.UserId, userId)
+                );
+            return true;
+        }
     }
 }

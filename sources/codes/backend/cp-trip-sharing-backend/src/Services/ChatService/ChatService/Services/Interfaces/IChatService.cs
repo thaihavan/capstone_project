@@ -9,7 +9,7 @@ namespace ChatService.Services.Interfaces
 
         IEnumerable<Conversation> GetByUserId(string id);
 
-        MessageDetail AddMessage(string receiverId, MessageDetail message);
+        MessageDetail AddMessage(string senderId, string receiverId, MessageDetail message);
 
         Conversation CreateGroupChat(Conversation conversation);
 

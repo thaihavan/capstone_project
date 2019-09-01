@@ -44,15 +44,13 @@ namespace PostService.Controllers
         // body { postId : "id" }
         [Authorize(Roles = "member")]
         [HttpDelete("bookmark")]
-        public IActionResult DeleteBookmark([FromQuery] string id)
-        {
-            var bookmark = _bookmarkService.GetById(id);
+        public IActionResult DeleteBookmark([FromQuery] string postId)
+        {          
             var identity = (ClaimsIdentity)User.Identity;
             var userId = identity.FindFirst("user_id").Value;
-            bookmark.UserId = userId;
-            if (_bookmarkService.DeleteBookmark(id))
+            if (_bookmarkService.DeleteBookmark(postId, userId))
             {
-                return Ok(bookmark);
+                return Ok();
             }
             else
             {

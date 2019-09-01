@@ -14,7 +14,7 @@ namespace ChatService.Repositories.Interfaces
 
         IEnumerable<User> GetAllUserInConversation(string conversationId);
 
-        Conversation FindPrivateConversationByReceiverId(string receiverId);
+        Conversation FindPrivateConversationByReceiverId(string senderId, string receiverId);
 
         User AddUserToGroupChat(string conversationId, string userId);
 

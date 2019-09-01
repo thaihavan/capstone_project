@@ -29,9 +29,9 @@ namespace ChatService.Services
             _messageRepository = messageRepository;
         }
 
-        public MessageDetail AddMessage(string receiverId, MessageDetail message)
+        public MessageDetail AddMessage(string senderId, string receiverId, MessageDetail message)
         {
-            var conversation = _conversationRepository.FindPrivateConversationByReceiverId(receiverId);
+            var conversation = _conversationRepository.FindPrivateConversationByReceiverId(senderId, receiverId);
             if (conversation == null)
             {
                 conversation = new Conversation()

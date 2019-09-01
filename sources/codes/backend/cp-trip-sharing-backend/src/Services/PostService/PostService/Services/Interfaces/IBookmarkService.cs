@@ -9,7 +9,7 @@ namespace PostService.Services.Interfaces
     public interface IBookmarkService
     {
         Bookmark AddBookmark(Bookmark bookmark);
-        bool DeleteBookmark(string id);
+        bool DeleteBookmark(string postId, string userId);
         IEnumerable<Bookmark> GetUserBookmarks(string userId);
         IEnumerable<string> GetUserBookmarkId(string id);
         Bookmark GetById(string id);

@@ -114,10 +114,10 @@ namespace ChatService.Repositories
             return users;
         }
 
-        public Conversation FindPrivateConversationByReceiverId(string receiverId)
+        public Conversation FindPrivateConversationByReceiverId(string senderId, string receiverId)
         {
             var conversation = _conversations.AsQueryable()
-                .Where(c => c.Type.Equals("private") && c.Receivers.Contains(receiverId))
+                .Where(c => c.Type.Equals("private") && c.Receivers.Contains(receiverId) && c.Receivers.Contains(senderId))
                 .FirstOrDefault();
             return conversation;
         }

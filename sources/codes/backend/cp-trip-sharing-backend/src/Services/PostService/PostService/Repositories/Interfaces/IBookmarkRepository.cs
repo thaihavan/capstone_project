@@ -10,5 +10,6 @@ namespace PostService.Repositories.Interfaces
     {
         IEnumerable<Bookmark> GetAll(string id);
         IEnumerable<string> GetUserBookmarkId(string id);
+        bool DeleteBookmark(string postId, string userId);
     }
 }
