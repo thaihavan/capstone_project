@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { PostFilter } from 'src/app/model/PostFilter';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { VirtualTripService } from 'src/app/core/services/post-service/virtual-trip.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { FindingCompanionService } from 'src/app/core/services/post-service/finding-companion.service';
@@ -31,6 +30,7 @@ export class ListPostPageComponent implements OnInit {
   showTimePeriod = true;
   showTopic = true;
 
+  firstLoading = true;
   isLoading = false;
   isScrollTopShow = false;
   topPosToStartShowing = 100;
@@ -58,7 +58,6 @@ export class ListPostPageComponent implements OnInit {
       this.isScrollTopShow = false;
     }
   }
-
   ngOnInit() {
     this.route.params.subscribe(routeParams => {
       this.homeNav = routeParams['home-nav'];
@@ -108,6 +107,7 @@ export class ListPostPageComponent implements OnInit {
   }
 
   getPosts(postFilter: PostFilter) {
+    this.firstLoading = true;
     switch (this.homeNav) {
       case '':
         break;
@@ -130,6 +130,7 @@ export class ListPostPageComponent implements OnInit {
   }
 
   submitFilter(postFilter: PostFilter) {
+    this.firstLoading = true;
     this.postFilter = postFilter;
     this.posts = [];
     this.getPosts(this.postFilter);
@@ -140,13 +141,19 @@ export class ListPostPageComponent implements OnInit {
       postFilter = new PostFilter();
       postFilter.topics = [];
       postFilter.timePeriod = 'all_time';
-
+    }
+    if (!this.firstLoading) {
       this.isLoading = true;
     }
     this.postService.getAllArticles(postFilter, this.page).subscribe((data: Article[]) => {
       // data = this.filterBlocker(data);
       this.posts.push(...data);
-    }, this.errorHandler.handleError);
+    },
+    this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+      this.firstLoading = false;
+    });
   }
 
   getPopularArticles(postFilter: PostFilter): void {
@@ -155,10 +162,17 @@ export class ListPostPageComponent implements OnInit {
       postFilter.topics = [];
       postFilter.timePeriod = 'all_time';
     }
+    if (!this.firstLoading) {
+      this.isLoading = true;
+    }
     this.postService.getPopularArticles(postFilter, this.page).subscribe((data: Article[]) => {
       // data = this.filterBlocker(data);
       this.posts.push(...data);
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+      this.firstLoading = false;
+    });
   }
 
   getRecommendArticles(postFilter: PostFilter): void {
@@ -167,10 +181,17 @@ export class ListPostPageComponent implements OnInit {
       postFilter.topics = [];
       postFilter.timePeriod = 'all_time';
     }
+    if (!this.firstLoading) {
+      this.isLoading = true;
+    }
     this.postService.getRecommendArticles(postFilter, this.page).subscribe((data: Article[]) => {
       // data = this.filterBlocker(data);
       this.posts.push(...data);
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+      this.firstLoading = false;
+    });
   }
 
   getVirtualTrips(postFilter: PostFilter): void {
@@ -181,11 +202,17 @@ export class ListPostPageComponent implements OnInit {
 
       this.isLoading = true;
     }
-
+    if (!this.firstLoading) {
+      this.isLoading = true;
+    }
     this.virtualTripService.getVirtualTrips(postFilter, this.page).subscribe(data => {
       // data = this.filterBlocker(data);
       this.posts.push(...data);
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+      this.firstLoading = false;
+    });
   }
 
   getCompanionPosts(postFilter: PostFilter): void {
@@ -193,14 +220,18 @@ export class ListPostPageComponent implements OnInit {
       postFilter = new PostFilter();
       postFilter.topics = [];
       postFilter.timePeriod = 'all_time';
-
+    }
+    if (!this.firstLoading) {
       this.isLoading = true;
     }
-
     this.companionPostService.getCompanionPosts(postFilter, this.page).subscribe(data => {
       // data = this.filterBlocker(data);
       this.posts.push(...data);
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+      this.firstLoading = false;
+    });
   }
 
   // filterBlocker(posts: any[]) {
@@ -213,11 +244,13 @@ export class ListPostPageComponent implements OnInit {
   // }
 
   onScroll() {
-    this.isLoading = true;
-    this.page++;
-    console.log('page-' + this.page);
-    // Continue loading data
-    this.getPosts(this.postFilter);
+    if (this.posts.length >= 12) {
+      this.isLoading = true;
+      this.page++;
+      console.log('page-' + this.page);
+      // Continue loading data
+      this.getPosts(this.postFilter);
+    }
   }
 
   gotoTop() {

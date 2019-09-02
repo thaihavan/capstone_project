@@ -31,11 +31,11 @@ export class PostSmallComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('Account'));
+    this.user = JSON.parse(localStorage.getItem('User'));
     if (this.user == null) {
       this.userId = 'chua dang nhap';
     } else {
-      this.userId = this.user.userId;
+      this.userId = this.user.id;
     }
     this.getStates();
   }

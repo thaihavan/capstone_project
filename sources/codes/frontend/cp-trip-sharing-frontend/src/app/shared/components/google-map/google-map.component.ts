@@ -95,7 +95,10 @@ export class GoogleMapComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.locationMarker === undefined) {
       return false;
     } else {
-      return this.locationMarker.length > 1;
+      if (this.lat === this.locationMarker[0].latitude && this.lng === this.locationMarker[0].longitude) {
+        return false;
+      }
+      return this.locationMarker.length > 0;
     }
   }
 

@@ -52,7 +52,7 @@
               <p><span class="sub-title">Bởi </span><a (click)="gotoPersionalPage(this.author.id)"><span
                     class="author-name">{{author? author.displayName : ''}}</span></a></p>
               <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
-              <a mat-button *ngIf="!note" (click)="editAble()">+ Thêm mô tả chuyến đi</a>
+              <button mat-button *ngIf="!note&&(userRole === 'author')" (click)="editAble()">+ Thêm mô tả chuyến đi</button>
               <p *ngIf="isViewDetailTrip"><span class="sub-title">{{ virtualTrip.items ? virtualTrip.items.length : 0}} mục cập nhập vào {{virtualTrip.post.pubDate | date:'dd-MM-yyyy'}}</span></p>
             </div>
           </mat-card-content>

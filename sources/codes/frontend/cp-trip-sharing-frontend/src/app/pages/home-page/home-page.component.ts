@@ -22,11 +22,19 @@ export class HomePageComponent implements OnInit {
   user: User;
 
   recommendedArticles: Article[] = [];
+  isRecomendedLoading = true;
+
   popularArticles: Article[] = [];
+  isPopularLoading = true;
+
   newestArticles: Article[] = [];
+  isNewesLoading = true;
 
   virtualTrips: VirtualTrip[] = [];
+  isVirtualLoading = true;
+
   companionPosts: CompanionPost[] = [];
+  isCompanionLoading = true;
 
   constructor(private titleService: Title,
               private postService: PostService,
@@ -60,7 +68,10 @@ export class HomePageComponent implements OnInit {
       if (this.newestArticles != null && this.newestArticles.length > 6) {
         this.newestArticles = this.newestArticles.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isNewesLoading = false;
+    });
   }
 
   getPopularArticles(postFilter: PostFilter): void {
@@ -75,7 +86,10 @@ export class HomePageComponent implements OnInit {
       if (this.popularArticles != null && this.popularArticles.length > 6) {
         this.popularArticles = this.popularArticles.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isPopularLoading = false;
+    });
   }
 
   getRecommendArticles(postFilter: PostFilter): void {
@@ -90,7 +104,10 @@ export class HomePageComponent implements OnInit {
       if (this.recommendedArticles != null && this.recommendedArticles.length > 6) {
         this.recommendedArticles = this.recommendedArticles.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isRecomendedLoading = false;
+    });
   }
 
   getVirtualTrips(postFilter: PostFilter): void {
@@ -106,7 +123,10 @@ export class HomePageComponent implements OnInit {
       if (this.virtualTrips != null && this.virtualTrips.length > 6) {
         this.virtualTrips = this.virtualTrips.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isVirtualLoading = false;
+    });
   }
 
   getCompanionPosts(postFilter: PostFilter): void {
@@ -122,7 +142,10 @@ export class HomePageComponent implements OnInit {
       if (this.companionPosts != null && this.companionPosts.length > 6) {
         this.companionPosts = this.companionPosts.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isCompanionLoading = false;
+    });
   }
 
   // on google-map-search submit add address location.

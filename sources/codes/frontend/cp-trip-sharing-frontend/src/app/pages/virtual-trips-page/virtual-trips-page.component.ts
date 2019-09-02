@@ -208,7 +208,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       this.alertify.error('Yêu cầu ảnh bìa cho bài viết');
       return;
     }
-    if (this.virtualTrip.items.length === 0) {
+    if (this.virtualTrip.items === undefined || this.virtualTrip.items.length === 0) {
       this.alertify.error('Yêu cầu nhập địa điểm của chuyến đi!');
       return;
     }
@@ -218,11 +218,12 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     this.post.content = this.note;
     this.virtualTrip.post = this.post;
     const dialogRef = this.dialog.open(LoadingScreenComponent, {
-      width: '100%',
+      height: '100vh',
       data: {
         title: '',
         isPublic: ''
       },
+      panelClass: 'full-screen-modal',
       disableClose: true
     });
     this.tripService.createVirtualTrip(this.virtualTrip).subscribe(
@@ -301,7 +302,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         },
         () => {
           // this.alertify.success('Xóa bài viết thành công');
-          this.openDialogMessageConfirm('Bài viết đã được xóa!', '', 'success', true);
+          this.openDialogMessageConfirm('Bài viết đã được xóa!', '/chuyen-di', 'success', true);
         }
         );
       }

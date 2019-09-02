@@ -1,13 +1,17 @@
 <div>
-
-  <div *ngIf="posts && posts.length == 0">
-    <p class="no-result">Không tìm thấy kết quả nào</p>
-  </div>
-
   <div *ngIf="posts && posts.length > 0" class="list-post-container">
     <div class="post-container {{rowSizeClass}}" *ngFor="let post of posts">
       <app-post-small [postType]="listType" [post]="post"></app-post-small>
-    </div>
   </div>
-
+  </div>
+  <ng-container *ngIf="isLoading; else elseTemplate">
+    <div>
+        <div class="lds-facebook"><div></div><div></div><div></div></div>
+    </div>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <div *ngIf="posts && posts.length === 0">
+      <p class="no-result">Không tìm thấy kết quả nào</p>
+    </div>
+  </ng-template>
 </div>
