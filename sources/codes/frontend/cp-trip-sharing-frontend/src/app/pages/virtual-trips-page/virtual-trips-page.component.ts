@@ -29,7 +29,7 @@ import { AlertifyService } from 'src/app/core/services/alertify-service/alertify
 export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   screenHeight: number;
   expandWidth: number;
-
+  user: any;
   virtualTripId = '';
   title = '';
   note = '';
@@ -60,6 +60,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.user = localStorage.getItem('User');
+    if (this.user == null) {
+      window.location.href = '/trang-chu';
+    } else {
     this.virtualTrip = new VirtualTrip();
     // check is view detail?
     this.virtualTripId = this.route.snapshot.paramMap.get('tripId');
@@ -74,9 +78,11 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       this.isViewDetailTrip = true;
       this.getVirtualTrip();
     }
+  }
 
     this.getScreenSize();
   }
+
   ngAfterViewInit(): void {
     if (!this.isViewDetailTrip) {
       setTimeout(() => {

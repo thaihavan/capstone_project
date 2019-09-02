@@ -45,6 +45,7 @@ import { ShareModule } from '@ngx-share/core';
 import { ListUserBlockedComponent } from './shared/components/list-user-blocked/list-user-blocked.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,9 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
     {
       provide: AuthServiceConfig,
       useFactory: provideSocialLoginConfig
-    }
+    },
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: [] },
   ],
   bootstrap: [AppComponent],
   entryComponents: [ MessagePopupComponent, DialogCreateTripComponent,

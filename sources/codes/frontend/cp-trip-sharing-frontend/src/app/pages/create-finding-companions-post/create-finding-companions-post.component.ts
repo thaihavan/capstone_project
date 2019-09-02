@@ -62,6 +62,7 @@ export class CreateFindingCompanionsPostComponent
   @ViewChild('stepper') stepper;
   isUpdate: boolean;
   imgUrl;
+  user: any;
   isHasImg = false;
   isPublic = true;
   title: string;
@@ -89,6 +90,10 @@ export class CreateFindingCompanionsPostComponent
   companionPostId: string;
 
   ngOnInit() {
+    this.user = localStorage.getItem('User');
+    if (this.user == null) {
+      window.location.href = '/trang-chu';
+    } else {
     this.companionPost = new CompanionPost();
     this.minDate.setDate(this.minDate.getDate() + 1);
     this.companionPostId = this.route.snapshot.paramMap.get('companionId');
@@ -118,6 +123,7 @@ export class CreateFindingCompanionsPostComponent
         }
       );
     }
+  }
   }
   ngAfterViewInit(): void {
   }
