@@ -165,7 +165,7 @@
                       <mat-list-item class="chat-member-item">
                         <img class="mat-list-avatar" src="{{userItem.profileImage}}">
                         <div class="mat-list-text">
-                          <h3 class="mat-line" matline="">{{userItem.displayName}}</h3>
+                          <h3 class="mat-line" matTooltip="{{userItem.displayName.length > 10 ? userItem.displayName : ''}}" matline="">{{userItem.displayName.length > 10 ? userItem.displayName.substring(0,8)+'...' :userItem.displayName}}</h3>
                         </div>
                         <span class="icon-settings" [matMenuTriggerFor]="settingsMenu">
                           <mat-icon>more_vert</mat-icon>
