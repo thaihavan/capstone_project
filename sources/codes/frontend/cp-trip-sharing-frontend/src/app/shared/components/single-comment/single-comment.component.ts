@@ -28,6 +28,7 @@ export class SingleCommentComponent implements OnInit {
   commentContent = '';
   liked = false;
   showRep = false;
+  isLikeWaitingRespone = false;
   like: Like;
   checkRemoveComment = false;
   ngOnInit(): void {
@@ -63,21 +64,30 @@ export class SingleCommentComponent implements OnInit {
   }
 
   likeComment(liked: any, commetId: any) {
+    if (this.isLikeWaitingRespone) {
+      return;
+    }
+    this.isLikeWaitingRespone = true;
     this.like.objectId = commetId;
     this.like.objectType = 'comment';
     if (liked === false) {
       this.postService.likeAPost(this.like).subscribe((data: any) => {
         this.comment.likeCount += 1;
         this.comment.liked = true;
-
         // Send notification
         this.sendLikeCommentNotification();
-      }, this.errorHandler.handleError);
+      }, this.errorHandler.handleError,
+      () => {
+        this.isLikeWaitingRespone = false;
+      });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.comment.likeCount -= 1;
         this.comment.liked = false;
-      }, this.errorHandler.handleError);
+      }, this.errorHandler.handleError,
+      () => {
+        this.isLikeWaitingRespone = false;
+      });
     }
   }
 

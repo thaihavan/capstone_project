@@ -38,6 +38,7 @@ export class DetailpostPageComponent implements OnInit {
   follow = false;
   isLoading = true;
   isNotFound = false;
+  isLikeWaitingRespone = false;
 
   typePost = '';
   authorId = '';
@@ -238,10 +239,14 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   likePost(like: any) {
+    if (this.isLikeWaitingRespone) {
+      return;
+    }
     if (this.user === null) {
       this.openDialogLoginForm();
       return;
     }
+    this.isLikeWaitingRespone = true;
     this.like.objectId = this.detailPost.post.id;
     this.like.objectType = 'post';
     if (like === false) {
@@ -250,12 +255,18 @@ export class DetailpostPageComponent implements OnInit {
         this.detailPost.post.likeCount += 1;
         // Send notitication
         this.notifyService.sendLikeNotification(this.user, this.detailPost);
-      }, this.errorHandler.handleError);
+      }, this.errorHandler.handleError,
+      () => {
+        this.isLikeWaitingRespone = false;
+      });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.detailPost.post.liked = false;
         this.detailPost.post.likeCount -= 1;
-      }, this.errorHandler.handleError);
+      }, this.errorHandler.handleError,
+      () => {
+        this.isLikeWaitingRespone = false;
+      });
     }
   }
 
