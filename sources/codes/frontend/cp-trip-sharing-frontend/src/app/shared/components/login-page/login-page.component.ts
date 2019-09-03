@@ -6,6 +6,7 @@ import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angular
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 import { Account } from 'src/app/model/Account';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-login-page',
@@ -36,7 +37,8 @@ export class LoginPageComponent implements OnInit {
   constructor(private titleService: Title,
               private userService: UserService,
               private authService: AuthService,
-              private alertifyService: AlertifyService) {
+              private alertifyService: AlertifyService,
+              private dialogRef: MatDialogRef<LoginPageComponent>) {
     this.titleService.setTitle('Đăng nhập');
     this.account = new Account();
   }
@@ -46,7 +48,6 @@ export class LoginPageComponent implements OnInit {
 
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((gUser) => {
-      console.log(gUser);
       this.userService.loginWithgoogle(gUser.authToken).subscribe((account: any) => {
         this.handleGetAccountSuccessful(account);
       }, (error: HttpErrorResponse) => {
@@ -60,7 +61,6 @@ export class LoginPageComponent implements OnInit {
 
   signInWithFb(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((fUser) => {
-      console.log(fUser);
       this.userService.loginWithFacebook(fUser.authToken).subscribe((account: any) => {
         this.handleGetAccountSuccessful(account);
       }, (error: HttpErrorResponse) => {
@@ -73,11 +73,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   callRegisterPage(): void {
-    // this.dialogRef.close();
+    this.dialogRef.close();
   }
 
   forgotPassword(): void {
-    // this.dialogRef.close();
+    this.dialogRef.close();
   }
 
   signInWithEmail() {

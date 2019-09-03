@@ -37,7 +37,7 @@ export class PersonalPageComponent implements OnInit {
   token: any;
   myProfile: Author;
   isFixMenuBar: boolean;
-  listBlockeds: User[];
+  // listBlockeds: User[];
 
   constructor(
     private router: Router,
@@ -75,7 +75,7 @@ export class PersonalPageComponent implements OnInit {
       this.getInforUser(this.userId);
     } else if (this.usergetLocalStorage != null) {
       this.userId = this.usergetLocalStorage.id;
-      this.listBlockeds = JSON.parse(localStorage.getItem('listBlockeds'));
+      // this.listBlockeds = JSON.parse(localStorage.getItem('listBlockeds'));
       this.getInforUser(this.userId);
     }
     this.token = localStorage.getItem('Token');
@@ -83,6 +83,11 @@ export class PersonalPageComponent implements OnInit {
     this.myProfile = new Author();
   }
   ngOnInit(): void {
+    if (this.router.url.indexOf('da-danh-dau') !== -1) {
+      this.isDisplayNav = false;
+    } else {
+      this.isDisplayNav = true;
+    }
     this.router.events.subscribe(res => {
       if (this.router.url.indexOf('da-danh-dau') !== -1) {
         this.isDisplayNav = false;
@@ -291,9 +296,9 @@ export class PersonalPageComponent implements OnInit {
     // window.location.href = '/user/' + this.userId + '/da-danh-dau';
   }
 
-  isBlocked(userId: string) {
-    return this.listBlockeds
-      ? this.listBlockeds.find(u => u.id === userId) != null
-      : false;
-  }
+  // isBlocked(userId: string) {
+  //   return this.listBlockeds
+  //     ? this.listBlockeds.find(u => u.id === userId) != null
+  //     : false;
+  // }
 }

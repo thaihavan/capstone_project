@@ -59,7 +59,6 @@ export class PostFilterComponent implements OnInit {
 
   toggleFilter() {
     this.isDisplayFilter = !this.isDisplayFilter;
-    console.log(this.postFilter);
   }
 
   submitFilter() {

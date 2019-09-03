@@ -11,13 +11,10 @@ export class ListPostHorizontalComponent implements OnInit {
   @Input() listType: string;
   @Input() posts: [];
   @Input() rowSize = 3;
-
+  @Input() isLoading: boolean;
   rowSizeClass: string;
-
   constructor() { }
-
   ngOnInit() {
     this.rowSizeClass = `post-container-${this.rowSize}`;
   }
-
 }

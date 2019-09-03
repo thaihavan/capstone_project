@@ -27,6 +27,7 @@ export class CreatePostPageComponent implements OnInit {
   @ViewChild('uploadImage') uploadImage: UploadImageComponent;
   @ViewChild('myEditor') myEditor;
   imgUrl;
+  user: any;
   isHasImg = false;
   isPublic = true;
   title: string;
@@ -82,6 +83,10 @@ export class CreatePostPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = localStorage.getItem('User');
+    if (this.user == null) {
+      window.location.href = '/trang-chu';
+    } else {
     this.articlereturn = new Article();
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     if (
@@ -104,6 +109,7 @@ export class CreatePostPageComponent implements OnInit {
         this.errorHandler.handleError
       );
     }
+  }
   }
   uploadImg(files) {
     if (files.lenght === 0) {
@@ -232,6 +238,10 @@ export class CreatePostPageComponent implements OnInit {
 
   // on google-map-search submit add address location.
   addDestination(addrObj) {
+    if (!addrObj) {
+      this.alertify.error('Địa điểm không tồn tại!');
+      return;
+    }
     this.zone.run(() => {
       let addrKeys;
       let addr;

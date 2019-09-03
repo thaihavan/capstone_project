@@ -3,7 +3,7 @@
         <div class="card">
             <div class="login-card-header">
                 <h5 class="card-header info-color white-text text-center py-4">
-                    <strong>Đăng Kí</strong>
+                    <strong>Đăng Ký</strong>
                 </h5>
             </div>
 
@@ -68,7 +68,7 @@
                     <!-- Sign in button -->
                     <button class="btn-sign-in" [disabled]="form.invalid || !form.valid" mat-flat-button color="primary"
                         type="submit">
-                        Đăng Kí
+                        Đăng Ký
                         <ng-container *ngIf="isLoading">
                             <div class="spinner-border spinner-border-sm" role="status">
                                 <span class="sr-only">Loading...</span>
@@ -79,7 +79,7 @@
                         {{message}}
                     </mat-error>
                     <!-- Social login -->
-                    <p class="color-gray">Hoặc đăng kí với:</p>
+                    <p class="color-gray">Hoặc đăng ký với:</p>
                     <a mat-mini-fab class="mr-3" color="primary">
                         <i class="fa fa-facebook-f"></i>
                     </a>

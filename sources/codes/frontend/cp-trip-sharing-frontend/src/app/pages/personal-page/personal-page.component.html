@@ -4,7 +4,7 @@
       <div>
         <img class="cover-image" src="{{coverImage}}">
       </div>
-      <div [class.fix-profile-avatar]="isFixMenuBar" class="profile-infor">
+      <div class="profile-infor">
         <div class="avatar-display">
           <div class="avatar-image">
             <img src="{{user.avatar}}" class="avatar-img">
@@ -13,7 +13,7 @@
               </div>
               <div class="btn-change-avatar">
                 <mat-icon class="change-avatar-icon ">add_a_photo</mat-icon>
-                <p class="btn-text">Cập nhập</p>
+                <p class="btn-text">Cập nhật</p>
               </div>
               <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]="1/1"
                 [resizeToWidth]="1350" #uploadImage></app-upload-image>
@@ -50,13 +50,13 @@
         </div>
       </div>
     </div>
-    <div [class.fix-menu]="isFixMenuBar" class="row menu-nav">
-      <div class="col-3 align-self-center menu-sub-avatar">
-        <div [class.fix-sub-avatar]="isFixMenuBar" class="sub-avatar">
+    <div  class="row menu-nav">
+      <!-- <div class="col-3 align-self-center menu-sub-avatar">
+        <div class="sub-avatar">
           <img src="{{user.avatar}}" alt="">
           <span>{{user.displayName}}</span>
         </div>
-      </div>
+      </div> -->
       <div>
         <div class="navlinks" *ngIf="isDisplayNav">
           <nav color="primary" mat-tab-nav-bar mat-align-tabs="left">
@@ -69,7 +69,7 @@
       </div>
 
     </div>
-    <div [style.margin-top.px]="isFixMenuBar ? '61' : '20'" class="row personal-content">
+    <div [style.margin-top.px]="'20'" class="row personal-content">
       <div class="col-md-3 card-personal">
         <!-- Card 1-->
         <div class="card promoting-card">

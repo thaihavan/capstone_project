@@ -43,7 +43,7 @@ export class SearchResultContainerComponent implements OnInit {
   users: User[];
   listType: string;
   postFilter: PostFilter;
-
+  firstLoading = true;
   page = 1;
 
   @HostListener('window:scroll') checkScroll() {
@@ -138,35 +138,64 @@ export class SearchResultContainerComponent implements OnInit {
     if (search === undefined || search == null) {
       search = '';
     }
-
+    if (!this.firstLoading) {
+      this.isLoading = true;
+    }
     this.userService.getUsers(search, this.page).subscribe((res: User[]) => {
-      res = this.filterUserBlocker(res);
+      // res = this.filterUserBlocker(res);
       this.users.push(...res);
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+      this.firstLoading = false;
+    });
   }
 
   getArticles(postFilter: PostFilter) {
     this.postService.getAllArticles(postFilter, this.page).subscribe((res: Article[]) => {
-      res = this.filterPostBlocker(res);
+      // res = this.filterPostBlocker(res);
       this.posts.push(...res);
-    }, this.errorHandler.handleError);
+      if (!this.firstLoading) {
+        this.isLoading = true;
+      }
+    }, this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+      this.firstLoading = false;
+    });
   }
 
   getVirtualTrips(postFilter: PostFilter) {
     this.virtualTripService.getVirtualTrips(postFilter, this.page).subscribe((res: VirtualTrip[]) => {
-      res = this.filterPostBlocker(res);
+      // res = this.filterPostBlocker(res);
       this.posts.push(...res);
-    }, this.errorHandler.handleError);
+      if (!this.firstLoading) {
+        this.isLoading = true;
+      }
+    }, this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+      this.firstLoading = false;
+    });
   }
 
   getCompanionPosts(postFilter: PostFilter) {
     this.companionPostService.getCompanionPosts(postFilter, this.page).subscribe((res: CompanionPost[]) => {
-      res = this.filterPostBlocker(res);
+      // res = this.filterPostBlocker(res);
       this.posts.push(...res);
-    }, this.errorHandler.handleError);
+      if (!this.firstLoading) {
+        this.isLoading = true;
+      }
+    }, this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+      this.firstLoading = false;
+    });
   }
 
   submitFilter(postFilter: PostFilter) {
+    this.isLoading = false;
+    this.firstLoading = true;
     this.postFilter = postFilter;
     switch (this.searchType) {
       case 'text':
@@ -189,30 +218,32 @@ export class SearchResultContainerComponent implements OnInit {
     return decodeURI(urlSplit[4]);
   }
 
-  filterPostBlocker(posts: any[]) {
-    let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
-    if (listBlockers == null) {
-      listBlockers = [];
-    }
-    posts = posts.filter(p => listBlockers.find(b => b.id === p.post.author.id) == null);
-    return posts;
-  }
+  // filterPostBlocker(posts: any[]) {
+  //   let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+  //   if (listBlockers == null) {
+  //     listBlockers = [];
+  //   }
+  //   posts = posts.filter(p => listBlockers.find(b => b.id === p.post.author.id) == null);
+  //   return posts;
+  // }
 
-  filterUserBlocker(users: any[]) {
-    let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
-    if (listBlockers == null) {
-      listBlockers = [];
-    }
-    users = users.filter(u => listBlockers.find(b => b.id === u.id) == null);
-    return users;
-  }
+  // filterUserBlocker(users: any[]) {
+  //   let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+  //   if (listBlockers == null) {
+  //     listBlockers = [];
+  //   }
+  //   users = users.filter(u => listBlockers.find(b => b.id === u.id) == null);
+  //   return users;
+  // }
 
   onScroll() {
-    this.isLoading = true;
-    this.page++;
-    console.log('page-' + this.page);
-    // Continue loading data
-    this.getSearchResult(this.postFilter, false);
+    if (this.posts.length >= 12) {
+      this.isLoading = true;
+      this.page++;
+      console.log('page-' + this.page);
+      // Continue loading data
+      this.getSearchResult(this.postFilter, false);
+    }
   }
 
   gotoTop() {

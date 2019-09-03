@@ -62,6 +62,7 @@ export class CreateFindingCompanionsPostComponent
   @ViewChild('stepper') stepper;
   isUpdate: boolean;
   imgUrl;
+  user: any;
   isHasImg = false;
   isPublic = true;
   title: string;
@@ -74,6 +75,7 @@ export class CreateFindingCompanionsPostComponent
   isMemberValide = true;
   content = '';
   public Editor = DecoupledEditor;
+  currentDate = new Date();
   minDate = new Date();
   maxDate = new Date(2020, 0, 1);
   companionForm: FormGroup;
@@ -88,7 +90,12 @@ export class CreateFindingCompanionsPostComponent
   companionPostId: string;
 
   ngOnInit() {
+    this.user = localStorage.getItem('User');
+    if (this.user == null) {
+      window.location.href = '/trang-chu';
+    } else {
     this.companionPost = new CompanionPost();
+    this.minDate.setDate(this.minDate.getDate() + 1);
     this.companionPostId = this.route.snapshot.paramMap.get('companionId');
     if (
       this.companionPostId !== undefined &&
@@ -117,6 +124,7 @@ export class CreateFindingCompanionsPostComponent
       );
     }
   }
+  }
   ngAfterViewInit(): void {
   }
   public onReady(editor) {
@@ -127,8 +135,6 @@ export class CreateFindingCompanionsPostComponent
         editor.ui.getEditableElement()
       );
     editor.plugins.get('FileRepository').createUploadAdapter = loader => {
-      // tslint:disable-next-line:no-string-literal
-      console.log(loader['file']);
       return new UploadAdapter(loader, this.imageService);
     };
   }
@@ -140,8 +146,8 @@ export class CreateFindingCompanionsPostComponent
         fromDate: new FormControl('', [Validators.required]),
         toDate: new FormControl('', [Validators.required]),
         estimatedDate: new FormControl('', [Validators.required]),
-        minMembers: new FormControl('', [Validators.required]),
-        maxMembers: new FormControl('', [Validators.required]),
+        minMembers: new FormControl('', [Validators.required, Validators.max(100), Validators.min(0)]),
+        maxMembers: new FormControl('', [Validators.required, Validators.max(100), Validators.min(0)]),
         estAdultAmount: new FormControl()
       },
       {
@@ -255,6 +261,16 @@ export class CreateFindingCompanionsPostComponent
     this.endPicker.open();
   }
 
+  // Expires date
+  maxExpiresDate(fromDate) {
+    if (fromDate) {
+      // tslint:disable-next-line:prefer-const
+      let fDate = new Date(fromDate);
+      fDate.setDate(fDate.getDate() - 1);
+      return fDate;
+    }
+    return fromDate;
+  }
   // update schedule item
   updateStepper(event) {
     this.createStep(event, true);
@@ -285,6 +301,10 @@ export class CreateFindingCompanionsPostComponent
 
   // on google-map-search submit add address location.
   addDestination(addrObj) {
+    if (!addrObj) {
+      this.alertifyService.error('Địa điểm không tồn tại!');
+      return;
+    }
     this.zone.run(() => {
       let addrKeys;
       let addr;
@@ -340,7 +360,7 @@ export class CreateFindingCompanionsPostComponent
     if (this.isUpdate) {
       this.companionService.updatePost(this.companionPost).subscribe(
         res => {
-          this.openDialogMessageConfirm('Bạn đã cập nhập thành công!', res.id , 'success' );
+          this.openDialogMessageConfirm('Bạn đã cập nhật thành công!', res.id , 'success' );
         },
         (error) => {
           this.openDialogMessageConfirm(error.message, null, 'danger');

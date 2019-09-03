@@ -57,6 +57,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { PostItemComponent } from './components/post-item/post-item.component';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
 import { RouterModule } from '@angular/router';
+import { LoadingDetailPostComponent } from './components/loading-detail-post/loading-detail-post.component';
 
 const Material = [
   MatButtonModule,
@@ -125,7 +126,8 @@ const Material = [
     ChangePasswordComponent,
     LoginPageComponent,
     PostItemComponent,
-    CommentItemComponent
+    CommentItemComponent,
+    LoadingDetailPostComponent
   ],
   imports: [
     CommonModule,
@@ -176,7 +178,8 @@ const Material = [
     ChangePasswordComponent,
     LoginPageComponent,
     PostItemComponent,
-    CommentItemComponent
+    CommentItemComponent,
+    LoadingDetailPostComponent
   ],
   entryComponents: [
     LoginPageComponent,

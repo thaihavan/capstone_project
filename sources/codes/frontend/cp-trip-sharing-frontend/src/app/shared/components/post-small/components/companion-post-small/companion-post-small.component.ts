@@ -40,6 +40,9 @@ export class CompanionPostSmallComponent implements OnInit {
     const to = new Date(this.companionPost.to);
     const milisecs = to.getTime() - from.getTime();
     const days = Math.round(milisecs / (24 * 60 * 60 * 1000));
+    if (days === 0) {
+      return 1;
+    }
     return days;
   }
 

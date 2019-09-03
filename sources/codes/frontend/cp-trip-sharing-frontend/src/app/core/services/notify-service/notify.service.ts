@@ -85,7 +85,11 @@ export class NotifyService {
     .getLikePostNotiTemplate(from.displayName, post.post.title);
     notification.displayImage = from.avatar;
     notification.receivers = [post.post.author.id];
+    if (post.post.postType === 'Article') {
     notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + post.id;
+  } else {
+    notification.url = HostGlobal.HOST_FRONTEND + '/tim-ban-dong-hanh/' + post.id;
+  }
     notification.seenIds = [from.id];
     this.sendNotification(notification);
   }
@@ -101,7 +105,11 @@ export class NotifyService {
       .getCommentedNotiTemplate(from.displayName, post.post.title);
     notification.displayImage = from.avatar;
     notification.receivers = [post.post.author.id];
-    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + post.id;
+    if (post.post.postType === 'Article') {
+      notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + post.id;
+    } else {
+      notification.url = HostGlobal.HOST_FRONTEND + '/tim-ban-dong-hanh/' + post.id;
+    }
     notification.seenIds = [from.id];
     this.sendNotification(notification);
   }

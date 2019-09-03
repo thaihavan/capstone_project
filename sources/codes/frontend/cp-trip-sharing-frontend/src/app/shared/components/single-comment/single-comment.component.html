@@ -2,10 +2,11 @@
   <div class="comment-post">
     <div class="icon-user-name">
       <div class="icon-user">
-        <img src="{{comment.author.profileImage}}">
+        <a [routerLink]="[ '/user', comment.authorId ]"><img src="{{comment.author.profileImage}}"></a>
       </div>
       <div class="">
-        <span class="name-user">{{comment.author.displayName}}</span>
+        <a [routerLink]="[ '/user', comment.authorId ]"><span
+            class="name-user">{{comment.author.displayName? comment.author.displayName : 'Tác giả'}}</span></a>
         <br />
         <span class="time">{{comment.date | customDate}}</span>
       </div>
@@ -15,9 +16,13 @@
         <div *ngIf="!editComments" class="content-comment">
           <div class="text">{{comment.content}}</div>
         </div>
-        <div *ngIf="editComments" class="comment-textarea-container">
-          <textarea #areaCommentContent rows="3" (keydown.esc)="cancelEdit()" (keydown.enter)="updateComment(areaCommentContent.value)">{{comment.content}}</textarea>
-          <span>Nhấn esc trên bàn phím để thoát</span>
+        <div *ngIf="editComments" class="pt-2">
+          <mat-form-field hintLabel="Nhấn esc trên bàn phím để thoát" appearance="outline">
+            <mat-label>Nhập bình luận</mat-label>
+            <textarea #areaCommentContent class="max-width" (keydown.esc)="cancelEdit()"
+              (keydown.enter)="updateComment(areaCommentContent.value)" rows="3" matInput
+              placeholder="Nhập bình luận">{{comment.content}}</textarea>
+          </mat-form-field>
         </div>
         <div *ngIf="!editComments" class="icon-menu">
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -33,19 +38,25 @@
               <span>Chỉnh sửa</span>
             </button>
             <button *ngIf="user != null && user.id === comment.authorId" mat-menu-item (click)="removeComment()">
-              <mat-icon>remove</mat-icon>
+              <mat-icon>delete_outline</mat-icon>
               <span>Xóa</span>
             </button>
           </mat-menu>
         </div>
       </div>
       <div *ngIf="!editComments" class="bottom-like-share">
-        <span class="number-like"><i class="fa fa-thumbs-up"></i> {{comment.likeCount}}</span>
-        <span *ngIf="user != null" class="like-comment" [class]="comment.liked ? 'like-comment':'unlike-comment'"(click)="likeComment(comment.liked,comment.id)">Thích</span>
+        <span class="number-like" [class.like-icon]='comment.liked'><i class="fa fa-heart-o"></i>
+          {{comment.likeCount}}</span>
+        <span *ngIf="user != null" class="like-comment" [class]="comment.liked ? 'like-comment':'unlike-comment'"
+          (click)="likeComment(comment.liked,comment.id)">Thích</span>
         <span *ngIf="user != null" class="rep-comment" (click)="showRepComment()">Trả lời</span>
         <div *ngIf="user != null && showRep" class="comment-textarea-container">
-          <textarea rows="3" (keydown.esc)="cancelRepComment()" (keydown.enter)="submitComment()" [(ngModel)]="commentContent"></textarea>
-          <span>Nhấn esc trên bàn phím để thoát</span>
+          <mat-form-field hintLabel="Nhấn esc trên bàn phím để thoát" appearance="outline">
+            <mat-label>Nhập bình luận</mat-label>
+            <textarea #areaCommentContent class="max-width" (keydown.esc)="cancelRepComment()"
+              (keydown.enter)="submitComment()" [(ngModel)]="commentContent" rows="3" matInput
+              placeholder="Nhập bình luận"></textarea>
+          </mat-form-field>
         </div>
       </div>
 

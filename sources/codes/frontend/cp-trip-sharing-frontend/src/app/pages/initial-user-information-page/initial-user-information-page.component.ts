@@ -40,11 +40,11 @@ export class InitialUserInformationPageComponent implements OnInit {
   ngOnInit() {
     this.checkHasAccount();
     this.firstFormGroup = this.formBuilder.group({
-      userName: ['', Validators.required],
-      displayName: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      birthday: ['', Validators.required],
+      userName: new FormControl ('', [Validators.required, this.noWhitespaceValidator]),
+      displayName: new FormControl ('', [Validators.required, this.noWhitespaceValidator]),
+      firstName: new FormControl ('', [Validators.required, this.noWhitespaceValidator]),
+      lastName: new FormControl ('', [Validators.required, this.noWhitespaceValidator]),
+      birthday: new FormControl ('', [Validators.required, this.noWhitespaceValidator]),
       address: [''],
       gender: ['true']
     });
@@ -75,9 +75,19 @@ export class InitialUserInformationPageComponent implements OnInit {
     return this.firstFormGroup.controls[controlName].hasError(errorName);
   }
 
+  // valid space
+  public noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    let isValid = !isWhitespace;
+    if (control.value === '') {
+      isValid = true;
+    }
+    return isValid ? null : { whitespace: true };
+}
+
   // valid user name from server
   validUserName() {
-    if (this.username === '') {
+    if (this.username.trim() === '') {
       return;
     }
     this.userService.checkValidateUserName(this.username).subscribe(res => {
@@ -127,11 +137,11 @@ export class InitialUserInformationPageComponent implements OnInit {
   }
 
   getValueFromFormGroup() {
-    this.user.userName = this.username;
-    this.user.displayName = this.displayname;
-    this.user.firstName = this.firstname;
-    this.user.lastName = this.lastname;
-    this.user.address = this.address;
+    this.user.userName = this.username.trim();
+    this.user.displayName = this.displayname.trim();
+    this.user.firstName = this.firstname.trim();
+    this.user.lastName = this.lastname.trim();
+    this.user.address = this.address.trim();
     this.user.dob = this.birthday;
     this.user.gender = this.gender === 'true' ? true : false;
   }

@@ -29,7 +29,7 @@ import { AlertifyService } from 'src/app/core/services/alertify-service/alertify
 export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   screenHeight: number;
   expandWidth: number;
-
+  user: any;
   virtualTripId = '';
   title = '';
   note = '';
@@ -39,6 +39,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   isPublic: boolean;
   readMore = false;
   isExpandLeft = false;
+  isNotFound = false;
   isViewDetailTrip: boolean;
 
   virtualTrip: VirtualTrip;
@@ -60,6 +61,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
     this.virtualTrip = new VirtualTrip();
     // check is view detail?
     this.virtualTripId = this.route.snapshot.paramMap.get('tripId');
@@ -68,7 +70,12 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       this.virtualTripId === null ||
       this.virtualTripId === ''
     ) {
+      this.user = localStorage.getItem('User');
+      if (this.user == null) {
+      window.location.href = '/trang-chu';
+    } else {
       this.preCreate();
+    }
       // this.openDialog('', '', true, true);
     } else {
       this.isViewDetailTrip = true;
@@ -77,6 +84,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
 
     this.getScreenSize();
   }
+
   ngAfterViewInit(): void {
     if (!this.isViewDetailTrip) {
       setTimeout(() => {
@@ -89,7 +97,11 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight - 60;
-    this.expandWidth = -this.leftContent.nativeElement.clientWidth;
+    if (this.leftContent) {
+      this.expandWidth = -this.leftContent.nativeElement.clientWidth;
+    } else {
+      setTimeout( () => {this.expandWidth = -this.leftContent.nativeElement.clientWidth; }, 1000);
+    }
   }
 
   // getVirtual by id
@@ -104,7 +116,9 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         this.author = this.virtualTrip.post.author;
         this.userRole = this.checkRoleUser();
       },
-      this.errorHandler.handleError
+      (error) => {
+        this.isNotFound = true;
+      }
     );
   }
 
@@ -138,6 +152,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
 
   // add destination from google-map-search
   addDestination(destinations) {
+    if (!destinations) {
+      console.log('null destination');
+      return;
+    }
     if (
       this.virtualTrip.items === undefined ||
       this.virtualTrip.items === null
@@ -202,7 +220,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       this.alertify.error('Yêu cầu ảnh bìa cho bài viết');
       return;
     }
-    if (this.virtualTrip.items.length === 0) {
+    if (this.virtualTrip.items === undefined || this.virtualTrip.items.length === 0) {
       this.alertify.error('Yêu cầu nhập địa điểm của chuyến đi!');
       return;
     }
@@ -212,11 +230,12 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
     this.post.content = this.note;
     this.virtualTrip.post = this.post;
     const dialogRef = this.dialog.open(LoadingScreenComponent, {
-      width: '100%',
+      height: '100vh',
       data: {
         title: '',
         isPublic: ''
       },
+      panelClass: 'full-screen-modal',
       disableClose: true
     });
     this.tripService.createVirtualTrip(this.virtualTrip).subscribe(
@@ -255,6 +274,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       this.virtualTrip.items = this.virtualTrip.items.filter(
         item => item.locationId !== des.item.locationId
       );
+      this.alertify.success('Đã xóa địa điểm');
     } else {
       const foundIndex = this.virtualTrip.items.findIndex(
         x => x.locationId === des.item.locationId
@@ -294,7 +314,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         },
         () => {
           // this.alertify.success('Xóa bài viết thành công');
-          this.openDialogMessageConfirm('Bài viết đã được xóa!', '', 'success', true);
+          this.openDialogMessageConfirm('Bài viết đã được xóa!', '/chuyen-di', 'success', true);
         }
         );
       }
@@ -312,7 +332,6 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         res => {},
         this.errorHandler.handleError,
         () => {
-          console.log('update success!');
         }
       );
     }

@@ -10,10 +10,16 @@
 
     <!-- List users -->
     <ng-container *ngSwitchCase="'moi-nguoi'">
-
-      <div *ngIf="users && users.length == 0">
-        <p class="no-result">Không tìm thấy kết quả nào</p>
-      </div>
+      <ng-container *ngIf="firstLoading; else elseTemplate">
+        <div>
+          <div class="lds-facebook"><div></div><div></div><div></div></div>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div *ngIf="users && users.length == 0">
+          <p class="no-result">Không tìm thấy kết quả nào</p>
+        </div>
+      </ng-template>
 
       <div *ngIf="users && users.length > 0">
         <div *ngFor="let user of users">
@@ -25,7 +31,7 @@
 
     <!-- List posts -->
     <ng-container *ngSwitchDefault>
-      <app-list-post-horizontal [listType]="listType" [posts]="posts" [rowSize]="3">
+      <app-list-post-horizontal [isLoading]="firstLoading" [listType]="listType" [posts]="posts" [rowSize]="3">
       </app-list-post-horizontal>
     </ng-container>
 

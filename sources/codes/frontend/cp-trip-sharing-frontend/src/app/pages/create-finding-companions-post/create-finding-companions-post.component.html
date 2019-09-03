@@ -32,7 +32,7 @@
             <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Nhập tiêu đề bài viết</mat-label>
                 <input [(ngModel)]="title" class="example-right-align" matInput type="text"
-                    placeholder="Nhập tiêu đề bài viết">
+                    placeholder="Nhập tiêu đề bài viết" [maxlength]='145'> 
             </mat-form-field>
         </div>
     </div>
@@ -71,34 +71,38 @@
                         <mat-error *ngIf="hasError('fromDate','required')">
                             Ngày bắt đầu<strong> bắt buộc</strong>
                         </mat-error>
-                        <mat-error *ngIf="hasError('fromDate','matDatepickerMin')">Ngày bắt đầu đã qua</mat-error>
+                        <mat-error *ngIf="hasError('fromDate','matDatepickerMin')">Ngày bắt đầu phải lớn hơn ngày hiện tại</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="end-date col-4">
                     <mat-form-field appearance="outline">
                         <mat-label>Chọn ngày kết thúc</mat-label>
-                        <input matInput [(ngModel)]="toDate" formControlName='toDate' [min]="fromDate" (click)="endPicker.open()"
-                            [matDatepicker]="endPicker" placeholder="Chọn ngày kết thúc">
+                        <input matInput [(ngModel)]="toDate" formControlName='toDate' [min]="fromDate"
+                            (click)="endPicker.open()" [matDatepicker]="endPicker" placeholder="Chọn ngày kết thúc">
                         <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                         <mat-datepicker #endPicker></mat-datepicker>
                         <mat-error *ngIf="hasError('toDate','required')">
                             Ngày kết thúc<strong> bắt buộc</strong>
                         </mat-error>
-                        <mat-error *ngIf="hasError('toDate','matDatepickerMin')">Ngày kết thúc phải lớn hơn ngày bắt đầu</mat-error>
+                        <mat-error *ngIf="hasError('toDate','matDatepickerMin')">Ngày kết thúc phải lớn hơn ngày bắt đầu
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="expried-date col-4">
                     <mat-form-field appearance="outline">
                         <mat-label>Chọn ngày hết hạn đăng kí</mat-label>
-                        <input matInput [(ngModel)]="estimatedDate" formControlName='estimatedDate' [max]="fromDate" (click)="expriedPicker.open()"
-                            [matDatepicker]="expriedPicker" placeholder="Chọn ngày hết hạn đăng kí"
-                            >
+                        <input matInput [(ngModel)]="estimatedDate" formControlName='estimatedDate' [min]="currentDate"
+                            [max]="maxExpiresDate(fromDate)" (click)="expriedPicker.open()" [matDatepicker]="expriedPicker"
+                            placeholder="Chọn ngày hết hạn đăng kí">
                         <mat-datepicker-toggle matSuffix [for]="expriedPicker"></mat-datepicker-toggle>
                         <mat-datepicker #expriedPicker></mat-datepicker>
                         <mat-error *ngIf="hasError('estimatedDate','required')">
                             Ngày hết hạn đăng kí<strong> bắt buộc</strong>
                         </mat-error>
-                        <mat-error *ngIf="hasError('estimatedDate','matDatepickerMax')">Ngày hết hạn đăng kí phải nhỏ hơn ngày bắt đầu</mat-error>
+                        <mat-error *ngIf="hasError('estimatedDate','matDatepickerMax')&& !hasError('estimatedDate','matDatepickerMin')">Ngày hạn đăng kí phải nhỏ
+                            hơn ngày bắt đầu</mat-error>
+                        <mat-error *ngIf="hasError('estimatedDate','matDatepickerMin')">Ngày hết hạn đăng kí đã qua
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -107,27 +111,25 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Số tiền dự tính</mat-label>
                         <input class="amount-right-align" [ngModel]="estAdultAmount"
-                        (ngModelChange)="estAdultAmount=onAmountChange($event)" formControlName='estAdultAmount'
-                            matInput type="text" placeholder=" Số tiền dự tính cho nguời lớn"
-                           >
+                            (ngModelChange)="estAdultAmount=onAmountChange($event)" formControlName='estAdultAmount'
+                            matInput type="text" placeholder=" Số tiền dự tính cho nguời lớn">
                         <button class="btn-amount" mat-icon-button disabled matSuffix>
-                           <img src="../../../assets/dong.png" alt="">
+                            <img src="../../../assets/dong.png" alt="">
                         </button>
                     </mat-form-field>
                 </div>
                 <div class="col-4">
                     <mat-form-field appearance="outline">
                         <mat-label>Số lượng thành viên tối thiểu</mat-label>
-                        <input [(ngModel)]="minMembers" formControlName='minMembers'
-                            type="number" matInput placeholder="Số lượng thành viên tối thiểu"
-                           [errorStateMatcher]="memfileMatcher">
+                        <input [(ngModel)]="minMembers" formControlName='minMembers' [min]="0" [max]="100" type="number"
+                            matInput placeholder="Số lượng thành viên tối thiểu" [errorStateMatcher]="memfileMatcher">
                         <button mat-icon-button disabled matSuffix>
                             <mat-icon>group</mat-icon>
                         </button>
                         <mat-error *ngIf="hasError('minMembers','required')">
                             Số lương thành viên bắt buộc<strong> bắt buộc</strong>
                         </mat-error>
-                        <mat-error  *ngIf="hasMemberError('minMembers') || hasMemberError('maxMembers')">
+                        <mat-error *ngIf="hasMemberError('minMembers') || hasMemberError('maxMembers')">
                             Số lương thành viên tối đa phải lớn hơn tối thiểu
                         </mat-error>
                     </mat-form-field>
@@ -135,9 +137,8 @@
                 <div class="col-4">
                     <mat-form-field appearance="outline">
                         <mat-label>Số lượng thành viên tối đa</mat-label>
-                        <input [(ngModel)]="maxMembers" formControlName='maxMembers'
-                            type="number" matInput placeholder="Số lượng thành viên tối đa"
-                            [errorStateMatcher]="memfileMatcher">
+                        <input [(ngModel)]="maxMembers" formControlName='maxMembers' type="number" matInput [min]="0"
+                            [max]="100" placeholder="Số lượng thành viên tối đa" [errorStateMatcher]="memfileMatcher">
                         <button mat-icon-button disabled matSuffix>
                             <mat-icon>group</mat-icon>
                         </button>
@@ -213,14 +214,15 @@
             <div class=" ml-3 d-flex flex-column full-input">
                 <div>
                     <mat-form-field hintLabel="Enter để tạo mới item">
-                        <input (keyup.enter)="addEstimatedCostItem()" [(ngModel)]="estCostItem" class="example-right-align" matInput
-                            placeholder="Thêm mới chi phí bao gồm">
+                        <input (keyup.enter)="addEstimatedCostItem()" [(ngModel)]="estCostItem"
+                            class="example-right-align" matInput placeholder="Thêm mới chi phí bao gồm">
                     </mat-form-field>
                 </div>
             </div>
         </div>
         <div class="row btnCreate">
-            <button mat-raised-button color="primary"  type="submit" form="companionForm" (click)="createPost()">{{isUpdate ? 'Cập nhật' : 'Tạo bài viết'}}</button>
+            <button mat-raised-button color="primary" type="submit" form="companionForm"
+                (click)="createPost()">{{isUpdate ? 'Cập nhật' : 'Tạo bài viết'}}</button>
         </div>
         <div class="clear"></div>
     </div>

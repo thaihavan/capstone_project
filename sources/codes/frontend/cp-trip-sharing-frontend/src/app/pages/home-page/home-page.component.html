@@ -23,7 +23,7 @@
           <h3 class="section-title">Đề xuất</h3>
           <a [routerLink]="['/trang-chu/de-xuat']" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
         </div>
-        <app-list-post-horizontal [listType]="'article'" [posts]="recommendedArticles" [rowSize]="3">
+        <app-list-post-horizontal [isLoading]="isRecomendedLoading" [listType]="'article'" [posts]="recommendedArticles" [rowSize]="3">
         </app-list-post-horizontal>
       </div>
 
@@ -32,7 +32,7 @@
           <h3 class="section-title">Phổ biến</h3>
           <a [routerLink]="['/trang-chu/pho-bien']" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
         </div>
-        <app-list-post-horizontal [listType]="'article'" [posts]="popularArticles" [rowSize]="3">
+        <app-list-post-horizontal [isLoading]="isPopularLoading" [listType]="'article'" [posts]="popularArticles" [rowSize]="3">
         </app-list-post-horizontal>
       </div>
 
@@ -41,7 +41,7 @@
           <h3 class="section-title">Mới nhất</h3>
           <a [routerLink]="[ '/trang-chu/moi-nhat']" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
         </div>
-        <app-list-post-horizontal [listType]="'article'" [posts]="newestArticles" [rowSize]="3">
+        <app-list-post-horizontal [isLoading]="isNewesLoading" [listType]="'article'" [posts]="newestArticles" [rowSize]="3">
         </app-list-post-horizontal>
       </div>
     </div>
@@ -58,7 +58,7 @@
             <h3 class="section-title">&nbsp;</h3>
             <a [routerLink]="[ '/trang-chu/chuyen-di']" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
           </div>
-          <app-list-post-horizontal [listType]="'virtual-trip'" [posts]="virtualTrips" [rowSize]="3">
+          <app-list-post-horizontal [isLoading]="isVirtualLoading" [listType]="'virtual-trip'" [posts]="virtualTrips" [rowSize]="3">
           </app-list-post-horizontal>
           
         </div>
@@ -76,7 +76,7 @@
           <h3 class="section-title">&nbsp;</h3>
           <a [routerLink]="[ '/trang-chu/tim-ban-dong-hanh']" class="see-more">Xem thêm <i class="fa fa-angle-right"></i></a>
         </div>
-        <app-list-post-horizontal [listType]="'companion-post'" [posts]="companionPosts" [rowSize]="3">
+        <app-list-post-horizontal [isLoading]="isCompanionLoading" [listType]="'companion-post'" [posts]="companionPosts" [rowSize]="3">
         </app-list-post-horizontal>
         
       </div>

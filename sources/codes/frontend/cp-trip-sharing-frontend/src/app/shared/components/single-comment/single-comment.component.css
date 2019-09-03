@@ -31,9 +31,12 @@
     margin: 0px 0px 0px 10px;
     float: left;
     font-weight: 800;
+    font-size: 16px;
 }
 .time {
     margin: 0px 0px 0px 10px;
+    font-size: 12px;
+    opacity: 0.7;
 }
 .icon-user img{
     border-radius: 100%;
@@ -71,7 +74,7 @@
 }
 
 .number-like,.like-comment,.rep-comment,.unlike-comment{
-    margin-left: .8em;
+    margin-right: .8em;
 }
 
 .mat-icon {
@@ -93,6 +96,9 @@
 .like-comment{
  color: #2196f3;
 }
+.like-icon {
+    color:red;
+}
 
 
 .rep-comment span :hover{
@@ -100,22 +106,14 @@
 }
 
 .bottom-like-share{
-    font-size: 13px;
+    font-size: 12px;
     margin-left: 31px;
 }
 
 button:focus {
     outline: none !important;
   }
-.material-icons:hover {
-    color: #4051b5 !important;
-}
-.mat-menu-item:hover {
-    color: #4051b5;
-}
-.mat-menu-item:hover .material-icons {
-    color: #4051b5;
-}
+
 .comment-textarea-container{
     display: block;
 }
@@ -141,4 +139,7 @@ button:focus {
     height: 31px;
     margin-top: .2em;
     font-size: 13px;
+}
+.mat-form-field {
+    display: inline;
 }

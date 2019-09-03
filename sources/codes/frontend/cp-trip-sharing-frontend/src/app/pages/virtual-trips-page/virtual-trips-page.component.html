@@ -1,96 +1,104 @@
-<div class="virtual-trip">
-  <div class="row">
-    <div class="col-4 pl-0 pr-0 left-content" [style.left.px]='isExpandLeft ? expandWidth : 0'>
-      <div #leftContent class="row">
-        <mat-card class="example-card">
-          <div class="header-card">
-            <div class="image-header" [class.no-image]="!urlCoverImage&&userRole === 'author'">
-              <ng-container *ngIf="urlCoverImage; else coverImage">
-                <img mat-card-image src="{{urlCoverImage}}" alt="Photo cover">
-              </ng-container>
-              <ng-template #coverImage>
-                <button *ngIf="userRole === 'author'" (click)="fileClick()" mat-icon-button class="">
-                  <mat-icon>add_photo_alternate</mat-icon>
+<ng-container *ngIf="isNotFound; else tripLoaded">
+    <div class="not-found">
+        <p class="no-result">Bài viết không tồn tại hoặc đã bị xoá!</p>
+    </div>
+</ng-container>
+<ng-template #tripLoaded>
+    <div class="virtual-trip">
+        <div class="row">
+          <div class="col-4 pl-0 pr-0 left-content" [style.left.px]='isExpandLeft ? expandWidth : 0'>
+            <div #leftContent class="row">
+              <mat-card class="example-card">
+                <div class="header-card">
+                  <div class="image-header" [class.no-image]="!urlCoverImage&&userRole === 'author'">
+                    <ng-container *ngIf="urlCoverImage; else coverImage">
+                      <img mat-card-image src="{{urlCoverImage}}" alt="Photo cover">
+                    </ng-container>
+                    <ng-template #coverImage>
+                      <button *ngIf="userRole === 'author'" (click)="fileClick()" mat-icon-button class="">
+                        <mat-icon>add_photo_alternate</mat-icon>
+                      </button>
+                      <img *ngIf="userRole !== 'author'" mat-card-image
+                        src="https://montehorizonte.com/wp-content/themes/fortunato-pro/images/no-image-box.png"
+                        alt="Photo cover">
+                    </ng-template>
+                    <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1'
+                      resizeToWidth="600" #uploadImage></app-upload-image>
+                  </div>
+                  <figure (click)="gotoPersionalPage(author.id)" class="profile">
+                    <a [routerLink]="[ '/user', author? author.id : '' ]"><img src="{{author ? author.profileImage : ''}}" class="profile-avatar" alt=""></a>
+                  </figure>
+                  <figure *ngIf="userRole === 'author'" class="profile-right">
+                    <button matTooltip="{{isPublic ? 'công khai' : 'riêng tư'}}" mat-icon-button (click)="setPolicy()">
+                      <mat-icon>{{ isPublic ? 'lock_open' : 'lock'}}</mat-icon>
+                    </button>
+                  </figure>
+                  <button *ngIf="userRole === 'author'" class="edit" mat-icon-button [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button *ngIf="virtualTripId" (click)="removeTrip()" mat-menu-item>
+                      <mat-icon>delete_outline</mat-icon>
+                      <span>Xoá</span>
+                    </button>
+                    <button (click)="editAble()" mat-menu-item>
+                      <mat-icon>edit</mat-icon>
+                      <span>Chỉnh sửa</span>
+                    </button>
+                    <button (click)="fileClick()" mat-menu-item>
+                      <mat-icon>add_photo_alternate</mat-icon>
+                      <span>Thay ảnh</span>
+                    </button>
+                  </mat-menu>
+                </div>
+                <mat-card-content>
+                  <div class="parent-content mt-5">
+                    <h4>{{title == '' ? 'Tên chuyến đi' : title}}</h4>
+                    <p><span class="sub-title">Bởi </span><a (click)="gotoPersionalPage(this.author.id)"><span
+                          class="author-name">{{author? author.displayName : ''}}</span></a></p>
+                    <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
+                    <button mat-button *ngIf="!note&&(userRole === 'author')" (click)="editAble()">+ Thêm mô tả chuyến đi</button>
+                    <p *ngIf="isViewDetailTrip"><span class="sub-title">{{ virtualTrip.items ? virtualTrip.items.length : 0}} mục cập nhật vào {{virtualTrip.post.pubDate | date:'dd-MM-yyyy'}}</span></p>
+                  </div>
+                </mat-card-content>
+                <mat-card-actions>
+                  <div class="interaction">
+                      <button matTooltip="Chia sẻ facebook" shareButton="facebook" [title]="title"
+                      [description]="note" [image]="urlCoverImage" class="share-facebook" mat-icon-button
+                      color="primary">
+                      <i class="fa fa-facebook-f"></i>
+                    </button>
+                  </div>
+                </mat-card-actions>
+                <div *ngIf="virtualTrip.items!=undefined">
+                  <ng-container *ngFor="let item of virtualTrip.items">
+                    <app-destination-trip (saveDestination)="saveDestination($event)" [userRole]='userRole' [item]='item'>
+                    </app-destination-trip>
+                  </ng-container>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+          <div>
+            <div [style.left.px]='isExpandLeft ? 0 : -expandWidth' class="expand">
+              <span class="icon-expand">
+                <button mat-flat-button (click)='expandLeft()' color="accent">
+                  <mat-icon>{{isExpandLeft ? 'keyboard_arrow_right' : 'keyboard_arrow_left'}}</mat-icon>
                 </button>
-                <img *ngIf="userRole !== 'author'" mat-card-image
-                  src="https://montehorizonte.com/wp-content/themes/fortunato-pro/images/no-image-box.png"
-                  alt="Photo cover">
-              </ng-template>
-              <app-upload-image width="60%" (croppedImage)="ImageCropted($event)" [aspectRatio]='1.8/1'
-                resizeToWidth="600" #uploadImage></app-upload-image>
+              </span>
             </div>
-            <figure (click)="gotoPersionalPage(author.id)" class="profile">
-              <a [routerLink]="[ '/user', author? author.id : '' ]"><img src="{{author ? author.profileImage : ''}}" class="profile-avatar" alt=""></a>
-            </figure>
-            <figure *ngIf="userRole === 'author'" class="profile-right">
-              <button matTooltip="{{isPublic ? 'công khai' : 'riêng tư'}}" mat-icon-button (click)="setPolicy()">
-                <mat-icon>{{ isPublic ? 'lock_open' : 'lock'}}</mat-icon>
-              </button>
-            </figure>
-            <button *ngIf="userRole === 'author'" class="edit" mat-icon-button [matMenuTriggerFor]="menu"
-              aria-label="Example icon-button with a menu">
-              <mat-icon>more_horiz</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button *ngIf="virtualTripId" (click)="removeTrip()" mat-menu-item>
-                <mat-icon>delete_outline</mat-icon>
-                <span>Xoá</span>
-              </button>
-              <button (click)="editAble()" mat-menu-item>
-                <mat-icon>edit</mat-icon>
-                <span>Chỉnh sửa</span>
-              </button>
-              <button (click)="fileClick()" mat-menu-item>
-                <mat-icon>add_photo_alternate</mat-icon>
-                <span>Thay ảnh</span>
-              </button>
-            </mat-menu>
           </div>
-          <mat-card-content>
-            <div class="parent-content mt-5">
-              <h4>{{title == '' ? 'Tên chuyến đi' : title}}</h4>
-              <p><span class="sub-title">Bởi </span><a (click)="gotoPersionalPage(this.author.id)"><span
-                    class="author-name">{{author? author.displayName : ''}}</span></a></p>
-              <app-read-more [isEditable]='false' text="{{note}}"></app-read-more>
-              <a mat-button *ngIf="!note" (click)="editAble()">+ Thêm mô tả chuyến đi</a>
-              <p *ngIf="isViewDetailTrip"><span class="sub-title">{{ isViewDetailTrip ? virtualTrip.items.length : 0}} mục cập nhập vào {{virtualTrip.post.pubDate | date:'dd-MM-yyyy'}}</span></p>
+          <div class="col-12 right-content pl-0 pr-0 mt-0 ">
+            <div class="fixed">
+              <app-google-map [userRole]='userRole' [isCreate]='!isViewDetailTrip' [heightMap]="screenHeight" [locationMarker]="virtualTrip.items"
+                (addDestination)="addDestination($event)"></app-google-map>
             </div>
-          </mat-card-content>
-          <mat-card-actions>
-            <div class="interaction">
-                <button matTooltip="Chia sẻ facebook" shareButton="facebook" [title]="title"
-                [description]="note" [image]="urlCoverImage" class="share-facebook" mat-icon-button
-                color="primary">
-                <i class="fa fa-facebook-f"></i>
-              </button>
-            </div>
-          </mat-card-actions>
-          <div *ngIf="virtualTrip.items!=undefined">
-            <ng-container *ngFor="let item of virtualTrip.items">
-              <app-destination-trip (saveDestination)="saveDestination($event)" [userRole]='userRole' [item]='item'>
-              </app-destination-trip>
-            </ng-container>
           </div>
-        </mat-card>
+        </div>
+        <div *ngIf="!isViewDetailTrip" class="btn-create">
+          <button mat-fab color="accent" (click)="createTrip()">Tạo</button>
+        </div>
       </div>
-    </div>
-    <div>
-      <div [style.left.px]='isExpandLeft ? 0 : -expandWidth' class="expand">
-        <span class="icon-expand">
-          <button mat-flat-button (click)='expandLeft()' color="accent">
-            <mat-icon>{{isExpandLeft ? 'keyboard_arrow_right' : 'keyboard_arrow_left'}}</mat-icon>
-          </button>
-        </span>
-      </div>
-    </div>
-    <div class="col-12 right-content pl-0 pr-0 mt-0 ">
-      <div class="fixed">
-        <app-google-map [userRole]='userRole' [isCreate]='!isViewDetailTrip' [heightMap]="screenHeight" [locationMarker]="virtualTrip.items"
-          (addDestination)="addDestination($event)"></app-google-map>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="!isViewDetailTrip" class="btn-create">
-    <button mat-fab color="accent" (click)="createTrip()">Tạo</button>
-  </div>
-</div>
+</ng-template>
+

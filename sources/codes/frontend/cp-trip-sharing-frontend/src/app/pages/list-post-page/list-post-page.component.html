@@ -13,7 +13,7 @@
       <app-post-filter [showTimePeriod]="showTimePeriod" [showTopic]="showTopic" (filtered)="submitFilter($event)">
       </app-post-filter>
     </div>
-    <app-list-post-horizontal [listType]="listType" [posts]="posts" [rowSize]="3">
+    <app-list-post-horizontal [isLoading]="firstLoading"  [listType]="listType" [posts]="posts" [rowSize]="3">
     </app-list-post-horizontal>
   </div>
 

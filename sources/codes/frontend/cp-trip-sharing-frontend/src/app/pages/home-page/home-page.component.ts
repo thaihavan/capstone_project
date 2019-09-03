@@ -11,6 +11,7 @@ import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 import { User } from 'src/app/model/User';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { Router } from '@angular/router';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-home-page',
@@ -22,18 +23,27 @@ export class HomePageComponent implements OnInit {
   user: User;
 
   recommendedArticles: Article[] = [];
+  isRecomendedLoading = true;
+
   popularArticles: Article[] = [];
+  isPopularLoading = true;
+
   newestArticles: Article[] = [];
+  isNewesLoading = true;
 
   virtualTrips: VirtualTrip[] = [];
+  isVirtualLoading = true;
+
   companionPosts: CompanionPost[] = [];
+  isCompanionLoading = true;
 
   constructor(private titleService: Title,
               private postService: PostService,
               private virtualTripService: VirtualTripService,
               private companionPostService: FindingCompanionService,
               private errorHandler: GlobalErrorHandler,
-              private router: Router) {
+              private router: Router,
+              private alertify: AlertifyService) {
     this.titleService.setTitle('Trang chủ');
     this.user = JSON.parse(localStorage.getItem('User'));
   }
@@ -56,11 +66,14 @@ export class HomePageComponent implements OnInit {
     }
     this.postService.getAllArticles(postFilter, 1).subscribe((data: Article[]) => {
       this.newestArticles = data;
-      this.newestArticles = this.filterBlocker(this.newestArticles);
+      // this.newestArticles = this.filterBlocker(this.newestArticles);
       if (this.newestArticles != null && this.newestArticles.length > 6) {
         this.newestArticles = this.newestArticles.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isNewesLoading = false;
+    });
   }
 
   getPopularArticles(postFilter: PostFilter): void {
@@ -71,11 +84,14 @@ export class HomePageComponent implements OnInit {
     }
     this.postService.getPopularArticles(postFilter, 1).subscribe((data: Article[]) => {
       this.popularArticles = data;
-      this.popularArticles = this.filterBlocker(this.popularArticles);
+      // this.popularArticles = this.filterBlocker(this.popularArticles);
       if (this.popularArticles != null && this.popularArticles.length > 6) {
         this.popularArticles = this.popularArticles.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isPopularLoading = false;
+    });
   }
 
   getRecommendArticles(postFilter: PostFilter): void {
@@ -86,11 +102,14 @@ export class HomePageComponent implements OnInit {
     }
     this.postService.getRecommendArticles(postFilter, 1).subscribe((data: Article[]) => {
       this.recommendedArticles = data;
-      this.recommendedArticles = this.filterBlocker(this.recommendedArticles);
+      // this.recommendedArticles = this.filterBlocker(this.recommendedArticles);
       if (this.recommendedArticles != null && this.recommendedArticles.length > 6) {
         this.recommendedArticles = this.recommendedArticles.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isRecomendedLoading = false;
+    });
   }
 
   getVirtualTrips(postFilter: PostFilter): void {
@@ -102,11 +121,14 @@ export class HomePageComponent implements OnInit {
 
     this.virtualTripService.getVirtualTrips(postFilter, 1).subscribe(data => {
       this.virtualTrips = data;
-      this.virtualTrips = this.filterBlocker(this.virtualTrips);
+      // this.virtualTrips = this.filterBlocker(this.virtualTrips);
       if (this.virtualTrips != null && this.virtualTrips.length > 6) {
         this.virtualTrips = this.virtualTrips.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isVirtualLoading = false;
+    });
   }
 
   getCompanionPosts(postFilter: PostFilter): void {
@@ -118,15 +140,22 @@ export class HomePageComponent implements OnInit {
 
     this.companionPostService.getCompanionPosts(postFilter, 1).subscribe(data => {
       this.companionPosts = data;
-      this.companionPosts = this.filterBlocker(this.companionPosts);
+      // this.companionPosts = this.filterBlocker(this.companionPosts);
       if (this.companionPosts != null && this.companionPosts.length > 6) {
         this.companionPosts = this.companionPosts.slice(0, 6);
       }
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isCompanionLoading = false;
+    });
   }
 
   // on google-map-search submit add address location.
   setAddress(addrObj) {
+    if (!addrObj) {
+      this.alertify.error('Địa điểm không tồn tại');
+      return;
+    }
     const searchDestination = new  ArticleDestinationItem();
     searchDestination.id = addrObj.locationId;
     searchDestination.name = addrObj.name;
@@ -134,12 +163,12 @@ export class HomePageComponent implements OnInit {
     window.location.href = `/search/location/bai-viet/${addrObj.locationId}`;
   }
 
-  filterBlocker(posts: any[]) {
-    let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
-    if (listBlockers == null) {
-      listBlockers = [];
-    }
-    posts = posts.filter(p => listBlockers.find(u => u.id === p.post.author.id) == null);
-    return posts;
-  }
+  // filterBlocker(posts: any[]) {
+  //   let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
+  //   if (listBlockers == null) {
+  //     listBlockers = [];
+  //   }
+  //   posts = posts.filter(p => listBlockers.find(u => u.id === p.post.author.id) == null);
+  //   return posts;
+  // }
 }

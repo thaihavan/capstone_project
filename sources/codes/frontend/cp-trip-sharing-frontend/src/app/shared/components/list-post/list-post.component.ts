@@ -33,12 +33,13 @@ export class ListPostComponent implements OnInit {
   isDisplayFilter = false;
 
   personalNav: string;
-  postFilter: PostFilter;
 
   isScrollTopShow = false;
   topPosToStartShowing = 100;
 
   page = 1;
+  showTimePeriod = true;
+  showTopic = true;
 
   @HostListener('window:scroll') checkScroll() {
     const scrollPosition =
@@ -60,7 +61,6 @@ export class ListPostComponent implements OnInit {
               private errorHandler: GlobalErrorHandler) { }
 
   ngOnInit() {
-    this.getTopics();
     this.setNavParams();
   }
 
@@ -69,25 +69,12 @@ export class ListPostComponent implements OnInit {
     this.page++;
     console.log('page-' + this.page);
     // Continue loading data
-    this.getPosts(false);
+    this.getPosts(false, undefined);
   }
 
-  onButtonToggleChange(value: string) {
-    this.postFilter.timePeriod = value;
-  }
-
-  submitFilter() {
+  submitFilter(postFilter: PostFilter) {
     this.isDisplayFilter = false;
-    this.getPosts(true);
-  }
-
-  onCheckboxToggleChange(topicId: string) {
-    const index = this.postFilter.topics.indexOf(topicId);
-    if (index === -1) {
-      this.postFilter.topics.push(topicId);
-    } else {
-      this.postFilter.topics.splice(index, 1);
-    }
+    this.getPosts(true, postFilter);
   }
 
   setNavParams() {
@@ -100,28 +87,9 @@ export class ListPostComponent implements OnInit {
         this.personalNav = 'bai-viet';
       }
 
-      // Init post filter
-      this.initPostFilter();
-
       // Get posts
-      this.getPosts(true);
+      this.getPosts(true, undefined);
     });
-  }
-
-  initPostFilter() {
-    this.postFilter = new PostFilter();
-    this.postFilter.timePeriod = 'all_time';
-    this.postFilter.topics = [];
-  }
-
-  getTopics() {
-    this.postService.getAllTopics().subscribe((res: any) => {
-      this.topics = res;
-      this.postFilter.topics = this.topics.map(t => t.id);
-      this.topics.forEach(topic => {
-        this.isCheckedDict[topic.id] = true;
-      });
-    }, this.errorHandler.handleError);
   }
 
   resetListPost() {
@@ -130,10 +98,13 @@ export class ListPostComponent implements OnInit {
     this.articleDisplay.typeArticle = null;
   }
 
-  getPosts(isReset: boolean): void {
-    const postFilter: PostFilter = JSON.parse(JSON.stringify(this.postFilter));
-    if (this.postFilter.topics.length === this.topics.length) {
+  getPosts(isReset: boolean, postFilter: PostFilter): void {
+    if (!postFilter) {
+      postFilter = new PostFilter();
       postFilter.topics = [];
+      postFilter.timePeriod = 'all_time';
+
+      this.isLoading = true;
     }
 
     if (this.personalNav != null) {
@@ -149,12 +120,14 @@ export class ListPostComponent implements OnInit {
           this.isLoading = false;
         }, this.errorHandler.handleError);
       } else if (this.personalNav === 'chuyen-di') {
+        this.showTopic = false;
         this.tripService.getVirtualTripsByUser(userId, postFilter, this.page).subscribe((data: []) => {
           this.articleDisplay.typeArticle = 'virtual-trip';
           this.articleDisplay.items.push(...data);
           this.isLoading = false;
         }, this.errorHandler.handleError);
       } else if (this.personalNav === 'tim-ban-dong-hanh') {
+        this.showTopic = false;
         this.companionPostService.getCompanionPostsByUser(userId, postFilter, this.page).subscribe((data: []) => {
           this.articleDisplay.typeArticle = 'companion-post';
           this.articleDisplay.items.push(...data);
@@ -162,11 +135,6 @@ export class ListPostComponent implements OnInit {
         });
       }
     }
-  }
-
-  toggleFilter() {
-    this.isDisplayFilter = !this.isDisplayFilter;
-    console.log(this.postFilter);
   }
 
   gotoTop() {
