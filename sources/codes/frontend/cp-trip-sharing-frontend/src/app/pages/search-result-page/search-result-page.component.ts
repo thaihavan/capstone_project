@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-search-result-page',
@@ -20,7 +21,8 @@ export class SearchResultPageComponent implements OnInit {
   selectedPath: string;
 
   constructor(private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private alertify: AlertifyService) {
     this.searchType = this.route.snapshot.paramMap.get('searchType');
     this.search = this.getSearchParam();
 
@@ -90,6 +92,9 @@ export class SearchResultPageComponent implements OnInit {
   }
 
   searchByLocation(addressObject: any) {
+    if (!addressObject) {
+      this.alertify.error('Địa điểm không tồn tại!');
+    }
     // this.router.navigate(['/search/location', this.selectedPath, addressObject.locationId]);
     window.location.href = '/search/location/' + this.selectedPath + '/' + addressObject.locationId;
   }

@@ -11,6 +11,7 @@ import { ArticleDestinationItem } from 'src/app/model/ArticleDestinationItem';
 import { User } from 'src/app/model/User';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { Router } from '@angular/router';
+import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
 
 @Component({
   selector: 'app-home-page',
@@ -41,7 +42,8 @@ export class HomePageComponent implements OnInit {
               private virtualTripService: VirtualTripService,
               private companionPostService: FindingCompanionService,
               private errorHandler: GlobalErrorHandler,
-              private router: Router) {
+              private router: Router,
+              private alertify: AlertifyService) {
     this.titleService.setTitle('Trang chủ');
     this.user = JSON.parse(localStorage.getItem('User'));
   }
@@ -150,6 +152,10 @@ export class HomePageComponent implements OnInit {
 
   // on google-map-search submit add address location.
   setAddress(addrObj) {
+    if (!addrObj) {
+      this.alertify.error('Địa điểm không tồn tại');
+      return;
+    }
     const searchDestination = new  ArticleDestinationItem();
     searchDestination.id = addrObj.locationId;
     searchDestination.name = addrObj.name;

@@ -301,6 +301,10 @@ export class CreateFindingCompanionsPostComponent
 
   // on google-map-search submit add address location.
   addDestination(addrObj) {
+    if (!addrObj) {
+      this.alertifyService.error('Địa điểm không tồn tại!');
+      return;
+    }
     this.zone.run(() => {
       let addrKeys;
       let addr;

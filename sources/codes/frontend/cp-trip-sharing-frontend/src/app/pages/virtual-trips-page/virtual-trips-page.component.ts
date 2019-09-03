@@ -152,6 +152,10 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
 
   // add destination from google-map-search
   addDestination(destinations) {
+    if (!destinations) {
+      console.log('null destination');
+      return;
+    }
     if (
       this.virtualTrip.items === undefined ||
       this.virtualTrip.items === null

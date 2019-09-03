@@ -35,13 +35,18 @@ export class GoogleMapSearchComponent implements OnInit, AfterViewInit {
       });
   }
   getFormatPlace(place) {
+    if (!place.geometry) {
+      return;
+    }
     const locationObj = {};
     // tslint:disable-next-line:forin
     for (const i in place.address_components) {
       const item = place.address_components[i];
       let name: string;
       name = this.inputSearch.nativeElement.value;
-      name = name.slice(0, name.indexOf(','));
+      if (name.indexOf(',') !== -1) {
+        name = name.slice(0, name.indexOf(','));
+      }
       // tslint:disable-next-line:no-string-literal
       locationObj['formatted_address'] = place.formatted_address;
       // tslint:disable-next-line:no-string-literal

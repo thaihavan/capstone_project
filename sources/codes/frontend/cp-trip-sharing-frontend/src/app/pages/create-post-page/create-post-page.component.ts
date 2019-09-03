@@ -238,6 +238,10 @@ export class CreatePostPageComponent implements OnInit {
 
   // on google-map-search submit add address location.
   addDestination(addrObj) {
+    if (!addrObj) {
+      this.alertify.error('Địa điểm không tồn tại!');
+      return;
+    }
     this.zone.run(() => {
       let addrKeys;
       let addr;
