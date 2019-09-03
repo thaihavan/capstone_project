@@ -231,7 +231,7 @@ export class UserService {
     return this.http.post(url, reportUser, httpOptionAuthen);
   }
 
-  checkValidateUserName(username) {
+  checkValidateUserName(username): Observable<any> {
     const url = `${this.apiUserService}user/check-username`;
     return this.http.get(url + '?username=' + username, httpOptionAuthen);
   }

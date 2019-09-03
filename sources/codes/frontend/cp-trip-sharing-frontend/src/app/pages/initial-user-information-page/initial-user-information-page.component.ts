@@ -28,6 +28,7 @@ export class InitialUserInformationPageComponent implements OnInit {
   address = '';
   gender = 'true';
   birthday: Date;
+  maxDate = new Date();
   fakeinput = '';
   isValidUserName = true;
   constructor(private formBuilder: FormBuilder,
@@ -91,16 +92,25 @@ export class InitialUserInformationPageComponent implements OnInit {
       return;
     }
     this.userService.checkValidateUserName(this.username).subscribe(res => {
-    },
-      (error) => {
+      if (res.message === 'ok') {
+        this.isValidUserName = true;
+        this.firstFormGroup.controls.userName.setErrors(null);
+      } else {
         this.isValidUserName = false;
         this.firstFormGroup.controls.userName.setErrors({
           notMatched: true
         });
+      }
+    },
+      (error) => {
+        // this.isValidUserName = false;
+        // this.firstFormGroup.controls.userName.setErrors({
+        //   notMatched: true
+        // });
       },
       () => {
-        this.isValidUserName = true;
-        this.firstFormGroup.controls.userName.setErrors(null);
+        // this.isValidUserName = true;
+        // this.firstFormGroup.controls.userName.setErrors(null);
       }
     );
   }
