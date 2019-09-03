@@ -39,6 +39,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   isPublic: boolean;
   readMore = false;
   isExpandLeft = false;
+  isNotFound = false;
   isViewDetailTrip: boolean;
 
   virtualTrip: VirtualTrip;
@@ -60,10 +61,7 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.user = localStorage.getItem('User');
-    if (this.user == null) {
-      window.location.href = '/trang-chu';
-    } else {
+
     this.virtualTrip = new VirtualTrip();
     // check is view detail?
     this.virtualTripId = this.route.snapshot.paramMap.get('tripId');
@@ -72,13 +70,17 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
       this.virtualTripId === null ||
       this.virtualTripId === ''
     ) {
+      this.user = localStorage.getItem('User');
+      if (this.user == null) {
+      window.location.href = '/trang-chu';
+    } else {
       this.preCreate();
+    }
       // this.openDialog('', '', true, true);
     } else {
       this.isViewDetailTrip = true;
       this.getVirtualTrip();
     }
-  }
 
     this.getScreenSize();
   }
@@ -95,7 +97,11 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight - 60;
-    this.expandWidth = -this.leftContent.nativeElement.clientWidth;
+    if (this.leftContent) {
+      this.expandWidth = -this.leftContent.nativeElement.clientWidth;
+    } else {
+      setTimeout( () => {this.expandWidth = -this.leftContent.nativeElement.clientWidth; }, 1000);
+    }
   }
 
   // getVirtual by id
@@ -110,7 +116,9 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
         this.author = this.virtualTrip.post.author;
         this.userRole = this.checkRoleUser();
       },
-      this.errorHandler.handleError
+      (error) => {
+        this.isNotFound = true;
+      }
     );
   }
 

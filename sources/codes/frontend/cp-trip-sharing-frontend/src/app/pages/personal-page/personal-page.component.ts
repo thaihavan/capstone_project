@@ -83,6 +83,11 @@ export class PersonalPageComponent implements OnInit {
     this.myProfile = new Author();
   }
   ngOnInit(): void {
+    if (this.router.url.indexOf('da-danh-dau') !== -1) {
+      this.isDisplayNav = false;
+    } else {
+      this.isDisplayNav = true;
+    }
     this.router.events.subscribe(res => {
       if (this.router.url.indexOf('da-danh-dau') !== -1) {
         this.isDisplayNav = false;

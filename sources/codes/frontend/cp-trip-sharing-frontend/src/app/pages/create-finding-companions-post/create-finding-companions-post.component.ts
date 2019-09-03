@@ -356,7 +356,7 @@ export class CreateFindingCompanionsPostComponent
     if (this.isUpdate) {
       this.companionService.updatePost(this.companionPost).subscribe(
         res => {
-          this.openDialogMessageConfirm('Bạn đã cập nhập thành công!', res.id , 'success' );
+          this.openDialogMessageConfirm('Bạn đã cập nhật thành công!', res.id , 'success' );
         },
         (error) => {
           this.openDialogMessageConfirm(error.message, null, 'danger');
