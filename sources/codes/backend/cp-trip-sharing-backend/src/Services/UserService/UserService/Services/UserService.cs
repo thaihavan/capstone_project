@@ -51,9 +51,9 @@ namespace UserServices.Services
             return _userRepository.BanAnUser(userId);
         }
 
-        public bool CheckUsername(string username)
+        public bool CheckUsername(string userId, string username)
         {
-            return this._userRepository.CheckUsername(username);
+            return this._userRepository.CheckUsername(userId, username);
         }
 
         public User GetUserById(string userId)
