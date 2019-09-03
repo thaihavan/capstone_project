@@ -37,6 +37,8 @@ export class DetailpostPageComponent implements OnInit {
   bookmark = false;
   follow = false;
   isLoading = true;
+  isNotFound = false;
+  isLikeWaitingRespone = false;
 
   typePost = '';
   authorId = '';
@@ -96,22 +98,26 @@ export class DetailpostPageComponent implements OnInit {
   // get article post
   loadArticlePostById(articleId: string) {
     this.postService.getArticleById(articleId).subscribe((data: any) => {
-      this.detailPost = data;
-      this.post = data.post;
-      this.displayName = data.post.author.displayName;
-      this.profileImage = data.post.author.profileImage;
-      this.authorId = data.post.author.id;
-      this.getContributionPoint(this.authorId);
-      if (this.post.coverImage == null) {
-        this.post.coverImage = '../../../assets/coverimg.jpg';
+      if (data === null) {
+        this.isNotFound = true;
+      } else {
+        this.detailPost = data;
+        this.post = data.post;
+        this.displayName = data.post.author.displayName;
+        this.profileImage = data.post.author.profileImage;
+        this.authorId = data.post.author.id;
+        this.getContributionPoint(this.authorId);
+        if (this.post.coverImage == null) {
+          this.post.coverImage = '../../../assets/coverimg.jpg';
+        }
+        this.listLocation = data.destinations;
+        if (this.profileImage == null) {
+          this.profileImage = '../../../assets/img_avatar.png';
+        }
+        this.getStates();
+        this.getCommentByPostId(this.post.id);
+        this.titleService.setTitle(this.post.title);
       }
-      this.listLocation = data.destinations;
-      if (this.profileImage == null) {
-        this.profileImage = '../../../assets/img_avatar.png';
-      }
-      this.getStates();
-      this.getCommentByPostId(this.post.id);
-      this.titleService.setTitle(this.post.title);
     }, this.errorHandler.handleError,
     () => {
       this.isLoading = false;
@@ -123,22 +129,29 @@ export class DetailpostPageComponent implements OnInit {
     this.token = localStorage.getItem('Token');
     this.postCopmanionService.getPost(articleId).subscribe(
       (data: any) => {
-        this.detailPost = data;
-        this.post = data.post;
-        this.displayName = data.post.author.displayName;
-        this.profileImage = data.post.author.profileImage;
-        this.listLocation = data.destinations;
-        this.authorId = this.post.author.id;
-        this.getContributionPoint(this.authorId);
-        if (this.profileImage == null) {
-          this.profileImage = '../../../assets/img_avatar.png';
+        if (data === null) {
+          this.isNotFound = true;
+        } else {
+          this.detailPost = data;
+          this.post = data.post;
+          this.displayName = data.post.author.displayName;
+          this.profileImage = data.post.author.profileImage;
+          this.listLocation = data.destinations;
+          this.authorId = this.post.author.id;
+          this.getContributionPoint(this.authorId);
+          if (this.profileImage == null) {
+            this.profileImage = '../../../assets/img_avatar.png';
+          }
+          this.displayName = this.post.author.displayName;
+          this.getCommentByPostId(this.post.id);
+          this.getStates();
+          this.titleService.setTitle(this.post.title);
         }
-        this.displayName = this.post.author.displayName;
-        this.getCommentByPostId(this.post.id);
-        this.getStates();
-        this.titleService.setTitle(this.post.title);
       },
-      this.errorHandler.handleError,
+      (error) => {
+        this.isNotFound = true;
+        this.isLoading = false;
+      },
       () => {
         this.typePost = 'companion';
         this.isLoading = false;
@@ -226,10 +239,14 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   likePost(like: any) {
+    if (this.isLikeWaitingRespone) {
+      return;
+    }
     if (this.user === null) {
       this.openDialogLoginForm();
       return;
     }
+    this.isLikeWaitingRespone = true;
     this.like.objectId = this.detailPost.post.id;
     this.like.objectType = 'post';
     if (like === false) {
@@ -238,12 +255,18 @@ export class DetailpostPageComponent implements OnInit {
         this.detailPost.post.likeCount += 1;
         // Send notitication
         this.notifyService.sendLikeNotification(this.user, this.detailPost);
-      }, this.errorHandler.handleError);
+      }, this.errorHandler.handleError,
+      () => {
+        this.isLikeWaitingRespone = false;
+      });
     } else {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.detailPost.post.liked = false;
         this.detailPost.post.likeCount -= 1;
-      }, this.errorHandler.handleError);
+      }, this.errorHandler.handleError,
+      () => {
+        this.isLikeWaitingRespone = false;
+      });
     }
   }
 

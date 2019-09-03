@@ -146,10 +146,9 @@ namespace UserServices.Reponsitories
         }
 
         // Return false if username is exist
-        public bool CheckUsername(string username)
+        public bool CheckUsername(string userId, string username)
         {
-            var user = this._users.Find(u => u.UserName == username).FirstOrDefault();
-
+            var user = _users.Find(u => u.UserName == username && !u.Id.Equals(userId)).FirstOrDefault();         
             return user == null;
         }
 

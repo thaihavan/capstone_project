@@ -20,7 +20,7 @@ namespace UserServices.Services.Interfaces
         
         void IncreaseContributionPoint(string userId, int point);
 
-        bool CheckUsername(string username);
+        bool CheckUsername(string userId, string username);
 
         bool BanAnUser(string userId);
 

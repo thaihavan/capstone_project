@@ -86,14 +86,19 @@ namespace UserServices.Controllers
         [HttpGet("check-username")]
         public IActionResult CheckUsername([FromQuery] string username)
         {
-            var result = _userService.CheckUsername(username.Trim());
-
+            var identity = (ClaimsIdentity)User.Identity;
+            var userId = identity.FindFirst("user_id").Value;
+            var result = _userService.CheckUsername(userId, username.Trim());
             if (!result)
             {
-                return BadRequest("Username is exist.");
+                return Ok(new {
+                    message = "user name existed"
+                });
             }
-
-            return Ok();
+            return Ok(new
+            {
+                message = "ok"
+            });
         }
 
         [Authorize(Roles = "admin")]         
