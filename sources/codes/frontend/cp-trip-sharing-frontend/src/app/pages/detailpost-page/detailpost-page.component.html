@@ -1,162 +1,170 @@
-<div class="timeline-cover" #top>
-  <div>
-    <img class="cover-image" src="{{post.coverImage}}">
-  </div>
-  <div class="profile-infor">
-    <a [routerLink]="['/user', authorId]"><img src="{{profileImage}}" class="avatar-img"></a>
-  </div>
-  <div class="icon-block">
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-      <mat-icon>more_horiz</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <ng-container *ngIf="user != null && user.id === authorId; else report">
-        <button mat-menu-item (click)="editpost()">
-          <mat-icon>edit</mat-icon>
-          <span>Chỉnh sửa</span>
-        </button>
-        <button mat-menu-item (click)="openDialogMessageConfirm('Bạn có muốn xóa bài viêt?','','confirm')">
-          <mat-icon>delete_outline</mat-icon>
-          <span>Xóa</span>
-        </button>
-      </ng-container>
-      <ng-template #report>
-        <button mat-menu-item (click)="reportPost(post.id)">
-          <mat-icon>report</mat-icon>
-          <span>Báo cáo vi phạm</span>
-        </button>
-      </ng-template>
-    </mat-menu>
-  </div>
-  <div class="opacity"></div>
-  <div class="title-top">
-    <div class="title-location">
-      <div class="title">
-        <span>{{post.title}}</span>
-      </div>
-      <div class="location" *ngFor="let location of listLocation">
-        <span><i class="fa fa-tag"></i>{{location.name}}</span>
-      </div>
-    </div>
-  </div>
-  <div class="content-infor">
-    <div class="infor-author">
-      <div (click)="gotoPersonalPage(authorId)" class="personal-name">
-        <span>{{displayName}}</span>
-        <div class="time">{{post.pubDate | customDate}}</div>
-      </div>
-      <div *ngIf="contributionPoint" class="stars size-20">
-        <span class="no-cursor mat-button">
-          <mat-icon class="middle">stars</mat-icon>
-          <span class="middle infor-count">{{contributionPoint}} điểm</span>
-        </span>
-      </div>
-      <ng-container *ngIf="post.author.id">
-        <button mat-button (click)="followPerson(post.author.id)" *ngIf="user !== null && user.id !== post.author.id"
-          class="btn-follow size-20">
-          <ng-container *ngIf="follow; else follower">
-            <mat-icon class="middle">rss_feed</mat-icon>
-            <span class="middle infor-count">Đã theo dõi</span>
-          </ng-container>
-          <ng-template #follower>
-            <mat-icon class="middle">rss_feed</mat-icon>
-            <span class="middle infor-count">Theo dõi</span>
-          </ng-template>
-          <!--           
-          <span *ngIf="follow == false"><i class="fa fa-rss"></i>Theo dõi</span>
-          <span *ngIf="follow == true"><i class="fa fa-rss"></i> Đã theo dõi</span> -->
-        </button>
-      </ng-container>
 
-      <div class="like-share size-20">
-        <div class="like">
-          <a class="no-cursor mat-button">
-            <mat-icon color="warn" class="middle">favorite_border</mat-icon>
-            <span class="middle infor-count">{{post.likeCount}} thích</span>
-          </a>
-        </div>
-        <div class="share">
-          <a class="no-cursor mat-button">
-            <mat-icon class="middle">chat_bubble_outline</mat-icon>
-            <span class="middle infor-count">{{post.commentCount}} bình luận</span>
-          </a>
-        </div>
-      </div>
-      <br class="clearleft" />
-    </div>
-  </div>
-</div>
-<ng-container [ngSwitch]="typePost">
-  <ng-container *ngSwitchCase="'article'">
-    <div class="content-post-page">
-      <div class="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred"
-        role="textbox" aria-label="Rich Text Editor, main" [innerHTML]="post.content">
-      </div>
-    </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="'companion'">
-    <app-detail-companion-post [companionPost]="detailPost"></app-detail-companion-post>
-  </ng-container>
+<ng-container *ngIf="isLoading; else postLoaded">
+  <app-loading-detail-post></app-loading-detail-post>
 </ng-container>
-
-
-<div [ngClass]="typePost === 'article' ? 'content-post-page' : 'col-9 comment-companiont'">
-  <div class="interaction mt-4">
+<ng-template #postLoaded>
+  <div class="timeline-cover" #top>
     <div>
-      <button matTooltip="Yêu thích" [class]="post.liked ? 'iconLike mat-icon-button':'iconUnLike mat-icon-button'"
-        (click)="likePost(detailPost.post.liked)" mat-icon-button>
-        <mat-icon>favorite_border</mat-icon>
-      </button> {{post.likeCount}} thích
+      <img class="cover-image" src="{{post.coverImage}}">
     </div>
-    <div>
-      <button class="interact-bookmark" mat-icon-button matTooltip="Bookmark" (click)="bookmarkPost(detailPost.id)">
-        <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
-      </button>
-      <button matTooltip="Chia sẻ facebook" shareButton="facebook" [title]="post.title" [description]="post.description" [image]="post.coverImage" class="share-facebook" mat-icon-button
-        color="primary">
-        <i class="fa fa-facebook-f"></i>
-      </button>
+    <div class="profile-infor">
+      <a [routerLink]="['/user', authorId]"><img src="{{profileImage}}" class="avatar-img"></a>
     </div>
-  </div>
-  <div class="comment text mt-4 mb-5">
-    <h3>Bình luận</h3>
-    <div class="iconuser-textarea" #target>
-      <div *ngIf="user != null" class="form-group">
-        <mat-form-field hintLabel="Không quá 500 kí tự" appearance="outline">
-          <mat-label>Nhập bình luận</mat-label>
-          <textarea class="max-width" #txtarea [(ngModel)]="commentContent" rows="7" matInput maxlength="500"
-            placeholder="Nhập bình luận"></textarea>
-          <mat-hint align="end">{{txtarea.value?.length || 0}}/500</mat-hint>
-        </mat-form-field>
-        <!-- <textarea matInput class="" rows="5" id="comment" name="text" [(ngModel)]="commentContent"></textarea> -->
+    <div class="icon-block">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngIf="user != null && user.id === authorId; else report">
+          <button mat-menu-item (click)="editpost()">
+            <mat-icon>edit</mat-icon>
+            <span>Chỉnh sửa</span>
+          </button>
+          <button mat-menu-item (click)="openDialogMessageConfirm('Bạn có muốn xóa bài viêt?','','confirm')">
+            <mat-icon>delete_outline</mat-icon>
+            <span>Xóa</span>
+          </button>
+        </ng-container>
+        <ng-template #report>
+          <button mat-menu-item (click)="reportPost(post.id)">
+            <mat-icon>report</mat-icon>
+            <span>Báo cáo vi phạm</span>
+          </button>
+        </ng-template>
+      </mat-menu>
+    </div>
+    <div class="opacity"></div>
+    <div class="title-top">
+      <div class="title-location">
+        <div class="title">
+          <span>{{post.title}}</span>
+        </div>
+        <div class="location" *ngFor="let location of listLocation">
+          <span><i class="fa fa-tag"></i>{{location.name}}</span>
+        </div>
       </div>
-      <button mat-flat-button color="primary" *ngIf="user != null" type="submit" class="" (click)="submitComment()">Bình
-        luận</button>
-
-      <!-- Comment container include all comments -->
-      <app-comment-container [comments]="comments" [post]="detailPost"></app-comment-container>
     </div>
-    <div class="button-showcomment">
-      <button mat-stroked-button color="primary" type="button">Tải thêm bình luận</button>
+    <div class="content-infor">
+      <div class="infor-author">
+        <div (click)="gotoPersonalPage(authorId)" class="personal-name">
+          <span>{{displayName}}</span>
+          <div class="time">{{post.pubDate | customDate}}</div>
+        </div>
+        <div *ngIf="contributionPoint" class="stars size-20">
+          <span class="no-cursor mat-button">
+            <mat-icon class="middle">stars</mat-icon>
+            <span class="middle infor-count">{{contributionPoint}} điểm</span>
+          </span>
+        </div>
+        <ng-container *ngIf="post.author.id">
+          <button mat-button (click)="followPerson(post.author.id)" *ngIf="user !== null && user.id !== post.author.id"
+            class="btn-follow size-20">
+            <ng-container *ngIf="follow; else follower">
+              <mat-icon class="middle">rss_feed</mat-icon>
+              <span class="middle infor-count">Đã theo dõi</span>
+            </ng-container>
+            <ng-template #follower>
+              <mat-icon class="middle">rss_feed</mat-icon>
+              <span class="middle infor-count">Theo dõi</span>
+            </ng-template>
+            <!--           
+            <span *ngIf="follow == false"><i class="fa fa-rss"></i>Theo dõi</span>
+            <span *ngIf="follow == true"><i class="fa fa-rss"></i> Đã theo dõi</span> -->
+          </button>
+        </ng-container>
+  
+        <div class="like-share size-20">
+          <div class="like">
+            <a class="no-cursor mat-button">
+              <mat-icon color="warn" class="middle">favorite_border</mat-icon>
+              <span class="middle infor-count">{{post.likeCount}} thích</span>
+            </a>
+          </div>
+          <div class="share">
+            <a class="no-cursor mat-button">
+              <mat-icon class="middle">chat_bubble_outline</mat-icon>
+              <span class="middle infor-count">{{post.commentCount}} bình luận</span>
+            </a>
+          </div>
+        </div>
+        <br class="clearleft" />
+      </div>
     </div>
   </div>
-</div>
+  <ng-container [ngSwitch]="typePost">
+    <ng-container *ngSwitchCase="'article'">
+      <div class="content-post-page">
+        <div class="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred"
+          role="textbox" aria-label="Rich Text Editor, main" [innerHTML]="post.content">
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'companion'">
+      <app-detail-companion-post [companionPost]="detailPost"></app-detail-companion-post>
+    </ng-container>
+  </ng-container>
+  
+  
+  <div [ngClass]="typePost === 'article' ? 'content-post-page' : 'col-9 comment-companiont'">
+    <div class="interaction mt-4">
+      <div>
+        <button matTooltip="Yêu thích" [class]="post.liked ? 'iconLike mat-icon-button':'iconUnLike mat-icon-button'"
+          (click)="likePost(detailPost.post.liked)" mat-icon-button>
+          <mat-icon>favorite_border</mat-icon>
+        </button> {{post.likeCount}} thích
+      </div>
+      <div>
+        <button class="interact-bookmark" mat-icon-button matTooltip="Bookmark" (click)="bookmarkPost(detailPost.id)">
+          <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
+        </button>
+        <button matTooltip="Chia sẻ facebook" shareButton="facebook" [title]="post.title" [description]="post.description" [image]="post.coverImage" class="share-facebook" mat-icon-button
+          color="primary">
+          <i class="fa fa-facebook-f"></i>
+        </button>
+      </div>
+    </div>
+    <div class="comment text mt-4 mb-5">
+      <h3>Bình luận</h3>
+      <div class="iconuser-textarea" #target>
+        <div *ngIf="user != null" class="form-group">
+          <mat-form-field hintLabel="Không quá 500 kí tự" appearance="outline">
+            <mat-label>Nhập bình luận</mat-label>
+            <textarea class="max-width" #txtarea [(ngModel)]="commentContent" rows="7" matInput maxlength="500"
+              placeholder="Nhập bình luận"></textarea>
+            <mat-hint align="end">{{txtarea.value?.length || 0}}/500</mat-hint>
+          </mat-form-field>
+          <!-- <textarea matInput class="" rows="5" id="comment" name="text" [(ngModel)]="commentContent"></textarea> -->
+        </div>
+        <button mat-flat-button color="primary" *ngIf="user != null" type="submit" class="" (click)="submitComment()">Bình
+          luận</button>
+  
+        <!-- Comment container include all comments -->
+        <app-comment-container [comments]="comments" [post]="detailPost"></app-comment-container>
+      </div>
+      <div class="button-showcomment">
+        <button mat-stroked-button color="primary" type="button">Tải thêm bình luận</button>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="isScrollTopShow" class="icon-action">
+    <button mat-button matTooltip="Yêu thích" [matTooltipPosition]="'right'"
+      [class]="post.liked ? 'iconLike mat-button':'iconUnLike mat-button'" (click)="likePost(detailPost.post.liked)">
+      <mat-icon>favorite_border</mat-icon>
+    </button>
+    <button mat-button matTooltip="Bookmark" [matTooltipPosition]="'right'" (click)="bookmarkPost(detailPost.id)">
+      <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
+    </button>
+    <button mat-button matTooltip="Chia sẻ" [matTooltipPosition]="'right'" mat-button shareButton="facebook">
+      <i class="f-20 fa fa-facebook-f"></i>
+    </button>
+    <button mat-button matTooltip="Bình luận" [matTooltipPosition]="'right'" mat-button (click)="commentPost(target)">
+      <mat-icon>chat_bubble_outline</mat-icon>
+    </button>
+    <button mat-button (click)="gotoTopPage(top)">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+  </div>
+</ng-template>
 
-<div *ngIf="isScrollTopShow" class="icon-action">
-  <button mat-button matTooltip="Yêu thích" [matTooltipPosition]="'right'"
-    [class]="post.liked ? 'iconLike mat-button':'iconUnLike mat-button'" (click)="likePost(detailPost.post.liked)">
-    <mat-icon>favorite_border</mat-icon>
-  </button>
-  <button mat-button matTooltip="Bookmark" [matTooltipPosition]="'right'" (click)="bookmarkPost(detailPost.id)">
-    <mat-icon [color]="bookmark?'primary':'grey'">bookmark</mat-icon>
-  </button>
-  <button mat-button matTooltip="Chia sẻ" [matTooltipPosition]="'right'" mat-button shareButton="facebook">
-    <i class="f-20 fa fa-facebook-f"></i>
-  </button>
-  <button mat-button matTooltip="Bình luận" [matTooltipPosition]="'right'" mat-button (click)="commentPost(target)">
-    <mat-icon>chat_bubble_outline</mat-icon>
-  </button>
-  <button mat-button (click)="gotoTopPage(top)">
-    <mat-icon>keyboard_arrow_up</mat-icon>
-  </button>
-</div>
+

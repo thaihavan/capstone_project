@@ -36,6 +36,7 @@ export class DetailpostPageComponent implements OnInit {
 
   bookmark = false;
   follow = false;
+  isLoading = true;
 
   typePost = '';
   authorId = '';
@@ -111,7 +112,10 @@ export class DetailpostPageComponent implements OnInit {
       this.getStates();
       this.getCommentByPostId(this.post.id);
       this.titleService.setTitle(this.post.title);
-    }, this.errorHandler.handleError);
+    }, this.errorHandler.handleError,
+    () => {
+      this.isLoading = false;
+    });
   }
 
   // get companionpost
@@ -137,6 +141,7 @@ export class DetailpostPageComponent implements OnInit {
       this.errorHandler.handleError,
       () => {
         this.typePost = 'companion';
+        this.isLoading = false;
       }
     );
   }
