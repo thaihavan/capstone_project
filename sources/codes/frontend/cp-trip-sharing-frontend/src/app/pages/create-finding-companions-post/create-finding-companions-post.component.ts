@@ -146,8 +146,8 @@ export class CreateFindingCompanionsPostComponent
         fromDate: new FormControl('', [Validators.required]),
         toDate: new FormControl('', [Validators.required]),
         estimatedDate: new FormControl('', [Validators.required]),
-        minMembers: new FormControl('', [Validators.required, Validators.max(100), Validators.min(0)]),
-        maxMembers: new FormControl('', [Validators.required, Validators.max(100), Validators.min(0)]),
+        minMembers: new FormControl('', [Validators.required, Validators.max(100), Validators.min(1)]),
+        maxMembers: new FormControl('', [Validators.required, Validators.max(100), Validators.min(1)]),
         estAdultAmount: new FormControl()
       },
       {

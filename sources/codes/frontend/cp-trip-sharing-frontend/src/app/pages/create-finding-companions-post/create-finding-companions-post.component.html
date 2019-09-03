@@ -121,32 +121,38 @@
                 <div class="col-4">
                     <mat-form-field appearance="outline">
                         <mat-label>Số lượng thành viên tối thiểu</mat-label>
-                        <input [(ngModel)]="minMembers" formControlName='minMembers' [min]="0" [max]="100" type="number"
+                        <input [(ngModel)]="minMembers" formControlName='minMembers' [min]="1" [max]="100" type="number"
                             matInput placeholder="Số lượng thành viên tối thiểu" [errorStateMatcher]="memfileMatcher">
                         <button mat-icon-button disabled matSuffix>
                             <mat-icon>group</mat-icon>
                         </button>
                         <mat-error *ngIf="hasError('minMembers','required')">
-                            Số lương thành viên bắt buộc<strong> bắt buộc</strong>
+                            Số lượng thành viên bắt buộc<strong> bắt buộc</strong>
                         </mat-error>
                         <mat-error *ngIf="hasMemberError('minMembers') || hasMemberError('maxMembers')">
-                            Số lương thành viên tối đa phải lớn hơn tối thiểu
+                            Số lượng thành viên tối đa phải lớn hơn tối thiểu
+                        </mat-error>
+                        <mat-error *ngIf="companionForm.controls['minMembers'].hasError('max') || companionForm.controls['minMembers'].hasError('min')">
+                            Số lượng thành viên tối thiểu phải lớn hơn 0 và nhỏ hơn 100 
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-4">
                     <mat-form-field appearance="outline">
                         <mat-label>Số lượng thành viên tối đa</mat-label>
-                        <input [(ngModel)]="maxMembers" formControlName='maxMembers' type="number" matInput [min]="0"
+                        <input [(ngModel)]="maxMembers" formControlName='maxMembers' type="number" matInput [min]="1"
                             [max]="100" placeholder="Số lượng thành viên tối đa" [errorStateMatcher]="memfileMatcher">
                         <button mat-icon-button disabled matSuffix>
                             <mat-icon>group</mat-icon>
                         </button>
                         <mat-error *ngIf="hasError('maxMembers','required')">
-                            Số lương thành viên bắt buộc<strong> bắt buộc</strong>
+                            Số lượng thành viên bắt buộc<strong> bắt buộc</strong>
                         </mat-error>
                         <mat-error *ngIf="hasMemberError('maxMembers') || hasMemberError('minMembers')">
-                            Số lương thành viên tối đa phải lớn hơn tối thiểu
+                            Số lượng thành viên tối đa phải lớn hơn tối thiểu
+                        </mat-error>
+                        <mat-error *ngIf="companionForm.controls['maxMembers'].hasError('max') || companionForm.controls['maxMembers'].hasError('min')">
+                            Số lương thành viên tối đa phải lớn hơn 0 và nhỏ hơn 100
                         </mat-error>
                     </mat-form-field>
                 </div>
