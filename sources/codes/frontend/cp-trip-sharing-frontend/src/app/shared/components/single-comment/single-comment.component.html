@@ -63,7 +63,7 @@
       <!-- Childs -->
       <div ng-if="comment.childs != null && comment.childs.length > 0">
         <div *ngFor="let item of comment.childs">
-          <app-single-comment [comment]="item"></app-single-comment>
+          <app-single-comment [comment]="item" [post]="post"></app-single-comment>
         </div>
       </div>
 
