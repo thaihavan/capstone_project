@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Article } from 'src/app/model/Article';
 import { PostService } from 'src/app/core/services/post-service/post.service';
@@ -12,6 +12,8 @@ import { User } from 'src/app/model/User';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { Router } from '@angular/router';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
+import { ListPostHorizontalComponent } from 'src/app/shared/components/list-post-horizontal/list-post-horizontal.component';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-home-page',
@@ -37,6 +39,7 @@ export class HomePageComponent implements OnInit {
   companionPosts: CompanionPost[] = [];
   isCompanionLoading = true;
 
+  @ViewChildren(ListPostHorizontalComponent) listPostHori: ListPostHorizontalComponent[];
   constructor(private titleService: Title,
               private postService: PostService,
               private virtualTripService: VirtualTripService,
@@ -163,6 +166,16 @@ export class HomePageComponent implements OnInit {
     window.location.href = `/search/location/bai-viet/${addrObj.locationId}`;
   }
 
+  checkFollowStages(event) {
+    // tslint:disable-next-line:no-shadowed-variable
+    console.log(event);
+    console.log(this.listPostHori);
+    this.listPostHori.forEach(listPost => {
+      if (listPost !== event) {
+        listPost.getStages();
+      }
+    });
+  }
   // filterBlocker(posts: any[]) {
   //   let listBlockers: any[] = JSON.parse(localStorage.getItem('listBlockers'));
   //   if (listBlockers == null) {
