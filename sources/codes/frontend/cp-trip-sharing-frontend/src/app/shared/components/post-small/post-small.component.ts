@@ -13,7 +13,7 @@ export class PostSmallComponent implements OnInit {
   @Input() post: any;
   @Input() postType: string;
   @Output() checkStageFollow = new EventEmitter();
-
+  isBookmarkWaitingRespone = false;
   token: string;
 
   follow = false;
@@ -53,6 +53,7 @@ export class PostSmallComponent implements OnInit {
   }
 
   followPerson(userId: any) {
+    this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
     if (this.follow === false) {
       this.userService.addFollow(userId, this.token).subscribe((data: any) => {
         this.follow = true;
@@ -72,6 +73,11 @@ export class PostSmallComponent implements OnInit {
   }
 
   bookmarkPost() {
+    if (this.isBookmarkWaitingRespone) {
+      return;
+    }
+    this.isBookmarkWaitingRespone = true;
+    this.listPostIdBookMark = JSON.parse(localStorage.getItem('listPostIdBookmark'));
     if (this.bookmark === false) {
       const bookmarkObject = new Bookmark();
       bookmarkObject.postId = this.post.id;
@@ -80,14 +86,24 @@ export class PostSmallComponent implements OnInit {
         this.bookmark = true;
         this.listPostIdBookMark.push(this.post.post.id);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-      }, this.errorHandler.handleError);
+      }, (error) => {
+        this.isBookmarkWaitingRespone = false;
+      },
+      () => {
+        this.isBookmarkWaitingRespone = false;
+      });
     } else {
       this.userService.deleteBookMark(this.post.post.id, this.token).subscribe((data: any) => {
         this.bookmark = false;
         const unbookmark = this.listPostIdBookMark.indexOf(this.post.post.id);
         this.listPostIdBookMark.splice(unbookmark, 1);
         localStorage.setItem('listPostIdBookmark', JSON.stringify(this.listPostIdBookMark));
-      }, this.errorHandler.handleError);
+      }, (error) => {
+        this.isBookmarkWaitingRespone = false;
+      },
+      () => {
+        this.isBookmarkWaitingRespone = false;
+      });
     }
   }
 

@@ -38,6 +38,8 @@ export class UserItemComponent implements OnInit {
           this.isFollowed = this.listUserIdFollowing.indexOf(this.user.id) !== -1;
         }
       }
+    } else {
+      this.isYou = user === null;
     }
   }
 

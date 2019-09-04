@@ -76,7 +76,9 @@ export class SingleCommentComponent implements OnInit {
         this.comment.liked = true;
         // Send notification
         this.sendLikeCommentNotification();
-      }, this.errorHandler.handleError,
+      }, (error) => {
+        this.isLikeWaitingRespone = false;
+      },
       () => {
         this.isLikeWaitingRespone = false;
       });
@@ -84,7 +86,9 @@ export class SingleCommentComponent implements OnInit {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.comment.likeCount -= 1;
         this.comment.liked = false;
-      }, this.errorHandler.handleError,
+      }, (error) => {
+        this.isLikeWaitingRespone = false;
+      },
       () => {
         this.isLikeWaitingRespone = false;
       });

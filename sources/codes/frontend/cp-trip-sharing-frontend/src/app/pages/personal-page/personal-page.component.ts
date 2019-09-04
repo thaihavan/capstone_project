@@ -193,6 +193,7 @@ export class PersonalPageComponent implements OnInit {
     const instance = dialogRef.componentInstance;
     instance.listUser = listUsers;
     instance.title = title;
+    if (this.usergetLocalStorage != null && this.userId === this.usergetLocalStorage.id) {
     dialogRef.afterClosed().subscribe(result => {
       this.listUserIdFollowing = JSON.parse(
         localStorage.getItem('listUserIdFollowing')
@@ -203,6 +204,7 @@ export class PersonalPageComponent implements OnInit {
       });
       this.user.followingCount = numberFollowing;
     });
+  }
   }
 
   // blockUserById(userId: any) {

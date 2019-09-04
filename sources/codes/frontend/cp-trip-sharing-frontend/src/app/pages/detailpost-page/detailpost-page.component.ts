@@ -47,7 +47,7 @@ export class DetailpostPageComponent implements OnInit {
   displayName = '';
   profileImage = '';
   commentContent = '';
-
+  isBookmarkWaitingRespone = false;
   comments: Comment[];
   listPostIdBookMark: string[] = [];
   listUserIdFollowing: string[] = [];
@@ -260,7 +260,9 @@ export class DetailpostPageComponent implements OnInit {
         this.detailPost.post.likeCount += 1;
         // Send notitication
         this.notifyService.sendLikeNotification(this.user, this.detailPost);
-      }, this.errorHandler.handleError,
+      }, (error) => {
+        this.isLikeWaitingRespone = false;
+      },
       () => {
         this.isLikeWaitingRespone = false;
       });
@@ -268,7 +270,9 @@ export class DetailpostPageComponent implements OnInit {
       this.postService.unlikeAPost(this.like).subscribe((data: any) => {
         this.detailPost.post.liked = false;
         this.detailPost.post.likeCount -= 1;
-      }, this.errorHandler.handleError,
+      }, (error) => {
+        this.isLikeWaitingRespone = false;
+      },
       () => {
         this.isLikeWaitingRespone = false;
       });
@@ -276,10 +280,14 @@ export class DetailpostPageComponent implements OnInit {
   }
 
   bookmarkPost(postId: string) {
+    if (this.isBookmarkWaitingRespone) {
+      return;
+    }
     if (this.user === null) {
       this.openDialogLoginForm();
       return;
     }
+    this.isBookmarkWaitingRespone = true;
     if (this.bookmark === false) {
       this.bookmarkObject.postId = postId;
       this.userService
@@ -291,7 +299,12 @@ export class DetailpostPageComponent implements OnInit {
             'listPostIdBookmark',
             JSON.stringify(this.listPostIdBookMark)
           );
-        }, this.errorHandler.handleError);
+        }, (error) => {
+          this.isBookmarkWaitingRespone = false;
+        },
+        () => {
+          this.isBookmarkWaitingRespone = false;
+        });
     } else {
       this.userService
         .deleteBookMark(postId, this.token)
@@ -303,7 +316,12 @@ export class DetailpostPageComponent implements OnInit {
             'listPostIdBookmark',
             JSON.stringify(this.listPostIdBookMark)
           );
-        }, this.errorHandler.handleError);
+        }, (error) => {
+          this.isBookmarkWaitingRespone = false;
+        },
+        () => {
+          this.isBookmarkWaitingRespone = false;
+        });
     }
   }
 
