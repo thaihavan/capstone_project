@@ -3,7 +3,7 @@
     <span class='pl-2'>
       <img class="img-circle" src="{{conversation.avatar}}">
     </span>
-    <span class='pl-2'
+    <span class='pl-2' style="cursor: pointer;" (click)="goToMessagePage()"
       matTooltip="{{conversation.name.length > 30 ? conversation.name : ''}}">{{conversation.name.length > 30 ? conversation.name.substring(0,25)+'...' :conversation.name }}</span>
     <span class="icon-close" (click)="closeChatPopup()">
       <mat-icon>close</mat-icon>

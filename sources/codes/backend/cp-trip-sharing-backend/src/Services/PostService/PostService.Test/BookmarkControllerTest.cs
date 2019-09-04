@@ -110,12 +110,12 @@ namespace UserService.Test
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockBookmarkService.Setup(x => x.GetById(It.IsAny<string>())).Returns(bookmark);
-            mockBookmarkService.Setup(x => x.DeleteBookmark(It.IsAny<string>())).Returns(true);
+            mockBookmarkService.Setup(x => x.DeleteBookmark(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             var bookmarkController = new BookmarkController(mockBookmarkService.Object);
             bookmarkController.ControllerContext.HttpContext = contextMock.Object;
             IActionResult deleteBookmark = bookmarkController.DeleteBookmark("5d1da79eb7ee1f00013b2e70");
             var type = deleteBookmark.GetType();
-            Assert.AreEqual(type.Name, "OkObjectResult");
+            Assert.AreEqual(type.Name, "OkResult");
         }
 
 
@@ -125,7 +125,7 @@ namespace UserService.Test
             var contextMock = new Mock<HttpContext>();
             contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal(claims));
             mockBookmarkService.Setup(x => x.GetById(It.IsAny<string>())).Returns(bookmark);
-            mockBookmarkService.Setup(x => x.DeleteBookmark(It.IsAny<string>())).Returns(false);
+            mockBookmarkService.Setup(x => x.DeleteBookmark(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
             var bookmarkController = new BookmarkController(mockBookmarkService.Object);
             bookmarkController.ControllerContext.HttpContext = contextMock.Object;
             IActionResult deleteBookmark = bookmarkController.DeleteBookmark("5d1da79eb7ee1f00013b2e70");

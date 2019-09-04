@@ -20,10 +20,25 @@ namespace PostService.Test
         PostFilter postFilter = null;
         VirtualTrip virtualTrip = null;
         Post post = null;
+        VirtualTripItem virtualTripItem = null;
 
         [SetUp]
         public void Config()
         {
+            virtualTripItem = new VirtualTripItem()
+            {
+                Icon = "icon",
+                FormattedAddress = "Ha Long",
+                Image = "image",
+                Latitude = 12,
+                LocationId = "5d07d847a2c5f845707dc6x4",
+                Longitude = 15,
+                Name = "item1",
+                Note = ""
+            };
+            List <VirtualTripItem> virtualTripItems = new List<VirtualTripItem>();
+            virtualTripItems.Add(virtualTripItem);
+            
             post = new Post()
             {
                 Id = "5d07d847a2c5f845707dc69a",
@@ -37,7 +52,7 @@ namespace PostService.Test
                 PostType = "article",
                 PubDate = DateTime.Now,
                 liked = false,
-                Title = "Post Test",
+                Title = "Post Test"
             };
             List<string> listTopics = new List<string>() { "5d247a04eff1030d7c5209a3" };
             postFilter = new PostFilter()
@@ -51,7 +66,8 @@ namespace PostService.Test
             {
                 Id= "a6sfa7fafaf65fa58fa7f",
                 PostId = "asf7f6af9sfafaf7af0aaf",
-                Post = post 
+                Post = post,
+                Items = virtualTripItems
             };
 
             mockVirtualTripService = new Mock<IVirtualTripService>();

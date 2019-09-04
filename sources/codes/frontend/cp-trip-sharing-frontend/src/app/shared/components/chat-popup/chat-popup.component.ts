@@ -166,4 +166,9 @@ export class ChatPopupComponent implements OnInit {
   closeChatPopup() {
     this.closed.emit(true);
   }
+
+  goToMessagePage() {
+    window.location.href = '/tin-nhan';
+    this.closed.emit(true);
+  }
 }

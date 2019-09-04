@@ -78,9 +78,9 @@ namespace UserService.Test
         [TestCase]
         public void TestDeleteBookmark()
         {
-            mockBookmarkRepository.Setup(x => x.Delete(It.IsAny<string>())).Returns(true);
+            mockBookmarkRepository.Setup(x => x.DeleteBookmark(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
             var bookmarkService = new BookmarkService(mockBookmarkRepository.Object);
-            bool deleteBookmark = bookmarkService.DeleteBookmark("5d0a17701a0a4200017de6c7");
+            bool deleteBookmark = bookmarkService.DeleteBookmark("5d0a17701a0a4200017de6c7", "5d0a17701a0a4200017d07c5");
             Assert.IsTrue(deleteBookmark);
         }
 
