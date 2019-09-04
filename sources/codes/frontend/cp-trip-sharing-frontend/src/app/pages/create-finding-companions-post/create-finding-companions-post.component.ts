@@ -351,7 +351,6 @@ export class CreateFindingCompanionsPostComponent
     this.companionPost.estimatedCost = Number(
       this.estAdultAmount.replace(/\,/g, '')
     );
-    this.companionPost.post.pubDate = new Date().toDateString();
     this.companionPost.post.title = this.title;
     this.companionPost.post.content = this.content;
     this.companionPost.post.isPublic = this.isPublic;

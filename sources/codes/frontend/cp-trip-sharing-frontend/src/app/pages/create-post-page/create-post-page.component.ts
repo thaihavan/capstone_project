@@ -168,7 +168,6 @@ export class CreatePostPageComponent implements OnInit {
         if (this.isUpdate) {
           this.articlereturn.post.title = post.title;
           this.articlereturn.post.content = post.content;
-          this.articlereturn.post.pubDate = post.pubDate;
           this.articlereturn.post.isPublic = post.isPublic;
           this.articlereturn.post.coverImage = post.coverImage;
           this.articlereturn.topics = res.topics;

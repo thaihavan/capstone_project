@@ -162,7 +162,7 @@ namespace PostService.Repositories
 
             var result = _virtualTrips.AsQueryable()
                 .Join(
-                    _posts.AsQueryable().Where(p => p.IsActive),
+                    _posts.AsQueryable().Where(p => p.IsActive && p.IsPublic),
                     virtualTrip => virtualTrip.PostId,
                     post => post.Id,
                     SelectVirtualTripWithPost)
