@@ -58,6 +58,7 @@ export class UserItemComponent implements OnInit {
 
   followPerson(userId: any) {
     const token = localStorage.getItem('Token');
+    this.listUserIdFollowing = JSON.parse(localStorage.getItem('listUserIdFollowing'));
     if (this.isFollowed === false) {
       this.userService.addFollow(userId, token).subscribe((data: any) => {
         this.isFollowed = true;

@@ -185,6 +185,7 @@ export class PersonalPageComponent implements OnInit {
   // }
 
   openDialogFollow(title: any, listUsers: any) {
+    let numberFollowing = 0;
     const dialogRef = this.dialog.open(ListFollowComponent, {
       height: '450px',
       width: '50%'
@@ -192,6 +193,16 @@ export class PersonalPageComponent implements OnInit {
     const instance = dialogRef.componentInstance;
     instance.listUser = listUsers;
     instance.title = title;
+    dialogRef.afterClosed().subscribe(result => {
+      this.listUserIdFollowing = JSON.parse(
+        localStorage.getItem('listUserIdFollowing')
+      );
+
+      this.listUserIdFollowing.forEach(element => {
+        numberFollowing += 1;
+      });
+      this.user.followingCount = numberFollowing;
+    });
   }
 
   // blockUserById(userId: any) {

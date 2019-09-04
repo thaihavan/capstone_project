@@ -106,14 +106,20 @@
               <a (click)="showFolowerUser()" class="mat-button a-hover">
                 <mat-icon class="align-middle">rss_feed</mat-icon>
                 <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'15px'">{{user.followerCount}}</b>
-                  người đang theo dõi bạn</span>
+                  người đang theo dõi
+                  <span style="padding-left: 0px !important;" *ngIf="usergetLocalStorage == null || userId != usergetLocalStorage.id">{{user.displayName}}</span>
+                  <span style="padding-left: 0px !important;" *ngIf="usergetLocalStorage != null && userId == usergetLocalStorage.id">bạn</span>
+                </span>
               </a>
             </div>
             <div class="card-person-infor">
               <a (click)="showFollowingUser()" class="mat-button a-hover">
                 <mat-icon class="align-middle">rss_feed</mat-icon>
                 <span class="align-middle"><b [appHighlight]="'#2196f3'" [size]="'15px'">{{user.followingCount}}</b>
-                  người bạn đang theo dõi</span>
+                  người 
+                  <span style="padding-left: 0px !important;" *ngIf="usergetLocalStorage == null || userId != usergetLocalStorage.id">{{user.displayName}}</span>
+                  <span style="padding-left: 0px !important;" *ngIf="usergetLocalStorage != null && userId == usergetLocalStorage.id">bạn</span>
+                  đang theo dõi</span>
               </a>
             </div>
           </div>
