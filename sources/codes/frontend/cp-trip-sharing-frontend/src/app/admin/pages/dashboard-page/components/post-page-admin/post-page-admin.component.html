@@ -24,5 +24,12 @@
       </mat-menu>
     </div>
   </div>
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="200" (scrolled)="onScroll()"></div>
+
+  <div *ngIf="isLoading" class="loading-dots">
+    <h1 class="dot one">.</h1>
+    <h1 class="dot two">.</h1>
+    <h1 class="dot three">.</h1>
+  </div>
 
 </div>

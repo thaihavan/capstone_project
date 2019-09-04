@@ -17,6 +17,7 @@ export class PostPageAdminComponent implements OnInit {
   searchType: string;
   posts: Post[];
   page: number;
+  isLoading = true;
 
   constructor(private postService: PostService,
               private adminService: AdminService,
@@ -33,6 +34,8 @@ export class PostPageAdminComponent implements OnInit {
   }
 
   searchByText() {
+    this.isLoading = true;
+    this.page = 1;
     this.posts = [];
     this.getPosts(this.search);
   }
@@ -44,6 +47,9 @@ export class PostPageAdminComponent implements OnInit {
 
     this.postService.getAllPosts(search, this.page).subscribe((res: Post[]) => {
       this.posts.push(...res);
+      if (this.page * 12 > this.posts.length) {
+        this.isLoading = false;
+      }
     }, this.errorHandler.handleError);
 
   }
@@ -94,5 +100,10 @@ export class PostPageAdminComponent implements OnInit {
     this.adminService.updatePost(post).subscribe((res: any) => {
     }, this.errorHandler.handleError);
   }
-
+  onScroll() {
+    if (this.posts.length >= 12) {
+      this.page += 1;
+      this.getPosts(this.search);
+    }
+  }
 }
