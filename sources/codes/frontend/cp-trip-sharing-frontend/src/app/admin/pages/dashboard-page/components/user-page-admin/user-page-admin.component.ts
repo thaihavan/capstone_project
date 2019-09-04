@@ -18,6 +18,7 @@ export class UserPageAdminComponent implements OnInit {
   searchType: string;
   users: User[];
   page: number;
+  isLoading = true;
 
   constructor(private userService: UserService,
               private adminService: AdminService,
@@ -34,6 +35,8 @@ export class UserPageAdminComponent implements OnInit {
   }
 
   searchByText() {
+    this.isLoading = true;
+    this.page = 1;
     this.users = [];
     this.getUsers(this.search);
   }
@@ -45,6 +48,9 @@ export class UserPageAdminComponent implements OnInit {
 
     this.userService.getUsers(search, this.page).subscribe((res: []) => {
       this.users.push(...res);
+      if (this.page * 12 > this.users.length) {
+        this.isLoading = false;
+      }
     }, this.errorHandler.handleError);
   }
 
@@ -95,5 +101,10 @@ export class UserPageAdminComponent implements OnInit {
       }
     });
   }
-
+  onScroll() {
+    if (this.users.length >= 12) {
+      this.page += 1;
+      this.getUsers(this.search);
+    }
+  }
 }
