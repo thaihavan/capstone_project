@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Comment } from 'src/app/model/Comment';
 import { Post } from 'src/app/model/Post';
@@ -16,6 +16,7 @@ import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
 import { ReportPopupComponent } from 'src/app/shared/components/report-popup/report-popup.component';
 import { LoginPageComponent } from 'src/app/shared/components/login-page/login-page.component';
 import { AlertifyService } from 'src/app/core/services/alertify-service/alertify.service';
+import { CommentContainerComponent } from 'src/app/shared/components/comment-container/comment-container.component';
 
 @Component({
   selector: 'app-detailpost-page',
@@ -39,6 +40,7 @@ export class DetailpostPageComponent implements OnInit {
   isLoading = true;
   isNotFound = false;
   isLikeWaitingRespone = false;
+  isShowMoreComment = false;
 
   typePost = '';
   authorId = '';
@@ -194,6 +196,9 @@ export class DetailpostPageComponent implements OnInit {
       .subscribe((data: any) => {
         if (data != null) {
           this.comments = data;
+          if (this.comments.length >= 3) {
+            this.isShowMoreComment = true;
+          }
         }
       });
   }
@@ -401,5 +406,8 @@ export class DetailpostPageComponent implements OnInit {
         width: '400px'
       });
     }
+  }
+  showMoreComment() {
+    this.isShowMoreComment = !this.isShowMoreComment;
   }
 }

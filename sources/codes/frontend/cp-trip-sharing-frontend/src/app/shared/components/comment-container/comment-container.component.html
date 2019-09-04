@@ -1,6 +1,13 @@
 <div class="comment-container">
   <!-- Loop through list of comments -->
-  <div *ngFor="let item of comments">
-    <app-single-comment [comment]="item" [post]="post"></app-single-comment>
-  </div>
+  <ng-container *ngIf="isShowMoreComment; else comment">
+    <div *ngFor="let item of comments, let i=index">
+      <app-single-comment *ngIf="i<=3" [comment]="item" [post]="post"></app-single-comment>
+    </div>
+  </ng-container>
+  <ng-template #comment>
+    <div *ngFor="let item of comments">
+      <app-single-comment [comment]="item" [post]="post"></app-single-comment>
+    </div>
+  </ng-template>
 </div>
