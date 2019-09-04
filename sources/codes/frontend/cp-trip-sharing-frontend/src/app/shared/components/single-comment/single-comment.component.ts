@@ -97,7 +97,12 @@ export class SingleCommentComponent implements OnInit {
       .getCommentedNotiTemplate(this.user.displayName, this.post.post.title);
     notification.displayImage = this.user.avatar;
     notification.receivers = [this.post.post.author.id];
-    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.comment.postId;
+    if (this.post.post.postType === 'Article') {
+      notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.comment.postId;
+    } else {
+      notification.url = HostGlobal.HOST_FRONTEND + '/tim-ban-dong-hanh/' + this.comment.postId;
+    }
+    // notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.comment.postId;
     notification.seenIds = [this.user.id];
     this.notifyService.sendNotification(notification);
   }
@@ -108,7 +113,12 @@ export class SingleCommentComponent implements OnInit {
       .getLikeCommentNotiTemplate(this.user.displayName, this.post.post.title);
     notification.displayImage = this.user.avatar;
     notification.receivers = [this.post.post.author.id];
-    notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.post.id;
+    if (this.post.post.postType === 'Article') {
+      notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.post.id;
+    } else {
+      notification.url = HostGlobal.HOST_FRONTEND + '/tim-ban-dong-hanh/' + this.post.id;
+    }
+    // notification.url = HostGlobal.HOST_FRONTEND + '/bai-viet/' + this.post.id;
     notification.seenIds = [this.user.id];
     this.notifyService.sendNotification(notification);
   }

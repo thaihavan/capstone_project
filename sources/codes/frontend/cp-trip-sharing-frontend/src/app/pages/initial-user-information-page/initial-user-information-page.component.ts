@@ -91,6 +91,11 @@ export class InitialUserInformationPageComponent implements OnInit {
     if (this.username.trim() === '') {
       return;
     }
+    if (!this.isRegister) {
+      if (this.user.userName === this.username) {
+        return;
+      }
+    }
     this.userService.checkValidateUserName(this.username).subscribe(res => {
       if (res.message === 'ok') {
         this.isValidUserName = true;
