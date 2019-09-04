@@ -96,11 +96,11 @@
           <button *ngSwitchCase="'expired'" mat-flat-button disabled>
             {{statustRequest.text}}
           </button>
-          <button *ngSwitchCase="'request'" (click)='sendRequest()' mat-flat-button
+          <button *ngSwitchCase="'request'" (click)='checkSendRequest()' mat-flat-button
             color="primary">
             {{statustRequest.text}}
           </button>
-          <button *ngSwitchCase="'waiting'" (click)='sendRequest()' mat-flat-button
+          <button *ngSwitchCase="'waiting'" (click)='checkSendRequest()' mat-flat-button
             color="warn">
             {{statustRequest.text}}
           </button>

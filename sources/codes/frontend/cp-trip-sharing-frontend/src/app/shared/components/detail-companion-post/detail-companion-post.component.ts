@@ -116,6 +116,45 @@ export class DetailCompanionPostComponent implements OnInit {
     );
   }
 
+  // get member in group chat
+  checkSendRequest() {
+    this.chatService.getMembers(this.companionPost.conversationId).subscribe(
+      res => {
+        this.userListGroup = res;
+      },
+      this.errorHandler.handleError,
+      () => {
+        const user = JSON.parse(localStorage.getItem('User'));
+        // if (user === null) {
+        //   this.statustRequest.IsRequestJoin();
+        //   // tslint:disable-next-line:no-shadowed-variable
+        //   const currDate = new Date();
+        //   // tslint:disable-next-line:no-shadowed-variable
+        //   const fromDate = new Date(this.companionPost.from);
+        //   if (fromDate.getTime() < currDate.getTime()) {
+        //     this.statustRequest.IsExpired();
+        //   }
+        //   return;
+        // }
+        const isJoined = this.userListGroup.find(u => u.id === user.id);
+        if (isJoined) {
+          this.statustRequest.IsJoined();
+        }
+        // else {
+        //   this.statustRequest.IsRequestJoin();
+        // }
+        // // if (this.companionPost.requested) {
+        // //   this.statustRequest.IsWaiting();
+        // // }
+        // const currDate = new Date();
+        // const fromDate = new Date(this.companionPost.from);
+        // if (fromDate.getTime() < currDate.getTime()) {
+        //   this.statustRequest.IsExpired();
+        // }
+        this.sendRequest();
+      }
+    );
+  }
   // form author access a request join to group
   // tslint:disable-next-line:variable-name
   accessRequestJoin(user_id, index) {
@@ -189,7 +228,8 @@ export class DetailCompanionPostComponent implements OnInit {
             );
           }
         );
-    } else {
+    }
+    if (this.statustRequest.type === 'waiting') {
       this.postService.cancleRequest(this.companionPost.id).subscribe(
         res => {},
         err => {
