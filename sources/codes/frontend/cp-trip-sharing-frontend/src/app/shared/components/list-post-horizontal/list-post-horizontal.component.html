@@ -1,7 +1,7 @@
 <div>
   <div *ngIf="posts && posts.length > 0" class="list-post-container">
     <div class="post-container {{rowSizeClass}}" *ngFor="let post of posts">
-      <app-post-small [postType]="listType" [post]="post"></app-post-small>
+      <app-post-small (checkStageFollow)="getStagesEmit()" [postType]="listType" [post]="post"></app-post-small>
   </div>
   </div>
   <ng-container *ngIf="isLoading; else elseTemplate">

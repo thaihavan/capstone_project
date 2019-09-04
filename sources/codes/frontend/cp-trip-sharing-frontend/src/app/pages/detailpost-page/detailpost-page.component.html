@@ -145,10 +145,10 @@
                 luận</button>
         
               <!-- Comment container include all comments -->
-              <app-comment-container [comments]="comments" [post]="detailPost"></app-comment-container>
+              <app-comment-container [isShowMoreComment]="isShowMoreComment" [comments]="comments" [post]="detailPost"></app-comment-container>
             </div>
             <div class="button-showcomment">
-              <button mat-stroked-button color="primary" type="button">Tải thêm bình luận</button>
+              <button mat-stroked-button (click)="showMoreComment()" color="primary" type="button">{{isShowMoreComment ? 'Tải thêm bình luận' : 'Ẩn bớt bình luận'}}</button>
             </div>
           </div>
         </div>

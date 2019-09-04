@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from 'src/app/core/services/user-service/user.service';
 import { Bookmark } from 'src/app/model/Bookmark';
 import { GlobalErrorHandler } from 'src/app/core/globals/GlobalErrorHandler';
@@ -12,6 +12,7 @@ export class PostSmallComponent implements OnInit {
 
   @Input() post: any;
   @Input() postType: string;
+  @Output() checkStageFollow = new EventEmitter();
 
   token: string;
 
@@ -58,6 +59,7 @@ export class PostSmallComponent implements OnInit {
 
         this.listUserIdFollowing.push(userId);
         localStorage.setItem('listUserIdFollowing', JSON.stringify(this.listUserIdFollowing));
+        this.checkStageFollow.emit();
       }, this.errorHandler.handleError);
     } else {
       this.userService.unFollow(userId, this.token).subscribe((data: any) => {

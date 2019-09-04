@@ -11,7 +11,7 @@ export class CommentContainerComponent implements OnInit {
 
   @Input() comments: Comment[];
   @Input() post: any;
-
+  @Input() isShowMoreComment: boolean;
   constructor() { }
 
   ngOnInit() {

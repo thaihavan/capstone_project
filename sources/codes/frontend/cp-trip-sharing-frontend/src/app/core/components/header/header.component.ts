@@ -221,6 +221,9 @@ export class HeaderComponent implements OnInit {
   //   }, this.errorHandler.handleError);
   // }
 
+  goToHomePage() {
+    window.location.href = '/trang-chu';
+  }
   // dialog change password
   openDialogChangePassword() {
       const dialogRef = this.dialog.open(ChangePasswordComponent, {
