@@ -57,6 +57,9 @@ export class BookmarkPostComponent implements OnInit {
     if ( type === 'CompanionPost') {
       this.router.navigate(['/tim-ban-dong-hanh', this.bookmark.postId]);
     }
+    if ( type === 'VirtualTrip') {
+      this.router.navigate(['/chuyen-di', this.bookmark.postId]);
+    }
     // window.location.href = '/bai-viet/' + this.bookmark.postId;
   }
 }

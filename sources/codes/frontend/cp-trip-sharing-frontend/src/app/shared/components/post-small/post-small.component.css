@@ -49,3 +49,14 @@ mat-card-title {
   z-index: 99;
   cursor: pointer;
 }
+
+.bookmark-icon-virtualtrip{
+  display: inline-block;
+  width: 20px;
+  position: absolute;
+  color: #fff;
+  right: 30px;
+  top: 10px;
+  z-index: 99;
+  cursor: pointer;
+}

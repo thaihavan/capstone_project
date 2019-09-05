@@ -1,6 +1,6 @@
 <div class="post-container">
   <mat-card class="post-card">
-    <div class="bookmark-icon" *ngIf="user != null && userId !== post.post.author.id">
+    <div [class]="postType == 'virtual-trip' ? 'bookmark-icon-virtualtrip' : 'bookmark-icon'" *ngIf="user != null && userId !== post.post.author.id">
       <mat-icon *ngIf="bookmark" (click)="bookmarkPost()">bookmark</mat-icon>
       <mat-icon *ngIf="!bookmark" (click)="bookmarkPost()">bookmark_border</mat-icon>
     </div>
