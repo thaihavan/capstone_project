@@ -200,7 +200,6 @@ export class ListPostPageComponent implements OnInit {
       postFilter.topics = [];
       postFilter.timePeriod = 'all_time';
 
-      this.isLoading = true;
     }
     if (!this.firstLoading) {
       this.isLoading = true;
