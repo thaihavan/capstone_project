@@ -78,7 +78,7 @@ export class InitialUserInformationPageComponent implements OnInit {
 
   // valid space
   public noWhitespaceValidator(control: FormControl) {
-    const isWhitespace = (control.value || '').trim().length === 0;
+    const isWhitespace = ('' + control.value || '').trim().length === 0;
     let isValid = !isWhitespace;
     if (control.value === '') {
       isValid = true;
@@ -134,11 +134,11 @@ export class InitialUserInformationPageComponent implements OnInit {
       this.getValueFromFormGroup();
       this.userService.registerUser(this.user).subscribe((result: any) => {
         localStorage.setItem('User', JSON.stringify(result));
-        this.router.navigate(['/trang-chu']);
-        // window.location.href = '/trang-chu';
+        // this.router.navigate(['/trang-chu']);
+        window.location.href = '/trang-chu';
       }, (err: HttpErrorResponse) => {
-        this.router.navigate(['/khoi-tao']);
-        // window.location.href = '/khoi-tao';
+        // this.router.navigate(['/khoi-tao']);
+        window.location.href = '/khoi-tao';
       });
     }
   }
@@ -147,6 +147,7 @@ export class InitialUserInformationPageComponent implements OnInit {
     this.getValueFromFormGroup();
     this.userService.updateUser(this.user).subscribe((result: any) => {
       // this.router.navigate(['/user', this.user.id]);
+      localStorage.setItem('User', JSON.stringify(result));
       window.location.href = '/user/' + this.user.id;
     }, this.errorHandler.handleError);
   }
