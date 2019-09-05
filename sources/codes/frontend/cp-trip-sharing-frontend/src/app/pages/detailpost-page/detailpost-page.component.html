@@ -147,8 +147,8 @@
               <!-- Comment container include all comments -->
               <app-comment-container [isShowMoreComment]="isShowMoreComment" [comments]="comments" [post]="detailPost"></app-comment-container>
             </div>
-            <div class="button-showcomment">
-              <button mat-stroked-button (click)="showMoreComment()" color="primary" type="button">{{isShowMoreComment ? 'Tải thêm bình luận' : 'Ẩn bớt bình luận'}}</button>
+            <div *ngIf="comments.length >= 3" class="button-showcomment">
+              <button  mat-stroked-button (click)="showMoreComment()" color="primary" type="button">{{isShowMoreComment ? 'Tải thêm bình luận' : 'Ẩn bớt bình luận'}}</button>
             </div>
           </div>
         </div>

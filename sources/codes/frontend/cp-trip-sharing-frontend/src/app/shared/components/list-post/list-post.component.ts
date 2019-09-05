@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { PostService } from 'src/app/core/services/post-service/post.service';
 import { Post } from 'src/app/model/Post';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Article } from 'src/app/model/Article';
 import { UserService } from 'src/app/core/services/user-service/user.service';
@@ -31,7 +31,7 @@ export class ListPostComponent implements OnInit {
   pageIndex: 1;
   isLoading = true;
   isDisplayFilter = false;
-
+  isPreLoading = true;
   personalNav: string;
 
   isScrollTopShow = false;
@@ -58,10 +58,14 @@ export class ListPostComponent implements OnInit {
               private userService: UserService,
               private tripService: VirtualTripService,
               private companionPostService: FindingCompanionService,
-              private errorHandler: GlobalErrorHandler) { }
+              private errorHandler: GlobalErrorHandler,
+              private router: Router) { }
 
   ngOnInit() {
     this.setNavParams();
+    this.router.events.subscribe(res => {
+      this.isPreLoading = true;
+    });
   }
 
   onScroll() {
@@ -118,20 +122,26 @@ export class ListPostComponent implements OnInit {
           this.articleDisplay.typeArticle = 'article';
           this.articleDisplay.items.push(...data);
           this.isLoading = false;
-        }, this.errorHandler.handleError);
+        }, this.errorHandler.handleError , () => {
+          this.isPreLoading = false;
+        });
       } else if (this.personalNav === 'chuyen-di') {
         this.showTopic = false;
         this.tripService.getVirtualTripsByUser(userId, postFilter, this.page).subscribe((data: []) => {
           this.articleDisplay.typeArticle = 'virtual-trip';
           this.articleDisplay.items.push(...data);
           this.isLoading = false;
-        }, this.errorHandler.handleError);
+        }, this.errorHandler.handleError, () => {
+          this.isPreLoading = false;
+        });
       } else if (this.personalNav === 'tim-ban-dong-hanh') {
         this.showTopic = false;
         this.companionPostService.getCompanionPostsByUser(userId, postFilter, this.page).subscribe((data: []) => {
           this.articleDisplay.typeArticle = 'companion-post';
           this.articleDisplay.items.push(...data);
           this.isLoading = false;
+        }, this.errorHandler.handleError,  () => {
+          this.isPreLoading = false;
         });
       }
     }

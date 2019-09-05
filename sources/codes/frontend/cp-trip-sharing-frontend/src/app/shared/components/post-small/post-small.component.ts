@@ -18,6 +18,7 @@ export class PostSmallComponent implements OnInit {
 
   follow = false;
   bookmark = false;
+  isPublic = true;
 
   user: any;
   userId: string;
@@ -39,6 +40,7 @@ export class PostSmallComponent implements OnInit {
       this.userId = this.user.id;
     }
     this.getStates();
+    this.isPublic = this.checUserPostIsPublic();
   }
 
   getStates(): void {
@@ -110,5 +112,19 @@ export class PostSmallComponent implements OnInit {
   gotoPersionalPage(userId: string) {
     this.router.navigate(['/user', userId]);
   }
-
+  checUserPostIsPublic() {
+    if (this.postType === 'virtual-trip') {
+      const user = JSON.parse(localStorage.getItem('User'));
+      if (user) {
+        if (this.post.post.author.id !== user.id && !this.post.post.isPublic) {
+          return false;
+        }
+      } else {
+        if (!this.post.post.isPublic) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }

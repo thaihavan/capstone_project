@@ -170,6 +170,8 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
   // set policy for virtual post
   setPolicy() {
     this.isPublic = !this.isPublic;
+    this.virtualTrip.post.isPublic = this.isPublic;
+    this.sendUpdateRequest();
   }
 
   // expand left conttent
@@ -327,6 +329,14 @@ export class VirtualTripsPageComponent implements OnInit, AfterViewInit {
 
   // send update request to server
   sendUpdateRequest() {
+    if (this.urlCoverImage === '') {
+      this.alertify.error('Yêu cầu ảnh bìa cho bài viết');
+      return;
+    }
+    if (this.virtualTrip.items === undefined || this.virtualTrip.items.length === 0) {
+      this.alertify.error('Yêu cầu nhập địa điểm của chuyến đi!');
+      return;
+    }
     if (this.isViewDetailTrip) {
       this.tripService.updateVirtualTrip(this.virtualTrip).subscribe(
         res => {},
