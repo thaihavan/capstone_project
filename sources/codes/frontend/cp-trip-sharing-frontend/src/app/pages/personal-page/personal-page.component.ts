@@ -278,7 +278,9 @@ export class PersonalPageComponent implements OnInit {
     user.avatar = image;
     this.userService
       .updateUser(user)
-      .subscribe(res => {}, this.errorHandler.handleError, () => {
+      .subscribe(res => {
+        window.location.reload();
+      }, this.errorHandler.handleError, () => {
         localStorage.setItem('User', JSON.stringify(user));
       });
   }

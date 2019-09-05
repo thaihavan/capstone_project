@@ -211,7 +211,7 @@ export class DetailpostPageComponent implements OnInit {
     if (comment.content.trim() !== '') {
     this.postService.addComment(comment).subscribe((res: Comment) => {
       this.commentContent = '';
-      this.comments.push(res);
+      this.comments.unshift(res);
       // Send notification
       this.notifyService.sendCommentNotification(this.user, this.detailPost);
     }, this.errorHandler.handleError);

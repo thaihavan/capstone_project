@@ -53,7 +53,7 @@ export class SingleCommentComponent implements OnInit {
     comment.parentId = this.comment.id;
     if (comment.content.trim() !== '') {
     this.postService.addComment(comment).subscribe((res: Comment) => {
-      this.comment.childs.push(res);
+      this.comment.childs.unshift(res);
 
       // Send notification
       this.sendCommentNotification();

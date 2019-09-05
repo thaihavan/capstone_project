@@ -62,7 +62,7 @@ namespace ChatService.Repositories
                 c.LastMessage = tempMessage;
             });
 
-            conversations.OrderByDescending(c => c.LastMessage.Time);
+            conversations = conversations.OrderByDescending(c => c.LastMessage.Time).ToList();
 
             return conversations;
         }

@@ -146,8 +146,8 @@ export class InitialUserInformationPageComponent implements OnInit {
   updateUser() {
     this.getValueFromFormGroup();
     this.userService.updateUser(this.user).subscribe((result: any) => {
-      this.router.navigate(['/user', this.user.id]);
-      // window.location.href = '/user/' + this.user.id;
+      // this.router.navigate(['/user', this.user.id]);
+      window.location.href = '/user/' + this.user.id;
     }, this.errorHandler.handleError);
   }
 

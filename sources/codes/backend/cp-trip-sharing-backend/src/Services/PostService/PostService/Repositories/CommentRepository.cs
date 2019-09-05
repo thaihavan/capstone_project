@@ -110,7 +110,8 @@ namespace PostService.Repositories
                            ProfileImage = author.ProfileImage
                        },
                        LikeCount= comment.LikeCount
-                   });
+                   })
+                .OrderByDescending(c => c.Date);
 
             return comments.ToList();
         }
@@ -164,7 +165,8 @@ namespace PostService.Repositories
                     comment=>comment.Id,
                     like=>like.ObjectId,
                     UpdateLiked
-                );
+                )
+                .OrderByDescending(c => c.Date);
             return comments.ToList();
         }
 

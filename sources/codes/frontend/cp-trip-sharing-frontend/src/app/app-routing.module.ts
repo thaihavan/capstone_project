@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router } from '@angular/router';
 import { PersonalPageComponent } from './pages/personal-page/personal-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { ForgotpasswordPageComponent } from './pages/forgotpassword-page/forgotpassword-page.component';
@@ -95,4 +95,10 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class AppRoutingModule { }
+export class AppRoutingModule {
+  constructor(private router: Router) {
+    this.router.errorHandler = (error: any) => {
+        this.router.navigate(['error']); // or redirect to default route
+    };
+  }
+}
