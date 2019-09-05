@@ -141,8 +141,8 @@ export class RegisterPageComponent implements OnInit {
           this.errorRegister = false;
           this.openDialogMessageConfirm('success');
           setTimeout(() => {
-            this.router.navigate(['/']);
-            // window.location.href = '';
+            // this.router.navigate(['/']);
+            window.location.href = '';
           }, 5000);
         }
       );
